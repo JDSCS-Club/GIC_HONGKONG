@@ -1,0 +1,11 @@
+,,,,,,,,,,,,,,,,,,,,
+,단계,기능,월,9M,,,,10M,,,,11M,,,,12M,,,,진행사항
+,,,주,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
+,1단계,홍콩 KTU 내부 SW 구형 완료,Main Software DB update/Skip function and test,,,,,,,,,,,,,,,,,
+,,,Main Software (PAD 관제통화 다자 연결) 기능 추가,,,,,,,,,,,,,,,,,
+,,,Mtx Software mp3 update and test + skip test,,,,,,,,,,,,,,,,,
+,,,MOP (VOIP) Software update and test + skip test,,,,,,,,,,,,,,,,,
+,,,MOP (VOIP) Software (PAD 관제통화 다자 연결) 기능추 ,,,,,,,,,,,,,,,,,
+,,,ETX (VOIP) Software update and test + skip test,,,,,,,,,,,,,,,,,
+,2단계,현차 시험 및 디버깅 ,현차 디버깅,,,,,,,,,,,,,,,,,
+,3단계,시행청 기능 확인 및 ECP 승인,시행청 기능 확인 및 승인완료.,,,,,,,,,,,,,,,,,
