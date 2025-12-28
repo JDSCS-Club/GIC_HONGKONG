@@ -1,6 +1,11 @@
+# Gemini CLI temp files
+.gemini/
+
+# Virtual environment
 .venv/
-.DS_Store
+
+# Export directories
 csv_export/
 docx_export/
-*.xlsx
-*.docx
+
+# Test comment
