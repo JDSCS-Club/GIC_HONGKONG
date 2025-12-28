@@ -1,0 +1,248 @@
+
+
+
+HK-MTR Corporation
+
+Shatin to Central Link
+Contract 1141B
+
+Technical Description of 
+PA-PIS Bench Test Equipment
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table of Contents
+1.	Application	4
+2.	Full Test Equipment	4
+2.1.	Configure the tester	4
+2.2.	Full Function list.	5
+2.3.	Tester Components	10
+3.	Individual Test Equipment	12
+3.1.	The test items using the device-specific testers are as follows.	12
+3.2.	MSR	13
+3.3.	PSR	15
+3.4.	MOP	17
+3.5.	PAB	18
+3.6.	EIDS	19
+
+
+Application 
+This document describes the Full Test Equipment and Individual Test Equipment methods for PA / PIS devices on 333 cars in the Hong Kong SCL (Sha Tin to Central Link) project.
+
+Full Test Equipment
+Configure the tester 
+The tester is configured using a laptop . The laptop computer is equipped with simulator software for  broadcasting and indicator devices, which can test the device under test by virtually generating signals from the broadcasting/indicator device.
+The tester rack is a method of testing the device by installing it on the rack, and the test is conducted by installing the Hong Kong Bureau of Administration equipment at the location corresponding to the rack.
+The test rack is configured by installing 1EAof each device, which differs from the number of devices installed in the vehicle.
+Configure the product according to the configuration table below.
+
+
+Figure  Device connectivity
+
+Figure  Full Test Equipment Rack
+Full Function list.
+ Automatic Announcement simulation function.
+: You can check the device by changing the vehicle operation table  or by using the automatic broadcast simulation to check the PA/PIS operation status according to the vehicle operation conditions.
+Auto-simulation has two functions.
+Repeating the entire route for the Hong Kong SCL line in the Operations Table .
+Service Table for Hong Kong SCL Line Repeat a specific segment of the line.
+Select the route table, and you can check the different broadcasting sound sources for each route..
+Ex) Lo Wu to Hung Hom
+
+Monitoring
+: It monitors the event behaviour of each device in real time to ensure that the interlocking behaviour between each device operates normally.
+Automatic Announcement Monitoring.
+Ex) 
+Determines whether the code transmitted by the TMS simulation is normal.
+MSR-MOP-PSR It monitors the event behaviour of each device in real time to ensure that the interlocking behaviour between each device operates normally.
+The result can be checked in the simulation programme.
+
+Checks each device event flow and provides a visual representation of the misbehaving device.
+
+Manual Broadcasting Monitoring.
+: The manual broadcasting can be available using a microphone at the MOP. It will be output through the speakers in each car’s PSR.
+
+
+①MOP can make the manual announcement regardless of the operation mode.
+
+②MSPK is only output the PAD call.
+
+③MOP manual announcement is transmitted from MSR to PSR, and output through ISP via PSR AMP.
+
+
+
+PAD call operation Monitoring.
+: The PAD action has two functions. 
+MOP-PAD call function. 
+2.PAD-OCC call function.
+When PAD call, the cab is selected according to the HCR signal.
+①The information of operation mode is processed by TMS communication data
+②When PAD call is occurred in FAO mode, the connection is made by OCC with RAD. 
+③OCC confirms PAD call information and initiate PAD communication. 
+④The connected PAD with OCC can make the communication.
+⑤If it is not FAO mode, MOP will wait for 30 seconds to response by the operator.
+⑥If the operator is not response, the PAD call will be connected to OCC by RAD.
+⑦If the operator is response in 30 seconds, the communication can be made.
+Media Controller Announcement Monitoring.
+: The MSR will transmit the voice signal to the PSR of each car by audio encoding it when it is received from the Media controller. The PSR will output it through the AMP by audio decoding it.
+
+
+
+
+①COM transmits the audio information to MSR.
+②COM audio signal is input to MSR(ETX).
+③The input signal is converted to digital signal and transmits to sub-equipment via Ethernet.
+④PSR(VOIP) converts the audio digital data to analog through Audio DECODER, and then the analog data is output through ISP via AMP.
+
+
+EIDS Image Display Monitoring.
+: The DVI information received from the LapTop will be transmitted to the MSR. The MSR transmits the converted video data to each car through the NSW by H.264 encoding the DVI information.
+The information will be transmitted to the EIDS through the HUB boards of each PSR. The EIDS will H.264 decode the received data image and display it on the LCD.
+
+
+ ① DVI signal received from the Media Controller will be transmitted to MSR.
+② MSR MTX will convert DVI signal as H.264 encoding video data.
+③ NSW transmits DVI to the each sub equipment.
+The receiving DVI information will be transferred to 2 EIDS through HUB PCB of each PSR.
+④ The EIDS will display the received image on LCD by H.264 decoder.
+⑤ The EIDS will display the received image on LCD by H.264 decoder.
+
+Emergency Code Transmission Monitoring.
+: MSR will play the corresponding emergency message through ISP after receiving the emergency code from TMS Simulator.
+
+
+① TMS Simulator transmits the emergency code to MSR. (Data receiving from SIG or operator)
+② MSR (TCIU) will transmit the receiving code to Main program.
+③ The receiving code from TMS is checked whether it is normal or abnormal code. If the code is normal, the corresponding emergency message will be transferred to PSR. 
+
+
+
+
+
+
+
+
+
+
+
+Device health check feature.
+: You can check the interworking behavior of each device on the tester connection frame, and you can check the update of each device using the special tool .
+Check the ability of the camera connected to the tester rack to display the video on the CTM device.
+Check the function of the MSR-SSD storage of camera footage connected to the tester rack.
+EDD/ETND Destination and Train Number Display Functionality checks.
+
+
+
+
+
+
+Tester Components
+The PA-PIS tester Rack configuration is shown belowand.
+
+
+
+Individual Test Equipment
+: MSR/PSR/MOP/PAB/EIDS devices can perform PCB unit testing.
+The TEST JIG DEVICE made for PCB testing in Hong Kong can be used for testing.
+Hong Kong-originated test equipment, conduct the test, and use the equipment required for the test.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The test items using the device-specific testers are as follows.
+
+
+MSR
+: The Main Sub Rack (MSR) have the master authority to the entire CS components and integrally control, manage, and/or monitor the overall functionality of the CS. This main controller transmits a command and signal to, or directly controls various components that are comprising the system. The MSR is also equipped with a built-in Local Diagnostic and Test System function to interface with the TMS via the car-level network.
+
+
+
+Figure  Block Diagram
+MTX PCB Test Methods.
+
+
+HUB PCB Test Methods.
+
+
+TCIU PCB Test Methods.
+
+
+
+ETX PCB Test Methods.
+
+
+PSR
+: The Passenger Sub Rack (PSR) will have the sub authority to the entire CS components. PSR audio data received from the Ethernet to the audio signal from the amplification of the PA AMP to restore output to the speakers. Also the video signal received from MSR is transmitted to the EIDS panels (via Ethernet).
+The ANS microphones will measure the ambient noise level within the vehicle and automatically adjust the volume level of the In-saloon speakers according to predetermined gain adjustment levels and maximum output level specifications.
+
+
+Figure  Block Diagram
+
+HUB PCB Test Methods.
+
+
+
+
+PA VOIP Test Methods.
+
+
+PA AMP1 Test Methods.
+
+
+PA AMP2 Test Methods.
+
+
+MOP
+: The Main Operation Panel (MOP) is provided the PA, PAB, Intercom (IC), TR, functions and Train Radio Interface to the crew. MOP is energized by insertion and operation of the Standard Car Key in the adjacent door control panel or by energization of the adjacent Master Controller.
+MOP audio data received from the Ethernet to output the audio signal to the Monitor speaker that restoring to, PSR to the PA AMP to send audio data to encode the device is built.
+
+
+
+
+MOP PCB Test Methods.
+
+PAB
+: The Passenger Alarm Device (PAD) is provided a means of communication between passengers and the crew using a built-in microphone, speaker and flashing indicator. An emergency call button is provided for PAD activation. Flush-mounting type pushbutton switch will be used to prevent accidental activation. The switch is momentary contact type so that it returns to its original position after activation.
+
+
+
+
+Figure  Block Diagram
+PAB PCB Test Methods.
+
+
+
+EIDS
+: The Electronic Information Display(EIDS) is using a/two 27 inch LED-backlit LCD and support 1680 x 1050 resolution. The mechanical structure of the EIDS is allow both horizontal and vertical mountings as preferred by the customer.
+
+
+
+
+
+
+Figure  Block Diagram
+EIDS PCB Test Methods.
+
