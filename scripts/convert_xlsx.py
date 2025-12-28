@@ -17,7 +17,7 @@ def convert_xlsx_to_csv(xlsx_path_str):
     output_dir.mkdir(exist_ok=True)
 
     try:
-        workbook = openpyxl.load_workbook(xlsx_path, data_only=True)
+        workbook = openpyxl.load_workbook(xlsx_path, data_only=True, read_only=True)
         
         for sheet_name in workbook.sheetnames:
             # Create a sanitized, unique name for the csv file
