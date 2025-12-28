@@ -15,26 +15,51 @@ def convert_xlsx_to_csv(xlsx_path_str):
     output_dir.mkdir(exist_ok=True)
 
     try:
-        # Load all sheets from the Excel file
-        xls = pd.ExcelFile(xlsx_path)
+        # Try different engines for reading Excel files
+        engines = ['openpyxl', 'xlrd']
+        xls = None
         
+        for engine in engines:
+            try:
+                xls = pd.ExcelFile(xlsx_path, engine=engine)
+                print(f"  -> Successfully opened with {engine} engine")
+                break
+            except Exception as engine_error:
+                print(f"  -> Failed with {engine}: {engine_error}")
+                continue
+        
+        if xls is None:
+            print(f"Error: Could not read {xlsx_path} with any available engine", file=sys.stderr)
+            print("  -> This file may be corrupted or in an unsupported format", file=sys.stderr)
+            return False
+        
+        sheets_converted = 0
         for sheet_name in xls.sheet_names:
-            # Read the sheet into a DataFrame
-            df = pd.read_excel(xls, sheet_name=sheet_name, header=None) # header=None to treat first row as data
-            
-            # Create a sanitized, unique name for the csv file
-            sanitized_sheet_name = "".join(c if c.isalnum() else '_' for c in sheet_name)
-            csv_file_name = f"{xlsx_path.stem}_{sanitized_sheet_name}.csv"
-            csv_path = output_dir / csv_file_name
+            try:
+                # Read the sheet into a DataFrame
+                df = pd.read_excel(xls, sheet_name=sheet_name, header=None)
+                
+                # Create a sanitized, unique name for the csv file
+                sanitized_sheet_name = "".join(c if c.isalnum() or c in '-_' else '_' for c in sheet_name)
+                csv_file_name = f"{xlsx_path.stem}_{sanitized_sheet_name}.csv"
+                csv_path = output_dir / csv_file_name
 
-            print(f"  -> Converting sheet '{sheet_name}' to '{csv_path}'")
+                print(f"  -> Converting sheet '{sheet_name}' to '{csv_path}'")
 
-            # Save the DataFrame to a CSV file
-            df.to_csv(csv_path, index=False, header=False) # Use index=False and header=False to mimic the original script's output
+                # Save the DataFrame to a CSV file
+                df.to_csv(csv_path, index=False, header=False)
+                sheets_converted += 1
+                
+            except Exception as sheet_error:
+                print(f"  -> Warning: Failed to convert sheet '{sheet_name}': {sheet_error}")
+                continue
+        
+        print(f"  -> Successfully converted {sheets_converted}/{len(xls.sheet_names)} sheets")
+        return sheets_converted > 0
 
     except Exception as e:
-        print(f"An error occurred: {e}", file=sys.stderr)
-        sys.exit(1)
+        print(f"Error: {e}", file=sys.stderr)
+        return False
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -43,5 +68,11 @@ if __name__ == "__main__":
     
     file_to_convert = sys.argv[1]
     print(f"Converting '{file_to_convert}' with pandas...")
-    convert_xlsx_to_csv(file_to_convert)
-    print("Conversion complete.")
+    success = convert_xlsx_to_csv(file_to_convert)
+    
+    if success:
+        print("Conversion complete.")
+        sys.exit(0)
+    else:
+        print("Conversion failed.", file=sys.stderr)
+        sys.exit(1)
