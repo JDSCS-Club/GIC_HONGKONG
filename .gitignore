@@ -7,5 +7,6 @@
 # Export directories
 csv_export/
 docx_export/
+pptx_export/ # Added for pptx conversions
 
 # Test comment
