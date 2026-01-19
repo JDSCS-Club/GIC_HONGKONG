@@ -1,0 +1,256 @@
+
+
+#ifndef _GpProface_H_
+#define _GpProface_H_
+
+////////////////////////////////////////////////////////
+//	Gp 화면 전송 프로토콜
+////////////////////////////////////////////////////////
+
+#define gpMENU		gp_WritingWord(0x0F,0x41)  // 메뉴화면
+#define gpROOT		gp_WritingWord(0x0F,0x5A)  // 행선화면
+#define gpSPOT		gp_WritingWord(0x0F,0x6E)  // 지점화면
+#define gpSPOT2		gp_WritingWord(0x0F,0x73)  // 지점화면2(운행중 현시) 03-09-08 3:54오후
+#define gpSTATE		gp_WritingWord(0x0F,0x3C)  // 상태화면
+#define gpMANU		gp_WritingWord(0x0F,0x78)  // 수동화면
+//#define gpSELFTEST	gp_WritingWord(0x0F,0x80)  // 자기진단 (인천 설정기)
+#define gpSELFTEST	gp_WritingWord(0x0F,0x7C)  // 자기진단 (대구 설정기) 03-09-08 3:52오후
+//#define gpTEST	gp_WritingWord(0x0F,0x69)  // 시험화면
+#define gpTEST		gp_WritingWord(0x0F,0x6B)  // 시험화면
+#define gpSDR_SCREEN	gp_WritingWord(0x0F,0x85)  // 시험화면
+
+#define gpTRAINNUMBER	gp_WritingWord(0x0F,0x33)  // 열번화면
+#define gpSIM_TRAINNUMBER	gp_WritingWord(0x0F,108)  // 열번화면
+
+#define gpExpNomScreenSet gp_WritingWord(0x0F,0x36)  //직통 일반 선택 화면
+#define gpStartScreen gp_WritingWord(0x0F,0x34)  //초기 화면
+
+
+#define gpSTATENOCLR	gp_WritingWord(0x45,0x00)  // 무표시 설정 해제 
+#define gpSTATENOSET	gp_WritingWord(0x45,0x01)  // 무표시 설정
+#define gpTURNOFF	gp_WritingWord(12,0xffff)  // 백라이트 Off 
+#define gpTURNOFFINIT	gp_WritingWord(11,0x40)    // 백라이트 초기화
+#define gpINIT		gp_WritingWord(0x0F,52)    // 초기화 화면 
+
+#define gpCOMERR	gp_WritingWord(0x5D,0x01)  // 통신 고장
+#define gpCOMCLR	gp_WritingWord(0x5D,0x00)  // 통신 고장
+#define gpSYSERR	gp_WritingWord(0x34,0x04)  // 시스템 고장
+#define gpCARDERR	gp_WritingWord(0x34,0x01)  // 카드미삽입
+#define gpCARDOK	gp_WritingWord(0x34,0x00)  // 카드
+
+#define gpUpLoad	gp_WritingWord(0x0F,134)	//UPLOAD 화면
+#define gpUpLoad_2	gp_WritingWord(0x0F,135)	//UPLOAD 화면
+#define gpDATA_UpLoad gp_WritingWord(0x0F,136)	//UPLOAD 화면
+
+#define gpHCR		gp_WritingWord(0x35,0x02)
+#define gpICR		gp_WritingWord(0x35,0x04)
+#define gpTCR		gp_WritingWord(0x35,0x08)
+#define gpDI_CHECK	gp_WritingWord(0x35,0x10)
+
+#define gpExp gp_WritingWord(101,0x01)
+#define gpExpClr gp_WritingWord(101,0x00)
+
+#define gpNor gp_WritingWord(102,0x01)
+#define gpNorClr gp_WritingWord(102,0x00)
+
+#define gpAuto_ON gp_WritingWord(250,0x01)
+#define gpAuto_OFF gp_WritingWord(250,0x00)
+
+#define gpManu_ON gp_WritingWord(251,0x01)
+#define gpManu_OFF gp_WritingWord(251,0x00)
+
+
+
+#define gpBuzzerOn  gp_WritingWord(11,0x02)    // 브저 소리 ON 한다.
+#define gpBuzzerOff gp_WritingWord(11,0x10)    // 부저 소리 OFF 한다.
+
+#define gpSTATEOPEN		gp_WritingWord(0x5E,0x01)  // 출입문 열림 
+#define gpSTATECLOSE	gp_WritingWord(0x5E,0x02)  // 출입문 닫힘 
+
+#define gpCURRSTATION	gp_WritingWord(0x50,0x01)  // 현재역
+#define gpNEXTSTATION	gp_WritingWord(0x50,0x02)  // 다음역
+#define gpSETERR	gp_WritingWord(0x52,0x02)  // 설정에러 
+#define gpSETCLR	gp_WritingWord(0x52,0x00)  // 설정에러 취소
+#define gpTRNOSEEK	gp_WritingWord(0x52,0x04)  // 열번검색중
+#define gpSDRCHK	gp_WritingWord(0x52,0x08)  // SDR 확인중
+#define gpACKKEY	gp_WritingWord(0x52,0x01)  // 확인Key를 누름
+#define gpKEYINIT	gp_WritingWord(0x4B,0x00)  // KEY 입력을 위한 초기화 과정
+#define gpKEYACTIVE	gp_WritingWord(0x32,0x01)  // KEY 입력창 활성화
+#define gpKEYCLR	gp_WritingWord(0x4A,0x00)  // KEY 입력창 활성화
+#define gpRDNUMBER	gp_ReadingWord(0x64,0x01)  // 열번읽기데이터 
+
+#define gpKEYDIS	gp_WritingWord(0x0E,0x00)  // KEY 입력창 비활성 
+#define gpKEYEN		gp_WritingWord(0x0E,0x01)  // KEY 입력창 활성 
+#define gpROOTDIS	gp_WritingWord(0x39,0x00)  // 전화면, 다음화면 비활성 
+#define gpROOTEN	gp_WritingWord(0x39,0x01)  // 전화면, 다음화면 활성 
+#define gpSPOTDIS	gp_WritingWord(0x47,0x00)  // 반대방향, 진행방향 비활성 
+#define gpSPOTEN	gp_WritingWord(0x47,0x01)  // 반대방향, 진행방향 활성 
+
+#define gpROOT1BLK	gp_WritingWord(0x38,0x01)  // 입력창 활성화
+#define gpROOT2BLK	gp_WritingWord(0x38,0x02)  // 입력창 활성화
+#define gpROOT3BLK	gp_WritingWord(0x38,0x04)  // 입력창 활성화
+#define gpROOT4BLK	gp_WritingWord(0x38,0x08)  // 입력창 활성화
+#define gpROOT5BLK	gp_WritingWord(0x38,0x10)  // 입력창 활성화
+#define gpROOT6BLK	gp_WritingWord(0x38,0x20)  // 입력창 활성화
+#define gpROOT7BLK	gp_WritingWord(0x38,0x40)  // 입력창 활성화
+#define gpROOT8BLK	gp_WritingWord(0x38,0x80)  // 입력창 활성화
+#define gpROOT9BLK	gp_WritingWord(0x38,0x100) // 입력창 활성화
+#define gpROOT10BLK	gp_WritingWord(0x38,0x200) // 입력창 활성화
+#define gpROOTNOBLK	gp_WritingWord(0x38,0x00)  // 입력창 활성화
+#define gpROOTACTIVE	gp_WritingWord(0x3C,0x01)  // 행선설정 확인버튼 초기화 (확인버튼 깜박임)
+#define gpROOTWHITE	gp_WritingWord(0x3D,0x00)  // 검정색 선택화면 흰색으로 전환 
+#define gpROOTINIT	gp_WritingWord(0x3C,0x00);gp_WritingWord(0x37,0x00)  // 행선설정 확인버튼 초기화 
+#define gpSPOTINIT	gp_WritingWord(0x46,0x00);gp_WritingWord(0x49,0x00)  // 지점보정 초기화
+
+//#define gpDISTANCE(m)	gp_WritingWord(0x67,m)     // 거리표출, xx.xxx Km (decimal)
+#define gpDISTANCE(m)	gp_WritingDWord(0x67,m)     // 거리표출, xx.xxx Km (decimal)
+#define gpSPEED(m)		gp_WritingWord(0x66,m)     // 속도표출, xxx Km/h  (decimal)
+#define gpSTATIONBLK	gp_WritingWord(0x51,0x01)  // 역증가 가능 점멸
+#define gpSTATIONCLR	gp_WritingWord(0x51,0x00)  // 역증가 가능 소거 
+
+#define gpDOOROPEN	gp_WritingWord(0x42,0x01)
+#define gpDOORCLOSE	gp_WritingWord(0x42,0x00)
+#define gpTESTCLR	gp_WritingWord(0x41,0x00)  // 모의 주행시험, 차내패턴시험, 행선표시기 시험 모두 Clear
+
+#define gpAFTERSTATION	gp_WritingWord(0x4E,0x02)  // 다음역 글자표출
+#define gpNOWSTATION	gp_WritingWord(0x4E,0x01)  // 현재역 글자표출
+#define gpNOWBLK	gp_WritingWord(0x53,0x01)  // 출발안내 깜박임  03-09-08
+#define gpAFTERBLK	gp_WritingWord(0x53,0x02)  // 도착안내 깜박임  03-09-08
+#define gpMANUNOBLK	gp_WritingWord(0x53,0x00)  // 도착안내 깜박임
+#define gpMANUOKBLK	gp_WritingWord(0x55,0x01)  // 확인 깜박임
+#define gpMANUINIT	gp_WritingWord(0x55,0x00);gp_WritingWord(0x56,0x00)  // 활성화 제거 
+
+#define gpSELFNOBLK 	gp_WritingWord(0x57,0x00)  // NO BLINK
+#define gpSELFTESTINIT	gp_WritingWord(0x59,0x00);gp_WritingWord(0x5A,0x00); gpSELFNOBLK  // 자기진단
+#define gp6RBLK		gp_WritingWord(0x57,0x01)  // 6R 깜박임
+#define gp8RBLK		gp_WritingWord(0x57,0x02)  // 8R 깜박임
+#define gp6RBLACK	gp_WritingWord(0x58,0x01)  // 6R 검정색
+#define gp8RBLACK	gp_WritingWord(0x58,0x02)  // 8R 검정색
+#define gpSELKTOKBLK	gp_WritingWord(0x59,0x01)  // 확인 깜박임
+#define gp6RTRAIN	gp_WritingWord(0x5B,0x01)  // 6량 차량 현시 (일반)
+#define gp8RTRAIN	gp_WritingWord(0x5B,0x02)  // 8량 차량 현시 (직통)
+#define gp6SELFITEM	gp_WritingWord(0x5C,0x01)  // 테스트 내용 현시 (일반)
+#define gp8SELFITEM	gp_WritingWord(0x5C,0x02)  // 테스트 내용 현시 (직통)
+#define gpSELTTESTGOOD(addr)	gp_WritingWord(addr,2053)  // O 표출 
+#define gpSELTTESTNG(addr)	gp_WritingWord(addr,2054)  // X 표출 
+#define gpSELFTESTNO(addr)	gp_WritingWord(addr,2055)  // 공백 표출 
+
+
+
+
+#define gpSFDD_UPLOAD_SCREEN gp_WritingWord(0x0F,137)  // LED 표시기 업로드 화면
+
+#define gpLED_UPLOAD_BUTOFF			gp_WritingWord(700,0x00)  //LED 표시기 ERASS 버튼 비활성화.
+#define gpLED_UPLOAD_ERBUT_SF_OFF	gp_WritingWord(710,0x00)  //LED 표시기 ERASS 이벤트 비활성화.
+
+#define gpLED_UPLOAD_ERBUT			gp_WritingWord(700,0x01)  //LED 표시기 ERASS 버튼 활성화.
+#define gpLED_UPLOAD_ERBUT_SF_ON	gp_WritingWord(710,0x01)  //LED 표시기 ERASS 이벤트 활성화.
+
+#define gpLED_UPLOAD_DABUT			gp_WritingWord(701,0x01)  //LED 표시기 다운로드 버튼 활성화.
+#define gpLED_UPLOAD_DABUT_SF_ON	gp_WritingWord(711,0x01)  //LED 표시기 다운로드 이벤트 활성화.
+
+#define gpLED_UPLOAD_DABUTOFF		gp_WritingWord(701,0x00)  //LED 표시기 다운로드 버튼 비활성화.
+#define gpLED_UPLOAD_DABUT_SF_OFF	gp_WritingWord(711,0x00)  //LED 표시기 다운로드 이벤트 비활성화.
+
+#define gpBuzzerOn  gp_WritingWord(11,0x02)    // 브저 소리 ON 한다.
+#define gpBuzzerOff gp_WritingWord(11,0x10)    // 부저 소리 OFF 한다.
+
+#define gpTrNumCheckMs_Off gp_WritingWord(3000,0x00); //열차 번호 확인 메세지
+#define gpTrNumCheckMs_ON gp_WritingWord(3000,0x01); //열차 번호 확인 메세지
+#define gpStPointSet_Off gp_WritingWord(3001,0x00); //지점 보정 확인 메세지 
+#define gpStPointSet_ON gp_WritingWord(3001,0x01); //지점 보정 확인 메세지 
+#define gpPattern_ON  gp_WritingWord(3002,0x01); //패턴 정보 조건을 표출한다.
+#define gpPattern_Off  gp_WritingWord(3002,0x00);
+#define gpSelftest_ON gp_WritingWord(3003,0x01); //자기진단에서 조건
+#define gpSelftest_Off gp_WritingWord(3003,0x00); //자기진단에서 조건
+
+
+#define STX		0x1B
+
+/****************************************************
+ 자기 진단 8량4량 추가
+****************************************************/
+//#define gpclean		gp_WritingWord(0x6A,0x01)
+#define gp4RTRAIN_S gp_WritingWord(0x5B,0x10);// 4량 그림 로드
+#define gp6RTRAIN_S gp_WritingWord(0x5B,0x08);// 6량 그림 로드
+#define gp8RTRAIN_S gp_WritingWord(0x5B,0x04);// 8량 그림 로드
+
+#define gpSELFT_4	gp_WritingWord(0x0F,0x82)  // 자기진단 8_6_4 추가
+#define gpSELFT_8	gp_WritingWord(0x0F,0x83)  // 자기진단 8_6_4 추가
+#define gpSELFT_12	gp_WritingWord(0x0F,0x84)  // 자기진단 8_6_4 추가
+
+#define gpExpSelfScreen gp_WritingWord(0x0F,129)  //Exp 
+#define gpNorSelfScreen gp_WritingWord(0x0F,132)  //Exp 
+
+#define gp8RBLACK_S	gp_WritingWord(0x60,0x04)	//배경 검은색
+#define gp4RBLACK_S	gp_WritingWord(0x61,0x04)	//배경 검은색
+#define gp6RBLACK_S	gp_WritingWord(0x62,0x04)	//배경 검은색
+
+#define gp8RBLK_S   gp_WritingWord(0x60,0x02)	//깜박임
+#define gp4RBLK_S	gp_WritingWord(0x61,0x02)	//깜박임
+#define gp6RBLK_S	gp_WritingWord(0x62,0x02)	//깜박임
+
+#define gp8RWITE	gp_WritingWord(0x60,0x00)	//흰 바탕 화면
+#define gp4RWITE	gp_WritingWord(0x61,0x00)	//흰 바탕 화면
+#define gp6RWITE	gp_WritingWord(0x62,0x00)	//흰 바탕 화면
+
+/*****************************************************/
+/*****************************************************/
+
+typedef struct
+{
+	UCHAR nFlag;	//열번 입력 확인 Flag
+	WORD nNum;	//현재 입력받은 열번
+	WORD nRemNum;	//전에 입력 받았던 열번.
+	UCHAR nNowSt_Re;//현재역 기억
+	UCHAR nNextSt_Re;//다음역 기억
+}TRANNUM_INPUT;
+
+typedef struct
+{
+	TRANNUM_INPUT nGPTranNumInput;
+	UCHAR nScreenSetNum; // 상태 화면 1 , 수동 설정 2, 자기진단 3, 시험 화면 4, 지점 보정 5,
+	UCHAR nScreenRxTime;	// 화면 터치 시간을 감지 한다.
+	UCHAR nScreenSafe; //화면 보호 기능.
+	UCHAR nScreen_Send_Delay_Time;
+} SELETC_BUTTON;
+
+/*****************************************************/
+void gp_WritingWord(WORD Addr,WORD nData);
+void gp_ReadingWord(WORD Addr,WORD nCnt);
+void gp_WritingStr(WORD Addr,WORD Len, UCHAR *pData);
+
+UCHAR Hex2ASCIIW(WORD nInput, UCHAR *pOutput);
+WORD BCD_BIN(WORD nInput);
+
+void Gp_Receive(UCHAR *pGpRXData);
+void GpProface_Init();
+void GP_POINT_ST_PRO(UCHAR nPointSt);
+void GP_1msTime();
+void GP_100msTime();
+void GP_SEND_SCREEN(UCHAR nScreenNum);
+void GP_STATE_SCREEN(UCHAR nScreenInf);
+void GP_MANUAL_SCREEN(UCHAR nScreenInf);
+void GP_MENU_SCREEN(UCHAR nScreenInf);
+void GP_DEST_SCREEN(UCHAR nScreenInf);
+void GP_SIMU_SCREEN(UCHAR nScreenInf);
+void GP_POINT_SCREEN(UCHAR nScreenInf);
+void GP_SELFTEST_SCREEN(UCHAR nScreenInf);
+void GP_SDR_SCREEN(UCHAR nScreenInf);
+void GP_SDR_PRINT(UCHAR *pDataTcms,UCHAR *pDataIcd,UCHAR nSend_ID);
+void GP_TRAIN_SCREEN(UCHAR nScreenInf);
+void SDR_Routine_Complete(UCHAR *pSData,UCHAR nUnitCnt,UCHAR nSt_End);
+void GP_CLEAN(UCHAR nScreenInf);
+void GP_DISPLAY_SAFETY(UCHAR nScreenInf);
+void Gp_Pro_Main();
+void GP_IDC_SW_UPLOAD(UCHAR nScreenInf);
+void GP_SFDD_SW_UPLOAD(UCHAR nScreenInf);
+void GP_DOWNLOAD_SDR();
+void GP_SFDD_SW_UPLOAD_CLEAN();
+void GP_SFDD_DATA_UPLOAD(UCHAR nScreenInf) ;
+void GP_START_SET(UCHAR nScreenInf);
+void GP_AUTO_MANU_SET(UCHAR nScreenInf);
+#endif
+
+
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="호차번호표시기">
+</Property><Property Name="솔루션 파일" Value="D:\백업DATA_090304\JDS_프로젝트\인천신공항\프로그램\인천표시기\호차번호표시기\호차번호표시기.sln">
+</Property><Property Name="사용자 옵션 파일" Value="D:\백업DATA_090304\JDS_프로젝트\인천신공항\프로그램\인천표시기\호차번호표시기\호차번호표시기.suo">
+</Property><Property Name="Date" Value="2009년 4월 13일 월요일">
+</Property><Property Name="Time" Value="오후 15:19">
+</Property><Property Name="로그 번호" Value="2">
+</Property></Properties><Event ErrorLevel="2" Project="" Source="호차번호표시기.sln" Description="백업 파일 만들기 오류: D:\백업DATA_090304\JDS_프로젝트\인천신공항\프로그램\인천표시기\호차번호표시기\호차번호표시기.sln.old">
+</Event><Event ErrorLevel="2" Project="" Source="호차번호표시기.suo" Description="백업 파일 만들기 오류: D:\백업DATA_090304\JDS_프로젝트\인천신공항\프로그램\인천표시기\호차번호표시기\호차번호표시기.suo.old">
+</Event><Event ErrorLevel="0" Project="호차번호표시기" Source="호차번호표시기.vcproj" Description="로컬 IIS 서버에 대한 웹 배포가 더 이상 지원되지 않습니다. 웹 배포 빌드 도구가 프로젝트 설정에서 제거되었습니다.">
+</Event><Event ErrorLevel="1" Project="호차번호표시기" Source="호차번호표시기.vcproj" Description="이 응용 프로그램이 Windows Vista의 UAC(사용자 계정 컨트롤) 기능과 관련된 설정을 포함하도록 업데이트되었습니다. 기본적으로 이 응용 프로그램은 UAC를 사용하는 Windows Vista에서 실행되는 경우 이 응용 프로그램을 시작한 프로세스와 같은 권한으로 실행되도록 표시됩니다. 이렇게 표시되면 가상화를 사용하여 응용 프로그램을 실행할 수도 없습니다. UAC 관련 설정은 프로젝트의 속성 페이지에서 변경할 수 있습니다.">
+</Event><Event ErrorLevel="0" Project="호차번호표시기" Source="호차번호표시기.vcproj" Description="프로젝트 파일을 'D:\백업DATA_090304\JDS_프로젝트\인천신공항\프로그램\인천표시기\호차번호표시기\호차번호표시기.vcproj.8.00.old'(으)로 백업했습니다.">
+</Event><Event ErrorLevel="0" Project="호차번호표시기" Source="호차번호표시기.vcproj" Description="프로젝트가 업그레이드되었습니다.">
+</Event><Event ErrorLevel="3" Project="호차번호표시기" Source="호차번호표시기.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="호차번호표시기.sln" Description="솔루션을 변환했습니다.">
+</Event><Event ErrorLevel="3" Project="" Source="호차번호표시기.sln" Description="Converted">
+</Event></UpgradeLog>

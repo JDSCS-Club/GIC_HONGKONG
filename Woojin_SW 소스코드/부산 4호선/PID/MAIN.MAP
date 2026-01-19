@@ -1,0 +1,234 @@
+*****************************************************
+TMS320C3x/4x COFF Linker        Version 4.70
+*****************************************************
+Tue Oct  5 08:49:27 2010
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00700001
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         SRAM      00700000  00000e000  0000829d     RWIX      
+         IRAM      0087fe10  0000001f0  00000000     RWIX      
+         FROM      00900000  000080000  00000000     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00700000    00000120     
+                  00700000    00000001     start.obj (.text)
+                  00700001    0000001b     rts30.lib : boot.obj (.text)
+                  0070001c    00000025               : divi.obj (.text)
+                  00700041    00000033               : divu.obj (.text)
+                  00700074    00000022               : modi.obj (.text)
+                  00700096    0000002a               : modu.obj (.text)
+                  007000c0    00000026               : exit.obj (.text)
+                  007000e6    00000012               : memcpy.obj (.text)
+                  007000f8    00000010               : memset.obj (.text)
+                  00700108    00000018               : strncmp.obj (.text)
+
+.text      0    00700120    000011ae     
+                  00700120    000011ae     main.obj (.text)
+
+.cinit     0    007012ce    000002a9     
+                  007012ce    000002a2     main.obj (.cinit)
+                  00701570    00000006     rts30.lib : exit.obj (.cinit)
+                  00701576    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    00701577    00000010     
+                  00701577    00000010     main.obj (.const)
+
+.data      0    00700000    00000000     UNINITIALIZED
+                  00700000    00000000     start.obj (.data)
+                  00700000    00000000     rts30.lib : strncmp.obj (.data)
+                  00700000    00000000               : memset.obj (.data)
+                  00700000    00000000               : memcpy.obj (.data)
+                  00700000    00000000               : exit.obj (.data)
+                  00700000    00000000               : modu.obj (.data)
+                  00700000    00000000               : modi.obj (.data)
+                  00700000    00000000               : divu.obj (.data)
+                  00700000    00000000               : divi.obj (.data)
+                  00700000    00000000               : boot.obj (.data)
+                  00700000    00000000     main.obj (.data)
+
+.stack     0    00701587    00004000     UNINITIALIZED
+                  00701587    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00705587    00002d16     UNINITIALIZED
+                  00705587    00000000     start.obj (.bss)
+                  00705587    00000000     rts30.lib : strncmp.obj (.bss)
+                  00705587    00000000               : memset.obj (.bss)
+                  00705587    00000000               : memcpy.obj (.bss)
+                  00705587    00000000               : modu.obj (.bss)
+                  00705587    00000000               : modi.obj (.bss)
+                  00705587    00000000               : divu.obj (.bss)
+                  00705587    00000000               : divi.obj (.bss)
+                  00705587    00000000               : boot.obj (.bss)
+                  00705587    00002cf4     main.obj (.bss)
+                  0070827b    00000022     rts30.lib : exit.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00705587 .bss                             00004000 __STACK_SIZE
+00700000 .data                            00700000 edata
+00700120 .text                            00700000 .data
+0070001c DIV_I30                          00700001 _c_int00
+00700041 DIV_U30                          0070001c DIV_I30
+00700074 MOD_I30                          00700041 DIV_U30
+00700096 MOD_U30                          00700074 MOD_I30
+00705729 _Arrow_L                         00700096 MOD_U30
+0070571f _Arrow_R                         007000c0 _exit
+00700dff _BASIC_VALUE                     007000ce _atexit
+007056fe _BLINK_DCC_T_C                   007000e1 _abort
+007056d8 _B_FRONT                         007000e6 _memcpy
+007056d6 _Blink_Timer_Count               007000f8 _memset
+00705717 _CHACK_DATA                      00700108 _strncmp
+007056bd _CH                              00700120 .text
+007056be _CHH                             00700120 _c_int06
+007056b0 _COUNT                           0070016d _Debug3xInit
+00705587 _CRC_Table                       00700194 _FlashBusyWait
+00707dcc _Compari_Arrow_L                 00700199 _GetFlashId
+00707dd6 _Compari_Arrow_R                 007001b7 _FlashPageRead
+00707e13 _Compari_ITEM                    007001e1 _GetLirAdrImg
+00705688 _DATA_LEN                        00700217 _FlashPageWrite
+0070104d _DCC_CONTROL                     00700262 _FlashErase
+007056ff _DCC                             00700298 _NorFlashAllErase
+007056fd _DCC_T_C                         007002a4 _NorFlashBlockErase
+00700c07 _DOT_VIDEO_PIRNT                 007002ba _NorFlashWrite
+00700e1b _DSP_INIT                        007002d3 _SCC_8530_Initial
+0070016d _Debug3xInit                     00700314 _SCC2_SendTo
+007056c4 _Dot_Video                       00700365 _SCC_ISR
+0070570d _ESC                             0070041c _LdmLatchClk
+00700605 _FONT_POSITION                   0070042c _main
+007056d7 _FRONT                           00700600 _JUMPDOWLOAD
+00700194 _FlashBusyWait                   00700605 _FONT_POSITION
+00700262 _FlashErase                      00700933 _IMAG_POINT_VALUE
+007001b7 _FlashPageRead                   00700970 _Imag_Screen
+00700217 _FlashPageWrite                  00700a46 _Imag_Screen_door
+00706799 _Font_Data                       00700ac8 _Imag_Screen_door_DATA
+0070573d _Font_Save_posi                  00700b0f _ImageMake
+00700199 _GetFlashId                      00700b85 _Imag_Screen_8
+007001e1 _GetLirAdrImg                    00700c07 _DOT_VIDEO_PIRNT
+00700ee0 _HEX_SWITCH                      00700c57 _UP_DOT_VIDEO_PIRNT
+007056b2 _HI_SEND                         00700cb7 _LEFT_DOT_VIDEO_PIRNT
+007056c0 _Hex_Pri_T_F                     00700cf8 _STATIC_LEFT_VIDEO_PRINT
+007056c2 _Hex_Pri_Tim                     00700d56 _SCREEN_PRINT
+00700933 _IMAG_POINT_VALUE                00700d8a _PUSH
+00705733 _ITEM                            00700dc7 _POP
+00700a46 _Imag_Screen_door                00700dff _BASIC_VALUE
+00700ac8 _Imag_Screen_door_DATA           00700e1b _DSP_INIT
+00700970 _Imag_Screen                     00700e48 _IsBCCOK
+00700b85 _Imag_Screen_8                   00700e6e _cal_CRC16
+00700b0f _ImageMake                       00700e8b _SEND_DATA
+00700e48 _IsBCCOK                         00700eca _RTS
+00700600 _JUMPDOWLOAD                     00700ee0 _HEX_SWITCH
+00700cb7 _LEFT_DOT_VIDEO_PIRNT            00700f55 _VER_PRINT
+0070573a _LEF_Font_posi                   00700fb4 _PATTREN
+007056b3 _LOW_SEND                        00700ffb _PATTREN_MOVE_VALUE
+0070041c _LdmLatchClk                     0070104d _DCC_CONTROL
+007056c6 _Left_Dot_Video                  00701108 _NORMAL_DCC_COUNT
+00701108 _NORMAL_DCC_COUNT                0070115b _STOP_DCC_COUNT
+007056b5 _NUM_TX_DATA                     00701177 _c_int02
+007056b4 _NUM_TX                          007011ae _c_int09
+007056fb _NandFlasc_Ring                  00701205 _c_int10
+007073cb _NandFlashBuff                   007012ce etext
+007056fa _NandFlashBuff_Cou               007012ce cinit
+00700298 _NorFlashAllErase                00701587 __stack
+007002a4 _NorFlashBlockErase              00705587 _CRC_Table
+007002ba _NorFlashWrite                   00705587 .bss
+00700ffb _PATTREN_MOVE_VALUE              00705687 _gRxComplete
+00700fb4 _PATTREN                         00705688 _DATA_LEN
+007056bf _PAT_COLOR                       00705689 _cRc
+00700dc7 _POP                             0070568a _gRxPos
+00700d8a _PUSH                            0070568b _gRxStTemp
+007056c1 _Pattren_inter_time              0070568c _SCC_INIT_ASYNC_9600BPS
+00705713 _RECEIVECnt                      007056ae _gSccRxTimeout
+00707de1 _REMEMBER_RING                   007056af _gHexaSw
+00706199 _RING_DATA                       007056b0 _COUNT
+00700eca _RTS                             007056b1 _TX_DA_ENA_COUNT
+007056c8 _SCAN                            007056b2 _HI_SEND
+00706f99 _SCC1_Init_AChl                  007056b3 _LOW_SEND
+00707e19 _SCC1_Init_BChl                  007056b4 _NUM_TX
+00700314 _SCC2_SendTo                     007056b5 _NUM_TX_DATA
+007002d3 _SCC_8530_Initial                007056b6 _glTest
+0070568c _SCC_INIT_ASYNC_9600BPS          007056b7 _nIsPattern
+00700365 _SCC_ISR                         007056b8 _gOneSec
+00700d56 _SCREEN_PRINT                    007056b9 _num
+00700e8b _SEND_DATA                       007056ba _numm
+007073b2 _SEND_DATA_BUFF                  007056bb _hnum
+00700cf8 _STATIC_LEFT_VIDEO_PRINT         007056bc _hnumm
+0070573b _STATIC_LEF_Posi                 007056bd _CH
+007056c7 _STATIC_Left_Dot_Video           007056be _CHH
+0070115b _STOP_DCC_COUNT                  007056bf _PAT_COLOR
+00705718 _STRT_DA_CHK                     007056c0 _Hex_Pri_T_F
+007056b1 _TX_DA_ENA_COUNT                 007056c1 _Pattren_inter_time
+00705739 _UP_DATA_LEN                     007056c2 _Hex_Pri_Tim
+00700c57 _UP_DOT_VIDEO_PIRNT              007056c3 _send_glDebugCnt
+0070573c _UP_Font_posi                    007056c4 _Dot_Video
+007056c5 _Up_Dot_Video                    007056c5 _Up_Dot_Video
+00700f55 _VER_PRINT                       007056c6 _Left_Dot_Video
+00004000 __STACK_SIZE                     007056c7 _STATIC_Left_Dot_Video
+00707de0 __glDebugAddr                    007056c8 _SCAN
+00707dcb __glDebugData                    007056d6 _Blink_Timer_Count
+00701587 __stack                          007056d7 _FRONT
+007000e1 _abort                           007056d8 _B_FRONT
+007000ce _atexit                          007056d9 _gScnIdx
+00705689 _cRc                             007056da _gScnPos
+00700001 _c_int00                         007056fa _NandFlashBuff_Cou
+00701177 _c_int02                         007056fb _NandFlasc_Ring
+00700120 _c_int06                         007056fc _stop_time
+007011ae _c_int09                         007056fd _DCC_T_C
+00701205 _c_int10                         007056fe _BLINK_DCC_T_C
+00700e6e _cal_CRC16                       007056ff _DCC
+00705719 _d_RxDataCnt                     0070570d _ESC
+007000c0 _exit                            00705712 _glDebugCnt
+00705716 _font_Len                        00705713 _RECEIVECnt
+007056af _gHexaSw                         00705716 _font_Len
+007056b8 _gOneSec                         00705717 _CHACK_DATA
+00705740 _gRxBuffer                       00705718 _STRT_DA_CHK
+00705687 _gRxComplete                     00705719 _d_RxDataCnt
+00706599 _gRxExcCode                      0070571a _sStimg_Time_Cnt
+0070568a _gRxPos                          0070571b _sSTImg_KE_Flag
+0070568b _gRxStTemp                       0070571c _sSTimg_Blk_Flag
+007056ae _gSccRxTimeout                   0070571d _sSTimg_Code
+007056d9 _gScnIdx                         0070571e _gpVersion
+007056da _gScnPos                         0070571f _Arrow_R
+00706198 _gTextBitLength                  00705729 _Arrow_L
+00705712 _glDebugCnt                      00705733 _ITEM
+007056b6 _glTest                          00705739 _UP_DATA_LEN
+0070571e _gpVersion                       0070573a _LEF_Font_posi
+007056bc _hnumm                           0070573b _STATIC_LEF_Posi
+007056bb _hnum                            0070573c _UP_Font_posi
+0070042c _main                            0070573d _Font_Save_posi
+007000e6 _memcpy                          0070573f _sStimg_Time_BlkCnt
+007000f8 _memset                          00705740 _gRxBuffer
+00706b99 _nBB                             00705998 _nImgStName
+007075cb _nBuff                           00706198 _gTextBitLength
+0070739e _nDataRLBuf                      00706199 _RING_DATA
+00705998 _nImgStName                      00706599 _gRxExcCode
+007056b7 _nIsPattern                      00706799 _Font_Data
+007056ba _numm                            00706b99 _nBB
+007056b9 _num                             00706f99 _SCC1_Init_AChl
+0070571b _sSTImg_KE_Flag                  0070739e _nDataRLBuf
+0070571c _sSTimg_Blk_Flag                 007073b2 _SEND_DATA_BUFF
+0070571d _sSTimg_Code                     007073cb _NandFlashBuff
+0070573f _sStimg_Time_BlkCnt              007075cb _nBuff
+0070571a _sStimg_Time_Cnt                 00707dcb __glDebugData
+007056c3 _send_glDebugCnt                 00707dcc _Compari_Arrow_L
+007056fc _stop_time                       00707dd6 _Compari_Arrow_R
+00700108 _strncmp                         00707de0 __glDebugAddr
+007012ce cinit                            00707de1 _REMEMBER_RING
+00700000 edata                            00707e13 _Compari_ITEM
+0070829d end                              00707e19 _SCC1_Init_BChl
+007012ce etext                            0070829d end
+
+[152 symbols]

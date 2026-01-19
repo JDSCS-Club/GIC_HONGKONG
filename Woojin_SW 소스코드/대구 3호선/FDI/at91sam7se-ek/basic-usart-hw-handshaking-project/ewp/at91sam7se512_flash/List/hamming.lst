@@ -1,0 +1,757 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.4.8167/W32 for ARM        02/Jul/2015  09:27:25
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\utility\hamming.c
+#    Command line =  
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\utility\hamming.c"
+#        -D at91sam7se512 -D flash -D TRACE_LEVEL=4 -lC
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\"
+#        --remarks --diag_suppress Pe826,Pe1375 -o
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\"
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little --cpu=ARM7TDMI
+#        -e --fpu=None --dlib_config "C:\Program Files\IAR Systems\Embedded
+#        Workbench 7.0\arm\INC\c\DLib_Config_Full.h" -I
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/peripherals\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/memories\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/components\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"
+#        --interwork --cpu_mode arm -On --use_c++_inline
+#    List file    =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\hamming.lst
+#    Object file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\hamming.o
+#
+###############################################################################
+
+F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\utility\hamming.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "hamming.h"
+     35          #include <utility/trace.h>
+     36          #include <utility/assert.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //         Internal function
+     40          //------------------------------------------------------------------------------
+     41          
+     42          //------------------------------------------------------------------------------
+     43          /// Counts and return the number of bits set to '1' in the given byte.
+     44          /// \param byte  Byte to count.
+     45          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     46          static unsigned char CountBitsInByte(unsigned char byte)
+     47          {
+   \                     CountBitsInByte:
+   \   00000000   0xE1B01000         MOVS     R1,R0
+     48              unsigned char count = 0;
+   \   00000004   0xE3A00000         MOV      R0,#+0
+     49              while (byte > 0) {
+   \                     ??CountBitsInByte_0:
+   \   00000008   0xE1B02001         MOVS     R2,R1
+   \   0000000C   0xE21220FF         ANDS     R2,R2,#0xFF      ;; Zero extend
+   \   00000010   0xE3520000         CMP      R2,#+0
+   \   00000014   0x0A000005         BEQ      ??CountBitsInByte_1
+     50          
+     51                  if (byte & 1) {
+   \   00000018   0xE3110001         TST      R1,#0x1
+   \   0000001C   0x0A000000         BEQ      ??CountBitsInByte_2
+     52          
+     53                      count++;
+   \   00000020   0xE2900001         ADDS     R0,R0,#+1
+     54                  }
+     55                  byte >>= 1;
+   \                     ??CountBitsInByte_2:
+   \   00000024   0xE21110FF         ANDS     R1,R1,#0xFF      ;; Zero extend
+   \   00000028   0xE1B010A1         LSRS     R1,R1,#+1
+   \   0000002C   0xEAFFFFF5         B        ??CountBitsInByte_0
+     56              }
+     57          
+     58              return count;
+   \                     ??CountBitsInByte_1:
+   \   00000030   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+     59          }
+     60          
+     61          //------------------------------------------------------------------------------
+     62          /// Counts and return the number of bits set to '1' in the given hamming code.
+     63          /// \param code  Hamming code.
+     64          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     65          static unsigned char CountBitsInCode256(unsigned char *code)
+     66          {
+   \                     CountBitsInCode256:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     67              return CountBitsInByte(code[0])
+     68                     + CountBitsInByte(code[1])
+     69                     + CountBitsInByte(code[2]);
+   \   00000008   0xE5D40000         LDRB     R0,[R4, #+0]
+   \   0000000C   0x........         BL       CountBitsInByte
+   \   00000010   0xE1B05000         MOVS     R5,R0
+   \   00000014   0xE5D40001         LDRB     R0,[R4, #+1]
+   \   00000018   0x........         BL       CountBitsInByte
+   \   0000001C   0xE0905005         ADDS     R5,R0,R5
+   \   00000020   0xE5D40002         LDRB     R0,[R4, #+2]
+   \   00000024   0x........         BL       CountBitsInByte
+   \   00000028   0xE0900005         ADDS     R0,R0,R5
+   \   0000002C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000030   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+     70          }
+     71          
+     72          //------------------------------------------------------------------------------
+     73          /// Calculates the 22-bit hamming code for a 256-bytes block of data.
+     74          /// \param data  Data buffer to calculate code for.
+     75          /// \param code  Pointer to a buffer where the code should be stored.
+     76          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     77          static void Compute256(const unsigned char *data, unsigned char *code)
+     78          {
+   \                     Compute256:
+   \   00000000   0xE92D4FF8         PUSH     {R3-R11,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+     79              unsigned int i;
+     80              unsigned char columnSum = 0;
+   \   0000000C   0xE3A07000         MOV      R7,#+0
+     81              unsigned char evenLineCode = 0;
+   \   00000010   0xE3A08000         MOV      R8,#+0
+     82              unsigned char oddLineCode = 0;
+   \   00000014   0xE3A09000         MOV      R9,#+0
+     83              unsigned char evenColumnCode = 0;
+   \   00000018   0xE3A0A000         MOV      R10,#+0
+     84              unsigned char oddColumnCode = 0;
+   \   0000001C   0xE3A0B000         MOV      R11,#+0
+     85          
+     86              // Xor all bytes together to get the column sum;
+     87              // At the same time, calculate the even and odd line codes
+     88              for (i=0; i < 256; i++) {
+   \   00000020   0xE3A00000         MOV      R0,#+0
+   \   00000024   0xE1B06000         MOVS     R6,R0
+   \                     ??Compute256_0:
+   \   00000028   0xE3560F40         CMP      R6,#+256
+   \   0000002C   0x2A00000C         BCS      ??Compute256_1
+     89          
+     90                  columnSum ^= data[i];
+   \   00000030   0xE7D60004         LDRB     R0,[R6, +R4]
+   \   00000034   0xE0307007         EORS     R7,R0,R7
+     91          
+     92                  // If the xor sum of the byte is 0, then this byte has no incidence on
+     93                  // the computed code; so check if the sum is 1.
+     94                  if ((CountBitsInByte(data[i]) & 1) == 1) {
+   \   00000038   0xE7D60004         LDRB     R0,[R6, +R4]
+   \   0000003C   0x........         BL       CountBitsInByte
+   \   00000040   0xE3100001         TST      R0,#0x1
+   \   00000044   0x0A000004         BEQ      ??Compute256_2
+     95          
+     96                      // Parity groups are formed by forcing a particular index bit to 0
+     97                      // (even) or 1 (odd).
+     98                      // Example on one byte:
+     99                      // 
+    100                      // bits (dec)  7   6   5   4   3   2   1   0    
+    101                      //      (bin) 111 110 101 100 011 010 001 000    
+    102                      //                            '---'---'---'----------.
+    103                      //                                                   |
+    104                      // groups P4' ooooooooooooooo eeeeeeeeeeeeeee P4     |
+    105                      //        P2' ooooooo eeeeeee ooooooo eeeeeee P2     |
+    106                      //        P1' ooo eee ooo eee ooo eee ooo eee P1     |
+    107                      //                                                   |
+    108                      // We can see that:                                  |
+    109                      //  - P4  -> bit 2 of index is 0 --------------------'
+    110                      //  - P4' -> bit 2 of index is 1.
+    111                      //  - P2  -> bit 1 of index if 0.
+    112                      //  - etc...
+    113                      // We deduce that a bit position has an impact on all even Px if
+    114                      // the log2(x)nth bit of its index is 0
+    115                      //     ex: log2(4) = 2, bit2 of the index must be 0 (-> 0 1 2 3)
+    116                      // and on all odd Px' if the log2(x)nth bit of its index is 1
+    117                      //     ex: log2(2) = 1, bit1 of the index must be 1 (-> 0 1 4 5)
+    118                      // 
+    119                      // As such, we calculate all the possible Px and Px' values at the
+    120                      // same time in two variables, evenLineCode and oddLineCode, such as
+    121                      //     evenLineCode bits: P128  P64  P32  P16  P8  P4  P2  P1
+    122                      //     oddLineCode  bits: P128' P64' P32' P16' P8' P4' P2' P1'
+    123                      // 
+    124                      evenLineCode ^= (255 - i);
+   \   00000048   0xE1B00006         MOVS     R0,R6
+   \   0000004C   0xE27000FF         RSBS     R0,R0,#+255
+   \   00000050   0xE0308008         EORS     R8,R0,R8
+    125                      oddLineCode ^= i;
+   \   00000054   0xE1B00006         MOVS     R0,R6
+   \   00000058   0xE0309009         EORS     R9,R0,R9
+    126                  }
+    127              }
+   \                     ??Compute256_2:
+   \   0000005C   0xE2966001         ADDS     R6,R6,#+1
+   \   00000060   0xEAFFFFF0         B        ??Compute256_0
+    128          
+    129              // At this point, we have the line parities, and the column sum. First, We
+    130              // must caculate the parity group values on the column sum.
+    131              for (i=0; i < 8; i++) {
+   \                     ??Compute256_1:
+   \   00000064   0xE3A00000         MOV      R0,#+0
+   \   00000068   0xE1B06000         MOVS     R6,R0
+   \                     ??Compute256_3:
+   \   0000006C   0xE3560008         CMP      R6,#+8
+   \   00000070   0x2A00000A         BCS      ??Compute256_4
+    132          
+    133                  if (columnSum & 1) {
+   \   00000074   0xE3170001         TST      R7,#0x1
+   \   00000078   0x0A000004         BEQ      ??Compute256_5
+    134          
+    135                      evenColumnCode ^= (7 - i);
+   \   0000007C   0xE1B00006         MOVS     R0,R6
+   \   00000080   0xE2700007         RSBS     R0,R0,#+7
+   \   00000084   0xE030A00A         EORS     R10,R0,R10
+    136                      oddColumnCode ^= i;
+   \   00000088   0xE1B00006         MOVS     R0,R6
+   \   0000008C   0xE030B00B         EORS     R11,R0,R11
+    137                  }
+    138                  columnSum >>= 1;
+   \                     ??Compute256_5:
+   \   00000090   0xE21770FF         ANDS     R7,R7,#0xFF      ;; Zero extend
+   \   00000094   0xE1B070A7         LSRS     R7,R7,#+1
+    139              }
+   \   00000098   0xE2966001         ADDS     R6,R6,#+1
+   \   0000009C   0xEAFFFFF2         B        ??Compute256_3
+    140          
+    141              // Now, we must interleave the parity values, to obtain the following layout:
+    142              // Code[0] = Line1
+    143              // Code[1] = Line2
+    144              // Code[2] = Column
+    145              // Line = Px' Px P(x-1)- P(x-1) ...
+    146              // Column = P4' P4 P2' P2 P1' P1 PadBit PadBit 
+    147              code[0] = 0;
+   \                     ??Compute256_4:
+   \   000000A0   0xE3A00000         MOV      R0,#+0
+   \   000000A4   0xE5C50000         STRB     R0,[R5, #+0]
+    148              code[1] = 0;
+   \   000000A8   0xE3A00000         MOV      R0,#+0
+   \   000000AC   0xE5C50001         STRB     R0,[R5, #+1]
+    149              code[2] = 0;
+   \   000000B0   0xE3A00000         MOV      R0,#+0
+   \   000000B4   0xE5C50002         STRB     R0,[R5, #+2]
+    150          
+    151              for (i=0; i < 4; i++) {
+   \   000000B8   0xE3A00000         MOV      R0,#+0
+   \   000000BC   0xE1B06000         MOVS     R6,R0
+   \                     ??Compute256_6:
+   \   000000C0   0xE3560004         CMP      R6,#+4
+   \   000000C4   0x2A00002C         BCS      ??Compute256_7
+    152          
+    153                  code[0] <<= 2;
+   \   000000C8   0xE5D50000         LDRB     R0,[R5, #+0]
+   \   000000CC   0xE1B00100         LSLS     R0,R0,#+2
+   \   000000D0   0xE5C50000         STRB     R0,[R5, #+0]
+    154                  code[1] <<= 2;
+   \   000000D4   0xE5D50001         LDRB     R0,[R5, #+1]
+   \   000000D8   0xE1B00100         LSLS     R0,R0,#+2
+   \   000000DC   0xE5C50001         STRB     R0,[R5, #+1]
+    155                  code[2] <<= 2;
+   \   000000E0   0xE5D50002         LDRB     R0,[R5, #+2]
+   \   000000E4   0xE1B00100         LSLS     R0,R0,#+2
+   \   000000E8   0xE5C50002         STRB     R0,[R5, #+2]
+    156          
+    157                  // Line 1
+    158                  if ((oddLineCode & 0x80) != 0) {
+   \   000000EC   0xE3190080         TST      R9,#0x80
+   \   000000F0   0x0A000002         BEQ      ??Compute256_8
+    159          
+    160                      code[0] |= 2;
+   \   000000F4   0xE5D50000         LDRB     R0,[R5, #+0]
+   \   000000F8   0xE3900002         ORRS     R0,R0,#0x2
+   \   000000FC   0xE5C50000         STRB     R0,[R5, #+0]
+    161                  }
+    162                  if ((evenLineCode & 0x80) != 0) {
+   \                     ??Compute256_8:
+   \   00000100   0xE3180080         TST      R8,#0x80
+   \   00000104   0x0A000002         BEQ      ??Compute256_9
+    163          
+    164                      code[0] |= 1;
+   \   00000108   0xE5D50000         LDRB     R0,[R5, #+0]
+   \   0000010C   0xE3900001         ORRS     R0,R0,#0x1
+   \   00000110   0xE5C50000         STRB     R0,[R5, #+0]
+    165                  }
+    166          
+    167                  // Line 2
+    168                  if ((oddLineCode & 0x08) != 0) {
+   \                     ??Compute256_9:
+   \   00000114   0xE3190008         TST      R9,#0x8
+   \   00000118   0x0A000002         BEQ      ??Compute256_10
+    169          
+    170                      code[1] |= 2;
+   \   0000011C   0xE5D50001         LDRB     R0,[R5, #+1]
+   \   00000120   0xE3900002         ORRS     R0,R0,#0x2
+   \   00000124   0xE5C50001         STRB     R0,[R5, #+1]
+    171                  }
+    172                  if ((evenLineCode & 0x08) != 0) {
+   \                     ??Compute256_10:
+   \   00000128   0xE3180008         TST      R8,#0x8
+   \   0000012C   0x0A000002         BEQ      ??Compute256_11
+    173          
+    174                      code[1] |= 1;
+   \   00000130   0xE5D50001         LDRB     R0,[R5, #+1]
+   \   00000134   0xE3900001         ORRS     R0,R0,#0x1
+   \   00000138   0xE5C50001         STRB     R0,[R5, #+1]
+    175                  }
+    176          
+    177                  // Column
+    178                  if ((oddColumnCode & 0x04) != 0) {
+   \                     ??Compute256_11:
+   \   0000013C   0xE31B0004         TST      R11,#0x4
+   \   00000140   0x0A000002         BEQ      ??Compute256_12
+    179          
+    180                      code[2] |= 2;
+   \   00000144   0xE5D50002         LDRB     R0,[R5, #+2]
+   \   00000148   0xE3900002         ORRS     R0,R0,#0x2
+   \   0000014C   0xE5C50002         STRB     R0,[R5, #+2]
+    181                  }
+    182                  if ((evenColumnCode & 0x04) != 0) {
+   \                     ??Compute256_12:
+   \   00000150   0xE31A0004         TST      R10,#0x4
+   \   00000154   0x0A000002         BEQ      ??Compute256_13
+    183          
+    184                      code[2] |= 1;
+   \   00000158   0xE5D50002         LDRB     R0,[R5, #+2]
+   \   0000015C   0xE3900001         ORRS     R0,R0,#0x1
+   \   00000160   0xE5C50002         STRB     R0,[R5, #+2]
+    185                  }
+    186          
+    187                  oddLineCode <<= 1;
+   \                     ??Compute256_13:
+   \   00000164   0xE1B09089         LSLS     R9,R9,#+1
+    188                  evenLineCode <<= 1;
+   \   00000168   0xE1B08088         LSLS     R8,R8,#+1
+    189                  oddColumnCode <<= 1;
+   \   0000016C   0xE1B0B08B         LSLS     R11,R11,#+1
+    190                  evenColumnCode <<= 1;
+   \   00000170   0xE1B0A08A         LSLS     R10,R10,#+1
+    191              }
+   \   00000174   0xE2966001         ADDS     R6,R6,#+1
+   \   00000178   0xEAFFFFD0         B        ??Compute256_6
+    192          
+    193              // Invert codes (linux compatibility)
+    194              code[0] = ~code[0];
+                               ^
+Remark[Pa091]: operator operates on value promoted to int (with possibly
+          unexpected result)
+   \                     ??Compute256_7:
+   \   0000017C   0xE5D50000         LDRB     R0,[R5, #+0]
+   \   00000180   0xE1F00000         MVNS     R0,R0
+   \   00000184   0xE5C50000         STRB     R0,[R5, #+0]
+    195              code[1] = ~code[1];
+                               ^
+Remark[Pa091]: operator operates on value promoted to int (with possibly
+          unexpected result)
+   \   00000188   0xE5D50001         LDRB     R0,[R5, #+1]
+   \   0000018C   0xE1F00000         MVNS     R0,R0
+   \   00000190   0xE5C50001         STRB     R0,[R5, #+1]
+    196              code[2] = ~code[2];
+                               ^
+Remark[Pa091]: operator operates on value promoted to int (with possibly
+          unexpected result)
+   \   00000194   0xE5D50002         LDRB     R0,[R5, #+2]
+   \   00000198   0xE1F00000         MVNS     R0,R0
+   \   0000019C   0xE5C50002         STRB     R0,[R5, #+2]
+    197          
+    198              TRACE_DEBUG("Computed code = %02X %02X %02X\n\r",
+    199                        code[0], code[1], code[2]);
+    200          }
+   \   000001A0   0xE8BD4FF1         POP      {R0,R4-R11,LR}
+   \   000001A4   0xE12FFF1E         BX       LR               ;; return
+    201          
+    202          //------------------------------------------------------------------------------
+    203          /// Verifies and corrects a 256-bytes block of data using the given 22-bits
+    204          /// hamming code.
+    205          /// Returns 0 if there is no error, otherwise returns a HAMMING_ERROR code.
+    206          /// \param data  Data buffer to check.
+    207          /// \param originalCode  Hamming code to use for verifying the data.
+    208          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    209          static unsigned char Verify256(
+    210              unsigned char *data,
+    211              const unsigned char *originalCode)
+    212          {
+   \                     Verify256:
+   \   00000000   0xE92D4030         PUSH     {R4,R5,LR}
+   \   00000004   0xE24DD00C         SUB      SP,SP,#+12
+   \   00000008   0xE1B04000         MOVS     R4,R0
+   \   0000000C   0xE1B05001         MOVS     R5,R1
+    213              // Calculate new code
+    214              unsigned char computedCode[3];
+    215              unsigned char correctionCode[3];
+    216              Compute256(data, computedCode);
+   \   00000010   0xE28D1004         ADD      R1,SP,#+4
+   \   00000014   0xE1B00004         MOVS     R0,R4
+   \   00000018   0x........         BL       Compute256
+    217          
+    218              // Xor both codes together
+    219              correctionCode[0] = computedCode[0] ^ originalCode[0];
+   \   0000001C   0xE5DD0004         LDRB     R0,[SP, #+4]
+   \   00000020   0xE5D51000         LDRB     R1,[R5, #+0]
+   \   00000024   0xE0310000         EORS     R0,R1,R0
+   \   00000028   0xE5CD0000         STRB     R0,[SP, #+0]
+    220              correctionCode[1] = computedCode[1] ^ originalCode[1];
+   \   0000002C   0xE5DD0005         LDRB     R0,[SP, #+5]
+   \   00000030   0xE5D51001         LDRB     R1,[R5, #+1]
+   \   00000034   0xE0310000         EORS     R0,R1,R0
+   \   00000038   0xE5CD0001         STRB     R0,[SP, #+1]
+    221              correctionCode[2] = computedCode[2] ^ originalCode[2];
+   \   0000003C   0xE5DD0006         LDRB     R0,[SP, #+6]
+   \   00000040   0xE5D51002         LDRB     R1,[R5, #+2]
+   \   00000044   0xE0310000         EORS     R0,R1,R0
+   \   00000048   0xE5CD0002         STRB     R0,[SP, #+2]
+    222          
+    223              TRACE_DEBUG("Correction code = %02X %02X %02X\n\r",
+    224                        correctionCode[0], correctionCode[1], correctionCode[2]);
+    225          
+    226              // If all bytes are 0, there is no error
+    227              if ((correctionCode[0] == 0)
+    228                  && (correctionCode[1] == 0)
+    229                  && (correctionCode[2] == 0)) {
+   \   0000004C   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   00000050   0xE3500000         CMP      R0,#+0
+   \   00000054   0x1A000007         BNE      ??Verify256_0
+   \   00000058   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   0000005C   0xE3500000         CMP      R0,#+0
+   \   00000060   0x1A000004         BNE      ??Verify256_0
+   \   00000064   0xE5DD0002         LDRB     R0,[SP, #+2]
+   \   00000068   0xE3500000         CMP      R0,#+0
+   \   0000006C   0x1A000001         BNE      ??Verify256_0
+    230          
+    231                  return 0;
+   \   00000070   0xE3A00000         MOV      R0,#+0
+   \   00000074   0xEA000045         B        ??Verify256_1
+    232              }
+    233              // If there is a single bit error, there are 11 bits set to 1
+    234              if (CountBitsInCode256(correctionCode) == 11) {
+   \                     ??Verify256_0:
+   \   00000078   0xE1B0000D         MOVS     R0,SP
+   \   0000007C   0x........         BL       CountBitsInCode256
+   \   00000080   0xE350000B         CMP      R0,#+11
+   \   00000084   0x1A00003A         BNE      ??Verify256_2
+    235          
+    236                  // Get byte and bit indexes
+    237                  unsigned char byte = correctionCode[0] & 0x80;
+   \   00000088   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   0000008C   0xE2101080         ANDS     R1,R0,#0x80
+    238                  byte |= (correctionCode[0] << 1) & 0x40;
+   \   00000090   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   00000094   0xE3A02040         MOV      R2,#+64
+   \   00000098   0xE0120080         ANDS     R0,R2,R0, LSL #+1
+   \   0000009C   0xE1901001         ORRS     R1,R0,R1
+    239                  byte |= (correctionCode[0] << 2) & 0x20;
+   \   000000A0   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   000000A4   0xE3A02020         MOV      R2,#+32
+   \   000000A8   0xE0120100         ANDS     R0,R2,R0, LSL #+2
+   \   000000AC   0xE1901001         ORRS     R1,R0,R1
+    240                  byte |= (correctionCode[0] << 3) & 0x10;
+   \   000000B0   0xE5DD0000         LDRB     R0,[SP, #+0]
+   \   000000B4   0xE3A02010         MOV      R2,#+16
+   \   000000B8   0xE0120180         ANDS     R0,R2,R0, LSL #+3
+   \   000000BC   0xE1901001         ORRS     R1,R0,R1
+    241          
+    242                  byte |= (correctionCode[1] >> 4) & 0x08;
+   \   000000C0   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   000000C4   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000C8   0xE3A02008         MOV      R2,#+8
+   \   000000CC   0xE0120220         ANDS     R0,R2,R0, LSR #+4
+   \   000000D0   0xE1901001         ORRS     R1,R0,R1
+    243                  byte |= (correctionCode[1] >> 3) & 0x04;
+   \   000000D4   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   000000D8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000DC   0xE3A02004         MOV      R2,#+4
+   \   000000E0   0xE01201A0         ANDS     R0,R2,R0, LSR #+3
+   \   000000E4   0xE1901001         ORRS     R1,R0,R1
+    244                  byte |= (correctionCode[1] >> 2) & 0x02;
+   \   000000E8   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   000000EC   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000F0   0xE3A02002         MOV      R2,#+2
+   \   000000F4   0xE0120120         ANDS     R0,R2,R0, LSR #+2
+   \   000000F8   0xE1901001         ORRS     R1,R0,R1
+    245                  byte |= (correctionCode[1] >> 1) & 0x01;
+   \   000000FC   0xE5DD0001         LDRB     R0,[SP, #+1]
+   \   00000100   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000104   0xE3A02001         MOV      R2,#+1
+   \   00000108   0xE01200A0         ANDS     R0,R2,R0, LSR #+1
+   \   0000010C   0xE1901001         ORRS     R1,R0,R1
+    246          
+    247                  unsigned char bit = (correctionCode[2] >> 5) & 0x04;
+   \   00000110   0xE5DD0002         LDRB     R0,[SP, #+2]
+   \   00000114   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000118   0xE3A02004         MOV      R2,#+4
+   \   0000011C   0xE01222A0         ANDS     R2,R2,R0, LSR #+5
+    248                  bit |= (correctionCode[2] >> 4) & 0x02;
+   \   00000120   0xE5DD0002         LDRB     R0,[SP, #+2]
+   \   00000124   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000128   0xE3A03002         MOV      R3,#+2
+   \   0000012C   0xE0130220         ANDS     R0,R3,R0, LSR #+4
+   \   00000130   0xE1902002         ORRS     R2,R0,R2
+    249                  bit |= (correctionCode[2] >> 3) & 0x01;
+   \   00000134   0xE5DD0002         LDRB     R0,[SP, #+2]
+   \   00000138   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000013C   0xE3A03001         MOV      R3,#+1
+   \   00000140   0xE01301A0         ANDS     R0,R3,R0, LSR #+3
+   \   00000144   0xE1902002         ORRS     R2,R0,R2
+    250          
+    251                  // Correct bit
+    252                  TRACE_DEBUG("Correcting byte #%d at bit %d\n\r", byte, bit);
+    253                  data[byte] ^= (1 << bit);
+   \   00000148   0xE1B00001         MOVS     R0,R1
+   \   0000014C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000150   0xE7D00004         LDRB     R0,[R0, +R4]
+   \   00000154   0xE3A03001         MOV      R3,#+1
+   \   00000158   0xE1B03213         LSLS     R3,R3,R2
+   \   0000015C   0xE0330000         EORS     R0,R3,R0
+   \   00000160   0xE1B03001         MOVS     R3,R1
+   \   00000164   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000168   0xE7C30004         STRB     R0,[R3, +R4]
+    254          
+    255                  return Hamming_ERROR_SINGLEBIT;
+   \   0000016C   0xE3A00001         MOV      R0,#+1
+   \   00000170   0xEA000006         B        ??Verify256_1
+    256              }
+    257              // Check if ECC has been corrupted
+    258              if (CountBitsInCode256(correctionCode) == 1) {
+   \                     ??Verify256_2:
+   \   00000174   0xE1B0000D         MOVS     R0,SP
+   \   00000178   0x........         BL       CountBitsInCode256
+   \   0000017C   0xE3500001         CMP      R0,#+1
+   \   00000180   0x1A000001         BNE      ??Verify256_3
+    259          
+    260                  return Hamming_ERROR_ECC;
+   \   00000184   0xE3A00002         MOV      R0,#+2
+   \   00000188   0xEA000000         B        ??Verify256_1
+    261              }
+    262              // Otherwise, this is a multi-bit error
+    263              else {
+    264          
+    265                  return Hamming_ERROR_MULTIPLEBITS;
+   \                     ??Verify256_3:
+   \   0000018C   0xE3A00003         MOV      R0,#+3
+   \                     ??Verify256_1:
+   \   00000190   0xE8BD403E         POP      {R1-R5,LR}
+   \   00000194   0xE12FFF1E         BX       LR               ;; return
+    266              }
+    267          }
+    268          
+    269          //------------------------------------------------------------------------------
+    270          //         Exported functions
+    271          //------------------------------------------------------------------------------
+    272          
+    273          //------------------------------------------------------------------------------
+    274          /// Computes 3-bytes hamming codes for a data block whose size is multiple of
+    275          /// 256 bytes. Each 256 bytes block gets its own code.
+    276          /// \param data  Data to compute code for.
+    277          /// \param size  Data size in bytes.
+    278          /// \param code  Codes buffer.
+    279          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    280          void Hamming_Compute256x(
+    281              const unsigned char *data,
+    282              unsigned int size,
+    283              unsigned char *code)
+    284          {
+   \                     Hamming_Compute256x:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0xE1B06002         MOVS     R6,R2
+    285              TRACE_DEBUG("Hamming_Compute256x()\n\r");
+    286          
+    287              while (size > 0) {
+   \                     ??Hamming_Compute256x_0:
+   \   00000010   0xE3550000         CMP      R5,#+0
+   \   00000014   0x0A000007         BEQ      ??Hamming_Compute256x_1
+    288          
+    289                  Compute256(data, code);
+   \   00000018   0xE1B01006         MOVS     R1,R6
+   \   0000001C   0xE1B00004         MOVS     R0,R4
+   \   00000020   0x........         BL       Compute256
+    290                  data += 256;
+   \   00000024   0xE2944F40         ADDS     R4,R4,#+256
+    291                  code += 3;
+   \   00000028   0xE2966003         ADDS     R6,R6,#+3
+    292                  size -= 256;
+   \   0000002C   0xE3E000FF         MVN      R0,#+255
+   \   00000030   0xE0905005         ADDS     R5,R0,R5
+   \   00000034   0xEAFFFFF5         B        ??Hamming_Compute256x_0
+    293              }
+    294          }
+   \                     ??Hamming_Compute256x_1:
+   \   00000038   0xE8BD4070         POP      {R4-R6,LR}
+   \   0000003C   0xE12FFF1E         BX       LR               ;; return
+    295          
+    296          //------------------------------------------------------------------------------
+    297          /// Verifies 3-bytes hamming codes for a data block whose size is multiple of
+    298          /// 256 bytes. Each 256-bytes block is verified with its own code.
+    299          /// Returns 0 if the data is correct, Hamming_ERROR_SINGLEBIT if one or more
+    300          /// block(s) have had a single bit corrected, or either Hamming_ERROR_ECC
+    301          /// or Hamming_ERROR_MULTIPLEBITS.
+    302          /// \param data  Data buffer to verify.
+    303          /// \param size  Size of the data in bytes.
+    304          /// \param code  Original codes.
+    305          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    306          unsigned char Hamming_Verify256x(
+    307              unsigned char *data,
+    308              unsigned int size,
+    309              const unsigned char *code)
+    310          {
+   \                     Hamming_Verify256x:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE1B07000         MOVS     R7,R0
+   \   00000008   0xE1B04001         MOVS     R4,R1
+   \   0000000C   0xE1B08002         MOVS     R8,R2
+    311              unsigned char error;
+    312              unsigned char result = 0;
+   \   00000010   0xE3A05000         MOV      R5,#+0
+    313          
+    314              TRACE_DEBUG("Hamming_Verify256x()\n\r");
+    315          
+    316              while (size > 0) {
+   \                     ??Hamming_Verify256x_0:
+   \   00000014   0xE3540000         CMP      R4,#+0
+   \   00000018   0x0A000016         BEQ      ??Hamming_Verify256x_1
+    317          
+    318                  error = Verify256(data, code);
+   \   0000001C   0xE1B01008         MOVS     R1,R8
+   \   00000020   0xE1B00007         MOVS     R0,R7
+   \   00000024   0x........         BL       Verify256
+   \   00000028   0xE1B06000         MOVS     R6,R0
+    319                  if (error == Hamming_ERROR_SINGLEBIT) {
+   \   0000002C   0xE1B00006         MOVS     R0,R6
+   \   00000030   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000034   0xE3500001         CMP      R0,#+1
+   \   00000038   0x1A000002         BNE      ??Hamming_Verify256x_2
+    320          
+    321                      result = Hamming_ERROR_SINGLEBIT;
+   \   0000003C   0xE3A00001         MOV      R0,#+1
+   \   00000040   0xE1B05000         MOVS     R5,R0
+   \   00000044   0xEA000006         B        ??Hamming_Verify256x_3
+    322                  }
+    323                  else if (error) {
+   \                     ??Hamming_Verify256x_2:
+   \   00000048   0xE1B00006         MOVS     R0,R6
+   \   0000004C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000050   0xE3500000         CMP      R0,#+0
+   \   00000054   0x0A000002         BEQ      ??Hamming_Verify256x_3
+    324          
+    325                      return error;
+   \   00000058   0xE1B00006         MOVS     R0,R6
+   \   0000005C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000060   0xEA000006         B        ??Hamming_Verify256x_4
+    326                  }
+    327          
+    328                  data += 256;
+   \                     ??Hamming_Verify256x_3:
+   \   00000064   0xE2977F40         ADDS     R7,R7,#+256
+    329                  code += 3;
+   \   00000068   0xE2988003         ADDS     R8,R8,#+3
+    330                  size -= 256;
+   \   0000006C   0xE3E000FF         MVN      R0,#+255
+   \   00000070   0xE0904004         ADDS     R4,R0,R4
+   \   00000074   0xEAFFFFE6         B        ??Hamming_Verify256x_0
+    331              }
+    332          
+    333              return result;
+   \                     ??Hamming_Verify256x_1:
+   \   00000078   0xE1B00005         MOVS     R0,R5
+   \   0000007C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \                     ??Hamming_Verify256x_4:
+   \   00000080   0xE8BD41F0         POP      {R4-R8,LR}
+   \   00000084   0xE12FFF1E         BX       LR               ;; return
+    334          }
+    335          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      40   Compute256
+        40   -> CountBitsInByte
+       0   CountBitsInByte
+      16   CountBitsInCode256
+        16   -> CountBitsInByte
+      16   Hamming_Compute256x
+        16   -> Compute256
+      24   Hamming_Verify256x
+        24   -> Verify256
+      24   Verify256
+        24   -> Compute256
+        24   -> CountBitsInCode256
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     424  Compute256
+      56  CountBitsInByte
+      56  CountBitsInCode256
+      64  Hamming_Compute256x
+     136  Hamming_Verify256x
+     408  Verify256
+
+ 
+ 1 144 bytes in section .text
+ 
+ 1 144 bytes of CODE memory
+
+Errors: none
+Warnings: none

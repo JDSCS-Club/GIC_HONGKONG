@@ -1,0 +1,22 @@
+[simple.c]
+TMS320C3x/4x ANSI C Compiler            Version 5.11
+Copyright (c) 1987-1999 Texas Instruments Incorporated
+   "simple.c"   ==> main
+   "simple.c"   ==> c_int06
+   "simple.c"   ==> DSP_INIT
+TMS320C3x/4x ANSI C Code Generator      Version 5.11
+Copyright (c) 1987-1999 Texas Instruments Incorporated
+   "simple.c"   ==> main
+   "simple.c"   ==> c_int06
+   "simple.c"   ==> DSP_INIT
+C Source Interlister                    Version 5.11
+Copyright (c) 1987-1999 Texas Instruments Incorporated
+   ""  ==> main
+   "simple.c"  ==> c_int06
+   "simple.c"  ==> DSP_INIT
+TMS320C3x/4x COFF Assembler             Version 5.11
+Copyright (c) 1987-1999 Texas Instruments Incorporated
+ PASS 1
+ PASS 2
+
+ No Errors,  No Warnings

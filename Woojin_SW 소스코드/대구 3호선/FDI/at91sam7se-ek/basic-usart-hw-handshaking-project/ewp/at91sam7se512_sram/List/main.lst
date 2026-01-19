@@ -1,0 +1,2090 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     06/May/2013  13:29:28 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\main.c                                               #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\main.c" -D at91sam7se512 -D sram -D TRACE_LEVEL=4    #
+#                    -lC "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구     #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\main.lst                 #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\main.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          /// \dir "Basic USART Hardware Handshaking Project"
+     32          ///
+     33          /// !!!Purpose
+     34          ///
+     35          /// This example demonstrates the hardware handshaking mode (i.e. RTS/CTS)
+     36          /// provided by the USART peripherals on AT91 microcontrollers. The practical
+     37          /// use of hardware handshaking is that it allows to stop transfer on the USART
+     38          /// without losing any data in the process. This is very useful for applications
+     39          /// that need to program slow memories for example.
+     40          ///
+     41          /// !!!Requirements
+     42          ///
+     43          /// This example can be used on any AT91 evaluation kit, except when they do
+     44          /// not provide an USART serial port (i.e. on AT91SAM9261-EK, AT91SAM7L-EK and
+     45          /// AT91SAM7L-STK).
+     46          ///
+     47          /// !!!Description
+     48          ///
+     49          /// The provided program uses hardware handshaking mode to regulate the data
+     50          /// rate of an incoming file transfer. A terminal application, such as
+     51          /// hyperterminal, is used to send a text file to the device (without any
+     52          /// protocol such as X-modem). The device will enforce the configured
+     53          /// bytes per second (bps) rate with its Request To Send (RTS) line.
+     54          ///
+     55          /// Whenever the data rate meet or exceed the configurable threshold, the device
+     56          /// stops receiving data on the USART. Since no buffer is provided to the PDC,
+     57          /// this will set the RTS line, telling the computer to stop sending data. Each
+     58          /// second, the current data rate and total number of bytes received are
+     59          /// displayed; the transfer is also restarted.
+     60          ///
+     61          /// Note that the device may receive slightly less bytes than the actual file
+     62          /// size, depending on the nature of the file. This does NOT mean that bytes
+     63          /// have been lost: this is simply an issue with how line breaks are transmitted
+     64          /// by the terminal. It is therefore better to use binary files, as they most
+     65          /// often do not contain line breaks. For example, send one of the object files
+     66          /// generated by the compiler.
+     67          ///
+     68          /// !!!Usage
+     69          ///
+     70          /// -# Build the program and download it inside the evaluation board. Please
+     71          ///    refer to the <a href="http://www.atmel.com/dyn/resources/prod_documents/doc6224.pdf">SAM-BA User Guide</a>,
+     72          ///    the <a href="http://www.atmel.com/dyn/resources/prod_documents/doc6310.pdf">GNU-Based Software Development</a>
+     73          ///    application note or to the <a href="ftp://ftp.iar.se/WWWfiles/arm/Guides/EWARM_UserGuide.ENU.pdf">IAR EWARM User Guide</a>,
+     74          ///    depending on your chosen solution.
+     75          /// -# Connect a serial cable to the USART0 port on the evaluation kit. It will
+     76          ///    most often be labeled "RS232 COM port".
+     77          /// -# On the computer, open and configure a terminal application (e.g.
+     78          ///    HyperTerminal on Microsoft Windows) with these settings:
+     79          ///       - 115200 bauds
+     80          ///       - 8 data bits
+     81          ///       - No parity
+     82          ///       - 1 stop bit
+     83          ///       - Hardware flow control (RTS/CTS)
+     84          /// -# Start the application. The following traces shall appear on the terminal:
+     85          ///    \code
+     86          ///    -- Basic USART Hardware Handshaking Project xxx --
+     87          ///    -- AT91xxxxxx-xx
+     88          ///    -- Compiled: xxx xx xxxx xx:xx:xx --
+     89          ///    Bps:    0; Tot:      0
+     90          ///    \endcode
+     91          /// -# Send a file in text format to the device. On HyperTerminal, this is done
+     92          ///    by selecting "Transfer -> Send Text File" (this does not prevent you from
+     93          ///    sending binary files). The transfer will start and the device will update
+     94          ///    the bps and total counts on the terminal.
+     95          /// -# Whenever the transfer is complete, the total number of bytes received
+     96          ///    should match the size of the sent file (unless it is a text file, see
+     97          ///    explanation in description section).
+     98          //------------------------------------------------------------------------------
+     99          
+    100          //------------------------------------------------------------------------------
+    101          //         Headers
+    102          //------------------------------------------------------------------------------
+    103          
+    104          #include <board.h>
+    105          #include <pio/pio.h>
+    106          #include <usart/usart.h>
+    107          #include <tc/tc.h>
+    108          #include <aic/aic.h>
+    109          #include <pmc/pmc.h>
+    110          #include <utility/trace.h>
+    111          #include <pit/pit.h>
+    112          #include <utility/math.h>
+    113          #include <board_memories.h>
+    114          #include <utility/assert.h>
+    115          #include <memories/norflash/NorFlashCFI.h>
+    116          #include <memories/norflash/NorFlashApi.h>
+    117          #include <memories/spi-flash/at26.h>
+    118          
+    119          #include <spi/spi.h>
+    120          
+    121          
+    122          #include <stdio.h>
+    123          
+    124          #include "UART.h"
+
+  #endif
+        ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.h",27  Remark[Pe001]: 
+          last line of file ends without a newline
+
+  #endif
+        ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\UART.h",41  Remark[Pe001]: 
+          last line of file ends without a newline
+    125          #include "main.h"
+    126          #include "NorFlash.h"
+
+   \                                 In section .text, align 4, keep-with-next
+   \   __interwork __softfp void NorFlashAllErase()
+   \                     NorFlashAllErase:
+   \   00000000   0xE3A00251         MOV      R0,#+268435461
+   \   00000004   0xE3800E55         ORR      R0,R0,#0x550
+   \   00000008   0xE3A010AA         MOV      R1,#+170
+   \   0000000C   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000010   0xE3A002A1         MOV      R0,#+268435466
+   \   00000014   0xE3800FA8         ORR      R0,R0,#0x2A0
+   \   00000018   0xE3A01055         MOV      R1,#+85
+   \   0000001C   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000020   0xE3A00251         MOV      R0,#+268435461
+   \   00000024   0xE3800E55         ORR      R0,R0,#0x550
+   \   00000028   0xE3A01080         MOV      R1,#+128
+   \   0000002C   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000030   0xE3A010AA         MOV      R1,#+170
+   \   00000034   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000038   0xE3A002A1         MOV      R0,#+268435466
+   \   0000003C   0xE3800FA8         ORR      R0,R0,#0x2A0
+   \   00000040   0xE3A01055         MOV      R1,#+85
+   \   00000044   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000048   0xE3A00251         MOV      R0,#+268435461
+   \   0000004C   0xE3800E55         ORR      R0,R0,#0x550
+   \   00000050   0xE3A01010         MOV      R1,#+16
+   \   00000054   0xE5C01000         STRB     R1,[R0, #+0]
+   \   00000058   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \   __interwork __softfp int NorFlashBlockErase(DWORD)
+   \                     NorFlashBlockErase:
+   \   00000000   0xE3A01251         MOV      R1,#+268435461
+   \   00000004   0xE3811E55         ORR      R1,R1,#0x550
+   \   00000008   0xE3A020AA         MOV      R2,#+170
+   \   0000000C   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000010   0xE3A012A1         MOV      R1,#+268435466
+   \   00000014   0xE3811FA8         ORR      R1,R1,#0x2A0
+   \   00000018   0xE3A02055         MOV      R2,#+85
+   \   0000001C   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000020   0xE3A01251         MOV      R1,#+268435461
+   \   00000024   0xE3811E55         ORR      R1,R1,#0x550
+   \   00000028   0xE3A02080         MOV      R2,#+128
+   \   0000002C   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000030   0xE3A020AA         MOV      R2,#+170
+   \   00000034   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000038   0xE3A012A1         MOV      R1,#+268435466
+   \   0000003C   0xE3811FA8         ORR      R1,R1,#0x2A0
+   \   00000040   0xE3A02055         MOV      R2,#+85
+   \   00000044   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000048   0xE3A01540         MOV      R1,#+268435456
+   \   0000004C   0xE3A02030         MOV      R2,#+48
+   \   00000050   0xE7C12800         STRB     R2,[R1, +R0, LSL #+16]
+   \   00000054   0xE3A00001         MOV      R0,#+1
+   \   00000058   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \   __interwork __softfp void NorFlashWrite(DWORD, UCHAR)
+   \                     NorFlashWrite:
+   \   00000000   0xE3A02251         MOV      R2,#+268435461
+   \   00000004   0xE3822E55         ORR      R2,R2,#0x550
+   \   00000008   0xE3A030AA         MOV      R3,#+170
+   \   0000000C   0xE5C23000         STRB     R3,[R2, #+0]
+   \   00000010   0xE3A022A1         MOV      R2,#+268435466
+   \   00000014   0xE3822FA8         ORR      R2,R2,#0x2A0
+   \   00000018   0xE3A03055         MOV      R3,#+85
+   \   0000001C   0xE5C23000         STRB     R3,[R2, #+0]
+   \   00000020   0xE3A02251         MOV      R2,#+268435461
+   \   00000024   0xE3822E55         ORR      R2,R2,#0x550
+   \   00000028   0xE3A030A0         MOV      R3,#+160
+   \   0000002C   0xE5C23000         STRB     R3,[R2, #+0]
+   \   00000030   0xE2802540         ADD      R2,R0,#+268435456
+   \   00000034   0xE5C21000         STRB     R1,[R2, #+0]
+   \                     ??NorFlashWrite_0:
+   \   00000038   0xE2802540         ADD      R2,R0,#+268435456
+   \   0000003C   0xE5D22000         LDRB     R2,[R2, #+0]
+   \   00000040   0xE1520001         CMP      R2,R1
+   \   00000044   0x1AFFFFFB         BNE      ??NorFlashWrite_0
+   \   00000048   0xE12FFF1E         BX       LR               ;; return
+    127          
+    128          #include "SPI_FUN.h"
+
+  #endif
+        ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\SPI_FUN.h",18  Remark[Pe001]: 
+          last line of file ends without a newline
+    129          
+    130          
+    131          
+    132          //------------------------------------------------------------------------------
+    133          //         Local variables - nandflash memory 변수 
+    134          //------------------------------------------------------------------------------
+    135          
+    136          /// Norflash device structure.
+
+   \                                 In section .bss, align 4
+    137          static struct NorFlash norFlash;
+   \                     norFlash:
+   \   00000000                      DS8 104
+    138          
+    139          //------------------------------------------------------------------------------
+    140          //         Local definition
+    141          //------------------------------------------------------------------------------
+    142          
+    143          #ifndef AT91C_ID_TC0
+    144          #if defined(AT91C_ID_TC012)
+    145              #define AT91C_ID_TC0 AT91C_ID_TC012
+    146          #elif defined(AT91C_ID_TC)
+    147              #define AT91C_ID_TC0 AT91C_ID_TC
+    148          #else
+    149              #error Pb define ID_TC
+    150          #endif
+    151          #endif
+    152          
+    153          /// Maximum Bytes Per Second (BPS) rate that will be forced using the CTS pin.
+    154          #define MAX_BPS             550
+    155          
+    156          /// Size of the receive buffer used by the PDC, in bytes.
+    157          #define BUFFER_SIZE         1
+    158          
+    159          /// PIT period value (useconds)
+    160          #define PIT_PERIOD        1000
+    161          /// Delay for pushbutton debouncing (ms)
+    162          #define DEBOUNCE_TIME       10
+    163          
+    164          
+    165          // Pio HexSwitch Read 
+    166          #define HEX_SW_ADD1_1 {1 << 19, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    167          #define HEX_SW_ADD1_2 {1 << 20, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    168          #define HEX_SW_ADD1_3 {1 << 21, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    169          #define HEX_SW_ADD1_4 {1 << 22, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    170          
+    171          #define HEX_SW_ADD2_1 {1 << 28, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    172          #define HEX_SW_ADD2_2 {1 << 29, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    173          #define HEX_SW_ADD2_3 {1 << 30, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    174          #define HEX_SW_ADD2_4 {1 << 31, AT91C_BASE_PIOB, AT91C_ID_PIOB, PIO_INPUT, PIO_DEFAULT}
+    175          
+    176          #define ARM_RUN_LED_OUT {1 << 3, AT91C_BASE_PIOA, AT91C_ID_PIOA, PIO_OUTPUT_0,PIO_DEFAULT}
+    177          
+    178          
+    179          #define BUFFER_ADDRESS (AT91C_EBI_SDRAM)
+    180          
+    181          extern  At26 at26;
+    182          //------------------------------------------------------------------------------
+    183          //         Local variables
+    184          //------------------------------------------------------------------------------
+    185          
+    186          /// Pins to configure for the application.
+
+   \                                 In section .rodata, align 4
+    187          const Pin pins[] = {
+   \                     pins:
+   \   00000000   0x00000600         DC32 1536, 0FFFFF400H
+   \              0xFFFFF400   
+   \   00000008   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \   0000000C   0x00000020         DC32 32, 0FFFFF400H
+   \              0xFFFFF400   
+   \   00000014   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \   00000018   0x00000040         DC32 64, 0FFFFF400H
+   \              0xFFFFF400   
+   \   00000020   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \   00000024   0x00000100         DC32 256, 0FFFFF400H
+   \              0xFFFFF400   
+   \   0000002C   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \   00000030   0x00000080         DC32 128, 0FFFFF400H
+   \              0xFFFFF400   
+   \   00000038   0x02 0x00          DC8 2, 0, 0, 0
+   \              0x00 0x00    
+   \   0000003C   0x00080000         DC32 524288, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000044   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000048   0x00100000         DC32 1048576, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000050   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000054   0x00200000         DC32 2097152, 0FFFFF600H
+   \              0xFFFFF600   
+   \   0000005C   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000060   0x00400000         DC32 4194304, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000068   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   0000006C   0x10000000         DC32 268435456, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000074   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000078   0x20000000         DC32 536870912, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000080   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000084   0x40000000         DC32 1073741824, 0FFFFF600H
+   \              0xFFFFF600   
+   \   0000008C   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   00000090   0x80000000         DC32 2147483648, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000098   0x03 0x02          DC8 3, 2, 0, 0
+   \              0x00 0x00    
+   \   0000009C   0xC0000000         DC32 3221225472, 0FFFFF400H
+   \              0xFFFFF400   
+   \   000000A4   0x02 0x01          DC8 2, 1, 0, 0
+   \              0x00 0x00    
+   \   000000A8   0xFFFFFFFE         DC32 4294967294, 0FFFFF600H
+   \              0xFFFFF600   
+   \   000000B0   0x03 0x01          DC8 3, 1, 0, 0
+   \              0x00 0x00    
+   \   000000B4   0x001FFFFF         DC32 2097151, 0FFFFF800H
+   \              0xFFFFF800   
+   \   000000BC   0x04 0x00          DC8 4, 0, 0, 0
+   \              0x00 0x00    
+   \   000000C0   0x00E00000         DC32 14680064, 0FFFFF800H
+   \              0xFFFFF800   
+   \   000000C8   0x04 0x01          DC8 4, 1, 0, 0
+   \              0x00 0x00    
+   \   000000CC   0x00000008         DC32 8, 0FFFFF400H
+   \              0xFFFFF400   
+   \   000000D4   0x02 0x03          DC8 2, 3, 0, 0
+   \              0x00 0x00    
+    188              PINS_DBGU,
+    189              PIN_USART0_RXD,
+    190              PIN_USART0_TXD,
+    191              PIN_USART0_CTS,
+    192              PIN_USART0_RTS,
+    193              
+    194              HEX_SW_ADD1_1,
+    195              HEX_SW_ADD1_2,
+    196              HEX_SW_ADD1_3,
+    197              HEX_SW_ADD1_4,
+    198              
+    199              HEX_SW_ADD2_1,
+    200              HEX_SW_ADD2_2,
+    201              HEX_SW_ADD2_3,
+    202              HEX_SW_ADD2_4,
+                     ^
+Warning[Pe068]: integer conversion resulted in a change of sign
+    203              PINS_NORFLASH,
+    204              ARM_RUN_LED_OUT
+    205          };
+    206          
+    207          /// Number of bytes received between two timer ticks.
+
+   \                                 In section .bss, align 4
+    208          volatile unsigned int bytesReceived = 0;
+   \                     bytesReceived:
+   \   00000000                      DS8 4
+    209          
+    210          /// Receive buffer.
+
+   \                                 In section .bss, align 1
+    211          unsigned char pBuffer[BUFFER_SIZE];
+   \                     pBuffer:
+   \   00000000                      DS8 1
+    212          
+    213          /// String buffer.
+
+   \                                 In section .bss, align 4
+    214          char pString[24];
+   \                     pString:
+   \   00000000                      DS8 24
+    215          
+    216          //타이머 1ms 
+
+   \                                 In section .bss, align 4
+    217          volatile unsigned int mTimerFlag = 0;
+   \                     mTimerFlag:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+    218          volatile unsigned int mTimerDebugCnt = 0;
+   \                     mTimerDebugCnt:
+   \   00000000                      DS8 4
+    219          
+    220          
+
+   \                                 In section .bss, align 4
+    221          unsigned int RxTimerCnt = 0;
+   \                     RxTimerCnt:
+   \   00000000                      DS8 4
+
+   \                                 In section .bss, align 4
+    222          unsigned int RxTimerBuf[100];
+   \                     RxTimerBuf:
+   \   00000000                      DS8 400
+
+   \                                 In section .bss, align 4
+    223          unsigned int RxTimerBufCnt = 0;
+   \                     RxTimerBufCnt:
+   \   00000000                      DS8 4
+    224          
+    225          
+
+   \                                 In section .bss, align 1
+    226          unsigned char mHexSwitchAdd = 0;
+   \                     mHexSwitchAdd:
+   \   00000000                      DS8 1
+    227          
+    228          //------------------------------------------------------------------------------
+    229          //         Local functions
+    230          //------------------------------------------------------------------------------
+    231          
+    232          //------------------------------------------------------------------------------
+    233          /// Interrupt handler for USART0. Increments the number of bytes received in the
+    234          /// current second and starts another transfer if the desired bps has not been
+    235          /// met yet.
+    236          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    237          void ISR_Usart0(void)
+    238          {
+    239              unsigned int status;
+    240          
+    241              // Read USART status
+    242              status = AT91C_BASE_US0->US_CSR;
+   \                     ISR_Usart0:
+   \   00000000   0x........         LDR      R0,??DataTable8  ;; 0xfffc0014
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+    243              
+    244              //AT91C_US_TXBUFE
+    245          
+    246              // Receive buffer is full
+    247              if ((status & AT91C_US_RXBUFF) == AT91C_US_RXBUFF) {
+   \   00000008   0xE3100D40         TST      R0,#0x1000
+   \   0000000C   0x1A000000         BNE      ??ISR_Usart0_0
+    248          
+    249                  bytesReceived += BUFFER_SIZE;
+   \   00000010   0xE12FFF1E         BX       LR
+   \                     ??ISR_Usart0_0:
+   \   00000014   0xE92D5000         PUSH     {R12,LR}
+   \   00000018   0x........         LDR      R0,??DataTable8_1
+   \   0000001C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000020   0xE2800001         ADD      R0,R0,#+1
+   \   00000024   0x........         LDR      R1,??DataTable8_1
+   \   00000028   0xE5810000         STR      R0,[R1, #+0]
+    250          
+    251                  // Restart transfer if BPS is not high enough
+    252                  if (bytesReceived < MAX_BPS) {
+   \   0000002C   0xE5910000         LDR      R0,[R1, #+0]
+   \   00000030   0xE3A01026         MOV      R1,#+38
+   \   00000034   0xE3811F80         ORR      R1,R1,#0x200
+   \   00000038   0xE1500001         CMP      R0,R1
+   \   0000003C   0x2A000008         BCS      ??ISR_Usart0_1
+    253          
+    254                      USART_ReadBuffer(AT91C_BASE_US0, pBuffer, BUFFER_SIZE);
+   \   00000040   0xE3A02001         MOV      R2,#+1
+   \   00000044   0x........         LDR      R1,??DataTable8_2
+   \   00000048   0xE3A004FC         MOV      R0,#-67108864
+   \   0000004C   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000050   0x........         BL       USART_ReadBuffer
+    255                      
+    256                      SCC_ISR(pBuffer[0]);
+   \   00000054   0x........         LDR      R0,??DataTable8_2
+   \   00000058   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   0000005C   0xE8BD4002         POP      {R1,LR}
+   \   00000060   0x........         B        SCC_ISR          ;; tailcall
+    257                      //RxTimerBuf[RxTimerCnt++] = pBuffer[0];
+    258                      
+    259                  }
+    260                  // Otherwise disable interrupt
+    261                  else {
+    262          
+    263                      AT91C_BASE_US0->US_IDR = AT91C_US_RXBUFF;
+   \                     ??ISR_Usart0_1:
+   \   00000064   0x........         LDR      R0,??DataTable8_3  ;; 0xfffc000c
+   \   00000068   0xE3A01D40         MOV      R1,#+4096
+   \   0000006C   0xE5801000         STR      R1,[R0, #+0]
+    264                  }
+    265              }
+    266          }
+   \   00000070   0xE8BD4001         POP      {R0,LR}
+   \   00000074   0xE12FFF1E         BX       LR               ;; return
+    267          
+    268          //------------------------------------------------------------------------------
+    269          /// Interrupt handler for TC0. Displays the number of bytes received during the
+    270          /// last second and the total number of bytes received, then restarts a read
+    271          /// transfer on the USART if it was stopped.
+    272          //------------------------------------------------------------------------------
+    273          
+
+   \                                 In section .bss, align 4
+    274          UINT mTc1_Cnt = 0;
+   \                     mTc1_Cnt:
+   \   00000000                      DS8 4
+
+   \                                 In section .text, align 4, keep-with-next
+    275          void ISR_Tc0(void)
+    276          {
+    277              unsigned int status;
+    278              static unsigned int bytesTotal = 0;
+    279          
+    280              // Read TC0 status
+    281              status = AT91C_BASE_TC0->TC_SR;
+   \                     ISR_Tc0:
+   \   00000000   0x........         LDR      R0,??DataTable8_4  ;; 0xfffa0020
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+    282          
+    283              // RC compare
+    284              if ((status & AT91C_TC_CPCS) == AT91C_TC_CPCS) {
+   \   00000008   0xE3100010         TST      R0,#0x10
+   \   0000000C   0x1A000000         BNE      ??ISR_Tc0_0
+    285            
+    286                  // Display info
+    287                  bytesTotal += bytesReceived;
+   \   00000010   0xE12FFF1E         BX       LR
+   \                     ??ISR_Tc0_0:
+   \   00000014   0xE92D5000         PUSH     {R12,LR}
+   \   00000018   0x........         LDR      R0,??DataTable8_5
+   \   0000001C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000020   0x........         LDR      R1,??DataTable8_1
+   \   00000024   0xE5911000         LDR      R1,[R1, #+0]
+   \   00000028   0xE0810000         ADD      R0,R1,R0
+   \   0000002C   0x........         LDR      R1,??DataTable8_5
+   \   00000030   0xE5810000         STR      R0,[R1, #+0]
+    288                  //sprintf(pString, "Bps: %4u; Tot: %6u\r", bytesReceived, bytesTotal);
+    289                  //USART_WriteBuffer(AT91C_BASE_US0, pString, sizeof(pString));
+    290                  bytesReceived = 0;
+   \   00000034   0x........         LDR      R0,??DataTable8_1
+   \   00000038   0xE3A01000         MOV      R1,#+0
+   \   0000003C   0xE5801000         STR      R1,[R0, #+0]
+    291          
+    292                  
+    293                  // 통신 수신 인터럽트가 발생 하였는지 다시 한번 확인 하는 부분.
+    294                  // Resume transfer if needed
+    295                  if (AT91C_BASE_US0->US_RCR == 0) {
+   \   00000040   0x........         LDR      R0,??DataTable8_6  ;; 0xfffc0104
+   \   00000044   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000048   0xE3500000         CMP      R0,#+0
+   \   0000004C   0x1A000007         BNE      ??ISR_Tc0_1
+    296                      USART_ReadBuffer(AT91C_BASE_US0, pBuffer, BUFFER_SIZE);
+   \   00000050   0xE3A02001         MOV      R2,#+1
+   \   00000054   0x........         LDR      R1,??DataTable8_2
+   \   00000058   0xE3A004FC         MOV      R0,#-67108864
+   \   0000005C   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000060   0x........         BL       USART_ReadBuffer
+    297                      AT91C_BASE_US0->US_IER = AT91C_US_RXBUFF;
+   \   00000064   0x........         LDR      R0,??DataTable8_7  ;; 0xfffc0008
+   \   00000068   0xE3A01D40         MOV      R1,#+4096
+   \   0000006C   0xE5801000         STR      R1,[R0, #+0]
+    298                  }
+    299              }
+    300          }
+   \                     ??ISR_Tc0_1:
+   \   00000070   0xE8BD4001         POP      {R0,LR}
+   \   00000074   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .bss, align 4
+   \                     ??bytesTotal:
+   \   00000000                      DS8 4
+    301          
+    302          
+    303          
+
+   \                                 In section .text, align 4, keep-with-next
+    304          void ISR_Tc1(void)
+    305          {
+    306             unsigned int status;
+    307              static unsigned int stLineNum = 0;
+    308              
+    309          
+    310              // Read TC0 status
+    311              status = AT91C_BASE_TC1->TC_SR;
+   \                     ISR_Tc1:
+   \   00000000   0x........         LDR      R0,??DataTable8_8  ;; 0xfffa0060
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+    312          
+    313              // RC compare
+    314              if ((status & AT91C_TC_CPCS) == AT91C_TC_CPCS)
+   \   00000008   0xE3100010         TST      R0,#0x10
+   \   0000000C   0x1A000000         BNE      ??ISR_Tc1_0
+    315              {
+    316          
+    317          	  AT26_Write(&at26,((UCHAR *)AT91C_EBI_SDRAM+(stLineNum*128)), 128, 0);
+   \   00000010   0xE12FFF1E         BX       LR
+   \                     ??ISR_Tc1_0:
+   \   00000014   0xE92D5000         PUSH     {R12,LR}
+   \   00000018   0xE3A03000         MOV      R3,#+0
+   \   0000001C   0xE3A02080         MOV      R2,#+128
+   \   00000020   0x........         LDR      R0,??DataTable8_9
+   \   00000024   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000028   0xE1A00380         LSL      R0,R0,#+7
+   \   0000002C   0xE2801580         ADD      R1,R0,#+536870912
+   \   00000030   0x........         LDR      R0,??DataTable8_10
+   \   00000034   0x........         BL       AT26_Write
+    318          
+    319                   stLineNum++;
+    320                   
+    321                   // Module Data Tx Enable
+    322                   
+    323          		*(char *)0x30400000 = 0x00; // OE_Off
+   \   00000038   0xE3A005C1         MOV      R0,#+809500672
+   \   0000003C   0xE3A01000         MOV      R1,#+0
+   \   00000040   0xE5C01000         STRB     R1,[R0, #+0]
+    324          		*(char *)0x30400000 = 0x03; // OE_ON
+   \   00000044   0xE3A01003         MOV      R1,#+3
+   \   00000048   0xE5C01000         STRB     R1,[R0, #+0]
+    325                  
+    326          		*(char *)0x30600000 = 0x00; // LT_Off
+   \   0000004C   0xE3800980         ORR      R0,R0,#0x200000
+   \   00000050   0xE3A01000         MOV      R1,#+0
+   \   00000054   0xE5C01000         STRB     R1,[R0, #+0]
+    327          		*(char *)0x30600000 = 0x03; // LT_On
+   \   00000058   0xE3A01003         MOV      R1,#+3
+   \   0000005C   0xE5C01000         STRB     R1,[R0, #+0]
+    328                  
+    329          		*(char *)0x30600000 = 0x00; // LT_off        
+   \   00000060   0xE3A01000         MOV      R1,#+0
+   \   00000064   0xE5C01000         STRB     R1,[R0, #+0]
+    330          		*(char *)0x30400000 = 0x00; // OE_off
+   \   00000068   0xE3A005C1         MOV      R0,#+809500672
+   \   0000006C   0xE5C01000         STRB     R1,[R0, #+0]
+    331                   
+    332          		*(char *)0x30000000 = RxTimerBufCnt; // address
+   \   00000070   0xE3A005C0         MOV      R0,#+805306368
+   \   00000074   0x........         LDR      R1,??DataTable8_11
+   \   00000078   0xE5911000         LDR      R1,[R1, #+0]
+   \   0000007C   0xE5C01000         STRB     R1,[R0, #+0]
+    333                   
+    334                   stLineNum = stLineNum%16;  
+   \   00000080   0x........         LDR      R0,??DataTable8_9
+   \   00000084   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000088   0xE2800001         ADD      R0,R0,#+1
+   \   0000008C   0xE200000F         AND      R0,R0,#0xF
+   \   00000090   0x........         LDR      R1,??DataTable8_9
+   \   00000094   0xE5810000         STR      R0,[R1, #+0]
+    335          
+    336          		 
+    337              }
+    338          }
+   \   00000098   0xE8BD4001         POP      {R0,LR}
+   \   0000009C   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .bss, align 4
+   \                     ??stLineNum:
+   \   00000000                      DS8 4
+    339          //------------------------------------------------------------------------------
+    340          /// Configures USART0 in hardware handshaking mode, asynchronous, 8 bits, 1 stop
+    341          /// bit, no parity, 115200 bauds and enables its transmitter and receiver.
+    342          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    343          void ConfigureUsart0(void)
+    344          {
+   \                     ConfigureUsart0:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    345              unsigned int mode = //AT91C_US_USMODE_HWHSH
+    346                                    AT91C_US_USMODE_RS485
+    347                                  | AT91C_US_CLKS_CLOCK
+    348                                  | AT91C_US_CHRL_8_BITS
+    349                                  | AT91C_US_PAR_NONE
+    350                                  | AT91C_US_NBSTOP_1_BIT
+    351                                  | AT91C_US_CHMODE_NORMAL;
+    352          
+    353              // Enable the peripheral clock in the PMC
+    354              PMC_EnablePeripheral(AT91C_ID_US0);
+   \   00000004   0xE3A00006         MOV      R0,#+6
+   \   00000008   0x........         BL       PMC_EnablePeripheral
+    355          
+    356              // Configure the USART in the desired mode @115200 bauds
+    357              USART_Configure(AT91C_BASE_US0, mode, 115200, BOARD_MCK);
+   \   0000000C   0xE3A037B7         MOV      R3,#+47972352
+   \   00000010   0xE3833C6C         ORR      R3,R3,#0x6C00
+   \   00000014   0xE3A02B40         MOV      R2,#+65536
+   \   00000018   0xE3822CC2         ORR      R2,R2,#0xC200
+   \   0000001C   0xE3A010C1         MOV      R1,#+193
+   \   00000020   0xE3811E80         ORR      R1,R1,#0x800
+   \   00000024   0xE3A004FC         MOV      R0,#-67108864
+   \   00000028   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   0000002C   0x........         BL       USART_Configure
+    358          
+    359              // Configure the RXBUFF interrupt
+    360              AIC_ConfigureIT(AT91C_ID_US0, 0, ISR_Usart0);
+   \   00000030   0x........         ADR      R2,ISR_Usart0
+   \   00000034   0xE3A01000         MOV      R1,#+0
+   \   00000038   0xE3A00006         MOV      R0,#+6
+   \   0000003C   0x........         BL       AIC_ConfigureIT
+    361              AIC_EnableIT(AT91C_ID_US0);
+   \   00000040   0xE3A00006         MOV      R0,#+6
+   \   00000044   0x........         BL       AIC_EnableIT
+    362          
+    363              // Enable receiver & transmitter
+    364              USART_SetTransmitterEnabled(AT91C_BASE_US0, 1);
+   \   00000048   0xE3A01001         MOV      R1,#+1
+   \   0000004C   0xE3A004FC         MOV      R0,#-67108864
+   \   00000050   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000054   0x........         BL       USART_SetTransmitterEnabled
+    365              USART_SetReceiverEnabled(AT91C_BASE_US0, 1);
+   \   00000058   0xE3A01001         MOV      R1,#+1
+   \   0000005C   0xE3A004FC         MOV      R0,#-67108864
+   \   00000060   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000064   0xE8BD4004         POP      {R2,LR}
+   \   00000068   0x........         B        USART_SetReceiverEnabled  ;; tailcall
+    366          }
+    367          
+    368          //------------------------------------------------------------------------------
+    369          /// Configures Timer Counter 0 (TC0) to generate an interrupt every second. This
+    370          /// interrupt will be used to display the number of bytes received on the USART.
+    371          //------------------------------------------------------------------------------
+    372          
+
+   \                                 In section .text, align 4, keep-with-next
+    373          void ConfigureTc0(void)
+    374          {
+   \                     ConfigureTc0:
+   \   00000000   0xE92D4000         PUSH     {LR}
+   \   00000004   0xE24DD00C         SUB      SP,SP,#+12
+    375              unsigned int div, tcclks;
+    376             //------------------------------------------------------------//
+    377              // Enable TC0 peripheral clock
+    378              PMC_EnablePeripheral(AT91C_ID_TC0);
+   \   00000008   0xE3A0000C         MOV      R0,#+12
+   \   0000000C   0x........         BL       PMC_EnablePeripheral
+    379             
+    380          
+    381              /// Configure TC for a 1s (= 1Hz) tick
+    382              TC_FindMckDivisor(1, BOARD_MCK, &div, &tcclks);
+   \   00000010   0xE1A0300D         MOV      R3,SP
+   \   00000014   0xE28D2004         ADD      R2,SP,#+4
+   \   00000018   0xE3A017B7         MOV      R1,#+47972352
+   \   0000001C   0xE3811C6C         ORR      R1,R1,#0x6C00
+   \   00000020   0xE3A00001         MOV      R0,#+1
+   \   00000024   0x........         BL       TC_FindMckDivisor
+    383              TC_Configure(AT91C_BASE_TC0, tcclks | AT91C_TC_CPCTRG);
+   \   00000028   0xE59D0000         LDR      R0,[SP, #+0]
+   \   0000002C   0xE3801C40         ORR      R1,R0,#0x4000
+   \   00000030   0xE3A004FF         MOV      R0,#-16777216
+   \   00000034   0xE38008FA         ORR      R0,R0,#0xFA0000
+   \   00000038   0x........         BL       TC_Configure
+    384              AT91C_BASE_TC0->TC_RC = (BOARD_MCK / (2 * div));
+   \   0000003C   0xE3A007B7         MOV      R0,#+47972352
+   \   00000040   0xE3800C6C         ORR      R0,R0,#0x6C00
+   \   00000044   0xE59D1004         LDR      R1,[SP, #+4]
+   \   00000048   0xE1A01081         LSL      R1,R1,#+1
+   \   0000004C   0x........         BL       __aeabi_uidiv
+   \   00000050   0x........         LDR      R1,??DataTable8_12  ;; 0xfffa001c
+   \   00000054   0xE5810000         STR      R0,[R1, #+0]
+    385          
+    386              // Configure interrupt on RC compare
+    387              AIC_ConfigureIT(AT91C_ID_TC0, 0, ISR_Tc0);
+   \   00000058   0x........         ADR      R2,ISR_Tc0
+   \   0000005C   0xE3A01000         MOV      R1,#+0
+   \   00000060   0xE3A0000C         MOV      R0,#+12
+   \   00000064   0x........         BL       AIC_ConfigureIT
+    388              AT91C_BASE_TC0->TC_IER = AT91C_TC_CPCS;
+   \   00000068   0x........         LDR      R0,??DataTable8_13  ;; 0xfffa0024
+   \   0000006C   0xE3A01010         MOV      R1,#+16
+   \   00000070   0xE5801000         STR      R1,[R0, #+0]
+    389              AIC_EnableIT(AT91C_ID_TC0);
+   \   00000074   0xE3A0000C         MOV      R0,#+12
+   \   00000078   0x........         B        ?Subroutine0
+    390          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0x........         BL       AIC_EnableIT
+   \   00000004   0xE28DD00C         ADD      SP,SP,#+12       ;; stack cleaning
+   \   00000008   0xE8BD4000         POP      {LR}
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    391          
+
+   \                                 In section .text, align 4, keep-with-next
+    392          void ConfigureTc1(void)
+    393          {
+   \                     ConfigureTc1:
+   \   00000000   0xE92D4000         PUSH     {LR}
+   \   00000004   0xE24DD00C         SUB      SP,SP,#+12
+    394             unsigned int div, tcclks;
+    395             
+    396             PMC_EnablePeripheral(AT91C_ID_TC1);
+   \   00000008   0xE3A0000D         MOV      R0,#+13
+   \   0000000C   0x........         BL       PMC_EnablePeripheral
+    397             
+    398             TC_FindMckDivisor(1, BOARD_MCK, &div, &tcclks);
+   \   00000010   0xE1A0300D         MOV      R3,SP
+   \   00000014   0xE28D2004         ADD      R2,SP,#+4
+   \   00000018   0xE3A017B7         MOV      R1,#+47972352
+   \   0000001C   0xE3811C6C         ORR      R1,R1,#0x6C00
+   \   00000020   0xE3A00001         MOV      R0,#+1
+   \   00000024   0x........         BL       TC_FindMckDivisor
+    399             TC_Configure(AT91C_BASE_TC1, tcclks | AT91C_TC_CPCTRG);
+   \   00000028   0xE59D0000         LDR      R0,[SP, #+0]
+   \   0000002C   0xE3801C40         ORR      R1,R0,#0x4000
+   \   00000030   0x........         LDR      R0,??DataTable8_14  ;; 0xfffa0040
+   \   00000034   0x........         BL       TC_Configure
+    400             AT91C_BASE_TC1->TC_RC = (BOARD_MCK / (20000 * div)); // 약 200마이크로 동작 속도
+   \   00000038   0xE3A007B7         MOV      R0,#+47972352
+   \   0000003C   0xE3800C6C         ORR      R0,R0,#0x6C00
+   \   00000040   0xE59D1004         LDR      R1,[SP, #+4]
+   \   00000044   0xE3A02020         MOV      R2,#+32
+   \   00000048   0xE3822C4E         ORR      R2,R2,#0x4E00
+   \   0000004C   0xE0010192         MUL      R1,R2,R1
+   \   00000050   0x........         BL       __aeabi_uidiv
+   \   00000054   0x........         LDR      R1,??DataTable8_15  ;; 0xfffa005c
+   \   00000058   0xE5810000         STR      R0,[R1, #+0]
+    401             
+    402             
+    403             AIC_ConfigureIT(AT91C_ID_TC1, 0, ISR_Tc1);
+   \   0000005C   0x........         ADR      R2,ISR_Tc1
+   \   00000060   0xE3A01000         MOV      R1,#+0
+   \   00000064   0xE3A0000D         MOV      R0,#+13
+   \   00000068   0x........         BL       AIC_ConfigureIT
+    404             AT91C_BASE_TC1->TC_IER = AT91C_TC_CPCS;
+   \   0000006C   0x........         LDR      R0,??DataTable8_16  ;; 0xfffa0064
+   \   00000070   0xE3A01010         MOV      R1,#+16
+   \   00000074   0xE5801000         STR      R1,[R0, #+0]
+    405             AIC_EnableIT(AT91C_ID_TC1);
+   \   00000078   0xE3A0000D         MOV      R0,#+13
+   \   0000007C                      REQUIRE ?Subroutine0
+   \   0000007C                      ;; // Fall through to label ?Subroutine0
+    406            
+    407          }
+    408          
+    409          //------------------------------------------------------------------------------
+    410          /// Interrupt service routine for the PIT. Debounces the wake-up pin input.
+    411          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    412          static void ISR_Pit(void)
+    413          {
+   \                     ISR_Pit:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    414              unsigned long pisr = 0;
+    415          
+    416              // Read the PISR
+    417              pisr = PIT_GetStatus() & AT91C_PITC_PITS;
+    418          
+    419              if (pisr != 0) {
+   \   00000004   0x........         BL       PIT_GetStatus
+   \   00000008   0xE3100001         TST      R0,#0x1
+   \   0000000C   0x0A000003         BEQ      ??ISR_Pit_0
+    420          
+    421                  // Read the PIVR. It acknowledges the IT
+    422                  PIT_GetPIVR();
+   \   00000010   0x........         BL       PIT_GetPIVR
+    423                  
+    424                   mTimerFlag = TRUE;
+   \   00000014   0x........         LDR      R0,??DataTable8_17
+   \   00000018   0xE3A01001         MOV      R1,#+1
+   \   0000001C   0xE5801000         STR      R1,[R0, #+0]
+    425              }
+    426          
+    427          }
+   \                     ??ISR_Pit_0:
+   \   00000020   0xE8BD4001         POP      {R0,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+    428          
+    429          //------------------------------------------------------------------------------
+    430          /// Configures the PIT to generate 1ms ticks. 
+    431          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    432          static void ConfigurePit(void)
+    433          {
+   \                     ConfigurePit:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    434              // Initialize and enable the PIT
+    435              PIT_Init(PIT_PERIOD, BOARD_MCK / 1000000);
+   \   00000004   0xE3A01030         MOV      R1,#+48
+   \   00000008   0xE3A00FFA         MOV      R0,#+1000
+   \   0000000C   0x........         BL       PIT_Init
+    436          
+    437              // Disable the interrupt on the interrupt controller
+    438              AIC_DisableIT(AT91C_ID_SYS);
+   \   00000010   0xE3A00001         MOV      R0,#+1
+   \   00000014   0x........         BL       AIC_DisableIT
+    439          
+    440              // Configure the AIC for PIT interrupts
+    441              AIC_ConfigureIT(AT91C_ID_SYS, 0, ISR_Pit);
+   \   00000018   0x........         ADR      R2,ISR_Pit
+   \   0000001C   0xE3A01000         MOV      R1,#+0
+   \   00000020   0xE3A00001         MOV      R0,#+1
+   \   00000024   0x........         BL       AIC_ConfigureIT
+    442          
+    443              // Enable the interrupt on the interrupt controller
+    444              AIC_EnableIT(AT91C_ID_SYS);
+   \   00000028   0xE3A00001         MOV      R0,#+1
+   \   0000002C   0x........         BL       AIC_EnableIT
+    445          
+    446              // Enable the interrupt on the pit
+    447              PIT_EnableIT();
+   \   00000030   0x........         BL       PIT_EnableIT
+    448          
+    449              // Enable the pit
+    450              PIT_Enable();
+   \   00000034   0xE8BD4001         POP      {R0,LR}
+   \   00000038   0x........         B        PIT_Enable       ;; tailcall
+    451          }
+    452          
+    453          //------------------------------------------------------------------------------
+    454          //         SW_TIMER (1ms)
+    455          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    456          void SW_TIMER(void)
+    457          {
+   \                     SW_TIMER:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    458            static int sSw_Timer_Cnt = 0; 
+    459          
+    460            mTimerDebugCnt++;
+   \   00000004   0x........         LDR      R0,??DataTable8_18
+   \   00000008   0xE5900000         LDR      R0,[R0, #+0]
+   \   0000000C   0xE2800001         ADD      R0,R0,#+1
+   \   00000010   0x........         LDR      R1,??DataTable8_18
+   \   00000014   0xE5810000         STR      R0,[R1, #+0]
+    461            SCC_ISR_Timer(); // 통신 함수 타이머 
+   \   00000018   0x........         BL       SCC_ISR_Timer
+    462            
+    463            if(!(mTimerDebugCnt%100))
+   \   0000001C   0x........         LDR      R0,??DataTable8_18
+   \   00000020   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000024   0x........         LDR      R1,??DataTable8_19  ;; 0x51eb851f
+   \   00000028   0xE0832091         UMULL    R2,R3,R1,R0
+   \   0000002C   0xE1A032A3         LSR      R3,R3,#+5
+   \   00000030   0xE3A02064         MOV      R2,#+100
+   \   00000034   0xE0030392         MUL      R3,R2,R3
+   \   00000038   0xE0503003         SUBS     R3,R0,R3
+   \   0000003C   0x1A00000B         BNE      ??SW_TIMER_0
+    464            {
+    465              sSw_Timer_Cnt++;
+   \   00000040   0x........         LDR      R0,??DataTable8_20
+   \   00000044   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000048   0xE2800001         ADD      R0,R0,#+1
+   \   0000004C   0x........         LDR      R1,??DataTable8_20
+   \   00000050   0xE5810000         STR      R0,[R1, #+0]
+    466              AT91C_BASE_PIOA->PIO_ODSR ^= AT91C_PIO_PA3;	//해당핀을 출력 토글	
+   \   00000054   0xE3E000C7         MVN      R0,#+199
+   \   00000058   0xE3C00EB0         BIC      R0,R0,#0xB00
+   \   0000005C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000060   0xE2200008         EOR      R0,R0,#0x8
+   \   00000064   0xE3E010C7         MVN      R1,#+199
+   \   00000068   0xE3C11EB0         BIC      R1,R1,#0xB00
+   \   0000006C   0xE5810000         STR      R0,[R1, #+0]
+    467              
+    468            }
+    469          
+    470            
+    471          }
+   \                     ??SW_TIMER_0:
+   \   00000070   0xE8BD4001         POP      {R0,LR}
+   \   00000074   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .bss, align 4
+   \                     ??sSw_Timer_Cnt:
+   \   00000000                      DS8 4
+    472          
+    473          //**********************************************************************************
+    474          //	HEXA 값을 읽어 온다..
+    475          //**********************************************************************************
+
+   \                                 In section .text, align 4, keep-with-next
+    476          unsigned char ChackHexa(void)
+    477          {
+   \                     ChackHexa:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+    478          	unsigned char H_Add_Buff=0;
+    479          	unsigned char L_Add_Buff=0;        
+    480          
+    481          	H_Add_Buff  = PIO_Get(&pins[5])<<3;
+   \   00000004   0x........         LDR      R0,??DataTable8_21
+   \   00000008   0x........         BL       PIO_Get
+   \   0000000C   0xE1A07000         MOV      R7,R0
+    482          	H_Add_Buff |= PIO_Get(&pins[6])<<2;
+   \   00000010   0x........         LDR      R0,??DataTable8_22
+   \   00000014   0x........         BL       PIO_Get
+   \   00000018   0xE1A08000         MOV      R8,R0
+    483          	H_Add_Buff |= PIO_Get(&pins[7])<<1;
+   \   0000001C   0x........         LDR      R0,??DataTable8_23
+   \   00000020   0x........         BL       PIO_Get
+   \   00000024   0xE1A09000         MOV      R9,R0
+    484          	H_Add_Buff |= PIO_Get(&pins[8])&0x01;      
+   \   00000028   0x........         LDR      R0,??DataTable8_24
+   \   0000002C   0x........         BL       PIO_Get
+   \   00000030   0xE1A04000         MOV      R4,R0
+    485          
+    486          	L_Add_Buff  = PIO_Get(&pins[9])<<3;
+   \   00000034   0x........         LDR      R0,??DataTable8_25
+   \   00000038   0x........         BL       PIO_Get
+   \   0000003C   0xE1A05000         MOV      R5,R0
+    487          	L_Add_Buff |= PIO_Get(&pins[10])<<2;
+   \   00000040   0x........         LDR      R0,??DataTable8_26
+   \   00000044   0x........         BL       PIO_Get
+   \   00000048   0xE1A06000         MOV      R6,R0
+    488          	L_Add_Buff |= PIO_Get(&pins[11])<<1;
+   \   0000004C   0x........         LDR      R0,??DataTable8_27
+   \   00000050   0x........         BL       PIO_Get
+    489          	L_Add_Buff |= PIO_Get(&pins[12])&0x01;       
+    490                    
+    491          	return ~((H_Add_Buff<<4)|L_Add_Buff);
+   \   00000054   0xE1A01108         LSL      R1,R8,#+2
+   \   00000058   0xE1811187         ORR      R1,R1,R7, LSL #+3
+   \   0000005C   0xE1811089         ORR      R1,R1,R9, LSL #+1
+   \   00000060   0xE2042001         AND      R2,R4,#0x1
+   \   00000064   0xE1824001         ORR      R4,R2,R1
+   \   00000068   0xE20440FF         AND      R4,R4,#0xFF
+   \   0000006C   0xE1A01106         LSL      R1,R6,#+2
+   \   00000070   0xE1811185         ORR      R1,R1,R5, LSL #+3
+   \   00000074   0xE1815080         ORR      R5,R1,R0, LSL #+1
+   \   00000078   0x........         LDR      R0,??DataTable8_28
+   \   0000007C   0x........         BL       PIO_Get
+   \   00000080   0xE2000001         AND      R0,R0,#0x1
+   \   00000084   0xE1800005         ORR      R0,R0,R5
+   \   00000088   0xE20000FF         AND      R0,R0,#0xFF
+   \   0000008C   0xE1800204         ORR      R0,R0,R4, LSL #+4
+   \   00000090   0xE1E00000         MVN      R0,R0
+   \   00000094   0xE20000FF         AND      R0,R0,#0xFF
+   \   00000098   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   0000009C   0xE12FFF1E         BX       LR               ;; return
+    492          }
+    493          
+    494          
+
+   \                                 In section .text, align 4, keep-with-next
+    495          void ADD_CHECK(void)
+    496          {
+    497             // 장치 어드레스 인식 부분,
+    498            if(!mHexSwitchAdd)
+   \                     ADD_CHECK:
+   \   00000000   0x........         LDR      R0,??DataTable8_29
+   \   00000004   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000008   0xE3500000         CMP      R0,#+0
+   \   0000000C   0x0A000000         BEQ      ??ADD_CHECK_0
+    499            {
+    500              mHexSwitchAdd = ChackHexa();
+   \   00000010   0xE12FFF1E         BX       LR
+    501            }
+   \                     ??ADD_CHECK_0:
+   \   00000014   0xE92D5000         PUSH     {R12,LR}
+   \   00000018   0x........         BL       ChackHexa
+   \   0000001C   0x........         LDR      R1,??DataTable8_29
+   \   00000020   0xE5C10000         STRB     R0,[R1, #+0]
+    502          }
+   \   00000024   0xE8BD4001         POP      {R0,LR}
+   \   00000028   0xE12FFF1E         BX       LR               ;; return
+    503          
+
+   \                                 In section .text, align 4, keep-with-next
+    504          void MODE_SET(void)
+    505          {
+    506                AT91C_BASE_PIOA->PIO_OER   = AT91C_PIO_PA3;	//출력 버퍼 ENABLE
+   \                     MODE_SET:
+   \   00000000   0xE3E000EF         MVN      R0,#+239
+   \   00000004   0xE3C00EB0         BIC      R0,R0,#0xB00
+   \   00000008   0xE3A01008         MOV      R1,#+8
+   \   0000000C   0xE5801000         STR      R1,[R0, #+0]
+    507          	AT91C_BASE_PIOA->PIO_PER   = AT91C_PIO_PA3;	//IO 포트로 사용
+   \   00000010   0xE3C00010         BIC      R0,R0,#0x10
+   \   00000014   0xE5801000         STR      R1,[R0, #+0]
+    508          	AT91C_BASE_PIOA->PIO_PPUDR = AT91C_PIO_PA3;	//각 핀을 풀업하지 않음
+   \   00000018   0xE3800060         ORR      R0,R0,#0x60
+   \   0000001C   0xE4801040         STR      R1,[R0], #+64
+    509          	AT91C_BASE_PIOA->PIO_OWER  = AT91C_PIO_PA3;	//각 핀을 IO 동시 출력으로 설정함    
+   \   00000020   0xE400102C         STR      R1,[R0], #-44
+    510                  
+    511                  
+    512                  AT91C_BASE_PIOA->PIO_BSR= ((unsigned int) AT91C_PA20_NCS2_CFCS1);
+   \   00000024   0xE3A01940         MOV      R1,#+1048576
+   \   00000028   0xE5801000         STR      R1,[R0, #+0]
+    513          	AT91C_BASE_PIOA->PIO_PDR =((unsigned int) AT91C_PA20_NCS2_CFCS1); 	
+   \   0000002C   0xE3C00070         BIC      R0,R0,#0x70
+   \   00000030   0xE5801000         STR      R1,[R0, #+0]
+    514          }
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+    515          
+    516          //------------------------------------------------------------------------------
+    517          /// Application entry point. Configures USART0 in hardware handshaking mode and
+    518          /// Timer Counter 0 to generate an interrupt every second. Then, starts the first
+    519          /// transfer on the USART and wait in an endless loop.
+    520          /// \return Unused.
+    521          //------------------------------------------------------------------------------
+
+   \                                 In section .bss, align 4
+    522          UCHAR TextBuf[5000];
+   \                     TextBuf:
+   \   00000000                      DS8 5000
+    523          
+
+   \                                 In section .text, align 4, keep-with-next
+    524          int main(void)
+    525          {
+   \                     main:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+    526              
+    527              //unsigned int i = 0;
+    528              
+    529              unsigned char *pSRamBuffer = (unsigned char *) AT91C_EBI_SDRAM;
+    530              
+    531              
+    532                 /* nandflash memory 변수 */ 
+    533              unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+    534              unsigned char testFailed;
+    535              const unsigned char busWidth[3] = {FLASH_CHIP_WIDTH_8BITS, FLASH_CHIP_WIDTH_16BITS, FLASH_CHIP_WIDTH_32BITS};
+   \   00000004   0x........         LDR      R1,??DataTable8_30
+   \   00000008   0xE5912000         LDR      R2,[R1, #0]
+   \   0000000C   0xE58D2000         STR      R2,[SP, #+0]
+    536              
+    537              
+    538              
+    539              // Configure pins
+    540              PIO_Configure(pins, PIO_LISTSIZE(pins));
+   \   00000010   0xE3A01012         MOV      R1,#+18
+   \   00000014   0x........         LDR      R0,??DataTable8_31
+   \   00000018   0x........         BL       PIO_Configure
+    541              
+    542              // Configure USART0 and display startup trace
+    543              ConfigureUsart0();
+   \   0000001C   0x........         BL       ConfigureUsart0
+    544              //printf("-- Basic USART Hardware Handshaking Project %s --\n\r", SOFTPACK_VERSION);
+    545              //printf("-- %s\n\r", BOARD_NAME);
+    546              //printf("-- Compiled: %s %s --\n\r", __DATE__, __TIME__);
+    547               
+    548              // Configure TC0 to generate a 1s tick
+    549              ConfigureTc0();
+   \   00000020   0x........         BL       ConfigureTc0
+    550              
+    551              // 타이머 설정.
+    552              ConfigureTc1();
+   \   00000024   0x........         BL       ConfigureTc1
+    553              TC_Start(AT91C_BASE_TC1);
+   \   00000028   0x........         LDR      R0,??DataTable8_14  ;; 0xfffa0040
+   \   0000002C   0x........         BL       TC_Start
+    554          
+    555              // Start receiving data and start timer
+    556              USART_ReadBuffer(AT91C_BASE_US0, pBuffer, BUFFER_SIZE);
+   \   00000030   0xE3A02001         MOV      R2,#+1
+   \   00000034   0x........         LDR      R1,??DataTable8_2
+   \   00000038   0xE3A004FC         MOV      R0,#-67108864
+   \   0000003C   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000040   0x........         BL       USART_ReadBuffer
+    557              AT91C_BASE_US0->US_IER = AT91C_US_RXBUFF;
+   \   00000044   0x........         LDR      R0,??DataTable8_7  ;; 0xfffc0008
+   \   00000048   0xE3A01D40         MOV      R1,#+4096
+   \   0000004C   0xE5801000         STR      R1,[R0, #+0]
+    558              
+    559              TC_Start(AT91C_BASE_TC0);
+   \   00000050   0xE3A004FF         MOV      R0,#-16777216
+   \   00000054   0xE38008FA         ORR      R0,R0,#0xFA0000
+   \   00000058   0x........         BL       TC_Start
+    560          
+    561              //Configures the PIT to generate 1ms ticks.
+    562              ConfigurePit();
+   \   0000005C   0x........         BL       ConfigurePit
+    563             
+    564              
+    565              //SDRAM 설정 
+    566              BOARD_ConfigureSdram(BOARD_SDRAM_BUSWIDTH); 
+   \   00000060   0xE3A00010         MOV      R0,#+16
+   \   00000064   0x........         BL       BOARD_ConfigureSdram
+    567              
+    568              memcpy(RxTimerBuf,0x00,sizeof(RxTimerBuf));
+                     ^
+Warning[Pe223]: function "memcpy" declared implicitly
+   \   00000068   0xE3A02F64         MOV      R2,#+400
+   \   0000006C   0xE3A01000         MOV      R1,#+0
+   \   00000070   0x........         LDR      R0,??DataTable8_32
+   \   00000074   0x........         BL       memcpy
+    569              memset(TextBuf,0x11,5000);
+                     ^
+Warning[Pe223]: function "memset" declared implicitly
+   \   00000078   0xE3A02088         MOV      R2,#+136
+   \   0000007C   0xE3822D4C         ORR      R2,R2,#0x1300
+   \   00000080   0xE3A01011         MOV      R1,#+17
+   \   00000084   0x........         LDR      R0,??DataTable8_33
+   \   00000088   0x........         BL       memset
+    570              
+    571              MODE_SET();
+   \   0000008C   0x........         BL       MODE_SET
+    572              
+    573          
+    574              SPI_Init();
+   \   00000090   0x........         BL       SPI_Init
+    575          
+    576          	SCC_Init(); // 통신 함수 초기화 부분.
+   \   00000094   0x........         BL       SCC_Init
+    577              
+    578              
+    579              //SPI_Set();
+    580              //SPI_PDC_open();
+    581              
+    582              	//Interrupt 처리 관련 
+    583          	//AT91C_BASE_SPI->SPI_IER = 0x00000000;	//SPI Interrupt Enable Resister -> Write Only
+    584          	//AT91C_BASE_SPI->SPI_IDR = 0x00000000;	//SPI Interrupt Disable Resister -> Write Only
+    585              
+    586              ////////////////////////////////////////////////
+    587              
+    588              
+    589              
+    590              norFlash.norFlashInfo.baseAddress = BOARD_NORFLASH_ADDR;
+   \   00000098   0x........         LDR      R0,??DataTable8_34
+   \   0000009C   0xE3A01540         MOV      R1,#+268435456
+   \   000000A0   0xE5801004         STR      R1,[R0, #+4]
+    591              // Check device CFI and get Vendor setting from it.
+    592              printf("-I- \t Common Flash Interface detecting...\n\r");
+   \   000000A4   0x........         LDR      R0,??DataTable8_35
+   \   000000A8   0x........         BL       printf
+    593              
+    594              for (i = 0; i < 3; i++) {
+   \   000000AC   0xE1A0400D         MOV      R4,SP
+   \   000000B0   0xE3A05003         MOV      R5,#+3
+    595                  // Configure SMC for Norflash accesses 
+    596                  printf("\t Try bus width %d bits\n\r", busWidth[i] * 8);
+   \                     ??main_0:
+   \   000000B4   0xE5D40000         LDRB     R0,[R4, #+0]
+   \   000000B8   0xE1A01180         LSL      R1,R0,#+3
+   \   000000BC   0x........         LDR      R0,??DataTable8_36
+   \   000000C0   0x........         BL       printf
+    597                  BOARD_ConfigureNorFlash48MHz(busWidth[i] * 8);
+   \   000000C4   0xE5D40000         LDRB     R0,[R4, #+0]
+   \   000000C8   0xE1A00D80         LSL      R0,R0,#+27
+   \   000000CC   0xE1A00C20         LSR      R0,R0,#+24
+   \   000000D0   0x........         BL       BOARD_ConfigureNorFlash
+    598                  if(! NorFlash_CFI_Detect(&norFlash, busWidth[i])) break;
+   \   000000D4   0xE4D41001         LDRB     R1,[R4], #+1
+   \   000000D8   0x........         LDR      R0,??DataTable8_34
+   \   000000DC   0x........         BL       NorFlash_CFI_Detect
+   \   000000E0   0xE3500000         CMP      R0,#+0
+    599              }
+   \   000000E4   0x12555001         SUBSNE   R5,R5,#+1
+   \   000000E8   0x1AFFFFF1         BNE      ??main_0
+    600               
+    601              if (norFlash.norFlashInfo.cfiCompatible == 0) {
+   \   000000EC   0x........         LDR      R0,??DataTable8_34
+   \   000000F0   0xE5D00009         LDRB     R0,[R0, #+9]
+   \   000000F4   0xE3500000         CMP      R0,#+0
+   \   000000F8   0x1A000001         BNE      ??main_1
+    602                  printf("Device Unknown\n\r");
+   \   000000FC   0x........         LDR      R0,??DataTable8_37
+   \   00000100   0x........         BL       printf
+    603                  //testFailed = 1;
+    604                  //goto exit;
+    605              }
+    606                 
+    607              printf("-I- \t CFI detected and driver initialized\n\r");
+   \                     ??main_1:
+   \   00000104   0x........         LDR      R0,??DataTable8_38
+   \   00000108   0x........         BL       printf
+    608              printf("-I- \t manufactureID : 0x%08x, deviceID : 0x%08x\n\r",
+    609                      NORFLASH_ReadManufactoryID(&norFlash),
+    610                      NORFLASH_ReadDeviceID(&norFlash));
+   \   0000010C   0x........         LDR      R0,??DataTable8_34
+   \   00000110   0x........         BL       NORFLASH_ReadDeviceID
+   \   00000114   0xE1A04000         MOV      R4,R0
+   \   00000118   0x........         LDR      R0,??DataTable8_34
+   \   0000011C   0x........         BL       NORFLASH_ReadManufactoryID
+   \   00000120   0xE1A01000         MOV      R1,R0
+   \   00000124   0xE1A02004         MOV      R2,R4
+   \   00000128   0x........         LDR      R0,??DataTable8_39
+   \   0000012C   0x........         BL       printf
+    611          
+    612              // Test all pages
+    613                testFailed = 0;
+    614              block = 0;
+    615              blockNumber = NorFlash_GetDeviceNumOfBlocks(&(norFlash.norFlashInfo));
+   \   00000130   0x........         LDR      R0,??DataTable8_40
+   \   00000134   0x........         BL       NorFlash_GetDeviceNumOfBlocks
+    616              pageSize = min(NorFlash_GetDeviceMinBlockSize(&(norFlash.norFlashInfo)), 1024);
+   \   00000138   0x........         LDR      R0,??DataTable8_40
+   \   0000013C   0x........         BL       NorFlash_GetDeviceMinBlockSize
+   \   00000140   0xE3A01E40         MOV      R1,#+1024
+   \   00000144   0x........         BL       min
+    617              
+    618              
+    619             
+    620              
+    621              /*
+    622             while (!testFailed && (block < blockNumber)) {
+    623          
+    624          
+    625               printf("Test in progress on block: %6d / %6d\n\r", block ,blockNumber );
+    626                  // Erase block
+    627                  NORFLASH_EraseSector(&norFlash, NorFlash_GetDeviceSectorAddress(&(norFlash.norFlashInfo), block));
+    628              
+    629             
+    630                  blockSize =  NorFlash_GetDeviceBlockSize(&(norFlash.norFlashInfo), block);
+    631                  blockAddress = NorFlash_GetDeviceSectorAddress(&(norFlash.norFlashInfo), block);
+    632                  packetSize = pageSize;
+    633                  
+    634                 
+    635                    
+    636                  while (blockSize) {
+    637                      // Verify that page has been erased correctly
+    638                      memset(TextBuf, 0, packetSize);
+    639                      NORFLASH_ReadData(&norFlash, blockAddress, TextBuf, packetSize);
+    640                      for (i=0; i < packetSize; i++) {
+    641                      
+    642                          if (WORD_L(TextBuf[i]) != 0xFF) {
+    643                              TRACE_ERROR("Could not erase block %d\n\r", block);
+    644                              testFailed = 1;
+    645                              goto exit;
+    646                          }
+    647                      }
+    648                      
+    649                      blockAddress += packetSize;
+    650                      blockSize -= packetSize;
+    651                      if (blockSize < pageSize) {
+    652                           packetSize = blockSize;
+    653                      }
+    654                  }
+    655                  
+    656                  blockSize =  NorFlash_GetDeviceBlockSize(&(norFlash.norFlashInfo), block);
+    657                  blockAddress = NorFlash_GetDeviceSectorAddress(&(norFlash.norFlashInfo), block);
+    658                  packetSize = pageSize;
+    659                
+    660                      
+    661                  while (blockSize) {
+    662                      // Write page
+    663                      for (i = 0; i < packetSize; i++) {
+    664                          TextBuf[i] = WORD_L(i);
+    665                      }
+    666                      
+    667                      
+    668                      NORFLASH_WriteData(&norFlash, blockAddress, TextBuf, packetSize);
+    669                      // Check that data has been written correctly                    
+    670                      memset(TextBuf, 0, packetSize);
+    671                      NORFLASH_ReadData(&norFlash, blockAddress, TextBuf, packetSize);
+    672                  
+    673                      for (i = 0; i < packetSize; i++) {
+    674                          if (WORD_L(TextBuf[i]) != WORD_L(i)) {
+    675                              TRACE_ERROR("Could not write block %d\n\r", block);
+    676                              testFailed = 1;
+    677                              goto exit;
+    678                          }
+    679                      }
+    680                      blockAddress += packetSize;
+    681                      blockSize -= packetSize;
+    682                      if (blockSize < pageSize) {
+    683                           packetSize = blockSize;
+    684                      }
+    685                  }
+    686                  block++;    
+    687               
+    688              }
+    689              exit:
+    690              // Display test result
+    691              if (testFailed) {
+    692              
+    693                  printf("-E- Test failed.\n\r");
+    694              }
+    695              else {
+    696              
+    697                   printf("\n\r-I- Test passed.\n\r");
+    698              }
+    699          
+    700              return 0;
+    701              */
+    702             
+    703              
+    704              
+    705              // Infinite loop
+    706              while (1)
+    707              {
+    708                
+    709                  if(mTimerFlag) // 1ms OP 
+   \                     ??main_2:
+   \   00000148   0x........         LDR      R0,??DataTable8_17
+   \   0000014C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000150   0xE3500000         CMP      R0,#+0
+   \   00000154   0x0A000005         BEQ      ??main_3
+    710                  {
+    711                    mTimerFlag = FALSE;
+   \   00000158   0x........         LDR      R0,??DataTable8_17
+   \   0000015C   0xE3A01000         MOV      R1,#+0
+   \   00000160   0xE5801000         STR      R1,[R0, #+0]
+    712                    SW_TIMER();
+   \   00000164   0x........         BL       SW_TIMER
+    713                    
+    714                    ADD_CHECK(); // PCB ADD Check
+   \   00000168   0x........         BL       ADD_CHECK
+    715          
+    716          		  LED_Display_c_int10();
+                 		  ^
+Warning[Pe223]: function "LED_Display_c_int10" declared implicitly
+   \   0000016C   0x........         BL       LED_Display_c_int10
+    717                    
+    718                  }
+    719                  
+    720                  if(SCC_RX_OK_CHECK()) // 통신이 OK
+   \                     ??main_3:
+   \   00000170   0x........         BL       SCC_RX_OK_CHECK
+    721                  {
+    722                    
+    723                  }
+    724                 
+    725                  if(!(mTimerDebugCnt%1000))
+   \   00000174   0x........         LDR      R0,??DataTable8_18
+   \   00000178   0xE5900000         LDR      R0,[R0, #+0]
+   \   0000017C   0x........         LDR      R1,??DataTable8_41  ;; 0x10624dd3
+   \   00000180   0xE0832091         UMULL    R2,R3,R1,R0
+   \   00000184   0xE1A03323         LSR      R3,R3,#+6
+   \   00000188   0xE3A02FFA         MOV      R2,#+1000
+   \   0000018C   0xE0030392         MUL      R3,R2,R3
+   \   00000190   0xE0503003         SUBS     R3,R0,R3
+   \   00000194   0x1A000007         BNE      ??main_4
+    726                  {
+    727                    mTimerDebugCnt = 1;
+   \   00000198   0x........         LDR      R0,??DataTable8_18
+   \   0000019C   0xE3A01001         MOV      R1,#+1
+   \   000001A0   0xE5801000         STR      R1,[R0, #+0]
+    728                    RxTimerBufCnt++;
+   \   000001A4   0x........         LDR      R0,??DataTable8_11
+   \   000001A8   0xE5900000         LDR      R0,[R0, #+0]
+   \   000001AC   0xE2800001         ADD      R0,R0,#+1
+   \   000001B0   0x........         LDR      R1,??DataTable8_11
+   \   000001B4   0xE5810000         STR      R0,[R1, #+0]
+    729                    
+    730                    
+    731                     //USART_WriteBuffer(AT91C_BASE_US0,AABBB,30);
+    732                    //SPI_WriteBuffer(AT91C_BASE_SPI,TextBuf,100);
+    733                     
+    734                  }
+    735                  
+    736          
+    737          		Display_main();
+                 		^
+Warning[Pe223]: function "Display_main" declared implicitly
+
+      unsigned char *pSRamBuffer = (unsigned char *) AT91C_EBI_SDRAM;
+                     ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",529  Warning[Pe177]: 
+          variable "pSRamBuffer" was declared but never referenced
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                   ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe550]: 
+          variable "blockNumber" was set but never used
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                                ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe550]: 
+          variable "block" was set but never used
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                                       ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe177]: 
+          variable "blockSize" was declared but never referenced
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                                                  ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe177]: 
+          variable "blockAddress" was declared but never referenced
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                                                                ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe550]: 
+          variable "pageSize" was set but never used
+
+      unsigned int blockNumber, block, blockSize, blockAddress, pageSize, packetSize, i;
+                                                                          ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",533  Warning[Pe177]: 
+          variable "packetSize" was declared but never referenced
+
+      unsigned char testFailed;
+                    ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c",534  Warning[Pe550]: 
+          variable "testFailed" was set but never used
+   \                     ??main_4:
+   \   000001B8   0x........         BL       Display_main
+    738                  
+    739                  
+    740                  if(mHexSwitchAdd == 0x11)
+   \   000001BC   0x........         LDR      R0,??DataTable8_29
+   \   000001C0   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   000001C4   0xE3500011         CMP      R0,#+17
+   \   000001C8   0x1AFFFFDE         BNE      ??main_2
+    741                  {
+    742          
+    743                    if(RxTimerCnt >= 24)
+   \   000001CC   0x........         LDR      R0,??DataTable8_42
+   \   000001D0   0xE5900000         LDR      R0,[R0, #+0]
+   \   000001D4   0xE3500018         CMP      R0,#+24
+   \   000001D8   0x3AFFFFDA         BCC      ??main_2
+    744                    {
+    745                      RxTimerCnt = 0;
+   \   000001DC   0x........         LDR      R0,??DataTable8_42
+   \   000001E0   0xE3A01000         MOV      R1,#+0
+   \   000001E4   0xE5801000         STR      R1,[R0, #+0]
+    746                      
+    747                      RxTimerBufCnt++;
+   \   000001E8   0x........         LDR      R0,??DataTable8_11
+   \   000001EC   0xE5900000         LDR      R0,[R0, #+0]
+   \   000001F0   0xE2800001         ADD      R0,R0,#+1
+   \   000001F4   0x........         LDR      R1,??DataTable8_11
+   \   000001F8   0xE5810000         STR      R0,[R1, #+0]
+   \   000001FC   0xEAFFFFD1         B        ??main_2
+    748                      
+    749                         // Write buffer
+    750                      // AT26_Write(&at26,TextBuf, RxTimerBufCnt, 0);
+    751                      
+    752                     //SPI_PDC_sandframe((UCHAR*)TextBuf,RxTimerBufCnt,0,0);
+    753                     // memcpy(pSRamBuffer,0x00,24);
+    754                      //memset(pSRamBuffer,0xaa,1000);
+    755                       //memset(pSRamBuffer,0x55,1000);
+    756                      
+    757                      /*
+    758                      for(i= 0;i< 1000;i++)
+    759                      {
+    760                        pSRamBuffer[i] = WORD_L(i%100);//RxTimerBuf[i];
+    761                      }
+    762                      
+    763                      for(i=0;i<1000;i++)
+    764                      {
+    765                        TextBuf[i] =  WORD_L(pSRamBuffer[i]);
+    766                      }
+    767                      */
+    768                     
+    769                      /*
+    770                      if(WORD_L(RxTimerBufCnt) < 50 )
+    771                      {
+    772                        TextBuf[RxTimerBufCnt++] = mTimerDebugCnt;
+    773                        mTimerDebugCnt = 0;
+    774                      }
+    775                      else if(WORD_L(RxTimerCnt) >= 50)
+    776                      { 
+    777                        RxTimerBufCnt = 0;
+    778                      }
+    779                      */
+    780              
+    781                    }
+    782                  }
+    783                  
+    784                
+    785              }
+    786              
+    787          
+    788          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8:
+   \   00000000   0xFFFC0014         DC32     0xfffc0014
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_1:
+   \   00000000   0x........         DC32     bytesReceived
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_2:
+   \   00000000   0x........         DC32     pBuffer
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_3:
+   \   00000000   0xFFFC000C         DC32     0xfffc000c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_4:
+   \   00000000   0xFFFA0020         DC32     0xfffa0020
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_5:
+   \   00000000   0x........         DC32     ??bytesTotal
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_6:
+   \   00000000   0xFFFC0104         DC32     0xfffc0104
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_7:
+   \   00000000   0xFFFC0008         DC32     0xfffc0008
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_8:
+   \   00000000   0xFFFA0060         DC32     0xfffa0060
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_9:
+   \   00000000   0x........         DC32     ??stLineNum
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_10:
+   \   00000000   0x........         DC32     at26
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_11:
+   \   00000000   0x........         DC32     RxTimerBufCnt
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_12:
+   \   00000000   0xFFFA001C         DC32     0xfffa001c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_13:
+   \   00000000   0xFFFA0024         DC32     0xfffa0024
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_14:
+   \   00000000   0xFFFA0040         DC32     0xfffa0040
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_15:
+   \   00000000   0xFFFA005C         DC32     0xfffa005c
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_16:
+   \   00000000   0xFFFA0064         DC32     0xfffa0064
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_17:
+   \   00000000   0x........         DC32     mTimerFlag
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_18:
+   \   00000000   0x........         DC32     mTimerDebugCnt
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_19:
+   \   00000000   0x51EB851F         DC32     0x51eb851f
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_20:
+   \   00000000   0x........         DC32     ??sSw_Timer_Cnt
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_21:
+   \   00000000   0x........         DC32     pins+0x3C
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_22:
+   \   00000000   0x........         DC32     pins+0x48
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_23:
+   \   00000000   0x........         DC32     pins+0x54
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_24:
+   \   00000000   0x........         DC32     pins+0x60
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_25:
+   \   00000000   0x........         DC32     pins+0x6C
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_26:
+   \   00000000   0x........         DC32     pins+0x78
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_27:
+   \   00000000   0x........         DC32     pins+0x84
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_28:
+   \   00000000   0x........         DC32     pins+0x90
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_29:
+   \   00000000   0x........         DC32     mHexSwitchAdd
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_30:
+   \   00000000   0x........         DC32     `?<Constant {1, 2, 4}>`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_31:
+   \   00000000   0x........         DC32     pins
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_32:
+   \   00000000   0x........         DC32     RxTimerBuf
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_33:
+   \   00000000   0x........         DC32     TextBuf
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_34:
+   \   00000000   0x........         DC32     norFlash
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_35:
+   \   00000000   0x........         DC32     `?<Constant "-I- \\t Common Flash In...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_36:
+   \   00000000   0x........         DC32     `?<Constant "\\t Try bus width %d bi...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_37:
+   \   00000000   0x........         DC32     `?<Constant "Device Unknown\\n\\r">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_38:
+   \   00000000   0x........         DC32     `?<Constant "-I- \\t CFI detected an...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_39:
+   \   00000000   0x........         DC32     `?<Constant "-I- \\t manufactureID :...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_40:
+   \   00000000   0x........         DC32     norFlash+0x4
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_41:
+   \   00000000   0x10624DD3         DC32     0x10624dd3
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_42:
+   \   00000000   0x........         DC32     RxTimerCnt
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant {1, 2, 4}>`:
+   \   00000000   0x01 0x02          DC8 1, 2, 4, 0
+   \              0x04 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- \\t Common Flash In...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- \t Common Flash Interface detecting...\012\015"
+   \              0x2D 0x20    
+   \              0x09 0x20    
+   \              0x43 0x6F    
+   \              0x6D 0x6D    
+   \              0x6F 0x6E    
+   \              0x20 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x20 0x49    
+   \              0x6E 0x74    
+   \              0x65 0x72    
+   \              0x66 0x61    
+   \              0x63 0x65    
+   \              0x20 0x64    
+   \              0x65 0x74    
+   \              0x65 0x63    
+   \              0x74 0x69    
+   \              0x6E 0x67    
+   \              0x2E 0x2E    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "\\t Try bus width %d bi...">`:
+   \   00000000   0x09 0x20          DC8 "\t Try bus width %d bits\012\015"
+   \              0x54 0x72    
+   \              0x79 0x20    
+   \              0x62 0x75    
+   \              0x73 0x20    
+   \              0x77 0x69    
+   \              0x64 0x74    
+   \              0x68 0x20    
+   \              0x25 0x64    
+   \              0x20 0x62    
+   \              0x69 0x74    
+   \              0x73 0x0A    
+   \              0x0D 0x00    
+   \   0000001A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Device Unknown\\n\\r">`:
+   \   00000000   0x44 0x65          DC8 "Device Unknown\012\015"
+   \              0x76 0x69    
+   \              0x63 0x65    
+   \              0x20 0x55    
+   \              0x6E 0x6B    
+   \              0x6E 0x6F    
+   \              0x77 0x6E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000011   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- \\t CFI detected an...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- \t CFI detected and driver initialized\012\015"
+   \              0x2D 0x20    
+   \              0x09 0x20    
+   \              0x43 0x46    
+   \              0x49 0x20    
+   \              0x64 0x65    
+   \              0x74 0x65    
+   \              0x63 0x74    
+   \              0x65 0x64    
+   \              0x20 0x61    
+   \              0x6E 0x64    
+   \              0x20 0x64    
+   \              0x72 0x69    
+   \              0x76 0x65    
+   \              0x72 0x20    
+   \              0x69 0x6E    
+   \              0x69 0x74    
+   \              0x69 0x61    
+   \              0x6C 0x69    
+   \              0x7A 0x65    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- \\t manufactureID :...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- \t manufactureID : 0x%08x, deviceID : 0x%08x\012\015"
+   \              0x2D 0x20    
+   \              0x09 0x20    
+   \              0x6D 0x61    
+   \              0x6E 0x75    
+   \              0x66 0x61    
+   \              0x63 0x74    
+   \              0x75 0x72    
+   \              0x65 0x49    
+   \              0x44 0x20    
+   \              0x3A 0x20    
+   \              0x30 0x78    
+   \              0x25 0x30    
+   \              0x38 0x78    
+   \              0x2C 0x20    
+   \              0x64 0x65    
+   \              0x76 0x69    
+   \              0x63 0x65    
+   \              0x49 0x44    
+   \              0x20 0x3A    
+   \              0x20 0x30    
+   \              0x78 0x25    
+   \              0x30 0x38    
+   \              0x78 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+    789          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        8  ADD_CHECK
+              8 -> ChackHexa
+       32  ChackHexa
+             32 -> PIO_Get
+        8  ConfigurePit
+              8 -> AIC_ConfigureIT
+              8 -> AIC_DisableIT
+              8 -> AIC_EnableIT
+              0 -> PIT_Enable
+              8 -> PIT_EnableIT
+              8 -> PIT_Init
+       16  ConfigureTc0
+             16 -> AIC_ConfigureIT
+             16 -> AIC_EnableIT
+             16 -> PMC_EnablePeripheral
+             16 -> TC_Configure
+             16 -> TC_FindMckDivisor
+             16 -> __aeabi_uidiv
+       16  ConfigureTc1
+             16 -> AIC_ConfigureIT
+             16 -> AIC_EnableIT
+             16 -> PMC_EnablePeripheral
+             16 -> TC_Configure
+             16 -> TC_FindMckDivisor
+             16 -> __aeabi_uidiv
+        8  ConfigureUsart0
+              8 -> AIC_ConfigureIT
+              8 -> AIC_EnableIT
+              8 -> PMC_EnablePeripheral
+              8 -> USART_Configure
+              0 -> USART_SetReceiverEnabled
+              8 -> USART_SetTransmitterEnabled
+        8  ISR_Pit
+              8 -> PIT_GetPIVR
+              8 -> PIT_GetStatus
+        8  ISR_Tc0
+              8 -> USART_ReadBuffer
+        8  ISR_Tc1
+              8 -> AT26_Write
+        8  ISR_Usart0
+              0 -> SCC_ISR
+              8 -> USART_ReadBuffer
+        0  MODE_SET
+        0  NorFlashAllErase
+        0  NorFlashBlockErase
+        0  NorFlashWrite
+        8  SW_TIMER
+              8 -> SCC_ISR_Timer
+       16  main
+             16 -> ADD_CHECK
+             16 -> BOARD_ConfigureNorFlash
+             16 -> BOARD_ConfigureSdram
+             16 -> ConfigurePit
+             16 -> ConfigureTc0
+             16 -> ConfigureTc1
+             16 -> ConfigureUsart0
+             16 -> Display_main
+             16 -> LED_Display_c_int10
+             16 -> MODE_SET
+             16 -> NORFLASH_ReadDeviceID
+             16 -> NORFLASH_ReadManufactoryID
+             16 -> NorFlash_CFI_Detect
+             16 -> NorFlash_GetDeviceMinBlockSize
+             16 -> NorFlash_GetDeviceNumOfBlocks
+             16 -> PIO_Configure
+             16 -> SCC_Init
+             16 -> SCC_RX_OK_CHECK
+             16 -> SPI_Init
+             16 -> SW_TIMER
+             16 -> TC_Start
+             16 -> USART_ReadBuffer
+             16 -> memcpy
+             16 -> memset
+             16 -> min
+             16 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      44  ?<Constant "-I- \t CFI detected an...">
+      44  ?<Constant "-I- \t Common Flash In...">
+      52  ?<Constant "-I- \t manufactureID :...">
+      20  ?<Constant "Device Unknown\n\r">
+      28  ?<Constant "\t Try bus width %d bi...">
+       4  ?<Constant {1, 2, 4}>
+       4  ??DataTable8
+       4  ??DataTable8_1
+       4  ??DataTable8_10
+       4  ??DataTable8_11
+       4  ??DataTable8_12
+       4  ??DataTable8_13
+       4  ??DataTable8_14
+       4  ??DataTable8_15
+       4  ??DataTable8_16
+       4  ??DataTable8_17
+       4  ??DataTable8_18
+       4  ??DataTable8_19
+       4  ??DataTable8_2
+       4  ??DataTable8_20
+       4  ??DataTable8_21
+       4  ??DataTable8_22
+       4  ??DataTable8_23
+       4  ??DataTable8_24
+       4  ??DataTable8_25
+       4  ??DataTable8_26
+       4  ??DataTable8_27
+       4  ??DataTable8_28
+       4  ??DataTable8_29
+       4  ??DataTable8_3
+       4  ??DataTable8_30
+       4  ??DataTable8_31
+       4  ??DataTable8_32
+       4  ??DataTable8_33
+       4  ??DataTable8_34
+       4  ??DataTable8_35
+       4  ??DataTable8_36
+       4  ??DataTable8_37
+       4  ??DataTable8_38
+       4  ??DataTable8_39
+       4  ??DataTable8_4
+       4  ??DataTable8_40
+       4  ??DataTable8_41
+       4  ??DataTable8_42
+       4  ??DataTable8_5
+       4  ??DataTable8_6
+       4  ??DataTable8_7
+       4  ??DataTable8_8
+       4  ??DataTable8_9
+      16  ?Subroutine0
+      44  ADD_CHECK
+     160  ChackHexa
+      60  ConfigurePit
+     124  ConfigureTc0
+     124  ConfigureTc1
+     108  ConfigureUsart0
+      40  ISR_Pit
+     120  ISR_Tc0
+     160  ISR_Tc1
+     120  ISR_Usart0
+      56  MODE_SET
+      92  NorFlashAllErase
+      92  NorFlashBlockErase
+      76  NorFlashWrite
+     400  RxTimerBuf
+       4  RxTimerBufCnt
+       4  RxTimerCnt
+     120  SW_TIMER
+    5000  TextBuf
+       4  bytesReceived
+       4  bytesTotal
+       1  mHexSwitchAdd
+       4  mTc1_Cnt
+       4  mTimerDebugCnt
+       4  mTimerFlag
+     512  main
+     104  norFlash
+       1  pBuffer
+      24  pString
+     216  pins
+       4  sSw_Timer_Cnt
+       4  stLineNum
+
+ 
+ 5 566 bytes in section .bss
+   408 bytes in section .rodata
+ 2 196 bytes in section .text
+ 
+ 2 196 bytes of CODE  memory
+   408 bytes of CONST memory
+ 5 566 bytes of DATA  memory
+
+Errors: none
+Warnings: 13

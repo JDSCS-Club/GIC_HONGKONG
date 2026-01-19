@@ -1,0 +1,764 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     06/Apr/2015  18:37:25 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\peripherals\usart\usart.c                     #
+#    Command line =  "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\peripherals\usart\usart.c" -D at91sam7se512   #
+#                    -D flash -D TRACE_LEVEL=4 -lC "C:\Users\jang             #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_ #
+#                    flash\List\" --remarks --diag_suppress Pe826,Pe1375 -o   #
+#                    "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\Obj\" --no_cse --no_unroll           #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/peripherals\" -I "C:\Users\jang         #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/memories\" -I "C:\Users\jang                          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib\" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/components\" -I "C:\Users\jang          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/boards/at91sam7se-ek\" --interwork --cpu_mode arm     #
+#                    -On --use_c++_inline                                     #
+#    List file    =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\List\usart.lst                       #
+#    Object file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\Obj\usart.o                          #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91lib\peripherals\usart\usart.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "usart.h"
+     35          #include <utility/trace.h>
+     36          #include <utility/assert.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //         Exported functions
+     40          //------------------------------------------------------------------------------
+     41          //------------------------------------------------------------------------------
+     42          /// Configures an USART peripheral with the specified parameters.
+     43          /// \param usart  Pointer to the USART peripheral to configure.
+     44          /// \param mode  Desired value for the USART mode register (see the datasheet).
+     45          /// \param baudrate  Baudrate at which the USART should operate (in Hz).
+     46          /// \param masterClock  Frequency of the system master clock (in Hz).
+     47          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     48          void USART_Configure(AT91S_USART *usart,
+     49                                      unsigned int mode,
+     50                                      unsigned int baudrate,
+     51                                      unsigned int masterClock)
+     52          {
+   \                     USART_Configure:
+   \   00000000   0xE92D40F0         PUSH     {R4-R7,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0xE1B06002         MOVS     R6,R2
+   \   00000010   0xE1B07003         MOVS     R7,R3
+     53              // Reset and disable receiver & transmitter
+     54              usart->US_CR = AT91C_US_RSTRX | AT91C_US_RSTTX
+     55                             | AT91C_US_RXDIS | AT91C_US_TXDIS;
+   \   00000014   0xE3A000AC         MOV      R0,#+172
+   \   00000018   0xE5840000         STR      R0,[R4, #+0]
+     56          
+     57              // Configure mode
+     58              usart->US_MR = mode;
+   \   0000001C   0xE5845004         STR      R5,[R4, #+4]
+     59          
+     60              // Configure baudrate
+     61              // Asynchronous, no oversampling
+     62              if (((mode & AT91C_US_SYNC) == 0)
+     63                  && ((mode & AT91C_US_OVER) == 0)) {
+   \   00000020   0xE3A00A80         MOV      R0,#+524288
+   \   00000024   0xE3800F40         ORR      R0,R0,#0x100
+   \   00000028   0xE1100005         TST      R0,R5
+   \   0000002C   0x1A000004         BNE      ??USART_Configure_0
+     64              
+     65                  usart->US_BRGR = (masterClock / baudrate) / 16;
+   \   00000030   0xE1B00007         MOVS     R0,R7
+   \   00000034   0xE1B01006         MOVS     R1,R6
+   \   00000038   0x........         BL       __aeabi_uidiv
+   \   0000003C   0xE1B00220         LSRS     R0,R0,#+4
+   \   00000040   0xE5840020         STR      R0,[R4, #+32]
+     66              }
+     67              // TODO other modes
+     68          }
+   \                     ??USART_Configure_0:
+   \   00000044   0xE8BD40F0         POP      {R4-R7,LR}
+   \   00000048   0xE12FFF1E         BX       LR               ;; return
+     69          
+     70          //------------------------------------------------------------------------------
+     71          /// Enables or disables the transmitter of an USART peripheral.
+     72          /// \param usart  Pointer to an USART peripheral
+     73          /// \param enabled  If true, the transmitter is enabled; otherwise it is
+     74          ///                 disabled.
+     75          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     76          void USART_SetTransmitterEnabled(AT91S_USART *usart,
+     77                                                  unsigned char enabled)
+     78          {
+     79              if (enabled) {
+   \                     USART_SetTransmitterEnabled:
+   \   00000000   0xE21110FF         ANDS     R1,R1,#0xFF      ;; Zero extend
+   \   00000004   0xE3510000         CMP      R1,#+0
+   \   00000008   0x0A000002         BEQ      ??USART_SetTransmitterEnabled_0
+     80          
+     81                  usart->US_CR = AT91C_US_TXEN;
+   \   0000000C   0xE3A02040         MOV      R2,#+64
+   \   00000010   0xE5802000         STR      R2,[R0, #+0]
+   \   00000014   0xEA000001         B        ??USART_SetTransmitterEnabled_1
+     82              }
+     83              else {
+     84          
+     85                  usart->US_CR = AT91C_US_TXDIS;
+   \                     ??USART_SetTransmitterEnabled_0:
+   \   00000018   0xE3A02080         MOV      R2,#+128
+   \   0000001C   0xE5802000         STR      R2,[R0, #+0]
+     86              }
+     87          }
+   \                     ??USART_SetTransmitterEnabled_1:
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+     88          
+     89          //------------------------------------------------------------------------------
+     90          /// Enables or disables the receiver of an USART peripheral
+     91          /// \param usart  Pointer to an USART peripheral
+     92          /// \param enabled  If true, the receiver is enabled; otherwise it is disabled.
+     93          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     94          void USART_SetReceiverEnabled(AT91S_USART *usart,
+     95                                               unsigned char enabled)
+     96          {
+     97              if (enabled) {
+   \                     USART_SetReceiverEnabled:
+   \   00000000   0xE21110FF         ANDS     R1,R1,#0xFF      ;; Zero extend
+   \   00000004   0xE3510000         CMP      R1,#+0
+   \   00000008   0x0A000002         BEQ      ??USART_SetReceiverEnabled_0
+     98          
+     99                  usart->US_CR = AT91C_US_RXEN;
+   \   0000000C   0xE3A02010         MOV      R2,#+16
+   \   00000010   0xE5802000         STR      R2,[R0, #+0]
+   \   00000014   0xEA000001         B        ??USART_SetReceiverEnabled_1
+    100              }
+    101              else {
+    102          
+    103                  usart->US_CR = AT91C_US_RXDIS;
+   \                     ??USART_SetReceiverEnabled_0:
+   \   00000018   0xE3A02020         MOV      R2,#+32
+   \   0000001C   0xE5802000         STR      R2,[R0, #+0]
+    104              }
+    105          }
+   \                     ??USART_SetReceiverEnabled_1:
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+    106          
+    107          //------------------------------------------------------------------------------
+    108          /// Sends one packet of data through the specified USART peripheral. This
+    109          /// function operates synchronously, so it only returns when the data has been
+    110          /// actually sent.
+    111          /// \param usart  Pointer to an USART peripheral.
+    112          /// \param data  Data to send including 9nth bit and sync field if necessary (in
+    113          ///              the same format as the US_THR register in the datasheet).
+    114          /// \param timeOut  Time out value (0 = no timeout).
+    115          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    116          void USART_Write(
+    117              AT91S_USART *usart,
+    118              unsigned short data,
+    119              volatile unsigned int timeOut)
+    120          {
+   \                     USART_Write:
+   \   00000000   0xE92D4034         PUSH     {R2,R4,R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    121              if (timeOut == 0) {
+   \   0000000C   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000010   0xE3500000         CMP      R0,#+0
+   \   00000014   0x1A000003         BNE      ??USART_Write_0
+    122          
+    123                  while ((usart->US_CSR & AT91C_US_TXEMPTY) == 0);
+   \                     ??USART_Write_1:
+   \   00000018   0xE5940014         LDR      R0,[R4, #+20]
+   \   0000001C   0xE3100F80         TST      R0,#0x200
+   \   00000020   0x1A00000D         BNE      ??USART_Write_2
+   \   00000024   0xEAFFFFFB         B        ??USART_Write_1
+    124              }
+    125              else {
+    126          
+    127                  while ((usart->US_CSR & AT91C_US_TXEMPTY) == 0) {
+   \                     ??USART_Write_0:
+   \   00000028   0xE5940014         LDR      R0,[R4, #+20]
+   \   0000002C   0xE3100F80         TST      R0,#0x200
+   \   00000030   0x1A000009         BNE      ??USART_Write_2
+    128          
+    129                      if (timeOut == 0) {
+   \   00000034   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000038   0xE3500000         CMP      R0,#+0
+   \   0000003C   0x1A000002         BNE      ??USART_Write_3
+    130          
+    131                          TRACE_ERROR("USART_Write: Timed out.\n\r");
+   \   00000040   0x........         LDR      R0,??DataTable2
+   \   00000044   0x........         BL       printf
+    132                          return;
+   \   00000048   0xEA000007         B        ??USART_Write_4
+    133                      }
+    134                      timeOut--;
+   \                     ??USART_Write_3:
+   \   0000004C   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000050   0xE2500001         SUBS     R0,R0,#+1
+   \   00000054   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000058   0xEAFFFFF2         B        ??USART_Write_0
+    135                  }
+    136              }
+    137          
+    138              usart->US_THR = data;
+   \                     ??USART_Write_2:
+   \   0000005C   0xE1B00005         MOVS     R0,R5
+   \   00000060   0xE1A00800         LSL      R0,R0,#+16
+   \   00000064   0xE1B00820         LSRS     R0,R0,#+16
+   \   00000068   0xE584001C         STR      R0,[R4, #+28]
+    139          }
+   \                     ??USART_Write_4:
+   \   0000006C   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000070   0xE12FFF1E         BX       LR               ;; return
+    140          
+    141          //------------------------------------------------------------------------------
+    142          /// Sends the contents of a data buffer through the specified USART peripheral.
+    143          /// This function returns immediately (1 if the buffer has been queued, 0
+    144          /// otherwise); poll the ENDTX and TXBUFE bits of the USART status register
+    145          /// to check for the transfer completion.
+    146          /// \param usart  Pointer to an USART peripheral.
+    147          /// \param buffer  Pointer to the data buffer to send.
+    148          /// \param size  Size of the data buffer (in bytes).
+    149          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    150          unsigned char USART_WriteBuffer(
+    151              AT91S_USART *usart,
+    152              void *buffer,
+    153              unsigned int size)
+    154          {
+   \                     USART_WriteBuffer:
+   \   00000000   0xE1B03000         MOVS     R3,R0
+    155              // Check if the first PDC bank is free
+    156              if ((usart->US_TCR == 0) && (usart->US_TNCR == 0)) {
+   \   00000004   0xE593010C         LDR      R0,[R3, #+268]
+   \   00000008   0xE3500000         CMP      R0,#+0
+   \   0000000C   0x1A000008         BNE      ??USART_WriteBuffer_0
+   \   00000010   0xE593011C         LDR      R0,[R3, #+284]
+   \   00000014   0xE3500000         CMP      R0,#+0
+   \   00000018   0x1A000005         BNE      ??USART_WriteBuffer_0
+    157          
+    158                  usart->US_TPR = (unsigned int) buffer;
+   \   0000001C   0xE5831108         STR      R1,[R3, #+264]
+    159                  usart->US_TCR = size;
+   \   00000020   0xE583210C         STR      R2,[R3, #+268]
+    160                  usart->US_PTCR = AT91C_PDC_TXTEN;
+   \   00000024   0xE3A00F40         MOV      R0,#+256
+   \   00000028   0xE5830120         STR      R0,[R3, #+288]
+    161          
+    162                  return 1;
+   \   0000002C   0xE3A00001         MOV      R0,#+1
+   \   00000030   0xEA000007         B        ??USART_WriteBuffer_1
+    163              }
+    164              // Check if the second PDC bank is free
+    165              else if (usart->US_TNCR == 0) {
+   \                     ??USART_WriteBuffer_0:
+   \   00000034   0xE593011C         LDR      R0,[R3, #+284]
+   \   00000038   0xE3500000         CMP      R0,#+0
+   \   0000003C   0x1A000003         BNE      ??USART_WriteBuffer_2
+    166          
+    167                  usart->US_TNPR = (unsigned int) buffer;
+   \   00000040   0xE5831118         STR      R1,[R3, #+280]
+    168                  usart->US_TNCR = size;
+   \   00000044   0xE583211C         STR      R2,[R3, #+284]
+    169          
+    170                  return 1;
+   \   00000048   0xE3A00001         MOV      R0,#+1
+   \   0000004C   0xEA000000         B        ??USART_WriteBuffer_1
+    171              }
+    172              else {
+    173          
+    174                  return 0;
+   \                     ??USART_WriteBuffer_2:
+   \   00000050   0xE3A00000         MOV      R0,#+0
+   \                     ??USART_WriteBuffer_1:
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    175              }
+    176          }
+    177          
+    178          //------------------------------------------------------------------------------
+    179          /// Reads and return a packet of data on the specified USART peripheral. This
+    180          /// function operates asynchronously, so it waits until some data has been
+    181          /// received.
+    182          /// \param usart  Pointer to an USART peripheral.
+    183          /// \param timeOut  Time out value (0 -> no timeout).
+    184          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    185          unsigned short USART_Read(
+    186              AT91S_USART *usart,
+    187              volatile unsigned int timeOut)
+    188          {
+   \                     USART_Read:
+   \   00000000   0xE92D4013         PUSH     {R0,R1,R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+    189              if (timeOut == 0) {
+   \   00000008   0xE59D0004         LDR      R0,[SP, #+4]
+   \   0000000C   0xE3500000         CMP      R0,#+0
+   \   00000010   0x1A000003         BNE      ??USART_Read_0
+    190          
+    191                  while ((usart->US_CSR & AT91C_US_RXRDY) == 0);
+   \                     ??USART_Read_1:
+   \   00000014   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000018   0xE3100001         TST      R0,#0x1
+   \   0000001C   0x1A00000E         BNE      ??USART_Read_2
+   \   00000020   0xEAFFFFFB         B        ??USART_Read_1
+    192              }
+    193              else {
+    194          
+    195                  while ((usart->US_CSR & AT91C_US_RXRDY) == 0) {
+   \                     ??USART_Read_0:
+   \   00000024   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000028   0xE3100001         TST      R0,#0x1
+   \   0000002C   0x1A00000A         BNE      ??USART_Read_2
+    196          
+    197                      if (timeOut == 0) {
+   \   00000030   0xE59D0004         LDR      R0,[SP, #+4]
+   \   00000034   0xE3500000         CMP      R0,#+0
+   \   00000038   0x1A000003         BNE      ??USART_Read_3
+    198          
+    199                          TRACE_ERROR("USART_Read: Timed out.\n\r");
+   \   0000003C   0x........         LDR      R0,??DataTable2_1
+   \   00000040   0x........         BL       printf
+    200                          return 0;
+   \   00000044   0xE3A00000         MOV      R0,#+0
+   \   00000048   0xEA000006         B        ??USART_Read_4
+    201                      }
+    202                      timeOut--;
+   \                     ??USART_Read_3:
+   \   0000004C   0xE59D0004         LDR      R0,[SP, #+4]
+   \   00000050   0xE2500001         SUBS     R0,R0,#+1
+   \   00000054   0xE58D0004         STR      R0,[SP, #+4]
+   \   00000058   0xEAFFFFF1         B        ??USART_Read_0
+    203                  }
+    204              }
+    205          
+    206              return usart->US_RHR;
+   \                     ??USART_Read_2:
+   \   0000005C   0xE5940018         LDR      R0,[R4, #+24]
+   \   00000060   0xE1A00800         LSL      R0,R0,#+16
+   \   00000064   0xE1B00820         LSRS     R0,R0,#+16
+   \                     ??USART_Read_4:
+   \   00000068   0xE8BD4016         POP      {R1,R2,R4,LR}
+   \   0000006C   0xE12FFF1E         BX       LR               ;; return
+    207          }
+    208          
+    209          //------------------------------------------------------------------------------
+    210          /// Reads data from an USART peripheral, filling the provided buffer until it
+    211          /// becomes full. This function returns immediately with 1 if the buffer has
+    212          /// been queued for transmission; otherwise 0.
+    213          /// \param usart  Pointer to an USART peripheral.
+    214          /// \param buffer  Pointer to the buffer where the received data will be stored.
+    215          /// \param size  Size of the data buffer (in bytes).
+    216          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    217          unsigned char USART_ReadBuffer(AT91S_USART *usart,
+    218                                                void *buffer,
+    219                                                unsigned int size)
+    220          {
+   \                     USART_ReadBuffer:
+   \   00000000   0xE1B03000         MOVS     R3,R0
+    221              // Check if the first PDC bank is free
+    222              if ((usart->US_RCR == 0) && (usart->US_RNCR == 0)) {
+   \   00000004   0xE5930104         LDR      R0,[R3, #+260]
+   \   00000008   0xE3500000         CMP      R0,#+0
+   \   0000000C   0x1A000008         BNE      ??USART_ReadBuffer_0
+   \   00000010   0xE5930114         LDR      R0,[R3, #+276]
+   \   00000014   0xE3500000         CMP      R0,#+0
+   \   00000018   0x1A000005         BNE      ??USART_ReadBuffer_0
+    223          
+    224                  usart->US_RPR = (unsigned int) buffer;
+   \   0000001C   0xE5831100         STR      R1,[R3, #+256]
+    225                  usart->US_RCR = size;
+   \   00000020   0xE5832104         STR      R2,[R3, #+260]
+    226                  usart->US_PTCR = AT91C_PDC_RXTEN;
+   \   00000024   0xE3A00001         MOV      R0,#+1
+   \   00000028   0xE5830120         STR      R0,[R3, #+288]
+    227          
+    228                  return 1;
+   \   0000002C   0xE3A00001         MOV      R0,#+1
+   \   00000030   0xEA000007         B        ??USART_ReadBuffer_1
+    229              }
+    230              // Check if the second PDC bank is free
+    231              else if (usart->US_RNCR == 0) {
+   \                     ??USART_ReadBuffer_0:
+   \   00000034   0xE5930114         LDR      R0,[R3, #+276]
+   \   00000038   0xE3500000         CMP      R0,#+0
+   \   0000003C   0x1A000003         BNE      ??USART_ReadBuffer_2
+    232          
+    233                  usart->US_RNPR = (unsigned int) buffer;
+   \   00000040   0xE5831110         STR      R1,[R3, #+272]
+    234                  usart->US_RNCR = size;
+   \   00000044   0xE5832114         STR      R2,[R3, #+276]
+    235          
+    236                  return 1;
+   \   00000048   0xE3A00001         MOV      R0,#+1
+   \   0000004C   0xEA000000         B        ??USART_ReadBuffer_1
+    237              }
+    238              else {
+    239          
+    240                  return 0;
+   \                     ??USART_ReadBuffer_2:
+   \   00000050   0xE3A00000         MOV      R0,#+0
+   \                     ??USART_ReadBuffer_1:
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    241              }
+    242          }
+    243          
+    244          //------------------------------------------------------------------------------
+    245          /// Returns 1 if some data has been received and can be read from an USART;
+    246          /// otherwise returns 0.
+    247          /// \param usart  Pointer to an AT91S_USART instance.
+    248          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    249          unsigned char USART_IsDataAvailable(AT91S_USART *usart)
+    250          {
+   \                     USART_IsDataAvailable:
+   \   00000000   0xE1B01000         MOVS     R1,R0
+    251              if ((usart->US_CSR & AT91C_US_RXRDY) != 0) {
+   \   00000004   0xE5910014         LDR      R0,[R1, #+20]
+   \   00000008   0xE3100001         TST      R0,#0x1
+   \   0000000C   0x0A000001         BEQ      ??USART_IsDataAvailable_0
+    252          
+    253                  return 1;
+   \   00000010   0xE3A00001         MOV      R0,#+1
+   \   00000014   0xEA000000         B        ??USART_IsDataAvailable_1
+    254              }
+    255              else {
+    256          
+    257                  return 0;
+   \                     ??USART_IsDataAvailable_0:
+   \   00000018   0xE3A00000         MOV      R0,#+0
+   \                     ??USART_IsDataAvailable_1:
+   \   0000001C   0xE12FFF1E         BX       LR               ;; return
+    258              }
+    259          }
+    260          
+    261          //------------------------------------------------------------------------------
+    262          /// Sets the filter value for the IRDA demodulator.
+    263          /// \param pUsart  Pointer to an AT91S_USART instance.
+    264          /// \param filter  Filter value.
+    265          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    266          void USART_SetIrdaFilter(AT91S_USART *pUsart, unsigned char filter)
+    267          {
+   \                     USART_SetIrdaFilter:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    268              SANITY_CHECK(pUsart);
+   \   0000000C   0xE3540000         CMP      R4,#+0
+   \   00000010   0x1A000006         BNE      ??USART_SetIrdaFilter_0
+   \   00000014   0x........         LDR      R0,??DataTable2_2
+   \   00000018   0x........         BL       printf
+   \   0000001C   0xE3A02F43         MOV      R2,#+268
+   \   00000020   0x........         LDR      R1,??DataTable2_3
+   \   00000024   0x........         LDR      R0,??DataTable2_4
+   \   00000028   0x........         BL       printf
+   \                     ??USART_SetIrdaFilter_1:
+   \   0000002C   0xEAFFFFFE         B        ??USART_SetIrdaFilter_1
+    269          
+    270              pUsart->US_IF = filter;
+   \                     ??USART_SetIrdaFilter_0:
+   \   00000030   0xE1B00005         MOVS     R0,R5
+   \   00000034   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000038   0xE584004C         STR      R0,[R4, #+76]
+    271          }
+   \   0000003C   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000040   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     `?<Constant "-E- USART_Write: Time...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x........         DC32     `?<Constant "-E- USART_Read: Timed...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0x........         DC32     `?<Constant "C:\\\\Users\\\\jang duksu\\\\D...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0x........         DC32     `?<Constant "Sanity check failed a...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- USART_Write: Time...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- USART_Write: Timed out.\012\015"
+   \              0x2D 0x20    
+   \              0x55 0x53    
+   \              0x41 0x52    
+   \              0x54 0x5F    
+   \              0x57 0x72    
+   \              0x69 0x74    
+   \              0x65 0x3A    
+   \              0x20 0x54    
+   \              0x69 0x6D    
+   \              0x65 0x64    
+   \              0x20 0x6F    
+   \              0x75 0x74    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   0000001E   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- USART_Read: Timed...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- USART_Read: Timed out.\012\015"
+   \              0x2D 0x20    
+   \              0x55 0x53    
+   \              0x41 0x52    
+   \              0x54 0x5F    
+   \              0x52 0x65    
+   \              0x61 0x64    
+   \              0x3A 0x20    
+   \              0x54 0x69    
+   \              0x6D 0x65    
+   \              0x64 0x20    
+   \              0x6F 0x75    
+   \              0x74 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Sanity check failed a...">`:
+   \   00000000   0x53 0x61          DC8 "Sanity check failed at %s:%d\012\015"
+   \              0x6E 0x69    
+   \              0x74 0x79    
+   \              0x20 0x63    
+   \              0x68 0x65    
+   \              0x63 0x6B    
+   \              0x20 0x66    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x61 0x74    
+   \              0x20 0x25    
+   \              0x73 0x3A    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "C:\\\\Users\\\\jang duksu\\\\D...">`:
+   \   00000000   0x43 0x3A          DC8 43H, 3AH, 5CH, 55H, 73H, 65H, 72H, 73H
+   \              0x5C 0x55    
+   \              0x73 0x65    
+   \              0x72 0x73    
+   \   00000008   0x5C 0x6A          DC8 5CH, 6AH, 61H, 6EH, 67H, 20H, 64H, 75H
+   \              0x61 0x6E    
+   \              0x67 0x20    
+   \              0x64 0x75    
+   \   00000010   0x6B 0x73          DC8 6BH, 73H, 75H, 5CH, 44H, 72H, 6FH, 70H
+   \              0x75 0x5C    
+   \              0x44 0x72    
+   \              0x6F 0x70    
+   \   00000018   0x62 0x6F          DC8 62H, 6FH, 78H, 5CH, 0C8H, 0B8H, 0BBH, 0E7H
+   \              0x78 0x5C    
+   \              0xC8 0xB8    
+   \              0xBB 0xE7    
+   \   00000020   0x5C 0x4A          DC8 5CH, 4AH, 44H, 53H, 5FH, 50H, 52H, 4FH
+   \              0x44 0x53    
+   \              0x5F 0x50    
+   \              0x52 0x4F    
+   \   00000028   0x5C 0xB1          DC8 5CH, 0B1H, 0B9H, 0B3H, 0BBH, 20H, 0C7H, 0C1H
+   \              0xB9 0xB3    
+   \              0xBB 0x20    
+   \              0xC7 0xC1    
+   \   00000030   0xB7 0xCE          DC8 0B7H, 0CEH, 0C1H, 0A7H, 0C6H, 0AEH, 5CH, 0B4H
+   \              0xC1 0xA7    
+   \              0xC6 0xAE    
+   \              0x5C 0xB4    
+   \   00000038   0xEB 0xB1          DC8 0EBH, 0B1H, 0B8H, 20H, 0B8H, 0F0H, 0B3H, 0EBH
+   \              0xB8 0x20    
+   \              0xB8 0xF0    
+   \              0xB3 0xEB    
+   \   00000040   0xB7 0xB9          DC8 0B7H, 0B9H, 0C0H, 0CFH, 5CH, 0C7H, 0C1H, 0B7H
+   \              0xC0 0xCF    
+   \              0x5C 0xC7    
+   \              0xC1 0xB7    
+   \   00000048   0xCE 0xB1          DC8 0CEH, 0B1H, 0D7H, 0B7H, 0A5H, 5CH, 41H, 52H
+   \              0xD7 0xB7    
+   \              0xA5 0x5C    
+   \              0x41 0x52    
+   \   00000050   0x4D 0x5F          DC8 4DH, 5FH, 41H, 54H, 39H, 31H, 73H, 61H
+   \              0x41 0x54    
+   \              0x39 0x31    
+   \              0x73 0x61    
+   \   00000058   0x6D 0x37          DC8 6DH, 37H, 73H, 65H, 35H, 31H, 32H, 5FH
+   \              0x73 0x65    
+   \              0x35 0x31    
+   \              0x32 0x5F    
+   \   00000060   0x44 0x61          DC8 44H, 61H, 67H, 75H, 5FH, 4CH, 45H, 44H
+   \              0x67 0x75    
+   \              0x5F 0x4C    
+   \              0x45 0x44    
+   \   00000068   0x5C 0x61          DC8 5CH, 61H, 74H, 39H, 31H, 6CH, 69H, 62H
+   \              0x74 0x39    
+   \              0x31 0x6C    
+   \              0x69 0x62    
+   \   00000070   0x5C 0x70          DC8 5CH, 70H, 65H, 72H, 69H, 70H, 68H, 65H
+   \              0x65 0x72    
+   \              0x69 0x70    
+   \              0x68 0x65    
+   \   00000078   0x72 0x61          DC8 72H, 61H, 6CH, 73H, 5CH, 75H, 73H, 61H
+   \              0x6C 0x73    
+   \              0x5C 0x75    
+   \              0x73 0x61    
+   \   00000080   0x72 0x74          DC8 72H, 74H, 5CH, 75H, 73H, 61H, 72H, 74H
+   \              0x5C 0x75    
+   \              0x73 0x61    
+   \              0x72 0x74    
+   \   00000088   0x2E 0x63          DC8 2EH, 63H, 0
+   \              0x00         
+   \   0000008B   0x00               DC8 0
+    272          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       20  USART_Configure
+             20 -> __aeabi_uidiv
+        0  USART_IsDataAvailable
+       16  USART_Read
+             16 -> printf
+        0  USART_ReadBuffer
+       16  USART_SetIrdaFilter
+             16 -> printf
+        0  USART_SetReceiverEnabled
+        0  USART_SetTransmitterEnabled
+       16  USART_Write
+             16 -> printf
+        0  USART_WriteBuffer
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ?<Constant "-E- USART_Read: Timed...">
+      32  ?<Constant "-E- USART_Write: Time...">
+      16  ?<Constant "-F- ASSERT: ">
+     140  ?<Constant "C:\\Users\\jang duksu\\D...">
+      32  ?<Constant "Sanity check failed a...">
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+      76  USART_Configure
+      32  USART_IsDataAvailable
+     112  USART_Read
+      88  USART_ReadBuffer
+      68  USART_SetIrdaFilter
+      36  USART_SetReceiverEnabled
+      36  USART_SetTransmitterEnabled
+     116  USART_Write
+      88  USART_WriteBuffer
+
+ 
+ 252 bytes in section .rodata
+ 672 bytes in section .text
+ 
+ 672 bytes of CODE  memory
+ 252 bytes of CONST memory
+
+Errors: none
+Warnings: none

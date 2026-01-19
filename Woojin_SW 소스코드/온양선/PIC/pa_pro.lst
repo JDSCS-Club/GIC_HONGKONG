@@ -1,0 +1,2735 @@
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    1
+
+        1                   ;******************************************************************************
+        2                   ;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+        3                   ;* Date/Time created: Mon Apr 29 17:36:35 2013                                *
+        4                   ;******************************************************************************
+        5                           .regalias       ; enable floating point register aliases
+        6          0000000b fp      .set    ar3
+        7          0000000b FP      .set    ar3
+        8                   ;******************************************************************************
+        9                   ;* GLOBAL FILE PARAMETERS                                                     *
+       10                   ;*                                                                            *
+       11                   ;*   Optimization       : Always Choose Smaller Code Size                     *
+       12                   ;*   Memory             : Small Memory Model                                  *
+       13                   ;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+       14                   ;*   Multiply           : in Hardware (24 bits max)                           *
+       15                   ;*   Memory Info        : Unmapped Memory Exists                              *
+       16                   ;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+       17                   ;*   Calls              : Normal Library ASM calls                            *
+       18                   ;*   Debug Info         : Optimized TI Debug Information                      *
+       19                   ;******************************************************************************
+       20                   ;       c:\lang\tms320c3x\511\bin\ac30.exe pa_pro.c C:\Users\JDS\AppData\Local\Temp\pa_pro.if 
+       21                           .file   "pa_pro.c"
+       22                           .file   "string.h"
+       23                           .sym    _size_t,0,14,13,32
+       24                           .file   "stdio.h"
+       25                           .stag   .fake0,224
+       26                           .member _fd,0,4,8,32
+       27                           .member _buf,32,28,8,32
+       28                           .member _pos,64,28,8,32
+       29                           .member _bufend,96,28,8,32
+       30                           .member _buff_stop,128,28,8,32
+       31                           .member _flags,160,14,8,32
+       32                           .member _index,192,4,8,32
+       33                           .eos
+       34                           .sym    _FILE,0,8,13,224,.fake0
+       35                           .sym    _fpos_t,0,5,13,32
+       36                           .stag   .fake1,544
+       37                           .member _name,0,50,8,288,,9
+       38                           .member _flags,288,13,8,32
+       39                           .member _OPEN,320,148,8,32
+       40                           .member _CLOSE,352,148,8,32
+       41                           .member _READ,384,148,8,32
+       42                           .member _WRITE,416,148,8,32
+       43                           .member _LSEEK,448,149,8,32
+       44                           .member _UNLINK,480,148,8,32
+       45                           .member _RENAME,512,148,8,32
+       46                           .eos
+       47                           .sym    __DEVICE,0,8,13,544,.fake1
+       48                           .file   "stdarg.h"
+       49                           .sym    _va_list,0,18,13,32
+       50                           .file   "def.h"
+       51                           .sym    _WORD,0,13,13,32
+       52                           .sym    _USHORT,0,13,13,32
+       53                           .sym    _BYTE,0,12,13,32
+       54                           .sym    _UCHAR,0,12,13,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    2
+
+       55                           .sym    _UINT,0,14,13,32
+       56                           .sym    _BOOL,0,4,13,32
+       57                           .sym    _DWORD,0,15,13,32
+       58                           .file   "main.h"
+       59                           .file   "xr16788.h"
+       60                           .stag   .fake4,32
+       61                           .member _B0,0,14,18,1
+       62                           .member _B1,1,14,18,1
+       63                           .member _B2,2,14,18,1
+       64                           .member _B3,3,14,18,1
+       65                           .member _B4,4,14,18,1
+       66                           .member _B5,5,14,18,1
+       67                           .member _B6,6,14,18,1
+       68                           .member _B7,7,14,18,1
+       69                           .eos
+       70                           .utag   .fake3,32
+       71                           .member _BYTE,0,14,11,32
+       72                           .member _BIT,0,8,11,32,.fake4
+       73                           .eos
+       74                           .stag   .fake2,32
+       75                           .member _DR,0,9,8,32,.fake3
+       76                           .eos
+       77                           .sym    _TMS_SEND_DATA,0,8,13,32,.fake2
+       78                           .sym    _PTMS_SEND_DATA,0,24,13,32,.fake2
+       79                           .utag   .fake6,32
+       80                           .member _btRxd,0,12,11,32
+       81                           .member _btTxd,0,12,11,32
+       82                           .member _btDll,0,12,11,32
+       83                           .eos
+       84                           .utag   .fake7,32
+       85                           .member _btDlm,0,12,11,32
+       86                           .member _btIer,0,12,11,32
+       87                           .eos
+       88                           .utag   .fake8,32
+       89                           .member _btIir,0,12,11,32
+       90                           .member _btFcr,0,12,11,32
+       91                           .eos
+       92                           .stag   .fake5,512
+       93                           .member _CREG1,0,9,8,32,.fake6
+       94                           .member _CREG2,32,9,8,32,.fake7
+       95                           .member _CREG3,64,9,8,32,.fake8
+       96                           .member _btLcr,96,12,8,32
+       97                           .member _btMcr,128,12,8,32
+       98                           .member _btLsr,160,12,8,32
+       99                           .member _btMsr_U,192,12,8,32
+      100                           .member _btScr,224,12,8,32
+      101                           .member _btSp,256,60,8,256,,8
+      102                           .eos
+      103                           .sym    _XR16L788ST,0,8,13,512,.fake5
+      104                           .sym    _PXR16L788ST,0,24,13,32,.fake5
+      105                           .stag   .fake9,4096
+      106                           .member _xr16Reg,0,56,8,4096,.fake5,8
+      107                           .eos
+      108                           .sym    _XR16L788BDY,0,8,13,4096,.fake9
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    3
+
+      109                           .sym    _PXR16L788BDY,0,24,13,32,.fake9
+      110                           .stag   .fake10,608
+      111                           .member _nTxPos,0,12,8,32
+      112                           .member _nTxLen,32,12,8,32
+      113                           .member _nTxOK,64,12,8,32
+      114                           .member _nTxOK_Cnt,96,12,8,32
+      115                           .member _nTx_Rts_Off,128,12,8,32
+      116                           .member _nTxBuffer,160,28,8,32
+      117                           .member _nTxTimeOut,192,12,8,32
+      118                           .member _nRxOK,224,12,8,32
+      119                           .member _nRxOK_Cnt,256,12,8,32
+      120                           .member _nRxRearPos,288,12,8,32
+      121                           .member _nRxFrontPos,320,12,8,32
+      122                           .member _nRxPos,352,12,8,32
+      123                           .member _nRxDlyTm,384,12,8,32
+      124                           .member _nRxLen,416,12,8,32
+      125                           .member _nRxBuffer,448,28,8,32
+      126                           .member _nGetRxBuf,480,28,8,32
+      127                           .member _nRxBuf_BackUp,512,28,8,32
+      128                           .member _nRxTimeOut,544,12,8,32
+      129                           .member _nBPS,576,12,8,32
+      130                           .eos
+      131                           .sym    _XR16788_INIT_SHAPE,0,8,13,608,.fake10
+      132                           .sym    _pXR16788_INIT_SHAPE,0,24,13,32,.fake10
+      133                           .file   "GpProface.h"
+      134                           .stag   .fake11,320
+      135                           .member _nFlag,0,12,8,32
+      136                           .member _nNum,32,13,8,32
+      137                           .member _nRemNum,64,13,8,32
+      138                           .member _nNowSt_Re,96,12,8,32
+      139                           .member _nNextSt_Re,128,12,8,32
+      140                           .member _nASC_NumBuf,160,60,8,160,,5
+      141                           .eos
+      142                           .sym    _TRANNUM_INPUT,0,8,13,320,.fake11
+      143                           .stag   .fake12,448
+      144                           .member _nGPTranNumInput,0,8,8,320,.fake11
+      145                           .member _nScreenSetNum,320,12,8,32
+      146                           .member _nScreenRxTime,352,12,8,32
+      147                           .member _nScreenSafe,384,12,8,32
+      148                           .member _nScreen_Send_Delay_Time,416,12,8,32
+      149                           .eos
+      150                           .sym    _SELETC_BUTTON,0,8,13,448,.fake12
+      151                           .file   "saf82532.h"
+      152                           .stag   .fake13,2048
+      153                           .member _XFIFO,0,60,8,1024,,32
+      154                           .member _STA_CMD,1024,12,8,32
+      155                           .member _MODE,1088,12,8,32
+      156                           .member _TIMR,1120,12,8,32
+      157                           .member _XON,1152,12,8,32
+      158                           .member _XOFF,1184,12,8,32
+      159                           .member _TCR,1216,12,8,32
+      160                           .member _DAFO,1248,12,8,32
+      161                           .member _RFC,1280,12,8,32
+      162                           .member _RBCL_XBCL,1344,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    4
+
+      163                           .member _RBCH_XBCH,1376,12,8,32
+      164                           .member _CCR0,1408,12,8,32
+      165                           .member _CCR1,1440,12,8,32
+      166                           .member _CCR2,1472,12,8,32
+      167                           .member _CCR3,1504,12,8,32
+      168                           .member _TSAX,1536,12,8,32
+      169                           .member _TSAR,1568,12,8,32
+      170                           .member _XCCR,1600,12,8,32
+      171                           .member _RCCR,1632,12,8,32
+      172                           .member _VSTR_BGR,1664,12,8,32
+      173                           .member _TIC,1696,12,8,32
+      174                           .member _MXN,1728,12,8,32
+      175                           .member _MXF,1760,12,8,32
+      176                           .member _GIS_IVA,1792,12,8,32
+      177                           .member _IPC,1824,12,8,32
+      178                           .member _ISR0_IMR0,1856,12,8,32
+      179                           .member _ISR1_IMR1,1888,12,8,32
+      180                           .member _PVR,1920,12,8,32
+      181                           .member _PIS_PIM,1952,12,8,32
+      182                           .member _PCR,1984,12,8,32
+      183                           .member _CCR4,2016,12,8,32
+      184                           .eos
+      185                           .sym    _SAF82532ASYNCREG1CH,0,8,13,2048,.fake13
+      186                           .sym    _PSAF82532ASYNCREG1CH,0,24,13,32,.fake13
+      187                           .stag   .fake14,4096
+      188                           .member _ACHREG,0,8,8,2048,.fake13
+      189                           .member _BCHREG,2048,8,8,2048,.fake13
+      190                           .eos
+      191                           .sym    _SAF82532ASYNCREG,0,8,13,4096,.fake14
+      192                           .sym    _PSAF82532ASYNCREG,0,24,13,32,.fake14
+      193                           .stag   .fake15,416
+      194                           .member _nRxOkFlag,0,4,8,32
+      195                           .member _nRxRear,32,4,8,32
+      196                           .member _nRxFront,64,4,8,32
+      197                           .member _nRxPos,96,4,8,32
+      198                           .member _nRxCnt,128,4,8,32
+      199                           .member _nRxBuffer,160,28,8,32
+      200                           .member _nGetRxBuf,192,28,8,32
+      201                           .member _nRxBackUp,224,28,8,32
+      202                           .member _nIs485,256,4,8,32
+      203                           .member _nUsPer1Byte,288,4,8,32
+      204                           .member _nTxDisable1msCnt,320,4,8,32
+      205                           .member _nTxLedOnDly,352,4,8,32
+      206                           .member _nTxCnt,384,4,8,32
+      207                           .eos
+      208                           .sym    _SAF82532_SCC,0,8,13,416,.fake15
+      209                           .file   "PA_Pro.h"
+      210                           .stag   .fake17,32
+      211                           .member _n1EM1_1,0,14,18,1
+      212                           .member _n2EM2_1,1,14,18,1
+      213                           .member _n3EM3_1,2,14,18,1
+      214                           .member _n4EM4_1,3,14,18,1
+      215                           .member _n5EMSW,4,14,18,1
+      216                           .member _n6TCRCallFinish,5,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    5
+
+      217                           .member _n7EMCallFinish,6,14,18,1
+      218                           .member _n8sp,7,14,18,1
+      219                           .eos
+      220                           .stag   .fake18,32
+      221                           .member _n1EM1_2,0,14,18,1
+      222                           .member _n2EM2_2,1,14,18,1
+      223                           .member _n3EM3_2,2,14,18,1
+      224                           .member _n4EM4_2,3,14,18,1
+      225                           .member _n5sp,4,14,18,1
+      226                           .member _n6sp,5,14,18,1
+      227                           .member _n7sp,6,14,18,1
+      228                           .member _n8sp,7,14,18,1
+      229                           .eos
+      230                           .stag   .fake16,64
+      231                           .member _nTCR_DATA_1,0,8,8,32,.fake17
+      232                           .member _nTCR_DATA_2,32,8,8,32,.fake18
+      233                           .eos
+      234                           .sym    _PA_ICR_INFO,0,8,13,64,.fake16
+      235                           .stag   .fake20,32
+      236                           .member _n1Mster_Active,0,14,18,1
+      237                           .member _n2sp,1,14,18,1
+      238                           .member _n3EM_Call_End,2,14,18,1
+      239                           .member _n4Fire,3,14,18,1
+      240                           .member _n5ICR_DI,4,14,18,1
+      241                           .member _n6ICR_Flag,5,14,18,1
+      242                           .member _n7sp1,6,14,18,1
+      243                           .member _n8sp2,7,14,18,1
+      244                           .eos
+      245                           .stag   .fake21,32
+      246                           .member _n1Door_LR,0,14,18,1
+      247                           .member _n2DCW,1,14,18,1
+      248                           .member _n3DOW,2,14,18,1
+      249                           .member _n4BR_Start,3,14,18,1
+      250                           .member _n5BR_Finish,4,14,18,1
+      251                           .member _n6INFO,5,14,18,1
+      252                           .member _n7RM,6,14,18,1
+      253                           .member _n8sp,7,14,18,1
+      254                           .eos
+      255                           .stag   .fake22,32
+      256                           .member _n1PDT1,0,14,18,1
+      257                           .member _n2PDT2,1,14,18,1
+      258                           .member _n3SNDChk,2,14,18,1
+      259                           .member _n4sp,3,14,18,1
+      260                           .member _n5StarST_PA,4,14,18,1
+      261                           .member _n6sp,5,14,18,1
+      262                           .member _n7sp,6,14,18,1
+      263                           .member _n8sp,7,14,18,1
+      264                           .eos
+      265                           .stag   .fake19,608
+      266                           .member _nSTX,0,12,8,32
+      267                           .member _nPA_ADD,32,12,8,32
+      268                           .member _nPIC_ADD,64,12,8,32
+      269                           .member _nSDR_Code,96,12,8,32
+      270                           .member _TEXT_03,128,8,8,32,.fake20
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    6
+
+      271                           .member _nLine_Num,160,12,8,32
+      272                           .member _nNow_ST,192,12,8,32
+      273                           .member _nPR_Num,224,12,8,32
+      274                           .member _nNext_ST,256,12,8,32
+      275                           .member _nDest_ST,288,12,8,32
+      276                           .member _TEXT_09,320,8,8,32,.fake21
+      277                           .member _TEST_10,352,8,8,32,.fake22
+      278                           .member _nTramNum,384,60,8,64,,2
+      279                           .member _nDistNUM,448,60,8,64,,2
+      280                           .member _nTCR_DATA,512,8,8,64,.fake16
+      281                           .member _nETX,576,12,8,32
+      282                           .eos
+      283                           .sym    _PIS_PA_TXDATA,0,8,13,608,.fake19
+      284                           .sym    _PPIS_PA_TXDATA,0,24,13,32,.fake19
+      285                           .stag   .fake24,32
+      286                           .member _n1PAVC_1,0,14,18,1
+      287                           .member _n2COB_1,1,14,18,1
+      288                           .member _n3SOBL_1,2,14,18,1
+      289                           .member _n4SOBR_1,3,14,18,1
+      290                           .member _n5PAVC_2,4,14,18,1
+      291                           .member _n6COB_2,5,14,18,1
+      292                           .member _n7SOBL_2,6,14,18,1
+      293                           .member _n8SOBR_2,7,14,18,1
+      294                           .eos
+      295                           .stag   .fake25,32
+      296                           .member _n1EI1_1,0,14,18,1
+      297                           .member _n2EI2_1,1,14,18,1
+      298                           .member _n3EI3_1,2,14,18,1
+      299                           .member _n4EI4_1,3,14,18,1
+      300                           .member _n5sp,4,14,18,1
+      301                           .member _n6sp,5,14,18,1
+      302                           .member _n7sp,6,14,18,1
+      303                           .member _n8sp,7,14,18,1
+      304                           .eos
+      305                           .stag   .fake26,32
+      306                           .member _n1EI1_2,0,14,18,1
+      307                           .member _n2EI2_2,1,14,18,1
+      308                           .member _n3EI3_2,2,14,18,1
+      309                           .member _n4EI4_2,3,14,18,1
+      310                           .member _n5sp,4,14,18,1
+      311                           .member _n6sp,5,14,18,1
+      312                           .member _n7sp,6,14,18,1
+      313                           .member _n8sp,7,14,18,1
+      314                           .eos
+      315                           .stag   .fake27,32
+      316                           .member _n1AMP1,0,14,18,1
+      317                           .member _n2AMP2,1,14,18,1
+      318                           .member _n3AMP3,2,14,18,1
+      319                           .member _n4AMP4,3,14,18,1
+      320                           .member _n5sp,4,14,18,1
+      321                           .member _n6sp,5,14,18,1
+      322                           .member _n7sp,6,14,18,1
+      323                           .member _n8sp,7,14,18,1
+      324                           .eos
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    7
+
+      325                           .stag   .fake28,32
+      326                           .member _n1ACK,0,14,18,1
+      327                           .member _n2ACK_KingCh,1,14,18,1
+      328                           .member _n3Speaking,2,14,18,1
+      329                           .member _n4sp,3,14,18,1
+      330                           .member _n5sp,4,14,18,1
+      331                           .member _n6sp,5,14,18,1
+      332                           .member _n7sp,6,14,18,1
+      333                           .member _n8sp,7,14,18,1
+      334                           .eos
+      335                           .stag   .fake29,32
+      336                           .member _n1EI1_1_Call,0,14,18,1
+      337                           .member _n2EI2_1_Call,1,14,18,1
+      338                           .member _n3EI3_1_Call,2,14,18,1
+      339                           .member _n4EI4_1_Call,3,14,18,1
+      340                           .member _n5sp,4,14,18,1
+      341                           .member _n6sp,5,14,18,1
+      342                           .member _n7sp,6,14,18,1
+      343                           .member _n8sp,7,14,18,1
+      344                           .eos
+      345                           .stag   .fake30,32
+      346                           .member _n1EI1_2_Call,0,14,18,1
+      347                           .member _n2EI2_2_Call,1,14,18,1
+      348                           .member _n3EI3_2_Call,2,14,18,1
+      349                           .member _n4EI4_2_Call,3,14,18,1
+      350                           .member _n5sp,4,14,18,1
+      351                           .member _n6sp,5,14,18,1
+      352                           .member _n7sp,6,14,18,1
+      353                           .member _n8sp,7,14,18,1
+      354                           .eos
+      355                           .stag   .fake31,32
+      356                           .member _n1IFV1_1,0,14,18,1
+      357                           .member _n2IFV1_2,1,14,18,1
+      358                           .member _n3IFV1_3,2,14,18,1
+      359                           .member _n4IFV1_4,3,14,18,1
+      360                           .member _n5IFV2_1,4,14,18,1
+      361                           .member _n6IFV2_2,5,14,18,1
+      362                           .member _n7IFV2_3,6,14,18,1
+      363                           .member _n8IFV2_4,7,14,18,1
+      364                           .eos
+      365                           .stag   .fake32,32
+      366                           .member _n1sp,0,14,18,1
+      367                           .member _n2IFV3_2,1,14,18,1
+      368                           .member _n3IFV3_3,2,14,18,1
+      369                           .member _n4sp,3,14,18,1
+      370                           .member _n5sp,4,14,18,1
+      371                           .member _n6IFV4_2,5,14,18,1
+      372                           .member _n7IFV4_3,6,14,18,1
+      373                           .member _n8sp,7,14,18,1
+      374                           .eos
+      375                           .stag   .fake23,608
+      376                           .member _nSTX,0,12,8,32
+      377                           .member _nPIC_ADD,32,12,8,32
+      378                           .member _nPA_ADD,64,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    8
+
+      379                           .member _nSD_Code,96,12,8,32
+      380                           .member _TEST_03_Falt,128,8,8,32,.fake24
+      381                           .member _TEST_04_Falt,160,8,8,32,.fake25
+      382                           .member _TEST_05_Falt,192,8,8,32,.fake26
+      383                           .member _TEST_06_Falt,224,8,8,32,.fake27
+      384                           .member _TEST_07,256,8,8,32,.fake28
+      385                           .member _TEST_08,288,8,8,32,.fake29
+      386                           .member _TEST_09,320,8,8,32,.fake30
+      387                           .member _TEST_10_Falt,352,8,8,32,.fake31
+      388                           .member _TEST_11_Falt,384,8,8,32,.fake32
+      389                           .member _nSound_Level,416,12,8,32
+      390                           .member _nRomVer,448,12,8,32
+      391                           .member _nTCR_DATA,480,8,8,64,.fake16
+      392                           .member _nTEXT16sp,544,12,8,32
+      393                           .member _nETX,576,12,8,32
+      394                           .eos
+      395                           .sym    _PA_PIS_TXDATA,0,8,13,608,.fake23
+      396                           .sym    _PPA_PIS_TXDATA,0,24,13,32,.fake23
+      397                           .file   "user.h"
+      398                           .stag   .fake33,128
+      399                           .member _nTotalDestCnt,0,12,8,32
+      400                           .member _nCheakSt,32,12,8,32
+      401                           .member _nDiskInputCheckFlag,64,12,8,32
+      402                           .member _nDiskUpChekFlag,96,12,8,32
+      403                           .eos
+      404                           .sym    _SANDISK_VARI,0,8,13,128,.fake33
+      405                           .stag   .fake34,1472
+      406                           .member _nCode,0,12,8,32
+      407                           .member _nEnNameBuf,32,60,8,480,,15
+      408                           .member _nIRNameBuf,512,60,8,960,,30
+      409                           .eos
+      410                           .sym    _STATION_INFO,0,8,13,1472,.fake34
+      411                           .stag   .fake35,1920
+      412                           .member _nPre,0,60,8,480,,15
+      413                           .member _nNow,480,60,8,480,,15
+      414                           .member _nNext,960,60,8,480,,15
+      415                           .member _nDest,1440,60,8,480,,15
+      416                           .eos
+      417                           .sym    _GP_ST_NAME,0,8,13,1920,.fake35
+      418                           .stag   .fake36,128
+      419                           .member _nFlag_DI_INPUT,0,12,8,32
+      420                           .member _nFlag_Simu,32,12,8,32
+      421                           .member _nFlag_SelfTest,64,12,8,32
+      422                           .member _nAutoPlay_Flag,96,12,8,32
+      423                           .eos
+      424                           .sym    _TIME_FLAG,0,8,13,128,.fake36
+      425                           .stag   .fake37,2112
+      426                           .member _nSELF_ADDDATA_BUF,0,60,8,960,,30
+      427                           .member _nSELF_RXDATA_Buf,960,60,8,480,,15
+      428                           .member _nSELF_RXDATA_Buf_2R,1440,60,8,480,,15
+      429                           .member _nSELF_TX_Cnt,1920,12,8,32
+      430                           .member _nSELF_All_Cnt,1952,12,8,32
+      431                           .member _nSELF_ICR_CNT,1984,12,8,32
+      432                           .member _nSELF_ICR_SELECT,2016,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE    9
+
+      433                           .member _nPA_PrintCnt,2048,12,8,32
+      434                           .member _nPA_SCREEN_SET,2080,12,8,32
+      435                           .eos
+      436                           .sym    _SELF_TEST,0,8,13,2112,.fake37
+      437                           .stag   .fake39,32
+      438                           .member _nFirCode,0,14,18,1
+      439                           .member _B1,1,14,18,1
+      440                           .member _B2,2,14,18,1
+      441                           .member _B3,3,14,18,1
+      442                           .member _B4,4,14,18,1
+      443                           .member _B5,5,14,18,1
+      444                           .member _B6,6,14,18,1
+      445                           .member _nAutoTest,7,14,18,1
+      446                           .eos
+      447                           .stag   .fake38,17024
+      448                           .member _nStopPatNum,0,12,8,32
+      449                           .member _nStation_MaxCnt,32,12,8,32
+      450                           .member _nStation_StartPointCnt,64,12,8,32
+      451                           .member _nStation_PointCnt,96,12,8,32
+      452                           .member _nStation_PointCntRe,128,12,8,32
+      453                           .member _nStation_List,160,60,8,6400,,200
+      454                           .member _nPIBPatFlag,6560,12,8,32
+      455                           .member _nDISFPatFlag,6592,12,8,32
+      456                           .member _nSimulationFlag,6624,12,8,32
+      457                           .member _nSimulationCnt,6656,12,8,32
+      458                           .member _nAutoDoorFlag,6688,12,8,32
+      459                           .member _nSpeed,6720,12,8,32
+      460                           .member _nDoor,6752,12,8,32
+      461                           .member _nDoorOPenCnt,6784,12,8,32
+      462                           .member _nDistance,6816,12,8,32
+      463                           .member _nSinmuScrCnt,6848,12,8,32
+      464                           .member _nTcmsRxNGCnt,6880,12,8,32
+      465                           .member _nStart,6912,8,8,1472,.fake34
+      466                           .member _nPre,8384,8,8,1472,.fake34
+      467                           .member _nNow,9856,8,8,1472,.fake34
+      468                           .member _nNext,11328,8,8,1472,.fake34
+      469                           .member _nDest,12800,8,8,1472,.fake34
+      470                           .member _nGpStName,14272,8,8,1920,.fake35
+      471                           .member _nSelf_Test_Flag,16192,12,8,32
+      472                           .member _nClean_Flag,16224,12,8,32
+      473                           .member _nSendTextEnd,16256,12,8,32
+      474                           .member _nPaTxDataBuf,16288,60,8,704,,22
+      475                           .member _nFirAuto,16992,8,8,32,.fake39
+      476                           .eos
+      477                           .sym    _TRAN_STATION_INFO,0,8,13,17024,.fake38
+      478                           .stag   .fake40,128
+      479                           .member _nFlag,0,12,8,32
+      480                           .member _nTime,32,12,8,32
+      481                           .member _nTimeCnt,64,12,8,32
+      482                           .member _nFlagCnt,96,12,8,32
+      483                           .eos
+      484                           .sym    _ONTD_CHECK,0,8,13,128,.fake40
+      485                           .stag   .fake41,768
+      486                           .member _nHcr,0,8,8,128,.fake40
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   10
+
+      487                           .member _nIcr,128,8,8,128,.fake40
+      488                           .member _nTcr,256,8,8,128,.fake40
+      489                           .member _nDoor,384,8,8,128,.fake40
+      490                           .member _nDoLeft,512,8,8,128,.fake40
+      491                           .member _nDoRight,640,8,8,128,.fake40
+      492                           .eos
+      493                           .sym    _DI_CHECK,0,8,13,768,.fake41
+      494                           .stag   .fake42,864
+      495                           .member _nIndexBuf,0,60,8,640,,20
+      496                           .member _nIndexST_STAllCnt,640,12,8,32
+      497                           .member _nAllCnt_Cnt,672,12,8,32
+      498                           .member _nIndexDI_DICnt,704,12,8,32
+      499                           .member _nIndexCnt,736,12,8,32
+      500                           .member _nDistanRe,768,15,8,32
+      501                           .member _nDistanNew,800,15,8,32
+      502                           .member _nBetweenFlag,832,12,8,32
+      503                           .eos
+      504                           .sym    _INDEX_FLAG,0,8,13,864,.fake42
+      505                           .stag   .fake43,384
+      506                           .member _nDataDefin,0,12,8,32
+      507                           .member _nCarNum,32,12,8,32
+      508                           .member _nDist,64,12,8,32
+      509                           .member _nDist_10,96,4,8,32
+      510                           .member _nStaCod,128,12,8,32
+      511                           .member _nNowCod,160,12,8,32
+      512                           .member _nNowCod_Re,192,12,8,32
+      513                           .member _nNexCod,224,12,8,32
+      514                           .member _nNexCod_Re,256,12,8,32
+      515                           .member _nDetCod,288,12,8,32
+      516                           .member _nDetCod_Re,320,12,8,32
+      517                           .member _nMasterFlag,352,12,8,32
+      518                           .eos
+      519                           .sym    _TMS_RX_DATA_PR,0,8,13,384,.fake43
+      520                           .stag   .fake44,64
+      521                           .member _nTxNum,0,12,8,32
+      522                           .member _nTxFlag,32,12,8,32
+      523                           .eos
+      524                           .sym    _IM_PR_SEND,0,8,13,64,.fake44
+      525                           .stag   .fake45,608
+      526                           .member _nTrNumSet,0,12,8,32
+      527                           .member _nDeSTCodeSet,32,12,8,32
+      528                           .member _nSddCodeSet,64,12,8,32
+      529                           .member _nClean,96,12,8,32
+      530                           .member _nPIBPaten,128,12,8,32
+      531                           .member _nS_FDIPaten,160,12,8,32
+      532                           .member _nIM_Text,192,8,8,64,.fake44
+      533                           .member _nPR_Text,256,8,8,64,.fake44
+      534                           .member _nAddSet,320,12,8,32
+      535                           .member _nSDI_Clean,352,12,8,32
+      536                           .member _nManualSet,384,12,8,32
+      537                           .member _nDeadheadFlag,416,12,8,32
+      538                           .member _nDest9999Flag,448,12,8,32
+      539                           .member _nSddAddCntUp,480,12,8,32
+      540                           .member _nPaSendTxCnt,512,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   11
+
+      541                           .member _nPaSendStartFlag,544,12,8,32
+      542                           .member _nPaSendEndFlag,576,12,8,32
+      543                           .eos
+      544                           .sym    _SCC_SEND_FLAG,0,8,13,608,.fake45
+      545                           .stag   .fake46,64
+      546                           .member _nCh,0,12,8,32
+      547                           .member _nLen,32,12,8,32
+      548                           .eos
+      549                           .sym    _RING_FALG,0,8,13,64,.fake46
+      550                           .stag   .fake47,704
+      551                           .member _nPush_Cnt,0,12,8,32
+      552                           .member _nPop_Cnt,32,12,8,32
+      553                           .member _nRingFlagBuf,64,56,8,640,.fake46,10
+      554                           .eos
+      555                           .sym    _RING_BUF_FALG,0,8,13,704,.fake47
+      556                           .stag   .fake48,17600
+      557                           .member _nDataBuf,0,60,8,17600,,550
+      558                           .eos
+      559                           .sym    _RING_DATA,0,8,13,17600,.fake48
+      560                           .stag   .fake49,176000
+      561                           .member _nRingDataBuf,0,56,8,176000,.fake48,10
+      562                           .eos
+      563                           .sym    _RING_BUF_DATA,0,8,13,176000,.fake49
+      564                           .sym    _PRING_BUF_DATA,0,24,13,32,.fake49
+      565                           .stag   .fake50,224
+      566                           .member _nIDC_ROM_Flag,0,12,8,32
+      567                           .member _nErCnt,32,12,8,32
+      568                           .member _nErFlag,64,12,8,32
+      569                           .member _nDataNvsrLoad,96,12,8,32
+      570                           .member _nDataNvsrWait,128,12,8,32
+      571                           .member _nRomWriteCnt,160,12,8,32
+      572                           .member _nKO_Flag,192,12,8,32
+      573                           .eos
+      574                           .sym    _IDC_ROM_WRITE,0,8,13,224,.fake50
+      575                           .stag   .fake51,224
+      576                           .member _nAA,0,12,8,32
+      577                           .member _nBB,32,12,8,32
+      578                           .member _nCC,64,12,8,32
+      579                           .member _nLen_H,96,12,8,32
+      580                           .member _nLen_L,128,12,8,32
+      581                           .member _nLenCom_H,160,12,8,32
+      582                           .member _nLenCom_L,192,12,8,32
+      583                           .eos
+      584                           .sym    _SCC_HEAD,0,8,13,224,.fake51
+      585                           .stag   .fake52,320
+      586                           .member _nToAdd,0,12,8,32
+      587                           .member _nFromAdd,32,12,8,32
+      588                           .member _nCode,64,12,8,32
+      589                           .member _nSp3,96,12,8,32
+      590                           .member _nSp4,128,12,8,32
+      591                           .member _nErBlk,160,12,8,32
+      592                           .member _nSp6,192,12,8,32
+      593                           .member _nSp7,224,12,8,32
+      594                           .member _nSp8,256,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   12
+
+      595                           .member _nSp9,288,12,8,32
+      596                           .eos
+      597                           .sym    _SCC_TEST,0,8,13,320,.fake52
+      598                           .stag   .fake53,640
+      599                           .member _nHead,0,8,8,224,.fake51
+      600                           .member _nTest,224,8,8,320,.fake52
+      601                           .member _Etx,544,12,8,32
+      602                           .member _CRC_H,576,12,8,32
+      603                           .member _CRC_L,608,12,8,32
+      604                           .eos
+      605                           .sym    _SCC_TX_DATA,0,8,13,640,.fake53
+      606                           .sym    _PSCC_TX_DATA,0,24,13,32,.fake53
+      607                           .stag   .fake54,17696
+      608                           .member _nToAdd,0,12,8,32
+      609                           .member _nFromAdd,32,12,8,32
+      610                           .member _nCode,64,12,8,32
+      611                           .member _nTEXT,96,60,8,17600,,550
+      612                           .eos
+      613                           .sym    _SCC_TEXT,0,8,13,17696,.fake54
+      614                           .stag   .fake55,17920
+      615                           .member _nHead,0,8,8,224,.fake51
+      616                           .member _nText,224,8,8,17696,.fake54
+      617                           .eos
+      618                           .sym    _SCC_PIB_TEXT,0,8,13,17920,.fake55
+      619                           .sym    _PSCC_PIB_TEXT,0,24,13,32,.fake55
+      620                           .stag   .fake57,32
+      621                           .member _nFirCode,0,14,18,1
+      622                           .member _B1,1,14,18,1
+      623                           .member _B2,2,14,18,1
+      624                           .member _B3,3,14,18,1
+      625                           .member _nMc2Flag,4,14,18,1
+      626                           .member _nMc1Flag,5,14,18,1
+      627                           .member _nIDCFlag,6,14,18,1
+      628                           .member _nAutoTest,7,14,18,1
+      629                           .eos
+      630                           .stag   .fake58,32
+      631                           .member _n1PA_1,0,14,18,1
+      632                           .member _n2PA_4,1,14,18,1
+      633                           .member _n3COB_1,2,14,18,1
+      634                           .member _n4COB_4,3,14,18,1
+      635                           .member _n5SOBL_1,4,14,18,1
+      636                           .member _n6SOBL_4,5,14,18,1
+      637                           .member _n7SOBR_1,6,14,18,1
+      638                           .member _n8SOBR_4,7,14,18,1
+      639                           .eos
+      640                           .stag   .fake59,32
+      641                           .member _n1Pow_Amp_1,0,14,18,1
+      642                           .member _n2Pow_Amp_2,1,14,18,1
+      643                           .member _n3Pow_Amp_3,2,14,18,1
+      644                           .member _n4Pow_Amp_4,3,14,18,1
+      645                           .member _n5sp,4,14,18,1
+      646                           .member _n6sp,5,14,18,1
+      647                           .member _n7sp,6,14,18,1
+      648                           .member _n8sp,7,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   13
+
+      649                           .eos
+      650                           .stag   .fake60,32
+      651                           .member _n1EM_Phon_1,0,14,18,1
+      652                           .member _n2EM_Phon_2,1,14,18,1
+      653                           .member _n3EM_Phon_3,2,14,18,1
+      654                           .member _n4EM_Phon_4,3,14,18,1
+      655                           .member _n5sp,4,14,18,1
+      656                           .member _n6sp,5,14,18,1
+      657                           .member _n7sp,6,14,18,1
+      658                           .member _n8sp,7,14,18,1
+      659                           .eos
+      660                           .stag   .fake56,704
+      661                           .member _nSTX,0,12,8,32
+      662                           .member _nST_Code,32,12,8,32
+      663                           .member _nSp1,64,12,8,32
+      664                           .member _nStaCod,96,12,8,32
+      665                           .member _nNowCod,128,12,8,32
+      666                           .member _nNexCod,160,12,8,32
+      667                           .member _nDetCod,192,12,8,32
+      668                           .member _nSp2,224,12,8,32
+      669                           .member _BIT,256,8,8,32,.fake57
+      670                           .member _nTrnBuf,288,60,8,128,,4
+      671                           .member _PA_IDC_Falt_1,416,8,8,32,.fake58
+      672                           .member _PA_IDC_Falt_2,448,8,8,32,.fake59
+      673                           .member _PA_IDC_Falt_3,480,8,8,32,.fake60
+      674                           .member _nTCR_DATA,512,8,8,64,.fake16
+      675                           .member _nSp3Buf,576,60,8,96,,3
+      676                           .member _nETX,672,12,8,32
+      677                           .eos
+      678                           .sym    _SCC_TCMS,0,8,13,704,.fake56
+      679                           .sym    _TCMS_PSS,0,24,13,32,.fake56
+      680                           .stag   .fake63,32
+      681                           .member _n1PA_1,0,14,18,1
+      682                           .member _n2PA_4,1,14,18,1
+      683                           .member _n3COB_1,2,14,18,1
+      684                           .member _n4COB_4,3,14,18,1
+      685                           .member _n5SOBL_1,4,14,18,1
+      686                           .member _n6SOBL_4,5,14,18,1
+      687                           .member _n7SOBR_1,6,14,18,1
+      688                           .member _n8SOBR_4,7,14,18,1
+      689                           .eos
+      690                           .utag   .fake62,32
+      691                           .member _BYTE,0,14,11,32
+      692                           .member _BIT,0,8,11,32,.fake63
+      693                           .eos
+      694                           .stag   .fake65,32
+      695                           .member _n1Pow_Amp_1,0,14,18,1
+      696                           .member _n2Pow_Amp_2,1,14,18,1
+      697                           .member _n3Pow_Amp_3,2,14,18,1
+      698                           .member _n4Pow_Amp_4,3,14,18,1
+      699                           .member _n5sp,4,14,18,1
+      700                           .member _n6sp,5,14,18,1
+      701                           .member _n7sp,6,14,18,1
+      702                           .member _n8sp,7,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   14
+
+      703                           .eos
+      704                           .utag   .fake64,32
+      705                           .member _BYTE,0,14,11,32
+      706                           .member _BIT,0,8,11,32,.fake65
+      707                           .eos
+      708                           .stag   .fake67,32
+      709                           .member _n1EM_Phon_1,0,14,18,1
+      710                           .member _n2EM_Phon_2,1,14,18,1
+      711                           .member _n3EM_Phon_3,2,14,18,1
+      712                           .member _n4EM_Phon_4,3,14,18,1
+      713                           .member _n5sp,4,14,18,1
+      714                           .member _n6sp,5,14,18,1
+      715                           .member _n7sp,6,14,18,1
+      716                           .member _n8sp,7,14,18,1
+      717                           .eos
+      718                           .utag   .fake66,32
+      719                           .member _BYTE,0,14,11,32
+      720                           .member _BIT,0,8,11,32,.fake67
+      721                           .eos
+      722                           .stag   .fake68,32
+      723                           .member _n1FDD_1,0,14,18,1
+      724                           .member _n2FDD_4,1,14,18,1
+      725                           .member _n3sp,2,14,18,1
+      726                           .member _n4sp,3,14,18,1
+      727                           .member _n5FDD_5,4,14,18,1
+      728                           .member _n6FDD_8,5,14,18,1
+      729                           .member _n7sp,6,14,18,1
+      730                           .member _n8Self_Info,7,14,18,1
+      731                           .eos
+      732                           .stag   .fake69,32
+      733                           .member _n1SDD1_1,0,14,18,1
+      734                           .member _n2SDD2_1,1,14,18,1
+      735                           .member _n3SDD3_1,2,14,18,1
+      736                           .member _n4SDD4_1,3,14,18,1
+      737                           .member _n5SDD5_1,4,14,18,1
+      738                           .member _n6SDD6_1,5,14,18,1
+      739                           .member _n7SDD7_1,6,14,18,1
+      740                           .member _n8SDD8_1,7,14,18,1
+      741                           .eos
+      742                           .stag   .fake70,32
+      743                           .member _n1SDD1_2,0,14,18,1
+      744                           .member _n2SDD2_2,1,14,18,1
+      745                           .member _n3SDD3_2,2,14,18,1
+      746                           .member _n4SDD4_2,3,14,18,1
+      747                           .member _n5SDD5_2,4,14,18,1
+      748                           .member _n6SDD6_2,5,14,18,1
+      749                           .member _n7SDD7_2,6,14,18,1
+      750                           .member _n8SDD8_2,7,14,18,1
+      751                           .eos
+      752                           .stag   .fake61,704
+      753                           .member _nSTX,0,12,8,32
+      754                           .member _nST_Code,32,12,8,32
+      755                           .member _nSp1,64,12,8,32
+      756                           .member _nStaCod,96,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   15
+
+      757                           .member _nNowCod,128,12,8,32
+      758                           .member _nNexCod,160,12,8,32
+      759                           .member _nDetCod,192,12,8,32
+      760                           .member _PA_IDC_Falt_1,224,9,8,32,.fake62
+      761                           .member _PA_IDC_Falt_2,256,9,8,32,.fake64
+      762                           .member _PA_IDC_Falt_3,288,9,8,32,.fake66
+      763                           .member _nTCR_DATA,320,8,8,64,.fake16
+      764                           .member _PID_Falt_1,384,8,8,32,.fake68
+      765                           .member _PID_Falt_2,416,8,8,32,.fake69
+      766                           .member _PID_Falt_3,448,8,8,32,.fake70
+      767                           .member _nSpBuf,480,60,8,192,,6
+      768                           .member _nETX,672,12,8,32
+      769                           .eos
+      770                           .sym    _PSS_TCMS_SD,0,8,13,704,.fake61
+      771                           .sym    _PPSS_TCMS_SD,0,24,13,32,.fake61
+      772                           .stag   .fake71,96
+      773                           .member _nIDCFlag,0,12,8,32
+      774                           .member _nMc1Flag,32,12,8,32
+      775                           .member _nMc2Flag,64,12,8,32
+      776                           .eos
+      777                           .sym    _TCMS_IDC_INFO,0,8,13,96,.fake71
+      778                           .stag   .fake72,160
+      779                           .member _nTimeTranNum,0,14,8,32
+      780                           .member _nStartHour,32,60,8,64,,2
+      781                           .member _nStartMin,96,60,8,64,,2
+      782                           .eos
+      783                           .sym    _TRANNUMTIME,0,8,13,160,.fake72
+      784                           .sym    _PTRANNUMTIME,0,24,13,32,.fake72
+      785                           .stag   .fake73,4000
+      786                           .member _nTIMEBUF,0,56,8,4000,.fake72,25
+      787                           .eos
+      788                           .sym    _TIMEBUF,0,8,13,4000,.fake73
+      789                           .sym    _PTIMEBUF,0,24,13,32,.fake73
+      790                           .file   "LED_DOWNLOAD.h"
+      791                           .stag   .fake74,160
+      792                           .member _nST_1,0,12,8,32
+      793                           .member _nST_2,32,12,8,32
+      794                           .member _nTXCnt,64,12,8,32
+      795                           .member _nRepCnt,96,12,8,32
+      796                           .member _nErassOk,128,12,8,32
+      797                           .eos
+      798                           .sym    _DOWN_STEP,0,8,13,160,.fake74
+      799                           .stag   .fake75,576
+      800                           .member _nSDDSelt,0,12,8,32
+      801                           .member _nFDDSelt,32,12,8,32
+      802                           .member _nSFKindCode,64,12,8,32
+      803                           .member _nWaitSDR,96,12,8,32
+      804                           .member _nSelfTestFlag,128,12,8,32
+      805                           .member _nSDR_RxCnt,160,12,8,32
+      806                           .member _nErassFlag,192,8,8,160,.fake74
+      807                           .member _nDataDownFlag,352,12,8,32
+      808                           .member _nDataRepetFlag,384,12,8,32
+      809                           .member _nDataRepetNum,416,12,8,32
+      810                           .member _nDataRepetCnt,448,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   16
+
+      811                           .member _nDataSDRFlag,480,12,8,32
+      812                           .member _nDataSize,512,12,8,32
+      813                           .member _nDataTxCnt,544,12,8,32
+      814                           .eos
+      815                           .sym    _LED_DATA_DOWNLOAD,0,8,13,576,.fake75
+      816                           .file   "pa_pro.c"
+      817                   
+      818 00000000                  .sect   ".cinit"
+      819 00000000 00000001         .field          1,32
+      820 00000001 00000000-        .field          _nMc1_Flag+0,32
+      821 00000002 00000001         .field          1,32            ; _nMc1_Flag @ 0
+      822                   
+      823 00000000                  .sect   ".text"
+      824                   
+      825                           .global _nMc1_Flag
+      826 00000000                  .bss    _nMc1_Flag,1
+      827                           .sym    _nMc1_Flag,_nMc1_Flag,12,2,32
+      828                   
+      829 00000003                  .sect   ".cinit"
+      830 00000003 00000001         .field          1,32
+      831 00000004 00000001-        .field          _nPaTimeCnt+0,32
+      832 00000005 00000000         .field          0,32            ; _nPaTimeCnt @ 0
+      833                   
+      834 00000000                  .sect   ".text"
+      835                   
+      836                           .global _nPaTimeCnt
+      837 00000001                  .bss    _nPaTimeCnt,1
+      838                           .sym    _nPaTimeCnt,_nPaTimeCnt,12,2,32
+      839                   
+      840 00000006                  .sect   ".cinit"
+      841 00000006 00000001         .field          1,32
+      842 00000007 00000002-        .field          _m_PA_SccTxCnt+0,32
+      843 00000008 00000000         .field          0,32            ; _m_PA_SccTxCnt @ 0
+      844                   
+      845 00000000                  .sect   ".text"
+      846                   
+      847                           .global _m_PA_SccTxCnt
+      848 00000002                  .bss    _m_PA_SccTxCnt,1
+      849                           .sym    _m_PA_SccTxCnt,_m_PA_SccTxCnt,12,2,32
+      850                   
+      851 00000009                  .sect   ".cinit"
+      852 00000009 00000001         .field          1,32
+      853 0000000a 00000003-        .field          _m_PA_M1_Cnt+0,32
+      854 0000000b 00000000         .field          0,32            ; _m_PA_M1_Cnt @ 0
+      855                   
+      856 00000000                  .sect   ".text"
+      857                   
+      858                           .global _m_PA_M1_Cnt
+      859 00000003                  .bss    _m_PA_M1_Cnt,1
+      860                           .sym    _m_PA_M1_Cnt,_m_PA_M1_Cnt,12,2,32
+      861                   
+      862 0000000c                  .sect   ".cinit"
+      863 0000000c 00000001         .field          1,32
+      864 0000000d 00000004-        .field          _m_PA_M2_Cnt+0,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   17
+
+      865 0000000e 00000000         .field          0,32            ; _m_PA_M2_Cnt @ 0
+      866                   
+      867 00000000                  .sect   ".text"
+      868                   
+      869                           .global _m_PA_M2_Cnt
+      870 00000004                  .bss    _m_PA_M2_Cnt,1
+      871                           .sym    _m_PA_M2_Cnt,_m_PA_M2_Cnt,12,2,32
+      872                   
+      873 0000000f                  .sect   ".cinit"
+      874 0000000f 00000001         .field          1,32
+      875 00000010 00000005-        .field          _m_PA_Tx_Flag+0,32
+      876 00000011 00000000         .field          0,32            ; _m_PA_Tx_Flag @ 0
+      877                   
+      878 00000000                  .sect   ".text"
+      879                   
+      880                           .global _m_PA_Tx_Flag
+      881 00000005                  .bss    _m_PA_Tx_Flag,1
+      882                           .sym    _m_PA_Tx_Flag,_m_PA_Tx_Flag,12,2,32
+      883                   
+      884 00000012                  .sect   ".cinit"
+      885 00000012 00000001         .field          1,32
+      886 00000013 00000006-        .field          _m_PA_Self_Tcms_Tx_Info+0,32
+      887 00000014 00000000         .field          0,32            ; _m_PA_Self_Tcms_Tx_Info @ 0
+      888                   
+      889 00000000                  .sect   ".text"
+      890                   
+      891                           .global _m_PA_Self_Tcms_Tx_Info
+      892 00000006                  .bss    _m_PA_Self_Tcms_Tx_Info,1
+      893                           .sym    _m_PA_Self_Tcms_Tx_Info,_m_PA_Self_Tcms_Tx_Info,12,2,32
+      894 00000000                  .sect    ".text"
+      895                   
+      896                           .global _Pa_Pro_Init
+      897                           .sym    _Pa_Pro_Init,_Pa_Pro_Init,32,2,0
+      898                           .func   40
+      899                   ;******************************************************************************
+      900                   ;* FUNCTION NAME: _Pa_Pro_Init                                                *
+      901                   ;*                                                                            *
+      902                   ;*   Architecture       : TMS320C30                                           *
+      903                   ;*   Calling Convention : Stack Parameter Convention                          *
+      904                   ;*   Function Uses Regs :                                                     *
+      905                   ;*   Regs Saved         :                                                     *
+      906                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      907                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+      908                   ;******************************************************************************
+      909 00000000          _Pa_Pro_Init:
+      910                           .line   1
+      911                   ;----------------------------------------------------------------------
+      912                   ;  40 | void Pa_Pro_Init()                                                     
+      913                   ;----------------------------------------------------------------------
+      914 00000000 0f2b0000         push      fp
+      915 00000001 500b0014         ldiu      sp,fp
+      916                           .line   5
+      917 00000002 50410b01         ldiu      *-fp(1),r1
+      918 00000003 504bc300         ldiu      *fp,fp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   18
+
+      919 00000004 18740002         subi      2,sp
+      920 00000005 68000001         bu        r1
+      921                   ;*      Branch Occurs to r1 
+      922                           .endfunc        44,000000000h,0
+      923                   
+      924                   
+      925 00000006                  .sect    ".text"
+      926                   
+      927                           .global _Pa_MainPro
+      928                           .sym    _Pa_MainPro,_Pa_MainPro,32,2,0
+      929                           .func   48
+      930                   ;******************************************************************************
+      931                   ;* FUNCTION NAME: _Pa_MainPro                                                 *
+      932                   ;*                                                                            *
+      933                   ;*   Architecture       : TMS320C30                                           *
+      934                   ;*   Calling Convention : Stack Parameter Convention                          *
+      935                   ;*   Function Uses Regs : r0,r1,r2,ar0,ar1,fp,sp,st,rs,re,rc                  *
+      936                   ;*   Regs Saved         :                                                     *
+      937                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      938                   ;*   Total Frame Size   : 2 Call + 0 Parm + 25 Auto + 0 SOE = 27 words        *
+      939                   ;******************************************************************************
+      940 00000006          _Pa_MainPro:
+      941                           .sym    _sData,1,60,1,800,,25
+      942                           .line   1
+      943                   ;----------------------------------------------------------------------
+      944                   ;  48 | void Pa_MainPro()                                                      
+      945                   ;  50 | UCHAR sData[25];                                                       
+      946                   ;----------------------------------------------------------------------
+      947 00000006 0f2b0000         push      fp
+      948 00000007 500b0014         ldiu      sp,fp
+      949 00000008 02740019         addi      25,sp
+      950                           .line   4
+      951                   ;----------------------------------------------------------------------
+      952                   ;  51 | if(!(nPaTimeCnt%500) && (!Idc_Load.nIDC_ROM_Flag) && (!nLedDataLoad.nSD
+      953                   ;     | DSelt) && (!nLedDataLoad.nFDDSelt))                                    
+      954                   ;----------------------------------------------------------------------
+      955 00000009 506101f4         ldiu      500,r1
+      956 0000000a 50200001-        ldiu      @_nPaTimeCnt+0,r0
+      957 0000000b 62000000!        call      MOD_U30
+      958                                                           ; Call Occurs
+      959 0000000c 04e00000         cmpi      0,r0
+      960 0000000d 6a06003d         bne       L12
+      961                   ;*      Branch Occurs to L12 
+      962 0000000e 08200000!        ldi       @_Idc_Load+0,r0
+      963 0000000f 6a06003b         bne       L12
+      964                   ;*      Branch Occurs to L12 
+      965 00000010 08200000!        ldi       @_nLedDataLoad+0,r0
+      966 00000011 6a060039         bne       L12
+      967                   ;*      Branch Occurs to L12 
+      968 00000012 08200001!        ldi       @_nLedDataLoad+1,r0
+      969 00000013 6a260035         bned      L12
+      970 00000014 52e20019         ldieq     25,r2
+      971 00000015 5280000b         ldieq     fp,r0
+      972 00000016 52e10000         ldieq     0,r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   19
+
+      973                   ;*      Branch Occurs to L12 
+      974                           .line   6
+      975                   ;----------------------------------------------------------------------
+      976                   ;  53 | memset(sData,0x00,25);                                                 
+      977                   ;----------------------------------------------------------------------
+      978 00000017 0f220000         push      r2
+      979 00000018 02600001         addi      1,r0
+      980 00000019 0f210000         push      r1
+      981 0000001a 0f200000         push      r0
+      982 0000001b 62000000!        call      _memset
+      983                                                           ; Call Occurs
+      984 0000001c 18740003         subi      3,sp
+      985                           .line   7
+      986                   ;----------------------------------------------------------------------
+      987                   ;  54 | nPaTimeCnt++;                                                          
+      988                   ;----------------------------------------------------------------------
+      989 0000001d 50600001         ldiu      1,r0
+      990 0000001e 02200001-        addi      @_nPaTimeCnt+0,r0     ; Unsigned
+      991 0000001f 15200001-        sti       r0,@_nPaTimeCnt+0
+      992                           .line   9
+      993                   ;----------------------------------------------------------------------
+      994                   ;  56 | Pa_TxData_Pro(sData,Xr16788_1Ch.nRxBuf_BackUp);                        
+      995                   ;----------------------------------------------------------------------
+      996 00000020 50210010!        ldiu      @_Xr16788_1Ch+16,r1
+      997 00000021 5000000b         ldiu      fp,r0
+      998 00000022 0f210000         push      r1
+      999 00000023 02600001         addi      1,r0
+     1000 00000024 0f200000         push      r0
+     1001 00000025 620001fb'        call      _Pa_TxData_Pro
+     1002                                                           ; Call Occurs
+     1003 00000026 18740002         subi      2,sp
+     1004                           .line   10
+     1005                   ;----------------------------------------------------------------------
+     1006                   ;  57 | memcpy(nTr_St_Info.nPaTxDataBuf,sData,21);                             
+     1007                   ;----------------------------------------------------------------------
+     1008 00000027 50280026-        ldiu      @CL1,ar0
+     1009 00000028 5009000b         ldiu      fp,ar1
+     1010 00000029 02690001         addi      1,ar1
+     1011 0000002a 50402101         ldiu      *ar1++(1),r0
+     1012 0000002b 13fb0013         rpts      19                    ; Fast MEMCPY(#3)
+     1013 0000002c da002021         sti       r0,*ar0++(1)
+     1014                   ||      ldi       *ar1++(1),r0
+     1015 0000002d 15402001         sti       r0,*ar0++(1)
+     1016                           .line   11
+     1017                   ;----------------------------------------------------------------------
+     1018                   ;  58 | nTr_St_Info.nPaTxDataBuf[21] = (m_PA_SccTxCnt%256);                    
+     1019                   ;----------------------------------------------------------------------
+     1020 0000002e 506000ff         ldiu      255,r0
+     1021 0000002f 02a00002-        and       @_m_PA_SccTxCnt+0,r0
+     1022 00000030 15200212!        sti       r0,@_nTr_St_Info+530
+     1023                           .line   12
+     1024                   ;----------------------------------------------------------------------
+     1025                   ;  59 | saf82532_Send(SAB82532_ACH,sData,21);                                  
+     1026                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   20
+
+     1027 00000031 50620015         ldiu      21,r2
+     1028 00000032 5000000b         ldiu      fp,r0
+     1029 00000033 0f220000         push      r2
+     1030 00000034 02600001         addi      1,r0
+     1031 00000035 50610000         ldiu      0,r1
+     1032 00000036 0f200000         push      r0
+     1033 00000037 0f210000         push      r1
+     1034 00000038 62000000!        call      _saf82532_Send
+     1035                                                           ; Call Occurs
+     1036 00000039 18740003         subi      3,sp
+     1037                           .line   13
+     1038                   ;----------------------------------------------------------------------
+     1039                   ;  60 | m_PA_SccTxCnt++;                                                       
+     1040                   ;----------------------------------------------------------------------
+     1041 0000003a 50600001         ldiu      1,r0
+     1042 0000003b 02200002-        addi      @_m_PA_SccTxCnt+0,r0  ; Unsigned
+     1043 0000003c 15200002-        sti       r0,@_m_PA_SccTxCnt+0
+     1044                           .line   15
+     1045                   ;----------------------------------------------------------------------
+     1046                   ;  62 | if(WORD_L(m_PA_SccTxCnt) > 20){                                        
+     1047                   ;----------------------------------------------------------------------
+     1048 0000003d 506000ff         ldiu      255,r0
+     1049 0000003e 02a00002-        and       @_m_PA_SccTxCnt+0,r0
+     1050 0000003f 04e00014         cmpi      20,r0
+     1051 00000040 6a220007         blsd      L11
+     1052 00000041 0c800000         nop
+     1053 00000042 51280027-        ldils     @CL2,ar0
+     1054 00000043 51600000         ldils     0,r0
+     1055                   ;*      Branch Occurs to L11 
+     1056                           .line   16
+     1057                   ;----------------------------------------------------------------------
+     1058                   ;  63 | DO0 = 1; //2012_03_12                                                  
+     1059                   ;----------------------------------------------------------------------
+     1060 00000044 50280027-        ldiu      @CL2,ar0
+     1061 00000045 50600001         ldiu      1,r0
+     1062 00000046 1540c000         sti       r0,*ar0
+     1063                           .line   17
+     1064                   ;----------------------------------------------------------------------
+     1065                   ;  64 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n1PA_1 = 1;                           
+     1066                   ;  66 | else                                                                   
+     1067                   ;----------------------------------------------------------------------
+     1068 00000047 10200007!        or        @_nPssTcmsTxData+7,r0
+     1069 00000048 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1070 00000049 6a000001         bu        L12
+     1071                   ;*      Branch Occurs to L12 
+     1072                           .line   21
+     1073                   ;----------------------------------------------------------------------
+     1074                   ;  68 | DO0 = 0; //2012_03_12                                                  
+     1075                   ;----------------------------------------------------------------------
+     1076 0000004a          L11:        
+     1077 0000004a 1540c000         sti       r0,*ar0
+     1078 0000004b          L12:        
+     1079                           .line   26
+     1080 0000004b 50530b01         ldiu      *-fp(1),bk
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   21
+
+     1081 0000004c 504bc300         ldiu      *fp,fp
+     1082 0000004d 1874001b         subi      27,sp
+     1083 0000004e 68000013         bu        bk
+     1084                   ;*      Branch Occurs to bk 
+     1085                           .endfunc        73,000000000h,25
+     1086                   
+     1087                   
+     1088 0000004f                  .sect    ".text"
+     1089                   
+     1090                           .global _Pa_RxData_Pro
+     1091                           .sym    _Pa_RxData_Pro,_Pa_RxData_Pro,32,2,0
+     1092                           .func   78
+     1093                   ;******************************************************************************
+     1094                   ;* FUNCTION NAME: _Pa_RxData_Pro                                              *
+     1095                   ;*                                                                            *
+     1096                   ;*   Architecture       : TMS320C30                                           *
+     1097                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1098                   ;*   Function Uses Regs : r0,r1,r2,ar0,ar1,fp,sp,st,rs,re,rc                  *
+     1099                   ;*   Regs Saved         :                                                     *
+     1100                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1101                   ;*   Total Frame Size   : 2 Call + 1 Parm + 31 Auto + 0 SOE = 34 words        *
+     1102                   ;******************************************************************************
+     1103 0000004f          _Pa_RxData_Pro:
+     1104                           .sym    _pData,-2,28,9,32
+     1105                           .sym    _nPaSd,1,24,1,32,.fake23
+     1106                           .sym    _sDataBuf,2,60,1,960,,30
+     1107                           .line   1
+     1108                   ;----------------------------------------------------------------------
+     1109                   ;  78 | void Pa_RxData_Pro(UCHAR *pData)                                       
+     1110                   ;----------------------------------------------------------------------
+     1111 0000004f 0f2b0000         push      fp
+     1112 00000050 500b0014         ldiu      sp,fp
+     1113 00000051 0274001f         addi      31,sp
+     1114                           .line   2
+     1115                           .line   3
+     1116                   ;----------------------------------------------------------------------
+     1117                   ;  80 | PPA_PIS_TXDATA nPaSd = (PA_PIS_TXDATA *) pData;                        
+     1118                   ;  82 | UCHAR sDataBuf[30];                                                    
+     1119                   ;----------------------------------------------------------------------
+     1120 00000052 50400b02         ldiu      *-fp(2),r0
+     1121 00000053 15400301         sti       r0,*+fp(1)
+     1122                           .line   6
+     1123                   ;----------------------------------------------------------------------
+     1124                   ;  83 | memset(sDataBuf,0x00,30);                                              
+     1125                   ;----------------------------------------------------------------------
+     1126 00000054 5062001e         ldiu      30,r2
+     1127 00000055 50610000         ldiu      0,r1
+     1128 00000056 5000000b         ldiu      fp,r0
+     1129 00000057 0f220000         push      r2
+     1130 00000058 02600002         addi      2,r0
+     1131 00000059 0f210000         push      r1
+     1132 0000005a 0f200000         push      r0
+     1133 0000005b 62000000!        call      _memset
+     1134                                                           ; Call Occurs
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   22
+
+     1135 0000005c 18740003         subi      3,sp
+     1136                           .line   9
+     1137                   ;----------------------------------------------------------------------
+     1138                   ;  86 | m_PA_SccTxCnt = 0; // 2011_10_24                                       
+     1139                   ;----------------------------------------------------------------------
+     1140 0000005d 50600000         ldiu      0,r0
+     1141 0000005e 15200002-        sti       r0,@_m_PA_SccTxCnt+0
+     1142                           .line   10
+     1143                   ;----------------------------------------------------------------------
+     1144                   ;  87 | sDataBuf[0] = nPaSd->TEST_03_Falt.n2COB_1;                             
+     1145                   ;----------------------------------------------------------------------
+     1146 0000005f 5008000b         ldiu      fp,ar0
+     1147 00000060 50490301         ldiu      *+fp(1),ar1
+     1148 00000061 02680002         addi      2,ar0
+     1149 00000062 50600002         ldiu      2,r0
+     1150 00000063 02c00104         and       *+ar1(4),r0
+     1151 00000064 09e0ffff         lsh       -1,r0
+     1152 00000065 1540c000         sti       r0,*ar0
+     1153                           .line   11
+     1154                   ;----------------------------------------------------------------------
+     1155                   ;  88 | sDataBuf[1] = nPaSd->TEST_03_Falt.n6COB_2;                             
+     1156                   ;----------------------------------------------------------------------
+     1157 00000066 50600020         ldiu      32,r0
+     1158 00000067 50490301         ldiu      *+fp(1),ar1
+     1159 00000068 5008000b         ldiu      fp,ar0
+     1160 00000069 02c00104         and       *+ar1(4),r0
+     1161 0000006a 02680003         addi      3,ar0
+     1162 0000006b 09e0fffb         lsh       -5,r0
+     1163 0000006c 1540c000         sti       r0,*ar0
+     1164                           .line   12
+     1165                   ;----------------------------------------------------------------------
+     1166                   ;  89 | sDataBuf[2] = nPaSd->TEST_03_Falt.n3SOBL_1;                            
+     1167                   ;----------------------------------------------------------------------
+     1168 0000006d 50600004         ldiu      4,r0
+     1169 0000006e 50490301         ldiu      *+fp(1),ar1
+     1170 0000006f 5008000b         ldiu      fp,ar0
+     1171 00000070 02c00104         and       *+ar1(4),r0
+     1172 00000071 02680004         addi      4,ar0
+     1173 00000072 09e0fffe         lsh       -2,r0
+     1174 00000073 1540c000         sti       r0,*ar0
+     1175                           .line   13
+     1176                   ;----------------------------------------------------------------------
+     1177                   ;  90 | sDataBuf[3] = nPaSd->TEST_03_Falt.n7SOBL_2;                            
+     1178                   ;----------------------------------------------------------------------
+     1179 00000074 50490301         ldiu      *+fp(1),ar1
+     1180 00000075 50600040         ldiu      64,r0
+     1181 00000076 5008000b         ldiu      fp,ar0
+     1182 00000077 02c00104         and       *+ar1(4),r0
+     1183 00000078 02680005         addi      5,ar0
+     1184 00000079 09e0fffa         lsh       -6,r0
+     1185 0000007a 1540c000         sti       r0,*ar0
+     1186                           .line   14
+     1187                   ;----------------------------------------------------------------------
+     1188                   ;  91 | sDataBuf[4] = nPaSd->TEST_03_Falt.n4SOBR_1;                            
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   23
+
+     1189                   ;----------------------------------------------------------------------
+     1190 0000007b 50490301         ldiu      *+fp(1),ar1
+     1191 0000007c 50600008         ldiu      8,r0
+     1192 0000007d 02c00104         and       *+ar1(4),r0
+     1193 0000007e 5008000b         ldiu      fp,ar0
+     1194 0000007f 02680006         addi      6,ar0
+     1195 00000080 09e0fffd         lsh       -3,r0
+     1196 00000081 1540c000         sti       r0,*ar0
+     1197                           .line   15
+     1198                   ;----------------------------------------------------------------------
+     1199                   ;  92 | sDataBuf[5] = nPaSd->TEST_03_Falt.n8SOBR_2;                            
+     1200                   ;----------------------------------------------------------------------
+     1201 00000082 50600080         ldiu      128,r0
+     1202 00000083 50490301         ldiu      *+fp(1),ar1
+     1203 00000084 5008000b         ldiu      fp,ar0
+     1204 00000085 02c00104         and       *+ar1(4),r0
+     1205 00000086 02680007         addi      7,ar0
+     1206 00000087 09e0fff9         lsh       -7,r0
+     1207 00000088 1540c000         sti       r0,*ar0
+     1208                           .line   17
+     1209                   ;----------------------------------------------------------------------
+     1210                   ;  94 | sDataBuf[6] = nPaSd->TEST_04_Falt.n1EI1_1;                             
+     1211                   ;----------------------------------------------------------------------
+     1212 00000089 50490301         ldiu      *+fp(1),ar1
+     1213 0000008a 5008000b         ldiu      fp,ar0
+     1214 0000008b 50600001         ldiu      1,r0
+     1215 0000008c 02680008         addi      8,ar0
+     1216 0000008d 02c00105         and       *+ar1(5),r0
+     1217 0000008e 1540c000         sti       r0,*ar0
+     1218                           .line   18
+     1219                   ;----------------------------------------------------------------------
+     1220                   ;  95 | sDataBuf[7] = nPaSd->TEST_04_Falt.n2EI2_1;                             
+     1221                   ;----------------------------------------------------------------------
+     1222 0000008f 50600002         ldiu      2,r0
+     1223 00000090 50490301         ldiu      *+fp(1),ar1
+     1224 00000091 5008000b         ldiu      fp,ar0
+     1225 00000092 02c00105         and       *+ar1(5),r0
+     1226 00000093 02680009         addi      9,ar0
+     1227 00000094 09e0ffff         lsh       -1,r0
+     1228 00000095 1540c000         sti       r0,*ar0
+     1229                           .line   19
+     1230                   ;----------------------------------------------------------------------
+     1231                   ;  96 | sDataBuf[8] = nPaSd->TEST_04_Falt.n3EI3_1;                             
+     1232                   ;----------------------------------------------------------------------
+     1233 00000096 50600004         ldiu      4,r0
+     1234 00000097 50490301         ldiu      *+fp(1),ar1
+     1235 00000098 5008000b         ldiu      fp,ar0
+     1236 00000099 02c00105         and       *+ar1(5),r0
+     1237 0000009a 0268000a         addi      10,ar0
+     1238 0000009b 09e0fffe         lsh       -2,r0
+     1239 0000009c 1540c000         sti       r0,*ar0
+     1240                           .line   20
+     1241                   ;----------------------------------------------------------------------
+     1242                   ;  97 | sDataBuf[9] = nPaSd->TEST_04_Falt.n4EI4_1;                             
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   24
+
+     1243                   ;----------------------------------------------------------------------
+     1244 0000009d 50600008         ldiu      8,r0
+     1245 0000009e 50490301         ldiu      *+fp(1),ar1
+     1246 0000009f 5008000b         ldiu      fp,ar0
+     1247 000000a0 02c00105         and       *+ar1(5),r0
+     1248 000000a1 0268000b         addi      11,ar0
+     1249 000000a2 09e0fffd         lsh       -3,r0
+     1250 000000a3 1540c000         sti       r0,*ar0
+     1251                           .line   22
+     1252                   ;----------------------------------------------------------------------
+     1253                   ;  99 | sDataBuf[10] = nPaSd->TEST_05_Falt.n1EI1_2;                            
+     1254                   ;----------------------------------------------------------------------
+     1255 000000a4 50600001         ldiu      1,r0
+     1256 000000a5 5008000b         ldiu      fp,ar0
+     1257 000000a6 50490301         ldiu      *+fp(1),ar1
+     1258 000000a7 0268000c         addi      12,ar0
+     1259 000000a8 02c00106         and       *+ar1(6),r0
+     1260 000000a9 1540c000         sti       r0,*ar0
+     1261                           .line   23
+     1262                   ;----------------------------------------------------------------------
+     1263                   ; 100 | sDataBuf[11] = nPaSd->TEST_05_Falt.n2EI2_2;                            
+     1264                   ;----------------------------------------------------------------------
+     1265 000000aa 50490301         ldiu      *+fp(1),ar1
+     1266 000000ab 50600002         ldiu      2,r0
+     1267 000000ac 5008000b         ldiu      fp,ar0
+     1268 000000ad 02c00106         and       *+ar1(6),r0
+     1269 000000ae 0268000d         addi      13,ar0
+     1270 000000af 09e0ffff         lsh       -1,r0
+     1271 000000b0 1540c000         sti       r0,*ar0
+     1272                           .line   24
+     1273                   ;----------------------------------------------------------------------
+     1274                   ; 101 | sDataBuf[12] = nPaSd->TEST_05_Falt.n3EI3_2;                            
+     1275                   ;----------------------------------------------------------------------
+     1276 000000b1 50490301         ldiu      *+fp(1),ar1
+     1277 000000b2 50600004         ldiu      4,r0
+     1278 000000b3 02c00106         and       *+ar1(6),r0
+     1279 000000b4 5008000b         ldiu      fp,ar0
+     1280 000000b5 0268000e         addi      14,ar0
+     1281 000000b6 09e0fffe         lsh       -2,r0
+     1282 000000b7 1540c000         sti       r0,*ar0
+     1283                           .line   25
+     1284                   ;----------------------------------------------------------------------
+     1285                   ; 102 | sDataBuf[13] = nPaSd->TEST_05_Falt.n4EI4_2;                            
+     1286                   ;----------------------------------------------------------------------
+     1287 000000b8 50490301         ldiu      *+fp(1),ar1
+     1288 000000b9 5008000b         ldiu      fp,ar0
+     1289 000000ba 50600008         ldiu      8,r0
+     1290 000000bb 0268000f         addi      15,ar0
+     1291 000000bc 02c00106         and       *+ar1(6),r0
+     1292 000000bd 09e0fffd         lsh       -3,r0
+     1293 000000be 1540c000         sti       r0,*ar0
+     1294                           .line   27
+     1295                   ;----------------------------------------------------------------------
+     1296                   ; 104 | sDataBuf[14] = nPaSd->TEST_06_Falt.n1AMP1;                             
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   25
+
+     1297                   ;----------------------------------------------------------------------
+     1298 000000bf 5008000b         ldiu      fp,ar0
+     1299 000000c0 50600001         ldiu      1,r0
+     1300 000000c1 50490301         ldiu      *+fp(1),ar1
+     1301 000000c2 02680010         addi      16,ar0
+     1302 000000c3 02c00107         and       *+ar1(7),r0
+     1303 000000c4 1540c000         sti       r0,*ar0
+     1304                           .line   28
+     1305                   ;----------------------------------------------------------------------
+     1306                   ; 105 | sDataBuf[15] = nPaSd->TEST_06_Falt.n2AMP2;                             
+     1307                   ;----------------------------------------------------------------------
+     1308 000000c5 50490301         ldiu      *+fp(1),ar1
+     1309 000000c6 50600002         ldiu      2,r0
+     1310 000000c7 02c00107         and       *+ar1(7),r0
+     1311 000000c8 5008000b         ldiu      fp,ar0
+     1312 000000c9 02680011         addi      17,ar0
+     1313 000000ca 09e0ffff         lsh       -1,r0
+     1314 000000cb 1540c000         sti       r0,*ar0
+     1315                           .line   29
+     1316                   ;----------------------------------------------------------------------
+     1317                   ; 106 | sDataBuf[16] = nPaSd->TEST_06_Falt.n3AMP3;                             
+     1318                   ;----------------------------------------------------------------------
+     1319 000000cc 50600004         ldiu      4,r0
+     1320 000000cd 50490301         ldiu      *+fp(1),ar1
+     1321 000000ce 5008000b         ldiu      fp,ar0
+     1322 000000cf 02680012         addi      18,ar0
+     1323 000000d0 02c00107         and       *+ar1(7),r0
+     1324 000000d1 09e0fffe         lsh       -2,r0
+     1325 000000d2 1540c000         sti       r0,*ar0
+     1326                           .line   30
+     1327                   ;----------------------------------------------------------------------
+     1328                   ; 107 | sDataBuf[17] = nPaSd->TEST_06_Falt.n4AMP4;                             
+     1329                   ;----------------------------------------------------------------------
+     1330 000000d3 50600008         ldiu      8,r0
+     1331 000000d4 50490301         ldiu      *+fp(1),ar1
+     1332 000000d5 5008000b         ldiu      fp,ar0
+     1333 000000d6 02c00107         and       *+ar1(7),r0
+     1334 000000d7 02680013         addi      19,ar0
+     1335 000000d8 09e0fffd         lsh       -3,r0
+     1336 000000d9 1540c000         sti       r0,*ar0
+     1337                           .line   32
+     1338                   ;----------------------------------------------------------------------
+     1339                   ; 109 | sDataBuf[18] = nPaSd->TEST_10_Falt.n1IFV1_1;                           
+     1340                   ;----------------------------------------------------------------------
+     1341 000000da 50490301         ldiu      *+fp(1),ar1
+     1342 000000db 5008000b         ldiu      fp,ar0
+     1343 000000dc 50600001         ldiu      1,r0
+     1344 000000dd 02680014         addi      20,ar0
+     1345 000000de 02c0010b         and       *+ar1(11),r0
+     1346 000000df 1540c000         sti       r0,*ar0
+     1347                           .line   33
+     1348                   ;----------------------------------------------------------------------
+     1349                   ; 110 | sDataBuf[19] = nPaSd->TEST_10_Falt.n2IFV1_2;                           
+     1350                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   26
+
+     1351 000000e0 5008000b         ldiu      fp,ar0
+     1352 000000e1 50600002         ldiu      2,r0
+     1353 000000e2 50490301         ldiu      *+fp(1),ar1
+     1354 000000e3 02680015         addi      21,ar0
+     1355 000000e4 02c0010b         and       *+ar1(11),r0
+     1356 000000e5 09e0ffff         lsh       -1,r0
+     1357 000000e6 1540c000         sti       r0,*ar0
+     1358                           .line   34
+     1359                   ;----------------------------------------------------------------------
+     1360                   ; 111 | sDataBuf[20] = nPaSd->TEST_10_Falt.n3IFV1_3;                           
+     1361                   ;----------------------------------------------------------------------
+     1362 000000e7 50490301         ldiu      *+fp(1),ar1
+     1363 000000e8 5008000b         ldiu      fp,ar0
+     1364 000000e9 50600004         ldiu      4,r0
+     1365 000000ea 02680016         addi      22,ar0
+     1366 000000eb 02c0010b         and       *+ar1(11),r0
+     1367 000000ec 09e0fffe         lsh       -2,r0
+     1368 000000ed 1540c000         sti       r0,*ar0
+     1369                           .line   35
+     1370                   ;----------------------------------------------------------------------
+     1371                   ; 112 | sDataBuf[21] = nPaSd->TEST_10_Falt.n4IFV1_4;                           
+     1372                   ;----------------------------------------------------------------------
+     1373 000000ee 50600008         ldiu      8,r0
+     1374 000000ef 50490301         ldiu      *+fp(1),ar1
+     1375 000000f0 5008000b         ldiu      fp,ar0
+     1376 000000f1 02c0010b         and       *+ar1(11),r0
+     1377 000000f2 02680017         addi      23,ar0
+     1378 000000f3 09e0fffd         lsh       -3,r0
+     1379 000000f4 1540c000         sti       r0,*ar0
+     1380                           .line   36
+     1381                   ;----------------------------------------------------------------------
+     1382                   ; 113 | sDataBuf[22] = nPaSd->TEST_10_Falt.n5IFV2_1;                           
+     1383                   ;----------------------------------------------------------------------
+     1384 000000f5 50490301         ldiu      *+fp(1),ar1
+     1385 000000f6 50600010         ldiu      16,r0
+     1386 000000f7 5008000b         ldiu      fp,ar0
+     1387 000000f8 02c0010b         and       *+ar1(11),r0
+     1388 000000f9 02680018         addi      24,ar0
+     1389 000000fa 09e0fffc         lsh       -4,r0
+     1390 000000fb 1540c000         sti       r0,*ar0
+     1391                           .line   37
+     1392                   ;----------------------------------------------------------------------
+     1393                   ; 114 | sDataBuf[23] = nPaSd->TEST_10_Falt.n6IFV2_2;                           
+     1394                   ;----------------------------------------------------------------------
+     1395 000000fc 50490301         ldiu      *+fp(1),ar1
+     1396 000000fd 50600020         ldiu      32,r0
+     1397 000000fe 02c0010b         and       *+ar1(11),r0
+     1398 000000ff 5008000b         ldiu      fp,ar0
+     1399 00000100 02680019         addi      25,ar0
+     1400 00000101 09e0fffb         lsh       -5,r0
+     1401 00000102 1540c000         sti       r0,*ar0
+     1402                           .line   38
+     1403                   ;----------------------------------------------------------------------
+     1404                   ; 115 | sDataBuf[24] = nPaSd->TEST_10_Falt.n7IFV2_3;                           
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   27
+
+     1405                   ;----------------------------------------------------------------------
+     1406 00000103 50600040         ldiu      64,r0
+     1407 00000104 50490301         ldiu      *+fp(1),ar1
+     1408 00000105 5008000b         ldiu      fp,ar0
+     1409 00000106 02c0010b         and       *+ar1(11),r0
+     1410 00000107 0268001a         addi      26,ar0
+     1411 00000108 09e0fffa         lsh       -6,r0
+     1412 00000109 1540c000         sti       r0,*ar0
+     1413                           .line   39
+     1414                   ;----------------------------------------------------------------------
+     1415                   ; 116 | sDataBuf[25] = nPaSd->TEST_10_Falt.n8IFV2_4;                           
+     1416                   ;----------------------------------------------------------------------
+     1417 0000010a 50600080         ldiu      128,r0
+     1418 0000010b 50490301         ldiu      *+fp(1),ar1
+     1419 0000010c 5008000b         ldiu      fp,ar0
+     1420 0000010d 02c0010b         and       *+ar1(11),r0
+     1421 0000010e 0268001b         addi      27,ar0
+     1422 0000010f 09e0fff9         lsh       -7,r0
+     1423 00000110 1540c000         sti       r0,*ar0
+     1424                           .line   41
+     1425                   ;----------------------------------------------------------------------
+     1426                   ; 118 | sDataBuf[26] = nPaSd->TEST_11_Falt.n2IFV3_2;                           
+     1427                   ;----------------------------------------------------------------------
+     1428 00000111 50490301         ldiu      *+fp(1),ar1
+     1429 00000112 50600002         ldiu      2,r0
+     1430 00000113 02c0010c         and       *+ar1(12),r0
+     1431 00000114 5008000b         ldiu      fp,ar0
+     1432 00000115 0268001c         addi      28,ar0
+     1433 00000116 09e0ffff         lsh       -1,r0
+     1434 00000117 1540c000         sti       r0,*ar0
+     1435                           .line   42
+     1436                   ;----------------------------------------------------------------------
+     1437                   ; 119 | sDataBuf[27] = nPaSd->TEST_11_Falt.n3IFV3_3;                           
+     1438                   ;----------------------------------------------------------------------
+     1439 00000118 50490301         ldiu      *+fp(1),ar1
+     1440 00000119 50600004         ldiu      4,r0
+     1441 0000011a 5008000b         ldiu      fp,ar0
+     1442 0000011b 02c0010c         and       *+ar1(12),r0
+     1443 0000011c 0268001d         addi      29,ar0
+     1444 0000011d 09e0fffe         lsh       -2,r0
+     1445 0000011e 1540c000         sti       r0,*ar0
+     1446                           .line   43
+     1447                   ;----------------------------------------------------------------------
+     1448                   ; 120 | sDataBuf[28] = nPaSd->TEST_11_Falt.n6IFV4_2;                           
+     1449                   ;----------------------------------------------------------------------
+     1450 0000011f 5008000b         ldiu      fp,ar0
+     1451 00000120 0268001e         addi      30,ar0
+     1452 00000121 50490301         ldiu      *+fp(1),ar1
+     1453 00000122 50600020         ldiu      32,r0
+     1454 00000123 02c0010c         and       *+ar1(12),r0
+     1455 00000124 09e0fffb         lsh       -5,r0
+     1456 00000125 1540c000         sti       r0,*ar0
+     1457                           .line   44
+     1458                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   28
+
+     1459                   ; 121 | sDataBuf[29] = nPaSd->TEST_11_Falt.n7IFV4_3;                           
+     1460                   ;----------------------------------------------------------------------
+     1461 00000126 50490301         ldiu      *+fp(1),ar1
+     1462 00000127 50600040         ldiu      64,r0
+     1463 00000128 5008000b         ldiu      fp,ar0
+     1464 00000129 02c0010c         and       *+ar1(12),r0
+     1465 0000012a 0268001f         addi      31,ar0
+     1466 0000012b 09e0fffa         lsh       -6,r0
+     1467 0000012c 1540c000         sti       r0,*ar0
+     1468                           .line   46
+     1469                   ;----------------------------------------------------------------------
+     1470                   ; 123 | if( WORD_L(pData[4]) || WORD_L(pData[5]) || WORD_L(pData[6]) || WORD_L(
+     1471                   ;     | pData[7])){m_PA_Self_Tcms_Tx_Info++; }                                 
+     1472                   ; 124 | else                                                                   
+     1473                   ;----------------------------------------------------------------------
+     1474 0000012d 50480b02         ldiu      *-fp(2),ar0
+     1475 0000012e 506000ff         ldiu      255,r0
+     1476 0000012f 1a400004         tstb      *+ar0(4),r0
+     1477 00000130 6a060006         bne       L18
+     1478                   ;*      Branch Occurs to L18 
+     1479 00000131 1a400005         tstb      *+ar0(5),r0
+     1480 00000132 6a060004         bne       L18
+     1481                   ;*      Branch Occurs to L18 
+     1482 00000133 1a400006         tstb      *+ar0(6),r0
+     1483 00000134 6a060002         bne       L18
+     1484                   ;*      Branch Occurs to L18 
+     1485 00000135 1a400007         tstb      *+ar0(7),r0
+     1486 00000136 6a050004         beq       L19
+     1487                   ;*      Branch Occurs to L19 
+     1488 00000137          L18:        
+     1489 00000137 50600001         ldiu      1,r0
+     1490 00000138 02200006-        addi      @_m_PA_Self_Tcms_Tx_Info+0,r0 ; Unsigned
+     1491 00000139 15200006-        sti       r0,@_m_PA_Self_Tcms_Tx_Info+0
+     1492 0000013a 6a000005         bu        L20
+     1493                   ;*      Branch Occurs to L20 
+     1494 0000013b          L19:        
+     1495                           .line   49
+     1496                   ;----------------------------------------------------------------------
+     1497                   ; 126 | m_PA_Self_Tcms_Tx_Info=0;                                              
+     1498                   ;----------------------------------------------------------------------
+     1499 0000013b 50600000         ldiu      0,r0
+     1500 0000013c 15200006-        sti       r0,@_m_PA_Self_Tcms_Tx_Info+0
+     1501                           .line   51
+     1502                   ;----------------------------------------------------------------------
+     1503                   ; 128 | nPssTcmsTxData.PA_IDC_Falt_1.BYTE = 0;                                 
+     1504                   ;----------------------------------------------------------------------
+     1505 0000013d 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1506                           .line   52
+     1507                   ;----------------------------------------------------------------------
+     1508                   ; 129 | nPssTcmsTxData.PA_IDC_Falt_2.BYTE = 0;                                 
+     1509                   ;----------------------------------------------------------------------
+     1510 0000013e 15200008!        sti       r0,@_nPssTcmsTxData+8
+     1511                           .line   53
+     1512                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   29
+
+     1513                   ; 130 | nPssTcmsTxData.PA_IDC_Falt_3.BYTE = 0;                                 
+     1514                   ; 133 | //if( (!m_PA_Self_Tcms_Tx_Info)|| m_PA_Self_Tcms_Tx_Info>10)           
+     1515                   ;----------------------------------------------------------------------
+     1516 0000013f 15200009!        sti       r0,@_nPssTcmsTxData+9
+     1517 00000140          L20:        
+     1518                           .line   57
+     1519                   ;----------------------------------------------------------------------
+     1520                   ; 134 | if(WORD_L(m_PA_Self_Tcms_Tx_Info)>10)  //°íÀå Ä«¿îÅÍ°¡ 10È¸ ÀÌ»ó Áö¼Ó µ
+     1521                   ;     | É¶§ °íÀåÀ» Àü¼Û ÇÑ´Ù.                                                  
+     1522                   ;----------------------------------------------------------------------
+     1523 00000140 506000ff         ldiu      255,r0
+     1524 00000141 02a00006-        and       @_m_PA_Self_Tcms_Tx_Info+0,r0
+     1525 00000142 04e0000a         cmpi      10,r0
+     1526 00000143 6a2200a3         blsd      L38
+     1527 00000144 51a00007!        ldihi     @_nPssTcmsTxData+7,r0
+     1528 00000145 51e10001         ldihi     1,r1
+     1529 00000146 51c80301         ldihi     *+fp(1),ar0
+     1530                   ;*      Branch Occurs to L38 
+     1531                           .line   59
+     1532                   ;----------------------------------------------------------------------
+     1533                   ; 136 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n1PA_1 =   nPaSd->TEST_03_Falt.n1PAVC_
+     1534                   ;     | 1;                                                                     
+     1535                   ;----------------------------------------------------------------------
+     1536 00000147 03600001         andn      1,r0
+     1537 00000148 02c10004         and       *+ar0(4),r1
+     1538 00000149 25800100         or3       r0,r1,r0
+     1539 0000014a 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1540                           .line   60
+     1541                   ;----------------------------------------------------------------------
+     1542                   ; 137 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n2PA_4 =   nPaSd->TEST_03_Falt.n5PAVC_
+     1543                   ;     | 2;                                                                     
+     1544                   ;----------------------------------------------------------------------
+     1545 0000014b 50600010         ldiu      16,r0
+     1546 0000014c 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1547 0000014d 02c00004         and       *+ar0(4),r0
+     1548 0000014e 09e0fffc         lsh       -4,r0
+     1549 0000014f 03610002         andn      2,r1
+     1550 00000150 02e00001         and       1,r0
+     1551 00000151 03e00001         ash       1,r0
+     1552 00000152 25800001         or3       r1,r0,r0
+     1553 00000153 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1554                           .line   61
+     1555                   ;----------------------------------------------------------------------
+     1556                   ; 138 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n3COB_1 =  nPaSd->TEST_03_Falt.n2COB_1
+     1557                   ;     | ;                                                                      
+     1558                   ;----------------------------------------------------------------------
+     1559 00000154 50600002         ldiu      2,r0
+     1560 00000155 02c00004         and       *+ar0(4),r0
+     1561 00000156 09e0ffff         lsh       -1,r0
+     1562 00000157 02e00001         and       1,r0
+     1563 00000158 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1564 00000159 03e00002         ash       2,r0
+     1565 0000015a 03610004         andn      4,r1
+     1566 0000015b 25800001         or3       r1,r0,r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   30
+
+     1567 0000015c 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1568                           .line   62
+     1569                   ;----------------------------------------------------------------------
+     1570                   ; 139 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n4COB_4 =  nPaSd->TEST_03_Falt.n6COB_2
+     1571                   ;     | ;                                                                      
+     1572                   ;----------------------------------------------------------------------
+     1573 0000015d 50600020         ldiu      32,r0
+     1574 0000015e 02c00004         and       *+ar0(4),r0
+     1575 0000015f 09e0fffb         lsh       -5,r0
+     1576 00000160 02e00001         and       1,r0
+     1577 00000161 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1578 00000162 03e00003         ash       3,r0
+     1579 00000163 03610008         andn      8,r1
+     1580 00000164 25800001         or3       r1,r0,r0
+     1581 00000165 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1582                           .line   63
+     1583                   ;----------------------------------------------------------------------
+     1584                   ; 140 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n5SOBL_1 = nPaSd->TEST_03_Falt.n3SOBL_
+     1585                   ;     | 1;                                                                     
+     1586                   ;----------------------------------------------------------------------
+     1587 00000166 50010000         ldiu      r0,r1
+     1588 00000167 50600004         ldiu      4,r0
+     1589 00000168 02c00004         and       *+ar0(4),r0
+     1590 00000169 09e0fffe         lsh       -2,r0
+     1591 0000016a 03610010         andn      16,r1
+     1592 0000016b 02e00001         and       1,r0
+     1593 0000016c 03e00004         ash       4,r0
+     1594 0000016d 25800001         or3       r1,r0,r0
+     1595 0000016e 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1596                           .line   64
+     1597                   ;----------------------------------------------------------------------
+     1598                   ; 141 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n6SOBL_4 = nPaSd->TEST_03_Falt.n7SOBL_
+     1599                   ;     | 2;                                                                     
+     1600                   ;----------------------------------------------------------------------
+     1601 0000016f 50600040         ldiu      64,r0
+     1602 00000170 02c00004         and       *+ar0(4),r0
+     1603 00000171 09e0fffa         lsh       -6,r0
+     1604 00000172 02e00001         and       1,r0
+     1605 00000173 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1606 00000174 03e00005         ash       5,r0
+     1607 00000175 03610020         andn      32,r1
+     1608 00000176 25800001         or3       r1,r0,r0
+     1609 00000177 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1610                           .line   65
+     1611                   ;----------------------------------------------------------------------
+     1612                   ; 142 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n7SOBR_1 = nPaSd->TEST_03_Falt.n4SOBR_
+     1613                   ;     | 1;                                                                     
+     1614                   ;----------------------------------------------------------------------
+     1615 00000178 50600008         ldiu      8,r0
+     1616 00000179 02c00004         and       *+ar0(4),r0
+     1617 0000017a 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1618 0000017b 09e0fffd         lsh       -3,r0
+     1619 0000017c 02e00001         and       1,r0
+     1620 0000017d 03610040         andn      64,r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   31
+
+     1621 0000017e 03e00006         ash       6,r0
+     1622 0000017f 25800001         or3       r1,r0,r0
+     1623 00000180 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1624                           .line   66
+     1625                   ;----------------------------------------------------------------------
+     1626                   ; 143 | nPssTcmsTxData.PA_IDC_Falt_1.BIT.n8SOBR_4 = nPaSd->TEST_03_Falt.n8SOBR_
+     1627                   ;     | 2;                                                                     
+     1628                   ;----------------------------------------------------------------------
+     1629 00000181 50600080         ldiu      128,r0
+     1630 00000182 02c00004         and       *+ar0(4),r0
+     1631 00000183 09e0fff9         lsh       -7,r0
+     1632 00000184 02e00001         and       1,r0
+     1633 00000185 03e00007         ash       7,r0
+     1634 00000186 50210007!        ldiu      @_nPssTcmsTxData+7,r1
+     1635 00000187 03610080         andn      128,r1
+     1636 00000188 25800001         or3       r1,r0,r0
+     1637 00000189 15200007!        sti       r0,@_nPssTcmsTxData+7
+     1638                           .line   69
+     1639                   ;----------------------------------------------------------------------
+     1640                   ; 146 | nPssTcmsTxData.PA_IDC_Falt_2.BIT.n1Pow_Amp_1 = nPaSd->TEST_06_Falt.n1AM
+     1641                   ;     | P1;                                                                    
+     1642                   ;----------------------------------------------------------------------
+     1643 0000018a 50610001         ldiu      1,r1
+     1644 0000018b 50200008!        ldiu      @_nPssTcmsTxData+8,r0
+     1645 0000018c 02c10007         and       *+ar0(7),r1
+     1646 0000018d 03600001         andn      1,r0
+     1647 0000018e 25800100         or3       r0,r1,r0
+     1648 0000018f 15200008!        sti       r0,@_nPssTcmsTxData+8
+     1649                           .line   70
+     1650                   ;----------------------------------------------------------------------
+     1651                   ; 147 | nPssTcmsTxData.PA_IDC_Falt_2.BIT.n2Pow_Amp_2 = nPaSd->TEST_06_Falt.n2AM
+     1652                   ;     | P2;                                                                    
+     1653                   ;----------------------------------------------------------------------
+     1654 00000190 50600002         ldiu      2,r0
+     1655 00000191 02c00007         and       *+ar0(7),r0
+     1656 00000192 09e0ffff         lsh       -1,r0
+     1657 00000193 50210008!        ldiu      @_nPssTcmsTxData+8,r1
+     1658 00000194 02e00001         and       1,r0
+     1659 00000195 03610002         andn      2,r1
+     1660 00000196 03e00001         ash       1,r0
+     1661 00000197 25800001         or3       r1,r0,r0
+     1662 00000198 15200008!        sti       r0,@_nPssTcmsTxData+8
+     1663                           .line   71
+     1664                   ;----------------------------------------------------------------------
+     1665                   ; 148 | nPssTcmsTxData.PA_IDC_Falt_2.BIT.n3Pow_Amp_3 = nPaSd->TEST_06_Falt.n3AM
+     1666                   ;     | P3;                                                                    
+     1667                   ;----------------------------------------------------------------------
+     1668 00000199 50600004         ldiu      4,r0
+     1669 0000019a 02c00007         and       *+ar0(7),r0
+     1670 0000019b 09e0fffe         lsh       -2,r0
+     1671 0000019c 50210008!        ldiu      @_nPssTcmsTxData+8,r1
+     1672 0000019d 02e00001         and       1,r0
+     1673 0000019e 03610004         andn      4,r1
+     1674 0000019f 03e00002         ash       2,r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   32
+
+     1675 000001a0 25800001         or3       r1,r0,r0
+     1676 000001a1 15200008!        sti       r0,@_nPssTcmsTxData+8
+     1677                           .line   72
+     1678                   ;----------------------------------------------------------------------
+     1679                   ; 149 | nPssTcmsTxData.PA_IDC_Falt_2.BIT.n4Pow_Amp_4 = nPaSd->TEST_06_Falt.n4AM
+     1680                   ;     | P4;                                                                    
+     1681                   ;----------------------------------------------------------------------
+     1682 000001a2 50600008         ldiu      8,r0
+     1683 000001a3 02c00007         and       *+ar0(7),r0
+     1684 000001a4 09e0fffd         lsh       -3,r0
+     1685 000001a5 02e00001         and       1,r0
+     1686 000001a6 50210008!        ldiu      @_nPssTcmsTxData+8,r1
+     1687 000001a7 03610008         andn      8,r1
+     1688 000001a8 03e00003         ash       3,r0
+     1689 000001a9 25800001         or3       r1,r0,r0
+     1690 000001aa 15200008!        sti       r0,@_nPssTcmsTxData+8
+     1691                           .line   74
+     1692                   ;----------------------------------------------------------------------
+     1693                   ; 151 | nPssTcmsTxData.PA_IDC_Falt_3.BIT.n1EM_Phon_1 = (nPaSd->TEST_04_Falt.n1E
+     1694                   ;     | I1_1 || nPaSd->TEST_05_Falt.n1EI1_2) ? 1 : 0;                          
+     1695                   ;----------------------------------------------------------------------
+     1696 000001ab 50600001         ldiu      1,r0
+     1697 000001ac 1a400005         tstb      *+ar0(5),r0
+     1698 000001ad 6a060005         bne       L23
+     1699                   ;*      Branch Occurs to L23 
+     1700 000001ae 1a400006         tstb      *+ar0(6),r0
+     1701 000001af 6a250003         beqd      L25
+     1702 000001b0 0c800000         nop
+     1703 000001b1 52e00000         ldieq     0,r0
+     1704 000001b2 52a10009!        ldieq     @_nPssTcmsTxData+9,r1
+     1705                   ;*      Branch Occurs to L25 
+     1706 000001b3          L23:        
+     1707 000001b3 50600001         ldiu      1,r0
+     1708 000001b4 50210009!        ldiu      @_nPssTcmsTxData+9,r1
+     1709 000001b5          L25:        
+     1710 000001b5 02e00001         and       1,r0
+     1711 000001b6 03610001         andn      1,r1
+     1712 000001b7 25800001         or3       r1,r0,r0
+     1713 000001b8 15200009!        sti       r0,@_nPssTcmsTxData+9
+     1714                           .line   75
+     1715                   ;----------------------------------------------------------------------
+     1716                   ; 152 | nPssTcmsTxData.PA_IDC_Falt_3.BIT.n2EM_Phon_2 = (nPaSd->TEST_04_Falt.n2E
+     1717                   ;     | I2_1 || nPaSd->TEST_05_Falt.n2EI2_2) ? 1 : 0;                          
+     1718                   ;----------------------------------------------------------------------
+     1719 000001b9 50480301         ldiu      *+fp(1),ar0
+     1720 000001ba 50600002         ldiu      2,r0
+     1721 000001bb 1a400005         tstb      *+ar0(5),r0
+     1722 000001bc 6a060005         bne       L27
+     1723                   ;*      Branch Occurs to L27 
+     1724 000001bd 1a400006         tstb      *+ar0(6),r0
+     1725 000001be 6a250003         beqd      L29
+     1726 000001bf 0c800000         nop
+     1727 000001c0 52e00000         ldieq     0,r0
+     1728 000001c1 52a10009!        ldieq     @_nPssTcmsTxData+9,r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   33
+
+     1729                   ;*      Branch Occurs to L29 
+     1730 000001c2          L27:        
+     1731 000001c2 50600001         ldiu      1,r0
+     1732 000001c3 50210009!        ldiu      @_nPssTcmsTxData+9,r1
+     1733 000001c4          L29:        
+     1734 000001c4 02e00001         and       1,r0
+     1735 000001c5 03610002         andn      2,r1
+     1736 000001c6 03e00001         ash       1,r0
+     1737 000001c7 25800001         or3       r1,r0,r0
+     1738 000001c8 15200009!        sti       r0,@_nPssTcmsTxData+9
+     1739                           .line   76
+     1740                   ;----------------------------------------------------------------------
+     1741                   ; 153 | nPssTcmsTxData.PA_IDC_Falt_3.BIT.n3EM_Phon_3 = (nPaSd->TEST_04_Falt.n3E
+     1742                   ;     | I3_1 || nPaSd->TEST_05_Falt.n3EI3_2) ? 1 : 0;                          
+     1743                   ;----------------------------------------------------------------------
+     1744 000001c9 50480301         ldiu      *+fp(1),ar0
+     1745 000001ca 50600004         ldiu      4,r0
+     1746 000001cb 1a400005         tstb      *+ar0(5),r0
+     1747 000001cc 6a060005         bne       L31
+     1748                   ;*      Branch Occurs to L31 
+     1749 000001cd 1a400006         tstb      *+ar0(6),r0
+     1750 000001ce 6a250003         beqd      L33
+     1751 000001cf 0c800000         nop
+     1752 000001d0 52e00000         ldieq     0,r0
+     1753 000001d1 52a10009!        ldieq     @_nPssTcmsTxData+9,r1
+     1754                   ;*      Branch Occurs to L33 
+     1755 000001d2          L31:        
+     1756 000001d2 50600001         ldiu      1,r0
+     1757 000001d3 50210009!        ldiu      @_nPssTcmsTxData+9,r1
+     1758 000001d4          L33:        
+     1759 000001d4 02e00001         and       1,r0
+     1760 000001d5 03610004         andn      4,r1
+     1761 000001d6 03e00002         ash       2,r0
+     1762 000001d7 25800001         or3       r1,r0,r0
+     1763 000001d8 15200009!        sti       r0,@_nPssTcmsTxData+9
+     1764                           .line   77
+     1765                   ;----------------------------------------------------------------------
+     1766                   ; 154 | nPssTcmsTxData.PA_IDC_Falt_3.BIT.n4EM_Phon_4 = (nPaSd->TEST_04_Falt.n4E
+     1767                   ;     | I4_1 || nPaSd->TEST_05_Falt.n4EI4_2) ? 1 : 0;                          
+     1768                   ; 158 | //2012_03_12                                                           
+     1769                   ;----------------------------------------------------------------------
+     1770 000001d9 50480301         ldiu      *+fp(1),ar0
+     1771 000001da 50600008         ldiu      8,r0
+     1772 000001db 1a400005         tstb      *+ar0(5),r0
+     1773 000001dc 6a060005         bne       L35
+     1774                   ;*      Branch Occurs to L35 
+     1775 000001dd 1a400006         tstb      *+ar0(6),r0
+     1776 000001de 6a250003         beqd      L37
+     1777 000001df 0c800000         nop
+     1778 000001e0 52e10000         ldieq     0,r1
+     1779 000001e1 52a00009!        ldieq     @_nPssTcmsTxData+9,r0
+     1780                   ;*      Branch Occurs to L37 
+     1781 000001e2          L35:        
+     1782 000001e2 50610001         ldiu      1,r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   34
+
+     1783 000001e3 50200009!        ldiu      @_nPssTcmsTxData+9,r0
+     1784 000001e4          L37:        
+     1785 000001e4 02e10001         and       1,r1
+     1786 000001e5 03600008         andn      8,r0
+     1787 000001e6 03e10003         ash       3,r1
+     1788 000001e7 25800100         or3       r0,r1,r0
+     1789 000001e8 15200009!        sti       r0,@_nPssTcmsTxData+9
+     1790 000001e9          L38:        
+     1791                           .line   82
+     1792                   ;----------------------------------------------------------------------
+     1793                   ; 159 | if(nTcmsIdcInfo.nIDCFlag)                                              
+     1794                   ;----------------------------------------------------------------------
+     1795 000001e9 08200000!        ldi       @_nTcmsIdcInfo+0,r0
+     1796 000001ea 6a050005         beq       L40
+     1797                   ;*      Branch Occurs to L40 
+     1798                           .line   85
+     1799                   ;----------------------------------------------------------------------
+     1800                   ; 162 | nPssTcmsTxData.nTCR_DATA.nTCR_DATA_1 = nPaSd->nTCR_DATA.nTCR_DATA_1;   
+     1801                   ;----------------------------------------------------------------------
+     1802 000001eb 50480301         ldiu      *+fp(1),ar0
+     1803 000001ec 5040000f         ldiu      *+ar0(15),r0
+     1804 000001ed 1520000a!        sti       r0,@_nPssTcmsTxData+10
+     1805                           .line   86
+     1806                   ;----------------------------------------------------------------------
+     1807                   ; 163 | nPssTcmsTxData.nTCR_DATA.nTCR_DATA_2 = nPaSd->nTCR_DATA.nTCR_DATA_2;   
+     1808                   ;----------------------------------------------------------------------
+     1809 000001ee 50400010         ldiu      *+ar0(16),r0
+     1810 000001ef 1520000b!        sti       r0,@_nPssTcmsTxData+11
+     1811 000001f0          L40:        
+     1812                           .line   89
+     1813                   ;----------------------------------------------------------------------
+     1814                   ; 166 | memcpy(m_PA_SelfTest_Buf,sDataBuf,30);                                 
+     1815                   ;----------------------------------------------------------------------
+     1816 000001f0 5008000b         ldiu      fp,ar0
+     1817 000001f1 50290028-        ldiu      @CL3,ar1
+     1818 000001f2 02680002         addi      2,ar0
+     1819 000001f3 50402001         ldiu      *ar0++(1),r0
+     1820 000001f4 13fb001c         rpts      28                    ; Fast MEMCPY(#6)
+     1821 000001f5 da002120         sti       r0,*ar1++(1)
+     1822                   ||      ldi       *ar0++(1),r0
+     1823 000001f6 15402101         sti       r0,*ar1++(1)
+     1824                           .line   91
+     1825 000001f7 50530b01         ldiu      *-fp(1),bk
+     1826 000001f8 504bc300         ldiu      *fp,fp
+     1827 000001f9 18740021         subi      33,sp
+     1828 000001fa 68000013         bu        bk
+     1829                   ;*      Branch Occurs to bk 
+     1830                           .endfunc        168,000000000h,31
+     1831                   
+     1832                   
+     1833                   
+     1834 00000015                  .sect   ".cinit"
+     1835 00000015 00000001         .field          1,32
+     1836 00000016 00000007-        .field          _d_paM_Data+0,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   35
+
+     1837 00000017 00000000         .field          0,32            ; _d_paM_Data @ 0
+     1838                   
+     1839 000001fb                  .sect   ".text"
+     1840                   
+     1841                           .global _d_paM_Data
+     1842 00000007                  .bss    _d_paM_Data,1
+     1843                           .sym    _d_paM_Data,_d_paM_Data,12,2,32
+     1844 000001fb                  .sect    ".text"
+     1845                   
+     1846                           .global _Pa_TxData_Pro
+     1847                           .sym    _Pa_TxData_Pro,_Pa_TxData_Pro,32,2,0
+     1848                           .func   173
+     1849                   ;******************************************************************************
+     1850                   ;* FUNCTION NAME: _Pa_TxData_Pro                                              *
+     1851                   ;*                                                                            *
+     1852                   ;*   Architecture       : TMS320C30                                           *
+     1853                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1854                   ;*   Function Uses Regs : r0,r1,ar0,ar1,fp,ir0,ir1,sp,st                      *
+     1855                   ;*   Regs Saved         :                                                     *
+     1856                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1857                   ;*   Total Frame Size   : 2 Call + 2 Parm + 615 Auto + 0 SOE = 619 words      *
+     1858                   ;******************************************************************************
+     1859 000001fb          _Pa_TxData_Pro:
+     1860                           .sym    _pData,-2,28,9,32
+     1861                           .sym    _pRxData,-3,28,9,32
+     1862                           .sym    _szBuf,1,50,1,16384,,512
+     1863                           .sym    _szBuf2,513,50,1,3200,,100
+     1864                           .sym    _sdebugFlag,613,4,1,32
+     1865                           .sym    _nPaSdr,614,24,1,32,.fake19
+     1866                           .sym    _pTcmsRxData,615,24,1,32,.fake56
+     1867                           .line   1
+     1868                   ;----------------------------------------------------------------------
+     1869                   ; 173 | void Pa_TxData_Pro(UCHAR *pData,UCHAR *pRxData)                        
+     1870                   ;----------------------------------------------------------------------
+     1871 000001fb 0f2b0000         push      fp
+     1872 000001fc 500b0014         ldiu      sp,fp
+     1873 000001fd 02740267         addi      615,sp
+     1874                           .line   2
+     1875                   ;----------------------------------------------------------------------
+     1876                   ; 176 | char szBuf[512];                                                       
+     1877                   ; 177 | char szBuf2[100];                                                      
+     1878                   ;----------------------------------------------------------------------
+     1879                           .line   6
+     1880                   ;----------------------------------------------------------------------
+     1881                   ; 178 | int sdebugFlag = 0;                                                    
+     1882                   ;----------------------------------------------------------------------
+     1883 000001fe 50710265         ldiu      613,ir0
+     1884 000001ff 50600000         ldiu      0,r0
+     1885 00000200 15404300         sti       r0,*+fp(ir0)
+     1886                           .line   8
+     1887                   ;----------------------------------------------------------------------
+     1888                   ; 180 | PPIS_PA_TXDATA nPaSdr = (PIS_PA_TXDATA *) pData;                       
+     1889                   ;----------------------------------------------------------------------
+     1890 00000201 50710266         ldiu      614,ir0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   36
+
+     1891 00000202 50400b02         ldiu      *-fp(2),r0
+     1892 00000203 15404300         sti       r0,*+fp(ir0)
+     1893                           .line   9
+     1894                   ;----------------------------------------------------------------------
+     1895                   ; 181 | TCMS_PSS pTcmsRxData = (SCC_TCMS *)pRxData;                            
+     1896                   ;----------------------------------------------------------------------
+     1897 00000204 50710267         ldiu      615,ir0
+     1898 00000205 50400b03         ldiu      *-fp(3),r0
+     1899 00000206 15404300         sti       r0,*+fp(ir0)
+     1900                           .line   11
+     1901                   ;----------------------------------------------------------------------
+     1902                   ; 183 | memset(pData,0x00,22);                                                 
+     1903                   ;----------------------------------------------------------------------
+     1904 00000207 50610016         ldiu      22,r1
+     1905 00000208 0f210000         push      r1
+     1906 00000209 50600000         ldiu      0,r0
+     1907 0000020a 0f200000         push      r0
+     1908 0000020b 50400b02         ldiu      *-fp(2),r0
+     1909 0000020c 0f200000         push      r0
+     1910 0000020d 62000000!        call      _memset
+     1911                                                           ; Call Occurs
+     1912 0000020e 18740003         subi      3,sp
+     1913                           .line   13
+     1914                   ;----------------------------------------------------------------------
+     1915                   ; 185 | nPaSdr->nSTX = 0x02;                                                   
+     1916                   ;----------------------------------------------------------------------
+     1917 0000020f 50710266         ldiu      614,ir0
+     1918 00000210 50484300         ldiu      *+fp(ir0),ar0
+     1919 00000211 50600002         ldiu      2,r0
+     1920 00000212 1540c000         sti       r0,*ar0
+     1921                           .line   14
+     1922                   ;----------------------------------------------------------------------
+     1923                   ; 186 | nPaSdr->nPA_ADD = 0x50;                                                
+     1924                   ;----------------------------------------------------------------------
+     1925 00000213 50484300         ldiu      *+fp(ir0),ar0
+     1926 00000214 50600050         ldiu      80,r0
+     1927 00000215 15400001         sti       r0,*+ar0(1)
+     1928                           .line   15
+     1929                   ;----------------------------------------------------------------------
+     1930                   ; 187 | nPaSdr->nPIC_ADD = 0x40;                                               
+     1931                   ;----------------------------------------------------------------------
+     1932 00000216 50484300         ldiu      *+fp(ir0),ar0
+     1933 00000217 50600040         ldiu      64,r0
+     1934 00000218 15400002         sti       r0,*+ar0(2)
+     1935                           .line   16
+     1936                   ;----------------------------------------------------------------------
+     1937                   ; 188 | nPaSdr->nSDR_Code = 0x20;                                              
+     1938                   ;----------------------------------------------------------------------
+     1939 00000219 50484300         ldiu      *+fp(ir0),ar0
+     1940 0000021a 50600020         ldiu      32,r0
+     1941 0000021b 15400003         sti       r0,*+ar0(3)
+     1942                           .line   18
+     1943                   ;----------------------------------------------------------------------
+     1944                   ; 190 | szBuf[0] = 0;                                                          
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   37
+
+     1945                   ; 192 | //if(WORD_L(nTr_St_Info.nTcmsRxNGCnt) <= 5)//TCMS Åë½Å °íÀå ÀÌ¸é ¾Æ¹«°Í
+     1946                   ;     | µµ ÇÏÁö ¾Ê´Â´Ù.                                                        
+     1947                   ; 193 | //{                                                                    
+     1948                   ;----------------------------------------------------------------------
+     1949 0000021c 5008000b         ldiu      fp,ar0
+     1950 0000021d 02680001         addi      1,ar0
+     1951 0000021e 50600000         ldiu      0,r0
+     1952 0000021f 1540c000         sti       r0,*ar0
+     1953                           .line   22
+     1954                   ;----------------------------------------------------------------------
+     1955                   ; 194 | nPaSdr->TEXT_03.n1Mster_Active = (WORD_L(pTcmsRxData->nST_Code) == 0x20
+     1956                   ;     | ) ? 1 : 0 ;//½ÃÇè ¿îÀü 090527                                          
+     1957                   ; 195 | //nPaSdr->TEXT_03.n1Mster_Active = (WORD_L(nDi_Check.nTcr.nFlag)) ? 1 :
+     1958                   ;     |  0 ;//½ÃÇè ¿îÀü 090527                                                 
+     1959                   ;----------------------------------------------------------------------
+     1960 00000220 50710267         ldiu      615,ir0
+     1961 00000221 50484300         ldiu      *+fp(ir0),ar0
+     1962 00000222 506000ff         ldiu      255,r0
+     1963 00000223 02c00001         and       *+ar0(1),r0
+     1964 00000224 04e00020         cmpi      32,r0
+     1965 00000225 6a260002         bned      L45
+     1966 00000226 50710266         ldiu      614,ir0
+     1967 00000227 50484300         ldiu      *+fp(ir0),ar0
+     1968 00000228 53600000         ldine     0,r0
+     1969                   ;*      Branch Occurs to L45 
+     1970 00000229 50600001         ldiu      1,r0
+     1971 0000022a          L45:        
+     1972 0000022a 50410004         ldiu      *+ar0(4),r1
+     1973 0000022b 02e00001         and       1,r0
+     1974 0000022c 03610001         andn      1,r1
+     1975 0000022d 25800001         or3       r1,r0,r0
+     1976 0000022e 15400004         sti       r0,*+ar0(4)
+     1977                           .line   24
+     1978                   ;----------------------------------------------------------------------
+     1979                   ; 196 | nPaSdr->TEXT_03.n4Fire = pTcmsRxData->BIT.nFirCode;                    
+     1980                   ;----------------------------------------------------------------------
+     1981 0000022f 50710267         ldiu      615,ir0
+     1982 00000230 50720266         ldiu      614,ir1
+     1983 00000231 50494300         ldiu      *+fp(ir0),ar1
+     1984 00000232 50488300         ldiu      *+fp(ir1),ar0
+     1985 00000233 50600001         ldiu      1,r0
+     1986 00000234 50410004         ldiu      *+ar0(4),r1
+     1987 00000235 02c00108         and       *+ar1(8),r0
+     1988 00000236 03610008         andn      8,r1
+     1989 00000237 03e00003         ash       3,r0
+     1990 00000238 25800001         or3       r1,r0,r0
+     1991 00000239 15400004         sti       r0,*+ar0(4)
+     1992                           .line   25
+     1993                   ;----------------------------------------------------------------------
+     1994                   ; 197 | nPaSdr->TEXT_03.n5ICR_DI = nDi_Check.nIcr.nFlag ? 1 : 0;               
+     1995                   ;----------------------------------------------------------------------
+     1996 0000023a 50710266         ldiu      614,ir0
+     1997 0000023b 08200004!        ldi       @_nDi_Check+4,r0
+     1998 0000023c 6a250002         beqd      L47
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   38
+
+     1999 0000023d 50484300         ldiu      *+fp(ir0),ar0
+     2000 0000023e 0c800000         nop
+     2001 0000023f 52e00000         ldieq     0,r0
+     2002                   ;*      Branch Occurs to L47 
+     2003 00000240 50600001         ldiu      1,r0
+     2004 00000241          L47:        
+     2005 00000241 50410004         ldiu      *+ar0(4),r1
+     2006 00000242 02e00001         and       1,r0
+     2007 00000243 03610010         andn      16,r1
+     2008 00000244 03e00004         ash       4,r0
+     2009 00000245 25800001         or3       r1,r0,r0
+     2010 00000246 15400004         sti       r0,*+ar0(4)
+     2011                           .line   26
+     2012                   ;----------------------------------------------------------------------
+     2013                   ; 198 | nPaSdr->TEXT_03.n6ICR_Flag = pTcmsRxData->BIT.nIDCFlag;                
+     2014                   ;----------------------------------------------------------------------
+     2015 00000247 50710267         ldiu      615,ir0
+     2016 00000248 50720266         ldiu      614,ir1
+     2017 00000249 50494300         ldiu      *+fp(ir0),ar1
+     2018 0000024a 50600040         ldiu      64,r0
+     2019 0000024b 50488300         ldiu      *+fp(ir1),ar0
+     2020 0000024c 02c00108         and       *+ar1(8),r0
+     2021 0000024d 50410004         ldiu      *+ar0(4),r1
+     2022 0000024e 09e0fffa         lsh       -6,r0
+     2023 0000024f 03610020         andn      32,r1
+     2024 00000250 02e00001         and       1,r0
+     2025 00000251 03e00005         ash       5,r0
+     2026 00000252 25800001         or3       r1,r0,r0
+     2027 00000253 15400004         sti       r0,*+ar0(4)
+     2028                           .line   27
+     2029                   ;----------------------------------------------------------------------
+     2030                   ; 199 | nPaSdr->nLine_Num = 0; // Ã³¸® ¹æ½Ä ¸ð¸§.                              
+     2031                   ; 200 | //nPaSdr->nNow_ST = pTcmsRxData->nNowCod || nTr_St_Info.nNow.nCode;  //
+     2032                   ;     | ½Ã¹Ä·¹ÀÌ¼Ç                                                             
+     2033                   ;----------------------------------------------------------------------
+     2034 00000254 50710266         ldiu      614,ir0
+     2035 00000255 50484300         ldiu      *+fp(ir0),ar0
+     2036 00000256 50600000         ldiu      0,r0
+     2037 00000257 15400005         sti       r0,*+ar0(5)
+     2038                           .line   29
+     2039                   ;----------------------------------------------------------------------
+     2040                   ; 201 | nPaSdr->nNow_ST = nTr_St_Info.nNow.nCode +1;  //½Ã¹Ä·¹ÀÌ¼Ç             
+     2041                   ;----------------------------------------------------------------------
+     2042 00000258 50600001         ldiu      1,r0
+     2043 00000259 50484300         ldiu      *+fp(ir0),ar0
+     2044 0000025a 02200134!        addi      @_nTr_St_Info+308,r0  ; Unsigned
+     2045 0000025b 15400006         sti       r0,*+ar0(6)
+     2046                           .line   30
+     2047                   ;----------------------------------------------------------------------
+     2048                   ; 202 | nPaSdr->nPR_Num = 0;//Ã³¸® ¹æ½Ä ¸ð¸§.                                  
+     2049                   ; 203 | //nPaSdr->nNext_ST = pTcmsRxData->nNexCod || nTr_St_Info.nNext.nCode;//
+     2050                   ;     | ½Ã¹Ä·¹ÀÌ¼Ç                                                             
+     2051                   ;----------------------------------------------------------------------
+     2052 0000025c 50484300         ldiu      *+fp(ir0),ar0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   39
+
+     2053 0000025d 50600000         ldiu      0,r0
+     2054 0000025e 15400007         sti       r0,*+ar0(7)
+     2055                           .line   32
+     2056                   ;----------------------------------------------------------------------
+     2057                   ; 204 | nPaSdr->nNext_ST = nTr_St_Info.nNext.nCode+1;//½Ã¹Ä·¹ÀÌ¼Ç              
+     2058                   ; 205 | //nPaSdr->nDest_ST = pTcmsRxData->nDetCod || nTr_St_Info.nDest.nCode;//
+     2059                   ;     | ½Ã¹Ä·¹ÀÌ¼Ç                                                             
+     2060                   ;----------------------------------------------------------------------
+     2061 0000025f 50484300         ldiu      *+fp(ir0),ar0
+     2062 00000260 50600001         ldiu      1,r0
+     2063 00000261 02200162!        addi      @_nTr_St_Info+354,r0  ; Unsigned
+     2064 00000262 15400008         sti       r0,*+ar0(8)
+     2065                           .line   34
+     2066                   ;----------------------------------------------------------------------
+     2067                   ; 206 | nPaSdr->nDest_ST = nTr_St_Info.nDest.nCode+1;//½Ã¹Ä·¹ÀÌ¼Ç              
+     2068                   ;----------------------------------------------------------------------
+     2069 00000263 50600001         ldiu      1,r0
+     2070 00000264 50484300         ldiu      *+fp(ir0),ar0
+     2071 00000265 02200190!        addi      @_nTr_St_Info+400,r0  ; Unsigned
+     2072 00000266 15400009         sti       r0,*+ar0(9)
+     2073                           .line   36
+     2074                   ;----------------------------------------------------------------------
+     2075                   ; 208 | nPaSdr->TEXT_09.n1Door_LR = nDi_Check.nDoor.nFlag;                     
+     2076                   ;----------------------------------------------------------------------
+     2077 00000267 50484300         ldiu      *+fp(ir0),ar0
+     2078 00000268 5041000a         ldiu      *+ar0(10),r1
+     2079 00000269 50600001         ldiu      1,r0
+     2080 0000026a 02a0000c!        and       @_nDi_Check+12,r0
+     2081 0000026b 03610001         andn      1,r1
+     2082 0000026c 25800001         or3       r1,r0,r0
+     2083 0000026d 1540000a         sti       r0,*+ar0(10)
+     2084                           .line   37
+     2085                   ;----------------------------------------------------------------------
+     2086                   ; 209 | nPaSdr->TEXT_09.n2DCW = nDi_Check.nDoor.nFlag;                         
+     2087                   ;----------------------------------------------------------------------
+     2088 0000026e 50484300         ldiu      *+fp(ir0),ar0
+     2089 0000026f 5041000a         ldiu      *+ar0(10),r1
+     2090 00000270 03610002         andn      2,r1
+     2091 00000271 50600001         ldiu      1,r0
+     2092 00000272 02a0000c!        and       @_nDi_Check+12,r0
+     2093 00000273 03e00001         ash       1,r0
+     2094 00000274 25800001         or3       r1,r0,r0
+     2095 00000275 1540000a         sti       r0,*+ar0(10)
+     2096                           .line   38
+     2097                   ;----------------------------------------------------------------------
+     2098                   ; 210 | nPaSdr->TEXT_09.n3DOW = !nDi_Check.nDoor.nFlag;                        
+     2099                   ;----------------------------------------------------------------------
+     2100 00000276 50610000         ldiu      0,r1
+     2101 00000277 0820000c!        ldi       @_nDi_Check+12,r0
+     2102 00000278 50484300         ldiu      *+fp(ir0),ar0
+     2103 00000279 52e10001         ldieq     1,r1
+     2104 0000027a 5040000a         ldiu      *+ar0(10),r0
+     2105 0000027b 02e10001         and       1,r1
+     2106 0000027c 03600004         andn      4,r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   40
+
+     2107 0000027d 03e10002         ash       2,r1
+     2108 0000027e 25800100         or3       r0,r1,r0
+     2109 0000027f 1540000a         sti       r0,*+ar0(10)
+     2110                           .line   40
+     2111                   ;----------------------------------------------------------------------
+     2112                   ; 212 | if(nSccSendFlag.nPaSendStartFlag)                                      
+     2113                   ; 214 |         //nPaSdr->TEXT_09.n4BR_Start = nSccSendFlag.nIM_Text.nTxFlag;  
+     2114                   ;----------------------------------------------------------------------
+     2115 00000280 08200011!        ldi       @_nSccSendFlag+17,r0
+     2116 00000281 6a05001b         beq       L51
+     2117                   ;*      Branch Occurs to L51 
+     2118                           .line   43
+     2119                   ;----------------------------------------------------------------------
+     2120                   ; 215 | if(nSccSendFlag.nPaSendTxCnt)                                          
+     2121                   ;----------------------------------------------------------------------
+     2122 00000282 08200010!        ldi       @_nSccSendFlag+16,r0
+     2123 00000283 6a05000c         beq       L50
+     2124                   ;*      Branch Occurs to L50 
+     2125                           .line   45
+     2126                   ;----------------------------------------------------------------------
+     2127                   ; 217 | nSccSendFlag.nPaSendTxCnt--;                                           
+     2128                   ;----------------------------------------------------------------------
+     2129 00000284 50600001         ldiu      1,r0
+     2130 00000285 19a00010!        subri     @_nSccSendFlag+16,r0  ; Unsigned
+     2131 00000286 15200010!        sti       r0,@_nSccSendFlag+16
+     2132                           .line   46
+     2133                   ;----------------------------------------------------------------------
+     2134                   ; 218 | nPaSdr->TEXT_09.n4BR_Start = 1;                                        
+     2135                   ;----------------------------------------------------------------------
+     2136 00000287 50484300         ldiu      *+fp(ir0),ar0
+     2137 00000288 50600008         ldiu      8,r0
+     2138 00000289 1040000a         or        *+ar0(10),r0
+     2139 0000028a 1540000a         sti       r0,*+ar0(10)
+     2140                           .line   47
+     2141                   ;----------------------------------------------------------------------
+     2142                   ; 219 | nPaSdr->TEXT_09.n5BR_Finish = 0;                                       
+     2143                   ; 221 | else                                                                   
+     2144                   ;----------------------------------------------------------------------
+     2145 0000028b 50484300         ldiu      *+fp(ir0),ar0
+     2146 0000028c 5040000a         ldiu      *+ar0(10),r0
+     2147 0000028d 03600010         andn      16,r0
+     2148 0000028e 1540000a         sti       r0,*+ar0(10)
+     2149 0000028f 6a00002a         bu        L55
+     2150                   ;*      Branch Occurs to L55 
+     2151 00000290          L50:        
+     2152                           .line   51
+     2153                   ;----------------------------------------------------------------------
+     2154                   ; 223 | nPaSdr->TEXT_09.n4BR_Start = 0;                                        
+     2155                   ;----------------------------------------------------------------------
+     2156 00000290 50710266         ldiu      614,ir0
+     2157 00000291 50484300         ldiu      *+fp(ir0),ar0
+     2158 00000292 5040000a         ldiu      *+ar0(10),r0
+     2159 00000293 03600008         andn      8,r0
+     2160 00000294 1540000a         sti       r0,*+ar0(10)
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   41
+
+     2161                           .line   52
+     2162                   ;----------------------------------------------------------------------
+     2163                   ; 224 | nPaSdr->TEXT_09.n5BR_Finish = 0;                                       
+     2164                   ;----------------------------------------------------------------------
+     2165 00000295 50484300         ldiu      *+fp(ir0),ar0
+     2166 00000296 5040000a         ldiu      *+ar0(10),r0
+     2167 00000297 03600010         andn      16,r0
+     2168 00000298 1540000a         sti       r0,*+ar0(10)
+     2169                           .line   53
+     2170                   ;----------------------------------------------------------------------
+     2171                   ; 225 | nSccSendFlag.nPaSendStartFlag = FALSE;                                 
+     2172                   ;----------------------------------------------------------------------
+     2173 00000299 50600000         ldiu      0,r0
+     2174 0000029a 15200011!        sti       r0,@_nSccSendFlag+17
+     2175                           .line   54
+     2176                   ;----------------------------------------------------------------------
+     2177                   ; 226 | nSccSendFlag.nPaSendEndFlag = FALSE;                                   
+     2178                   ;----------------------------------------------------------------------
+     2179 0000029b 15200012!        sti       r0,@_nSccSendFlag+18
+     2180 0000029c 6a00001d         bu        L55
+     2181                   ;*      Branch Occurs to L55 
+     2182 0000029d          L51:        
+     2183                           .line   64
+     2184                   ;----------------------------------------------------------------------
+     2185                   ; 236 | else if(nSccSendFlag.nPaSendEndFlag)                                   
+     2186                   ; 238 |         //nPaSdr->TEXT_09.n5BR_Finish = nSccSendFlag.nIM_Text.nTxFlag; 
+     2187                   ;----------------------------------------------------------------------
+     2188 0000029d 08200012!        ldi       @_nSccSendFlag+18,r0
+     2189 0000029e 6a05001b         beq       L55
+     2190                   ;*      Branch Occurs to L55 
+     2191                           .line   67
+     2192                   ;----------------------------------------------------------------------
+     2193                   ; 239 | if(nSccSendFlag.nPaSendTxCnt)                                          
+     2194                   ;----------------------------------------------------------------------
+     2195 0000029f 08200010!        ldi       @_nSccSendFlag+16,r0
+     2196 000002a0 6a05000d         beq       L54
+     2197                   ;*      Branch Occurs to L54 
+     2198                           .line   69
+     2199                   ;----------------------------------------------------------------------
+     2200                   ; 241 | nSccSendFlag.nPaSendTxCnt--;                                           
+     2201                   ;----------------------------------------------------------------------
+     2202 000002a1 50600001         ldiu      1,r0
+     2203 000002a2 19a00010!        subri     @_nSccSendFlag+16,r0  ; Unsigned
+     2204 000002a3 15200010!        sti       r0,@_nSccSendFlag+16
+     2205                           .line   70
+     2206                   ;----------------------------------------------------------------------
+     2207                   ; 242 | nPaSdr->TEXT_09.n4BR_Start = 0;                                        
+     2208                   ;----------------------------------------------------------------------
+     2209 000002a4 50710266         ldiu      614,ir0
+     2210 000002a5 50484300         ldiu      *+fp(ir0),ar0
+     2211 000002a6 5040000a         ldiu      *+ar0(10),r0
+     2212 000002a7 03600008         andn      8,r0
+     2213 000002a8 1540000a         sti       r0,*+ar0(10)
+     2214                           .line   71
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   42
+
+     2215                   ;----------------------------------------------------------------------
+     2216                   ; 243 | nPaSdr->TEXT_09.n5BR_Finish = 1;                                       
+     2217                   ; 245 | else                                                                   
+     2218                   ;----------------------------------------------------------------------
+     2219 000002a9 50484300         ldiu      *+fp(ir0),ar0
+     2220 000002aa 50600010         ldiu      16,r0
+     2221 000002ab 1040000a         or        *+ar0(10),r0
+     2222 000002ac 1540000a         sti       r0,*+ar0(10)
+     2223 000002ad 6a00000c         bu        L55
+     2224                   ;*      Branch Occurs to L55 
+     2225 000002ae          L54:        
+     2226                           .line   75
+     2227                   ;----------------------------------------------------------------------
+     2228                   ; 247 | nPaSdr->TEXT_09.n4BR_Start = 0;                                        
+     2229                   ;----------------------------------------------------------------------
+     2230 000002ae 50710266         ldiu      614,ir0
+     2231 000002af 50484300         ldiu      *+fp(ir0),ar0
+     2232 000002b0 5040000a         ldiu      *+ar0(10),r0
+     2233 000002b1 03600008         andn      8,r0
+     2234 000002b2 1540000a         sti       r0,*+ar0(10)
+     2235                           .line   76
+     2236                   ;----------------------------------------------------------------------
+     2237                   ; 248 | nPaSdr->TEXT_09.n5BR_Finish = 0;                                       
+     2238                   ;----------------------------------------------------------------------
+     2239 000002b3 50484300         ldiu      *+fp(ir0),ar0
+     2240 000002b4 5040000a         ldiu      *+ar0(10),r0
+     2241 000002b5 03600010         andn      16,r0
+     2242 000002b6 1540000a         sti       r0,*+ar0(10)
+     2243                           .line   77
+     2244                   ;----------------------------------------------------------------------
+     2245                   ; 249 | nSccSendFlag.nPaSendStartFlag = FALSE;                                 
+     2246                   ;----------------------------------------------------------------------
+     2247 000002b7 50600000         ldiu      0,r0
+     2248 000002b8 15200011!        sti       r0,@_nSccSendFlag+17
+     2249                           .line   78
+     2250                   ;----------------------------------------------------------------------
+     2251                   ; 250 | nSccSendFlag.nPaSendEndFlag = FALSE;                                   
+     2252                   ;----------------------------------------------------------------------
+     2253 000002b9 15200012!        sti       r0,@_nSccSendFlag+18
+     2254 000002ba          L55:        
+     2255                           .line   87
+     2256                   ;----------------------------------------------------------------------
+     2257                   ; 259 | nPaSdr->TEXT_09.n6INFO = 0;                                            
+     2258                   ;----------------------------------------------------------------------
+     2259 000002ba 50710266         ldiu      614,ir0
+     2260 000002bb 50484300         ldiu      *+fp(ir0),ar0
+     2261 000002bc 5040000a         ldiu      *+ar0(10),r0
+     2262 000002bd 03600020         andn      32,r0
+     2263 000002be 1540000a         sti       r0,*+ar0(10)
+     2264                           .line   88
+     2265                   ;----------------------------------------------------------------------
+     2266                   ; 260 | nPaSdr->TEXT_09.n7RM = 0;                                              
+     2267                   ;----------------------------------------------------------------------
+     2268 000002bf 50484300         ldiu      *+fp(ir0),ar0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   43
+
+     2269 000002c0 5040000a         ldiu      *+ar0(10),r0
+     2270 000002c1 03600040         andn      64,r0
+     2271 000002c2 1540000a         sti       r0,*+ar0(10)
+     2272                           .line   90
+     2273                   ;----------------------------------------------------------------------
+     2274                   ; 262 | nPaSdr->TEST_10.n1PDT1 = 0;                                            
+     2275                   ;----------------------------------------------------------------------
+     2276 000002c3 50484300         ldiu      *+fp(ir0),ar0
+     2277 000002c4 5040000b         ldiu      *+ar0(11),r0
+     2278 000002c5 03600001         andn      1,r0
+     2279 000002c6 1540000b         sti       r0,*+ar0(11)
+     2280                           .line   91
+     2281                   ;----------------------------------------------------------------------
+     2282                   ; 263 | nPaSdr->TEST_10.n2PDT2 = 0;                                            
+     2283                   ;----------------------------------------------------------------------
+     2284 000002c7 50484300         ldiu      *+fp(ir0),ar0
+     2285 000002c8 5040000b         ldiu      *+ar0(11),r0
+     2286 000002c9 03600002         andn      2,r0
+     2287 000002ca 1540000b         sti       r0,*+ar0(11)
+     2288                           .line   92
+     2289                   ;----------------------------------------------------------------------
+     2290                   ; 264 | nPaSdr->TEST_10.n3SNDChk = 0;                                          
+     2291                   ;----------------------------------------------------------------------
+     2292 000002cb 50484300         ldiu      *+fp(ir0),ar0
+     2293 000002cc 5040000b         ldiu      *+ar0(11),r0
+     2294 000002cd 03600004         andn      4,r0
+     2295 000002ce 1540000b         sti       r0,*+ar0(11)
+     2296                           .line   93
+     2297                   ;----------------------------------------------------------------------
+     2298                   ; 265 | nPaSdr->TEST_10.n5StarST_PA = 0;                                       
+     2299                   ; 267 | //nPaSdr->nTramNum[0] = MAKE_BYTE(WORD_L(pTcmsRxData->nTrnBuf[0])-0x30,
+     2300                   ;     | WORD_L(pTcmsRxData->nTrnBuf[1])-0x30);                                 
+     2301                   ; 268 | //nPaSdr->nTramNum[1] = MAKE_BYTE(WORD_L(pTcmsRxData->nTrnBuf[2])-0x30,
+     2302                   ;     | WORD_L(pTcmsRxData->nTrnBuf[3])-0x30);                                 
+     2303                   ;----------------------------------------------------------------------
+     2304 000002cf 50484300         ldiu      *+fp(ir0),ar0
+     2305 000002d0 5040000b         ldiu      *+ar0(11),r0
+     2306 000002d1 03600010         andn      16,r0
+     2307 000002d2 1540000b         sti       r0,*+ar0(11)
+     2308                           .line   97
+     2309                   ;----------------------------------------------------------------------
+     2310                   ; 269 | nPaSdr->nTramNum[0] = MAKE_BYTE(WORD_L(nSelect_Button.nGPTranNumInput.n
+     2311                   ;     | ASC_NumBuf[1])-0x30,WORD_L(nSelect_Button.nGPTranNumInput.nASC_NumBuf[2
+     2312                   ;     | ])-0x30);                                                              
+     2313                   ;----------------------------------------------------------------------
+     2314 000002d3 5061000f         ldiu      15,r1
+     2315 000002d4 5060000f         ldiu      15,r0
+     2316 000002d5 02a10006!        and       @_nSelect_Button+6,r1
+     2317 000002d6 03e10004         ash       4,r1
+     2318 000002d7 02a00007!        and       @_nSelect_Button+7,r0
+     2319 000002d8 25800001         or3       r1,r0,r0
+     2320 000002d9 50484300         ldiu      *+fp(ir0),ar0
+     2321 000002da 02e000ff         and       255,r0
+     2322 000002db 1540000c         sti       r0,*+ar0(12)
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   44
+
+     2323                           .line   98
+     2324                   ;----------------------------------------------------------------------
+     2325                   ; 270 | nPaSdr->nTramNum[1] = MAKE_BYTE(WORD_L(nSelect_Button.nGPTranNumInput.n
+     2326                   ;     | ASC_NumBuf[3])-0x30,WORD_L(nSelect_Button.nGPTranNumInput.nASC_NumBuf[4
+     2327                   ;     | ])-0x30);                                                              
+     2328                   ;----------------------------------------------------------------------
+     2329 000002dc 5060000f         ldiu      15,r0
+     2330 000002dd 5061000f         ldiu      15,r1
+     2331 000002de 02a10008!        and       @_nSelect_Button+8,r1
+     2332 000002df 03e10004         ash       4,r1
+     2333 000002e0 02a00009!        and       @_nSelect_Button+9,r0
+     2334 000002e1 25800001         or3       r1,r0,r0
+     2335 000002e2 50484300         ldiu      *+fp(ir0),ar0
+     2336 000002e3 02e000ff         and       255,r0
+     2337 000002e4 1540000d         sti       r0,*+ar0(13)
+     2338                           .line   100
+     2339                   ;----------------------------------------------------------------------
+     2340                   ; 272 | nPaSdr->nDistNUM[0] = WORD_H(nTr_St_Info.nDistance);                   
+     2341                   ;----------------------------------------------------------------------
+     2342 000002e5 502000d5!        ldiu      @_nTr_St_Info+213,r0
+     2343 000002e6 09e0fff8         lsh       -8,r0
+     2344 000002e7 50484300         ldiu      *+fp(ir0),ar0
+     2345 000002e8 02e000ff         and       255,r0
+     2346 000002e9 1540000e         sti       r0,*+ar0(14)
+     2347                           .line   101
+     2348                   ;----------------------------------------------------------------------
+     2349                   ; 273 | nPaSdr->nDistNUM[1] = WORD_L(nTr_St_Info.nDistance);                   
+     2350                   ;----------------------------------------------------------------------
+     2351 000002ea 506000ff         ldiu      255,r0
+     2352 000002eb 50484300         ldiu      *+fp(ir0),ar0
+     2353 000002ec 02a000d5!        and       @_nTr_St_Info+213,r0
+     2354 000002ed 1540000f         sti       r0,*+ar0(15)
+     2355                           .line   103
+     2356                   ;----------------------------------------------------------------------
+     2357                   ; 275 | if(nTcmsIdcInfo.nIDCFlag)                                              
+     2358                   ;----------------------------------------------------------------------
+     2359 000002ee 08200000!        ldi       @_nTcmsIdcInfo+0,r0
+     2360 000002ef 6a05000c         beq       L57
+     2361                   ;*      Branch Occurs to L57 
+     2362                           .line   105
+     2363                   ;----------------------------------------------------------------------
+     2364                   ; 277 | nPaSdr->nTCR_DATA.nTCR_DATA_1 = pTcmsRxData->nTCR_DATA.nTCR_DATA_1;    
+     2365                   ;----------------------------------------------------------------------
+     2366 000002f0 50710267         ldiu      615,ir0
+     2367 000002f1 50720266         ldiu      614,ir1
+     2368 000002f2 50484300         ldiu      *+fp(ir0),ar0
+     2369 000002f3 50498300         ldiu      *+fp(ir1),ar1
+     2370 000002f4 50400010         ldiu      *+ar0(16),r0
+     2371 000002f5 15400110         sti       r0,*+ar1(16)
+     2372                           .line   106
+     2373                   ;----------------------------------------------------------------------
+     2374                   ; 278 | nPaSdr->nTCR_DATA.nTCR_DATA_2 = pTcmsRxData->nTCR_DATA.nTCR_DATA_2;    
+     2375                   ; 283 | //}                                                                    
+     2376                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   45
+
+     2377 000002f6 50720267         ldiu      615,ir1
+     2378 000002f7 50710266         ldiu      614,ir0
+     2379 000002f8 50498300         ldiu      *+fp(ir1),ar1
+     2380 000002f9 50484300         ldiu      *+fp(ir0),ar0
+     2381 000002fa 50400111         ldiu      *+ar1(17),r0
+     2382 000002fb 15400011         sti       r0,*+ar0(17)
+     2383 000002fc          L57:        
+     2384                           .line   113
+     2385                   ;----------------------------------------------------------------------
+     2386                   ; 285 | nPaSdr->nETX = 0x03;                                                   
+     2387                   ;----------------------------------------------------------------------
+     2388 000002fc 50710266         ldiu      614,ir0
+     2389 000002fd 50484300         ldiu      *+fp(ir0),ar0
+     2390 000002fe 50600003         ldiu      3,r0
+     2391 000002ff 15400012         sti       r0,*+ar0(18)
+     2392                           .line   116
+     2393                   ;----------------------------------------------------------------------
+     2394                   ; 288 | MakeBcc(&pData[1],18);                                                 
+     2395                   ;----------------------------------------------------------------------
+     2396 00000300 50610012         ldiu      18,r1
+     2397 00000301 50600001         ldiu      1,r0
+     2398 00000302 02400b02         addi      *-fp(2),r0            ; Unsigned
+     2399 00000303 0f210000         push      r1
+     2400 00000304 0f200000         push      r0
+     2401 00000305 62000000!        call      _MakeBcc
+     2402                                                           ; Call Occurs
+     2403 00000306 18740002         subi      2,sp
+     2404                           .line   118
+     2405 00000307 50530b01         ldiu      *-fp(1),bk
+     2406 00000308 504bc300         ldiu      *fp,fp
+     2407 00000309 18740269         subi      617,sp
+     2408 0000030a 68000013         bu        bk
+     2409                   ;*      Branch Occurs to bk 
+     2410                           .endfunc        290,000000000h,615
+     2411                   
+     2412                   
+     2413 0000030b                  .sect    ".text"
+     2414                   
+     2415                           .global _Pa_Time1ms
+     2416                           .sym    _Pa_Time1ms,_Pa_Time1ms,32,2,0
+     2417                           .func   295
+     2418                   ;******************************************************************************
+     2419                   ;* FUNCTION NAME: _Pa_Time1ms                                                 *
+     2420                   ;*                                                                            *
+     2421                   ;*   Architecture       : TMS320C30                                           *
+     2422                   ;*   Calling Convention : Stack Parameter Convention                          *
+     2423                   ;*   Function Uses Regs : r0                                                  *
+     2424                   ;*   Regs Saved         :                                                     *
+     2425                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     2426                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     2427                   ;******************************************************************************
+     2428 0000030b          _Pa_Time1ms:
+     2429                           .line   1
+     2430                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   46
+
+     2431                   ; 295 | void Pa_Time1ms()                                                      
+     2432                   ;----------------------------------------------------------------------
+     2433 0000030b 0f2b0000         push      fp
+     2434 0000030c 500b0014         ldiu      sp,fp
+     2435                           .line   3
+     2436                   ;----------------------------------------------------------------------
+     2437                   ; 297 | nPaTimeCnt++;                                                          
+     2438                   ;----------------------------------------------------------------------
+     2439 0000030d 50600001         ldiu      1,r0
+     2440 0000030e 02200001-        addi      @_nPaTimeCnt+0,r0     ; Unsigned
+     2441 0000030f 15200001-        sti       r0,@_nPaTimeCnt+0
+     2442                           .line   4
+     2443 00000310 50410b01         ldiu      *-fp(1),r1
+     2444 00000311 504bc300         ldiu      *fp,fp
+     2445 00000312 18740002         subi      2,sp
+     2446 00000313 68000001         bu        r1
+     2447                   ;*      Branch Occurs to r1 
+     2448                           .endfunc        298,000000000h,0
+     2449                   
+     2450                   
+     2451                   
+     2452                           .global _m_PA_SelfTest_Buf
+     2453 00000008                  .bss    _m_PA_SelfTest_Buf,30
+     2454                           .sym    _m_PA_SelfTest_Buf,_m_PA_SelfTest_Buf,60,2,960,,30
+     2455                   ;******************************************************************************
+     2456                   ;* CONSTANT TABLE                                                             *
+     2457                   ;******************************************************************************
+     2458 00000000                  .sect   ".const"
+     2459 00000026                  .bss    CL1,1
+     2460 00000027                  .bss    CL2,1
+     2461 00000028                  .bss    CL3,1
+     2462                   
+     2463 00000018                  .sect   ".cinit"
+     2464 00000018 00000003         .field          3,32
+     2465 00000019 00000026-        .field          CL1+0,32
+     2466 0000001a 000001fd!        .field          _nTr_St_Info+509,32
+     2467 0000001b 00500000         .field          5242880,32
+     2468 0000001c 00000008-        .field          _m_PA_SelfTest_Buf,32
+     2469                   
+     2470 00000314                  .sect   ".text"
+     2471                   ;******************************************************************************
+     2472                   ;* UNDEFINED EXTERNAL REFERENCES                                              *
+     2473                   ;******************************************************************************
+     2474                   
+     2475                           .global _memset
+     2476                   
+     2477                           .global _MakeBcc
+     2478                   
+     2479                           .global _saf82532_Send
+     2480                   
+     2481                           .global _nTcmsIdcInfo
+     2482                   
+     2483                           .global _Idc_Load
+     2484                   
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:35 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l pa_pro.asm pa_pro.obj -tC:\Users\JDS\AppData\Local\Temp\pa_pro.tmp 
+
+pa_pro.asm                                                           PAGE   47
+
+     2485                           .global _nSccSendFlag
+     2486                   
+     2487                           .global _nSelect_Button
+     2488                   
+     2489                           .global _nLedDataLoad
+     2490                   
+     2491                           .global _Xr16788_1Ch
+     2492                   
+     2493                           .global _nTr_St_Info
+     2494                   
+     2495                           .global _nDi_Check
+     2496                   
+     2497                           .global _nPssTcmsTxData
+     2498                           .global MOD_U30
+
+ No Errors,  No Warnings

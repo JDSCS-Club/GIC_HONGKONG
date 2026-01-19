@@ -1,0 +1,197 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:44 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\utility\math.c                        #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\utility\math.c" -D at91sam7se512 -D   #
+#                    sram -D TRACE_LEVEL=4 -lC "C:\Users\JDS\Desktop\JDS_PRO\ #
+#                    국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-hand #
+#                    shaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart- #
+#                    hw-handshaking-project\ewp\at91sam7se512_sram\List\"     #
+#                    --remarks --diag_suppress Pe826,Pe1375 -o                #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\math.lst                 #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\math.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\utility\math.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "math.h"
+     35          #include "trace.h"
+     36          
+     37          //------------------------------------------------------------------------------
+     38          //         Exported functions
+     39          //------------------------------------------------------------------------------
+     40          
+     41          //------------------------------------------------------------------------------
+     42          /// Returns the minimum value between two integers.
+     43          /// \param a  First integer to compare.
+     44          /// \param b  Second integer to compare.
+     45          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     46          unsigned int min(unsigned int a, unsigned int b)
+     47          { 
+     48              if (a < b) {
+   \                     min:
+   \   00000000   0xE1500001         CMP      R0,R1
+   \   00000004   0x81A00001         MOVHI    R0,R1
+     49          
+     50                  return a;
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+     51              }
+     52              else {
+     53          
+     54                  return b;
+     55              }
+     56          }
+     57          
+     58          //------------------------------------------------------------------------------
+     59          /// Returns the absolute value of an integer.
+     60          /// \param value  Integer value.
+     61          //------------------------------------------------------------------------------
+     62          // Do not call this function "abs", problem with gcc !
+
+   \                                 In section .text, align 4, keep-with-next
+     63          unsigned int absv(signed int value)
+     64          {
+     65              if (value < 0) {
+   \                     absv:
+   \   00000000   0xE3500000         CMP      R0,#+0
+     66          
+     67                  return -value;
+   \   00000004   0x42600000         RSBMI    R0,R0,#+0
+     68              }
+     69              else {
+     70          
+     71                  return value;
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+     72              }
+     73          }
+     74          
+     75          //------------------------------------------------------------------------------
+     76          /// Computes and returns x power of y.
+     77          /// \param x  Value.
+     78          /// \param y  Power.
+     79          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     80          unsigned int power(unsigned int x, unsigned int y)
+     81          {
+     82              unsigned int result = 1;
+   \                     power:
+   \   00000000   0xE3A02001         MOV      R2,#+1
+   \   00000004   0xE3510000         CMP      R1,#+0
+   \   00000008   0x0A000002         BEQ      ??power_0
+     83              
+     84              while (y > 0) {
+     85          
+     86                  result *= x;
+   \                     ??power_1:
+   \   0000000C   0xE0020290         MUL      R2,R0,R2
+     87                  y--;
+   \   00000010   0xE2511001         SUBS     R1,R1,#+1
+     88              } 
+   \   00000014   0x1AFFFFFC         BNE      ??power_1
+     89              return result;
+   \                     ??power_0:
+   \   00000018   0xE1A00002         MOV      R0,R2
+   \   0000001C   0xE12FFF1E         BX       LR               ;; return
+     90          }
+     91          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  absv
+        0  min
+        0  power
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      12  absv
+      12  min
+      32  power
+
+ 
+ 56 bytes in section .text
+ 
+ 56 bytes of CODE memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,291 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.4.8167/W32 for ARM        02/Jul/2015  09:27:31
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashCommon.c
+#    Command line =  
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashCommon.c"
+#        -D at91sam7se512 -D flash -D TRACE_LEVEL=4 -lC
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\"
+#        --remarks --diag_suppress Pe826,Pe1375 -o
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\"
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little --cpu=ARM7TDMI
+#        -e --fpu=None --dlib_config "C:\Program Files\IAR Systems\Embedded
+#        Workbench 7.0\arm\INC\c\DLib_Config_Full.h" -I
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/peripherals\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/memories\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/components\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"
+#        --interwork --cpu_mode arm -On --use_c++_inline
+#    List file    =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\NorFlashCommon.lst
+#    Object file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\NorFlashCommon.o
+#
+###############################################################################
+
+F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashCommon.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          #include "NorFlashCommon.h"
+     34          
+     35          #include <utility/trace.h>
+     36          #include <string.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //         Internal macros
+     40          //------------------------------------------------------------------------------
+     41          
+     42          #define WRITE_COMMAND8(commandAddress, command) \
+     43              {*(volatile unsigned char *)(commandAddress) = (unsigned char) command;}
+     44          #define WRITE_COMMAND16(commandAddress, command) \
+     45              {*(volatile unsigned short *)(commandAddress) = (unsigned short) command;}
+     46          #define WRITE_COMMAND32(commandAddress, command) \
+     47              {*(volatile unsigned int *)(commandAddress) = (unsigned int) command;}
+     48              
+     49          #define WRITE_DATA8(dataAddress, data) \
+     50              {(*((volatile unsigned char *) dataAddress)) = (unsigned char) data;}
+     51          #define WRITE_DATA16(dataAddress, data) \
+     52              {(*((volatile unsigned short *) dataAddress)) = (unsigned short) data;}
+     53          #define WRITE_DATA32(dataAddress, data) \
+     54              {(*((volatile unsigned int *) dataAddress)) = (unsigned int) data;}
+     55              
+     56          #define READ_DATA8(dataAddress) \
+     57              (*((volatile unsigned char *) dataAddress))
+     58          #define READ_DATA16(dataAddress) \
+     59              (*((volatile unsigned short *) dataAddress))
+     60          #define READ_DATA32(dataAddress) \
+     61              (*((volatile unsigned int *) dataAddress))
+     62              
+     63              
+     64          //------------------------------------------------------------------------------
+     65          //         Exported functions
+     66          //------------------------------------------------------------------------------
+     67          
+     68          //------------------------------------------------------------------------------
+     69          /// Write a command to address.
+     70          /// \param busWidth Bus width in device.
+     71          /// \param commandAddress Command address offset.
+     72          /// \param command Command to be send.
+     73          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     74          unsigned char WriteCommand(
+     75              unsigned char busWidth, 
+     76              unsigned int commandAddress, 
+     77              unsigned int command)
+     78          {
+   \                     WriteCommand:
+   \   00000000   0xE1B03000         MOVS     R3,R0
+     79              if (busWidth == 8 ){
+   \   00000004   0xE1B00003         MOVS     R0,R3
+   \   00000008   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000000C   0xE3500008         CMP      R0,#+8
+   \   00000010   0x1A000001         BNE      ??WriteCommand_0
+     80                  WRITE_COMMAND8(commandAddress, command);
+   \   00000014   0xE5C12000         STRB     R2,[R1, #+0]
+   \   00000018   0xEA00000A         B        ??WriteCommand_1
+     81              }
+     82              else if( busWidth == 16 ){
+   \                     ??WriteCommand_0:
+   \   0000001C   0xE1B00003         MOVS     R0,R3
+   \   00000020   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000024   0xE3500010         CMP      R0,#+16
+   \   00000028   0x1A000001         BNE      ??WriteCommand_2
+     83                  WRITE_COMMAND16(commandAddress, command);
+   \   0000002C   0xE1C120B0         STRH     R2,[R1, #+0]
+   \   00000030   0xEA000004         B        ??WriteCommand_1
+     84              }
+     85              else if(busWidth == 32 ){
+   \                     ??WriteCommand_2:
+   \   00000034   0xE1B00003         MOVS     R0,R3
+   \   00000038   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000003C   0xE3500020         CMP      R0,#+32
+   \   00000040   0x1A000000         BNE      ??WriteCommand_1
+     86                  WRITE_COMMAND32(commandAddress, command);
+   \   00000044   0xE5812000         STR      R2,[R1, #+0]
+     87              }
+     88              return 0;
+   \                     ??WriteCommand_1:
+   \   00000048   0xE3A00000         MOV      R0,#+0
+   \   0000004C   0xE12FFF1E         BX       LR               ;; return
+     89          }
+     90          
+     91          
+     92          //------------------------------------------------------------------------------
+     93          /// Reads data from the NorFlash chip into the provided buffer.
+     94          /// \param busWidth  Bus width in device.
+     95          /// \param address  Address of data.
+     96          /// \param buffer  Buffer where the data will be stored.
+     97          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     98          void ReadRawData(
+     99              unsigned char busWidth,
+    100              unsigned int  address,
+    101              unsigned char *buffer)
+    102          {
+    103              if (busWidth == 8 ){    
+   \                     ReadRawData:
+   \   00000000   0xE1B03000         MOVS     R3,R0
+   \   00000004   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000008   0xE3530008         CMP      R3,#+8
+   \   0000000C   0x1A000002         BNE      ??ReadRawData_0
+    104                      *buffer = READ_DATA8(address);
+   \   00000010   0xE5D13000         LDRB     R3,[R1, #+0]
+   \   00000014   0xE5C23000         STRB     R3,[R2, #+0]
+   \   00000018   0xEA00000C         B        ??ReadRawData_1
+    105              }
+    106              else if( busWidth == 16 ){
+   \                     ??ReadRawData_0:
+   \   0000001C   0xE1B03000         MOVS     R3,R0
+   \   00000020   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000024   0xE3530010         CMP      R3,#+16
+   \   00000028   0x1A000002         BNE      ??ReadRawData_2
+    107                  
+    108                  unsigned short *buffer16 = (unsigned short *) buffer;
+    109                  *buffer16 = READ_DATA16(address);
+   \   0000002C   0xE1D130B0         LDRH     R3,[R1, #+0]
+   \   00000030   0xE1C230B0         STRH     R3,[R2, #+0]
+   \   00000034   0xEA000005         B        ??ReadRawData_1
+    110              }
+    111              else if(busWidth == 32 ){
+   \                     ??ReadRawData_2:
+   \   00000038   0xE1B03000         MOVS     R3,R0
+   \   0000003C   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000040   0xE3530020         CMP      R3,#+32
+   \   00000044   0x1A000001         BNE      ??ReadRawData_1
+    112                  unsigned int *buffer32 = (unsigned int *) buffer;
+    113                  *buffer32 = READ_DATA32(address);
+   \   00000048   0xE5913000         LDR      R3,[R1, #+0]
+   \   0000004C   0xE5823000         STR      R3,[R2, #+0]
+    114              }
+    115          }
+   \                     ??ReadRawData_1:
+   \   00000050   0xE12FFF1E         BX       LR               ;; return
+    116          
+    117          //------------------------------------------------------------------------------
+    118          /// Writes data to the NorFlash chip from the provided buffer.
+    119          /// \param busWidth  Bus width in device.
+    120          /// \param address  Address of data.
+    121          /// \param buffer  Buffer where the data will be stored.
+    122          //------------------------------------------------------------------------------
+    123          
+
+   \                                 In section .text, align 4, keep-with-next
+    124          void WriteRawData(
+    125              unsigned char busWidth,
+    126              unsigned int  address,
+    127              unsigned char *buffer)
+    128          
+    129          {
+    130              if (busWidth == 8 ){    
+   \                     WriteRawData:
+   \   00000000   0xE1B03000         MOVS     R3,R0
+   \   00000004   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000008   0xE3530008         CMP      R3,#+8
+   \   0000000C   0x1A000002         BNE      ??WriteRawData_0
+    131                  WRITE_DATA8(address, *buffer);
+   \   00000010   0xE5D23000         LDRB     R3,[R2, #+0]
+   \   00000014   0xE5C13000         STRB     R3,[R1, #+0]
+   \   00000018   0xEA00000C         B        ??WriteRawData_1
+    132              }
+    133              else if( busWidth == 16 ){
+   \                     ??WriteRawData_0:
+   \   0000001C   0xE1B03000         MOVS     R3,R0
+   \   00000020   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000024   0xE3530010         CMP      R3,#+16
+   \   00000028   0x1A000002         BNE      ??WriteRawData_2
+    134                  unsigned short *buffer16 = (unsigned short *) buffer;
+    135                  WRITE_DATA16(address, *buffer16);
+   \   0000002C   0xE1D230B0         LDRH     R3,[R2, #+0]
+   \   00000030   0xE1C130B0         STRH     R3,[R1, #+0]
+   \   00000034   0xEA000005         B        ??WriteRawData_1
+    136              }
+    137              else if(busWidth == 32 ){
+   \                     ??WriteRawData_2:
+   \   00000038   0xE1B03000         MOVS     R3,R0
+   \   0000003C   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000040   0xE3530020         CMP      R3,#+32
+   \   00000044   0x1A000001         BNE      ??WriteRawData_1
+    138                  unsigned int *buffer32 = (unsigned int *) buffer;
+    139                  WRITE_DATA32(address, *buffer32);
+   \   00000048   0xE5923000         LDR      R3,[R2, #+0]
+   \   0000004C   0xE5813000         STR      R3,[R1, #+0]
+    140              }
+    141          }
+   \                     ??WriteRawData_1:
+   \   00000050   0xE12FFF1E         BX       LR               ;; return
+    142          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       0   ReadRawData
+       0   WriteCommand
+       0   WriteRawData
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      84  ReadRawData
+      80  WriteCommand
+      84  WriteRawData
+
+ 
+ 248 bytes in section .text
+ 
+ 248 bytes of CODE memory
+
+Errors: none
+Warnings: none

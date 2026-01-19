@@ -1,0 +1,614 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     07/Apr/2013  02:16:25 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\NandSpareScheme.c  #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\NandSpareScheme.c" #
+#                     -D at91sam7se512 -D sdram -D TRACE_LEVEL=4 -lC          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\" --remarks             #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll   #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\NandSpareScheme.lst     #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\NandSpareScheme.o        #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\NandSpareScheme.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "NandSpareScheme.h"
+     35          #include <utility/assert.h>
+     36          
+     37          //------------------------------------------------------------------------------
+     38          //         Exported variables
+     39          //------------------------------------------------------------------------------
+     40          /// Spare area placement scheme for 256 byte pages.
+
+   \                                 In section .rodata, align 4
+     41          const struct NandSpareScheme nandSpareScheme256 = {
+   \                     nandSpareScheme256:
+   \   00000000   0x05 0x03          DC8 5, 3, 0, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x01    
+   \              0x02 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00         
+   \   00000017   0x00 0x00          DC8 0, 0, 0, 4, 3, 4, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x04    
+   \              0x03 0x04    
+   \              0x06 0x07    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00         
+   \   0000002E   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+     42          
+     43              // Bad block marker is at position #5
+     44              5,
+     45              // 3 ecc bytes
+     46              3,
+     47              // Ecc bytes positions
+     48              {0, 1, 2},
+     49              // 4 extra bytes
+     50              4,
+     51              // Extra bytes positions
+     52              {3, 4, 6, 7}
+     53          };
+     54          
+     55          /// Spare area placement scheme for 512 byte pages.
+
+   \                                 In section .rodata, align 4
+     56          const struct NandSpareScheme nandSpareScheme512 = {
+   \                     nandSpareScheme512:
+   \   00000000   0x05 0x06          DC8 5, 6, 0, 1, 2, 3, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x01    
+   \              0x02 0x03    
+   \              0x06 0x07    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00         
+   \   00000017   0x00 0x00          DC8 0, 0, 0, 8, 8, 9, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x08    
+   \              0x08 0x09    
+   \              0x0A 0x0B    
+   \              0x0C 0x0D    
+   \              0x0E 0x0F    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00         
+   \   0000002C   0x00 0x00          DC8 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00 0x00    
+   \              0x00         
+   \   00000041   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+     57          
+     58              // Bad block marker is at position #5
+     59              5,
+     60              // 6 ecc bytes
+     61              6,
+     62              // Ecc bytes positions
+     63              {0, 1, 2, 3, 6, 7},
+     64              // 8 extra bytes
+     65              8,
+     66              // Extra bytes positions
+     67              {8, 9, 10, 11, 12, 13, 14, 15}
+     68          };
+     69          
+     70          /// Spare area placement scheme for 2048 byte pages.
+
+   \                                 In section .rodata, align 4
+     71          const struct NandSpareScheme nandSpareScheme2048 = {
+   \                     nandSpareScheme2048:
+   \   00000000   0x00 0x18          DC8 0, 24, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54
+   \              0x28 0x29    
+   \              0x2A 0x2B    
+   \              0x2C 0x2D    
+   \              0x2E 0x2F    
+   \              0x30 0x31    
+   \              0x32 0x33    
+   \              0x34 0x35    
+   \              0x36         
+   \   00000011   0x37 0x38          DC8 55, 56, 57, 58, 59, 60, 61, 62, 63, 38, 2, 3, 4, 5, 6, 7, 8, 9, 10
+   \              0x39 0x3A    
+   \              0x3B 0x3C    
+   \              0x3D 0x3E    
+   \              0x3F 0x26    
+   \              0x02 0x03    
+   \              0x04 0x05    
+   \              0x06 0x07    
+   \              0x08 0x09    
+   \              0x0A         
+   \   00000024   0x0B 0x0C          DC8 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27
+   \              0x0D 0x0E    
+   \              0x0F 0x10    
+   \              0x11 0x12    
+   \              0x13 0x14    
+   \              0x15 0x16    
+   \              0x17 0x18    
+   \              0x19 0x1A    
+   \              0x1B         
+   \   00000035   0x1C 0x1D          DC8 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 0, 0, 0
+   \              0x1E 0x1F    
+   \              0x20 0x21    
+   \              0x22 0x23    
+   \              0x24 0x25    
+   \              0x26 0x27    
+   \              0x00 0x00    
+   \              0x00         
+     72          
+     73              // Bad block marker is at position #0
+     74              0,
+     75              // 24 ecc bytes
+     76              24, 
+     77              // Ecc bytes positions
+     78              {40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+     79               59, 60, 61, 62, 63},
+     80              // 38 extra bytes
+     81              38,
+     82              // Extra bytes positions
+     83              {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+     84               22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39}
+     85          };
+     86          
+     87          //------------------------------------------------------------------------------
+     88          //         Exported functions
+     89          //------------------------------------------------------------------------------
+     90          
+     91          //------------------------------------------------------------------------------
+     92          /// Reads the bad block marker inside a spare area buffer using the provided
+     93          /// scheme.
+     94          /// \param scheme  Pointer to a NandSpareScheme instance.
+     95          /// \param spare  Spare area buffer.
+     96          /// \param marker  Pointer to the variable to store the bad block marker.
+     97          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     98          void NandSpareScheme_ReadBadBlockMarker(
+     99              const struct NandSpareScheme *scheme,
+    100              const unsigned char *spare,
+    101              unsigned char *marker)
+    102          {
+    103              *marker = spare[scheme->badBlockMarkerPosition];
+   \                     NandSpareScheme_ReadBadBlockMarker:
+   \   00000000   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000004   0xE7D00001         LDRB     R0,[R0, +R1]
+   \   00000008   0xE5C20000         STRB     R0,[R2, #+0]
+    104          }
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    105          
+    106          //------------------------------------------------------------------------------
+    107          /// Modifies the bad block marker inside a spare area, using the given scheme.
+    108          /// \param scheme  Pointer to a NandSpareScheme instance.
+    109          /// \param spare  Spare area buffer.
+    110          /// \param marker  Bad block marker to write.
+    111          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    112          void NandSpareScheme_WriteBadBlockMarker(
+    113              const struct NandSpareScheme *scheme,
+    114              unsigned char *spare,
+    115              unsigned char marker)
+    116          {
+    117              spare[scheme->badBlockMarkerPosition] = marker;
+   \                     NandSpareScheme_WriteBadBlockMarker:
+   \   00000000   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000004   0xE7C02001         STRB     R2,[R0, +R1]
+    118          }
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    119          
+    120          //------------------------------------------------------------------------------
+    121          /// Reads ECC information from a spare area using the provided scheme.
+    122          /// \param scheme  Pointer to a NandSpareScheme instance.
+    123          /// \param spare  Spare area buffer.
+    124          /// \param ecc  ECC buffer.
+    125          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    126          void NandSpareScheme_ReadEcc(
+    127              const struct NandSpareScheme *scheme,
+    128              const unsigned char *spare,
+    129              unsigned char *ecc)
+    130          {
+   \                     NandSpareScheme_ReadEcc:
+   \   00000000   0xE92D4000         PUSH     {LR}
+    131              unsigned int i;
+    132              for (i=0; i < scheme->numEccBytes; i++) {
+   \   00000004   0xE3A03000         MOV      R3,#+0
+   \   00000008   0xE1A0C000         MOV      R12,R0
+   \   0000000C   0xE5D0E001         LDRB     LR,[R0, #+1]
+   \   00000010   0xE35E0000         CMP      LR,#+0
+   \   00000014   0x0A000007         BEQ      ??NandSpareScheme_ReadEcc_0
+    133          
+    134                  ecc[i] = spare[scheme->eccBytesPositions[i]];
+   \                     ??NandSpareScheme_ReadEcc_1:
+   \   00000018   0xE5DCE002         LDRB     LR,[R12, #+2]
+   \   0000001C   0xE7DEE001         LDRB     LR,[LR, +R1]
+   \   00000020   0xE4C2E001         STRB     LR,[R2], #+1
+    135              }
+   \   00000024   0xE2833001         ADD      R3,R3,#+1
+   \   00000028   0xE28CC001         ADD      R12,R12,#+1
+   \   0000002C   0xE5D0E001         LDRB     LR,[R0, #+1]
+   \   00000030   0xE153000E         CMP      R3,LR
+   \   00000034   0x3AFFFFF7         BCC      ??NandSpareScheme_ReadEcc_1
+    136          }
+   \                     ??NandSpareScheme_ReadEcc_0:
+   \   00000038   0xE8BD4000         POP      {LR}
+   \   0000003C   0xE12FFF1E         BX       LR               ;; return
+    137          
+    138          //------------------------------------------------------------------------------
+    139          /// Writes ECC information in a spare area, using a particular scheme.
+    140          /// \param scheme  Pointer to a NandSpareScheme instance.
+    141          /// \param spare  Spare area buffer.
+    142          /// \param ecc  ECC buffer.
+    143          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    144          void NandSpareScheme_WriteEcc(
+    145              const struct NandSpareScheme *scheme,
+    146              unsigned char *spare,
+    147              const unsigned char *ecc)
+    148          {
+   \                     NandSpareScheme_WriteEcc:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+    149              unsigned int i;
+    150              for (i=0; i < scheme->numEccBytes; i++) {
+   \   00000004   0xE3A03000         MOV      R3,#+0
+   \   00000008   0xE1A0C000         MOV      R12,R0
+   \   0000000C   0xE5D0E001         LDRB     LR,[R0, #+1]
+   \   00000010   0xE35E0000         CMP      LR,#+0
+   \   00000014   0x0A000007         BEQ      ??NandSpareScheme_WriteEcc_0
+    151          
+    152                  spare[scheme->eccBytesPositions[i]] = ecc[i];
+   \                     ??NandSpareScheme_WriteEcc_1:
+   \   00000018   0xE5DCE002         LDRB     LR,[R12, #+2]
+   \   0000001C   0xE4D24001         LDRB     R4,[R2], #+1
+   \   00000020   0xE7CE4001         STRB     R4,[LR, +R1]
+    153              } 
+   \   00000024   0xE2833001         ADD      R3,R3,#+1
+   \   00000028   0xE28CC001         ADD      R12,R12,#+1
+   \   0000002C   0xE5D0E001         LDRB     LR,[R0, #+1]
+   \   00000030   0xE153000E         CMP      R3,LR
+   \   00000034   0x3AFFFFF7         BCC      ??NandSpareScheme_WriteEcc_1
+    154          }
+   \                     ??NandSpareScheme_WriteEcc_0:
+   \   00000038   0xE8BD4010         POP      {R4,LR}
+   \   0000003C   0xE12FFF1E         BX       LR               ;; return
+    155          
+    156          //------------------------------------------------------------------------------
+    157          /// Reads extra bytes of information from a spare area, using the provided
+    158          /// scheme.
+    159          /// \param scheme  Pointer to a NandSpareScheme instance.
+    160          /// \param spare  Spare area buffer.
+    161          /// \param extra  Extra bytes buffer.
+    162          /// \param size  Number of extra bytes to read.
+    163          /// \param offset  Index where to read the first extra byte.
+    164          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    165          void NandSpareScheme_ReadExtra(
+    166              const struct NandSpareScheme *scheme,
+    167              const unsigned char *spare,
+    168              void *extra,
+    169              unsigned char size,
+    170              unsigned char offset)
+    171          {
+   \                     NandSpareScheme_ReadExtra:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE5DDC008         LDRB     R12,[SP, #+8]
+    172              ASSERT((size + offset) < scheme->numExtraBytes,
+    173                     "NandSpareScheme_ReadExtra: Too many bytes\n\r");
+   \   00000008   0xE08CE003         ADD      LR,R12,R3
+   \   0000000C   0xE5D0401A         LDRB     R4,[R0, #+26]
+   \   00000010   0xE15E0004         CMP      LR,R4
+   \   00000014   0xBA000004         BLT      ??NandSpareScheme_ReadExtra_0
+   \   00000018   0x........         LDR      R0,??DataTable1
+   \   0000001C   0x........         BL       printf
+   \   00000020   0x........         LDR      R0,??DataTable1_1
+   \   00000024   0x........         BL       printf
+   \                     ??NandSpareScheme_ReadExtra_1:
+   \   00000028   0xEAFFFFFE         B        ??NandSpareScheme_ReadExtra_1
+    174          
+    175              unsigned int i;
+    176              for (i=0; i < size; i++) {
+   \                     ??NandSpareScheme_ReadExtra_0:
+   \   0000002C   0xE3530000         CMP      R3,#+0
+   \   00000030   0x0A000006         BEQ      ??NandSpareScheme_ReadExtra_2
+   \   00000034   0xE08C0000         ADD      R0,R12,R0
+    177          
+    178                  ((unsigned char *) extra)[i] = spare[scheme->extraBytesPositions[i+offset]];
+   \                     ??NandSpareScheme_ReadExtra_3:
+   \   00000038   0xE5D0C01B         LDRB     R12,[R0, #+27]
+   \   0000003C   0xE7DCC001         LDRB     R12,[R12, +R1]
+   \   00000040   0xE4C2C001         STRB     R12,[R2], #+1
+    179              }
+   \   00000044   0xE2800001         ADD      R0,R0,#+1
+   \   00000048   0xE2533001         SUBS     R3,R3,#+1
+   \   0000004C   0x1AFFFFF9         BNE      ??NandSpareScheme_ReadExtra_3
+    180          }
+   \                     ??NandSpareScheme_ReadExtra_2:
+   \   00000050   0xE8BD4010         POP      {R4,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    181          
+    182          //------------------------------------------------------------------------------
+    183          /// Write extra bytes of information inside a spare area, using the provided
+    184          /// scheme.
+    185          /// \param scheme  Pointer to a NandSpareScheme instance.
+    186          /// \param spare  Spare area buffer.
+    187          /// \param extra  Extra bytes to write.
+    188          /// \param size  Number of extra bytes to write.
+    189          /// \param offset  Index where to write the first extra byte.
+    190          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    191          void NandSpareScheme_WriteExtra(
+    192              const struct NandSpareScheme *scheme,
+    193              unsigned char *spare,
+    194              const void *extra,
+    195              unsigned char size,
+    196              unsigned char offset)
+    197          {
+   \                     NandSpareScheme_WriteExtra:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE5DDC008         LDRB     R12,[SP, #+8]
+    198              ASSERT((size + offset) < scheme->numExtraBytes,
+    199                     "NandSpareScheme_WriteExtra: Too many bytes\n\r");
+   \   00000008   0xE08CE003         ADD      LR,R12,R3
+   \   0000000C   0xE5D0401A         LDRB     R4,[R0, #+26]
+   \   00000010   0xE15E0004         CMP      LR,R4
+   \   00000014   0xBA000004         BLT      ??NandSpareScheme_WriteExtra_0
+   \   00000018   0x........         LDR      R0,??DataTable1
+   \   0000001C   0x........         BL       printf
+   \   00000020   0x........         LDR      R0,??DataTable1_2
+   \   00000024   0x........         BL       printf
+   \                     ??NandSpareScheme_WriteExtra_1:
+   \   00000028   0xEAFFFFFE         B        ??NandSpareScheme_WriteExtra_1
+    200          
+    201              unsigned int i;
+    202              for (i=0; i < size; i++) {
+   \                     ??NandSpareScheme_WriteExtra_0:
+   \   0000002C   0xE3530000         CMP      R3,#+0
+   \   00000030   0x0A000006         BEQ      ??NandSpareScheme_WriteExtra_2
+   \   00000034   0xE08C0000         ADD      R0,R12,R0
+    203          
+    204                  spare[scheme->extraBytesPositions[i+offset]] = ((unsigned char *) extra)[i];
+   \                     ??NandSpareScheme_WriteExtra_3:
+   \   00000038   0xE5D0C01B         LDRB     R12,[R0, #+27]
+   \   0000003C   0xE4D2E001         LDRB     LR,[R2], #+1
+   \   00000040   0xE7CCE001         STRB     LR,[R12, +R1]
+    205              }
+   \   00000044   0xE2800001         ADD      R0,R0,#+1
+   \   00000048   0xE2533001         SUBS     R3,R3,#+1
+   \   0000004C   0x1AFFFFF9         BNE      ??NandSpareScheme_WriteExtra_3
+    206          }
+   \                     ??NandSpareScheme_WriteExtra_2:
+   \   00000050   0xE8BD4010         POP      {R4,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     `?<Constant "NandSpareScheme_ReadE...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     `?<Constant "NandSpareScheme_Write...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "NandSpareScheme_ReadE...">`:
+   \   00000000   0x4E 0x61          DC8 "NandSpareScheme_ReadExtra: Too many bytes\012\015"
+   \              0x6E 0x64    
+   \              0x53 0x70    
+   \              0x61 0x72    
+   \              0x65 0x53    
+   \              0x63 0x68    
+   \              0x65 0x6D    
+   \              0x65 0x5F    
+   \              0x52 0x65    
+   \              0x61 0x64    
+   \              0x45 0x78    
+   \              0x74 0x72    
+   \              0x61 0x3A    
+   \              0x20 0x54    
+   \              0x6F 0x6F    
+   \              0x20 0x6D    
+   \              0x61 0x6E    
+   \              0x79 0x20    
+   \              0x62 0x79    
+   \              0x74 0x65    
+   \              0x73 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "NandSpareScheme_Write...">`:
+   \   00000000   0x4E 0x61          DC8 "NandSpareScheme_WriteExtra: Too many bytes\012\015"
+   \              0x6E 0x64    
+   \              0x53 0x70    
+   \              0x61 0x72    
+   \              0x65 0x53    
+   \              0x63 0x68    
+   \              0x65 0x6D    
+   \              0x65 0x5F    
+   \              0x57 0x72    
+   \              0x69 0x74    
+   \              0x65 0x45    
+   \              0x78 0x74    
+   \              0x72 0x61    
+   \              0x3A 0x20    
+   \              0x54 0x6F    
+   \              0x6F 0x20    
+   \              0x6D 0x61    
+   \              0x6E 0x79    
+   \              0x20 0x62    
+   \              0x79 0x74    
+   \              0x65 0x73    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+    207          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  NandSpareScheme_ReadBadBlockMarker
+        4  NandSpareScheme_ReadEcc
+        8  NandSpareScheme_ReadExtra
+             8 -> printf
+        0  NandSpareScheme_WriteBadBlockMarker
+        8  NandSpareScheme_WriteEcc
+        8  NandSpareScheme_WriteExtra
+             8 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ?<Constant "-F- ASSERT: ">
+      44  ?<Constant "NandSpareScheme_ReadE...">
+      48  ?<Constant "NandSpareScheme_Write...">
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+      16  NandSpareScheme_ReadBadBlockMarker
+      64  NandSpareScheme_ReadEcc
+      88  NandSpareScheme_ReadExtra
+      12  NandSpareScheme_WriteBadBlockMarker
+      64  NandSpareScheme_WriteEcc
+      88  NandSpareScheme_WriteExtra
+      68  nandSpareScheme2048
+      68  nandSpareScheme256
+      68  nandSpareScheme512
+
+ 
+ 312 bytes in section .rodata
+ 344 bytes in section .text
+ 
+ 344 bytes of CODE  memory
+ 312 bytes of CONST memory
+
+Errors: none
+Warnings: none

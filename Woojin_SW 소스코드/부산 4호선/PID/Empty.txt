@@ -1,0 +1,5 @@
+{\rtf1\ansi\ansicpg949\deff0\deflang1042{\fonttbl{\f0\froman\fcharset129 \'b9\'d9\'c5\'c1\'c3\'bc;}}
+{\colortbl ;\red0\green255\blue0;}
+{\info{\horzdoc}{\*\lchars ([\{$\'5c([\{$\'a1\'ae\'a1\'b0\'a1\'b2\'a1\'b4\'a1\'b6\'a1\'b8\'a1\'ba\'a1\'bc\'a3\'a8\'a3\'db\'a3\'fb\'a3\'a4\'a3\'dc\'a1\'cc}{\*\fchars )]\},.:\'3b!?)]\},.:\'3b!?\'a1\'a1\'a1\'af\'a1\'b1\'a1\'b3\'a1\'b5\'a1\'b7\'a1\'b9\'a1\'bb\'a1\'bd\'a1\'a2\'a3\'a9\'a3\'dd\'a3\'fd\'a3\'ac\'a3\'ae\'a3\'ba\'a3\'bb\'a3\'bf\'a3\'a1\'a1\'c6\'a1\'c7\'a1\'c8\'a1\'c9\'a1\'cb\'a3\'a5}}
+\viewkind4\uc1\pard\cf1\f0\fs24 
+\par }

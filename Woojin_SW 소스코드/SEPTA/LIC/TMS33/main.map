@@ -1,0 +1,404 @@
+******************************************************************************
+TMS320C3x/4x COFF Linker                Version 5.11                   
+******************************************************************************
+>> Linked Tue Jan 22 10:53:10 2013
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 008027a9
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         FROM      00400000  000080000  00000400     RWIX      
+         IRAM0     00800000  000008000  00007389     RWIX      
+         RAM0      00809800  000000800  00000000     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00800000    0000337d     
+                  00800000    00000001     start.obj (.text)
+                  00800001    00000000     rts30.lib : mpyld.obj (.text)
+                  00800001    00000000               : ctype.obj (.text)
+                  00800001    0000006d     debug3x.obj (.text)
+                  0080006e    000003c0     xr16l784.obj (.text)
+                  0080042e    0000007d     en29lv040.obj (.text)
+                  008004ab    00001dac     user.obj (.text)
+                  00802257    00000550     main.obj (.text)
+                  008027a7    0000001b     rts30.lib : boot.obj (.text)
+                  008027c2    00000025               : divi.obj (.text)
+                  008027e7    00000033               : divu.obj (.text)
+                  0080281a    00000022               : modi.obj (.text)
+                  0080283c    0000002a               : modu.obj (.text)
+                  00802866    00000026               : exit.obj (.text)
+                  0080288c    0000001d               : memcpy.obj (.text)
+                  008028a9    00000010               : memset.obj (.text)
+                  008028b9    00000041               : sprintf.obj (.text)
+                  008028fa    00000010               : strcat.obj (.text)
+                  0080290a    00000011               : strcmp.obj (.text)
+                  0080291b    0000000d               : strlen.obj (.text)
+                  00802928    00000019               : strncpy.obj (.text)
+                  00802941    00000042               : vsprintf.obj (.text)
+                  00802983    0000067c               : _printfi.obj (.text)
+                  00802fff    0000003f               : atoi.obj (.text)
+                  0080303e    0000007d               : ecvt.obj (.text)
+                  008030bb    00000082               : fcvt.obj (.text)
+                  0080313d    0000002b               : ltoa.obj (.text)
+                  00803168    00000015               : memccpy.obj (.text)
+                  0080317d    000001ca               : memory.obj (.text)
+                  00803347    00000019               : strncat.obj (.text)
+                  00803360    0000000e               : mpyi.obj (.text)
+                  0080336e    0000000f               : mpyld.obj (.text:flt40)
+
+.cinit     0    0080337d    0000045e     
+                  0080337d    0000000e     debug3x.obj (.cinit)
+                  0080338b    0000007f     xr16l784.obj (.cinit)
+                  0080340a    00000003     en29lv040.obj (.cinit)
+                  0080340d    0000024e     user.obj (.cinit)
+                  0080365b    00000038     main.obj (.cinit)
+                  00803693    00000009     rts30.lib : exit.obj (.cinit)
+                  0080369c    00000003               : memcpy.obj (.cinit)
+                  0080369f    00000004               : sprintf.obj (.cinit)
+                  008036a3    00000003               : strncpy.obj (.cinit)
+                  008036a6    00000004               : vsprintf.obj (.cinit)
+                  008036aa    0000000f               : _printfi.obj (.cinit)
+                  008036b9    00000003               : atoi.obj (.cinit)
+                  008036bc    00000103               : ctype.obj (.cinit)
+                  008037bf    00000006               : ecvt.obj (.cinit)
+                  008037c5    00000006               : fcvt.obj (.cinit)
+                  008037cb    0000000c               : memory.obj (.cinit)
+                  008037d7    00000003               : strncat.obj (.cinit)
+                  008037da    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    008037db    000006bc     
+                  008037db    00000000     debug3x.obj (.const)
+                  008037db    00000000     rts30.lib : strncat.obj (.const)
+                  008037db    00000000               : memory.obj (.const)
+                  008037db    00000000               : fcvt.obj (.const)
+                  008037db    00000000               : ecvt.obj (.const)
+                  008037db    00000000               : atoi.obj (.const)
+                  008037db    00000000               : vsprintf.obj (.const)
+                  008037db    00000000               : strncpy.obj (.const)
+                  008037db    00000000               : sprintf.obj (.const)
+                  008037db    00000000               : memcpy.obj (.const)
+                  008037db    00000000               : exit.obj (.const)
+                  008037db    00000000     en29lv040.obj (.const)
+                  008037db    00000000     xr16l784.obj (.const)
+                  008037db    00000657     user.obj (.const)
+                  00803e32    0000003b     main.obj (.const)
+                  00803e6d    0000002a     rts30.lib : _printfi.obj (.const)
+
+.data      0    00800000    00000000     UNINITIALIZED
+                  00800000    00000000     start.obj (.data)
+                  00800000    00000000     rts30.lib : mpyld.obj (.data)
+                  00800000    00000000               : mpyi.obj (.data)
+                  00800000    00000000               : strncat.obj (.data)
+                  00800000    00000000               : memory.obj (.data)
+                  00800000    00000000               : memccpy.obj (.data)
+                  00800000    00000000               : ltoa.obj (.data)
+                  00800000    00000000               : fcvt.obj (.data)
+                  00800000    00000000               : ecvt.obj (.data)
+                  00800000    00000000               : ctype.obj (.data)
+                  00800000    00000000               : atoi.obj (.data)
+                  00800000    00000000               : _printfi.obj (.data)
+                  00800000    00000000               : vsprintf.obj (.data)
+                  00800000    00000000               : strncpy.obj (.data)
+                  00800000    00000000               : strlen.obj (.data)
+                  00800000    00000000               : strcmp.obj (.data)
+                  00800000    00000000               : strcat.obj (.data)
+                  00800000    00000000               : sprintf.obj (.data)
+                  00800000    00000000               : memset.obj (.data)
+                  00800000    00000000               : memcpy.obj (.data)
+                  00800000    00000000               : exit.obj (.data)
+                  00800000    00000000               : modu.obj (.data)
+                  00800000    00000000               : modi.obj (.data)
+                  00800000    00000000               : divu.obj (.data)
+                  00800000    00000000               : divi.obj (.data)
+                  00800000    00000000               : boot.obj (.data)
+                  00800000    00000000     main.obj (.data)
+                  00800000    00000000     user.obj (.data)
+                  00800000    00000000     en29lv040.obj (.data)
+                  00800000    00000000     xr16l784.obj (.data)
+                  00800000    00000000     debug3x.obj (.data)
+
+.stack     0    00803e97    00000800     UNINITIALIZED
+                  00803e97    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00804697    00002cf2     UNINITIALIZED
+                  00804697    00000000     start.obj (.bss)
+                  00804697    00000000     rts30.lib : mpyld.obj (.bss)
+                  00804697    00000000               : mpyi.obj (.bss)
+                  00804697    00000000               : memccpy.obj (.bss)
+                  00804697    00000000               : ltoa.obj (.bss)
+                  00804697    00000000               : strlen.obj (.bss)
+                  00804697    00000000               : strcmp.obj (.bss)
+                  00804697    00000000               : strcat.obj (.bss)
+                  00804697    00000000               : memset.obj (.bss)
+                  00804697    00000000               : modu.obj (.bss)
+                  00804697    00000000               : modi.obj (.bss)
+                  00804697    00000000               : divu.obj (.bss)
+                  00804697    00000000               : divi.obj (.bss)
+                  00804697    00000000               : boot.obj (.bss)
+                  00804697    0000000e     debug3x.obj (.bss)
+                  008046a5    00001c7b     xr16l784.obj (.bss)
+                  00806320    00000001     en29lv040.obj (.bss)
+                  00806321    00000dac     user.obj (.bss)
+                  008070cd    0000002c     main.obj (.bss)
+                  008070f9    00000023     rts30.lib : exit.obj (.bss)
+                  0080711c    00000001               : memcpy.obj (.bss)
+                  0080711d    00000003               : sprintf.obj (.bss)
+                  00807120    00000001               : strncpy.obj (.bss)
+                  00807121    00000002               : vsprintf.obj (.bss)
+                  00807123    0000008d               : _printfi.obj (.bss)
+                  008071b0    00000001               : atoi.obj (.bss)
+                  008071b1    00000101               : ctype.obj (.bss)
+                  008072b2    00000068               : ecvt.obj (.bss)
+                  0080731a    00000068               : fcvt.obj (.bss)
+                  00807382    00000006               : memory.obj (.bss)
+                  00807388    00000001               : strncat.obj (.bss)
+
+.sysmem    0    00400000    00000400     UNINITIALIZED
+                  00400000    00000001     rts30.lib : memory.obj (.sysmem)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00804697 .bss                             00000400 __SYSMEM_SIZE
+00800000 .data                            00000800 __STACK_SIZE
+00800000 .text                            00400000 __sys_memory
+00802874 C$$EXIT                          00800000 .data
+008027c2 DIV_I30                          00800000 .text
+008027e7 DIV_U30                          00800000 ___text__
+0080281a MOD_I30                          00800000 ___edata__
+0080283c MOD_U30                          00800000 edata
+00803360 MPY_I30                          00800000 ___data__
+0080336e MPY_LD                           00800001 _c_int06
+00801931 _ClearFltBlkInfo                 00800047 _Debug3xInit
+00802346 _ConvAsc2Dec                     0080006e _xr16l784_Init
+008022de _ConvAsc2Hex                     008000a1 _xr16l784_Rts
+00802371 _ConvDec2Hex                     008000be _xr16l784_RtsDelayStartSend
+00802358 _ConvHex2Asc                     00800107 _xr16l784_Send
+00800047 _Debug3xInit                     008001c3 _xr16l784_GetRxBuffer
+008023b5 _Dec2Str                         0080021f _xr16l784_GetRxBuffer1Ch
+008026be _Delay                           00800245 _xr16l784_GetRxBuffer2Ch
+008022bc _DspInit                         0080026b _xr16l784_GetRxBuffer3Ch
+008024da _FirmwareVersionStrCmp           00800291 _xr16l784_GetRxBuffer4Ch
+00802302 _FunConvAscHex                   008002b7 _xr16l784_Isr
+00802384 _FunConvHexAsc                   008003b6 _xr16l784_Loop
+008021f8 _GetDaysOfMonth                  008003bc _xr16l784_1msLoop
+008024f6 _GetFirmwareVersion              0080042e _en29_Init
+00801964 _GetFltBlkInfo                   00800434 _en29_AllErase
+00801975 _GetFltBlkStPos                  00800459 _en29_SectorErase
+00802141 _GetLocalTimeToUTC               0080047f _en29_WriteByte
+008025af _IsBccOk                         0080049e _en29_ReadByte
+008021d3 _IsLeapYear                      008004ab _user_Init
+00802336 _IsNumAsc                        008006d5 _user_Loop
+0080633c _LIC_VerList                     008006eb _user_DebugLoop
+0080257a _Make1ByteBcc                    00800bc4 _user_IsSingleOrMarried
+00802591 _MakeBcc                         00800bdb _user_SetVersionEnableTbl
+008024ba _MyPrintf                        00800da6 _user_DebugRx
+00801950 _SetFltBlkEdInfo                 00800db2 _user_DebugPrint
+0080193f _SetFltBlkStPos                  00800dc3 _user_CncsRx
+00802462 _StrCat                          00800dcf _user_CncsTx
+0080249d _StrCmp                          00800ddf _user_PacRx
+0080248a _StrCpy                          00800deb _user_PacTx
+0080247a _StrLen                          00800dfb _user_LonWorkLoop
+00000800 __STACK_SIZE                     00800ed5 _user_LonWorkRead
+00000400 __SYSMEM_SIZE                    0080147b _user_LonWorkRx
+00804697 ___bss__                         00801520 _user_LonWorkTx
+0080337d ___cinit__                       00801542 _user_WithCncsRs232Loop
+00800000 ___data__                        00801931 _ClearFltBlkInfo
+00800000 ___edata__                       0080193f _SetFltBlkStPos
+00807389 ___end__                         00801950 _SetFltBlkEdInfo
+0080337d ___etext__                       00801964 _GetFltBlkInfo
+ffffffff ___pinit__                       00801975 _GetFltBlkStPos
+00800000 ___text__                        00801989 _user_FaultDataTx
+008070fa __cleanup_ptr                    00801a62 _user_FtpEnd_CarNumFun
+008071b1 __ctypes_                        00801a9a _user_WithPacRs485Loop
+00804698 __glDebugAddr                    00802141 _GetLocalTimeToUTC
+00804697 __glDebugData                    008021d3 _IsLeapYear
+00802983 __printfi                        008021f8 _GetDaysOfMonth
+00803e97 __stack                          0080222a _user_1msLoop
+00400000 __sys_memory                     00802257 _main
+0080288b _abort                           008022bc _DspInit
+00802876 _atexit                          008022de _ConvAsc2Hex
+00802fff _atoi                            00802302 _FunConvAscHex
+00803033 _atol                            00802336 _IsNumAsc
+008032f5 _bmalloc                         00802346 _ConvAsc2Dec
+008027a9 _c_int00                         00802358 _ConvHex2Asc
+008026d3 _c_int01                         00802371 _ConvDec2Hex
+0080270d _c_int02                         00802384 _FunConvHexAsc
+00800001 _c_int06                         008023b5 _Dec2Str
+00802747 _c_int10                         00802462 _StrCat
+0080320b _calloc                          0080247a _StrLen
+00806e43 _d_BcarRxCnt                     0080248a _StrCpy
+00806632 _d_CdtTxCnt                      0080249d _StrCmp
+00806636 _d_EndFlagCnt                    008024ba _MyPrintf
+00806a3e _d_Len                           008024da _FirmwareVersionStrCmp
+00806e42 _d_LicTxEndCnt                   008024f6 _GetFirmwareVersion
+00806633 _d_LonKindNum                    0080257a _Make1ByteBcc
+00806634 _d_LonStData                     00802591 _MakeBcc
+00806a3d _d_LonTxData                     008025af _IsBccOk
+00807029 _d_LonTxDataBuf                  008025e6 _gm_SysTimeToRtc
+00806e44 _d_Rx3ch                         008026be _Delay
+00806f96 _d_RxUnitStBuf                   008026d3 _c_int01
+00806e45 _d_RxUnitSt_1                    0080270d _c_int02
+00806e46 _d_RxUnitSt_2                    00802747 _c_int10
+00806638 _d_StTxCnt                       008027a9 _c_int00
+00806f49 _d_TimeTxBuf                     008027c2 DIV_I30
+00806637 _d_TimeTxCnt                     008027e7 DIV_U30
+00806635 _d_VerTxCnt                      0080281a MOD_I30
+00806639 _d_nDoorCntA                     0080283c MOD_U30
+0080663a _d_nDoorCntB                     00802866 _exit
+0080303e _ecvt                            00802874 C$$EXIT
+00800434 _en29_AllErase                   00802876 _atexit
+0080042e _en29_Init                       0080288b _abort
+0080049e _en29_ReadByte                   0080288c _memcpy
+00800459 _en29_SectorErase                008028a9 _memset
+0080047f _en29_WriteByte                  008028b9 _sprintf
+00802866 _exit                            008028fa _strcat
+008030bb _fcvt                            0080290a _strcmp
+00803291 _free                            0080291b _strlen
+008025e6 _gm_SysTimeToRtc                 00802928 _strncpy
+0080313d _ltoa                            00802941 _vsprintf
+00807076 _mRackDi                         00802983 __printfi
+00806327 _m_LIC_CNCS_TX_DelyTime          00802fff _atoi
+00806326 _m_LIC_CNCS_Tx_Flag              00803033 _atol
+00806325 _m_LIC_GIA_TimSetFlag            0080303e _ecvt
+00807047 _m_bExVersionEnableTbl           008030bb _fcvt
+0080632e _m_bLnWkDbgTxFlag                0080313d _ltoa
+00806334 _m_bLnWkFtpEndFlag               00803168 _memccpy
+00806f8f _m_btCommSt                      008031cd _minit
+00806339 _m_btCttSignalA                  008031d4 _malloc
+0080633a _m_btCttSignalB                  0080320b _calloc
+00806f59 _m_btExVersionTbl                00803224 _realloc
+00806ffa _m_btExVersion_DAYTbl            00803291 _free
+00806329 _m_chCarKind                     008032f5 _bmalloc
+0080632c _m_nCDT_FaultDataStFlag          00803347 _strncat
+00806330 _m_nCarCnt                       00803360 MPY_I30
+00806331 _m_nCarNo                        0080336e MPY_LD
+00806335 _m_nDateTime2SecondCnt           0080337d ___etext__
+00806337 _m_nDbgTxPos                     0080337d ___cinit__
+008070cd _m_nDebug1msTimer                0080337d cinit
+008070ce _m_nDebugCnt                     0080337d etext
+0080632a _m_nFaultCnt                     00803e97 __stack
+0080633b _m_nGiaRxCheck1msTimer           00804697 ___bss__
+00806328 _m_nLnWkTxFlag                   00804697 __glDebugData
+0080632f _m_nLnWkWaySideOnRxOk            00804697 .bss
+00806333 _m_nNvsramPos                    00804698 __glDebugAddr
+00806338 _m_nSingleOrMarriedCarUpdate1msTimer 008046a5 _m_nXr16l784TxLen1
+00806336 _m_nTxDbg1msTimer                008046a6 _m_nXr16l784TxLen1Temp
+00806322 _m_nUart1RxOneByteGapDelayTime   008046a7 _m_nXr16l784TxPos1
+00806323 _m_nUart2RxOneByteGapDelayTime   008046a8 _m_nXr16l784RxLen1
+00806324 _m_nUart3RxOneByteGapDelayTime   008046a9 _m_nXr16l784RxRear1
+00806321 _m_nUserDebug1msTimer            008046aa _m_nXr16l784RxFront1
+008046aa _m_nXr16l784RxFront1             008046ab _m_nXr16l784TxEnableDly1
+008046b2 _m_nXr16l784RxFront2             008046ac _m_nXr16l784TxStartEnableDly1
+008046ba _m_nXr16l784RxFront3             008046ad _m_nXr16l784TxLen2
+008046c2 _m_nXr16l784RxFront4             008046ae _m_nXr16l784TxLen2Temp
+008046a8 _m_nXr16l784RxLen1               008046af _m_nXr16l784TxPos2
+008046b0 _m_nXr16l784RxLen2               008046b0 _m_nXr16l784RxLen2
+008046b8 _m_nXr16l784RxLen3               008046b1 _m_nXr16l784RxRear2
+008046c0 _m_nXr16l784RxLen4               008046b2 _m_nXr16l784RxFront2
+008046a9 _m_nXr16l784RxRear1              008046b3 _m_nXr16l784TxEnableDly2
+008046b1 _m_nXr16l784RxRear2              008046b4 _m_nXr16l784TxStartEnableDly2
+008046b9 _m_nXr16l784RxRear3              008046b5 _m_nXr16l784TxLen3
+008046c1 _m_nXr16l784RxRear4              008046b6 _m_nXr16l784TxLen3Temp
+008046ab _m_nXr16l784TxEnableDly1         008046b7 _m_nXr16l784TxPos3
+008046b3 _m_nXr16l784TxEnableDly2         008046b8 _m_nXr16l784RxLen3
+008046bb _m_nXr16l784TxEnableDly3         008046b9 _m_nXr16l784RxRear3
+008046c3 _m_nXr16l784TxEnableDly4         008046ba _m_nXr16l784RxFront3
+008046a6 _m_nXr16l784TxLen1Temp           008046bb _m_nXr16l784TxEnableDly3
+008046a5 _m_nXr16l784TxLen1               008046bc _m_nXr16l784TxStartEnableDly3
+008046ad _m_nXr16l784TxLen2               008046bd _m_nXr16l784TxLen4
+008046ae _m_nXr16l784TxLen2Temp           008046be _m_nXr16l784TxLen4Temp
+008046b5 _m_nXr16l784TxLen3               008046bf _m_nXr16l784TxPos4
+008046b6 _m_nXr16l784TxLen3Temp           008046c0 _m_nXr16l784RxLen4
+008046be _m_nXr16l784TxLen4Temp           008046c1 _m_nXr16l784RxRear4
+008046bd _m_nXr16l784TxLen4               008046c2 _m_nXr16l784RxFront4
+008046a7 _m_nXr16l784TxPos1               008046c3 _m_nXr16l784TxEnableDly4
+008046af _m_nXr16l784TxPos2               008046c4 _m_nXr16l784TxStartEnableDly4
+008046b7 _m_nXr16l784TxPos3               008046c5 _pXr16Reg
+008046bf _m_nXr16l784TxPos4               008046c6 _m_ucXr16l784TxBuf1
+008046ac _m_nXr16l784TxStartEnableDly1    008056c6 _m_ucXr16l784TxBuf2
+008046b4 _m_nXr16l784TxStartEnableDly2    008058c6 _m_ucXr16l784TxBuf3
+008046bc _m_nXr16l784TxStartEnableDly3    008059c6 _m_ucXr16l784TxBuf4
+008046c4 _m_nXr16l784TxStartEnableDly4    00805ac6 _m_ucXr16l784TxBuf2Temp
+008070cf _m_pBoardIdInfo                  00805cc6 _m_ucXr16l784TxBuf3Temp
+00806f53 _m_tFaultInfo                    00805dc6 _m_ucXr16l784TxBuf4Temp
+00807077 _m_tmCurTime                     00805ec6 _m_ucXr16l784RxBuf1
+00806f88 _m_tmUtcTime                     00805f06 _m_ucXr16l784RxBuf2
+00805ec6 _m_ucXr16l784RxBuf1              00806106 _m_ucXr16l784RxBuf3
+00805f06 _m_ucXr16l784RxBuf2              00806206 _m_ucXr16l784RxBuf4
+00806106 _m_ucXr16l784RxBuf3              00806321 _m_nUserDebug1msTimer
+00806206 _m_ucXr16l784RxBuf4              00806322 _m_nUart1RxOneByteGapDelayTime
+008046c6 _m_ucXr16l784TxBuf1              00806323 _m_nUart2RxOneByteGapDelayTime
+008056c6 _m_ucXr16l784TxBuf2              00806324 _m_nUart3RxOneByteGapDelayTime
+00805ac6 _m_ucXr16l784TxBuf2Temp          00806325 _m_LIC_GIA_TimSetFlag
+00805cc6 _m_ucXr16l784TxBuf3Temp          00806326 _m_LIC_CNCS_Tx_Flag
+008058c6 _m_ucXr16l784TxBuf3              00806327 _m_LIC_CNCS_TX_DelyTime
+00805dc6 _m_ucXr16l784TxBuf4Temp          00806328 _m_nLnWkTxFlag
+008059c6 _m_ucXr16l784TxBuf4              00806329 _m_chCarKind
+0080632d _m_wCarNo                        0080632a _m_nFaultCnt
+00802257 _main                            0080632b _nRecving_Posi
+008031d4 _malloc                          0080632c _m_nCDT_FaultDataStFlag
+00803168 _memccpy                         0080632d _m_wCarNo
+0080288c _memcpy                          0080632e _m_bLnWkDbgTxFlag
+008028a9 _memset                          0080632f _m_nLnWkWaySideOnRxOk
+008031cd _minit                           00806330 _m_nCarCnt
+0080632b _nRecving_Posi                   00806331 _m_nCarNo
+008046c5 _pXr16Reg                        00806333 _m_nNvsramPos
+00803224 _realloc                         00806334 _m_bLnWkFtpEndFlag
+008028b9 _sprintf                         00806335 _m_nDateTime2SecondCnt
+008028fa _strcat                          00806336 _m_nTxDbg1msTimer
+0080290a _strcmp                          00806337 _m_nDbgTxPos
+0080291b _strlen                          00806338 _m_nSingleOrMarriedCarUpdate1msTimer
+00803347 _strncat                         00806339 _m_btCttSignalA
+00802928 _strncpy                         0080633a _m_btCttSignalB
+0080222a _user_1msLoop                    0080633b _m_nGiaRxCheck1msTimer
+00800dc3 _user_CncsRx                     0080633c _LIC_VerList
+00800dcf _user_CncsTx                     00806632 _d_CdtTxCnt
+008006eb _user_DebugLoop                  00806633 _d_LonKindNum
+00800db2 _user_DebugPrint                 00806634 _d_LonStData
+00800da6 _user_DebugRx                    00806635 _d_VerTxCnt
+00801989 _user_FaultDataTx                00806636 _d_EndFlagCnt
+00801a62 _user_FtpEnd_CarNumFun           00806637 _d_TimeTxCnt
+008004ab _user_Init                       00806638 _d_StTxCnt
+00800bc4 _user_IsSingleOrMarried          00806639 _d_nDoorCntA
+00800dfb _user_LonWorkLoop                0080663a _d_nDoorCntB
+00800ed5 _user_LonWorkRead                00806a3d _d_LonTxData
+0080147b _user_LonWorkRx                  00806a3e _d_Len
+00801520 _user_LonWorkTx                  00806e42 _d_LicTxEndCnt
+008006d5 _user_Loop                       00806e43 _d_BcarRxCnt
+00800ddf _user_PacRx                      00806e44 _d_Rx3ch
+00800deb _user_PacTx                      00806e45 _d_RxUnitSt_1
+00800bdb _user_SetVersionEnableTbl        00806e46 _d_RxUnitSt_2
+00801542 _user_WithCncsRs232Loop          00806f49 _d_TimeTxBuf
+00801a9a _user_WithPacRs485Loop           00806f53 _m_tFaultInfo
+00802941 _vsprintf                        00806f59 _m_btExVersionTbl
+008003bc _xr16l784_1msLoop                00806f88 _m_tmUtcTime
+008001c3 _xr16l784_GetRxBuffer            00806f8f _m_btCommSt
+0080021f _xr16l784_GetRxBuffer1Ch         00806f96 _d_RxUnitStBuf
+00800245 _xr16l784_GetRxBuffer2Ch         00806ffa _m_btExVersion_DAYTbl
+0080026b _xr16l784_GetRxBuffer3Ch         00807029 _d_LonTxDataBuf
+00800291 _xr16l784_GetRxBuffer4Ch         00807047 _m_bExVersionEnableTbl
+0080006e _xr16l784_Init                   00807076 _mRackDi
+008002b7 _xr16l784_Isr                    00807077 _m_tmCurTime
+008003b6 _xr16l784_Loop                   008070cd _m_nDebug1msTimer
+008000a1 _xr16l784_Rts                    008070ce _m_nDebugCnt
+008000be _xr16l784_RtsDelayStartSend      008070cf _m_pBoardIdInfo
+00800107 _xr16l784_Send                   008070fa __cleanup_ptr
+0080337d cinit                            008071b1 __ctypes_
+00800000 edata                            00807389 ___end__
+00807389 end                              00807389 end
+0080337d etext                            ffffffff ___pinit__
+ffffffff pinit                            ffffffff pinit
+
+[230 symbols]

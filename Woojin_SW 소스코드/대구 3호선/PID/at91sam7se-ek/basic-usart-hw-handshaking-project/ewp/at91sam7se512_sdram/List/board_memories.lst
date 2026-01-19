@@ -1,0 +1,637 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     02/Sep/2014  08:12:13 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\boards\at91sam7se-ek\board_memories.c         #
+#    Command line =  "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\boards\at91sam7se-ek\board_memories.c" -D     #
+#                    at91sam7se512 -D sdram -D TRACE_LEVEL=4 -lC              #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\List\" --remarks --diag_suppress     #
+#                    Pe826,Pe1375 -o "C:\Users\JDS_Retina\Dropbox\회사\JDS_PR #
+#                    O\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512 #
+#                    _Dagu_LED\at91sam7se-ek\basic-usart-hw-handshaking-proje #
+#                    ct\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/peripherals\" -I                        #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib\" -I "C:\Users\JDS_Retina\Dropbox\회사\ #
+#                    JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam #
+#                    7se512_Dagu_LED\at91sam7se-ek\basic-usart-hw-handshaking #
+#                    -project\ewp\..\..\..\at91lib/components\" -I            #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/boards/at91sam7se-ek\" --interwork      #
+#                    --cpu_mode arm -Oh --use_c++_inline                      #
+#    List file    =  C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\List\board_memories.lst              #
+#    Object file  =  C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\board_memories.o                 #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91lib\boards\at91sam7se-ek\board_memories.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "board_memories.h"
+     35          #include "board.h"
+     36          #include <pio/pio.h>
+     37          
+     38          /*
+     39              Macros:
+     40                  READ - Reads a register value. Useful to add trace information to read
+     41                         accesses.
+     42                  WRITE - Writes data in a register. Useful to add trace information to
+     43                          write accesses.
+     44          */
+     45          #define READ(peripheral, register)          (peripheral->register)
+     46          #define WRITE(peripheral, register, value)  (peripheral->register = value)
+     47          
+     48          //------------------------------------------------------------------------------
+     49          //         Internal definitions
+     50          //------------------------------------------------------------------------------
+     51          /*
+     52              Constants: Remap types
+     53                  BOARD_FLASH - Flash is mirrored in the remap zone.
+     54                  BOARD_RAM - RAM is mirrored in the remap zone.
+     55          */
+     56          #define BOARD_FLASH             0
+     57          #define BOARD_RAM               1
+     58          
+     59          //------------------------------------------------------------------------------
+     60          //         Internal function
+     61          //------------------------------------------------------------------------------
+     62          /*
+     63              Function: BOARD_GetRemap
+     64                  Returns the current remap (see <Remap types>).
+     65          */
+
+   \                                 In section .text, align 4, keep-with-next
+     66          static unsigned char BOARD_GetRemap( void )
+     67          {
+     68              volatile unsigned int *remap = (volatile unsigned int *) 0;
+     69              volatile unsigned int *ram = (volatile unsigned int *) AT91C_ISRAM;
+     70          
+     71              // Try to write in 0 and see if this affects the RAM
+     72              unsigned int temp = *ram;
+   \                     BOARD_GetRemap:
+   \   00000000   0xE3A00980         MOV      R0,#+2097152
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+     73              *ram = temp + 1;
+   \   00000008   0xE2801001         ADD      R1,R0,#+1
+   \   0000000C   0xE3A02980         MOV      R2,#+2097152
+   \   00000010   0xE5821000         STR      R1,[R2, #+0]
+     74              if (*remap == *ram) {
+                     ^
+Warning[Pa082]: undefined behavior: the order of volatile accesses is
+          undefined in this statement
+   \   00000014   0xE3A01000         MOV      R1,#+0
+   \   00000018   0xE5911000         LDR      R1,[R1, #+0]
+   \   0000001C   0xE5922000         LDR      R2,[R2, #+0]
+   \   00000020   0xE1510002         CMP      R1,R2
+   \   00000024   0xE3A01980         MOV      R1,#+2097152
+   \   00000028   0xE5810000         STR      R0,[R1, #+0]
+     75          
+     76                  *ram = temp;
+     77                  return BOARD_RAM;
+   \   0000002C   0x03A00001         MOVEQ    R0,#+1
+     78              }
+     79              else {
+     80          
+     81                  *ram = temp;
+     82                  return BOARD_FLASH;
+   \   00000030   0x13A00000         MOVNE    R0,#+0
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+     83              }
+     84          }
+     85          
+     86          //------------------------------------------------------------------------------
+     87          //         Exported functions
+     88          //------------------------------------------------------------------------------
+     89          /*
+     90              Function: BOARD_RemapFlash
+     91                  Changes the mapping of the chip so that the remap area mirrors the
+     92                  internal flash.
+     93          */
+
+   \                                 In section .text, align 4, keep-with-next
+     94          void BOARD_RemapFlash( void )
+     95          {
+   \                     BOARD_RemapFlash:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+     96              if (BOARD_GetRemap() != BOARD_FLASH) {
+   \   00000004   0x........         BL       BOARD_GetRemap
+   \   00000008   0xE3500000         CMP      R0,#+0
+     97          
+     98                  AT91C_BASE_MC->MC_RCR = AT91C_MC_RCB;
+   \   0000000C   0x........         B        ?Subroutine1
+     99              }
+    100          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine1:
+   \   00000000   0x13E000FF         MVNNE    R0,#+255
+   \   00000004   0x13A01001         MOVNE    R1,#+1
+   \   00000008   0x15801000         STRNE    R1,[R0, #+0]
+   \   0000000C   0xE8BD4001         POP      {R0,LR}
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    101          
+    102          /*
+    103              Function: BOARD_RemapRam
+    104                  Changes the mapping of the chip so that the remap area mirrors the
+    105                  internal RAM.
+    106          */
+
+   \                                 In section .text, align 4, keep-with-next
+    107          void BOARD_RemapRam( void )
+    108          {
+   \                     BOARD_RemapRam:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    109              if (BOARD_GetRemap() != BOARD_RAM) {
+   \   00000004   0x........         BL       BOARD_GetRemap
+   \   00000008   0xE3500001         CMP      R0,#+1
+    110          
+    111                  AT91C_BASE_MC->MC_RCR = AT91C_MC_RCB;
+   \   0000000C                      REQUIRE ?Subroutine1
+   \   0000000C                      ;; // Fall through to label ?Subroutine1
+    112              }
+    113          }
+    114          
+    115          //------------------------------------------------------------------------------
+    116          /// Initializes the SDRAM controller so the external SDRAM chip connected to the
+    117          /// EBI is accessible. The EBI pins for the SDRAM must be configured prior to
+    118          /// calling this function.
+    119          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    120          void BOARD_ConfigureSdram(unsigned char busWidth)
+    121          {
+   \                     BOARD_ConfigureSdram:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+    122              volatile unsigned int i;
+    123              static const Pin pinsSdram[] = {PINS_SDRAM};
+    124              volatile unsigned int *pSdram = (unsigned int *) AT91C_EBI_SDRAM;
+    125              unsigned short sdrc_dbw = 0;
+    126          
+    127              switch (busWidth) {
+   \   00000008   0xE3500020         CMP      R0,#+32
+    128                  case 16:
+    129                  default:
+    130                      sdrc_dbw = AT91C_SDRC_DBW_16_BITS;
+   \   0000000C   0x13A04010         MOVNE    R4,#+16
+    131                      break;
+    132          
+    133                  case 32:
+    134                      sdrc_dbw = AT91C_SDRC_DBW_32_BITS;
+   \   00000010   0x03A04000         MOVEQ    R4,#+0
+    135                      break;
+    136          
+    137              }
+    138              
+    139              // Enable corresponding PIOs
+    140              PIO_Configure(pinsSdram, PIO_LISTSIZE(pinsSdram));
+   \   00000014   0xE3A01003         MOV      R1,#+3
+   \   00000018   0x........         LDR      R0,??DataTable1
+   \   0000001C   0x........         BL       PIO_Configure
+    141              
+    142              // Enable EBI chip select for the SDRAM
+    143              WRITE(AT91C_BASE_EBI, EBI_CSA, AT91C_EBI_CS1A_SDRAMC);
+   \   00000020   0xE3E0007F         MVN      R0,#+127
+   \   00000024   0xE3A01002         MOV      R1,#+2
+   \   00000028   0xE5801000         STR      R1,[R0, #+0]
+    144              
+    145          #define AT91C_SDRC_NC_9           (0x1)
+    146          #define AT91C_SDRC_NR_13          (0x2 << 2)
+    147          #define AT91C_SDRC_CAS_2          (0x2 << 5)
+    148          #define AT91C_SDRC_NB_4_BANKS     (0x1 << 4)
+    149          #define AT91C_SDRC_TWR_2          (0x2 << 7)
+    150          #define AT91C_SDRC_TRC_4          (0x4 << 11)
+    151          #define AT91C_SDRC_TRP_4          (0x4 << 15)
+    152          #define AT91C_SDRC_TRCD_2         (0x2 << 19)
+    153          #define AT91C_SDRC_TRAS_3         (0x3 << 23)
+    154          #define AT91C_SDRC_TXSR_4         (0x4 << 27)
+    155          
+    156              // CFG Control Register
+    157              WRITE(AT91C_BASE_SDRC, SDRC_CR, AT91C_SDRC_NC_9
+    158                                              | AT91C_SDRC_NR_13
+    159                                              | AT91C_SDRC_CAS_2
+    160                                              | AT91C_SDRC_NB_4_BANKS
+    161                                              | AT91C_SDRC_TWR_2
+    162                                              | AT91C_SDRC_TRC_4
+    163                                              | AT91C_SDRC_TRP_4
+    164                                              | AT91C_SDRC_TRCD_2
+    165                                              | AT91C_SDRC_TRAS_3
+    166                                              | AT91C_SDRC_TXSR_4);
+   \   0000002C   0xE3800038         ORR      R0,R0,#0x38
+   \   00000030   0x........         LDR      R1,??DataTable1_1  ;; 0x21922159
+   \   00000034   0xE5801000         STR      R1,[R0, #+0]
+    167                      
+    168              for (i = 0; i < 1000; i++);
+   \   00000038   0xE3A01000         MOV      R1,#+0
+   \   0000003C   0xE58D1000         STR      R1,[SP, #+0]
+   \   00000040   0xEA000002         B        ??BOARD_ConfigureSdram_0
+   \                     ??BOARD_ConfigureSdram_1:
+   \   00000044   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000048   0xE2800001         ADD      R0,R0,#+1
+   \   0000004C   0xE58D0000         STR      R0,[SP, #+0]
+   \                     ??BOARD_ConfigureSdram_0:
+   \   00000050   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000054   0xE3500FFA         CMP      R0,#+1000
+   \   00000058   0x3AFFFFF9         BCC      ??BOARD_ConfigureSdram_1
+    169          
+    170              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_NOP_CMD); // Perform NOP
+   \   0000005C   0xE3840001         ORR      R0,R4,#0x1
+   \   00000060   0xE3E0104F         MVN      R1,#+79
+   \   00000064   0xE5810000         STR      R0,[R1, #+0]
+    171              pSdram[0] = 0x00000000;
+   \   00000068   0xE3A00580         MOV      R0,#+536870912
+   \   0000006C   0xE3A01000         MOV      R1,#+0
+   \   00000070   0xE5801000         STR      R1,[R0, #+0]
+    172          
+    173              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_PRCGALL_CMD); // Set PRCHG AL
+   \   00000074   0xE3840002         ORR      R0,R4,#0x2
+   \   00000078   0xE3E0104F         MVN      R1,#+79
+   \   0000007C   0xE5810000         STR      R0,[R1, #+0]
+    174              pSdram[0] = 0x00000000;                     // Perform PRCHG
+   \   00000080   0xE3A00580         MOV      R0,#+536870912
+   \   00000084   0xE3A01000         MOV      R1,#+0
+   \   00000088   0xE5801000         STR      R1,[R0, #+0]
+    175          
+    176              for (i = 0; i < 10000; i++);
+   \   0000008C   0xE58D1000         STR      R1,[SP, #+0]
+   \   00000090   0xE3A01010         MOV      R1,#+16
+   \   00000094   0xE3811D9C         ORR      R1,R1,#0x2700
+   \   00000098   0xEA000002         B        ??BOARD_ConfigureSdram_2
+   \                     ??BOARD_ConfigureSdram_3:
+   \   0000009C   0xE59D0000         LDR      R0,[SP, #+0]
+   \   000000A0   0xE2800001         ADD      R0,R0,#+1
+   \   000000A4   0xE58D0000         STR      R0,[SP, #+0]
+   \                     ??BOARD_ConfigureSdram_2:
+   \   000000A8   0xE59D0000         LDR      R0,[SP, #+0]
+   \   000000AC   0xE1500001         CMP      R0,R1
+   \   000000B0   0x3AFFFFF9         BCC      ??BOARD_ConfigureSdram_3
+    177          
+    178              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 1st CBR
+   \   000000B4   0xE3840004         ORR      R0,R4,#0x4
+   \   000000B8   0xE3E0104F         MVN      R1,#+79
+   \   000000BC   0xE5810000         STR      R0,[R1, #+0]
+    179              pSdram[1] = 0x00000001;                     // Perform CBR
+   \   000000C0   0xE3A00242         MOV      R0,#+536870916
+   \   000000C4   0xE3A01001         MOV      R1,#+1
+   \   000000C8   0xE5801000         STR      R1,[R0, #+0]
+    180          
+    181              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 2 CBR
+   \   000000CC   0xE3840004         ORR      R0,R4,#0x4
+   \   000000D0   0xE3E0104F         MVN      R1,#+79
+   \   000000D4   0xE5810000         STR      R0,[R1, #+0]
+    182              pSdram[2] = 0x00000002;                     // Perform CBR
+   \   000000D8   0xE3A00282         MOV      R0,#+536870920
+   \   000000DC   0xE3A01002         MOV      R1,#+2
+   \   000000E0   0xE5801000         STR      R1,[R0, #+0]
+    183          
+    184              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 3 CBR
+   \   000000E4   0xE3840004         ORR      R0,R4,#0x4
+   \   000000E8   0xE3E0104F         MVN      R1,#+79
+   \   000000EC   0xE5810000         STR      R0,[R1, #+0]
+    185              pSdram[3] = 0x00000003;                    // Perform CBR
+   \   000000F0   0xE3A002C2         MOV      R0,#+536870924
+   \   000000F4   0xE3A01003         MOV      R1,#+3
+   \   000000F8   0xE5801000         STR      R1,[R0, #+0]
+    186          
+    187              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 4 CBR
+   \   000000FC   0xE3840004         ORR      R0,R4,#0x4
+   \   00000100   0xE3E0104F         MVN      R1,#+79
+   \   00000104   0xE5810000         STR      R0,[R1, #+0]
+    188              pSdram[4] = 0x00000004;                   // Perform CBR
+   \   00000108   0xE3A00010         MOV      R0,#+16
+   \   0000010C   0xE3800580         ORR      R0,R0,#0x20000000
+   \   00000110   0xE3A01004         MOV      R1,#+4
+   \   00000114   0xE5801000         STR      R1,[R0, #+0]
+    189          
+    190              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 5 CBR
+   \   00000118   0xE3840004         ORR      R0,R4,#0x4
+   \   0000011C   0xE3E0104F         MVN      R1,#+79
+   \   00000120   0xE5810000         STR      R0,[R1, #+0]
+    191              pSdram[5] = 0x00000005;                   // Perform CBR
+   \   00000124   0xE3A00014         MOV      R0,#+20
+   \   00000128   0xE3800580         ORR      R0,R0,#0x20000000
+   \   0000012C   0xE3A01005         MOV      R1,#+5
+   \   00000130   0xE5801000         STR      R1,[R0, #+0]
+    192          
+    193              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 6 CBR
+   \   00000134   0xE3840004         ORR      R0,R4,#0x4
+   \   00000138   0xE3E0104F         MVN      R1,#+79
+   \   0000013C   0xE5810000         STR      R0,[R1, #+0]
+    194              pSdram[6] = 0x00000006;                 // Perform CBR
+   \   00000140   0xE3A00018         MOV      R0,#+24
+   \   00000144   0xE3800580         ORR      R0,R0,#0x20000000
+   \   00000148   0xE3A01006         MOV      R1,#+6
+   \   0000014C   0xE5801000         STR      R1,[R0, #+0]
+    195          
+    196              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 7 CBR
+   \   00000150   0xE3840004         ORR      R0,R4,#0x4
+   \   00000154   0xE3E0104F         MVN      R1,#+79
+   \   00000158   0xE5810000         STR      R0,[R1, #+0]
+    197              pSdram[7] = 0x00000007;                 // Perform CBR
+   \   0000015C   0xE3A0001C         MOV      R0,#+28
+   \   00000160   0xE3800580         ORR      R0,R0,#0x20000000
+   \   00000164   0xE3A01007         MOV      R1,#+7
+   \   00000168   0xE5801000         STR      R1,[R0, #+0]
+    198          
+    199              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_RFSH_CMD);    // Set 8 CBR
+   \   0000016C   0xE3840004         ORR      R0,R4,#0x4
+   \   00000170   0xE3E0104F         MVN      R1,#+79
+   \   00000174   0xE5810000         STR      R0,[R1, #+0]
+    200              pSdram[8] = 0x00000008;                 // Perform CBR
+   \   00000178   0xE3A00020         MOV      R0,#+32
+   \   0000017C   0xE3800580         ORR      R0,R0,#0x20000000
+   \   00000180   0xE3A01008         MOV      R1,#+8
+   \   00000184   0xE5801000         STR      R1,[R0, #+0]
+    201          
+    202              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_LMR_CMD);     // Set LMR operation
+   \   00000188   0xE3840003         ORR      R0,R4,#0x3
+   \   0000018C   0xE3E0104F         MVN      R1,#+79
+   \   00000190   0xE5810000         STR      R0,[R1, #+0]
+    203              pSdram[9] = 0xcafedede;                 // Perform LMR burst=1, lat=2
+   \   00000194   0xE3A00024         MOV      R0,#+36
+   \   00000198   0xE3800580         ORR      R0,R0,#0x20000000
+   \   0000019C   0x........         LDR      R1,??DataTable1_2  ;; 0xcafedede
+   \   000001A0   0xE5801000         STR      R1,[R0, #+0]
+    204          
+    205              WRITE(AT91C_BASE_SDRC, SDRC_TR, sdrc_dbw | (BOARD_MCK * 7) / 1000000);     // Set Refresh Timer
+   \   000001A4   0xE3E0004B         MVN      R0,#+75
+   \   000001A8   0xE3A01F54         MOV      R1,#+336
+   \   000001AC   0xE5801000         STR      R1,[R0, #+0]
+    206          
+    207              WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_MODE_NORMAL_CMD);  // Set Normal mode
+   \   000001B0   0xE3C00004         BIC      R0,R0,#0x4
+   \   000001B4   0xE5804000         STR      R4,[R0, #+0]
+    208              //WRITE(AT91C_BASE_SDRC, SDRC_MR, sdrc_dbw | AT91C_SDRC_DBW_16_BITS);  // Set Normal mode
+    209              pSdram[0] = 0x00000000;                     // Perform Normal mode
+   \   000001B8   0xE3A00580         MOV      R0,#+536870912
+   \   000001BC   0xE3A01000         MOV      R1,#+0
+   \   000001C0   0xE5801000         STR      R1,[R0, #+0]
+    210          }
+   \   000001C4   0xE8BD4013         POP      {R0,R1,R4,LR}
+   \   000001C8   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .rodata, align 4
+   \                     ??pinsSdram:
+   \   00000000   0x3F800000         DC32 1065353216, 0FFFFF400H
+   \              0xFFFFF400   
+   \   00000008   0x02 0x01          DC8 2, 1, 0, 0
+   \              0x00 0x00    
+   \   0000000C   0x0003FFFF         DC32 262143, 0FFFFF600H
+   \              0xFFFFF600   
+   \   00000014   0x03 0x01          DC8 3, 1, 0, 0
+   \              0x00 0x00    
+   \   00000018   0x0000FFFF         DC32 65535, 0FFFFF800H
+   \              0xFFFFF800   
+   \   00000020   0x04 0x00          DC8 4, 0, 0, 0
+   \              0x00 0x00    
+    211          
+    212          //------------------------------------------------------------------------------
+    213          /// Configures the EBI for NandFlash access. Pins must be configured after or
+    214          /// before calling this function.
+    215          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    216          void BOARD_ConfigureNandFlash(unsigned char busWidth)
+    217          {
+    218              // Configure EBI
+    219              AT91C_BASE_EBI->EBI_CSA |= AT91C_EBI_CS3A_SMC_NandFlash;
+   \                     BOARD_ConfigureNandFlash:
+   \   00000000   0xE3E0107F         MVN      R1,#+127
+   \   00000004   0xE5911000         LDR      R1,[R1, #+0]
+   \   00000008   0xE3811008         ORR      R1,R1,#0x8
+   \   0000000C   0xE3E0207F         MVN      R2,#+127
+   \   00000010   0xE5821000         STR      R1,[R2, #+0]
+    220          
+    221          #define AT91C_SMC2_NWS_2            ((unsigned int) 1 <<  0)
+    222          #define AT91C_SMC2_TDF_2_CYCLES     ((unsigned int) 2 <<  8)
+    223          #define AT91C_SMC2_BAT_8BIT         ((unsigned int) 0 << 12)
+    224          #define AT91C_SMC2_DRP_STANDARD     ((unsigned int) 0 << 15)
+    225          #define AT91C_SMC2_RWSETUP_0_CYCLE  ((unsigned int) 0 << 24)
+    226          #define AT91C_SMC2_RWHOLD_1_CYCLE   ((unsigned int) 1 << 28)
+    227          
+    228              // Configure SMC
+    229              AT91C_BASE_SMC->SMC2_CSR[3] =
+    230                   AT91C_SMC2_NWS_2           // 2 wait states required required by the NAND Flash device
+    231                 | AT91C_SMC2_WSEN            // NWS register enabled
+    232                 | AT91C_SMC2_TDF_2_CYCLES    // 2 Data Float Time Cycles required by the NAND Flash device
+    233                 | AT91C_SMC2_BAT_8BIT        // 1 8-bit device connected over the bus
+    234                 | AT91C_SMC2_DBW_8           // 8-bit Data Bus Width
+    235                 | AT91C_SMC2_DRP_STANDARD    // Standard Read protocol required by the NAND Flash device
+    236                 | AT91C_SMC2_ACSS_STANDARD   // Standard address to chip select
+    237                 | AT91C_SMC2_RWSETUP_0_CYCLE // 0 Read/Write Setup time required by the Nand Flash Device
+    238                 | AT91C_SMC2_RWHOLD_1_CYCLE; // 1 Read/Write Setup time required by the ECC controller
+   \   00000014   0xE382101C         ORR      R1,R2,#0x1C
+   \   00000018   0x........         LDR      R2,??DataTable1_3  ;; 0x10004281
+   \   0000001C   0x........         B        ?Subroutine0
+    239              
+    240              if (busWidth == 8) {
+    241                  AT91C_BASE_SMC->SMC2_CSR[3] |=  AT91C_SMC2_DBW_8;
+    242              }
+    243              else if (busWidth == 16) {
+    244           
+    245                  AT91C_BASE_SMC->SMC2_CSR[3] |=  AT91C_SMC2_DBW_16;
+    246              }       
+    247          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE5812000         STR      R2,[R1, #+0]
+   \   00000004   0xE3500008         CMP      R0,#+8
+   \   00000008   0x05910000         LDREQ    R0,[R1, #+0]
+   \   0000000C   0x03800C40         ORREQ    R0,R0,#0x4000
+   \   00000010   0x0A000003         BEQ      ??Subroutine0_0
+   \   00000014   0xE3500010         CMP      R0,#+16
+   \   00000018   0x1A000002         BNE      ??Subroutine0_1
+   \   0000001C   0xE5910000         LDR      R0,[R1, #+0]
+   \   00000020   0xE3800D80         ORR      R0,R0,#0x2000
+   \                     ??Subroutine0_0:
+   \   00000024   0xE5810000         STR      R0,[R1, #+0]
+   \                     ??Subroutine0_1:
+   \   00000028   0xE12FFF1E         BX       LR               ;; return
+    248          
+    249          //------------------------------------------------------------------------------
+    250          /// Configures a list of AT91S_EFC instances.
+    251          /// \param list  Pointer to a list of AT91S_EFC instances.
+    252          /// \param size  Size of the AT91S_EFC list.
+    253          /// \param numWaitStates  Number of state cycles value for the EFC.
+    254          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    255          void BOARD_ConfigureFlash48MHz(void)
+    256          {
+    257              /* Set flash wait states in the EFC
+    258               **********************************/
+    259              /* 48MHz = 1 wait state */
+    260          #if defined(at91sam7se512)
+    261              AT91C_BASE_EFC0->EFC_FMR = AT91C_MC_FWS_2FWS;
+   \                     BOARD_ConfigureFlash48MHz:
+   \   00000000   0xE3E0009F         MVN      R0,#+159
+   \   00000004   0xE3A01F80         MOV      R1,#+512
+   \   00000008   0xE5801000         STR      R1,[R0, #+0]
+    262              AT91C_BASE_EFC1->EFC_FMR = AT91C_MC_FWS_2FWS;
+   \   0000000C   0xE3800010         ORR      R0,R0,#0x10
+   \   00000010   0xE5801000         STR      R1,[R0, #+0]
+    263          #elif defined(at91sam7se32) || defined(at91sam7se256)
+    264              AT91C_BASE_EFC->EFC_FMR = AT91C_MC_FWS_2FWS;
+    265          #else
+    266              #error No chip definition ?
+    267          #endif
+    268          }
+   \   00000014   0xE12FFF1E         BX       LR               ;; return
+    269          
+    270          //------------------------------------------------------------------------------
+    271          /// Configures the EBI for NorFlash access at 48MHz.
+    272          /// \Param busWidth Bus width 
+    273          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    274          void BOARD_ConfigureNorFlash(unsigned char busWidth)
+    275          {
+    276              // Configure SMC
+    277              AT91C_BASE_SMC->SMC2_CSR[0] =
+    278                   ((unsigned int) 2 <<  0)       // 2 wait states required required by the NOR Flash device
+    279                 | AT91C_SMC2_WSEN                // NWS register enabled
+    280                 | ((unsigned int) 1 <<  8)       // 1 Data Float Time Cycles required by the NOR Flash device
+    281                 | AT91C_SMC2_BAT_8BIT            // 1 8-bit device connected over the bus
+    282                 | AT91C_SMC2_DRP_STANDARD        // Standard Read protocol required by the NOR Flash device
+    283                 | ((unsigned int) 1 << 24)       // 1 Read/Write Setup time required by the NOR Flash Device
+    284                 | ((unsigned int) 2 << 28);      // 2 Read/Write Setup time required by the ECC controller
+   \                     BOARD_ConfigureNorFlash:
+   \   00000000   0xE3E0106F         MVN      R1,#+111
+   \   00000004   0xE59F2000         LDR      R2,??BOARD_ConfigureNorFlash_0  ;; 0x21000182
+   \   00000008   0xEA000000         B        ??BOARD_ConfigureNorFlash_1
+   \                     ??BOARD_ConfigureNorFlash_0:
+   \   0000000C   0x21000182         DC32     0x21000182
+   \                     ??BOARD_ConfigureNorFlash_1:
+   \   00000010                      REQUIRE ?Subroutine0
+   \   00000010                      ;; // Fall through to label ?Subroutine0
+    285              
+    286              if (busWidth == 8) {
+    287                  AT91C_BASE_SMC->SMC2_CSR[0] |=  AT91C_SMC2_DBW_8;
+    288              }
+    289              else if (busWidth == 16) {
+    290           
+    291                  AT91C_BASE_SMC->SMC2_CSR[0] |=  AT91C_SMC2_DBW_16;
+    292              }
+    293          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     ??pinsSdram
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x21922159         DC32     0x21922159
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0xCAFEDEDE         DC32     0xcafedede
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x10004281         DC32     0x10004281
+    294          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  BOARD_ConfigureFlash48MHz
+        0  BOARD_ConfigureNandFlash
+        0  BOARD_ConfigureNorFlash
+       16  BOARD_ConfigureSdram
+             16 -> PIO_Configure
+        0  BOARD_GetRemap
+        8  BOARD_RemapFlash
+              8 -> BOARD_GetRemap
+        8  BOARD_RemapRam
+              8 -> BOARD_GetRemap
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+      44  ?Subroutine0
+      20  ?Subroutine1
+      24  BOARD_ConfigureFlash48MHz
+      32  BOARD_ConfigureNandFlash
+      16  BOARD_ConfigureNorFlash
+     460  BOARD_ConfigureSdram
+      56  BOARD_GetRemap
+      16  BOARD_RemapFlash
+      12  BOARD_RemapRam
+      36  pinsSdram
+
+ 
+  36 bytes in section .rodata
+ 696 bytes in section .text
+ 
+ 696 bytes of CODE  memory
+  36 bytes of CONST memory
+
+Errors: none
+Warnings: 1

@@ -1,0 +1,323 @@
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-5 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-5-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder(2)/decoder.xst" -ofn "E:/_CPLD/LIC/decoder(2)/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder(2)/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 
+xst -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -ifn "E:/_CPLD/LIC/decoder/decoder.xst" -ofn "E:/_CPLD/LIC/decoder/decoder.syr" 
+ngdbuild -ise "decoder.ise" -intstyle ise -dd _ngo -i -p xc9536xl-VQ44-10 decoder.ngc decoder.ngd  
+cpldfit -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -p xc9536xl-10-VQ44 -ofmt vhdl -optimize speed -htmlrpt -loc on -slew fast -init low -inputs 54 -pterms 25 -unused float -power std -terminate keeper decoder.ngd 
+XSLTProcess -ise "E:/_CPLD/LIC/decoder/decoder.ise" decoder_build.xml 
+tsim -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise decoder decoder.nga 
+taengine -ise "E:/_CPLD/LIC/decoder/decoder.ise" -intstyle ise -f decoder -w --format html1 -l decoder_html/tim/timing_report.htm 
+hprep6 -ise "E:/_CPLD/LIC/decoder/decoder.ise" -s IEEE1149 -n decoder -i decoder 

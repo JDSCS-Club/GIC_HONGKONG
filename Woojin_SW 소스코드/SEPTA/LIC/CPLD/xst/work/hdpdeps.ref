@@ -1,0 +1,8 @@
+V3 4
+FL E:/_CPLD/LIC/decoder(2)/decoder.vhd 2010/03/03.13:56:10 L.68
+FL E:/_CPLD/LIC/decoder/decoder.vhd 2010/03/19.08:34:43 L.68
+EN work/decoder 1268955288 FL E:/_CPLD/LIC/decoder/decoder.vhd \
+      PB ieee/std_logic_1164 1258431800 PB ieee/std_logic_arith 1258431801 \
+      PB ieee/STD_LOGIC_UNSIGNED 1258431802
+AR work/decoder/Behavioral 1268955289 \
+      FL E:/_CPLD/LIC/decoder/decoder.vhd EN work/decoder 1268955288

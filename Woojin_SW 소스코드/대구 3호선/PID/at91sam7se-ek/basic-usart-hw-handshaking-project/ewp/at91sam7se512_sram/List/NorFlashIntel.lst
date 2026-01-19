@@ -1,0 +1,898 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:37 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\norflash\NorFlashIntel.c     #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\norflash\NorFlashIntel.c"    #
+#                    -D at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\NorFlashIntel.lst        #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\NorFlashIntel.o           #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\norflash\NorFlashIntel.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          #include "NorFlashCFI.h"
+     34          #include "NorFlashCommon.h"
+     35          #include <utility/trace.h>
+     36          #include <string.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //        Local defination
+     40          //------------------------------------------------------------------------------
+     41           
+     42          /// Command for vendor command set CMD_SET_INTEL. Device commands are written 
+     43          /// to the Command User Interface (CUI) to control all flash memory device operations.
+     44          #define INTEL_CMD_IDIN             0x0090
+     45          #define INTEL_CMD_BLOCK_ERASE_1    0x0020
+     46          #define INTEL_CMD_BLOCK_ERASE_2    0x00D0
+     47          #define INTEL_CMD_READ_STATUS      0x0070
+     48          #define INTEL_CMD_CLEAR_STATUS     0x0050
+     49          #define INTEL_CMD_BLOCK_LOCKSTART  0x0060
+     50          #define INTEL_CMD_BLOCK_LOCK       0x0001
+     51          #define INTEL_CMD_BLOCK_UNLOCK     0x00D0
+     52          #define INTEL_CMD_BLOCK_LOCKDOWN   0x002F
+     53          #define INTEL_CMD_PROGRAM_WORD     0x0010
+     54          #define INTEL_CMD_RESET            0x00FF
+     55          
+     56          
+     57          /// Intel norflash status resgister
+     58          #define INTEL_STATUS_DWS    0x80
+     59          #define INTEL_STATUS_ESS    0x40
+     60          #define INTEL_STATUS_ES     0x20
+     61          #define INTEL_STATUS_PS     0x10
+     62          #define INTEL_STATUS_VPPS   0x08
+     63          #define INTEL_STATUS_PSS    0x04
+     64          #define INTEL_STATUS_BLS    0x02
+     65          #define INTEL_STATUS_BWS    0x01
+     66          
+     67          /// Intel norflash device Identifier infomation address offset.
+     68          #define INTEL_MANU_ID       0x00
+     69          #define INTEL_DEVIDE_ID     0x01
+     70          #define INTEL_LOCKSTATUS    0x02
+     71          
+     72          /// Intel norflash device lock status.
+     73          #define INTEL_LOCKSTATUS_LOCKED         0x01
+     74          #define INTEL_LOCKSTATUS_LOCKDOWNED     0x02
+     75          
+     76          //------------------------------------------------------------------------------
+     77          //         Local functions
+     78          //------------------------------------------------------------------------------
+     79          
+     80          //------------------------------------------------------------------------------
+     81          /// It implements a RESET command.
+     82          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+     83          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     84          void intel_Reset(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+     85          {
+   \                     intel_Reset:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+     86              unsigned int busAddress;
+     87              unsigned int busWidth;
+     88              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000010   0xE1A06000         MOV      R6,R0
+     89              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo, address);
+   \   00000014   0xE1A01005         MOV      R1,R5
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       NorFlash_GetAddressInChip
+     90              WriteCommand(busWidth, busAddress, INTEL_CMD_RESET);
+   \   00000020   0xE3A020FF         MOV      R2,#+255
+   \   00000024   0xE1A01000         MOV      R1,R0
+   \   00000028   0xE1A00006         MOV      R0,R6
+   \   0000002C   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000030   0x........         B        WriteCommand     ;; tailcall
+     91          }
+     92          
+     93          
+     94          //------------------------------------------------------------------------------
+     95          /// The Read Device Identifier command instructs the device to output manufacturer
+     96          /// code, device identifier code, block-lock status, protection register data, 
+     97          /// or configuration register data by giving offset.
+     98          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+     99          /// \param offset 0: Identifier address offset.
+    100          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    101          unsigned int intel_ReadIdentification(
+    102              struct NorFlashInfo *pNorFlashInfo, 
+    103              unsigned int offset)
+    104          {
+   \                     intel_ReadIdentification:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    105              unsigned int data;
+    106              unsigned char busWidth;
+    107              unsigned int address;
+    108              
+    109              // Issue Read Array Command - just in case that the flash is not in Read Array mode 
+    110              intel_Reset(pNorFlashInfo, 0);    
+   \   00000010   0xE3A01000         MOV      R1,#+0
+   \   00000014   0x........         BL       intel_Reset
+    111              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000020   0xE1A06000         MOV      R6,R0
+    112              address = NorFlash_GetAddressInChip(pNorFlashInfo, offset);
+   \   00000024   0xE1A01005         MOV      R1,R5
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       NorFlash_GetAddressInChip
+   \   00000030   0xE1A05000         MOV      R5,R0
+    113              // Issue the Read Device Identifier command at specified address.
+    114              WriteCommand(busWidth, address, INTEL_CMD_IDIN);
+   \   00000034   0xE3A02090         MOV      R2,#+144
+   \   00000038   0xE1A01005         MOV      R1,R5
+   \   0000003C   0xE1A00006         MOV      R0,R6
+   \   00000040   0x........         BL       WriteCommand
+    115              ReadRawData(busWidth, address, (unsigned char*)&data);
+   \   00000044   0xE1A0200D         MOV      R2,SP
+   \   00000048   0xE1A01005         MOV      R1,R5
+   \   0000004C   0xE1A00006         MOV      R0,R6
+   \   00000050   0x........         BL       ReadRawData
+    116              
+    117              intel_Reset(pNorFlashInfo, 0);
+   \   00000054   0xE3A01000         MOV      R1,#+0
+   \   00000058   0xE1A00004         MOV      R0,R4
+   \   0000005C   0x........         BL       intel_Reset
+    118              return data;
+   \   00000060   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000064   0xE8BD4076         POP      {R1,R2,R4-R6,LR}
+   \   00000068   0xE12FFF1E         BX       LR               ;; return
+    119          }
+    120          
+    121          
+    122          //------------------------------------------------------------------------------
+    123          /// Return the status register value.
+    124          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    125          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    126          unsigned char intel_ReadStatus(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+    127          {
+   \                     intel_ReadStatus:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    128              unsigned int status;
+    129              unsigned char busWidth;
+    130              unsigned int budAddress;
+    131              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000010   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000014   0xE1A06000         MOV      R6,R0
+    132              
+    133              // Issue the Read Status Register command at any address.
+    134              budAddress = NorFlash_GetAddressInChip(pNorFlashInfo, address), 
+    135              WriteCommand(busWidth, budAddress, INTEL_CMD_READ_STATUS);
+   \   00000018   0xE1A01005         MOV      R1,R5
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0x........         BL       NorFlash_GetAddressInChip
+   \   00000024   0xE1A04000         MOV      R4,R0
+   \   00000028   0xE3A02070         MOV      R2,#+112
+   \   0000002C   0xE1A01004         MOV      R1,R4
+   \   00000030   0xE1A00006         MOV      R0,R6
+   \   00000034   0x........         BL       WriteCommand
+    136              ReadRawData(busWidth, budAddress, (unsigned char*)&status);
+   \   00000038   0xE1A0200D         MOV      R2,SP
+   \   0000003C   0xE1A01004         MOV      R1,R4
+   \   00000040   0xE1A00006         MOV      R0,R6
+   \   00000044   0x........         BL       ReadRawData
+    137              return status;
+   \   00000048   0xE59D0000         LDR      R0,[SP, #+0]
+   \   0000004C   0xE20000FF         AND      R0,R0,#0xFF
+   \   00000050   0xE8BD4076         POP      {R1,R2,R4-R6,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    138          }
+    139          
+    140          //------------------------------------------------------------------------------
+    141          /// Clear the status register.
+    142          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    143          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    144          void intel_ClearStatus(struct NorFlashInfo *pNorFlashInfo)
+    145          {
+   \                     intel_ClearStatus:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    146              unsigned char busWidth;
+    147              unsigned int address;
+    148              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000008   0x........         BL       NorFlash_GetDataBusWidth
+   \   0000000C   0xE1A05000         MOV      R5,R0
+    149              
+    150              // Issue the Clear Status Register command at any address
+    151              address = NorFlash_GetAddressInChip(pNorFlashInfo, 0), 
+    152              WriteCommand(busWidth, address, INTEL_CMD_CLEAR_STATUS);
+   \   00000010   0xE3A01000         MOV      R1,#+0
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       NorFlash_GetAddressInChip
+   \   0000001C   0xE3A02050         MOV      R2,#+80
+   \   00000020   0xE1A01000         MOV      R1,R0
+   \   00000024   0xE1A00005         MOV      R0,R5
+   \   00000028   0xE8BD4038         POP      {R3-R5,LR}
+   \   0000002C   0x........         B        WriteCommand     ;; tailcall
+    153          }
+    154          
+    155          //------------------------------------------------------------------------------
+    156          /// Unlocks the specified block of the device. 
+    157          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    158          /// \param address Address in sector.
+    159          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    160          void intel_UnlockSector(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+    161          {
+   \                     intel_UnlockSector:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    162              unsigned int busAddress;
+    163              unsigned char busWidth;
+    164               // Issue Read Array Command - just in case that the flash is not in Read Array mode 
+    165              intel_Reset(pNorFlashInfo, 0);    
+   \   0000000C   0xE3A01000         MOV      R1,#+0
+   \   00000010   0x........         BL       intel_Reset
+    166              // Clear the status register first.
+    167             
+    168              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       NorFlash_GetDataBusWidth
+   \   0000001C   0xE1A06000         MOV      R6,R0
+    169              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo,address);
+   \   00000020   0xE1A01005         MOV      R1,R5
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       NorFlash_GetAddressInChip
+   \   0000002C   0xE1A05000         MOV      R5,R0
+    170              
+    171              WriteCommand(busWidth, busAddress, INTEL_CMD_BLOCK_LOCKSTART);
+   \   00000030   0xE3A02060         MOV      R2,#+96
+   \   00000034   0xE1A01005         MOV      R1,R5
+   \   00000038   0xE1A00006         MOV      R0,R6
+   \   0000003C   0x........         BL       WriteCommand
+    172              WriteCommand(busWidth, busAddress, INTEL_CMD_BLOCK_UNLOCK);
+   \   00000040   0xE3A020D0         MOV      R2,#+208
+   \   00000044   0xE1A01005         MOV      R1,R5
+   \   00000048   0xE1A00006         MOV      R0,R6
+   \   0000004C   0x........         BL       WriteCommand
+    173              intel_Reset(pNorFlashInfo, 0);
+   \   00000050   0xE3A01000         MOV      R1,#+0
+   \   00000054   0xE1A00004         MOV      R0,R4
+   \   00000058   0xE8BD4070         POP      {R4-R6,LR}
+   \   0000005C   0x........         B        intel_Reset      ;; tailcall
+    174          }
+    175          
+    176          //------------------------------------------------------------------------------
+    177          /// The Read Device Identifier command instructs the device to output block-lock 
+    178          /// status.
+    179          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    180          /// \param address 0: Address in sector/block.
+    181          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    182          unsigned int intel_GetBlockLockStatus(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+    183          {
+   \                     intel_GetBlockLockStatus:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    184              return intel_ReadIdentification(pNorFlashInfo, (address + NorFlash_GetByteAddress(pNorFlashInfo ,INTEL_LOCKSTATUS)));
+   \   0000000C   0xE3A01002         MOV      R1,#+2
+   \   00000010   0x........         BL       NorFlash_GetByteAddress
+   \   00000014   0xE0801005         ADD      R1,R0,R5
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0xE8BD4034         POP      {R2,R4,R5,LR}
+   \   00000020   0x........         B        intel_ReadIdentification  ;; tailcall
+    185          }
+    186          
+    187          //------------------------------------------------------------------------------
+    188          /// It implement a program word command. Returns 0 if the operation was
+    189          /// successful; otherwise returns an error code.
+    190          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    191          /// \param address Start address offset to be wrote.
+    192          /// \param data word to be written.
+    193          //------------------------------------------------------------------------------    
+
+   \                                 In section .text, align 4, keep-with-next
+    194          unsigned char intel_Program(
+    195              struct NorFlashInfo *pNorFlashInfo,
+    196              unsigned int address,
+    197              unsigned int data
+    198              )
+    199          {
+   \                     intel_Program:
+   \   00000000   0xE92D4076         PUSH     {R1,R2,R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    200              unsigned int status;
+    201              unsigned int datain;
+                                  ^
+Warning[Pe177]: variable "datain" was declared but never referenced
+    202              volatile unsigned int busAddress;
+    203              unsigned char done = 0;
+    204              unsigned char busWidth;
+    205              
+    206              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000010   0xE1A06000         MOV      R6,R0
+    207               // Issue Read Array Command - just in case that the flash is not in Read Array mode 
+    208              intel_Reset(pNorFlashInfo, address);    
+   \   00000014   0xE1A01005         MOV      R1,R5
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       intel_Reset
+    209              
+    210              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo, address);
+   \   00000020   0xE1A01005         MOV      R1,R5
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       NorFlash_GetAddressInChip
+   \   0000002C   0xE58D0000         STR      R0,[SP, #+0]
+    211              /*
+    212              // Check if the data already have been erased.
+    213              ReadRawData(busWidth, busAddress, (unsigned char*)&datain);
+    214              if((datain & data)!= data) {
+    215                  return NorCommon_ERROR_CANNOTWRITE;
+    216              }
+    217              */
+    218              // Word programming operations are initiated by writing the Word Program Setup command to the device.
+    219              WriteCommand(busWidth, busAddress, INTEL_CMD_PROGRAM_WORD);
+   \   00000030   0xE3A02010         MOV      R2,#+16
+   \   00000034   0xE59D1000         LDR      R1,[SP, #+0]
+   \   00000038   0xE1A00006         MOV      R0,R6
+   \   0000003C   0x........         BL       WriteCommand
+    220              // This is followed by a second write to the device with the address and data to be programmed.
+    221              WriteRawData(busWidth, busAddress, (unsigned char*)&data);
+   \   00000040   0xE28D2004         ADD      R2,SP,#+4
+   \   00000044   0xE59D1000         LDR      R1,[SP, #+0]
+   \   00000048   0xE1A00006         MOV      R0,R6
+   \   0000004C   0x........         BL       WriteRawData
+    222              
+    223              // Status register polling 
+    224              do {
+    225                  status = intel_ReadStatus(pNorFlashInfo,address);
+   \                     ??intel_Program_0:
+   \   00000050   0xE1A01005         MOV      R1,R5
+   \   00000054   0xE1A00004         MOV      R0,R4
+   \   00000058   0x........         BL       intel_ReadStatus
+    226                  // Check if the device is ready.
+    227                  if ((status & INTEL_STATUS_DWS) == INTEL_STATUS_DWS ) {
+   \   0000005C   0xE3100080         TST      R0,#0x80
+   \   00000060   0x0AFFFFFA         BEQ      ??intel_Program_0
+    228                      // check if VPP within acceptable limits during program or erase operation.
+    229                      if ((status & INTEL_STATUS_VPPS) == INTEL_STATUS_VPPS ) {
+   \   00000064   0xE310001A         TST      R0,#0x1A
+    230                          return NorCommon_ERROR_CANNOTWRITE;
+    231                      }
+    232                      // Check if the erase block operation is completed. 
+    233                      if ((status & INTEL_STATUS_PS) == INTEL_STATUS_PS ) {
+    234                          return NorCommon_ERROR_CANNOTWRITE;
+    235                      }
+    236                      // check if Block locked during program or erase, operation aborted.
+    237                          else if ((status & INTEL_STATUS_BLS) == INTEL_STATUS_BLS ) {
+    238                              return NorCommon_ERROR_CANNOTWRITE;
+   \   00000068   0x13A00003         MOVNE    R0,#+3
+   \   0000006C   0x1A000005         BNE      ??intel_Program_1
+    239                      }
+    240                      else {
+    241                          done = 1;
+    242                      }
+    243                  }
+    244              } while (!done);
+    245              
+    246              intel_ClearStatus(pNorFlashInfo);
+   \   00000070   0xE1A00004         MOV      R0,R4
+   \   00000074   0x........         BL       intel_ClearStatus
+    247              intel_Reset(pNorFlashInfo, address);
+   \   00000078   0xE1A01005         MOV      R1,R5
+   \   0000007C   0xE1A00004         MOV      R0,R4
+   \   00000080   0x........         BL       intel_Reset
+    248              return 0;
+   \   00000084   0xE3A00000         MOV      R0,#+0
+   \                     ??intel_Program_1:
+   \   00000088   0xE8BD4076         POP      {R1,R2,R4-R6,LR}
+   \   0000008C   0xE12FFF1E         BX       LR               ;; return
+    249          }
+    250          
+    251          //------------------------------------------------------------------------------
+    252          //         Exported functions
+    253          //------------------------------------------------------------------------------
+    254          
+    255          //------------------------------------------------------------------------------
+    256          /// It implements a RESET command.
+    257          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    258          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    259          void INTEL_Reset(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+    260          {
+    261              intel_Reset(pNorFlashInfo, address);
+   \                     INTEL_Reset:
+   \   00000000   0x........         B        intel_Reset      ;; tailcall
+    262          }
+    263          
+    264          //------------------------------------------------------------------------------
+    265          /// The Read Device Identifier command instructs the device to output manufacturer
+    266          /// code.
+    267          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    268          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    269          unsigned int INTEL_ReadManufactoryId(struct NorFlashInfo *pNorFlashInfo)
+    270          {
+    271              return intel_ReadIdentification(pNorFlashInfo, INTEL_MANU_ID);
+   \                     INTEL_ReadManufactoryId:
+   \   00000000   0xE3A01000         MOV      R1,#+0
+   \   00000004   0x........         B        intel_ReadIdentification  ;; tailcall
+    272          }
+    273          
+    274          //------------------------------------------------------------------------------
+    275          /// The Read Device Identifier command instructs the device to output device id.
+    276          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    277          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    278          unsigned int INTEL_ReadDeviceID(struct NorFlashInfo *pNorFlashInfo)
+    279          {
+    280              return intel_ReadIdentification(pNorFlashInfo, INTEL_DEVIDE_ID);
+   \                     INTEL_ReadDeviceID:
+   \   00000000   0xE3A01001         MOV      R1,#+1
+   \   00000004   0x........         B        intel_ReadIdentification  ;; tailcall
+    281          }
+    282          
+    283          //------------------------------------------------------------------------------
+    284          /// Erases the specified block of the device. Returns 0 if the operation was
+    285          /// successful; otherwise returns an error code.
+    286          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    287          /// \param address Address offset to be erase.
+    288          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    289          unsigned char INTEL_EraseSector(
+    290              struct NorFlashInfo *pNorFlashInfo, 
+    291              unsigned int address)
+    292          {
+   \                     INTEL_EraseSector:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    293              unsigned int status;
+    294              unsigned int busAddress;
+    295              unsigned char busWidth;
+    296              unsigned char done = 0;
+    297              
+    298              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000010   0xE1A06000         MOV      R6,R0
+    299               // Issue Read Array Command - just in case that the flash is not in Read Array mode 
+    300              intel_Reset(pNorFlashInfo, address);    
+   \   00000014   0xE1A01005         MOV      R1,R5
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       intel_Reset
+    301             
+    302              // Check the lock status is locked.
+    303              status = intel_GetBlockLockStatus(pNorFlashInfo, address);
+    304              if(( status & INTEL_LOCKSTATUS_LOCKED ) == INTEL_LOCKSTATUS_LOCKED){
+   \   00000020   0xE1A01005         MOV      R1,R5
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       intel_GetBlockLockStatus
+   \   0000002C   0xE3100001         TST      R0,#0x1
+   \   00000030   0x0A000002         BEQ      ??INTEL_EraseSector_0
+    305                  intel_UnlockSector(pNorFlashInfo, address);
+   \   00000034   0xE1A01005         MOV      R1,R5
+   \   00000038   0xE1A00004         MOV      R0,R4
+   \   0000003C   0x........         BL       intel_UnlockSector
+    306              }
+    307              // Clear the status register first.
+    308              intel_ClearStatus(pNorFlashInfo);
+   \                     ??INTEL_EraseSector_0:
+   \   00000040   0xE1A00004         MOV      R0,R4
+   \   00000044   0x........         BL       intel_ClearStatus
+    309              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo,address);
+   \   00000048   0xE1A01005         MOV      R1,R5
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       NorFlash_GetAddressInChip
+   \   00000054   0xE1A07000         MOV      R7,R0
+    310              // Block erase operations are initiated by writing the Block Erase Setup command to the address of the block to be erased.
+    311              WriteCommand(busWidth, busAddress, INTEL_CMD_BLOCK_ERASE_1);
+   \   00000058   0xE3A02020         MOV      R2,#+32
+   \   0000005C   0xE1A01007         MOV      R1,R7
+   \   00000060   0xE1A00006         MOV      R0,R6
+   \   00000064   0x........         BL       WriteCommand
+    312              // Next, the Block Erase Confirm command is written to the address of the block to be erased.
+    313              WriteCommand(busWidth, busAddress, INTEL_CMD_BLOCK_ERASE_2);
+   \   00000068   0xE3A020D0         MOV      R2,#+208
+   \   0000006C   0xE1A01007         MOV      R1,R7
+   \   00000070   0xE1A00006         MOV      R0,R6
+   \   00000074   0x........         BL       WriteCommand
+    314              // Status register polling 
+    315              do {
+    316                  status = intel_ReadStatus(pNorFlashInfo,address);
+   \                     ??INTEL_EraseSector_1:
+   \   00000078   0xE1A01005         MOV      R1,R5
+   \   0000007C   0xE1A00004         MOV      R0,R4
+   \   00000080   0x........         BL       intel_ReadStatus
+    317                  // Check if the device is ready.
+    318                  if ((status & INTEL_STATUS_DWS) == INTEL_STATUS_DWS ) {
+   \   00000084   0xE3100080         TST      R0,#0x80
+   \   00000088   0x0AFFFFFA         BEQ      ??INTEL_EraseSector_1
+    319                      // check if VPP within acceptable limits during program or erase operation.
+    320                      if ((status & INTEL_STATUS_VPPS) == INTEL_STATUS_VPPS ) {
+   \   0000008C   0xE310003A         TST      R0,#0x3A
+   \   00000090   0x0A000004         BEQ      ??INTEL_EraseSector_2
+    321                          intel_Reset(pNorFlashInfo, 0);
+    322                          return NorCommon_ERROR_CANNOTWRITE;
+    323                      }
+    324                      // Check if the erase block operation is completed. 
+    325                      if ((status & INTEL_STATUS_PS) == INTEL_STATUS_PS ) {
+    326                          intel_Reset(pNorFlashInfo, 0);
+    327                          return NorCommon_ERROR_CANNOTWRITE;
+    328                      }
+    329                      // Check if the erase block operation is completed. 
+    330                      if ((status & INTEL_STATUS_ES) == INTEL_STATUS_ES ) {
+    331                          intel_Reset(pNorFlashInfo, 0);
+    332                          return NorCommon_ERROR_CANNOTWRITE;
+    333                      }
+    334                      
+    335                      // check if Block locked during program or erase, operation aborted.
+    336                          else if ((status & INTEL_STATUS_BLS) == INTEL_STATUS_BLS ) {
+    337                              intel_Reset(pNorFlashInfo, 0);
+   \   00000094   0xE3A01000         MOV      R1,#+0
+   \   00000098   0xE1A00004         MOV      R0,R4
+   \   0000009C   0x........         BL       intel_Reset
+    338                              return NorCommon_ERROR_CANNOTWRITE;
+   \   000000A0   0xE3A00003         MOV      R0,#+3
+   \   000000A4   0xEA000003         B        ??INTEL_EraseSector_3
+    339                      }
+    340                      else {
+    341                          done = 1;
+    342                      }
+    343                  }
+    344              } while (!done);
+    345              intel_Reset(pNorFlashInfo, address);
+   \                     ??INTEL_EraseSector_2:
+   \   000000A8   0xE1A01005         MOV      R1,R5
+   \   000000AC   0xE1A00004         MOV      R0,R4
+   \   000000B0   0x........         BL       intel_Reset
+    346              return 0;
+   \   000000B4   0xE3A00000         MOV      R0,#+0
+   \                     ??INTEL_EraseSector_3:
+   \   000000B8   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   000000BC   0xE12FFF1E         BX       LR               ;; return
+    347          }
+    348          
+    349          //------------------------------------------------------------------------------
+    350          /// Erases all the block of the device. Returns 0 if the operation was successful;
+    351          /// otherwise returns an error code.
+    352          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    353          //------------------------------------------------------------------------------
+    354          
+
+   \                                 In section .text, align 4, keep-with-next
+    355          unsigned char INTEL_EraseChip(struct NorFlashInfo *pNorFlashInfo)
+    356          {
+   \                     INTEL_EraseChip:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    357              // Interl flash have no independent Chip-erase command.
+    358              unsigned int i;
+    359              unsigned int sectors;
+    360              sectors = NorFlash_GetDeviceNumOfBlocks(pNorFlashInfo);
+   \   00000008   0x........         BL       NorFlash_GetDeviceNumOfBlocks
+   \   0000000C   0xE1B05000         MOVS     R5,R0
+    361              for (i = 0; i < sectors; i++) {
+   \   00000010   0xE3A06000         MOV      R6,#+0
+   \   00000014   0x0A00000B         BEQ      ??INTEL_EraseChip_0
+    362                  if (INTEL_EraseSector(pNorFlashInfo, NorFlash_GetDeviceSectorAddress(pNorFlashInfo, i))) {
+   \                     ??INTEL_EraseChip_1:
+   \   00000018   0xE1A01006         MOV      R1,R6
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0x........         BL       NorFlash_GetDeviceSectorAddress
+   \   00000024   0xE1A01000         MOV      R1,R0
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       INTEL_EraseSector
+   \   00000030   0xE3500000         CMP      R0,#+0
+    363                      return NorCommon_ERROR_CANNOTERASE;
+   \   00000034   0x13A00004         MOVNE    R0,#+4
+   \   00000038   0x1A000003         BNE      ??INTEL_EraseChip_2
+    364                  }
+    365              }
+   \   0000003C   0xE2866001         ADD      R6,R6,#+1
+   \   00000040   0xE1560005         CMP      R6,R5
+   \   00000044   0x3AFFFFF3         BCC      ??INTEL_EraseChip_1
+    366              return 0;
+   \                     ??INTEL_EraseChip_0:
+   \   00000048   0xE3A00000         MOV      R0,#+0
+   \                     ??INTEL_EraseChip_2:
+   \   0000004C   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000050   0xE12FFF1E         BX       LR               ;; return
+    367          }
+    368          
+    369          //------------------------------------------------------------------------------
+    370          /// Sends data to the struct NorFlashInfo chip from the provided buffer.
+    371          /// \param pNorFlashInfo  Pointer to an struct NorFlashInfo instance.
+    372          /// \param address Start address offset to be wrote.
+    373          /// \param buffer Buffer where the data is stored.
+    374          /// \param size Number of bytes that will be written.
+    375          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    376          unsigned char INTEL_Write_Data(
+    377              struct NorFlashInfo *pNorFlashInfo,
+    378              unsigned int address,
+    379              unsigned char *buffer,
+    380              unsigned int size)
+    381          {
+   \                     INTEL_Write_Data:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+   \   00000010   0xE1A07003         MOV      R7,R3
+    382              unsigned int i;
+    383              unsigned char busWidth;
+    384              
+    385              busWidth = pNorFlashInfo->deviceChipWidth;
+   \   00000014   0xE5D40004         LDRB     R0,[R4, #+4]
+    386              if (busWidth == FLASH_CHIP_WIDTH_8BITS ){ 
+   \   00000018   0xE3500001         CMP      R0,#+1
+   \   0000001C   0x1A00000D         BNE      ??INTEL_Write_Data_0
+    387                  for(i=0; i < size; i++) {
+   \   00000020   0xE3A08000         MOV      R8,#+0
+   \   00000024   0xE3570000         CMP      R7,#+0
+   \   00000028   0x0A00002D         BEQ      ??INTEL_Write_Data_1
+    388                      if(intel_Program(pNorFlashInfo, address, buffer[i])) {
+   \                     ??INTEL_Write_Data_2:
+   \   0000002C   0xE4D62001         LDRB     R2,[R6], #+1
+   \   00000030   0xE1A01005         MOV      R1,R5
+   \   00000034   0xE1A00004         MOV      R0,R4
+   \   00000038   0x........         BL       intel_Program
+   \   0000003C   0xE3500000         CMP      R0,#+0
+   \   00000040   0x1A000021         BNE      ??INTEL_Write_Data_3
+    389                          return NorCommon_ERROR_CANNOTWRITE;
+    390                      }
+    391                      address ++;
+   \   00000044   0xE2855001         ADD      R5,R5,#+1
+    392                  }
+   \   00000048   0xE2888001         ADD      R8,R8,#+1
+   \   0000004C   0xE1580007         CMP      R8,R7
+   \   00000050   0x3AFFFFF5         BCC      ??INTEL_Write_Data_2
+   \   00000054   0xEA000022         B        ??INTEL_Write_Data_1
+    393              }
+    394              else if( busWidth == FLASH_CHIP_WIDTH_16BITS ){
+   \                     ??INTEL_Write_Data_0:
+   \   00000058   0xE3500002         CMP      R0,#+2
+   \   0000005C   0x1A00000E         BNE      ??INTEL_Write_Data_4
+    395                  unsigned short *buffer16 = (unsigned short *) buffer;
+    396                  size = (size + 1) >> 1;
+   \   00000060   0xE2870001         ADD      R0,R7,#+1
+   \   00000064   0xE1B070A0         LSRS     R7,R0,#+1
+    397                  for(i=0; i < size; i++) {
+   \   00000068   0xE3A08000         MOV      R8,#+0
+   \   0000006C   0x0A00001C         BEQ      ??INTEL_Write_Data_1
+    398                      
+    399                      if(intel_Program(pNorFlashInfo, address, buffer16[i])){
+   \                     ??INTEL_Write_Data_5:
+   \   00000070   0xE0D620B2         LDRH     R2,[R6], #+2
+   \   00000074   0xE1A01005         MOV      R1,R5
+   \   00000078   0xE1A00004         MOV      R0,R4
+   \   0000007C   0x........         BL       intel_Program
+   \   00000080   0xE3500000         CMP      R0,#+0
+   \   00000084   0x1A000010         BNE      ??INTEL_Write_Data_3
+    400                          return NorCommon_ERROR_CANNOTWRITE;
+    401                      }
+    402                      address+= 2;
+   \   00000088   0xE2855002         ADD      R5,R5,#+2
+    403                  }
+   \   0000008C   0xE2888001         ADD      R8,R8,#+1
+   \   00000090   0xE1580007         CMP      R8,R7
+   \   00000094   0x3AFFFFF5         BCC      ??INTEL_Write_Data_5
+   \   00000098   0xEA000011         B        ??INTEL_Write_Data_1
+    404              }
+    405              else if(busWidth == FLASH_CHIP_WIDTH_32BITS ){
+   \                     ??INTEL_Write_Data_4:
+   \   0000009C   0xE3500004         CMP      R0,#+4
+   \   000000A0   0x1A00000F         BNE      ??INTEL_Write_Data_1
+    406                  unsigned int *buffer32 = (unsigned int *) buffer;
+    407                  size = (size + 3) >> 2;
+   \   000000A4   0xE2870003         ADD      R0,R7,#+3
+   \   000000A8   0xE1B07120         LSRS     R7,R0,#+2
+    408                  for(i=0; i < size; i++) {
+   \   000000AC   0xE3A08000         MOV      R8,#+0
+   \   000000B0   0x0A00000B         BEQ      ??INTEL_Write_Data_1
+    409                      if(intel_Program(pNorFlashInfo, address, buffer32[i])){
+   \                     ??INTEL_Write_Data_6:
+   \   000000B4   0xE4962004         LDR      R2,[R6], #+4
+   \   000000B8   0xE1A01005         MOV      R1,R5
+   \   000000BC   0xE1A00004         MOV      R0,R4
+   \   000000C0   0x........         BL       intel_Program
+   \   000000C4   0xE3500000         CMP      R0,#+0
+   \   000000C8   0x0A000001         BEQ      ??INTEL_Write_Data_7
+    410                          return NorCommon_ERROR_CANNOTWRITE;
+   \                     ??INTEL_Write_Data_3:
+   \   000000CC   0xE3A00003         MOV      R0,#+3
+   \   000000D0   0xEA000004         B        ??INTEL_Write_Data_8
+    411                      }
+    412                      address+= 4;
+   \                     ??INTEL_Write_Data_7:
+   \   000000D4   0xE2855004         ADD      R5,R5,#+4
+    413                  }
+   \   000000D8   0xE2888001         ADD      R8,R8,#+1
+   \   000000DC   0xE1580007         CMP      R8,R7
+   \   000000E0   0x3AFFFFF3         BCC      ??INTEL_Write_Data_6
+    414              }
+    415              return 0;
+   \                     ??INTEL_Write_Data_1:
+   \   000000E4   0xE3A00000         MOV      R0,#+0
+   \                     ??INTEL_Write_Data_8:
+   \   000000E8   0xE8BD41F0         POP      {R4-R8,LR}
+   \   000000EC   0xE12FFF1E         BX       LR               ;; return
+    416          }
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       16  INTEL_EraseChip
+             16 -> INTEL_EraseSector
+             16 -> NorFlash_GetDeviceNumOfBlocks
+             16 -> NorFlash_GetDeviceSectorAddress
+       24  INTEL_EraseSector
+             24 -> NorFlash_GetAddressInChip
+             24 -> NorFlash_GetDataBusWidth
+             24 -> WriteCommand
+             24 -> intel_ClearStatus
+             24 -> intel_GetBlockLockStatus
+             24 -> intel_ReadStatus
+             24 -> intel_Reset
+             24 -> intel_UnlockSector
+        0  INTEL_ReadDeviceID
+              0 -> intel_ReadIdentification
+        0  INTEL_ReadManufactoryId
+              0 -> intel_ReadIdentification
+        0  INTEL_Reset
+              0 -> intel_Reset
+       24  INTEL_Write_Data
+             24 -> intel_Program
+       16  intel_ClearStatus
+             16 -> NorFlash_GetAddressInChip
+             16 -> NorFlash_GetDataBusWidth
+              0 -> WriteCommand
+       16  intel_GetBlockLockStatus
+             16 -> NorFlash_GetByteAddress
+              0 -> intel_ReadIdentification
+       24  intel_Program
+             24 -> NorFlash_GetAddressInChip
+             24 -> NorFlash_GetDataBusWidth
+             24 -> WriteCommand
+             24 -> WriteRawData
+             24 -> intel_ClearStatus
+             24 -> intel_ReadStatus
+             24 -> intel_Reset
+       24  intel_ReadIdentification
+             24 -> NorFlash_GetAddressInChip
+             24 -> NorFlash_GetDataBusWidth
+             24 -> ReadRawData
+             24 -> WriteCommand
+             24 -> intel_Reset
+       24  intel_ReadStatus
+             24 -> NorFlash_GetAddressInChip
+             24 -> NorFlash_GetDataBusWidth
+             24 -> ReadRawData
+             24 -> WriteCommand
+       16  intel_Reset
+             16 -> NorFlash_GetAddressInChip
+             16 -> NorFlash_GetDataBusWidth
+              0 -> WriteCommand
+       16  intel_UnlockSector
+             16 -> NorFlash_GetAddressInChip
+             16 -> NorFlash_GetDataBusWidth
+             16 -> WriteCommand
+              0 -> intel_Reset
+             16 -> intel_Reset
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      84  INTEL_EraseChip
+     192  INTEL_EraseSector
+       8  INTEL_ReadDeviceID
+       8  INTEL_ReadManufactoryId
+       4  INTEL_Reset
+     240  INTEL_Write_Data
+      48  intel_ClearStatus
+      36  intel_GetBlockLockStatus
+     144  intel_Program
+     108  intel_ReadIdentification
+      88  intel_ReadStatus
+      52  intel_Reset
+      96  intel_UnlockSector
+
+ 
+ 1 108 bytes in section .text
+ 
+ 1 108 bytes of CODE memory
+
+Errors: none
+Warnings: 1

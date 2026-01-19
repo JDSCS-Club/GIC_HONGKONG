@@ -1,0 +1,192 @@
+*****************************************************
+TMS320C3x/4x COFF Linker        Version 4.70
+*****************************************************
+Thu May 12 19:38:09 2005
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00700001
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         SRAM      00700000  00000e000  00006097     RWIX      
+         IRAM      0087fe10  0000001f0  00000000     RWIX      
+         FROM      00900000  000080000  00000000     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00700000    000000b0     
+                  00700000    00000001     start.obj (.text)
+                  00700001    0000001b     rts30.lib : boot.obj (.text)
+                  0070001c    00000022               : modi.obj (.text)
+                  0070003e    0000002a               : modu.obj (.text)
+                  00700068    00000026               : exit.obj (.text)
+                  0070008e    00000012               : memcpy.obj (.text)
+                  007000a0    00000010               : memset.obj (.text)
+
+.text      0    007000b0    0000094f     
+                  007000b0    0000094f     main.obj (.text)
+
+.cinit     0    007009ff    00000242     
+                  007009ff    0000023b     main.obj (.cinit)
+                  00700c3a    00000006     rts30.lib : exit.obj (.cinit)
+                  00700c40    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    00700c41    00000019     
+                  00700c41    00000019     main.obj (.const)
+
+.data      0    00700000    00000000     UNINITIALIZED
+                  00700000    00000000     start.obj (.data)
+                  00700000    00000000     rts30.lib : memset.obj (.data)
+                  00700000    00000000               : memcpy.obj (.data)
+                  00700000    00000000               : exit.obj (.data)
+                  00700000    00000000               : modu.obj (.data)
+                  00700000    00000000               : modi.obj (.data)
+                  00700000    00000000               : boot.obj (.data)
+                  00700000    00000000     main.obj (.data)
+
+.stack     0    00700c5a    00004000     UNINITIALIZED
+                  00700c5a    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00704c5a    0000143d     UNINITIALIZED
+                  00704c5a    00000000     start.obj (.bss)
+                  00704c5a    00000000     rts30.lib : memset.obj (.bss)
+                  00704c5a    00000000               : memcpy.obj (.bss)
+                  00704c5a    00000000               : modu.obj (.bss)
+                  00704c5a    00000000               : modi.obj (.bss)
+                  00704c5a    00000000               : boot.obj (.bss)
+                  00704c5a    0000141b     main.obj (.bss)
+                  00706075    00000022     rts30.lib : exit.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00704c5a .bss                             00004000 __STACK_SIZE
+00700000 .data                            00700000 edata
+007000b0 .text                            00700000 .data
+0070001c MOD_I30                          00700001 _c_int00
+0070003e MOD_U30                          0070001c MOD_I30
+007005df _BIT_OPE                         0070003e MOD_U30
+0070082a _CHECK_TEST                      00700068 _exit
+00704d92 _CHH                             00700076 _atexit
+00704d91 _CH                              00700089 _abort
+00704d89 _COUNT                           0070008e _memcpy
+00704c5a _CRC_Table                       007000a0 _memset
+00704dbc _Check_Blink                     007000b0 .text
+00704db9 _Check_CLK                       007000b0 _c_int06
+00704dbb _Check_NOUT                      007000fd _Debug3xInit
+00704dba _Check_OUT                       00700124 _FlashBusyWait
+00704d5c _DATA_LEN                        00700129 _GetFlashId
+00700568 _DSP_INIT                        00700147 _FlashPageRead
+007000fd _Debug3xInit                     00700171 _GetLirAdrImg
+00704d99 _ER_END                          007001a7 _FlashPageWrite
+00704d98 _ER_START                        007001f2 _FlashErase
+00700124 _FlashBusyWait                   0070022b _NorFlashAllErase
+007001f2 _FlashErase                      00700237 _NorFlashBlockErase
+00700147 _FlashPageRead                   0070024d _NorFlashWrite
+007001a7 _FlashPageWrite                  00700266 _SCC_8530_Initial
+00704dbd _GREEN_Flag                      007002a6 _SCC2_SendTo
+0070085a _GREEN_RED_FLAG                  007002f7 _SCC_ISR
+00704dbe _GREEN_RED_FLAG_Time             0070039f _LdmLatchClk
+00700129 _GetFlashId                      007003a9 _main
+00700171 _GetLirAdrImg                    0070049a _NORFLASH_MEMORY
+0070075c _HEX_SWITCH                      007004ce _JUMPDOWLOAD
+00704d8a _HI_SEND                         007004d3 _START_CHAK_DATA
+00704db7 _Hex_Pri_T_F                     00700558 _STATION_DB
+00704dc0 _Hex_Pri_Tim                     00700568 _DSP_INIT
+00700660 _ImageMake                       0070059a _IsBCCOK
+0070059a _IsBCCOK                         007005c2 _cal_CRC16
+007004ce _JUMPDOWLOAD                     007005df _BIT_OPE
+00704d8b _LOW_SEND                        00700621 _SEND_DATA
+0070039f _LdmLatchClk                     00700660 _ImageMake
+0070049a _NORFLASH_MEMORY                 00700701 _PATTREN
+00705c06 _NOR_VAL                         00700746 _RTS
+00704d85 _NUM_HI                          0070075c _HEX_SWITCH
+00704d8d _NUM_TX_DATA                     00700805 _ONTD
+0070022b _NorFlashAllErase                0070082a _CHECK_TEST
+00700237 _NorFlashBlockErase              0070085a _GREEN_RED_FLAG
+0070024d _NorFlashWrite                   00700893 _PATTREN_MOVE_VALUE
+00704db4 _Nor_Cou                         007008e5 _c_int02
+00704db6 _Nor_Jump                        0070091c _c_int12
+00704db5 _Nor_Sav_C                       00700953 _c_int09
+00704db3 _Nor_T_F                         00700993 _c_int10
+00700805 _ONTD                            007009ff cinit
+00700701 _PATTREN                         007009ff etext
+00700893 _PATTREN_MOVE_VALUE              00700c5a __stack
+00704d93 _PAT_COLOR                       00704c5a .bss
+00704dbf _Pattren_inter_time              00704c5a _CRC_Table
+00704d95 _RECEIVECnt                      00704d5a _qqqq
+00700746 _RTS                             00704d5b _gRxComplete
+00704d9a _Re_Pint                         00704d5c _DATA_LEN
+00704d9b _Remember                        00704d5d _cRc
+00704d86 _SAVE_STATION                    00704d5e _gRxPos
+007053e5 _SCC1_Init_AChl                  00704d5f _gRxStTemp
+00705c24 _SCC1_Init_BChl                  00704d60 _SCC_INIT_ASYNC_9600BPS
+007002a6 _SCC2_SendTo                     00704d82 _gSccRxTimeout
+00700266 _SCC_8530_Initial                00704d83 _gDownloadRxBlock
+00704d60 _SCC_INIT_ASYNC_9600BPS          00704d84 _gHexaSw
+007002f7 _SCC_ISR                         00704d85 _NUM_HI
+00700621 _SEND_DATA                       00704d86 _SAVE_STATION
+007057eb _SEND_DATA_BUFF                  00704d87 _nIsPattern
+007004d3 _START_CHAK_DATA                 00704d88 _gOneSec
+00700558 _STATION_DB                      00704d89 _COUNT
+00704d9c _STATION_LIST                    00704d8a _HI_SEND
+00704d8e _TX_DA_ENA_COUNT                 00704d8b _LOW_SEND
+00004000 __STACK_SIZE                     00704d8c _num_TX
+00705c05 __glDebugAddr                    00704d8d _NUM_TX_DATA
+00705c04 __glDebugData                    00704d8e _TX_DA_ENA_COUNT
+00700c5a __stack                          00704d8f _send_glDebugCnt
+00700089 _abort                           00704d90 _glTest
+00700076 _atexit                          00704d91 _CH
+00704d5d _cRc                             00704d92 _CHH
+00700001 _c_int00                         00704d93 _PAT_COLOR
+007008e5 _c_int02                         00704d94 _glDebugCnt
+007000b0 _c_int06                         00704d95 _RECEIVECnt
+00700953 _c_int09                         00704d96 _dkdkd
+00700993 _c_int10                         00704d97 _dddd
+0070091c _c_int12                         00704d98 _ER_START
+007005c2 _cal_CRC16                       00704d99 _ER_END
+00704d97 _dddd                            00704d9a _Re_Pint
+00704d96 _dkdkd                           00704d9b _Remember
+00700068 _exit                            00704d9c _STATION_LIST
+00704fe2 _gDownLoadBuf                    00704db3 _Nor_T_F
+00704d83 _gDownloadRxBlock                00704db4 _Nor_Cou
+00704d84 _gHexaSw                         00704db5 _Nor_Sav_C
+00704d88 _gOneSec                         00704db6 _Nor_Jump
+00704de2 _gRxBuffer                       00704db7 _Hex_Pri_T_F
+00704d5b _gRxComplete                     00704db8 _gpVersion
+007051e3 _gRxExcCode                      00704db9 _Check_CLK
+00704d5e _gRxPos                          00704dba _Check_OUT
+00704d5f _gRxStTemp                       00704dbb _Check_NOUT
+00704d82 _gSccRxTimeout                   00704dbc _Check_Blink
+00704dc1 _gScnPosGray                     00704dbd _GREEN_Flag
+007051e2 _gTextBitLength                  00704dbe _GREEN_RED_FLAG_Time
+00704d94 _glDebugCnt                      00704dbf _Pattren_inter_time
+00704d90 _glTest                          00704dc0 _Hex_Pri_Tim
+00704db8 _gpVersion                       00704dc1 _gScnPosGray
+00706029 _hnumm                           00704de2 _gRxBuffer
+007053e3 _hnum                            00704fe2 _gDownLoadBuf
+007003a9 _main                            007051e2 _gTextBitLength
+0070008e _memcpy                          007051e3 _gRxExcCode
+007000a0 _memset                          007053e3 _hnum
+00705804 _nBuff                           007053e4 _num
+00704d87 _nIsPattern                      007053e5 _SCC1_Init_AChl
+00704d8c _num_TX                          007057ea _numm
+007053e4 _num                             007057eb _SEND_DATA_BUFF
+007057ea _numm                            00705804 _nBuff
+00704d5a _qqqq                            00705c04 __glDebugData
+00704d8f _send_glDebugCnt                 00705c05 __glDebugAddr
+007009ff cinit                            00705c06 _NOR_VAL
+00700000 edata                            00705c24 _SCC1_Init_BChl
+00706097 end                              00706029 _hnumm
+007009ff etext                            00706097 end
+
+[119 symbols]

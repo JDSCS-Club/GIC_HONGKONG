@@ -1,0 +1,2590 @@
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    1
+
+        1                   ;******************************************************************************
+        2                   ;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+        3                   ;* Date/Time created: Fri Sep 17 14:23:57 2010                                *
+        4                   ;******************************************************************************
+        5                           .regalias       ; enable floating point register aliases
+        6          0000000b fp      .set    ar3
+        7          0000000b FP      .set    ar3
+        8                   ;******************************************************************************
+        9                   ;* GLOBAL FILE PARAMETERS                                                     *
+       10                   ;*                                                                            *
+       11                   ;*   Optimization       : Always Choose Smaller Code Size                     *
+       12                   ;*   Memory             : Small Memory Model                                  *
+       13                   ;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+       14                   ;*   Multiply           : in Hardware (24 bits max)                           *
+       15                   ;*   Memory Info        : Unmapped Memory Exists                              *
+       16                   ;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+       17                   ;*   Calls              : Normal Library ASM calls                            *
+       18                   ;*   Debug Info         : Optimized TI Debug Information                      *
+       19                   ;******************************************************************************
+       20                   ;       c:\lang\tms320c3x\511\bin\ac30.exe main.c C:\Users\jds\AppData\Local\Temp\main.if 
+       21                           .file   "main.c"
+       22                           .file   "stdio.h"
+       23                           .sym    _size_t,0,14,13,32
+       24                           .stag   .fake0,224
+       25                           .member _fd,0,4,8,32
+       26                           .member _buf,32,28,8,32
+       27                           .member _pos,64,28,8,32
+       28                           .member _bufend,96,28,8,32
+       29                           .member _buff_stop,128,28,8,32
+       30                           .member _flags,160,14,8,32
+       31                           .member _index,192,4,8,32
+       32                           .eos
+       33                           .sym    _FILE,0,8,13,224,.fake0
+       34                           .sym    _fpos_t,0,5,13,32
+       35                           .stag   .fake1,544
+       36                           .member _name,0,50,8,288,,9
+       37                           .member _flags,288,13,8,32
+       38                           .member _OPEN,320,148,8,32
+       39                           .member _CLOSE,352,148,8,32
+       40                           .member _READ,384,148,8,32
+       41                           .member _WRITE,416,148,8,32
+       42                           .member _LSEEK,448,149,8,32
+       43                           .member _UNLINK,480,148,8,32
+       44                           .member _RENAME,512,148,8,32
+       45                           .eos
+       46                           .sym    __DEVICE,0,8,13,544,.fake1
+       47                           .file   "string.h"
+       48                           .file   "stdarg.h"
+       49                           .sym    _va_list,0,18,13,32
+       50                           .file   "ALL_DEF.h"
+       51                           .sym    _DWORD,0,15,13,32
+       52                           .sym    _USHORT,0,13,13,32
+       53                           .sym    _UCHAR,0,12,13,32
+       54                           .sym    _WORD,0,14,13,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    2
+
+       55                           .file   "debug3x.h"
+       56 00000000                  .sect    ".text"
+       57                   
+       58                           .global _c_int06
+       59                           .sym    _c_int06,_c_int06,32,2,0
+       60                           .func   26
+       61                   ;******************************************************************************
+       62                   ;* FUNCTION NAME: _c_int06                                                    *
+       63                   ;*                                                                            *
+       64                   ;*   Architecture       : TMS320C30                                           *
+       65                   ;*   Calling Convention : Stack Parameter Convention                          *
+       66                   ;*   Function Uses Regs : r0,ar0,st                                           *
+       67                   ;*   Regs Saved         : f0,r0,ar0,pc                                        *
+       68                   ;*   Stack Frame        : Full (w/ debug)                                     *
+       69                   ;*   Total Frame Size   : 2 Call + 0 Parm + 2 Auto + 3 SOE = 7 words          *
+       70                   ;******************************************************************************
+       71 00000000          _c_int06:
+       72                           .sym    _nRXData,1,15,1,32
+       73                           .sym    _nTXData,2,15,1,32
+       74                           .line   1
+       75                   ;----------------------------------------------------------------------
+       76                   ;  26 | void c_int06()                                                         
+       77                   ;  28 | unsigned long nRXData;                                                 
+       78                   ;  29 | unsigned long nTXData;                                                 
+       79                   ;----------------------------------------------------------------------
+       80 00000000 0f350000         push      st
+       81 00000001 0f2b0000         push      fp
+       82 00000002 500b0014         ldiu      sp,fp
+       83 00000003 02740002         addi      2,sp
+       84 00000004 0f200000         push      r0
+       85 00000005 0fa00000         pushf     f0
+       86 00000006 0f280000         push      ar0
+       87                           .line   6
+       88                   ;----------------------------------------------------------------------
+       89                   ;  31 | nRXData = *(unsigned long *)0x80804c;                                  
+       90                   ;  33 | switch(nRXData >> 24)                                                  
+       91                   ;  35 |         case 0x00:                                                     
+       92                   ;----------------------------------------------------------------------
+       93 00000007 6a20001e         bud       L12
+       94 00000008 5028000f-        ldiu      @CL1,ar0
+       95 00000009 5040c000         ldiu      *ar0,r0
+       96 0000000a 15400301         sti       r0,*+fp(1)
+       97                   ;*      Branch Occurs to L12 
+       98 0000000b          L2:        
+       99                           .line   11
+      100                   ;----------------------------------------------------------------------
+      101                   ;  36 | nTXData = *(unsigned long *)nRXData;                                   
+      102                   ;----------------------------------------------------------------------
+      103 0000000b 50480301         ldiu      *+fp(1),ar0
+      104 0000000c 5040c000         ldiu      *ar0,r0
+      105 0000000d 15400302         sti       r0,*+fp(2)
+      106                           .line   12
+      107                   ;----------------------------------------------------------------------
+      108                   ;  37 | break;                                                                 
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    3
+
+      109                   ;  39 | case 0x1D:                                                             
+      110                   ;----------------------------------------------------------------------
+      111 0000000e 6a00002d         bu        L20
+      112                   ;*      Branch Occurs to L20 
+      113 0000000f          L3:        
+      114                           .line   15
+      115                   ;----------------------------------------------------------------------
+      116                   ;  40 | nTXData = DEBUG_3X_ID_VALUE;                                           
+      117                   ;----------------------------------------------------------------------
+      118 0000000f 50200010-        ldiu      @CL2,r0
+      119 00000010 15400302         sti       r0,*+fp(2)
+      120                           .line   16
+      121                   ;----------------------------------------------------------------------
+      122                   ;  41 | break;                                                                 
+      123                   ;  43 | case 0x88:                                                             
+      124                   ;----------------------------------------------------------------------
+      125 00000011 6a00002a         bu        L20
+      126                   ;*      Branch Occurs to L20 
+      127 00000012          L4:        
+      128                           .line   19
+      129                   ;----------------------------------------------------------------------
+      130                   ;  44 | nTXData = 0x12345678;                                                  
+      131                   ;----------------------------------------------------------------------
+      132 00000012 50200010-        ldiu      @CL2,r0
+      133 00000013 15400302         sti       r0,*+fp(2)
+      134                           .line   20
+      135                   ;----------------------------------------------------------------------
+      136                   ;  45 | break;                                                                 
+      137                   ;  47 | case 0xAD:                                                             
+      138                   ;----------------------------------------------------------------------
+      139 00000014 6a000027         bu        L20
+      140                   ;*      Branch Occurs to L20 
+      141 00000015          L5:        
+      142                           .line   23
+      143                   ;----------------------------------------------------------------------
+      144                   ;  48 | _glDebugAddr = nRXData & 0xffffff;                                     
+      145                   ;----------------------------------------------------------------------
+      146 00000015 50200011-        ldiu      @CL3,r0
+      147 00000016 02c00301         and       *+fp(1),r0
+      148 00000017 1520000e-        sti       r0,@__glDebugAddr+0
+      149                           .line   24
+      150                   ;----------------------------------------------------------------------
+      151                   ;  49 | nTXData = _glDebugAddr;                                                
+      152                   ;----------------------------------------------------------------------
+      153 00000018 15400302         sti       r0,*+fp(2)
+      154                           .line   25
+      155                   ;----------------------------------------------------------------------
+      156                   ;  50 | break;                                                                 
+      157                   ;  52 | case 0xD1:                                                             
+      158                   ;----------------------------------------------------------------------
+      159 00000019 6a000022         bu        L20
+      160                   ;*      Branch Occurs to L20 
+      161 0000001a          L6:        
+      162                           .line   28
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    4
+
+      163                   ;----------------------------------------------------------------------
+      164                   ;  53 | _glDebugData = (nRXData << 16) & 0xffff0000;                           
+      165                   ;----------------------------------------------------------------------
+      166 0000001a 50400301         ldiu      *+fp(1),r0
+      167 0000001b 03e00010         ash       16,r0
+      168 0000001c 0360ffff         andn      65535,r0
+      169 0000001d 1520000d-        sti       r0,@__glDebugData+0
+      170                           .line   29
+      171                   ;----------------------------------------------------------------------
+      172                   ;  54 | nTXData = _glDebugData;                                                
+      173                   ;----------------------------------------------------------------------
+      174 0000001e 15400302         sti       r0,*+fp(2)
+      175                           .line   30
+      176                   ;----------------------------------------------------------------------
+      177                   ;  55 | break;                                                                 
+      178                   ;  57 | case 0xD0:                                                             
+      179                   ;----------------------------------------------------------------------
+      180 0000001f 6a00001c         bu        L20
+      181                   ;*      Branch Occurs to L20 
+      182 00000020          L7:        
+      183                           .line   33
+      184                   ;----------------------------------------------------------------------
+      185                   ;  58 | _glDebugData |= (nRXData & 0xffff);                                    
+      186                   ;----------------------------------------------------------------------
+      187 00000020 50400301         ldiu      *+fp(1),r0
+      188 00000021 02e0ffff         and       65535,r0
+      189 00000022 1020000d-        or        @__glDebugData+0,r0
+      190 00000023 1520000d-        sti       r0,@__glDebugData+0
+      191                           .line   34
+      192                   ;----------------------------------------------------------------------
+      193                   ;  59 | nTXData = _glDebugData;                                                
+      194                   ;----------------------------------------------------------------------
+      195 00000024 15400302         sti       r0,*+fp(2)
+      196                           .line   35
+      197                   ;----------------------------------------------------------------------
+      198                   ;  60 | break;                                                                 
+      199                   ;  62 | case 0x33:                                                             
+      200                   ;----------------------------------------------------------------------
+      201 00000025 6a000016         bu        L20
+      202                   ;*      Branch Occurs to L20 
+      203                           .line   38
+      204                   ;----------------------------------------------------------------------
+      205                   ;  63 | *(unsigned long *)_glDebugAddr = _glDebugData;                         
+      206                   ;----------------------------------------------------------------------
+      207 00000026          L9:        
+      208 00000026 1540c000         sti       r0,*ar0
+      209                           .line   39
+      210                   ;----------------------------------------------------------------------
+      211                   ;  64 | break;                                                                 
+      212                   ;  66 | default:                                                               
+      213                   ;----------------------------------------------------------------------
+      214 00000027 6a000014         bu        L20
+      215                   ;*      Branch Occurs to L20 
+      216                           .line   42
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    5
+
+      217                   ;----------------------------------------------------------------------
+      218                   ;  67 | nTXData = 0xffffffff;                                                  
+      219                   ;----------------------------------------------------------------------
+      220                           .line   43
+      221                   ;----------------------------------------------------------------------
+      222                   ;  68 | break;                                                                 
+      223                   ;----------------------------------------------------------------------
+      224 00000028          L12:        
+      225                           .line   8
+      226 00000028 50400301         ldiu      *+fp(1),r0
+      227 00000029 09e0ffe8         lsh       -24,r0
+      228 0000002a 6a05ffe0         beq       L2
+      229                   ;*      Branch Occurs to L2 
+      230 0000002b 04e0001d         cmpi      29,r0
+      231 0000002c 6a05ffe2         beq       L3
+      232                   ;*      Branch Occurs to L3 
+      233 0000002d 04e00033         cmpi      51,r0
+      234 0000002e 6a25fff5         beqd      L9
+      235 0000002f 0c800000         nop
+      236 00000030 52a8000e-        ldieq     @__glDebugAddr+0,ar0
+      237 00000031 52a0000d-        ldieq     @__glDebugData+0,r0
+      238                   ;*      Branch Occurs to L9 
+      239 00000032 04e00088         cmpi      136,r0
+      240 00000033 6a05ffde         beq       L4
+      241                   ;*      Branch Occurs to L4 
+      242 00000034 04e000ad         cmpi      173,r0
+      243 00000035 6a05ffdf         beq       L5
+      244                   ;*      Branch Occurs to L5 
+      245 00000036 04e000d0         cmpi      208,r0
+      246 00000037 6a05ffe8         beq       L7
+      247                   ;*      Branch Occurs to L7 
+      248 00000038 04e000d1         cmpi      209,r0
+      249 00000039 6a05ffe0         beq       L6
+      250                   ;*      Branch Occurs to L6 
+      251 0000003a 50200012-        ldiu      @CL4,r0
+      252 0000003b 15400302         sti       r0,*+fp(2)
+      253 0000003c          L20:        
+      254                           .line   46
+      255                   ;----------------------------------------------------------------------
+      256                   ;  71 | *(unsigned long *)0x808048 = nTXData;                                  
+      257                   ;----------------------------------------------------------------------
+      258 0000003c 50280013-        ldiu      @CL5,ar0
+      259 0000003d 50400302         ldiu      *+fp(2),r0
+      260 0000003e 1540c000         sti       r0,*ar0
+      261                           .line   47
+      262 0000003f 0e280000         pop       ar0
+      263 00000040 0ea00000         popf      f0
+      264 00000041 0e200000         pop       r0
+      265 00000042 18740002         subi      2,sp
+      266 00000043 0e2b0000         pop       fp
+      267 00000044 0e350000         pop       st
+      268 00000045 78000000         reti
+      269                                                                   ; Return From Interrupt
+      270                           .endfunc        72,000000101h,2
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    6
+
+      271                   
+      272                   
+      273 00000046                  .sect    ".text"
+      274                   
+      275                           .global _Debug3xInit
+      276                           .sym    _Debug3xInit,_Debug3xInit,32,2,0
+      277                           .func   93
+      278                   ;******************************************************************************
+      279                   ;* FUNCTION NAME: _Debug3xInit                                                *
+      280                   ;*                                                                            *
+      281                   ;*   Architecture       : TMS320C30                                           *
+      282                   ;*   Calling Convention : Stack Parameter Convention                          *
+      283                   ;*   Function Uses Regs : r0,ar0,st                                           *
+      284                   ;*   Regs Saved         :                                                     *
+      285                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      286                   ;*   Total Frame Size   : 2 Call + 1 Parm + 1 Auto + 0 SOE = 4 words          *
+      287                   ;******************************************************************************
+      288 00000046          _Debug3xInit:
+      289                           .sym    _nKind,-2,12,9,32
+      290                           .sym    _nTemp,1,4,1,32
+      291                           .line   1
+      292                   ;----------------------------------------------------------------------
+      293                   ;  93 | void Debug3xInit(unsigned char nKind)                                  
+      294                   ;----------------------------------------------------------------------
+      295 00000046 0f2b0000         push      fp
+      296 00000047 500b0014         ldiu      sp,fp
+      297 00000048 02740001         addi      1,sp
+      298                           .line   2
+      299                   ;----------------------------------------------------------------------
+      300                   ;  95 | int nTemp;                                                             
+      301                   ;----------------------------------------------------------------------
+      302                           .line   5
+      303                   ;----------------------------------------------------------------------
+      304                   ;  97 | *(unsigned long *)0x808042 = 0x111;                                    
+      305                   ;----------------------------------------------------------------------
+      306 00000049 50280014-        ldiu      @CL6,ar0
+      307 0000004a 50600111         ldiu      273,r0
+      308 0000004b 1540c000         sti       r0,*ar0
+      309                           .line   6
+      310                   ;----------------------------------------------------------------------
+      311                   ;  98 | *(unsigned long *)0x808040 = 0x0e3c0000;                               
+      312                   ;----------------------------------------------------------------------
+      313 0000004c 50280015-        ldiu      @CL7,ar0
+      314 0000004d 50200016-        ldiu      @CL8,r0
+      315 0000004e 1540c000         sti       r0,*ar0
+      316                           .line   7
+      317                   ;----------------------------------------------------------------------
+      318                   ;  99 | nTemp = *(unsigned long *)0x80804c;                                    
+      319                   ; 101 | switch(nKind)                                                          
+      320                   ; 103 | default:                                                               
+      321                   ; 107 | case TMS320C31:                                                        
+      322                   ; 108 | case TMS320C33:                                                        
+      323                   ;----------------------------------------------------------------------
+      324 0000004f 6a20000b         bud       L28
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    7
+
+      325 00000050 5028000f-        ldiu      @CL1,ar0
+      326 00000051 5040c000         ldiu      *ar0,r0
+      327 00000052 15400301         sti       r0,*+fp(1)
+      328                   ;*      Branch Occurs to L28 
+      329 00000053          L24:        
+      330                           .line   17
+      331                   ;----------------------------------------------------------------------
+      332                   ; 109 | (*(unsigned long *)0x809fc6) = 0x60000000 | (int)c_int06;              
+      333                   ;----------------------------------------------------------------------
+      334 00000053 50200018-        ldiu      @CL10,r0
+      335 00000054 50280017-        ldiu      @CL9,ar0
+      336 00000055 10200019-        or        @CL11,r0
+      337 00000056 1540c000         sti       r0,*ar0
+      338                           .line   18
+      339                   ;----------------------------------------------------------------------
+      340                   ; 110 | break;                                                                 
+      341                   ; 115 | case TMS320C32:                                                        
+      342                   ;----------------------------------------------------------------------
+      343 00000057 6a000010         bu        L32
+      344                   ;*      Branch Occurs to L32 
+      345                           .line   24
+      346                   ;----------------------------------------------------------------------
+      347                   ; 116 | (*(unsigned long *)0x87fe06) = 0x60000000 | (int)c_int06;              
+      348                   ; 118 | // ¿Œ≈Õ∑¥∆Æ ∫§≈Õ∏¶ ¥ŸΩ√ ±∏º∫«—¥Ÿ.                                      
+      349                   ;----------------------------------------------------------------------
+      350 00000058          L26:        
+      351 00000058 10200019-        or        @CL11,r0
+      352 00000059 1540c000         sti       r0,*ar0
+      353                           .line   27
+      354                   ;----------------------------------------------------------------------
+      355                   ; 119 | asm("   LDI     87feh, IF ");                                          
+      356                   ;----------------------------------------------------------------------
+      357 0000005a 087787fe    LDI     87feh, IF 
+      358                           .line   28
+      359                   ;----------------------------------------------------------------------
+      360                   ; 120 | asm("   LSH     10h, IF ");     // 0x87fe0000 <---------------         
+      361                   ;----------------------------------------------------------------------
+      362 0000005b 09f70010    LSH     10h, IF 
+      363                           .line   29
+      364                   ;----------------------------------------------------------------------
+      365                   ; 121 | break;                                                                 
+      366                   ; 124 | // ¿Œ≈Õ∑¥∆Æ∏¶ »∞º∫»≠ Ω√≈≤¥Ÿ.                                           
+      367                   ;----------------------------------------------------------------------
+      368 0000005c 6a00000b         bu        L32
+      369                   ;*      Branch Occurs to L32 
+      370 0000005d          L28:        
+      371                           .line   9
+      372 0000005d 50400b02         ldiu      *-fp(2),r0
+      373 0000005e 04e0001f         cmpi      31,r0
+      374 0000005f 6a05fff3         beq       L24
+      375                   ;*      Branch Occurs to L24 
+      376 00000060 04e00020         cmpi      32,r0
+      377 00000061 6a25fff4         beqd      L26
+      378 00000062 0c800000         nop
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    8
+
+      379 00000063 52a00018-        ldieq     @CL10,r0
+      380 00000064 52a8001a-        ldieq     @CL12,ar0
+      381                   ;*      Branch Occurs to L26 
+      382 00000065 04e00021         cmpi      33,r0
+      383 00000066 6a05ffec         beq       L24
+      384                   ;*      Branch Occurs to L24 
+      385 00000067 6a00ffeb         bu        L24
+      386                   ;*      Branch Occurs to L24 
+      387 00000068          L32:        
+      388                           .line   33
+      389                   ;----------------------------------------------------------------------
+      390                   ; 125 | asm("   OR      0020h,IE");                                            
+      391                   ;----------------------------------------------------------------------
+      392 00000068 10760020         OR      0020h,IE
+      393                           .line   34
+      394 00000069 50480b01         ldiu      *-fp(1),ar0
+      395 0000006a 504bc300         ldiu      *fp,fp
+      396 0000006b 18740003         subi      3,sp
+      397 0000006c 68000008         bu        ar0
+      398                   ;*      Branch Occurs to ar0 
+      399                           .endfunc        126,000000000h,1
+      400                   
+      401                   
+      402                           .file   "NorFlash.h"
+      403                           .file   "z85c30.h"
+      404                           .stag   .fake4,32
+      405                           .member _B0,0,14,18,1
+      406                           .member _B1,1,14,18,1
+      407                           .member _B2,2,14,18,1
+      408                           .member _B3,3,14,18,1
+      409                           .member _B4,4,14,18,1
+      410                           .member _B5,5,14,18,1
+      411                           .member _B6,6,14,18,1
+      412                           .member _B7,7,14,18,1
+      413                           .eos
+      414                           .utag   .fake3,32
+      415                           .member _UCHAR,0,14,11,32
+      416                           .member _BIT,0,8,11,32,.fake4
+      417                           .eos
+      418                           .stag   .fake2,32
+      419                           .member _DR,0,9,8,32,.fake3
+      420                           .eos
+      421                           .sym    _SD,0,8,13,32,.fake2
+      422                           .stag   .fake5,224
+      423                           .member _nAA,0,12,8,32
+      424                           .member _nBB,32,12,8,32
+      425                           .member _nCC,64,12,8,32
+      426                           .member _nLen_H,96,12,8,32
+      427                           .member _nLen_L,128,12,8,32
+      428                           .member _nLenCom_H,160,12,8,32
+      429                           .member _nLenCom_L,192,12,8,32
+      430                           .eos
+      431                           .sym    _SCC_HEAD,0,8,13,224,.fake5
+      432                           .stag   .fake6,320
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE    9
+
+      433                           .member _nToAdd,0,12,8,32
+      434                           .member _nFromAdd,32,12,8,32
+      435                           .member _nCode,64,12,8,32
+      436                           .member _nSp3,96,12,8,32
+      437                           .member _nSp4,128,12,8,32
+      438                           .member _nErBlk,160,12,8,32
+      439                           .member _nDeStCode,192,12,8,32
+      440                           .member _nSp7,224,12,8,32
+      441                           .member _nSp8,256,12,8,32
+      442                           .member _nSp9,288,12,8,32
+      443                           .eos
+      444                           .sym    _SCC_TEST,0,8,13,320,.fake6
+      445                           .stag   .fake7,640
+      446                           .member _nHead,0,8,8,224,.fake5
+      447                           .member _nTest,224,8,8,320,.fake6
+      448                           .member _Etx,544,12,8,32
+      449                           .member _CRC_H,576,12,8,32
+      450                           .member _CRC_L,608,12,8,32
+      451                           .eos
+      452                           .sym    _SCC_TX_DATA,0,8,13,640,.fake7
+      453                           .sym    _PSCC_TX_DATA,0,24,13,32,.fake7
+      454                           .stag   .fake8,320
+      455                           .member _nToAdd,0,12,8,32
+      456                           .member _nFromAdd,32,12,8,32
+      457                           .member _nCode,64,12,8,32
+      458                           .member _nSp3,96,12,8,32
+      459                           .member _nNow,128,12,8,32
+      460                           .member _nNext,160,12,8,32
+      461                           .member _nDeSt,192,12,8,32
+      462                           .member _nStartSt,224,12,8,32
+      463                           .member _nDist_H,256,12,8,32
+      464                           .member _nDist_L,288,12,8,32
+      465                           .eos
+      466                           .sym    _SCC_TEST_RND,0,8,13,320,.fake8
+      467                           .stag   .fake9,640
+      468                           .member _nHead,0,8,8,224,.fake5
+      469                           .member _nTest,224,8,8,320,.fake8
+      470                           .member _Etx,544,12,8,32
+      471                           .member _CRC_H,576,12,8,32
+      472                           .member _CRC_L,608,12,8,32
+      473                           .eos
+      474                           .sym    _SCC_RNDTX_DATA,0,8,13,640,.fake9
+      475                           .sym    _PSCC_RNDTX_DATA,0,24,13,32,.fake9
+      476                           .stag   .fake10,17696
+      477                           .member _nToAdd,0,12,8,32
+      478                           .member _nFromAdd,32,12,8,32
+      479                           .member _nCode,64,12,8,32
+      480                           .member _nTEXT,96,60,8,17600,,550
+      481                           .eos
+      482                           .sym    _SCC_TEXT,0,8,13,17696,.fake10
+      483                           .stag   .fake11,17920
+      484                           .member _nHead,0,8,8,224,.fake5
+      485                           .member _nText,224,8,8,17696,.fake10
+      486                           .eos
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   10
+
+      487                           .sym    _SCC_PIB_TEXT,0,8,13,17920,.fake11
+      488                           .sym    _PSCC_PIB_TEXT,0,24,13,32,.fake11
+      489                           .stag   .fake12,192
+      490                           .member _nYY,0,12,8,32
+      491                           .member _nMM,32,12,8,32
+      492                           .member _nDD,64,12,8,32
+      493                           .member _nhh,96,12,8,32
+      494                           .member _nmm,128,12,8,32
+      495                           .member _nss,160,12,8,32
+      496                           .eos
+      497                           .sym    _TIME,0,8,13,192,.fake12
+      498                           .stag   .fake14,32
+      499                           .member _nDoor1,0,14,18,1
+      500                           .member _nDoor2,1,14,18,1
+      501                           .member _nDcw,2,14,18,1
+      502                           .member _nNextSt,3,14,18,1
+      503                           .member _nExpress,4,14,18,1
+      504                           .member _B5,5,14,18,1
+      505                           .member _B6,6,14,18,1
+      506                           .member _B7,7,14,18,1
+      507                           .eos
+      508                           .stag   .fake13,608
+      509                           .member _nLAddres,0,12,8,32
+      510                           .member _nHAddres,32,12,8,32
+      511                           .member _nContro,64,12,8,32
+      512                           .member _nDataDefin,96,12,8,32
+      513                           .member _nStCode,128,12,8,32
+      514                           .member _nNowCode,160,12,8,32
+      515                           .member _nNextCode,192,12,8,32
+      516                           .member _nDestCode,224,12,8,32
+      517                           .member _BIT,256,8,8,32,.fake14
+      518                           .member _nCarTrainNum,288,60,8,64,,2
+      519                           .member _nSp,352,12,8,32
+      520                           .member _nTime,384,8,8,192,.fake12
+      521                           .member _nSp_2,576,12,8,32
+      522                           .eos
+      523                           .sym    _TMS_RX_DATA,0,8,13,608,.fake13
+      524                           .sym    _PTMS_RX_DATA,0,24,13,32,.fake13
+      525                           .stag   .fake15,416
+      526                           .member _TxPos,0,12,8,32
+      527                           .member _TxLen,32,12,8,32
+      528                           .member _TxOK,64,12,8,32
+      529                           .member _TX_RTS_OFF_TIME,96,12,8,32
+      530                           .member _TxBuffer,128,28,8,32
+      531                           .member _RxOK,160,12,8,32
+      532                           .member _RxOKCnt,192,12,8,32
+      533                           .member _RxPos,224,12,8,32
+      534                           .member _RxDlyTm,256,12,8,32
+      535                           .member _RxLen,288,12,8,32
+      536                           .member _RX_RTS_OFF_TIME,320,12,8,32
+      537                           .member _RxBuffer,352,28,8,32
+      538                           .member _RxTimeOut,384,12,8,32
+      539                           .eos
+      540                           .sym    _SCC_INIT_SHAPE,0,8,13,416,.fake15
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   11
+
+      541                           .file   "Disk.h"
+      542                           .stag   .fake16,416
+      543                           .member _FileName,0,60,8,256,,8
+      544                           .member _ExtName,256,60,8,96,,3
+      545                           .member _StartCluster,352,14,8,32
+      546                           .member _FileSize,384,14,8,32
+      547                           .eos
+      548                           .sym    _OPEN_FILE,0,8,13,416,.fake16
+      549                           .stag   .fake17,1472
+      550                           .member _StationCode,0,12,8,32
+      551                           .member _EngName,32,60,8,480,,15
+      552                           .member _IranName,512,60,8,960,,30
+      553                           .eos
+      554                           .sym    _STATION_NAME,0,8,13,1472,.fake17
+      555                           .stag   .fake18,1472
+      556                           .member _StationCode,0,12,8,32
+      557                           .member _EngName,32,60,8,480,,15
+      558                           .member _IranName,512,60,8,960,,30
+      559                           .eos
+      560                           .sym    _STATION_NAME_ALL,0,8,13,1472,.fake18
+      561                           .stag   .fake19,96
+      562                           .member _nDis_Point,0,15,8,32
+      563                           .member _Type,32,12,8,32
+      564                           .member _Number,64,12,8,32
+      565                           .eos
+      566                           .sym    _DISPLAY_INDEX,0,8,13,96,.fake19
+      567                           .stag   .fake20,9664
+      568                           .member _nCnt,0,12,8,32
+      569                           .member _nDoor,32,12,8,32
+      570                           .member _nDisplay_str,64,56,8,9600,.fake19,100
+      571                           .eos
+      572                           .sym    _DISPLAY_INDEX_NAME,0,8,13,9664,.fake20
+      573                           .stag   .fake21,512
+      574                           .member _nStationCode,0,12,8,32
+      575                           .member _nStationName,32,60,8,480,,15
+      576                           .eos
+      577                           .sym    _DEST_SET_SCREEN,0,8,13,512,.fake21
+      578                           .stag   .fake22,16032
+      579                           .member _nScreenNum,0,12,8,32
+      580                           .member _nDestSetNum,32,12,8,32
+      581                           .member _nDestSetNumRe,64,12,8,32
+      582                           .member _nStop_Patten_Num,96,12,8,32
+      583                           .member _nTrainClass_Num,128,12,8,32
+      584                           .member _nMatchCode,160,60,8,8192,,256
+      585                           .member _nDestCodeList,8352,60,8,2560,,80
+      586                           .member _nDestScreen,10912,56,8,5120,.fake21,10
+      587                           .eos
+      588                           .sym    _NVSRAM_VARIABLE,0,8,13,16032,.fake22
+      589                           .stag   .fake23,64
+      590                           .member _nData_Type,0,12,8,32
+      591                           .eos
+      592                           .sym    _DATA_TYPE,0,8,13,64,.fake23
+      593                           .sym    _PDATA_TYPE,0,24,13,32,.fake23
+      594                           .stag   .fake24,192
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   12
+
+      595                           .member _nYy,0,12,8,32
+      596                           .member _nMm,32,12,8,32
+      597                           .member _nDd,64,12,8,32
+      598                           .member _nhh,96,12,8,32
+      599                           .member _nmm,128,12,8,32
+      600                           .member _nss,160,12,8,32
+      601                           .eos
+      602                           .sym    _DATE,0,8,13,192,.fake24
+      603                           .stag   .fake25,1536
+      604                           .member _nDataHead_b,0,60,8,832,,26
+      605                           .member _nSp1,832,12,8,32
+      606                           .member _nEEE_b,864,60,8,128,,4
+      607                           .member _nSp2_b,992,60,8,96,,3
+      608                           .member _nDD_b,1088,60,8,64,,2
+      609                           .member _nSp3_b,1152,60,8,96,,3
+      610                           .member _nDate,1248,8,8,192,.fake24
+      611                           .member _nSp4_b,1440,60,8,96,,3
+      612                           .eos
+      613                           .sym    _PISC_HEAD,0,8,13,1536,.fake25
+      614                           .sym    _pPISC_HEAD,0,24,13,32,.fake25
+      615                           .stag   .fake26,2816
+      616                           .member _nHead_h,0,8,8,1536,.fake25
+      617                           .member _nAdd1_St_Name_b,1536,60,8,128,,4
+      618                           .member _nAdd2_St_Info_b,1664,60,8,128,,4
+      619                           .member _nAdd3_Dest_Info_b,1792,60,8,128,,4
+      620                           .member _nAdd4_Stop_Pt_I_b,1920,60,8,128,,4
+      621                           .member _nAdd5_Stop_Pt_G_b,2048,60,8,128,,4
+      622                           .member _nAdd6_Display_I_b,2176,60,8,128,,4
+      623                           .member _nAdd7_Display_G_b,2304,60,8,128,,4
+      624                           .member _nAdd8_Dia_I_b,2432,60,8,128,,4
+      625                           .member _nAdd9_Dia_G_b,2560,60,8,128,,4
+      626                           .member _nAdd10_Text_Info_b,2688,60,8,128,,4
+      627                           .eos
+      628                           .sym    _PISC_DATA_ADD,0,8,13,2816,.fake26
+      629                           .sym    _pPISC_DATA_ADD,0,24,13,32,.fake26
+      630                           .stag   .fake27,64
+      631                           .member _nNum_b,0,60,8,64,,2
+      632                           .eos
+      633                           .sym    _HEADER,0,8,13,64,.fake27
+      634                           .sym    _pHEADER,0,24,13,32,.fake27
+      635                           .stag   .fake28,1504
+      636                           .member _nCode_b,0,60,8,64,,2
+      637                           .member _nKorName_b,64,60,8,480,,15
+      638                           .member _nEngName_b,544,60,8,960,,30
+      639                           .eos
+      640                           .sym    _ST_NAME_B,0,8,13,1504,.fake28
+      641                           .sym    _pST_NAME_B,0,24,13,32,.fake28
+      642                           .stag   .fake29,150464
+      643                           .member _nCnt,0,8,8,64,.fake27
+      644                           .member _pBody,64,56,8,150400,.fake28,100
+      645                           .eos
+      646                           .sym    _ST_NAME,0,8,13,150464,.fake29
+      647                           .sym    _pST_NAME,0,24,13,32,.fake29
+      648                           .stag   .fake30,608
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   13
+
+      649                           .member _nCode_b,0,60,8,64,,2
+      650                           .member _nName_Index_b,64,60,8,64,,2
+      651                           .member _nST_Name_b,128,60,8,480,,15
+      652                           .eos
+      653                           .sym    _DEST_INFO_B,0,8,13,608,.fake30
+      654                           .sym    _pDEST_INFO_B,0,24,13,32,.fake30
+      655                           .stag   .fake31,60864
+      656                           .member _nCnt,0,8,8,64,.fake27
+      657                           .member _pBody,64,56,8,60800,.fake30,100
+      658                           .eos
+      659                           .sym    _DEST_INFO,0,8,13,60864,.fake31
+      660                           .sym    _pDEST_INFO,0,24,13,32,.fake31
+      661                           .stag   .fake32,224
+      662                           .member _nCode_b,0,60,8,64,,2
+      663                           .member _nType,64,12,8,32
+      664                           .member _nAddress_b,96,60,8,128,,4
+      665                           .eos
+      666                           .sym    _DIA_GROUP_B,0,8,13,224,.fake32
+      667                           .sym    _pDIA_GROUP_B,0,24,13,32,.fake32
+      668                           .stag   .fake33,22464
+      669                           .member _nCnt,0,8,8,64,.fake27
+      670                           .member _pBody,64,56,8,22400,.fake32,100
+      671                           .eos
+      672                           .sym    _DIA_GROUP,0,8,13,22464,.fake33
+      673                           .sym    _pDIA_GROUP,0,24,13,32,.fake33
+      674                           .stag   .fake34,480
+      675                           .member _nCode_b,0,60,8,64,,2
+      676                           .member _nSt_Time_b,64,60,8,96,,3
+      677                           .member _nStopPtG_Addres_b,160,60,8,128,,4
+      678                           .member _nDispG_Addres_b,288,60,8,128,,4
+      679                           .member _nDest_Index_b,416,60,8,64,,2
+      680                           .eos
+      681                           .sym    _DIA_G_ITEM_B,0,8,13,480,.fake34
+      682                           .sym    _pDIA_G_ITEM_B,0,24,13,32,.fake34
+      683                           .stag   .fake35,48064
+      684                           .member _nCnt,0,8,8,64,.fake27
+      685                           .member _pBody,64,56,8,48000,.fake34,100
+      686                           .eos
+      687                           .sym    _DIA_G_ITEM,0,8,13,48064,.fake35
+      688                           .sym    _pDIA_G_ITEM,0,24,13,32,.fake35
+      689                           .stag   .fake36,192
+      690                           .member _nSt_Cnt_b,0,60,8,64,,2
+      691                           .member _nGuri_b,64,60,8,64,,2
+      692                           .member _nItem_Index_b,128,60,8,64,,2
+      693                           .eos
+      694                           .sym    _DISPLAY_G_B,0,8,13,192,.fake36
+      695                           .sym    _pDISPLAY_G_B,0,24,13,32,.fake36
+      696                           .stag   .fake37,19264
+      697                           .member _nCnt,0,8,8,64,.fake27
+      698                           .member _pBody,64,56,8,19200,.fake36,100
+      699                           .eos
+      700                           .sym    _DISPLAY_GROUP,0,8,13,19264,.fake37
+      701                           .sym    _pDISPLAY_GROUP,0,24,13,32,.fake37
+      702                           .stag   .fake38,128
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   14
+
+      703                           .member _nText_Kind_b,0,60,8,64,,2
+      704                           .member _nText_Index,64,60,8,64,,2
+      705                           .eos
+      706                           .sym    _DISPLAY_ITEM_B,0,8,13,128,.fake38
+      707                           .sym    _pDISPLAY_ITEM_B,0,24,13,32,.fake38
+      708                           .stag   .fake39,12864
+      709                           .member _nCnt,0,8,8,64,.fake27
+      710                           .member _pBody,64,56,8,12800,.fake38,100
+      711                           .eos
+      712                           .sym    _DISPLAY_ITEM,0,8,13,12864,.fake39
+      713                           .sym    _pDISPLAY_ITEM,0,24,13,32,.fake39
+      714                           .stag   .fake40,256
+      715                           .member _nSt_Cnt_b,0,60,8,64,,2
+      716                           .member _nGuri_b,64,60,8,64,,2
+      717                           .member _nItem_Index_Flag,128,8,8,128,.fake38
+      718                           .eos
+      719                           .sym    _DISPLAY_G_I_B,0,8,13,256,.fake40
+      720                           .sym    _pDISPLAY_G_I_B,0,24,13,32,.fake40
+      721                           .stag   .fake41,25664
+      722                           .member _nCnt,0,8,8,64,.fake27
+      723                           .member _pBody,64,56,8,25600,.fake40,100
+      724                           .eos
+      725                           .sym    _DISPLAY_G_I_H,0,8,13,25664,.fake41
+      726                           .sym    _pDISPLAY_G_I_H,0,24,13,32,.fake41
+      727                           .stag   .fake42,192
+      728                           .member _nSt_Index_b,0,60,8,64,,2
+      729                           .member _nEn_Index_b,64,60,8,64,,2
+      730                           .member _nSt_P_G_Cnt_b,128,60,8,64,,2
+      731                           .eos
+      732                           .sym    _STOP_PT_G_B_H,0,8,13,192,.fake42
+      733                           .sym    _pSTOP_PT_G_B_H,0,24,13,32,.fake42
+      734                           .stag   .fake43,64
+      735                           .member _nSt_P_Item_Index_b,0,60,8,64,,2
+      736                           .eos
+      737                           .sym    _STOP_PT_G_B_B,0,8,13,64,.fake43
+      738                           .sym    _pSTOP_PT_G_B_B,0,24,13,32,.fake43
+      739                           .stag   .fake44,6592
+      740                           .member _nHeader,0,8,8,192,.fake42
+      741                           .member _pBody,192,56,8,6400,.fake43,100
+      742                           .eos
+      743                           .sym    _STOP_PT_G_B,0,8,13,6592,.fake44
+      744                           .sym    _pSTOP_PT_G_B,0,24,13,32,.fake44
+      745                           .stag   .fake45,659264
+      746                           .member _nCnt,0,8,8,64,.fake27
+      747                           .member _pBody,64,56,8,659200,.fake44,100
+      748                           .eos
+      749                           .sym    _STOP_PT_GROUP,0,8,13,659264,.fake45
+      750                           .sym    _pSTOP_PT_GROUP,0,24,13,32,.fake45
+      751                           .stag   .fake46,288
+      752                           .member _nSt_Info_b,0,60,8,64,,2
+      753                           .member _nDoor_Info,64,12,8,32
+      754                           .member _nSt_Time_b,96,60,8,96,,3
+      755                           .member _nStop_Time_b,192,60,8,96,,3
+      756                           .eos
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   15
+
+      757                           .sym    _STOP_PT_ITEM_B,0,8,13,288,.fake46
+      758                           .sym    _pSTOP_PT_ITEM_B,0,24,13,32,.fake46
+      759                           .stag   .fake47,28864
+      760                           .member _nCnt,0,8,8,64,.fake27
+      761                           .member _pBody,64,56,8,28800,.fake46,100
+      762                           .eos
+      763                           .sym    _STOP_PT_ITEM,0,8,13,28864,.fake47
+      764                           .sym    _pSTOP_PT_ITEM,0,24,13,32,.fake47
+      765                           .stag   .fake48,192
+      766                           .member _nSt_Index_b,0,60,8,64,,2
+      767                           .member _nArr_Index_b,64,60,8,64,,2
+      768                           .member _nSt_Dist_b,128,60,8,64,,2
+      769                           .eos
+      770                           .sym    _ST_INFO_B,0,8,13,192,.fake48
+      771                           .sym    _pST_INFO_B,0,24,13,32,.fake48
+      772                           .stag   .fake49,19264
+      773                           .member _nCnt,0,8,8,64,.fake27
+      774                           .member _pBody,64,56,8,19200,.fake48,100
+      775                           .eos
+      776                           .sym    _ST_INFO,0,8,13,19264,.fake49
+      777                           .sym    _pST_INFO,0,24,13,32,.fake49
+      778                           .stag   .fake50,416
+      779                           .member _nSt_Info_flag,0,8,8,192,.fake48
+      780                           .member _nDoor_Info,192,12,8,32
+      781                           .member _nSt_Time_b,224,60,8,96,,3
+      782                           .member _nStop_Time_b,320,60,8,96,,3
+      783                           .eos
+      784                           .sym    _STOP_PT_INFO_ITEM_B,0,8,13,416,.fake50
+      785                           .sym    _pSTOP_PT_INFO_ITEM_B,0,24,13,32,.fake50
+      786                           .stag   .fake51,41664
+      787                           .member _nCnt,0,8,8,64,.fake27
+      788                           .member _pBody,64,56,8,41600,.fake50,100
+      789                           .eos
+      790                           .sym    _STOP_PT_INFO_ITEM,0,8,13,41664,.fake51
+      791                           .sym    _pSTOP_PT_INFO_ITEM,0,24,13,32,.fake51
+      792                           .stag   .fake52,41792
+      793                           .member _nHeader,0,8,8,192,.fake42
+      794                           .member _nSt_Pt_G_I_Flage,192,56,8,41600,.fake50,100
+      795                           .eos
+      796                           .sym    _STOP_PT_G_I_HAP,0,8,13,41792,.fake52
+      797                           .sym    _pSTOP_PT_G_I_HAP,0,24,13,32,.fake52
+      798                           .stag   .fake53,9600
+      799                           .member _nImCheck,0,12,8,32
+      800                           .member _nImNum,32,12,8,32
+      801                           .member _nImText,64,60,8,9536,,298
+      802                           .eos
+      803                           .sym    _IMTEXTBODY,0,8,13,9600,.fake53
+      804                           .sym    _PIMTEXTBODY,0,24,13,32,.fake53
+      805                           .stag   .fake54,960000
+      806                           .member _nBody,0,56,8,960000,.fake53,100
+      807                           .eos
+      808                           .sym    _IMTEXT,0,8,13,960000,.fake54
+      809                           .sym    _PIMTEXT,0,24,13,32,.fake54
+      810                           .stag   .fake55,16000
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   16
+
+      811                           .member _nPrCheck,0,12,8,32
+      812                           .member _nPrNum,32,12,8,32
+      813                           .member _nPrText,64,60,8,15936,,498
+      814                           .eos
+      815                           .sym    _PRTEXTBODY,0,8,13,16000,.fake55
+      816                           .sym    _PPRTEXTBODY,0,24,13,32,.fake55
+      817                           .stag   .fake56,960000
+      818                           .member _nBody,0,56,8,960000,.fake55,60
+      819                           .eos
+      820                           .sym    _PRTEXT,0,8,13,960000,.fake56
+      821                           .sym    _PPRTEXT,0,24,13,32,.fake56
+      822                           .stag   .fake57,1920128
+      823                           .member _nBlockSize_b,0,60,8,128,,4
+      824                           .member _nImBlock,128,8,8,960000,.fake54
+      825                           .member _nPrBlock,960128,8,8,960000,.fake56
+      826                           .eos
+      827                           .sym    _TEXT_BLOCK,0,8,13,1920128,.fake57
+      828                           .sym    _pTEXT_BLOCK,0,24,13,32,.fake57
+      829                           .stag   .fake58,64
+      830                           .member _nSt_Pt_G_Address,0,15,8,32
+      831                           .member _nDisp_G_Address,32,15,8,32
+      832                           .eos
+      833                           .sym    _START_NV_ADDRESS,0,8,13,64,.fake58
+      834                           .file   "DataPro.h"
+      835                           .stag   .fake59,128
+      836                           .member _nTotalDestCnt,0,12,8,32
+      837                           .member _nCheakSt,32,12,8,32
+      838                           .member _nDiskInputCheckFlag,64,12,8,32
+      839                           .member _nDiskUpChekFlag,96,12,8,32
+      840                           .eos
+      841                           .sym    _SANDISK_VARI,0,8,13,128,.fake59
+      842                           .stag   .fake60,1472
+      843                           .member _nCode,0,12,8,32
+      844                           .member _nEnNameBuf,32,60,8,480,,15
+      845                           .member _nIRNameBuf,512,60,8,960,,30
+      846                           .eos
+      847                           .sym    _STATION_INFO,0,8,13,1472,.fake60
+      848                           .stag   .fake61,1920
+      849                           .member _nPre,0,60,8,480,,15
+      850                           .member _nNow,480,60,8,480,,15
+      851                           .member _nNext,960,60,8,480,,15
+      852                           .member _nDest,1440,60,8,480,,15
+      853                           .eos
+      854                           .sym    _GP_ST_NAME,0,8,13,1920,.fake61
+      855                           .stag   .fake62,128
+      856                           .member _nFlag_DI_INPUT,0,12,8,32
+      857                           .member _nFlag_Simu,32,12,8,32
+      858                           .member _nFlag_SelfTest,64,12,8,32
+      859                           .member _nAutoPlay_Flag,96,12,8,32
+      860                           .eos
+      861                           .sym    _TIME_FLAG,0,8,13,128,.fake62
+      862                           .stag   .fake63,5984
+      863                           .member _nSELF_ADDDATA_BUF,0,60,8,1920,,60
+      864                           .member _nSELF_RXDATA_Buf,1920,60,8,1920,,60
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   17
+
+      865                           .member _nSELF_DownLoad_RxBuf,3840,60,8,960,,30
+      866                           .member _nSELF_DownLoad_AddBuf,4800,60,8,960,,30
+      867                           .member _nSELF_DownLoad_UnitCnt,5760,12,8,32
+      868                           .member _nSELF_TX_Cnt,5792,12,8,32
+      869                           .member _nSELF_TX_Cnt_B,5824,12,8,32
+      870                           .member _nSELF_All_Cnt,5856,12,8,32
+      871                           .member _nSELF_All_Cnt_B,5888,12,8,32
+      872                           .member _nSELF_ICR_SELECT,5920,12,8,32
+      873                           .member _nSELF_Selt_Flag,5952,12,8,32
+      874                           .eos
+      875                           .sym    _SELF_TEST,0,8,13,5984,.fake63
+      876                           .stag   .fake64,12032
+      877                           .member _nStopPatNum,0,12,8,32
+      878                           .member _nStation_MaxCnt,32,12,8,32
+      879                           .member _nStation_StartPointCnt,64,12,8,32
+      880                           .member _nStation_PointCnt,96,12,8,32
+      881                           .member _nStation_PointCntRe,128,12,8,32
+      882                           .member _nStation_List,160,60,8,1920,,60
+      883                           .member _nPIBPatFlag,2080,12,8,32
+      884                           .member _nDISFPatFlag,2112,12,8,32
+      885                           .member _nSimulationFlag,2144,12,8,32
+      886                           .member _nSimulationCnt,2176,12,8,32
+      887                           .member _nSimulationRun,2208,12,8,32
+      888                           .member _nAutoDoorFlag,2240,12,8,32
+      889                           .member _nSpeed,2272,12,8,32
+      890                           .member _nDoor,2304,12,8,32
+      891                           .member _nDoorOPenCnt,2336,12,8,32
+      892                           .member _nDistance,2368,12,8,32
+      893                           .member _nSinmuScrCnt,2400,12,8,32
+      894                           .member _nTcmsRxNGCnt,2432,12,8,32
+      895                           .member _nStart,2464,8,8,1472,.fake60
+      896                           .member _nPre,3936,8,8,1472,.fake60
+      897                           .member _nNow,5408,8,8,1472,.fake60
+      898                           .member _nNext,6880,8,8,1472,.fake60
+      899                           .member _nDest,8352,8,8,1472,.fake60
+      900                           .member _nGpStName,9824,8,8,1920,.fake61
+      901                           .member _nSelf_Test_Flag,11744,12,8,32
+      902                           .member _nClean_Flag,11776,12,8,32
+      903                           .member _nTcmsAutoDriverFlag,11808,12,8,32
+      904                           .member _nDoOp_StCh,11840,12,8,32
+      905                           .member _nMasterFlag,11872,12,8,32
+      906                           .member _nRxCode_NoNe_Flag,11904,12,8,32
+      907                           .member _nSendIddTxFlag,11936,12,8,32
+      908                           .member _nAutoManuFlag,11968,12,8,32
+      909                           .member _nAutoManuFlagCnt,12000,12,8,32
+      910                           .eos
+      911                           .sym    _TRAN_STATION_INFO,0,8,13,12032,.fake64
+      912                           .stag   .fake65,160
+      913                           .member _nFlag,0,12,8,32
+      914                           .member _nTime,32,12,8,32
+      915                           .member _nTimeCnt,64,12,8,32
+      916                           .member _nFlagCnt,96,12,8,32
+      917                           .member _nRemem,128,12,8,32
+      918                           .eos
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   18
+
+      919                           .sym    _ONTD_CHECK,0,8,13,160,.fake65
+      920                           .stag   .fake66,800
+      921                           .member _nHcr,0,8,8,160,.fake65
+      922                           .member _nIcr,160,8,8,160,.fake65
+      923                           .member _nTcr,320,8,8,160,.fake65
+      924                           .member _nDoor,480,8,8,160,.fake65
+      925                           .member _nDist,640,8,8,160,.fake65
+      926                           .eos
+      927                           .sym    _DI_CHECK,0,8,13,800,.fake66
+      928                           .stag   .fake67,18496
+      929                           .member _nIM_PR_TEXT,0,60,8,17600,,550
+      930                           .member _nIndexBuf,17600,60,8,640,,20
+      931                           .member _nIndexST_STAllCnt,18240,12,8,32
+      932                           .member _nAllCnt_Cnt,18272,12,8,32
+      933                           .member _nIndexDI_DICnt,18304,12,8,32
+      934                           .member _nIndexCnt,18336,12,8,32
+      935                           .member _nDistanRe,18368,15,8,32
+      936                           .member _nDistanNew,18400,15,8,32
+      937                           .member _nBetweenFlag,18432,12,8,32
+      938                           .member _nTxEndTimeFlag,18464,12,8,32
+      939                           .eos
+      940                           .sym    _INDEX_FLAG,0,8,13,18496,.fake67
+      941                           .stag   .fake68,192
+      942                           .member _nDataDefin,0,12,8,32
+      943                           .member _nCarNum,32,12,8,32
+      944                           .member _nDist,64,12,8,32
+      945                           .member _nNow,96,12,8,32
+      946                           .member _nNext,128,12,8,32
+      947                           .member _nDest,160,12,8,32
+      948                           .eos
+      949                           .sym    _TMS_RX_DATA_PR,0,8,13,192,.fake68
+      950                           .stag   .fake69,64
+      951                           .member _nTxNum,0,12,8,32
+      952                           .member _nTxFlag,32,12,8,32
+      953                           .eos
+      954                           .sym    _IM_PR_SEND,0,8,13,64,.fake69
+      955                           .stag   .fake70,384
+      956                           .member _nDeSTCodeSet,0,12,8,32
+      957                           .member _nTranNum,32,12,8,32
+      958                           .member _nClean,64,12,8,32
+      959                           .member _nPIBPaten,96,12,8,32
+      960                           .member _nS_FDIPaten,128,12,8,32
+      961                           .member _nCarNum,160,12,8,32
+      962                           .member _nIM_Text,192,8,8,64,.fake69
+      963                           .member _nPR_Text,256,8,8,64,.fake69
+      964                           .member _nRNDTXFlag,320,12,8,32
+      965                           .member _nManualSet,352,12,8,32
+      966                           .eos
+      967                           .sym    _SCC_SEND_FLAG,0,8,13,384,.fake70
+      968                           .stag   .fake73,32
+      969                           .member _B0,0,14,18,1
+      970                           .member _B1,1,14,18,1
+      971                           .member _B2,2,14,18,1
+      972                           .member _B3,3,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   19
+
+      973                           .member _B4,4,14,18,1
+      974                           .member _B5,5,14,18,1
+      975                           .member _B6,6,14,18,1
+      976                           .member _B7,7,14,18,1
+      977                           .eos
+      978                           .utag   .fake72,32
+      979                           .member _BYTE,0,14,11,32
+      980                           .member _BIT,0,8,11,32,.fake73
+      981                           .eos
+      982                           .stag   .fake71,32
+      983                           .member _DR,0,9,8,32,.fake72
+      984                           .eos
+      985                           .sym    _TMS_SEND_DATA,0,8,13,32,.fake71
+      986                           .stag   .fake74,192
+      987                           .member _nIDC_ROM_Flag,0,12,8,32
+      988                           .member _nErCnt,32,12,8,32
+      989                           .member _nDataNvsrLoad,64,12,8,32
+      990                           .member _nDataNvsrWait,96,12,8,32
+      991                           .member _nRomWriteCnt,128,12,8,32
+      992                           .member _nKO_Flag,160,12,8,32
+      993                           .eos
+      994                           .sym    _IDC_ROM_WRITE,0,8,13,192,.fake74
+      995                           .stag   .fake75,288
+      996                           .member _nTimeTranNum,0,14,8,32
+      997                           .member _nStartHour,32,60,8,64,,2
+      998                           .member _nStartMin,96,60,8,64,,2
+      999                           .member _nEndHour,160,60,8,64,,2
+     1000                           .member _nEndMin,224,60,8,64,,2
+     1001                           .eos
+     1002                           .sym    _TRANNUMTIME,0,8,13,288,.fake75
+     1003                           .sym    _PTRANNUMTIME,0,24,13,32,.fake75
+     1004                           .stag   .fake76,9792
+     1005                           .member _nTIMEBUF,0,56,8,9792,.fake75,34
+     1006                           .eos
+     1007                           .sym    _TIMEBUF,0,8,13,9792,.fake76
+     1008                           .sym    _PTIMEBUF,0,24,13,32,.fake76
+     1009                           .file   "LED_DOWNLOAD.h"
+     1010                           .stag   .fake77,160
+     1011                           .member _nST_1,0,12,8,32
+     1012                           .member _nST_2,32,12,8,32
+     1013                           .member _nTXCnt,64,12,8,32
+     1014                           .member _nRepCnt,96,12,8,32
+     1015                           .member _nErassOk,128,12,8,32
+     1016                           .eos
+     1017                           .sym    _DOWN_STEP,0,8,13,160,.fake77
+     1018                           .stag   .fake78,736
+     1019                           .member _nRNDSelt,0,12,8,32
+     1020                           .member _nFDDSelt,32,12,8,32
+     1021                           .member _nIDDSelt,64,12,8,32
+     1022                           .member _nTNDSelt,96,12,8,32
+     1023                           .member _nFDD_DATA_Selt,128,12,8,32
+     1024                           .member _nSFKindCode,160,12,8,32
+     1025                           .member _nWaitSDR,192,12,8,32
+     1026                           .member _nSelfTestFlag,224,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   20
+
+     1027                           .member _nSDR_RxCnt,256,12,8,32
+     1028                           .member _nErassFlag,288,8,8,160,.fake77
+     1029                           .member _nDataDownFlag,448,12,8,32
+     1030                           .member _nDataRepetFlag,480,12,8,32
+     1031                           .member _nDataRepetNum,512,12,8,32
+     1032                           .member _nDataRepetCnt,544,12,8,32
+     1033                           .member _nDataSDRFlag,576,12,8,32
+     1034                           .member _nDataSize,608,12,8,32
+     1035                           .member _nDataTxCnt,640,12,8,32
+     1036                           .member _nSWScreenSelt,672,12,8,32
+     1037                           .member _nDATAScreenSelt,704,12,8,32
+     1038                           .eos
+     1039                           .sym    _LED_DATA_DOWNLOAD,0,8,13,736,.fake78
+     1040                           .file   "GpProface.h"
+     1041                           .stag   .fake79,160
+     1042                           .member _nFlag,0,12,8,32
+     1043                           .member _nNum,32,14,8,32
+     1044                           .member _nRemNum,64,14,8,32
+     1045                           .member _nNowSt_Re,96,12,8,32
+     1046                           .member _nNextSt_Re,128,12,8,32
+     1047                           .eos
+     1048                           .sym    _TRANNUM_INPUT,0,8,13,160,.fake79
+     1049                           .stag   .fake80,288
+     1050                           .member _nGPTranNumInput,0,8,8,160,.fake79
+     1051                           .member _nScreenSetNum,160,12,8,32
+     1052                           .member _nScreenRxTime,192,12,8,32
+     1053                           .member _nScreenSafe,224,12,8,32
+     1054                           .member _nScreen_Send_Delay_Time,256,12,8,32
+     1055                           .eos
+     1056                           .sym    _SELETC_BUTTON,0,8,13,288,.fake80
+     1057                           .file   "Main.h"
+     1058                           .file   "main.c"
+     1059                   
+     1060 00000000                  .sect   ".cinit"
+     1061 00000000 00000001         .field          1,32
+     1062 00000001 00000000-        .field          _c_int01_ECC+0,32
+     1063 00000002 00000000         .field          0,32            ; _c_int01_ECC @ 0
+     1064                   
+     1065 0000006d                  .sect   ".text"
+     1066                   
+     1067                           .global _c_int01_ECC
+     1068 00000000                  .bss    _c_int01_ECC,1
+     1069                           .sym    _c_int01_ECC,_c_int01_ECC,144,2,32
+     1070                   
+     1071 00000003                  .sect   ".cinit"
+     1072 00000003 00000001         .field          1,32
+     1073 00000004 00000001-        .field          _c_int02_ECC+0,32
+     1074 00000005 00000000         .field          0,32            ; _c_int02_ECC @ 0
+     1075                   
+     1076 0000006d                  .sect   ".text"
+     1077                   
+     1078                           .global _c_int02_ECC
+     1079 00000001                  .bss    _c_int02_ECC,1
+     1080                           .sym    _c_int02_ECC,_c_int02_ECC,144,2,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   21
+
+     1081                   
+     1082 00000006                  .sect   ".cinit"
+     1083 00000006 00000001         .field          1,32
+     1084 00000007 00000002-        .field          _c_int03_ECC+0,32
+     1085 00000008 00000000         .field          0,32            ; _c_int03_ECC @ 0
+     1086                   
+     1087 0000006d                  .sect   ".text"
+     1088                   
+     1089                           .global _c_int03_ECC
+     1090 00000002                  .bss    _c_int03_ECC,1
+     1091                           .sym    _c_int03_ECC,_c_int03_ECC,144,2,32
+     1092                   
+     1093 00000009                  .sect   ".cinit"
+     1094 00000009 00000001         .field          1,32
+     1095 0000000a 00000003-        .field          _cint04+0,32
+     1096 0000000b 00000000         .field          0,32            ; _cint04 @ 0
+     1097                   
+     1098 0000006d                  .sect   ".text"
+     1099                   
+     1100                           .global _cint04
+     1101 00000003                  .bss    _cint04,1
+     1102                           .sym    _cint04,_cint04,14,2,32
+     1103                   
+     1104 0000000c                  .sect   ".cinit"
+     1105 0000000c 00000001         .field          1,32
+     1106 0000000d 00000004-        .field          _cint09+0,32
+     1107 0000000e 00000000         .field          0,32            ; _cint09 @ 0
+     1108                   
+     1109 0000006d                  .sect   ".text"
+     1110                   
+     1111                           .global _cint09
+     1112 00000004                  .bss    _cint09,1
+     1113                           .sym    _cint09,_cint09,14,2,32
+     1114                   
+     1115 0000000f                  .sect   ".cinit"
+     1116 0000000f 00000001         .field          1,32
+     1117 00000010 00000005-        .field          _cint10+0,32
+     1118 00000011 00000000         .field          0,32            ; _cint10 @ 0
+     1119                   
+     1120 0000006d                  .sect   ".text"
+     1121                   
+     1122                           .global _cint10
+     1123 00000005                  .bss    _cint10,1
+     1124                           .sym    _cint10,_cint10,14,2,32
+     1125                   
+     1126 00000012                  .sect   ".cinit"
+     1127 00000012 00000001         .field          1,32
+     1128 00000013 00000006-        .field          _glDebugCnt+0,32
+     1129 00000014 00000000         .field          0,32            ; _glDebugCnt @ 0
+     1130                   
+     1131 0000006d                  .sect   ".text"
+     1132                   
+     1133                           .global _glDebugCnt
+     1134 00000006                  .bss    _glDebugCnt,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   22
+
+     1135                           .sym    _glDebugCnt,_glDebugCnt,14,2,32
+     1136                   
+     1137 00000015                  .sect   ".cinit"
+     1138 00000015 00000001         .field          1,32
+     1139 00000016 00000007-        .field          _cint01+0,32
+     1140 00000017 00000000         .field          0,32            ; _cint01 @ 0
+     1141                   
+     1142 0000006d                  .sect   ".text"
+     1143                   
+     1144                           .global _cint01
+     1145 00000007                  .bss    _cint01,1
+     1146                           .sym    _cint01,_cint01,14,2,32
+     1147                   
+     1148 00000018                  .sect   ".cinit"
+     1149 00000018 00000001         .field          1,32
+     1150 00000019 00000008-        .field          _cint02+0,32
+     1151 0000001a 00000000         .field          0,32            ; _cint02 @ 0
+     1152                   
+     1153 0000006d                  .sect   ".text"
+     1154                   
+     1155                           .global _cint02
+     1156 00000008                  .bss    _cint02,1
+     1157                           .sym    _cint02,_cint02,14,2,32
+     1158                   
+     1159 0000001b                  .sect   ".cinit"
+     1160 0000001b 00000001         .field          1,32
+     1161 0000001c 00000009-        .field          _cint03+0,32
+     1162 0000001d 00000000         .field          0,32            ; _cint03 @ 0
+     1163                   
+     1164 0000006d                  .sect   ".text"
+     1165                   
+     1166                           .global _cint03
+     1167 00000009                  .bss    _cint03,1
+     1168                           .sym    _cint03,_cint03,14,2,32
+     1169                   
+     1170 0000001e                  .sect   ".cinit"
+     1171 0000001e 00000001         .field          1,32
+     1172 0000001f 0000000a-        .field          _glScc1a_cnt+0,32
+     1173 00000020 00000000         .field          0,32            ; _glScc1a_cnt @ 0
+     1174                   
+     1175 0000006d                  .sect   ".text"
+     1176                   
+     1177                           .global _glScc1a_cnt
+     1178 0000000a                  .bss    _glScc1a_cnt,1
+     1179                           .sym    _glScc1a_cnt,_glScc1a_cnt,4,2,32
+     1180                   
+     1181 00000021                  .sect   ".cinit"
+     1182 00000021 00000001         .field          1,32
+     1183 00000022 0000000b-        .field          _glScc1a_Delaycnt+0,32
+     1184 00000023 00000000         .field          0,32            ; _glScc1a_Delaycnt @ 0
+     1185                   
+     1186 0000006d                  .sect   ".text"
+     1187                   
+     1188                           .global _glScc1a_Delaycnt
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   23
+
+     1189 0000000b                  .bss    _glScc1a_Delaycnt,1
+     1190                           .sym    _glScc1a_Delaycnt,_glScc1a_Delaycnt,4,2,32
+     1191 0000006d                  .sect    ".text"
+     1192                   
+     1193                           .global _DSP_Init
+     1194                           .sym    _DSP_Init,_DSP_Init,32,2,0
+     1195                           .func   71
+     1196                   ;******************************************************************************
+     1197                   ;* FUNCTION NAME: _DSP_Init                                                   *
+     1198                   ;*                                                                            *
+     1199                   ;*   Architecture       : TMS320C30                                           *
+     1200                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1201                   ;*   Function Uses Regs : r0,ar0                                              *
+     1202                   ;*   Regs Saved         :                                                     *
+     1203                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1204                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     1205                   ;******************************************************************************
+     1206 0000006d          _DSP_Init:
+     1207                           .line   1
+     1208                   ;----------------------------------------------------------------------
+     1209                   ;  71 | void DSP_Init(void)                                                    
+     1210                   ;----------------------------------------------------------------------
+     1211 0000006d 0f2b0000         push      fp
+     1212 0000006e 500b0014         ldiu      sp,fp
+     1213                           .line   4
+     1214                   ;----------------------------------------------------------------------
+     1215                   ;  74 | STRB0_CTRL = 0x000f0468;        /* Bank=1M, Wait=1, SWW=3 wait by softw
+     1216                   ;     | are */                                                                 
+     1217                   ;----------------------------------------------------------------------
+     1218 0000006f 5028001b-        ldiu      @CL13,ar0
+     1219 00000070 5020001c-        ldiu      @CL14,r0
+     1220 00000071 1540c000         sti       r0,*ar0
+     1221                           .line   5
+     1222                   ;----------------------------------------------------------------------
+     1223                   ;  75 | STRB1_CTRL = 0x000f0468;        /* Bank=1M, Wait=0, SWW=0 wait by softw
+     1224                   ;     | are */                                                                 
+     1225                   ;----------------------------------------------------------------------
+     1226 00000072 5028001d-        ldiu      @CL15,ar0
+     1227 00000073 1540c000         sti       r0,*ar0
+     1228                           .line   6
+     1229                   ;----------------------------------------------------------------------
+     1230                   ;  76 | IOSTRB_CTRL = 0x000000e8;       /* Wait=2, SWW=11 wait by software */  
+     1231                   ;----------------------------------------------------------------------
+     1232 00000074 5028001e-        ldiu      @CL16,ar0
+     1233 00000075 506000e8         ldiu      232,r0
+     1234 00000076 1540c000         sti       r0,*ar0
+     1235                           .line   9
+     1236                   ;----------------------------------------------------------------------
+     1237                   ;  79 | TMR0_CTRL = 0x02C0;             // General in port : TCLK0             
+     1238                   ;----------------------------------------------------------------------
+     1239 00000077 5028001f-        ldiu      @CL17,ar0
+     1240 00000078 506002c0         ldiu      704,r0
+     1241 00000079 1540c000         sti       r0,*ar0
+     1242                           .line   10
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   24
+
+     1243                   ;----------------------------------------------------------------------
+     1244                   ;  80 | TMR0_PERD = 1474560;            // 58.9824 MHz/4/14745.6 = 1Hz         
+     1245                   ;----------------------------------------------------------------------
+     1246 0000007a 50280020-        ldiu      @CL18,ar0
+     1247 0000007b 50200021-        ldiu      @CL19,r0
+     1248 0000007c 1540c000         sti       r0,*ar0
+     1249                           .line   13
+     1250                   ;----------------------------------------------------------------------
+     1251                   ;  83 | TMR1_CTRL = 0x02C0;             // General in port : TCLK1             
+     1252                   ;----------------------------------------------------------------------
+     1253 0000007d 50280022-        ldiu      @CL20,ar0
+     1254 0000007e 506002c0         ldiu      704,r0
+     1255 0000007f 1540c000         sti       r0,*ar0
+     1256                           .line   14
+     1257                   ;----------------------------------------------------------------------
+     1258                   ;  84 | TMR1_PERD = 14745;              // 1ms                                 
+     1259                   ;----------------------------------------------------------------------
+     1260 00000080 50280023-        ldiu      @CL21,ar0
+     1261 00000081 50603999         ldiu      14745,r0
+     1262 00000082 1540c000         sti       r0,*ar0
+     1263                           .line   17
+     1264                   ;----------------------------------------------------------------------
+     1265                   ;  87 | INT0_VECT = OP_BR |(int)c_int01 ; /* SCC Interrupt 0 */                
+     1266                   ;----------------------------------------------------------------------
+     1267 00000083 50200018-        ldiu      @CL10,r0
+     1268 00000084 50280024-        ldiu      @CL22,ar0
+     1269 00000085 10200025-        or        @CL23,r0
+     1270 00000086 1540c000         sti       r0,*ar0
+     1271                           .line   18
+     1272                   ;----------------------------------------------------------------------
+     1273                   ;  88 | INT1_VECT = OP_BR |(int)c_int02 ; /* SCC Interrupt 1 */                
+     1274                   ;----------------------------------------------------------------------
+     1275 00000087 50200018-        ldiu      @CL10,r0
+     1276 00000088 50280026-        ldiu      @CL24,ar0
+     1277 00000089 10200027-        or        @CL25,r0
+     1278 0000008a 1540c000         sti       r0,*ar0
+     1279                           .line   19
+     1280                   ;----------------------------------------------------------------------
+     1281                   ;  89 | INT2_VECT = OP_BR |(int)c_int03 ; /* SCC Interrupt 2 */                
+     1282                   ;----------------------------------------------------------------------
+     1283 0000008b 50200018-        ldiu      @CL10,r0
+     1284 0000008c 50280028-        ldiu      @CL26,ar0
+     1285 0000008d 10200029-        or        @CL27,r0
+     1286 0000008e 1540c000         sti       r0,*ar0
+     1287                           .line   20
+     1288                   ;----------------------------------------------------------------------
+     1289                   ;  90 | TIMER0_INT_VECT  = OP_BR |(int)c_int09 ; /* Timer 0 */                 
+     1290                   ;----------------------------------------------------------------------
+     1291 0000008f 50200018-        ldiu      @CL10,r0
+     1292 00000090 5028002a-        ldiu      @CL28,ar0
+     1293 00000091 1020002b-        or        @CL29,r0
+     1294 00000092 1540c000         sti       r0,*ar0
+     1295                           .line   21
+     1296                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   25
+
+     1297                   ;  91 | TIMER1_INT_VECT  = OP_BR |(int)c_int10 ; /* Timer 0 */                 
+     1298                   ;----------------------------------------------------------------------
+     1299 00000093 50200018-        ldiu      @CL10,r0
+     1300 00000094 5028002c-        ldiu      @CL30,ar0
+     1301 00000095 1020002d-        or        @CL31,r0
+     1302 00000096 1540c000         sti       r0,*ar0
+     1303                           .line   23
+     1304                   ;----------------------------------------------------------------------
+     1305                   ;  93 | EDGE_INT;                       /* LEVEL INTERRUPT */                  
+     1306                   ;----------------------------------------------------------------------
+     1307 00000097 10754000  OR        04000h, ST 
+     1308                           .line   26
+     1309                   ;----------------------------------------------------------------------
+     1310                   ;  96 | asm("   OR      307h,IE");                                             
+     1311                   ;----------------------------------------------------------------------
+     1312 00000098 10760307         OR      307h,IE
+     1313                           .line   27
+     1314                   ;----------------------------------------------------------------------
+     1315                   ;  97 | *(int *)0x110000 = 0;           // Boot SW => ¿Œ≈Õ∑¥∆Æ∏¶ ∫ª∑°¿« ±‚¥…¿∏∑
+     1316                   ;     | Œ..                                                                    
+     1317                   ;  99 | // -- ISR SET --                                                       
+     1318                   ;----------------------------------------------------------------------
+     1319 00000099 5028002e-        ldiu      @CL32,ar0
+     1320 0000009a 50600000         ldiu      0,r0
+     1321 0000009b 1540c000         sti       r0,*ar0
+     1322                           .line   30
+     1323                   ;----------------------------------------------------------------------
+     1324                   ; 100 | c_int01_ECC = &SCC1_AB;                                                
+     1325                   ;----------------------------------------------------------------------
+     1326 0000009c 5020002f-        ldiu      @CL33,r0
+     1327 0000009d 15200000-        sti       r0,@_c_int01_ECC+0
+     1328                           .line   31
+     1329                   ;----------------------------------------------------------------------
+     1330                   ; 101 | c_int02_ECC = &SCC2_AB;                                                
+     1331                   ;----------------------------------------------------------------------
+     1332 0000009e 50200030-        ldiu      @CL34,r0
+     1333 0000009f 15200001-        sti       r0,@_c_int02_ECC+0
+     1334                           .line   32
+     1335                   ;----------------------------------------------------------------------
+     1336                   ; 102 | c_int03_ECC = &SCC3_AB;                                                
+     1337                   ;----------------------------------------------------------------------
+     1338 000000a0 50200031-        ldiu      @CL35,r0
+     1339 000000a1 15200002-        sti       r0,@_c_int03_ECC+0
+     1340                           .line   34
+     1341                   ;----------------------------------------------------------------------
+     1342                   ; 104 | LINE_OFF = 1;                                                          
+     1343                   ;----------------------------------------------------------------------
+     1344 000000a2 50280032-        ldiu      @CL36,ar0
+     1345 000000a3 50600001         ldiu      1,r0
+     1346 000000a4 1540c000         sti       r0,*ar0
+     1347                           .line   35
+     1348 000000a5 50480b01         ldiu      *-fp(1),ar0
+     1349 000000a6 504bc300         ldiu      *fp,fp
+     1350 000000a7 18740002         subi      2,sp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   26
+
+     1351 000000a8 68000008         bu        ar0
+     1352                   ;*      Branch Occurs to ar0 
+     1353                           .endfunc        105,000000000h,0
+     1354                   
+     1355                   
+     1356                   
+     1357 00000024                  .sect   ".cinit"
+     1358 00000024 00000001         .field          1,32
+     1359 00000025 0000000c-        .field          _gpVersion+0,32
+     1360 00000026 00000000+        .field          SL1,32          ; _gpVersion @ 0
+     1361                   
+     1362 000000a9                  .sect   ".text"
+     1363                   
+     1364                           .global _gpVersion
+     1365 0000000c                  .bss    _gpVersion,1
+     1366                           .sym    _gpVersion,_gpVersion,18,2,32
+     1367 000000a9                  .sect    ".text"
+     1368                   
+     1369                           .global _main
+     1370                           .sym    _main,_main,32,2,0
+     1371                           .func   113
+     1372                   ;******************************************************************************
+     1373                   ;* FUNCTION NAME: _main                                                       *
+     1374                   ;*                                                                            *
+     1375                   ;*   Architecture       : TMS320C30                                           *
+     1376                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1377                   ;*   Function Uses Regs : r0,fp,sp                                            *
+     1378                   ;*   Regs Saved         :                                                     *
+     1379                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1380                   ;*   Total Frame Size   : 2 Call + 0 Parm + 1 Auto + 0 SOE = 3 words          *
+     1381                   ;******************************************************************************
+     1382 000000a9          _main:
+     1383                           .sym    _i,1,4,1,32
+     1384                           .line   1
+     1385                   ;----------------------------------------------------------------------
+     1386                   ; 113 | void main(void)                                                        
+     1387                   ; 115 | int i;                                                                 
+     1388                   ;----------------------------------------------------------------------
+     1389 000000a9 0f2b0000         push      fp
+     1390 000000aa 500b0014         ldiu      sp,fp
+     1391 000000ab 02740001         addi      1,sp
+     1392                           .line   5
+     1393                   ;----------------------------------------------------------------------
+     1394                   ; 117 | DINT;                                                           // glob
+     1395                   ;     | al interrupt disable                                                   
+     1396                   ;----------------------------------------------------------------------
+     1397 000000ac 02f5dfff  AND       0DFFFh, ST 
+     1398                           .line   6
+     1399                   ;----------------------------------------------------------------------
+     1400                   ; 118 | DSP_Init() ;                                                           
+     1401                   ;----------------------------------------------------------------------
+     1402 000000ad 6200006d'        call      _DSP_Init
+     1403                                                           ; Call Occurs
+     1404                           .line   7
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   27
+
+     1405                   ;----------------------------------------------------------------------
+     1406                   ; 119 | Debug3xInit(TMS320C32);                                                
+     1407                   ;----------------------------------------------------------------------
+     1408 000000ae 50600020         ldiu      32,r0
+     1409 000000af 0f200000         push      r0
+     1410 000000b0 62000046'        call      _Debug3xInit
+     1411                                                           ; Call Occurs
+     1412 000000b1 18740001         subi      1,sp
+     1413                           .line   9
+     1414                   ;----------------------------------------------------------------------
+     1415                   ; 121 | SCC_Initial();                                                         
+     1416                   ;----------------------------------------------------------------------
+     1417 000000b2 62000000!        call      _SCC_Initial
+     1418                                                           ; Call Occurs
+     1419                           .line   10
+     1420                   ;----------------------------------------------------------------------
+     1421                   ; 122 | DP_DataPro_Init();                                                     
+     1422                   ;----------------------------------------------------------------------
+     1423 000000b3 62000000!        call      _DP_DataPro_Init
+     1424                                                           ; Call Occurs
+     1425                           .line   11
+     1426                   ;----------------------------------------------------------------------
+     1427                   ; 123 | DP_SanDisk_Check();                                                    
+     1428                   ;----------------------------------------------------------------------
+     1429 000000b4 62000000!        call      _DP_SanDisk_Check
+     1430                                                           ; Call Occurs
+     1431                           .line   12
+     1432                   ;----------------------------------------------------------------------
+     1433                   ; 124 | GpProface_Init();                                                      
+     1434                   ;----------------------------------------------------------------------
+     1435 000000b5 62000000!        call      _GpProface_Init
+     1436                                                           ; Call Occurs
+     1437                           .line   13
+     1438                   ;----------------------------------------------------------------------
+     1439                   ; 125 | LED_Init();                                                            
+     1440                   ;----------------------------------------------------------------------
+     1441 000000b6 62000000!        call      _LED_Init
+     1442                                                           ; Call Occurs
+     1443                           .line   15
+     1444                   ;----------------------------------------------------------------------
+     1445                   ; 127 | EINT;// global interrupt enable                                        
+     1446                   ; 129 | while(1)                                                               
+     1447                   ;----------------------------------------------------------------------
+     1448 000000b7 10752000  OR        02000h, ST 
+     1449 000000b8          L39:        
+     1450                           .line   19
+     1451                   ;----------------------------------------------------------------------
+     1452                   ; 131 | glDebugCnt++;                                                          
+     1453                   ;----------------------------------------------------------------------
+     1454 000000b8 50600001         ldiu      1,r0
+     1455 000000b9 02200006-        addi      @_glDebugCnt+0,r0     ; Unsigned
+     1456 000000ba 15200006-        sti       r0,@_glDebugCnt+0
+     1457                           .line   20
+     1458                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   28
+
+     1459                   ; 132 | nDisplay_Pro();                                                        
+     1460                   ;----------------------------------------------------------------------
+     1461 000000bb 6200018a'        call      _nDisplay_Pro
+     1462                                                           ; Call Occurs
+     1463                           .line   21
+     1464                   ;----------------------------------------------------------------------
+     1465                   ; 133 | DP_DataPro_Main();                                                     
+     1466                   ;----------------------------------------------------------------------
+     1467 000000bc 62000000!        call      _DP_DataPro_Main
+     1468                                                           ; Call Occurs
+     1469                           .line   22
+     1470                   ;----------------------------------------------------------------------
+     1471                   ; 134 | M_Scc1_Rx();                                                           
+     1472                   ;----------------------------------------------------------------------
+     1473 000000bd 6200017c'        call      _M_Scc1_Rx
+     1474                                                           ; Call Occurs
+     1475                           .line   23
+     1476                   ;----------------------------------------------------------------------
+     1477                   ; 135 | M_Scc2_RX();                                                           
+     1478                   ;----------------------------------------------------------------------
+     1479 000000be 62000198'        call      _M_Scc2_RX
+     1480                                                           ; Call Occurs
+     1481                           .line   24
+     1482                   ;----------------------------------------------------------------------
+     1483                   ; 136 | Gp_Pro_Main();                                                         
+     1484                   ;----------------------------------------------------------------------
+     1485 000000bf 62000000!        call      _Gp_Pro_Main
+     1486                                                           ; Call Occurs
+     1487                           .line   25
+     1488                   ;----------------------------------------------------------------------
+     1489                   ; 137 | LED_Main();                                                            
+     1490                   ;----------------------------------------------------------------------
+     1491 000000c0 62000000!        call      _LED_Main
+     1492                                                           ; Call Occurs
+     1493                           .line   26
+     1494 000000c1 6a00fff6         bu        L39
+     1495                   ;*      Branch Occurs to L39 
+     1496                           .line   27
+     1497                           .endfunc        139,000000000h,1
+     1498                   
+     1499                   
+     1500 000000c2                  .sect    ".text"
+     1501                   
+     1502                           .global _c_int01
+     1503                           .sym    _c_int01,_c_int01,32,2,0
+     1504                           .func   145
+     1505                   ;******************************************************************************
+     1506                   ;* FUNCTION NAME: _c_int01                                                    *
+     1507                   ;*                                                                            *
+     1508                   ;*   Architecture       : TMS320C30                                           *
+     1509                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1510                   ;*   Function Uses Regs : r0,pc                                               *
+     1511                   ;*   Regs Saved         : f0,r0,f1,r1,f2,r2,f3,r3,f4,r4,f5,r5,f6,r6,f7,r7,ar0,*
+     1512                   ;*                        ar1,ar2,ir0,ir1,bk,sp,rs,re,rc,pc                   *
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   29
+
+     1513                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1514                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 25 SOE = 27 words        *
+     1515                   ;******************************************************************************
+     1516 000000c2          _c_int01:
+     1517                           .line   1
+     1518                   ;----------------------------------------------------------------------
+     1519                   ; 145 | void c_int01(void)                                                     
+     1520                   ;----------------------------------------------------------------------
+     1521 000000c2 0f350000         push      st
+     1522 000000c3 0f2b0000         push      fp
+     1523 000000c4 500b0014         ldiu      sp,fp
+     1524 000000c5 0f200000         push      r0
+     1525 000000c6 0fa00000         pushf     f0
+     1526 000000c7 0f210000         push      r1
+     1527 000000c8 0fa10000         pushf     f1
+     1528 000000c9 0f220000         push      r2
+     1529 000000ca 0fa20000         pushf     f2
+     1530 000000cb 0f230000         push      r3
+     1531 000000cc 0fa30000         pushf     f3
+     1532 000000cd 0f280000         push      ar0
+     1533 000000ce 0f290000         push      ar1
+     1534 000000cf 0f2a0000         push      ar2
+     1535 000000d0 0f310000         push      ir0
+     1536 000000d1 0f320000         push      ir1
+     1537 000000d2 0f390000         push      rs
+     1538 000000d3 0f3a0000         push      re
+     1539 000000d4 0f3b0000         push      rc
+     1540 000000d5 0f240000         push      r4
+     1541 000000d6 0fa40000         pushf     f4
+     1542 000000d7 0f250000         push      r5
+     1543 000000d8 0fa50000         pushf     f5
+     1544 000000d9 0f260000         push      r6
+     1545 000000da 0fa60000         pushf     f6
+     1546 000000db 0f270000         push      r7
+     1547 000000dc 0fa70000         pushf     f7
+     1548 000000dd 0f330000         push      bk
+     1549 000000de 03750100         andn      256,st                ; Disable any existing repeat loops
+     1550                           .line   3
+     1551                   ;----------------------------------------------------------------------
+     1552                   ; 147 | cint01++;                                                              
+     1553                   ;----------------------------------------------------------------------
+     1554 000000df 50600001         ldiu      1,r0
+     1555 000000e0 02200007-        addi      @_cint01+0,r0         ; Unsigned
+     1556 000000e1 15200007-        sti       r0,@_cint01+0
+     1557                           .line   4
+     1558                   ;----------------------------------------------------------------------
+     1559                   ; 148 | (*c_int01_ECC)();                                                      
+     1560                   ;----------------------------------------------------------------------
+     1561 000000e2 50200000-        ldiu      @_c_int01_ECC+0,r0
+     1562 000000e3 70000000         callu     r0
+     1563                                                           ; Call Occurs
+     1564                           .line   6
+     1565 000000e4 0e330000         pop       bk
+     1566 000000e5 0ea70000         popf      f7
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   30
+
+     1567 000000e6 0e270000         pop       r7
+     1568 000000e7 0ea60000         popf      f6
+     1569 000000e8 0e260000         pop       r6
+     1570 000000e9 0ea50000         popf      f5
+     1571 000000ea 0e250000         pop       r5
+     1572 000000eb 0ea40000         popf      f4
+     1573 000000ec 0e240000         pop       r4
+     1574 000000ed 0e3b0000         pop       rc
+     1575 000000ee 0e3a0000         pop       re
+     1576 000000ef 0e390000         pop       rs
+     1577 000000f0 0e320000         pop       ir1
+     1578 000000f1 0e310000         pop       ir0
+     1579 000000f2 0e2a0000         pop       ar2
+     1580 000000f3 0e290000         pop       ar1
+     1581 000000f4 0e280000         pop       ar0
+     1582 000000f5 0ea30000         popf      f3
+     1583 000000f6 0e230000         pop       r3
+     1584 000000f7 0ea20000         popf      f2
+     1585 000000f8 0e220000         pop       r2
+     1586 000000f9 0ea10000         popf      f1
+     1587 000000fa 0e210000         pop       r1
+     1588 000000fb 0ea00000         popf      f0
+     1589 000000fc 0e200000         pop       r0
+     1590 000000fd 0e2b0000         pop       fp
+     1591 000000fe 0e350000         pop       st
+     1592 000000ff 78000000         reti
+     1593                                                                   ; Return From Interrupt
+     1594                           .endfunc        150,0003f07ffh,0
+     1595                   
+     1596                   
+     1597 00000100                  .sect    ".text"
+     1598                   
+     1599                           .global _c_int02
+     1600                           .sym    _c_int02,_c_int02,32,2,0
+     1601                           .func   156
+     1602                   ;******************************************************************************
+     1603                   ;* FUNCTION NAME: _c_int02                                                    *
+     1604                   ;*                                                                            *
+     1605                   ;*   Architecture       : TMS320C30                                           *
+     1606                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1607                   ;*   Function Uses Regs : r0,pc                                               *
+     1608                   ;*   Regs Saved         : f0,r0,f1,r1,f2,r2,f3,r3,f4,r4,f5,r5,f6,r6,f7,r7,ar0,*
+     1609                   ;*                        ar1,ar2,ir0,ir1,bk,sp,rs,re,rc,pc                   *
+     1610                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1611                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 25 SOE = 27 words        *
+     1612                   ;******************************************************************************
+     1613 00000100          _c_int02:
+     1614                           .line   1
+     1615                   ;----------------------------------------------------------------------
+     1616                   ; 156 | void c_int02(void)                                                     
+     1617                   ;----------------------------------------------------------------------
+     1618 00000100 0f350000         push      st
+     1619 00000101 0f2b0000         push      fp
+     1620 00000102 500b0014         ldiu      sp,fp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   31
+
+     1621 00000103 0f200000         push      r0
+     1622 00000104 0fa00000         pushf     f0
+     1623 00000105 0f210000         push      r1
+     1624 00000106 0fa10000         pushf     f1
+     1625 00000107 0f220000         push      r2
+     1626 00000108 0fa20000         pushf     f2
+     1627 00000109 0f230000         push      r3
+     1628 0000010a 0fa30000         pushf     f3
+     1629 0000010b 0f280000         push      ar0
+     1630 0000010c 0f290000         push      ar1
+     1631 0000010d 0f2a0000         push      ar2
+     1632 0000010e 0f310000         push      ir0
+     1633 0000010f 0f320000         push      ir1
+     1634 00000110 0f390000         push      rs
+     1635 00000111 0f3a0000         push      re
+     1636 00000112 0f3b0000         push      rc
+     1637 00000113 0f240000         push      r4
+     1638 00000114 0fa40000         pushf     f4
+     1639 00000115 0f250000         push      r5
+     1640 00000116 0fa50000         pushf     f5
+     1641 00000117 0f260000         push      r6
+     1642 00000118 0fa60000         pushf     f6
+     1643 00000119 0f270000         push      r7
+     1644 0000011a 0fa70000         pushf     f7
+     1645 0000011b 0f330000         push      bk
+     1646 0000011c 03750100         andn      256,st                ; Disable any existing repeat loops
+     1647                           .line   3
+     1648                   ;----------------------------------------------------------------------
+     1649                   ; 158 | cint02++;                                                              
+     1650                   ;----------------------------------------------------------------------
+     1651 0000011d 50600001         ldiu      1,r0
+     1652 0000011e 02200008-        addi      @_cint02+0,r0         ; Unsigned
+     1653 0000011f 15200008-        sti       r0,@_cint02+0
+     1654                           .line   4
+     1655                   ;----------------------------------------------------------------------
+     1656                   ; 159 | (*c_int02_ECC)();                                                      
+     1657                   ;----------------------------------------------------------------------
+     1658 00000120 50200001-        ldiu      @_c_int02_ECC+0,r0
+     1659 00000121 70000000         callu     r0
+     1660                                                           ; Call Occurs
+     1661                           .line   5
+     1662 00000122 0e330000         pop       bk
+     1663 00000123 0ea70000         popf      f7
+     1664 00000124 0e270000         pop       r7
+     1665 00000125 0ea60000         popf      f6
+     1666 00000126 0e260000         pop       r6
+     1667 00000127 0ea50000         popf      f5
+     1668 00000128 0e250000         pop       r5
+     1669 00000129 0ea40000         popf      f4
+     1670 0000012a 0e240000         pop       r4
+     1671 0000012b 0e3b0000         pop       rc
+     1672 0000012c 0e3a0000         pop       re
+     1673 0000012d 0e390000         pop       rs
+     1674 0000012e 0e320000         pop       ir1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   32
+
+     1675 0000012f 0e310000         pop       ir0
+     1676 00000130 0e2a0000         pop       ar2
+     1677 00000131 0e290000         pop       ar1
+     1678 00000132 0e280000         pop       ar0
+     1679 00000133 0ea30000         popf      f3
+     1680 00000134 0e230000         pop       r3
+     1681 00000135 0ea20000         popf      f2
+     1682 00000136 0e220000         pop       r2
+     1683 00000137 0ea10000         popf      f1
+     1684 00000138 0e210000         pop       r1
+     1685 00000139 0ea00000         popf      f0
+     1686 0000013a 0e200000         pop       r0
+     1687 0000013b 0e2b0000         pop       fp
+     1688 0000013c 0e350000         pop       st
+     1689 0000013d 78000000         reti
+     1690                                                                   ; Return From Interrupt
+     1691                           .endfunc        160,0003f07ffh,0
+     1692                   
+     1693                   
+     1694 0000013e                  .sect    ".text"
+     1695                   
+     1696                           .global _c_int03
+     1697                           .sym    _c_int03,_c_int03,32,2,0
+     1698                           .func   166
+     1699                   ;******************************************************************************
+     1700                   ;* FUNCTION NAME: _c_int03                                                    *
+     1701                   ;*                                                                            *
+     1702                   ;*   Architecture       : TMS320C30                                           *
+     1703                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1704                   ;*   Function Uses Regs : r0,pc                                               *
+     1705                   ;*   Regs Saved         : f0,r0,f1,r1,f2,r2,f3,r3,f4,r4,f5,r5,f6,r6,f7,r7,ar0,*
+     1706                   ;*                        ar1,ar2,ir0,ir1,bk,sp,rs,re,rc,pc                   *
+     1707                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1708                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 25 SOE = 27 words        *
+     1709                   ;******************************************************************************
+     1710 0000013e          _c_int03:
+     1711                           .line   1
+     1712                   ;----------------------------------------------------------------------
+     1713                   ; 166 | void c_int03(void)                                                     
+     1714                   ;----------------------------------------------------------------------
+     1715 0000013e 0f350000         push      st
+     1716 0000013f 0f2b0000         push      fp
+     1717 00000140 500b0014         ldiu      sp,fp
+     1718 00000141 0f200000         push      r0
+     1719 00000142 0fa00000         pushf     f0
+     1720 00000143 0f210000         push      r1
+     1721 00000144 0fa10000         pushf     f1
+     1722 00000145 0f220000         push      r2
+     1723 00000146 0fa20000         pushf     f2
+     1724 00000147 0f230000         push      r3
+     1725 00000148 0fa30000         pushf     f3
+     1726 00000149 0f280000         push      ar0
+     1727 0000014a 0f290000         push      ar1
+     1728 0000014b 0f2a0000         push      ar2
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   33
+
+     1729 0000014c 0f310000         push      ir0
+     1730 0000014d 0f320000         push      ir1
+     1731 0000014e 0f390000         push      rs
+     1732 0000014f 0f3a0000         push      re
+     1733 00000150 0f3b0000         push      rc
+     1734 00000151 0f240000         push      r4
+     1735 00000152 0fa40000         pushf     f4
+     1736 00000153 0f250000         push      r5
+     1737 00000154 0fa50000         pushf     f5
+     1738 00000155 0f260000         push      r6
+     1739 00000156 0fa60000         pushf     f6
+     1740 00000157 0f270000         push      r7
+     1741 00000158 0fa70000         pushf     f7
+     1742 00000159 0f330000         push      bk
+     1743 0000015a 03750100         andn      256,st                ; Disable any existing repeat loops
+     1744                           .line   3
+     1745                   ;----------------------------------------------------------------------
+     1746                   ; 168 | cint03++;                                                              
+     1747                   ;----------------------------------------------------------------------
+     1748 0000015b 50600001         ldiu      1,r0
+     1749 0000015c 02200009-        addi      @_cint03+0,r0         ; Unsigned
+     1750 0000015d 15200009-        sti       r0,@_cint03+0
+     1751                           .line   4
+     1752                   ;----------------------------------------------------------------------
+     1753                   ; 169 | (*c_int03_ECC)();                                                      
+     1754                   ;----------------------------------------------------------------------
+     1755 0000015e 50200002-        ldiu      @_c_int03_ECC+0,r0
+     1756 0000015f 70000000         callu     r0
+     1757                                                           ; Call Occurs
+     1758                           .line   5
+     1759 00000160 0e330000         pop       bk
+     1760 00000161 0ea70000         popf      f7
+     1761 00000162 0e270000         pop       r7
+     1762 00000163 0ea60000         popf      f6
+     1763 00000164 0e260000         pop       r6
+     1764 00000165 0ea50000         popf      f5
+     1765 00000166 0e250000         pop       r5
+     1766 00000167 0ea40000         popf      f4
+     1767 00000168 0e240000         pop       r4
+     1768 00000169 0e3b0000         pop       rc
+     1769 0000016a 0e3a0000         pop       re
+     1770 0000016b 0e390000         pop       rs
+     1771 0000016c 0e320000         pop       ir1
+     1772 0000016d 0e310000         pop       ir0
+     1773 0000016e 0e2a0000         pop       ar2
+     1774 0000016f 0e290000         pop       ar1
+     1775 00000170 0e280000         pop       ar0
+     1776 00000171 0ea30000         popf      f3
+     1777 00000172 0e230000         pop       r3
+     1778 00000173 0ea20000         popf      f2
+     1779 00000174 0e220000         pop       r2
+     1780 00000175 0ea10000         popf      f1
+     1781 00000176 0e210000         pop       r1
+     1782 00000177 0ea00000         popf      f0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   34
+
+     1783 00000178 0e200000         pop       r0
+     1784 00000179 0e2b0000         pop       fp
+     1785 0000017a 0e350000         pop       st
+     1786 0000017b 78000000         reti
+     1787                                                                   ; Return From Interrupt
+     1788                           .endfunc        170,0003f07ffh,0
+     1789                   
+     1790                   
+     1791 0000017c                  .sect    ".text"
+     1792                   
+     1793                           .global _M_Scc1_Rx
+     1794                           .sym    _M_Scc1_Rx,_M_Scc1_Rx,32,2,0
+     1795                           .func   176
+     1796                   ;******************************************************************************
+     1797                   ;* FUNCTION NAME: _M_Scc1_Rx                                                  *
+     1798                   ;*                                                                            *
+     1799                   ;*   Architecture       : TMS320C30                                           *
+     1800                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1801                   ;*   Function Uses Regs : r0,fp,sp,st                                         *
+     1802                   ;*   Regs Saved         :                                                     *
+     1803                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1804                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     1805                   ;******************************************************************************
+     1806 0000017c          _M_Scc1_Rx:
+     1807                           .line   1
+     1808                   ;----------------------------------------------------------------------
+     1809                   ; 176 | void M_Scc1_Rx()                                                       
+     1810                   ;----------------------------------------------------------------------
+     1811 0000017c 0f2b0000         push      fp
+     1812 0000017d 500b0014         ldiu      sp,fp
+     1813                           .line   3
+     1814                   ;----------------------------------------------------------------------
+     1815                   ; 178 | if(SCC1_INIT_A.RxOK)                                                   
+     1816                   ;----------------------------------------------------------------------
+     1817 0000017e 08200005!        ldi       @_SCC1_INIT_A+5,r0
+     1818 0000017f 6a050006         beq       L53
+     1819                   ;*      Branch Occurs to L53 
+     1820                           .line   5
+     1821                   ;----------------------------------------------------------------------
+     1822                   ; 180 | SCC1_INIT_A.RxOK = FALSE;                                              
+     1823                   ;----------------------------------------------------------------------
+     1824 00000180 50600000         ldiu      0,r0
+     1825 00000181 15200005!        sti       r0,@_SCC1_INIT_A+5
+     1826                           .line   6
+     1827                   ;----------------------------------------------------------------------
+     1828                   ; 181 | DP_SCC1_A_RX_PRO(m_Scc1RXBuff_Ach_Back);                               
+     1829                   ;----------------------------------------------------------------------
+     1830 00000182 50200033-        ldiu      @CL37,r0
+     1831 00000183 0f200000         push      r0
+     1832 00000184 62000000!        call      _DP_SCC1_A_RX_PRO
+     1833                                                           ; Call Occurs
+     1834 00000185 18740001         subi      1,sp
+     1835 00000186          L53:        
+     1836                           .line   8
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   35
+
+     1837 00000186 50530b01         ldiu      *-fp(1),bk
+     1838 00000187 504bc300         ldiu      *fp,fp
+     1839 00000188 18740002         subi      2,sp
+     1840 00000189 68000013         bu        bk
+     1841                   ;*      Branch Occurs to bk 
+     1842                           .endfunc        183,000000000h,0
+     1843                   
+     1844                   
+     1845 0000018a                  .sect    ".text"
+     1846                   
+     1847                           .global _nDisplay_Pro
+     1848                           .sym    _nDisplay_Pro,_nDisplay_Pro,32,2,0
+     1849                           .func   187
+     1850                   ;******************************************************************************
+     1851                   ;* FUNCTION NAME: _nDisplay_Pro                                               *
+     1852                   ;*                                                                            *
+     1853                   ;*   Architecture       : TMS320C30                                           *
+     1854                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1855                   ;*   Function Uses Regs : r0,fp,sp,st                                         *
+     1856                   ;*   Regs Saved         :                                                     *
+     1857                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1858                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     1859                   ;******************************************************************************
+     1860 0000018a          _nDisplay_Pro:
+     1861                           .line   1
+     1862                   ;----------------------------------------------------------------------
+     1863                   ; 187 | void nDisplay_Pro()                                                    
+     1864                   ;----------------------------------------------------------------------
+     1865 0000018a 0f2b0000         push      fp
+     1866 0000018b 500b0014         ldiu      sp,fp
+     1867                           .line   3
+     1868                   ;----------------------------------------------------------------------
+     1869                   ; 189 | if(SCC3_INIT_A.RxOK)                                                   
+     1870                   ;----------------------------------------------------------------------
+     1871 0000018c 08200005!        ldi       @_SCC3_INIT_A+5,r0
+     1872 0000018d 6a050006         beq       L57
+     1873                   ;*      Branch Occurs to L57 
+     1874                           .line   5
+     1875                   ;----------------------------------------------------------------------
+     1876                   ; 191 | SCC3_INIT_A.RxOK= FALSE;                                               
+     1877                   ;----------------------------------------------------------------------
+     1878 0000018e 50600000         ldiu      0,r0
+     1879 0000018f 15200005!        sti       r0,@_SCC3_INIT_A+5
+     1880                           .line   6
+     1881                   ;----------------------------------------------------------------------
+     1882                   ; 192 | Gp_Receive(m_Scc3RXBuff_Ach_Back);                                     
+     1883                   ;----------------------------------------------------------------------
+     1884 00000190 50200034-        ldiu      @CL38,r0
+     1885 00000191 0f200000         push      r0
+     1886 00000192 62000000!        call      _Gp_Receive
+     1887                                                           ; Call Occurs
+     1888 00000193 18740001         subi      1,sp
+     1889 00000194          L57:        
+     1890                           .line   8
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   36
+
+     1891 00000194 50530b01         ldiu      *-fp(1),bk
+     1892 00000195 504bc300         ldiu      *fp,fp
+     1893 00000196 18740002         subi      2,sp
+     1894 00000197 68000013         bu        bk
+     1895                   ;*      Branch Occurs to bk 
+     1896                           .endfunc        194,000000000h,0
+     1897                   
+     1898                   
+     1899 00000198                  .sect    ".text"
+     1900                   
+     1901                           .global _M_Scc2_RX
+     1902                           .sym    _M_Scc2_RX,_M_Scc2_RX,32,2,0
+     1903                           .func   198
+     1904                   ;******************************************************************************
+     1905                   ;* FUNCTION NAME: _M_Scc2_RX                                                  *
+     1906                   ;*                                                                            *
+     1907                   ;*   Architecture       : TMS320C30                                           *
+     1908                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1909                   ;*   Function Uses Regs : r0,fp,sp,st                                         *
+     1910                   ;*   Regs Saved         :                                                     *
+     1911                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1912                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     1913                   ;******************************************************************************
+     1914 00000198          _M_Scc2_RX:
+     1915                           .line   1
+     1916                   ;----------------------------------------------------------------------
+     1917                   ; 198 | void M_Scc2_RX()                                                       
+     1918                   ;----------------------------------------------------------------------
+     1919 00000198 0f2b0000         push      fp
+     1920 00000199 500b0014         ldiu      sp,fp
+     1921                           .line   3
+     1922                   ;----------------------------------------------------------------------
+     1923                   ; 200 | if(SCC2_INIT_A.RxOK)                                                   
+     1924                   ;----------------------------------------------------------------------
+     1925 0000019a 08200005!        ldi       @_SCC2_INIT_A+5,r0
+     1926 0000019b 6a050006         beq       L61
+     1927                   ;*      Branch Occurs to L61 
+     1928                           .line   5
+     1929                   ;----------------------------------------------------------------------
+     1930                   ; 202 | SCC2_INIT_A.RxOK = FALSE;                                              
+     1931                   ;----------------------------------------------------------------------
+     1932 0000019c 50600000         ldiu      0,r0
+     1933 0000019d 15200005!        sti       r0,@_SCC2_INIT_A+5
+     1934                           .line   6
+     1935                   ;----------------------------------------------------------------------
+     1936                   ; 203 | DP_SCC2_A_RX_PRO(m_Scc2RXBuff_Ach_Back);                               
+     1937                   ;----------------------------------------------------------------------
+     1938 0000019e 50200035-        ldiu      @CL39,r0
+     1939 0000019f 0f200000         push      r0
+     1940 000001a0 62000000!        call      _DP_SCC2_A_RX_PRO
+     1941                                                           ; Call Occurs
+     1942 000001a1 18740001         subi      1,sp
+     1943 000001a2          L61:        
+     1944                           .line   9
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   37
+
+     1945                   ;----------------------------------------------------------------------
+     1946                   ; 206 | if(SCC2_INIT_B.RxOK)                                                   
+     1947                   ;----------------------------------------------------------------------
+     1948 000001a2 08200005!        ldi       @_SCC2_INIT_B+5,r0
+     1949 000001a3 6a050006         beq       L63
+     1950                   ;*      Branch Occurs to L63 
+     1951                           .line   11
+     1952                   ;----------------------------------------------------------------------
+     1953                   ; 208 | SCC2_INIT_B.RxOK = FALSE;                                              
+     1954                   ;----------------------------------------------------------------------
+     1955 000001a4 50600000         ldiu      0,r0
+     1956 000001a5 15200005!        sti       r0,@_SCC2_INIT_B+5
+     1957                           .line   12
+     1958                   ;----------------------------------------------------------------------
+     1959                   ; 209 | DP_SCC2_B_RX_PRO(m_Scc2RXBuff_Bch_Back);                               
+     1960                   ;----------------------------------------------------------------------
+     1961 000001a6 50200036-        ldiu      @CL40,r0
+     1962 000001a7 0f200000         push      r0
+     1963 000001a8 62000000!        call      _DP_SCC2_B_RX_PRO
+     1964                                                           ; Call Occurs
+     1965 000001a9 18740001         subi      1,sp
+     1966 000001aa          L63:        
+     1967                           .line   14
+     1968 000001aa 50530b01         ldiu      *-fp(1),bk
+     1969 000001ab 504bc300         ldiu      *fp,fp
+     1970 000001ac 18740002         subi      2,sp
+     1971 000001ad 68000013         bu        bk
+     1972                   ;*      Branch Occurs to bk 
+     1973                           .endfunc        211,000000000h,0
+     1974                   
+     1975                   
+     1976 000001ae                  .sect    ".text"
+     1977                   
+     1978                           .global _c_int09
+     1979                           .sym    _c_int09,_c_int09,32,2,0
+     1980                           .func   217
+     1981                   ;******************************************************************************
+     1982                   ;* FUNCTION NAME: _c_int09                                                    *
+     1983                   ;*                                                                            *
+     1984                   ;*   Architecture       : TMS320C30                                           *
+     1985                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1986                   ;*   Function Uses Regs : r0                                                  *
+     1987                   ;*   Regs Saved         : f0,r0,f1,r1,f2,r2,f3,r3,f4,r4,f5,r5,f6,r6,f7,r7,ar0,*
+     1988                   ;*                        ar1,ar2,ir0,ir1,bk,sp,rs,re,rc,pc                   *
+     1989                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1990                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 25 SOE = 27 words        *
+     1991                   ;******************************************************************************
+     1992 000001ae          _c_int09:
+     1993                           .line   1
+     1994                   ;----------------------------------------------------------------------
+     1995                   ; 217 | void c_int09()                                                         
+     1996                   ;----------------------------------------------------------------------
+     1997 000001ae 0f350000         push      st
+     1998 000001af 0f2b0000         push      fp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   38
+
+     1999 000001b0 500b0014         ldiu      sp,fp
+     2000 000001b1 0f200000         push      r0
+     2001 000001b2 0fa00000         pushf     f0
+     2002 000001b3 0f210000         push      r1
+     2003 000001b4 0fa10000         pushf     f1
+     2004 000001b5 0f220000         push      r2
+     2005 000001b6 0fa20000         pushf     f2
+     2006 000001b7 0f230000         push      r3
+     2007 000001b8 0fa30000         pushf     f3
+     2008 000001b9 0f280000         push      ar0
+     2009 000001ba 0f290000         push      ar1
+     2010 000001bb 0f2a0000         push      ar2
+     2011 000001bc 0f310000         push      ir0
+     2012 000001bd 0f320000         push      ir1
+     2013 000001be 0f390000         push      rs
+     2014 000001bf 0f3a0000         push      re
+     2015 000001c0 0f3b0000         push      rc
+     2016 000001c1 0f240000         push      r4
+     2017 000001c2 0fa40000         pushf     f4
+     2018 000001c3 0f250000         push      r5
+     2019 000001c4 0fa50000         pushf     f5
+     2020 000001c5 0f260000         push      r6
+     2021 000001c6 0fa60000         pushf     f6
+     2022 000001c7 0f270000         push      r7
+     2023 000001c8 0fa70000         pushf     f7
+     2024 000001c9 0f330000         push      bk
+     2025 000001ca 03750100         andn      256,st                ; Disable any existing repeat loops
+     2026                           .line   3
+     2027                   ;----------------------------------------------------------------------
+     2028                   ; 219 | cint09++;                                                              
+     2029                   ;----------------------------------------------------------------------
+     2030 000001cb 50600001         ldiu      1,r0
+     2031 000001cc 02200004-        addi      @_cint09+0,r0         ; Unsigned
+     2032 000001cd 15200004-        sti       r0,@_cint09+0
+     2033                           .line   5
+     2034                   ;----------------------------------------------------------------------
+     2035                   ; 221 | Scc100msTime();                                                        
+     2036                   ;----------------------------------------------------------------------
+     2037 000001ce 62000000!        call      _Scc100msTime
+     2038                                                           ; Call Occurs
+     2039                           .line   6
+     2040                   ;----------------------------------------------------------------------
+     2041                   ; 222 | DP_Timer_100ms_DataPro();                                              
+     2042                   ;----------------------------------------------------------------------
+     2043 000001cf 62000000!        call      _DP_Timer_100ms_DataPro
+     2044                                                           ; Call Occurs
+     2045                           .line   7
+     2046                   ;----------------------------------------------------------------------
+     2047                   ; 223 | GP_100msTime();                                                        
+     2048                   ;----------------------------------------------------------------------
+     2049 000001d0 62000000!        call      _GP_100msTime
+     2050                                                           ; Call Occurs
+     2051                           .line   8
+     2052 000001d1 0e330000         pop       bk
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   39
+
+     2053 000001d2 0ea70000         popf      f7
+     2054 000001d3 0e270000         pop       r7
+     2055 000001d4 0ea60000         popf      f6
+     2056 000001d5 0e260000         pop       r6
+     2057 000001d6 0ea50000         popf      f5
+     2058 000001d7 0e250000         pop       r5
+     2059 000001d8 0ea40000         popf      f4
+     2060 000001d9 0e240000         pop       r4
+     2061 000001da 0e3b0000         pop       rc
+     2062 000001db 0e3a0000         pop       re
+     2063 000001dc 0e390000         pop       rs
+     2064 000001dd 0e320000         pop       ir1
+     2065 000001de 0e310000         pop       ir0
+     2066 000001df 0e2a0000         pop       ar2
+     2067 000001e0 0e290000         pop       ar1
+     2068 000001e1 0e280000         pop       ar0
+     2069 000001e2 0ea30000         popf      f3
+     2070 000001e3 0e230000         pop       r3
+     2071 000001e4 0ea20000         popf      f2
+     2072 000001e5 0e220000         pop       r2
+     2073 000001e6 0ea10000         popf      f1
+     2074 000001e7 0e210000         pop       r1
+     2075 000001e8 0ea00000         popf      f0
+     2076 000001e9 0e200000         pop       r0
+     2077 000001ea 0e2b0000         pop       fp
+     2078 000001eb 0e350000         pop       st
+     2079 000001ec 78000000         reti
+     2080                                                                   ; Return From Interrupt
+     2081                           .endfunc        224,0003f07ffh,0
+     2082                   
+     2083                   
+     2084 000001ed                  .sect    ".text"
+     2085                   
+     2086                           .global _c_int10
+     2087                           .sym    _c_int10,_c_int10,32,2,0
+     2088                           .func   230
+     2089                   ;******************************************************************************
+     2090                   ;* FUNCTION NAME: _c_int10                                                    *
+     2091                   ;*                                                                            *
+     2092                   ;*   Architecture       : TMS320C30                                           *
+     2093                   ;*   Calling Convention : Stack Parameter Convention                          *
+     2094                   ;*   Function Uses Regs : r0                                                  *
+     2095                   ;*   Regs Saved         : f0,r0,f1,r1,f2,r2,f3,r3,f4,r4,f5,r5,f6,r6,f7,r7,ar0,*
+     2096                   ;*                        ar1,ar2,ir0,ir1,bk,sp,rs,re,rc,pc                   *
+     2097                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     2098                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 25 SOE = 27 words        *
+     2099                   ;******************************************************************************
+     2100 000001ed          _c_int10:
+     2101                           .line   1
+     2102                   ;----------------------------------------------------------------------
+     2103                   ; 230 | void c_int10()                                                         
+     2104                   ;----------------------------------------------------------------------
+     2105 000001ed 0f350000         push      st
+     2106 000001ee 0f2b0000         push      fp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   40
+
+     2107 000001ef 500b0014         ldiu      sp,fp
+     2108 000001f0 0f200000         push      r0
+     2109 000001f1 0fa00000         pushf     f0
+     2110 000001f2 0f210000         push      r1
+     2111 000001f3 0fa10000         pushf     f1
+     2112 000001f4 0f220000         push      r2
+     2113 000001f5 0fa20000         pushf     f2
+     2114 000001f6 0f230000         push      r3
+     2115 000001f7 0fa30000         pushf     f3
+     2116 000001f8 0f280000         push      ar0
+     2117 000001f9 0f290000         push      ar1
+     2118 000001fa 0f2a0000         push      ar2
+     2119 000001fb 0f310000         push      ir0
+     2120 000001fc 0f320000         push      ir1
+     2121 000001fd 0f390000         push      rs
+     2122 000001fe 0f3a0000         push      re
+     2123 000001ff 0f3b0000         push      rc
+     2124 00000200 0f240000         push      r4
+     2125 00000201 0fa40000         pushf     f4
+     2126 00000202 0f250000         push      r5
+     2127 00000203 0fa50000         pushf     f5
+     2128 00000204 0f260000         push      r6
+     2129 00000205 0fa60000         pushf     f6
+     2130 00000206 0f270000         push      r7
+     2131 00000207 0fa70000         pushf     f7
+     2132 00000208 0f330000         push      bk
+     2133 00000209 03750100         andn      256,st                ; Disable any existing repeat loops
+     2134                           .line   3
+     2135                   ;----------------------------------------------------------------------
+     2136                   ; 232 | cint10++;                                                              
+     2137                   ;----------------------------------------------------------------------
+     2138 0000020a 50600001         ldiu      1,r0
+     2139 0000020b 02200005-        addi      @_cint10+0,r0         ; Unsigned
+     2140 0000020c 15200005-        sti       r0,@_cint10+0
+     2141                           .line   4
+     2142                   ;----------------------------------------------------------------------
+     2143                   ; 233 | Scc1msTime();                                                          
+     2144                   ;----------------------------------------------------------------------
+     2145 0000020d 62000000!        call      _Scc1msTime
+     2146                                                           ; Call Occurs
+     2147                           .line   5
+     2148                   ;----------------------------------------------------------------------
+     2149                   ; 234 | GP_1msTime();                                                          
+     2150                   ;----------------------------------------------------------------------
+     2151 0000020e 62000000!        call      _GP_1msTime
+     2152                                                           ; Call Occurs
+     2153                           .line   6
+     2154                   ;----------------------------------------------------------------------
+     2155                   ; 235 | DP_Timer_1ms_DataPro();                                                
+     2156                   ;----------------------------------------------------------------------
+     2157 0000020f 62000000!        call      _DP_Timer_1ms_DataPro
+     2158                                                           ; Call Occurs
+     2159                           .line   7
+     2160                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   41
+
+     2161                   ; 236 | LED_Timer_1ms();                                                       
+     2162                   ;----------------------------------------------------------------------
+     2163 00000210 62000000!        call      _LED_Timer_1ms
+     2164                                                           ; Call Occurs
+     2165                           .line   8
+     2166 00000211 0e330000         pop       bk
+     2167 00000212 0ea70000         popf      f7
+     2168 00000213 0e270000         pop       r7
+     2169 00000214 0ea60000         popf      f6
+     2170 00000215 0e260000         pop       r6
+     2171 00000216 0ea50000         popf      f5
+     2172 00000217 0e250000         pop       r5
+     2173 00000218 0ea40000         popf      f4
+     2174 00000219 0e240000         pop       r4
+     2175 0000021a 0e3b0000         pop       rc
+     2176 0000021b 0e3a0000         pop       re
+     2177 0000021c 0e390000         pop       rs
+     2178 0000021d 0e320000         pop       ir1
+     2179 0000021e 0e310000         pop       ir0
+     2180 0000021f 0e2a0000         pop       ar2
+     2181 00000220 0e290000         pop       ar1
+     2182 00000221 0e280000         pop       ar0
+     2183 00000222 0ea30000         popf      f3
+     2184 00000223 0e230000         pop       r3
+     2185 00000224 0ea20000         popf      f2
+     2186 00000225 0e220000         pop       r2
+     2187 00000226 0ea10000         popf      f1
+     2188 00000227 0e210000         pop       r1
+     2189 00000228 0ea00000         popf      f0
+     2190 00000229 0e200000         pop       r0
+     2191 0000022a 0e2b0000         pop       fp
+     2192 0000022b 0e350000         pop       st
+     2193 0000022c 78000000         reti
+     2194                                                                   ; Return From Interrupt
+     2195                           .endfunc        237,0003f07ffh,0
+     2196                   
+     2197                   
+     2198                   
+     2199                           .global __glDebugData
+     2200 0000000d                  .bss    __glDebugData,1
+     2201                           .sym    __glDebugData,__glDebugData,15,2,32
+     2202                   
+     2203                           .global __glDebugAddr
+     2204 0000000e                  .bss    __glDebugAddr,1
+     2205                           .sym    __glDebugAddr,__glDebugAddr,15,2,32
+     2206                   ;******************************************************************************
+     2207                   ;* STRINGS                                                                    *
+     2208                   ;******************************************************************************
+     2209 00000000                  .sect   ".const"
+     2210 00000000 00000049 SL1:    .byte   "IDC21",0
+          00000001 00000044 
+          00000002 00000043 
+          00000003 00000032 
+          00000004 00000031 
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   42
+
+          00000005 00000000 
+     2211                   ;******************************************************************************
+     2212                   ;* CONSTANT TABLE                                                             *
+     2213                   ;******************************************************************************
+     2214 00000006                  .sect   ".const"
+     2215 0000000f                  .bss    CL1,1
+     2216 00000010                  .bss    CL2,1
+     2217 00000011                  .bss    CL3,1
+     2218 00000012                  .bss    CL4,1
+     2219 00000013                  .bss    CL5,1
+     2220 00000014                  .bss    CL6,1
+     2221 00000015                  .bss    CL7,1
+     2222 00000016                  .bss    CL8,1
+     2223 00000017                  .bss    CL9,1
+     2224 00000018                  .bss    CL10,1
+     2225 00000019                  .bss    CL11,1
+     2226 0000001a                  .bss    CL12,1
+     2227 0000001b                  .bss    CL13,1
+     2228 0000001c                  .bss    CL14,1
+     2229 0000001d                  .bss    CL15,1
+     2230 0000001e                  .bss    CL16,1
+     2231 0000001f                  .bss    CL17,1
+     2232 00000020                  .bss    CL18,1
+     2233 00000021                  .bss    CL19,1
+     2234 00000022                  .bss    CL20,1
+     2235 00000023                  .bss    CL21,1
+     2236 00000024                  .bss    CL22,1
+     2237 00000025                  .bss    CL23,1
+     2238 00000026                  .bss    CL24,1
+     2239 00000027                  .bss    CL25,1
+     2240 00000028                  .bss    CL26,1
+     2241 00000029                  .bss    CL27,1
+     2242 0000002a                  .bss    CL28,1
+     2243 0000002b                  .bss    CL29,1
+     2244 0000002c                  .bss    CL30,1
+     2245 0000002d                  .bss    CL31,1
+     2246 0000002e                  .bss    CL32,1
+     2247 0000002f                  .bss    CL33,1
+     2248 00000030                  .bss    CL34,1
+     2249 00000031                  .bss    CL35,1
+     2250 00000032                  .bss    CL36,1
+     2251 00000033                  .bss    CL37,1
+     2252 00000034                  .bss    CL38,1
+     2253 00000035                  .bss    CL39,1
+     2254 00000036                  .bss    CL40,1
+     2255                   
+     2256 00000027                  .sect   ".cinit"
+     2257 00000027 00000028         .field          40,32
+     2258 00000028 0000000f-        .field          CL1+0,32
+     2259 00000029 0080804c         .field          8421452,32
+     2260 0000002a 12345678         .field          305419896,32
+     2261 0000002b 00ffffff         .field          16777215,32
+     2262 0000002c ffffffff         .field          -1,32
+     2263 0000002d 00808048         .field          8421448,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   43
+
+     2264 0000002e 00808042         .field          8421442,32
+     2265 0000002f 00808040         .field          8421440,32
+     2266 00000030 0e3c0000         .field          238813184,32
+     2267 00000031 00809fc6         .field          8429510,32
+     2268 00000032 60000000         .field          1610612736,32
+     2269 00000033 00000000'        .field          _c_int06,32
+     2270 00000034 0087fe06         .field          8912390,32
+     2271 00000035 00808064         .field          8421476,32
+     2272 00000036 000f0468         .field          984168,32
+     2273 00000037 00808068         .field          8421480,32
+     2274 00000038 00808060         .field          8421472,32
+     2275 00000039 00808020         .field          8421408,32
+     2276 0000003a 00808028         .field          8421416,32
+     2277 0000003b 00168000         .field          1474560,32
+     2278 0000003c 00808030         .field          8421424,32
+     2279 0000003d 00808038         .field          8421432,32
+     2280 0000003e 0087fe01         .field          8912385,32
+     2281 0000003f 000000c2'        .field          _c_int01,32
+     2282 00000040 0087fe02         .field          8912386,32
+     2283 00000041 00000100'        .field          _c_int02,32
+     2284 00000042 0087fe03         .field          8912387,32
+     2285 00000043 0000013e'        .field          _c_int03,32
+     2286 00000044 0087fe09         .field          8912393,32
+     2287 00000045 000001ae'        .field          _c_int09,32
+     2288 00000046 0087fe0a         .field          8912394,32
+     2289 00000047 000001ed'        .field          _c_int10,32
+     2290 00000048 00110000         .field          1114112,32
+     2291 00000049 00000000!        .field          _SCC1_AB,32
+     2292 0000004a 00000000!        .field          _SCC2_AB,32
+     2293 0000004b 00000000!        .field          _SCC3_AB,32
+     2294 0000004c 00815000         .field          8474624,32
+     2295 0000004d 00000000!        .field          _m_Scc1RXBuff_Ach_Back,32
+     2296 0000004e 00000000!        .field          _m_Scc3RXBuff_Ach_Back,32
+     2297 0000004f 00000000!        .field          _m_Scc2RXBuff_Ach_Back,32
+     2298 00000050 00000000!        .field          _m_Scc2RXBuff_Bch_Back,32
+     2299                   
+     2300 0000022d                  .sect   ".text"
+     2301                   ;******************************************************************************
+     2302                   ;* UNDEFINED EXTERNAL REFERENCES                                              *
+     2303                   ;******************************************************************************
+     2304                   
+     2305                           .global _SCC2_INIT_A
+     2306                   
+     2307                           .global _SCC_Initial
+     2308                   
+     2309                           .global _SCC1_AB
+     2310                   
+     2311                           .global _SCC2_AB
+     2312                   
+     2313                           .global _SCC3_AB
+     2314                   
+     2315                           .global _Scc1msTime
+     2316                   
+     2317                           .global _Scc100msTime
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:58 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l main.asm main.obj -tC:\Users\jds\AppData\Local\Temp\main.tmp 
+
+main.asm                                                             PAGE   44
+
+     2318                   
+     2319                           .global _DP_Timer_1ms_DataPro
+     2320                   
+     2321                           .global _DP_Timer_100ms_DataPro
+     2322                   
+     2323                           .global _DP_DataPro_Main
+     2324                   
+     2325                           .global _DP_DataPro_Init
+     2326                   
+     2327                           .global _DP_SanDisk_Check
+     2328                   
+     2329                           .global _DP_SCC1_A_RX_PRO
+     2330                   
+     2331                           .global _DP_SCC2_A_RX_PRO
+     2332                   
+     2333                           .global _DP_SCC2_B_RX_PRO
+     2334                   
+     2335                           .global _LED_Init
+     2336                   
+     2337                           .global _LED_Main
+     2338                   
+     2339                           .global _LED_Timer_1ms
+     2340                   
+     2341                           .global _Gp_Receive
+     2342                   
+     2343                           .global _GpProface_Init
+     2344                   
+     2345                           .global _GP_1msTime
+     2346                   
+     2347                           .global _GP_100msTime
+     2348                   
+     2349                           .global _Gp_Pro_Main
+     2350                   
+     2351                           .global _m_Scc3RXBuff_Ach_Back
+     2352                   
+     2353                           .global _m_Scc2RXBuff_Bch_Back
+     2354                   
+     2355                           .global _m_Scc2RXBuff_Ach_Back
+     2356                   
+     2357                           .global _SCC3_INIT_A
+     2358                   
+     2359                           .global _SCC2_INIT_B
+     2360                   
+     2361                           .global _m_Scc1RXBuff_Ach_Back
+     2362                   
+     2363                           .global _SCC1_INIT_A
+
+ No Errors,  No Warnings

@@ -1,0 +1,2445 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:33 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\MappedNandFlash.c  #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\MappedNandFlash.c" #
+#                     -D at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC           #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\MappedNandFlash.lst      #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\MappedNandFlash.o         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\MappedNandFlash.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "MappedNandFlash.h"
+     35          #include <utility/trace.h>
+     36          #include <utility/assert.h>
+     37          #include <utility/math.h>
+     38          
+     39          #include <string.h>
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
+   \                     memcpy:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0x........         BL       __aeabi_memcpy
+   \   0000000C   0xE1A00004         MOV      R0,R4
+   \   00000010   0xE8BD4010         POP      {R4,LR}
+   \   00000014   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memset(void *, int, size_t)
+   \                     memset:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A00002         MOV      R0,R2
+   \   0000000C   0xE1A02001         MOV      R2,R1
+   \   00000010   0xE1A01000         MOV      R1,R0
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       __aeabi_memset
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0xE8BD4010         POP      {R4,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+     40          
+     41          //------------------------------------------------------------------------------
+     42          //         Internal definitions
+     43          //------------------------------------------------------------------------------
+     44          
+     45          /// Casts
+     46          #define MANAGED(mapped) ((struct ManagedNandFlash *) mapped)
+     47          #define ECC(mapped)     ((struct EccNandFlash *) mapped)
+     48          #define RAW(mapped)     ((struct RawNandFlash *) mapped)
+     49          #define MODEL(mapped)   ((struct NandFlashModel *) mapped)
+     50          
+     51          /// Logical block mapping pattern
+     52          #define PATTERN(i)      ((i << 1) & 0x73)
+     53          
+     54          //------------------------------------------------------------------------------
+     55          //         Internal functions
+     56          //------------------------------------------------------------------------------
+     57          
+     58          //------------------------------------------------------------------------------
+     59          /// Scans a mapped nandflash to find an existing logical block mapping. If a
+     60          /// block contains the mapping, its index is stored in the provided variable (if
+     61          /// pointer is not 0).
+     62          /// Returns 0 if mapping has been found; otherwise returns
+     63          /// NandCommon_ERROR_NOMAPPING if no mapping exists, or another
+     64          /// NandCommon_ERROR_xxx code.
+     65          /// \param mapped  Pointer to a MappedNandFlash instance.
+     66          /// \param logicalMappingBlock  Pointer to a variable for storing the block
+     67          ///                             number.
+     68          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     69          static unsigned char FindLogicalMappingBlock(
+     70              const struct MappedNandFlash *mapped,
+     71              signed short *logicalMappingBlock)
+     72          {
+   \                     FindLogicalMappingBlock:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A04000         MOV      R4,R0
+   \   00000010   0xE1A05001         MOV      R5,R1
+     73              unsigned short block;
+     74              unsigned char found;
+     75              unsigned short numBlocks = ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+   \   00000014   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000018   0xE1A06000         MOV      R6,R0
+     76              unsigned short pageDataSize = NandFlashModel_GetPageDataSize(MODEL(mapped));
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000024   0xE1A07000         MOV      R7,R0
+     77              unsigned char error;
+     78              unsigned char data[NandCommon_MAXPAGEDATASIZE];
+     79              unsigned int i;
+     80              
+     81              TRACE_INFO("FindLogicalMappingBlock()~%d\n\r", numBlocks);
+   \   00000028   0xE1A01006         MOV      R1,R6
+   \   0000002C   0x........         LDR      R0,??DataTable8
+   \   00000030   0x........         BL       printf
+     82          
+     83              // Search each LIVE block
+     84              found = 0;
+   \   00000034   0xE3A09000         MOV      R9,#+0
+     85              block = 0;
+   \   00000038   0xE3A08000         MOV      R8,#+0
+   \                     ??FindLogicalMappingBlock_0:
+   \   0000003C   0xE1580006         CMP      R8,R6
+   \   00000040   0xAA000025         BGE      ??FindLogicalMappingBlock_1
+     86              while (!found && (block < numBlocks)) {
+     87          
+     88                  // Check that block is LIVE
+     89                  if (MANAGED(mapped)->blockStatuses[block].status == NandBlockStatus_LIVE) {
+   \   00000044   0xE0840108         ADD      R0,R4,R8, LSL #+2
+   \   00000048   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   0000004C   0xE200000F         AND      R0,R0,#0xF
+   \   00000050   0xE350000C         CMP      R0,#+12
+   \   00000054   0x1A00001B         BNE      ??FindLogicalMappingBlock_2
+     90          
+     91                      // Read block
+     92                      TRACE_INFO("Checking LIVE block #%d\n\r", block);
+   \   00000058   0xE1A01008         MOV      R1,R8
+   \   0000005C   0x........         LDR      R0,??DataTable8_1
+   \   00000060   0x........         BL       printf
+     93                      error = ManagedNandFlash_ReadPage(MANAGED(mapped), block, 0, data, 0);
+   \   00000064   0xE3A00000         MOV      R0,#+0
+   \   00000068   0xE58D0000         STR      R0,[SP, #+0]
+   \   0000006C   0xE28D3004         ADD      R3,SP,#+4
+   \   00000070   0xE3A02000         MOV      R2,#+0
+   \   00000074   0xE1A01008         MOV      R1,R8
+   \   00000078   0xE1A00004         MOV      R0,R4
+   \   0000007C   0x........         BL       ManagedNandFlash_ReadPage
+   \   00000080   0xE1B0A000         MOVS     R10,R0
+     94                      if (!error) {
+   \   00000084   0x1A000024         BNE      ??FindLogicalMappingBlock_3
+     95          
+     96                          // Compare data with logical mapping pattern
+     97                          i = 0;
+   \   00000088   0xE3A00000         MOV      R0,#+0
+     98                          found = 1;
+   \   0000008C   0xE3A09001         MOV      R9,#+1
+   \   00000090   0xE3570000         CMP      R7,#+0
+   \   00000094   0x0A000019         BEQ      ??FindLogicalMappingBlock_4
+   \   00000098   0xE28D1004         ADD      R1,SP,#+4
+     99                          while ((i < pageDataSize) && found) {
+    100          
+    101                              if (data[i] != PATTERN(i)) {
+   \                     ??FindLogicalMappingBlock_5:
+   \   0000009C   0xE5D12000         LDRB     R2,[R1, #+0]
+   \   000000A0   0xE3A03073         MOV      R3,#+115
+   \   000000A4   0xE0033080         AND      R3,R3,R0, LSL #+1
+   \   000000A8   0xE1520003         CMP      R2,R3
+    102              
+    103                                  found = 0;
+   \   000000AC   0x13A09000         MOVNE    R9,#+0
+    104                              }
+    105                              i++;
+   \   000000B0   0xE2800001         ADD      R0,R0,#+1
+   \   000000B4   0xE2811001         ADD      R1,R1,#+1
+    106                          }
+   \   000000B8   0xE1500007         CMP      R0,R7
+   \   000000BC   0x2A00000D         BCS      ??FindLogicalMappingBlock_6
+   \   000000C0   0xE3590000         CMP      R9,#+0
+   \   000000C4   0x1AFFFFF4         BNE      ??FindLogicalMappingBlock_5
+    107              
+    108                          // If this is the mapping, stop looking
+    109                          if (found) {
+    110              
+    111                              TRACE_WARNING_WP("-I- Logical mapping in block #%d\n\r",
+    112                                               block);
+    113                              if (logicalMappingBlock) {
+    114              
+    115                                  *logicalMappingBlock = block;
+    116                              }
+    117                              return 0;
+    118                          }
+    119                      }
+    120                      else if (error != NandCommon_ERROR_WRONGSTATUS) {
+    121              
+    122                          TRACE_ERROR(
+    123                                    "FindLogicalMappingBlock: Failed to scan block #%d\n\r",
+    124                                    block);
+    125                          return error;
+    126                      }
+    127                  }
+    128          
+    129                  block++;
+   \                     ??FindLogicalMappingBlock_2:
+   \   000000C8   0xE2888001         ADD      R8,R8,#+1
+   \   000000CC   0xE1A08808         LSL      R8,R8,#+16
+   \   000000D0   0xE1A08828         LSR      R8,R8,#+16
+   \   000000D4   0xE3590000         CMP      R9,#+0
+   \   000000D8   0x0AFFFFD7         BEQ      ??FindLogicalMappingBlock_0
+    130              }
+    131          
+    132              TRACE_WARNING("No logical mapping found in device\n\r");
+   \                     ??FindLogicalMappingBlock_1:
+   \   000000DC   0x........         LDR      R0,??DataTable8_2
+   \   000000E0   0x........         BL       printf
+    133              return NandCommon_ERROR_NOMAPPING;
+   \   000000E4   0xE3A0000B         MOV      R0,#+11
+   \                     ??FindLogicalMappingBlock_7:
+   \   000000E8   0xE28DD008         ADD      SP,SP,#+8        ;; stack cleaning
+   \   000000EC   0xE28DDE80         ADD      SP,SP,#+2048
+   \   000000F0   0xE8BD47F0         POP      {R4-R10,LR}
+   \   000000F4   0xE12FFF1E         BX       LR               ;; return
+   \                     ??FindLogicalMappingBlock_6:
+   \   000000F8   0xE3590000         CMP      R9,#+0
+   \   000000FC   0x0AFFFFF1         BEQ      ??FindLogicalMappingBlock_2
+   \                     ??FindLogicalMappingBlock_4:
+   \   00000100   0xE1A01008         MOV      R1,R8
+   \   00000104   0x........         LDR      R0,??DataTable8_3
+   \   00000108   0x........         BL       printf
+   \   0000010C   0xE3550000         CMP      R5,#+0
+   \   00000110   0x11C580B0         STRHNE   R8,[R5, #+0]
+   \   00000114   0xE3A00000         MOV      R0,#+0
+   \   00000118   0xEAFFFFF2         B        ??FindLogicalMappingBlock_7
+   \                     ??FindLogicalMappingBlock_3:
+   \   0000011C   0xE35A000A         CMP      R10,#+10
+   \   00000120   0x0AFFFFE8         BEQ      ??FindLogicalMappingBlock_2
+   \   00000124   0xE1A01008         MOV      R1,R8
+   \   00000128   0x........         LDR      R0,??DataTable8_4
+   \   0000012C   0x........         BL       printf
+   \   00000130   0xE1A0000A         MOV      R0,R10
+   \   00000134   0xEAFFFFEB         B        ??FindLogicalMappingBlock_7
+    134          }
+    135          
+    136          //------------------------------------------------------------------------------
+    137          /// Loads the logical mapping contained in the given physical block.
+    138          /// Returns 0 if successful; otherwise, returns a NandCommon_ERROR code.
+    139          /// \param mapped  Pointer to a MappedNandFlash instance.
+    140          /// \param physicalBlock  Physical block number.
+    141          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    142          static unsigned char LoadLogicalMapping(
+    143              struct MappedNandFlash *mapped,
+    144              unsigned short physicalBlock)
+    145          {
+   \                     LoadLogicalMapping:
+   \   00000000   0xE92D4FF0         PUSH     {R4-R11,LR}
+   \   00000004   0xE24DD00C         SUB      SP,SP,#+12
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A05000         MOV      R5,R0
+   \   00000010   0xE1A04001         MOV      R4,R1
+    146              unsigned char error;
+    147              unsigned char data[NandCommon_MAXPAGEDATASIZE];
+    148              unsigned short pageDataSize =
+    149                              NandFlashModel_GetPageDataSize(MODEL(mapped));
+   \   00000014   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000018   0xE1A06000         MOV      R6,R0
+    150              unsigned short numBlocks =
+    151                              ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+   \   0000001C   0xE1A00005         MOV      R0,R5
+   \   00000020   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000024   0xE58D0004         STR      R0,[SP, #+4]
+    152              unsigned int remainingSize;
+    153              unsigned char *currentBuffer;
+    154              unsigned short currentPage;
+    155              unsigned int readSize;
+    156              unsigned int i;
+    157              unsigned char status;
+    158              signed short logicalBlock;
+    159              //signed short firstBlock, lastBlock;
+    160          
+    161              TRACE_INFO("LoadLogicalMapping(B#%d)\n\r", physicalBlock);
+   \   00000028   0xE1A01004         MOV      R1,R4
+   \   0000002C   0x........         LDR      R0,??DataTable8_5
+   \   00000030   0x........         BL       printf
+    162          
+    163              // Load mapping from pages #1 - #XXX of block
+    164              currentBuffer = (unsigned char *) mapped->logicalMapping;
+   \   00000034   0xE3A00034         MOV      R0,#+52
+   \   00000038   0xE3800D40         ORR      R0,R0,#0x1000
+   \   0000003C   0xE0807005         ADD      R7,R0,R5
+    165              remainingSize = sizeof(mapped->logicalMapping);
+   \   00000040   0xE3A08E80         MOV      R8,#+2048
+    166              currentPage = 1;
+   \   00000044   0xE3A09001         MOV      R9,#+1
+    167              while (remainingSize > 0) {
+    168          
+    169                  // Read page
+    170                  readSize = min(remainingSize, pageDataSize);
+   \                     ??LoadLogicalMapping_0:
+   \   00000048   0xE1A01006         MOV      R1,R6
+   \   0000004C   0xE1A00008         MOV      R0,R8
+   \   00000050   0x........         BL       min
+   \   00000054   0xE1A0A000         MOV      R10,R0
+    171                  error = ManagedNandFlash_ReadPage(MANAGED(mapped),
+    172                                                    physicalBlock,
+    173                                                    currentPage,
+    174                                                    data,
+    175                                                    0);
+   \   00000058   0xE3A00000         MOV      R0,#+0
+   \   0000005C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000060   0xE28D3008         ADD      R3,SP,#+8
+   \   00000064   0xE1A02809         LSL      R2,R9,#+16
+   \   00000068   0xE1A02822         LSR      R2,R2,#+16
+   \   0000006C   0xE1A01004         MOV      R1,R4
+   \   00000070   0xE1A00005         MOV      R0,R5
+   \   00000074   0x........         BL       ManagedNandFlash_ReadPage
+   \   00000078   0xE1B0B000         MOVS     R11,R0
+    176                  if (error) {
+   \   0000007C   0x0A000003         BEQ      ??LoadLogicalMapping_1
+    177          
+    178                      TRACE_ERROR(
+    179                                "LoadLogicalMapping: Failed to load mapping\n\r");
+   \   00000080   0x........         LDR      R0,??DataTable8_6
+   \   00000084   0x........         BL       printf
+    180                      return error;
+   \   00000088   0xE1A0000B         MOV      R0,R11
+   \   0000008C   0xEA000044         B        ??LoadLogicalMapping_2
+    181                  }
+    182          
+    183                  // Copy page info
+    184                  memcpy(currentBuffer, data, readSize);
+   \                     ??LoadLogicalMapping_1:
+   \   00000090   0xE1A0200A         MOV      R2,R10
+   \   00000094   0xE28D1008         ADD      R1,SP,#+8
+   \   00000098   0xE1A00007         MOV      R0,R7
+   \   0000009C   0x........         BL       memcpy
+    185          
+    186                  currentBuffer += readSize;
+   \   000000A0   0xE08A7007         ADD      R7,R10,R7
+    187                  remainingSize -= readSize;
+   \   000000A4   0xE048800A         SUB      R8,R8,R10
+    188                  currentPage++;
+   \   000000A8   0xE2899001         ADD      R9,R9,#+1
+    189              }
+   \   000000AC   0xE3580000         CMP      R8,#+0
+   \   000000B0   0x1AFFFFE4         BNE      ??LoadLogicalMapping_0
+    190          
+    191              // Store mapping block index
+    192              mapped->logicalMappingBlock = physicalBlock;
+   \   000000B4   0xE3A00034         MOV      R0,#+52
+   \   000000B8   0xE3800D60         ORR      R0,R0,#0x1800
+   \   000000BC   0xE18040B5         STRH     R4,[R0, +R5]
+    193          
+    194              // Power-loss recovery
+    195              for (i=0; i < numBlocks; i++) {
+   \   000000C0   0xE3A06000         MOV      R6,#+0
+   \   000000C4   0xE59D0004         LDR      R0,[SP, #+4]
+   \   000000C8   0xE3500000         CMP      R0,#+0
+   \   000000CC   0x0A000030         BEQ      ??LoadLogicalMapping_3
+   \   000000D0   0xE1A07005         MOV      R7,R5
+    196          
+    197                  // Check that this is not the logical mapping block
+    198                  if (i != physicalBlock) {
+   \                     ??LoadLogicalMapping_4:
+   \   000000D4   0xE1560004         CMP      R6,R4
+   \   000000D8   0x0A000028         BEQ      ??LoadLogicalMapping_5
+    199          
+    200                      status = mapped->managed.blockStatuses[i].status;
+   \   000000DC   0xE5D70030         LDRB     R0,[R7, #+48]
+   \   000000E0   0xE200800F         AND      R8,R0,#0xF
+    201                      logicalBlock = MappedNandFlash_PhysicalToLogical(mapped, i);
+   \   000000E4   0xE1A01806         LSL      R1,R6,#+16
+   \   000000E8   0xE1A01821         LSR      R1,R1,#+16
+   \   000000EC   0xE1A00005         MOV      R0,R5
+   \   000000F0   0x........         BL       MappedNandFlash_PhysicalToLogical
+   \   000000F4   0xE1A09000         MOV      R9,R0
+    202          
+    203                      // Block is LIVE
+    204                      if (status == NandBlockStatus_LIVE) {
+   \   000000F8   0xE358000C         CMP      R8,#+12
+   \   000000FC   0x1A000009         BNE      ??LoadLogicalMapping_6
+    205          
+    206                          // Block is not mapped -> release it
+    207                          if (logicalBlock == -1) {
+   \   00000100   0xE3790001         CMN      R9,#+1
+   \   00000104   0x1A00001D         BNE      ??LoadLogicalMapping_5
+    208          
+    209                              TRACE_WARNING_WP("-I- Release unmapped LIVE #%d\n\r",
+    210                                               i);
+                                                      ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+   \   00000108   0xE1A01006         MOV      R1,R6
+   \   0000010C   0x........         LDR      R0,??DataTable8_7
+   \   00000110   0x........         BL       printf
+    211                              ManagedNandFlash_ReleaseBlock(MANAGED(mapped), i);
+   \   00000114   0xE1A01806         LSL      R1,R6,#+16
+   \   00000118   0xE1A01821         LSR      R1,R1,#+16
+   \   0000011C   0xE1A00005         MOV      R0,R5
+   \   00000120   0x........         BL       ManagedNandFlash_ReleaseBlock
+   \   00000124   0xEA000015         B        ??LoadLogicalMapping_5
+    212                          }
+    213                      }
+    214                      // Block is DIRTY
+    215                      else if (status == NandBlockStatus_DIRTY) {
+   \                     ??LoadLogicalMapping_6:
+   \   00000128   0xE3580008         CMP      R8,#+8
+   \   0000012C   0x1A000009         BNE      ??LoadLogicalMapping_7
+    216          
+    217                          // Block is mapped -> fake it as live
+    218                          if (logicalBlock != -1) {
+   \   00000130   0xE3790001         CMN      R9,#+1
+   \   00000134   0x0A000011         BEQ      ??LoadLogicalMapping_5
+    219          
+    220                              TRACE_WARNING_WP("-I- Mark mapped DIRTY #%d -> LIVE\n\r",
+    221                                               i);
+                                                      ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+   \   00000138   0xE1A01006         MOV      R1,R6
+   \   0000013C   0x........         LDR      R0,??DataTable8_8
+   \   00000140   0x........         BL       printf
+    222                              mapped->managed.blockStatuses[i].status =
+    223                                                              NandBlockStatus_LIVE;
+   \   00000144   0xE5970030         LDR      R0,[R7, #+48]
+   \   00000148   0xE3C0000F         BIC      R0,R0,#0xF
+   \   0000014C   0xE380000C         ORR      R0,R0,#0xC
+   \   00000150   0xE5870030         STR      R0,[R7, #+48]
+   \   00000154   0xEA000009         B        ??LoadLogicalMapping_5
+    224                          }
+    225                      }
+    226                      // Block is FREE or BAD
+    227                      else {
+    228          
+    229                          // Block is mapped -> remove it from mapping
+    230                          if (logicalBlock != -1) {
+   \                     ??LoadLogicalMapping_7:
+   \   00000158   0xE3790001         CMN      R9,#+1
+   \   0000015C   0x0A000007         BEQ      ??LoadLogicalMapping_5
+    231          
+    232                              TRACE_WARNING_WP("-I- Unmap FREE or BAD #%d\n\r", i);
+                                                                                       ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+   \   00000160   0xE1A01006         MOV      R1,R6
+   \   00000164   0x........         LDR      R0,??DataTable8_9
+   \   00000168   0x........         BL       printf
+    233                              mapped->logicalMapping[logicalBlock] = -1;
+   \   0000016C   0xE3A00034         MOV      R0,#+52
+   \   00000170   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000174   0xE0851089         ADD      R1,R5,R9, LSL #+1
+   \   00000178   0xE3E02000         MVN      R2,#+0
+   \   0000017C   0xE18020B1         STRH     R2,[R0, +R1]
+    234                          }
+    235                      }
+    236                  }
+    237              }
+   \                     ??LoadLogicalMapping_5:
+   \   00000180   0xE2866001         ADD      R6,R6,#+1
+   \   00000184   0xE2877004         ADD      R7,R7,#+4
+   \   00000188   0xE59D0004         LDR      R0,[SP, #+4]
+   \   0000018C   0xE1560000         CMP      R6,R0
+   \   00000190   0x3AFFFFCF         BCC      ??LoadLogicalMapping_4
+    238          
+    239              TRACE_WARNING_WP("-I- Mapping loaded from block #%d\n\r", physicalBlock);
+   \                     ??LoadLogicalMapping_3:
+   \   00000194   0xE1A01004         MOV      R1,R4
+   \   00000198   0x........         LDR      R0,??DataTable8_10
+   \   0000019C   0x........         BL       printf
+    240          
+    241              return 0;
+   \   000001A0   0xE3A00000         MOV      R0,#+0
+   \                     ??LoadLogicalMapping_2:
+   \   000001A4   0x........         B        ?Subroutine0
+    242          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE28DD00C         ADD      SP,SP,#+12       ;; stack cleaning
+   \   00000004   0xE28DDE80         ADD      SP,SP,#+2048
+   \   00000008   0xE8BD4FF0         POP      {R4-R11,LR}
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    243          
+    244          //------------------------------------------------------------------------------
+    245          //         Exported functions
+    246          //------------------------------------------------------------------------------
+    247          
+    248          //------------------------------------------------------------------------------
+    249          /// Initializes a MappedNandFlash instance. Scans the device to look for and
+    250          /// existing logical block mapping; otherwise starts from scratch (no block
+    251          /// mapped).
+    252          /// Returns 0 if successful; otherwise returns a NandCommon_ERROR_xxx code.
+    253          /// \param mapped  Pointer to a MappedNandFlash instance.
+    254          /// \param model  Pointer to the underlying nand chip model. Can be 0.
+    255          /// \param commandAddress  Address at which commands are sent.
+    256          /// \param addressAddress  Address at which addresses are sent.
+    257          /// \param dataAddress  Address at which data is sent.
+    258          /// \param pinChipEnable  Pin controlling the CE signal of the NandFlash.
+    259          /// \param pinReadyBusy  Pin used to monitor the ready/busy signal of the Nand.
+    260          /// \param baseBlock Basic physical block address of mapped area.
+    261          /// \param sizeInBlocks Number of blocks that is mapped.
+    262          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    263          unsigned char MappedNandFlash_Initialize(
+    264              struct MappedNandFlash *mapped,
+    265              const struct NandFlashModel *model,
+    266              unsigned int commandAddress,
+    267              unsigned int addressAddress,
+    268              unsigned int dataAddress,
+    269              const Pin pinChipEnable,
+    270              const Pin pinReadyBusy,
+    271              unsigned short baseBlock,
+    272              unsigned short sizeInBlocks)
+    273          {
+   \                     MappedNandFlash_Initialize:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE24DD028         SUB      SP,SP,#+40
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8048         LDR      R8,[SP, #+72]
+   \   0000001C   0xE1DD96B4         LDRH     R9,[SP, #+100]
+   \   00000020   0xE1DDA6B8         LDRH     R10,[SP, #+104]
+    274              unsigned char error;
+    275              unsigned short numBlocks;
+    276              unsigned short block;
+    277              signed short logicalMappingBlock = 0;
+   \   00000024   0xE3A01000         MOV      R1,#+0
+   \   00000028   0xE1CD12B4         STRH     R1,[SP, #+36]
+    278          
+    279              TRACE_INFO("MappedNandFlash_Initialize()\n\r");
+   \   0000002C   0x........         LDR      R0,??DataTable8_11
+   \   00000030   0x........         BL       printf
+    280          
+    281              // Initialize ManagedNandFlash
+    282              error = ManagedNandFlash_Initialize(MANAGED(mapped),
+    283                                                  model,
+    284                                                  commandAddress,
+    285                                                  addressAddress,
+    286                                                  dataAddress,
+    287                                                  pinChipEnable,
+    288                                                  pinReadyBusy,
+    289                                                  baseBlock,
+    290                                                  sizeInBlocks);
+   \   00000034   0xE58DA020         STR      R10,[SP, #+32]
+   \   00000038   0xE58D901C         STR      R9,[SP, #+28]
+   \   0000003C   0xE28D0058         ADD      R0,SP,#+88
+   \   00000040   0xE28D2010         ADD      R2,SP,#+16
+   \   00000044   0xE8B0000A         LDM      R0!,{R1,R3}
+   \   00000048   0xE8A2000A         STM      R2!,{R1,R3}
+   \   0000004C   0xE5903000         LDR      R3,[R0, #0]
+   \   00000050   0xE5823000         STR      R3,[R2, #+0]
+   \   00000054   0xE28D004C         ADD      R0,SP,#+76
+   \   00000058   0xE28D2004         ADD      R2,SP,#+4
+   \   0000005C   0xE8B0000A         LDM      R0!,{R1,R3}
+   \   00000060   0xE8A2000A         STM      R2!,{R1,R3}
+   \   00000064   0xE5903000         LDR      R3,[R0, #0]
+   \   00000068   0xE5823000         STR      R3,[R2, #+0]
+   \   0000006C   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000070   0xE1A03007         MOV      R3,R7
+   \   00000074   0xE1A02006         MOV      R2,R6
+   \   00000078   0xE1A01005         MOV      R1,R5
+   \   0000007C   0xE1A00004         MOV      R0,R4
+   \   00000080   0x........         BL       ManagedNandFlash_Initialize
+   \   00000084   0xE1B05000         MOVS     R5,R0
+    291              if (error) {
+   \   00000088   0x1A000026         BNE      ??MappedNandFlash_Initialize_0
+    292          
+    293                  return error;
+    294              }
+    295          
+    296              // Scan to find logical mapping
+    297              mapped->mappingModified = 0;
+   \   0000008C   0xE3A00036         MOV      R0,#+54
+   \   00000090   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000094   0xE3A01000         MOV      R1,#+0
+   \   00000098   0xE7C01004         STRB     R1,[R0, +R4]
+    298              error = FindLogicalMappingBlock(mapped, &logicalMappingBlock);
+   \   0000009C   0xE28D1024         ADD      R1,SP,#+36
+   \   000000A0   0xE1A00004         MOV      R0,R4
+   \   000000A4   0x........         BL       FindLogicalMappingBlock
+   \   000000A8   0xE1B05000         MOVS     R5,R0
+    299              if (!error) {
+   \   000000AC   0x1A000007         BNE      ??MappedNandFlash_Initialize_1
+    300          
+    301                  // Extract mapping from block
+    302                  mapped->logicalMappingBlock = logicalMappingBlock;
+   \   000000B0   0xE3A00034         MOV      R0,#+52
+   \   000000B4   0xE3800D60         ORR      R0,R0,#0x1800
+   \   000000B8   0xE1DD12F4         LDRSH    R1,[SP, #+36]
+   \   000000BC   0xE18010B4         STRH     R1,[R0, +R4]
+    303                  return LoadLogicalMapping(mapped, logicalMappingBlock);
+   \   000000C0   0xE1DD12B4         LDRH     R1,[SP, #+36]
+   \   000000C4   0xE1A00004         MOV      R0,R4
+   \   000000C8   0x........         BL       LoadLogicalMapping
+   \   000000CC   0xEA000015         B        ??MappedNandFlash_Initialize_0
+    304              }
+    305              else if (error == NandCommon_ERROR_NOMAPPING) {
+   \                     ??MappedNandFlash_Initialize_1:
+   \   000000D0   0xE355000B         CMP      R5,#+11
+   \   000000D4   0x1A000010         BNE      ??MappedNandFlash_Initialize_2
+    306          
+    307                  // Start with no block mapped
+    308                  mapped->logicalMappingBlock = -1;
+   \   000000D8   0xE3A00034         MOV      R0,#+52
+   \   000000DC   0xE3800D60         ORR      R0,R0,#0x1800
+   \   000000E0   0xE3E01000         MVN      R1,#+0
+   \   000000E4   0xE18010B4         STRH     R1,[R0, +R4]
+    309                  numBlocks = ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+   \   000000E8   0xE1A00004         MOV      R0,R4
+   \   000000EC   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+    310                  for (block=0; block < numBlocks; block++) {
+   \   000000F0   0xE3500001         CMP      R0,#+1
+   \   000000F4   0xE3A01034         MOV      R1,#+52
+   \   000000F8   0xE3811D40         ORR      R1,R1,#0x1000
+   \   000000FC   0xE3E02000         MVN      R2,#+0
+   \   00000100   0xBA000003         BLT      ??MappedNandFlash_Initialize_3
+    311          
+    312                      mapped->logicalMapping[block] = -1;
+   \                     ??MappedNandFlash_Initialize_4:
+   \   00000104   0xE18120B4         STRH     R2,[R1, +R4]
+    313                  }
+   \   00000108   0xE2844002         ADD      R4,R4,#+2
+   \   0000010C   0xE2500001         SUBS     R0,R0,#+1
+   \   00000110   0x1AFFFFFB         BNE      ??MappedNandFlash_Initialize_4
+    314              }
+    315              else {
+    316                  
+    317                  TRACE_ERROR("MappedNandFlash_Initialize: Initialize device\n\r");
+    318                  return error;
+    319              }
+    320          
+    321              return 0;
+   \                     ??MappedNandFlash_Initialize_3:
+   \   00000114   0xE3A00000         MOV      R0,#+0
+   \   00000118   0xEA000002         B        ??MappedNandFlash_Initialize_0
+   \                     ??MappedNandFlash_Initialize_2:
+   \   0000011C   0x........         LDR      R0,??DataTable8_12
+   \   00000120   0x........         BL       printf
+   \   00000124   0xE1A00005         MOV      R0,R5
+   \                     ??MappedNandFlash_Initialize_0:
+   \   00000128   0xE28DD028         ADD      SP,SP,#+40       ;; stack cleaning
+   \   0000012C   0xE8BD47F0         POP      {R4-R10,LR}
+   \   00000130   0xE12FFF1E         BX       LR               ;; return
+    322          }
+    323          
+    324          //------------------------------------------------------------------------------
+    325          /// Reads the data and/or spare area of a page in a mapped logical block.
+    326          /// Returns 0 if successful; otherwise, returns NandCommon_ERROR_BLOCKNOTMAPPED
+    327          /// if the block is not mapped, or a NandCommon_ERROR_xxx code.
+    328          /// \param mapped  Pointer to a MappedNandFlash instance.
+    329          /// \param block  Number of logical block to read page from.
+    330          /// \param page  Number of page to read inside given block.
+    331          /// \param data  Data area buffer, can be 0.
+    332          /// \param spare  Spare area buffer, can be 0.
+    333          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    334          unsigned char MappedNandFlash_ReadPage(
+    335              const struct MappedNandFlash *mapped,
+    336              unsigned short block,
+    337              unsigned short page,
+    338              void *data,
+    339              void *spare)
+    340          {
+   \                     MappedNandFlash_ReadPage:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8020         LDR      R8,[SP, #+32]
+    341              signed short physicalBlock;
+    342          
+    343              TRACE_INFO("MappedNandFlash_ReadPage(LB#%d:P#%d)\n\r", block, page);
+   \   0000001C   0x........         LDR      R0,??DataTable8_13
+   \   00000020   0x........         BL       printf
+    344          
+    345              // Check if block is mapped
+    346              physicalBlock = mapped->logicalMapping[block];
+   \   00000024   0xE3A00034         MOV      R0,#+52
+   \   00000028   0xE3800D40         ORR      R0,R0,#0x1000
+   \   0000002C   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   00000030   0xE19010F1         LDRSH    R1,[R0, +R1]
+    347              if (physicalBlock == -1) {
+   \   00000034   0xE3710001         CMN      R1,#+1
+   \   00000038   0x1A000004         BNE      ??MappedNandFlash_ReadPage_0
+    348          
+    349                  TRACE_INFO( "MappedNandFlash_ReadPage: Block %d not mapped\n\r", block);
+   \   0000003C   0xE1A01005         MOV      R1,R5
+   \   00000040   0x........         LDR      R0,??DataTable8_14
+   \   00000044   0x........         BL       printf
+    350                  return NandCommon_ERROR_BLOCKNOTMAPPED;
+   \   00000048   0xE3A00002         MOV      R0,#+2
+   \   0000004C   0xEA000006         B        ??MappedNandFlash_ReadPage_1
+    351              }
+    352          
+    353              // Read page from corresponding physical block
+    354              return ManagedNandFlash_ReadPage(MANAGED(mapped),
+    355                                               physicalBlock,
+    356                                               page,
+    357                                               data,
+    358                                               spare);
+   \                     ??MappedNandFlash_ReadPage_0:
+   \   00000050   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000054   0xE1A03007         MOV      R3,R7
+   \   00000058   0xE1A02006         MOV      R2,R6
+   \   0000005C   0xE1A01801         LSL      R1,R1,#+16
+   \   00000060   0xE1A01821         LSR      R1,R1,#+16
+   \   00000064   0xE1A00004         MOV      R0,R4
+   \   00000068   0x........         BL       ManagedNandFlash_ReadPage
+   \                     ??MappedNandFlash_ReadPage_1:
+   \   0000006C   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000070   0xE12FFF1E         BX       LR               ;; return
+    359          }
+    360          
+    361          //------------------------------------------------------------------------------
+    362          /// Writes the data and/or spare area of a page in the given mapped logical
+    363          /// block.
+    364          /// Returns 0 if successful; otherwise, returns NandCommon_ERROR_BLOCKNOTMAPPED
+    365          /// (indicating the block is not logically mapped) or another NandCommon_ERROR
+    366          /// code.
+    367          /// \param mapped  Pointer to a MappedNandFlash instance.
+    368          /// \param block  Number of logical block to write on.
+    369          /// \param page  Number of page to write inside given block.
+    370          /// \param data  Data area buffer, can be 0.
+    371          /// \param spare  Spare area buffer, can be 0.
+    372          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    373          unsigned char MappedNandFlash_WritePage(
+    374              const struct MappedNandFlash *mapped,
+    375              unsigned short block,
+    376              unsigned short page,
+    377              void *data,
+    378              void *spare)
+    379          {
+   \                     MappedNandFlash_WritePage:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8020         LDR      R8,[SP, #+32]
+    380              signed short physicalBlock;
+    381          
+    382              TRACE_INFO("MappedNandFlash_WritePage(LB#%d:P#%d)\n\r", block, page);
+   \   0000001C   0x........         LDR      R0,??DataTable8_15
+   \   00000020   0x........         BL       printf
+    383          
+    384              // Check if block is mapped
+    385              physicalBlock = mapped->logicalMapping[block];
+   \   00000024   0xE3A00034         MOV      R0,#+52
+   \   00000028   0xE3800D40         ORR      R0,R0,#0x1000
+   \   0000002C   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   00000030   0xE19010F1         LDRSH    R1,[R0, +R1]
+    386              if (physicalBlock == -1) {
+   \   00000034   0xE3710001         CMN      R1,#+1
+   \   00000038   0x1A000003         BNE      ??MappedNandFlash_WritePage_0
+    387          
+    388                  TRACE_ERROR("MappedNandFlash_WritePage: Block must be mapped\n\r");
+   \   0000003C   0x........         LDR      R0,??DataTable8_16
+   \   00000040   0x........         BL       printf
+    389                  return NandCommon_ERROR_BLOCKNOTMAPPED;
+   \   00000044   0xE3A00002         MOV      R0,#+2
+   \   00000048   0xEA000006         B        ??MappedNandFlash_WritePage_1
+    390              }
+    391          
+    392              // Write page on physical block
+    393              return ManagedNandFlash_WritePage(MANAGED(mapped),
+    394                                                physicalBlock,
+    395                                                page,
+    396                                                data,
+    397                                                spare);
+   \                     ??MappedNandFlash_WritePage_0:
+   \   0000004C   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000050   0xE1A03007         MOV      R3,R7
+   \   00000054   0xE1A02006         MOV      R2,R6
+   \   00000058   0xE1A01801         LSL      R1,R1,#+16
+   \   0000005C   0xE1A01821         LSR      R1,R1,#+16
+   \   00000060   0xE1A00004         MOV      R0,R4
+   \   00000064   0x........         BL       ManagedNandFlash_WritePage
+   \                     ??MappedNandFlash_WritePage_1:
+   \   00000068   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   0000006C   0xE12FFF1E         BX       LR               ;; return
+    398          }
+    399          
+    400          //------------------------------------------------------------------------------
+    401          /// Maps a logical block number to an actual physical block. This allocates
+    402          /// the physical block (meaning it must be FREE), and releases the previous
+    403          /// block being replaced (if any).
+    404          /// Returns 0 if successful; otherwise returns a NandCommon_ERROR_xxx code.
+    405          /// \param mapped  Pointer to a MappedNandFlash instance.
+    406          /// \param logicalBlock  Logical block number to map.
+    407          /// \param physicalBlock  Physical block to map to the logical one.
+    408          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    409          unsigned char MappedNandFlash_Map(
+    410              struct MappedNandFlash *mapped,
+    411              unsigned short logicalBlock,
+    412              unsigned short physicalBlock)
+    413          {
+   \                     MappedNandFlash_Map:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    414              unsigned char error;
+    415              signed short oldPhysicalBlock;
+    416          
+    417              TRACE_INFO("MappedNandFlash_Map(LB#%d -> PB#%d)\n\r",
+    418                         logicalBlock, physicalBlock);
+   \   00000010   0x........         LDR      R0,??DataTable8_17
+   \   00000014   0x........         BL       printf
+    419              ASSERT(
+    420                 logicalBlock < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped)),
+    421                 "MappedNandFlash_Map: logicalBlock out-of-range\n\r");
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000020   0xE1550000         CMP      R5,R0
+   \   00000024   0x3A000004         BCC      ??MappedNandFlash_Map_0
+   \   00000028   0x........         LDR      R0,??DataTable8_18
+   \   0000002C   0x........         BL       printf
+   \   00000030   0x........         LDR      R0,??DataTable8_19
+   \   00000034   0x........         BL       printf
+   \                     ??MappedNandFlash_Map_1:
+   \   00000038   0xEAFFFFFE         B        ??MappedNandFlash_Map_1
+    422              ASSERT(
+    423                 physicalBlock < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped)),
+    424                 "MappedNandFlash_Map: physicalBlock out-of-range\n\r");
+   \                     ??MappedNandFlash_Map_0:
+   \   0000003C   0xE1A00004         MOV      R0,R4
+   \   00000040   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000044   0xE1560000         CMP      R6,R0
+   \   00000048   0x3A000004         BCC      ??MappedNandFlash_Map_2
+   \   0000004C   0x........         LDR      R0,??DataTable8_18
+   \   00000050   0x........         BL       printf
+   \   00000054   0x........         LDR      R0,??DataTable8_20
+   \   00000058   0x........         BL       printf
+   \                     ??MappedNandFlash_Map_3:
+   \   0000005C   0xEAFFFFFE         B        ??MappedNandFlash_Map_3
+    425          
+    426              // Allocate physical block
+    427              error = ManagedNandFlash_AllocateBlock(MANAGED(mapped), physicalBlock);
+   \                     ??MappedNandFlash_Map_2:
+   \   00000060   0xE1A01006         MOV      R1,R6
+   \   00000064   0xE1A00004         MOV      R0,R4
+   \   00000068   0x........         BL       ManagedNandFlash_AllocateBlock
+    428              if (error) {
+   \   0000006C   0xE3500000         CMP      R0,#+0
+   \   00000070   0x1A000014         BNE      ??MappedNandFlash_Map_4
+    429          
+    430                  return error;
+    431              }
+    432          
+    433              // Release currently mapped block (if any)
+    434              oldPhysicalBlock = mapped->logicalMapping[logicalBlock];
+   \   00000074   0xE3A00034         MOV      R0,#+52
+   \   00000078   0xE3800D40         ORR      R0,R0,#0x1000
+   \   0000007C   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   00000080   0xE19010F1         LDRSH    R1,[R0, +R1]
+    435              if (oldPhysicalBlock != -1) {
+   \   00000084   0xE3710001         CMN      R1,#+1
+   \   00000088   0x0A000005         BEQ      ??MappedNandFlash_Map_5
+    436          
+    437                  error =
+    438                      ManagedNandFlash_ReleaseBlock(MANAGED(mapped), oldPhysicalBlock);
+   \   0000008C   0xE1A01801         LSL      R1,R1,#+16
+   \   00000090   0xE1A01821         LSR      R1,R1,#+16
+   \   00000094   0xE1A00004         MOV      R0,R4
+   \   00000098   0x........         BL       ManagedNandFlash_ReleaseBlock
+    439                  if (error) {
+   \   0000009C   0xE3500000         CMP      R0,#+0
+   \   000000A0   0x1A000008         BNE      ??MappedNandFlash_Map_4
+    440          
+    441                      return error;
+    442                  }                                      
+    443              }
+    444          
+    445              // Set mapping
+    446              mapped->logicalMapping[logicalBlock] = physicalBlock;
+   \                     ??MappedNandFlash_Map_5:
+   \   000000A4   0xE3A00034         MOV      R0,#+52
+   \   000000A8   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000AC   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   000000B0   0xE18060B1         STRH     R6,[R0, +R1]
+    447              mapped->mappingModified = 1;
+   \   000000B4   0xE3A00036         MOV      R0,#+54
+   \   000000B8   0xE3800D60         ORR      R0,R0,#0x1800
+   \   000000BC   0xE3A01001         MOV      R1,#+1
+   \   000000C0   0xE7C01004         STRB     R1,[R0, +R4]
+    448          
+    449              return 0;
+   \   000000C4   0xE3A00000         MOV      R0,#+0
+   \                     ??MappedNandFlash_Map_4:
+   \   000000C8   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000CC   0xE12FFF1E         BX       LR               ;; return
+    450          }
+    451          
+    452          //------------------------------------------------------------------------------
+    453          /// Unmaps a logical block by releasing the corresponding physical block (if 
+    454          /// any).
+    455          /// Returns 0 if successful; otherwise returns a NandCommon_ERROR code.
+    456          /// \param mapped  Pointer to a MappedNandFlash instance.
+    457          /// \param logicalBlock  Number of logical block to unmap.
+    458          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    459          unsigned char MappedNandFlash_Unmap(
+    460              struct MappedNandFlash *mapped,
+    461              unsigned short logicalBlock)
+    462          {
+   \                     MappedNandFlash_Unmap:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    463              signed short physicalBlock = mapped->logicalMapping[logicalBlock];
+   \   0000000C   0xE3A00034         MOV      R0,#+52
+   \   00000010   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000014   0xE0841081         ADD      R1,R4,R1, LSL #+1
+   \   00000018   0xE19060F1         LDRSH    R6,[R0, +R1]
+    464              unsigned char error;
+    465          
+    466              TRACE_INFO("MappedNandFlash_Unmap(LB#%d)\n\r", logicalBlock);
+   \   0000001C   0xE1A01005         MOV      R1,R5
+   \   00000020   0x........         LDR      R0,??DataTable8_21
+   \   00000024   0x........         BL       printf
+    467              ASSERT(
+    468                  logicalBlock < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped)),
+    469                  "MappedNandFlash_Unmap: logicalBlock out-of-range\n\r");
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000030   0xE1550000         CMP      R5,R0
+   \   00000034   0x3A000004         BCC      ??MappedNandFlash_Unmap_0
+   \   00000038   0x........         LDR      R0,??DataTable8_18
+   \   0000003C   0x........         BL       printf
+   \   00000040   0x........         LDR      R0,??DataTable8_22
+   \   00000044   0x........         BL       printf
+   \                     ??MappedNandFlash_Unmap_1:
+   \   00000048   0xEAFFFFFE         B        ??MappedNandFlash_Unmap_1
+    470          
+    471              if (physicalBlock != -1) {
+   \                     ??MappedNandFlash_Unmap_0:
+   \   0000004C   0xE3760001         CMN      R6,#+1
+   \   00000050   0x0A000005         BEQ      ??MappedNandFlash_Unmap_2
+    472          
+    473                  error = ManagedNandFlash_ReleaseBlock(MANAGED(mapped), physicalBlock);
+   \   00000054   0xE1A01806         LSL      R1,R6,#+16
+   \   00000058   0xE1A01821         LSR      R1,R1,#+16
+   \   0000005C   0xE1A00004         MOV      R0,R4
+   \   00000060   0x........         BL       ManagedNandFlash_ReleaseBlock
+    474                  if (error) {
+   \   00000064   0xE3500000         CMP      R0,#+0
+   \   00000068   0x1A000009         BNE      ??MappedNandFlash_Unmap_3
+    475          
+    476                      return error;
+    477                  }
+    478              }
+    479              mapped->logicalMapping[logicalBlock] = -1;
+   \                     ??MappedNandFlash_Unmap_2:
+   \   0000006C   0xE3A00034         MOV      R0,#+52
+   \   00000070   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000074   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   00000078   0xE3E02000         MVN      R2,#+0
+   \   0000007C   0xE18020B1         STRH     R2,[R0, +R1]
+    480              mapped->mappingModified = 1;
+   \   00000080   0xE3A00036         MOV      R0,#+54
+   \   00000084   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000088   0xE3A01001         MOV      R1,#+1
+   \   0000008C   0xE7C01004         STRB     R1,[R0, +R4]
+    481          
+    482              return 0;
+   \   00000090   0xE3A00000         MOV      R0,#+0
+   \                     ??MappedNandFlash_Unmap_3:
+   \   00000094   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000098   0xE12FFF1E         BX       LR               ;; return
+    483          }
+    484          
+    485          //------------------------------------------------------------------------------
+    486          /// Returns the physical block mapped with the given logical block, or -1 if it
+    487          /// is not mapped.
+    488          /// \param mapped  Pointer to a MappedNandFlash instance.
+    489          /// \param logicalBlock  Logical block number.
+    490          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    491          signed short MappedNandFlash_LogicalToPhysical(
+    492              const struct MappedNandFlash *mapped,
+    493              unsigned short logicalBlock)
+    494          {
+   \                     MappedNandFlash_LogicalToPhysical:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    495              ASSERT(
+    496                  logicalBlock < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped)),
+    497                  "MappedNandFlash_LogicalToPhysical: logicalBlock out-of-range\n\r");
+   \   0000000C   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000010   0xE1550000         CMP      R5,R0
+   \   00000014   0x3A000004         BCC      ??MappedNandFlash_LogicalToPhysical_0
+   \   00000018   0x........         LDR      R0,??DataTable8_18
+   \   0000001C   0x........         BL       printf
+   \   00000020   0x........         LDR      R0,??DataTable8_23
+   \   00000024   0x........         BL       printf
+   \                     ??MappedNandFlash_LogicalToPhysical_1:
+   \   00000028   0xEAFFFFFE         B        ??MappedNandFlash_LogicalToPhysical_1
+    498          
+    499              return mapped->logicalMapping[logicalBlock];
+   \                     ??MappedNandFlash_LogicalToPhysical_0:
+   \   0000002C   0xE3A00034         MOV      R0,#+52
+   \   00000030   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000034   0xE0841085         ADD      R1,R4,R5, LSL #+1
+   \   00000038   0xE19000F1         LDRSH    R0,[R0, +R1]
+   \   0000003C   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000040   0xE12FFF1E         BX       LR               ;; return
+    500          }
+    501          
+    502          //------------------------------------------------------------------------------
+    503          /// Returns the logical block which is mapped to given physical block, or -1 if
+    504          /// the latter is not mapped.
+    505          /// \param mapped  Pointer to a MappedNandFlash instance.
+    506          /// \param physicalBlock  Physical block number.
+    507          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    508          signed short MappedNandFlash_PhysicalToLogical(
+    509              const struct MappedNandFlash *mapped,
+    510              unsigned short physicalBlock)
+    511          {
+   \                     MappedNandFlash_PhysicalToLogical:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    512              unsigned short numBlocks =
+    513                              ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+   \   0000000C   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000010   0xE1A06000         MOV      R6,R0
+    514              signed short logicalBlock;
+    515          
+    516              ASSERT(
+    517                 physicalBlock < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped)),
+    518                 "MappedNandFlash_PhysicalToLogical: physicalBlock out-of-range\n\r");
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   0000001C   0xE1550000         CMP      R5,R0
+   \   00000020   0x3A000004         BCC      ??MappedNandFlash_PhysicalToLogical_0
+   \   00000024   0x........         LDR      R0,??DataTable8_18
+   \   00000028   0x........         BL       printf
+   \   0000002C   0x........         LDR      R0,??DataTable8_24
+   \   00000030   0x........         BL       printf
+   \                     ??MappedNandFlash_PhysicalToLogical_1:
+   \   00000034   0xEAFFFFFE         B        ??MappedNandFlash_PhysicalToLogical_1
+    519          
+    520              // Search the mapping for the desired physical block
+    521              for (logicalBlock=0; logicalBlock < numBlocks; logicalBlock++) {
+   \                     ??MappedNandFlash_PhysicalToLogical_0:
+   \   00000038   0xE3A00000         MOV      R0,#+0
+   \   0000003C   0xEA000001         B        ??MappedNandFlash_PhysicalToLogical_2
+   \                     ??MappedNandFlash_PhysicalToLogical_3:
+   \   00000040   0xE2800001         ADD      R0,R0,#+1
+   \   00000044   0xE2844002         ADD      R4,R4,#+2
+   \                     ??MappedNandFlash_PhysicalToLogical_2:
+   \   00000048   0xE1A01800         MOV      R1,R0, LSL #+16
+   \   0000004C   0xE1560841         CMP      R6,R1, ASR #+16
+   \   00000050   0xDA000007         BLE      ??MappedNandFlash_PhysicalToLogical_4
+    522          
+    523                  if (mapped->logicalMapping[logicalBlock] == physicalBlock) {
+   \   00000054   0xE3A01034         MOV      R1,#+52
+   \   00000058   0xE3811D40         ORR      R1,R1,#0x1000
+   \   0000005C   0xE19110F4         LDRSH    R1,[R1, +R4]
+   \   00000060   0xE1510005         CMP      R1,R5
+   \   00000064   0x1AFFFFF5         BNE      ??MappedNandFlash_PhysicalToLogical_3
+    524          
+    525                      return logicalBlock;
+   \   00000068   0xE1A00800         LSL      R0,R0,#+16
+   \   0000006C   0xE1A00840         ASR      R0,R0,#+16
+   \   00000070   0xEA000000         B        ??MappedNandFlash_PhysicalToLogical_5
+    526                  }
+    527              }
+    528          
+    529              return -1;
+   \                     ??MappedNandFlash_PhysicalToLogical_4:
+   \   00000074   0xE3E00000         MVN      R0,#+0
+   \                     ??MappedNandFlash_PhysicalToLogical_5:
+   \   00000078   0xE8BD4070         POP      {R4-R6,LR}
+   \   0000007C   0xE12FFF1E         BX       LR               ;; return
+    530          }
+    531          
+    532          //------------------------------------------------------------------------------
+    533          /// Saves the logical mapping on a FREE, unmapped physical block. Allocates the
+    534          /// new block, releases the previous one (if any) and save the mapping.
+    535          /// Returns 0 if successful; otherwise, returns NandCommon_ERROR_WRONGSTATUS
+    536          /// if the block is not LIVE, or a NandCommon_ERROR code.
+    537          /// \param mapped  Pointer to a MappedNandFlash instance.
+    538          /// \param physicalBlock  Physical block number.
+    539          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    540          unsigned char MappedNandFlash_SaveLogicalMapping(
+    541              struct MappedNandFlash *mapped,
+    542              unsigned short physicalBlock)
+    543          {
+   \                     MappedNandFlash_SaveLogicalMapping:
+   \   00000000   0xE92D4FF0         PUSH     {R4-R11,LR}
+   \   00000004   0xE24DD00C         SUB      SP,SP,#+12
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A04000         MOV      R4,R0
+   \   00000010   0xE1A05001         MOV      R5,R1
+    544              unsigned char error;
+    545              unsigned char data[NandCommon_MAXPAGEDATASIZE];
+    546              unsigned short pageDataSize =
+    547                              NandFlashModel_GetPageDataSize(MODEL(mapped));
+   \   00000014   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000018   0xE1A06000         MOV      R6,R0
+    548              //unsigned short numBlocks =
+    549              //                ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+    550              unsigned int i;
+    551              unsigned int remainingSize;
+    552              unsigned char *currentBuffer;
+    553              unsigned short currentPage;
+    554              unsigned int writeSize;
+    555              signed short previousPhysicalBlock;
+    556          
+    557              TRACE_INFO("MappedNandFlash_SaveLogicalMapping(B#%d)\n\r", physicalBlock);
+   \   0000001C   0xE1A01005         MOV      R1,R5
+   \   00000020   0xE59F012C         LDR      R0,??MappedNandFlash_SaveLogicalMapping_0
+   \   00000024   0x........         BL       printf
+    558          
+    559              // If mapping has not been modified, do nothing
+    560              if (!mapped->mappingModified) {
+   \   00000028   0xE3A00036         MOV      R0,#+54
+   \   0000002C   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000030   0xE7D00004         LDRB     R0,[R0, +R4]
+   \   00000034   0xE3500000         CMP      R0,#+0
+   \   00000038   0x0A00005D         BEQ      ??MappedNandFlash_SaveLogicalMapping_1
+    561          
+    562                  return 0;
+    563              }
+    564          
+    565              // Allocate new block
+    566              error = ManagedNandFlash_AllocateBlock(MANAGED(mapped), physicalBlock);
+   \   0000003C   0xE1A01005         MOV      R1,R5
+   \   00000040   0xE1A00004         MOV      R0,R4
+   \   00000044   0x........         BL       ManagedNandFlash_AllocateBlock
+   \   00000048   0xE1B0B000         MOVS     R11,R0
+    567              if (error) {
+   \   0000004C   0x1A000050         BNE      ??MappedNandFlash_SaveLogicalMapping_2
+    568          
+    569                  return error;
+    570              }
+    571          
+    572              // Save mapping
+    573              previousPhysicalBlock = mapped->logicalMappingBlock;
+   \   00000050   0xE3A01034         MOV      R1,#+52
+   \   00000054   0xE3811D60         ORR      R1,R1,#0x1800
+   \   00000058   0xE19110F4         LDRSH    R1,[R1, +R4]
+   \   0000005C   0xE58D1004         STR      R1,[SP, #+4]
+    574              mapped->logicalMappingBlock = physicalBlock;
+   \   00000060   0xE3A00034         MOV      R0,#+52
+   \   00000064   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000068   0xE18050B4         STRH     R5,[R0, +R4]
+    575          
+    576              // Save actual mapping in pages #1-#XXX
+    577              currentBuffer = (unsigned char *) mapped->logicalMapping;
+   \   0000006C   0xE3C00E80         BIC      R0,R0,#0x800
+   \   00000070   0xE0807004         ADD      R7,R0,R4
+    578              remainingSize = sizeof(mapped->logicalMapping);
+   \   00000074   0xE3A08E80         MOV      R8,#+2048
+    579              currentPage = 1;
+   \   00000078   0xE3A09001         MOV      R9,#+1
+    580              while (remainingSize > 0) {
+    581          
+    582                  writeSize = min(remainingSize, pageDataSize);
+   \                     ??MappedNandFlash_SaveLogicalMapping_3:
+   \   0000007C   0xE1A01006         MOV      R1,R6
+   \   00000080   0xE1A00008         MOV      R0,R8
+   \   00000084   0x........         BL       min
+   \   00000088   0xE1A0A000         MOV      R10,R0
+    583                  memset(data, 0xFF, pageDataSize);
+   \   0000008C   0xE1A02006         MOV      R2,R6
+   \   00000090   0xE3A010FF         MOV      R1,#+255
+   \   00000094   0xE28D0008         ADD      R0,SP,#+8
+   \   00000098   0x........         BL       memset
+    584                  memcpy(data, currentBuffer, writeSize);
+   \   0000009C   0xE1A0200A         MOV      R2,R10
+   \   000000A0   0xE1A01007         MOV      R1,R7
+   \   000000A4   0xE28D0008         ADD      R0,SP,#+8
+   \   000000A8   0x........         BL       memcpy
+    585                  error = ManagedNandFlash_WritePage(MANAGED(mapped),
+    586                                                     physicalBlock,
+    587                                                     currentPage,
+    588                                                     data,
+    589                                                     0);
+   \   000000AC   0xE3A00000         MOV      R0,#+0
+   \   000000B0   0xE58D0000         STR      R0,[SP, #+0]
+   \   000000B4   0xE28D3008         ADD      R3,SP,#+8
+   \   000000B8   0xE1A02809         LSL      R2,R9,#+16
+   \   000000BC   0xE1A02822         LSR      R2,R2,#+16
+   \   000000C0   0xE1A01005         MOV      R1,R5
+   \   000000C4   0xE1A00004         MOV      R0,R4
+   \   000000C8   0x........         BL       ManagedNandFlash_WritePage
+   \   000000CC   0xE1B0B000         MOVS     R11,R0
+    590                  if (error) {
+   \   000000D0   0x0A000003         BEQ      ??MappedNandFlash_SaveLogicalMapping_4
+    591          
+    592                      TRACE_ERROR(
+    593                       "MappedNandFlash_SaveLogicalMapping: Failed to write mapping\n\r");
+   \   000000D4   0xE59F007C         LDR      R0,??MappedNandFlash_SaveLogicalMapping_0+0x4
+   \   000000D8   0x........         BL       printf
+    594                      return error;
+   \   000000DC   0xE1A0000B         MOV      R0,R11
+   \   000000E0   0xEA000033         B        ??MappedNandFlash_SaveLogicalMapping_1
+    595                  }
+    596          
+    597                  currentBuffer += writeSize;
+   \                     ??MappedNandFlash_SaveLogicalMapping_4:
+   \   000000E4   0xE08A7007         ADD      R7,R10,R7
+    598                  remainingSize -= writeSize;
+   \   000000E8   0xE048800A         SUB      R8,R8,R10
+    599                  currentPage++;
+   \   000000EC   0xE2899001         ADD      R9,R9,#+1
+    600              }
+   \   000000F0   0xE3580000         CMP      R8,#+0
+   \   000000F4   0x1AFFFFE0         BNE      ??MappedNandFlash_SaveLogicalMapping_3
+    601          
+    602              // Mark page #0 of block with a distinguishible pattern, so the mapping can
+    603              // be retrieved at startup
+    604              for (i=0; i < pageDataSize; i++) {
+   \   000000F8   0xE3A00000         MOV      R0,#+0
+   \   000000FC   0xE3560000         CMP      R6,#+0
+   \   00000100   0x0A000006         BEQ      ??MappedNandFlash_SaveLogicalMapping_5
+   \   00000104   0xE28D1008         ADD      R1,SP,#+8
+   \   00000108   0xE3A03073         MOV      R3,#+115
+    605          
+    606                  data[i] = PATTERN(i);
+   \                     ??MappedNandFlash_SaveLogicalMapping_6:
+   \   0000010C   0xE0032080         AND      R2,R3,R0, LSL #+1
+   \   00000110   0xE4C12001         STRB     R2,[R1], #+1
+    607              }
+   \   00000114   0xE2800001         ADD      R0,R0,#+1
+   \   00000118   0xE1500006         CMP      R0,R6
+   \   0000011C   0x3AFFFFFA         BCC      ??MappedNandFlash_SaveLogicalMapping_6
+    608              error = ManagedNandFlash_WritePage(MANAGED(mapped),
+    609                                                 physicalBlock, 0,
+    610                                                 data, 0);
+   \                     ??MappedNandFlash_SaveLogicalMapping_5:
+   \   00000120   0xE3A00000         MOV      R0,#+0
+   \   00000124   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000128   0xE28D3008         ADD      R3,SP,#+8
+   \   0000012C   0xE3A02000         MOV      R2,#+0
+   \   00000130   0xE1A01005         MOV      R1,R5
+   \   00000134   0xE1A00004         MOV      R0,R4
+   \   00000138   0x........         BL       ManagedNandFlash_WritePage
+   \   0000013C   0xE1B0B000         MOVS     R11,R0
+    611              if (error) {
+   \   00000140   0x0A000006         BEQ      ??MappedNandFlash_SaveLogicalMapping_7
+    612          
+    613                  TRACE_ERROR(
+    614                      "MappedNandFlash_SaveLogicalMapping: Failed to write pattern\n\r");
+   \   00000144   0xE59F0010         LDR      R0,??MappedNandFlash_SaveLogicalMapping_0+0x8
+   \   00000148   0x........         BL       printf
+    615                  return error;
+   \   0000014C   0xE1A0000B         MOV      R0,R11
+   \   00000150   0xEA000017         B        ??MappedNandFlash_SaveLogicalMapping_1
+   \                     ??MappedNandFlash_SaveLogicalMapping_0:
+   \   00000154   0x........         DC32     `?<Constant "-I- MappedNandFlash_S...">`
+   \   00000158   0x........         DC32     `?<Constant "-E- MappedNandFlash_S...">`
+   \   0000015C   0x........         DC32     `?<Constant "-E- MappedNandFlash_S...">_1`
+    616              }
+    617          
+    618              // Mapping is not modified anymore
+    619              mapped->mappingModified = 0;
+   \                     ??MappedNandFlash_SaveLogicalMapping_7:
+   \   00000160   0xE3A00036         MOV      R0,#+54
+   \   00000164   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000168   0xE3A01000         MOV      R1,#+0
+   \   0000016C   0xE7C01004         STRB     R1,[R0, +R4]
+    620          
+    621              // Release previous block (if any)
+    622              if (previousPhysicalBlock != -1) {
+   \   00000170   0xE59D0004         LDR      R0,[SP, #+4]
+   \   00000174   0xE3700001         CMN      R0,#+1
+   \   00000178   0x0A000007         BEQ      ??MappedNandFlash_SaveLogicalMapping_8
+    623          
+    624                  TRACE_DEBUG("Previous physical block was #%d\n\r",
+    625                              previousPhysicalBlock);
+    626                  error = ManagedNandFlash_ReleaseBlock(MANAGED(mapped),
+    627                                                        previousPhysicalBlock);
+   \   0000017C   0xE1A01800         LSL      R1,R0,#+16
+   \   00000180   0xE1A01821         LSR      R1,R1,#+16
+   \   00000184   0xE1A00004         MOV      R0,R4
+   \   00000188   0x........         BL       ManagedNandFlash_ReleaseBlock
+   \   0000018C   0xE1B0B000         MOVS     R11,R0
+    628                  if (error) {
+   \   00000190   0x0A000001         BEQ      ??MappedNandFlash_SaveLogicalMapping_8
+    629          
+    630                      return error;
+   \                     ??MappedNandFlash_SaveLogicalMapping_2:
+   \   00000194   0xE1A0000B         MOV      R0,R11
+   \   00000198   0xEA000005         B        ??MappedNandFlash_SaveLogicalMapping_1
+    631                  }
+    632              }
+    633          
+    634              TRACE_INFO("Mapping saved on block #%d\n\r", physicalBlock);
+   \                     ??MappedNandFlash_SaveLogicalMapping_8:
+   \   0000019C   0xE1A01005         MOV      R1,R5
+   \   000001A0   0xE59F0000         LDR      R0,??MappedNandFlash_SaveLogicalMapping_9
+   \   000001A4   0xEA000000         B        ??MappedNandFlash_SaveLogicalMapping_10
+   \                     ??MappedNandFlash_SaveLogicalMapping_9:
+   \   000001A8   0x........         DC32     `?<Constant "-I- Mapping saved on ...">`
+   \                     ??MappedNandFlash_SaveLogicalMapping_10:
+   \   000001AC   0x........         BL       printf
+    635          
+    636              return 0;
+   \   000001B0   0xE3A00000         MOV      R0,#+0
+   \                     ??MappedNandFlash_SaveLogicalMapping_1:
+   \   000001B4                      REQUIRE ?Subroutine0
+   \   000001B4                      ;; // Fall through to label ?Subroutine0
+    637          }
+    638          
+    639          //------------------------------------------------------------------------------
+    640          /// Erase all blocks in the mapped area of nand flash.
+    641          /// \param managed  Pointer to a MappedNandFlash instance.
+    642          /// \param level    Erase level.
+    643          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    644          unsigned char MappedNandFlash_EraseAll(
+    645              struct MappedNandFlash *mapped,
+    646              unsigned char level)
+    647          {
+   \                     MappedNandFlash_EraseAll:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    648              unsigned int block;
+    649              ManagedNandFlash_EraseAll(MANAGED(mapped), level);
+   \   0000000C   0x........         BL       ManagedNandFlash_EraseAll
+    650              // Reset to no block mapped
+    651              if (level > NandEraseDIRTY) {
+   \   00000010   0xE3550000         CMP      R5,#+0
+   \   00000014   0x0A000013         BEQ      ??MappedNandFlash_EraseAll_0
+    652                  mapped->logicalMappingBlock = -1;
+   \   00000018   0xE3A00034         MOV      R0,#+52
+   \   0000001C   0xE3800D60         ORR      R0,R0,#0x1800
+   \   00000020   0xE3E01000         MVN      R1,#+0
+   \   00000024   0xE18010B4         STRH     R1,[R0, +R4]
+    653                  mapped->mappingModified = 0;
+   \   00000028   0xE3800002         ORR      R0,R0,#0x2
+   \   0000002C   0xE3A01000         MOV      R1,#+0
+   \   00000030   0xE7C01004         STRB     R1,[R0, +R4]
+    654                  for (block=0;
+   \   00000034   0xE3A05000         MOV      R5,#+0
+   \   00000038   0xE1A06004         MOV      R6,R4
+   \   0000003C   0xEA000005         B        ??MappedNandFlash_EraseAll_1
+    655                       block < ManagedNandFlash_GetDeviceSizeInBlocks(MANAGED(mapped));
+    656                       block++) {
+    657                      mapped->logicalMapping[block] = -1;
+   \                     ??MappedNandFlash_EraseAll_2:
+   \   00000040   0xE3A00034         MOV      R0,#+52
+   \   00000044   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000048   0xE3E01000         MVN      R1,#+0
+   \   0000004C   0xE18010B6         STRH     R1,[R0, +R6]
+    658                  }
+   \   00000050   0xE2855001         ADD      R5,R5,#+1
+   \   00000054   0xE2866002         ADD      R6,R6,#+2
+   \                     ??MappedNandFlash_EraseAll_1:
+   \   00000058   0xE1A00004         MOV      R0,R4
+   \   0000005C   0x........         BL       ManagedNandFlash_GetDeviceSizeInBlocks
+   \   00000060   0xE1550000         CMP      R5,R0
+   \   00000064   0x3AFFFFF5         BCC      ??MappedNandFlash_EraseAll_2
+    659              }
+    660              return 0;
+   \                     ??MappedNandFlash_EraseAll_0:
+   \   00000068   0xE3A00000         MOV      R0,#+0
+   \   0000006C   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000070   0xE12FFF1E         BX       LR               ;; return
+    661          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8:
+   \   00000000   0x........         DC32     `?<Constant "-I- FindLogicalMappin...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_1:
+   \   00000000   0x........         DC32     `?<Constant "-I- Checking LIVE blo...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_2:
+   \   00000000   0x........         DC32     `?<Constant "-W- No logical mappin...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_3:
+   \   00000000   0x........         DC32     `?<Constant "-I- Logical mapping i...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_4:
+   \   00000000   0x........         DC32     `?<Constant "-E- FindLogicalMappin...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_5:
+   \   00000000   0x........         DC32     `?<Constant "-I- LoadLogicalMappin...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_6:
+   \   00000000   0x........         DC32     `?<Constant "-E- LoadLogicalMappin...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_7:
+   \   00000000   0x........         DC32     `?<Constant "-I- Release unmapped ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_8:
+   \   00000000   0x........         DC32     `?<Constant "-I- Mark mapped DIRTY...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_9:
+   \   00000000   0x........         DC32     `?<Constant "-I- Unmap FREE or BAD...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_10:
+   \   00000000   0x........         DC32     `?<Constant "-I- Mapping loaded fr...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_11:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_I...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_12:
+   \   00000000   0x........         DC32     `?<Constant "-E- MappedNandFlash_I...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_13:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_R...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_14:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_R...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_15:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_W...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_16:
+   \   00000000   0x........         DC32     `?<Constant "-E- MappedNandFlash_W...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_17:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_M...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_18:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_19:
+   \   00000000   0x........         DC32     `?<Constant "MappedNandFlash_Map: ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_20:
+   \   00000000   0x........         DC32     `?<Constant "MappedNandFlash_Map: ...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_21:
+   \   00000000   0x........         DC32     `?<Constant "-I- MappedNandFlash_U...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_22:
+   \   00000000   0x........         DC32     `?<Constant "MappedNandFlash_Unmap...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_23:
+   \   00000000   0x........         DC32     `?<Constant "MappedNandFlash_Logic...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_24:
+   \   00000000   0x........         DC32     `?<Constant "MappedNandFlash_Physi...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- FindLogicalMappin...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- FindLogicalMappingBlock()~%d\012\015"
+   \              0x2D 0x20    
+   \              0x46 0x69    
+   \              0x6E 0x64    
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x28    
+   \              0x29 0x7E    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Checking LIVE blo...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Checking LIVE block #%d\012\015"
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x65 0x63    
+   \              0x6B 0x69    
+   \              0x6E 0x67    
+   \              0x20 0x4C    
+   \              0x49 0x56    
+   \              0x45 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x23 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+   \   0000001E   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Logical mapping i...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Logical mapping in block #%d\012\015"
+   \              0x2D 0x20    
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x20    
+   \              0x6D 0x61    
+   \              0x70 0x70    
+   \              0x69 0x6E    
+   \              0x67 0x20    
+   \              0x69 0x6E    
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- FindLogicalMappin...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 46H, 69H, 6EH, 64H
+   \              0x2D 0x20    
+   \              0x46 0x69    
+   \              0x6E 0x64    
+   \   00000008   0x4C 0x6F          DC8 4CH, 6FH, 67H, 69H, 63H, 61H, 6CH, 4DH
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \   00000010   0x61 0x70          DC8 61H, 70H, 70H, 69H, 6EH, 67H, 42H, 6CH
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x42 0x6C    
+   \   00000018   0x6F 0x63          DC8 6FH, 63H, 6BH, 3AH, 20H, 46H, 61H, 69H
+   \              0x6B 0x3A    
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \   00000020   0x6C 0x65          DC8 6CH, 65H, 64H, 20H, 74H, 6FH, 20H, 73H
+   \              0x64 0x20    
+   \              0x74 0x6F    
+   \              0x20 0x73    
+   \   00000028   0x63 0x61          DC8 63H, 61H, 6EH, 20H, 62H, 6CH, 6FH, 63H
+   \              0x6E 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \   00000030   0x6B 0x20          DC8 6BH, 20H, 23H, 25H, 64H, 0AH, 0DH, 0
+   \              0x23 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-W- No logical mappin...">`:
+   \   00000000   0x2D 0x57          DC8 "-W- No logical mapping found in device\012\015"
+   \              0x2D 0x20    
+   \              0x4E 0x6F    
+   \              0x20 0x6C    
+   \              0x6F 0x67    
+   \              0x69 0x63    
+   \              0x61 0x6C    
+   \              0x20 0x6D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x20 0x66    
+   \              0x6F 0x75    
+   \              0x6E 0x64    
+   \              0x20 0x69    
+   \              0x6E 0x20    
+   \              0x64 0x65    
+   \              0x76 0x69    
+   \              0x63 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- LoadLogicalMappin...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- LoadLogicalMapping(B#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4C 0x6F    
+   \              0x61 0x64    
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x28 0x42    
+   \              0x23 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- LoadLogicalMappin...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- LoadLogicalMapping: Failed to load mapping\012\015"
+   \              0x2D 0x20    
+   \              0x4C 0x6F    
+   \              0x61 0x64    
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x6C 0x6F    
+   \              0x61 0x64    
+   \              0x20 0x6D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000031   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Release unmapped ...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Release unmapped LIVE #%d\012\015"
+   \              0x2D 0x20    
+   \              0x52 0x65    
+   \              0x6C 0x65    
+   \              0x61 0x73    
+   \              0x65 0x20    
+   \              0x75 0x6E    
+   \              0x6D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x20 0x4C    
+   \              0x49 0x56    
+   \              0x45 0x20    
+   \              0x23 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Mark mapped DIRTY...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Mark mapped DIRTY #%d -> LIVE\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x72 0x6B    
+   \              0x20 0x6D    
+   \              0x61 0x70    
+   \              0x70 0x65    
+   \              0x64 0x20    
+   \              0x44 0x49    
+   \              0x52 0x54    
+   \              0x59 0x20    
+   \              0x23 0x25    
+   \              0x64 0x20    
+   \              0x2D 0x3E    
+   \              0x20 0x4C    
+   \              0x49 0x56    
+   \              0x45 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Unmap FREE or BAD...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Unmap FREE or BAD #%d\012\015"
+   \              0x2D 0x20    
+   \              0x55 0x6E    
+   \              0x6D 0x61    
+   \              0x70 0x20    
+   \              0x46 0x52    
+   \              0x45 0x45    
+   \              0x20 0x6F    
+   \              0x72 0x20    
+   \              0x42 0x41    
+   \              0x44 0x20    
+   \              0x23 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Mapping loaded fr...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Mapping loaded from block #%d\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x69 0x6E    
+   \              0x67 0x20    
+   \              0x6C 0x6F    
+   \              0x61 0x64    
+   \              0x65 0x64    
+   \              0x20 0x66    
+   \              0x72 0x6F    
+   \              0x6D 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x23 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_I...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_Initialize()\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x49 0x6E    
+   \              0x69 0x74    
+   \              0x69 0x61    
+   \              0x6C 0x69    
+   \              0x7A 0x65    
+   \              0x28 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- MappedNandFlash_I...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 70H, 70H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \   00000008   0x65 0x64          DC8 65H, 64H, 4EH, 61H, 6EH, 64H, 46H, 6CH
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \   00000010   0x61 0x73          DC8 61H, 73H, 68H, 5FH, 49H, 6EH, 69H, 74H
+   \              0x68 0x5F    
+   \              0x49 0x6E    
+   \              0x69 0x74    
+   \   00000018   0x69 0x61          DC8 69H, 61H, 6CH, 69H, 7AH, 65H, 3AH, 20H
+   \              0x6C 0x69    
+   \              0x7A 0x65    
+   \              0x3A 0x20    
+   \   00000020   0x49 0x6E          DC8 49H, 6EH, 69H, 74H, 69H, 61H, 6CH, 69H
+   \              0x69 0x74    
+   \              0x69 0x61    
+   \              0x6C 0x69    
+   \   00000028   0x7A 0x65          DC8 7AH, 65H, 20H, 64H, 65H, 76H, 69H, 63H
+   \              0x20 0x64    
+   \              0x65 0x76    
+   \              0x69 0x63    
+   \   00000030   0x65 0x0A          DC8 65H, 0AH, 0DH, 0
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_R...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_ReadPage(LB#%d:P#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x52 0x65    
+   \              0x61 0x64    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x28 0x4C    
+   \              0x42 0x23    
+   \              0x25 0x64    
+   \              0x3A 0x50    
+   \              0x23 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_R...">_1`:
+   \   00000000   0x2D 0x49          DC8 2DH, 49H, 2DH, 20H, 4DH, 61H, 70H, 70H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \   00000008   0x65 0x64          DC8 65H, 64H, 4EH, 61H, 6EH, 64H, 46H, 6CH
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \   00000010   0x61 0x73          DC8 61H, 73H, 68H, 5FH, 52H, 65H, 61H, 64H
+   \              0x68 0x5F    
+   \              0x52 0x65    
+   \              0x61 0x64    
+   \   00000018   0x50 0x61          DC8 50H, 61H, 67H, 65H, 3AH, 20H, 42H, 6CH
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \              0x42 0x6C    
+   \   00000020   0x6F 0x63          DC8 6FH, 63H, 6BH, 20H, 25H, 64H, 20H, 6EH
+   \              0x6B 0x20    
+   \              0x25 0x64    
+   \              0x20 0x6E    
+   \   00000028   0x6F 0x74          DC8 6FH, 74H, 20H, 6DH, 61H, 70H, 70H, 65H
+   \              0x20 0x6D    
+   \              0x61 0x70    
+   \              0x70 0x65    
+   \   00000030   0x64 0x0A          DC8 64H, 0AH, 0DH, 0
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_W...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_WritePage(LB#%d:P#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x57 0x72    
+   \              0x69 0x74    
+   \              0x65 0x50    
+   \              0x61 0x67    
+   \              0x65 0x28    
+   \              0x4C 0x42    
+   \              0x23 0x25    
+   \              0x64 0x3A    
+   \              0x50 0x23    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- MappedNandFlash_W...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 70H, 70H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \   00000008   0x65 0x64          DC8 65H, 64H, 4EH, 61H, 6EH, 64H, 46H, 6CH
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \   00000010   0x61 0x73          DC8 61H, 73H, 68H, 5FH, 57H, 72H, 69H, 74H
+   \              0x68 0x5F    
+   \              0x57 0x72    
+   \              0x69 0x74    
+   \   00000018   0x65 0x50          DC8 65H, 50H, 61H, 67H, 65H, 3AH, 20H, 42H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x42    
+   \   00000020   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 6DH, 75H, 73H
+   \              0x63 0x6B    
+   \              0x20 0x6D    
+   \              0x75 0x73    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 62H, 65H, 20H, 6DH, 61H, 70H
+   \              0x62 0x65    
+   \              0x20 0x6D    
+   \              0x61 0x70    
+   \   00000030   0x70 0x65          DC8 70H, 65H, 64H, 0AH, 0DH, 0
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+   \   00000036   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_M...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_Map(LB#%d -> PB#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x4D 0x61    
+   \              0x70 0x28    
+   \              0x4C 0x42    
+   \              0x23 0x25    
+   \              0x64 0x20    
+   \              0x2D 0x3E    
+   \              0x20 0x50    
+   \              0x42 0x23    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+   \   0000002A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MappedNandFlash_Map: ...">`:
+   \   00000000   0x4D 0x61          DC8 "MappedNandFlash_Map: logicalBlock out-of-range\012\015"
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x4D 0x61    
+   \              0x70 0x3A    
+   \              0x20 0x6C    
+   \              0x6F 0x67    
+   \              0x69 0x63    
+   \              0x61 0x6C    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x6F 0x75    
+   \              0x74 0x2D    
+   \              0x6F 0x66    
+   \              0x2D 0x72    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000031   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MappedNandFlash_Map: ...">_1`:
+   \   00000000   0x4D 0x61          DC8 "MappedNandFlash_Map: physicalBlock out-of-range\012\015"
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x4D 0x61    
+   \              0x70 0x3A    
+   \              0x20 0x70    
+   \              0x68 0x79    
+   \              0x73 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x6F    
+   \              0x75 0x74    
+   \              0x2D 0x6F    
+   \              0x66 0x2D    
+   \              0x72 0x61    
+   \              0x6E 0x67    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_U...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_Unmap(LB#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x55 0x6E    
+   \              0x6D 0x61    
+   \              0x70 0x28    
+   \              0x4C 0x42    
+   \              0x23 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MappedNandFlash_Unmap...">`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 70H, 70H, 65H, 64H, 4EH, 61H
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \   00000008   0x6E 0x64          DC8 6EH, 64H, 46H, 6CH, 61H, 73H, 68H, 5FH
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \   00000010   0x55 0x6E          DC8 55H, 6EH, 6DH, 61H, 70H, 3AH, 20H, 6CH
+   \              0x6D 0x61    
+   \              0x70 0x3A    
+   \              0x20 0x6C    
+   \   00000018   0x6F 0x67          DC8 6FH, 67H, 69H, 63H, 61H, 6CH, 42H, 6CH
+   \              0x69 0x63    
+   \              0x61 0x6C    
+   \              0x42 0x6C    
+   \   00000020   0x6F 0x63          DC8 6FH, 63H, 6BH, 20H, 6FH, 75H, 74H, 2DH
+   \              0x6B 0x20    
+   \              0x6F 0x75    
+   \              0x74 0x2D    
+   \   00000028   0x6F 0x66          DC8 6FH, 66H, 2DH, 72H, 61H, 6EH, 67H, 65H
+   \              0x2D 0x72    
+   \              0x61 0x6E    
+   \              0x67 0x65    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MappedNandFlash_Logic...">`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 70H, 70H, 65H, 64H, 4EH, 61H
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \   00000008   0x6E 0x64          DC8 6EH, 64H, 46H, 6CH, 61H, 73H, 68H, 5FH
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \   00000010   0x4C 0x6F          DC8 4CH, 6FH, 67H, 69H, 63H, 61H, 6CH, 54H
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x54    
+   \   00000018   0x6F 0x50          DC8 6FH, 50H, 68H, 79H, 73H, 69H, 63H, 61H
+   \              0x68 0x79    
+   \              0x73 0x69    
+   \              0x63 0x61    
+   \   00000020   0x6C 0x3A          DC8 6CH, 3AH, 20H, 6CH, 6FH, 67H, 69H, 63H
+   \              0x20 0x6C    
+   \              0x6F 0x67    
+   \              0x69 0x63    
+   \   00000028   0x61 0x6C          DC8 61H, 6CH, 42H, 6CH, 6FH, 63H, 6BH, 20H
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \   00000030   0x6F 0x75          DC8 6FH, 75H, 74H, 2DH, 6FH, 66H, 2DH, 72H
+   \              0x74 0x2D    
+   \              0x6F 0x66    
+   \              0x2D 0x72    
+   \   00000038   0x61 0x6E          DC8 61H, 6EH, 67H, 65H, 0AH, 0DH, 0
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000003F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MappedNandFlash_Physi...">`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 70H, 70H, 65H, 64H, 4EH, 61H
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \   00000008   0x6E 0x64          DC8 6EH, 64H, 46H, 6CH, 61H, 73H, 68H, 5FH
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \   00000010   0x50 0x68          DC8 50H, 68H, 79H, 73H, 69H, 63H, 61H, 6CH
+   \              0x79 0x73    
+   \              0x69 0x63    
+   \              0x61 0x6C    
+   \   00000018   0x54 0x6F          DC8 54H, 6FH, 4CH, 6FH, 67H, 69H, 63H, 61H
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \   00000020   0x6C 0x3A          DC8 6CH, 3AH, 20H, 70H, 68H, 79H, 73H, 69H
+   \              0x20 0x70    
+   \              0x68 0x79    
+   \              0x73 0x69    
+   \   00000028   0x63 0x61          DC8 63H, 61H, 6CH, 42H, 6CH, 6FH, 63H, 6BH
+   \              0x6C 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000030   0x20 0x6F          DC8 20H, 6FH, 75H, 74H, 2DH, 6FH, 66H, 2DH
+   \              0x75 0x74    
+   \              0x2D 0x6F    
+   \              0x66 0x2D    
+   \   00000038   0x72 0x61          DC8 72H, 61H, 6EH, 67H, 65H, 0AH, 0DH, 0
+   \              0x6E 0x67    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- MappedNandFlash_S...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- MappedNandFlash_SaveLogicalMapping(B#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x65 0x64    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x5F    
+   \              0x53 0x61    
+   \              0x76 0x65    
+   \              0x4C 0x6F    
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \              0x61 0x70    
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x28 0x42    
+   \              0x23 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- MappedNandFlash_S...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 70H, 70H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \   00000008   0x65 0x64          DC8 65H, 64H, 4EH, 61H, 6EH, 64H, 46H, 6CH
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \   00000010   0x61 0x73          DC8 61H, 73H, 68H, 5FH, 53H, 61H, 76H, 65H
+   \              0x68 0x5F    
+   \              0x53 0x61    
+   \              0x76 0x65    
+   \   00000018   0x4C 0x6F          DC8 4CH, 6FH, 67H, 69H, 63H, 61H, 6CH, 4DH
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \   00000020   0x61 0x70          DC8 61H, 70H, 70H, 69H, 6EH, 67H, 3AH, 20H
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x3A 0x20    
+   \   00000028   0x46 0x61          DC8 46H, 61H, 69H, 6CH, 65H, 64H, 20H, 74H
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \   00000030   0x6F 0x20          DC8 6FH, 20H, 77H, 72H, 69H, 74H, 65H, 20H
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x65 0x20    
+   \   00000038   0x6D 0x61          DC8 6DH, 61H, 70H, 70H, 69H, 6EH, 67H, 0AH
+   \              0x70 0x70    
+   \              0x69 0x6E    
+   \              0x67 0x0A    
+   \   00000040   0x0D 0x00          DC8 0DH, 0
+   \   00000042   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- MappedNandFlash_S...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 70H, 70H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \   00000008   0x65 0x64          DC8 65H, 64H, 4EH, 61H, 6EH, 64H, 46H, 6CH
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x46 0x6C    
+   \   00000010   0x61 0x73          DC8 61H, 73H, 68H, 5FH, 53H, 61H, 76H, 65H
+   \              0x68 0x5F    
+   \              0x53 0x61    
+   \              0x76 0x65    
+   \   00000018   0x4C 0x6F          DC8 4CH, 6FH, 67H, 69H, 63H, 61H, 6CH, 4DH
+   \              0x67 0x69    
+   \              0x63 0x61    
+   \              0x6C 0x4D    
+   \   00000020   0x61 0x70          DC8 61H, 70H, 70H, 69H, 6EH, 67H, 3AH, 20H
+   \              0x70 0x69    
+   \              0x6E 0x67    
+   \              0x3A 0x20    
+   \   00000028   0x46 0x61          DC8 46H, 61H, 69H, 6CH, 65H, 64H, 20H, 74H
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \   00000030   0x6F 0x20          DC8 6FH, 20H, 77H, 72H, 69H, 74H, 65H, 20H
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x65 0x20    
+   \   00000038   0x70 0x61          DC8 70H, 61H, 74H, 74H, 65H, 72H, 6EH, 0AH
+   \              0x74 0x74    
+   \              0x65 0x72    
+   \              0x6E 0x0A    
+   \   00000040   0x0D 0x00          DC8 0DH, 0
+   \   00000042   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Mapping saved on ...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Mapping saved on block #%d\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x70 0x70    
+   \              0x69 0x6E    
+   \              0x67 0x20    
+   \              0x73 0x61    
+   \              0x76 0x65    
+   \              0x64 0x20    
+   \              0x6F 0x6E    
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000021   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+     2088  FindLogicalMappingBlock
+             2088 -> ManagedNandFlash_GetDeviceSizeInBlocks
+             2088 -> ManagedNandFlash_ReadPage
+             2088 -> NandFlashModel_GetPageDataSize
+             2088 -> printf
+     2096  LoadLogicalMapping
+             2096 -> ManagedNandFlash_GetDeviceSizeInBlocks
+             2096 -> ManagedNandFlash_ReadPage
+             2096 -> ManagedNandFlash_ReleaseBlock
+             2096 -> MappedNandFlash_PhysicalToLogical
+             2096 -> NandFlashModel_GetPageDataSize
+             2096 -> memcpy
+             2096 -> min
+             2096 -> printf
+       16  MappedNandFlash_EraseAll
+               16 -> ManagedNandFlash_EraseAll
+               16 -> ManagedNandFlash_GetDeviceSizeInBlocks
+       72  MappedNandFlash_Initialize
+               72 -> FindLogicalMappingBlock
+               72 -> LoadLogicalMapping
+               72 -> ManagedNandFlash_GetDeviceSizeInBlocks
+               72 -> ManagedNandFlash_Initialize
+               72 -> printf
+       16  MappedNandFlash_LogicalToPhysical
+               16 -> ManagedNandFlash_GetDeviceSizeInBlocks
+               16 -> printf
+       16  MappedNandFlash_Map
+               16 -> ManagedNandFlash_AllocateBlock
+               16 -> ManagedNandFlash_GetDeviceSizeInBlocks
+               16 -> ManagedNandFlash_ReleaseBlock
+               16 -> printf
+       16  MappedNandFlash_PhysicalToLogical
+               16 -> ManagedNandFlash_GetDeviceSizeInBlocks
+               16 -> printf
+       32  MappedNandFlash_ReadPage
+               32 -> ManagedNandFlash_ReadPage
+               32 -> printf
+     2096  MappedNandFlash_SaveLogicalMapping
+             2096 -> ManagedNandFlash_AllocateBlock
+             2096 -> ManagedNandFlash_ReleaseBlock
+             2096 -> ManagedNandFlash_WritePage
+             2096 -> NandFlashModel_GetPageDataSize
+             2096 -> memcpy
+             2096 -> memset
+             2096 -> min
+             2096 -> printf
+       16  MappedNandFlash_Unmap
+               16 -> ManagedNandFlash_GetDeviceSizeInBlocks
+               16 -> ManagedNandFlash_ReleaseBlock
+               16 -> printf
+       32  MappedNandFlash_WritePage
+               32 -> ManagedNandFlash_WritePage
+               32 -> printf
+        8  memcpy
+                8 -> __aeabi_memcpy
+        8  memset
+                8 -> __aeabi_memset
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      56  ?<Constant "-E- FindLogicalMappin...">
+      52  ?<Constant "-E- LoadLogicalMappin...">
+      52  ?<Constant "-E- MappedNandFlash_I...">
+      68  ?<Constant "-E- MappedNandFlash_S...">
+      68  ?<Constant "-E- MappedNandFlash_S...">_1
+      56  ?<Constant "-E- MappedNandFlash_W...">
+      16  ?<Constant "-F- ASSERT: ">
+      32  ?<Constant "-I- Checking LIVE blo...">
+      36  ?<Constant "-I- FindLogicalMappin...">
+      32  ?<Constant "-I- LoadLogicalMappin...">
+      36  ?<Constant "-I- Logical mapping i...">
+      36  ?<Constant "-I- MappedNandFlash_I...">
+      44  ?<Constant "-I- MappedNandFlash_M...">
+      44  ?<Constant "-I- MappedNandFlash_R...">
+      52  ?<Constant "-I- MappedNandFlash_R...">_1
+      48  ?<Constant "-I- MappedNandFlash_S...">
+      36  ?<Constant "-I- MappedNandFlash_U...">
+      44  ?<Constant "-I- MappedNandFlash_W...">
+      36  ?<Constant "-I- Mapping loaded fr...">
+      36  ?<Constant "-I- Mapping saved on ...">
+      36  ?<Constant "-I- Mark mapped DIRTY...">
+      32  ?<Constant "-I- Release unmapped ...">
+      28  ?<Constant "-I- Unmap FREE or BAD...">
+      44  ?<Constant "-W- No logical mappin...">
+      64  ?<Constant "MappedNandFlash_Logic...">
+      52  ?<Constant "MappedNandFlash_Map: ...">
+      52  ?<Constant "MappedNandFlash_Map: ...">_1
+      64  ?<Constant "MappedNandFlash_Physi...">
+      52  ?<Constant "MappedNandFlash_Unmap...">
+       4  ??DataTable8
+       4  ??DataTable8_1
+       4  ??DataTable8_10
+       4  ??DataTable8_11
+       4  ??DataTable8_12
+       4  ??DataTable8_13
+       4  ??DataTable8_14
+       4  ??DataTable8_15
+       4  ??DataTable8_16
+       4  ??DataTable8_17
+       4  ??DataTable8_18
+       4  ??DataTable8_19
+       4  ??DataTable8_2
+       4  ??DataTable8_20
+       4  ??DataTable8_21
+       4  ??DataTable8_22
+       4  ??DataTable8_23
+       4  ??DataTable8_24
+       4  ??DataTable8_3
+       4  ??DataTable8_4
+       4  ??DataTable8_5
+       4  ??DataTable8_6
+       4  ??DataTable8_7
+       4  ??DataTable8_8
+       4  ??DataTable8_9
+      16  ?Subroutine0
+     312  FindLogicalMappingBlock
+     424  LoadLogicalMapping
+     116  MappedNandFlash_EraseAll
+     308  MappedNandFlash_Initialize
+      68  MappedNandFlash_LogicalToPhysical
+     208  MappedNandFlash_Map
+     128  MappedNandFlash_PhysicalToLogical
+     116  MappedNandFlash_ReadPage
+     436  MappedNandFlash_SaveLogicalMapping
+     156  MappedNandFlash_Unmap
+     112  MappedNandFlash_WritePage
+      24  memcpy
+      40  memset
+
+ 
+ 1 304 bytes in section .rodata
+ 2 564 bytes in section .text
+ 
+ 2 500 bytes of CODE  memory (+ 64 bytes shared)
+ 1 304 bytes of CONST memory
+
+Errors: none
+Warnings: none

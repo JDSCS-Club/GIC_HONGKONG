@@ -1,0 +1,728 @@
+#include "def.h"
+#include "main.h"
+#include "saf82532.h"
+
+//************************************************************************************
+//	변수 정의
+//************************************************************************************
+
+BOOL m_bSaf82532RxOkAchFlag = FALSE;
+UINT m_nSaf82532RxOkAchCnt = 0;
+UINT m_nSaf82532RxOkAchErr = 0;
+int m_nSaf82532RxAchRear = 1;
+int m_nSaf82532RxAchFront = 0;
+int m_nSaf82532RxLenAch = 0;
+int m_nSaf82532TxPosAch = 0;
+UCHAR m_btSaf82532TxAchBuffer[SAB82532_BUFFER_SIZE+64];
+UCHAR m_btSaf82532RxAchBuffer[SAB82532_BUFFER_SIZE+64];
+
+BOOL m_bSaf82532RxOkBchFlag = FALSE;
+UINT m_nSaf82532RxOkBchCnt = 0;
+UINT m_nSaf82532RxOkBchErr = 0;
+int m_nSaf82532RxBchRear = 1;
+int m_nSaf82532RxBchFront = 0;
+int m_nSaf82532RxLenBch = 0;
+int m_nSaf82532TxPosBch = 0;
+UCHAR m_btSaf82532TxBchBuffer[SAB82532_BUFFER_SIZE+64];
+UCHAR m_btSaf82532RxBchBuffer[SAB82532_BUFFER_SIZE+64];
+
+BOOL m_bSaf82532_IsAsyncAch = TRUE;
+BOOL m_bSaf82532_IsAsyncBch = TRUE;
+int saf82532_Isr_Flag=0;   //JYJ
+
+BOOL m_bSaf82532_Is485Ach = TRUE; // [ASYNC]
+BOOL m_bSaf82532_Is485Bch = TRUE; // [ASYNC]
+
+int m_nbSaf82532_UsPer1ByteAch = 0; // 한 바이트 마다 us [ASYNC]
+int m_nbSaf82532_UsPer1ByteBch = 0; // 한 바이트 마다 us [ASYNC]
+int m_nbSaf82532_TxDisable1msCntAch = 0; // [ASYNC]
+int m_nbSaf82532_TxDisable1msCntBch = 0; // [ASYNC]
+
+int m_nSaf82532TxLedOnDlyAch = 0;
+int m_nSaf82532TxLedOnDlyBch = 0;
+
+
+//************************************************************************************
+//	SAF82532 초기화(동기통신)
+//************************************************************************************
+void saf82532_SyncInit(int nChl,UCHAR btSerialMode,UCHAR btCrcKind,BOOL bTxIntEn)
+{
+	UCHAR btTemp;
+
+	PSAF82532HDLCREG1CH pShReg = (SAF82532HDLCREG1CH *)(SAB82532_BASE+nChl);
+		
+	pShReg->IPC = 0x01;	
+	pShReg->MODE = SAF82532_HDLC_MODE_NONAUTO | SAF82532_HDLC_MODE_RCVA | SAF82532_HDLC_MODE_ADDRESS16;	
+	pShReg->RLCR = 0x80 | 17;
+	//pShReg->CCR0 = SAF82532_HDLC_CCR0_PWUP | SAF82532_HDLC_CCR0_MCE | SAF82532_HDLC_CCR0_MANCST | SAF82532_HDLC_CCR0_HDLC;
+	pShReg->CCR0 = SAF82532_HDLC_CCR0_PWUP | SAF82532_HDLC_CCR0_MCE | btSerialMode | SAF82532_HDLC_CCR0_HDLC;
+		
+	pShReg->XAD1 = 0xFF; // Only Auto-Mode
+	pShReg->XAD2 = 0xFF;
+
+	pShReg->RAH1 = 0xFF;
+	pShReg->RAH2 = 0xFF;
+
+	pShReg->RAL1 = 0xF0;
+	pShReg->RAL2_RHCR = 0xFF;
+
+	pShReg->AML = 0xFF; // Address Mask H
+	pShReg->AMH = 0xFF; // Address Mask L	
+
+	pShReg->PRE_RSTA = 0x7E; // Preamble
+
+	pShReg->CCR1 = SAF82532_HDLC_CCR1_ODS | SAF82532_HDLC_CCR1_CM2 | SAF82532_HDLC_CCR1_SFLG | SAF82532_HDLC_CCR1_ITF;
+
+	pShReg->CCR2 = SAF82532_HDLC_CCR2_SSEL | btCrcKind;
+
+	pShReg->CCR3 = SAF82532_HDLC_CCR3_PRE8 | SAF82532_HDLC_CCR3_EPT | SAF82532_HDLC_CCR3_RADD | SAF82532_HDLC_CCR3_RCRC;
+	
+	pShReg->CCR4 = 0x00;
+	
+	pShReg->PVR = 0xFA; // Port Value	
+	pShReg->PCR = 0x50; // Port Input : 0->OUT, 1->IN
+
+	// Interrupt Mask
+	pShReg->ISR0_IMR0 = ~(SAF82532_HDLC_IMR0_RME | SAF82532_HDLC_IMR0_RPF);
+	if(bTxIntEn)
+		pShReg->ISR1_IMR1 = ~(SAF82532_HDLC_IMR1_XPR | SAF82532_HDLC_IMR1_ALLS);
+	else
+		pShReg->ISR1_IMR1 = 0xFF;
+	
+	// Clear
+	pShReg->STA_CMD = SAF82532_HDLC_CMD_RHR;
+
+	// Interrupt Clear
+	//btTemp = pShReg->ISR0_IMR0;
+	//btTemp = pShReg->ISR1_IMR1;
+	
+	switch(nChl)
+	{
+	case SAB82532_ACH: m_bSaf82532_IsAsyncAch = FALSE; break;
+	case SAB82532_BCH: m_bSaf82532_IsAsyncBch = FALSE; break;
+	}
+}
+
+//************************************************************************************
+//	SAF82532 초기화(비동기통신)
+//************************************************************************************
+void saf82532_AsyncInit(int nChl,int nBps,int nDataBit,int nParity,int nStopBit,BOOL bIs485Chl)
+{
+	int i;
+	UCHAR btTemp;
+	PSAF82532ASYNCREG1CH pShReg = (SAF82532ASYNCREG1CH *)(SAB82532_BASE+nChl);
+	
+	pShReg->IPC = 0x01;	
+	
+	pShReg->MODE = SAF82532_ASYNC_MODE_RCVA;
+	
+	pShReg->CCR0 = SAF82532_ASYNC_CCR0_PWUP | SAF82532_ASYNC_CCR0_MCE | SAF82532_ASYNC_CCR0_NRZ | SAF82532_ASYNC_CCR0_ASYNC;
+	pShReg->CCR1 = SAF82532_ASYNC_CCR1_ODS | SAF82532_ASYNC_CCR1_CM7 | SAF82532_ASYNC_CCR1_BCR; // RX,TX:BRG
+	pShReg->CCR2 = SAF82532_ASYNC_CCR2_BDF | SAF82532_ASYNC_CCR2_SSEL;
+
+	pShReg->RFC = 0x10;
+
+	// BuadRate
+	i = (SAF82532_INTOSCCLK_HZ/32/nBps) - 1;
+	pShReg->CCR2 |= WORD_H(i)<<6;
+	pShReg->VSTR_BGR = WORD_L(i);
+
+	// Control Bit
+	pShReg->DAFO = (nStopBit<<5) | (nParity<<3) | (nParity?0x04:0x00) | nDataBit;
+
+	// Port
+	pShReg->PCR = 0xFA; // Port Input : 0->OUT, 1->IN
+	pShReg->PVR = 0x00; // Port Value
+	
+	//pShReg->PVR = 0xFA; // Port Value  NEW BOARD
+	//pShReg->PCR = 0x50; // Port Input : 0->OUT, 1->IN  NEW BOARD
+
+	pShReg->ISR0_IMR0 = ~(SAF82532_ASYNC_IMR0_RPF);
+	//pShReg->ISR1_IMR1 = ~(SAF82532_ASYNC_IMR1_XPR);
+	pShReg->ISR1_IMR1 = 0xFF;
+
+	pShReg->STA_CMD = SAF82532_ASYNC_CMD_RRES | SAF82532_ASYNC_CMD_XRES;
+
+	btTemp = pShReg->ISR0_IMR0;
+	btTemp = pShReg->ISR1_IMR1;
+
+	switch(nChl)
+	{
+	case SAB82532_ACH:
+		m_bSaf82532_IsAsyncAch = TRUE;
+		m_bSaf82532_Is485Ach = bIs485Chl;
+		m_nbSaf82532_UsPer1ByteAch = (int)(((1.0/(float)nBps))*1000.*1000.*10.0);
+		break;
+	case SAB82532_BCH:
+		m_bSaf82532_IsAsyncBch = TRUE;
+		m_bSaf82532_Is485Bch = bIs485Chl;
+		m_nbSaf82532_UsPer1ByteBch = (int)(((1.0/(float)nBps))*1000.*1000.*10.0);
+		break;
+	}
+}
+
+//************************************************************************************
+//	Chip Version 얻기
+//	000 : Ver 1
+//	001 : Ver 2
+//	010 : Ver 3.2
+//************************************************************************************
+UCHAR saf82532_GetVersion()
+{
+	PSAF82532HDLCREG1CH pShReg = (SAF82532HDLCREG1CH *)(SAB82532_BASE);
+
+	return BYTE_L(pShReg->VSTR_BGR);
+}
+
+//************************************************************************************
+//	SAF82532 전송
+//************************************************************************************
+void saf82532_Send(UCHAR btChl,UCHAR *pDat,int nTxLen)
+{
+	switch(btChl)
+	{
+	case SAB82532_ACH:
+		if(m_bSaf82532_IsAsyncAch)
+			saf82532_AsyncSend(SAB82532_ACH,pDat,nTxLen);
+		else
+			saf82532_HdlcSend(SAB82532_ACH,pDat,nTxLen);
+		break;
+
+	case SAB82532_BCH:
+		if(m_bSaf82532_IsAsyncBch)
+			saf82532_AsyncSend(SAB82532_BCH,pDat,nTxLen);
+		else
+			saf82532_HdlcSend(SAB82532_BCH,pDat,nTxLen);
+		break;
+	}
+}
+
+//************************************************************************************
+//	SAF82532 동기 전송
+//************************************************************************************
+void saf82532_HdlcSend(UCHAR btChl,UCHAR *pDat,int nTxLen)
+{
+	int i;
+	PSAF82532HDLCREG1CH pShReg = (SAF82532HDLCREG1CH *)(SAB82532_BASE+btChl);
+
+	switch(btChl)
+	{
+	case SAB82532_ACH: m_nSaf82532TxLedOnDlyAch = 10; break;
+	case SAB82532_BCH: m_nSaf82532TxLedOnDlyBch = 10; break;
+	default : return;
+	}
+	
+	for(i=0;nTxLen/SAF82532_FIFO_SIZE;i++)
+	{
+		while(!(pShReg->STA_CMD & 0x40));
+		memcpy(pShReg->XFIFO,pDat,SAF82532_FIFO_SIZE);
+		pShReg->STA_CMD = SAF82532_HDLC_CMD_XTF;		
+		pDat+=32;
+	}
+
+	if((nTxLen%SAF82532_FIFO_SIZE))
+	{
+		while(!(pShReg->STA_CMD & 0x40));
+		memcpy(pShReg->XFIFO,pDat,nTxLen%SAF82532_FIFO_SIZE);
+	}
+	
+	pShReg->STA_CMD = SAF82532_HDLC_CMD_XTF | SAF82532_HDLC_CMD_XME;	
+}
+
+//************************************************************************************
+//	SAF82532 비동기 전송
+//************************************************************************************
+void saf82532_AsyncSend(UCHAR btChl,UCHAR *pDat,int nTxLen)
+{
+	int i;
+	PSAF82532ASYNCREG1CH pShReg = (SAF82532ASYNCREG1CH *)(SAB82532_BASE+btChl);
+
+	switch(btChl)
+	{
+	case SAB82532_ACH:RS485_TX_ACHL_ENABLE;break;
+	case SAB82532_BCH:RS485_TX_BCHL_ENABLE;break;
+	}
+	
+	for(i=0;nTxLen/SAF82532_FIFO_SIZE;i++)
+	{
+		while(!(pShReg->STA_CMD & 0x40));
+		memcpy(pShReg->XFIFO,pDat,SAF82532_FIFO_SIZE);
+		pShReg->STA_CMD = SAF82532_ASYNC_CMD_XF;		
+		pDat+=32;
+	}
+
+	if((nTxLen%SAF82532_FIFO_SIZE))
+	{
+		while(!(pShReg->STA_CMD & 0x40));
+		memcpy(pShReg->XFIFO,pDat,nTxLen%SAF82532_FIFO_SIZE);
+	}
+	
+	switch(btChl)
+	{
+	case SAB82532_ACH: if(m_bSaf82532_Is485Ach) m_nbSaf82532_TxDisable1msCntAch = ((m_nbSaf82532_UsPer1ByteAch * (nTxLen)) / 1000) + 10; break;
+	case SAB82532_BCH: if(m_bSaf82532_Is485Bch) m_nbSaf82532_TxDisable1msCntBch = ((m_nbSaf82532_UsPer1ByteBch * (nTxLen)) / 1000) + 10; break;
+	}
+	
+	pShReg->STA_CMD = SAF82532_ASYNC_CMD_XF | SAF82532_ASYNC_CMD_XME;
+}
+
+//************************************************************************************
+//	SAF82532 전송, 514바이트 전송
+//************************************************************************************
+void saf82532_SendFixed514Byte(UCHAR btChl,UCHAR *pDat)
+{
+	int i;
+	PSAF82532HDLCREG1CH pShReg = (SAF82532HDLCREG1CH *)(SAB82532_BASE+btChl);
+	
+	// For Polling
+	/*
+	switch(btChl)
+	{
+	case SAB82532_ACH: m_nSaf82532TxLedOnDlyAch = 10; break;
+	case SAB82532_BCH: m_nSaf82532TxLedOnDlyBch = 10; break;
+	default : return;
+	}
+
+	//DI_EINT0;
+	for(i=0;i<(512/SAF82532_FIFO_SIZE);i++)
+	{
+		while(!(pShReg->STA_CMD & 0x40));
+		memcpy(pShReg->XFIFO,pDat,SAF82532_FIFO_SIZE);
+		pShReg->STA_CMD = SAF82532_HDLC_CMD_XTF;		
+		pDat+=32;
+	}
+
+	while(!(pShReg->STA_CMD & 0x40));
+	memcpy(pShReg->XFIFO,pDat,2);
+	pShReg->STA_CMD = SAF82532_HDLC_CMD_XTF | SAF82532_HDLC_CMD_XME;
+	//EI_EINT0;
+	*/
+	
+	// For Interrupt
+	switch(btChl)
+	{
+	case SAB82532_ACH: m_nSaf82532TxPosAch = 32; memcpy(m_btSaf82532TxAchBuffer,pDat,SAB82532_BUFFER_SIZE); break;
+	case SAB82532_BCH: m_nSaf82532TxPosBch = 32; memcpy(m_btSaf82532TxBchBuffer,pDat,SAB82532_BUFFER_SIZE); break;
+	default : return;
+	}
+
+	memcpy(pShReg->XFIFO,pDat,SAF82532_FIFO_SIZE);
+	pShReg->STA_CMD = SAF82532_HDLC_CMD_XTF;
+}
+
+//************************************************************************************
+//	SAF82532 HDLC 수신
+//************************************************************************************
+BOOL saf82532_GetHdlcRecv(UCHAR *pChl,UCHAR *pDat,int *pRxLen)
+{
+	int i;
+	static BOOL m_bNewRxOkAchFlag = FALSE;
+	static BOOL m_bNewRxOkBchFlag = FALSE;
+	static UCHAR m_btNewRxAchBuf[SAB82532_BUFFER_SIZE];
+	static UCHAR m_btNewRxBchBuf[SAB82532_BUFFER_SIZE];
+	
+	if(m_bSaf82532RxOkAchFlag)
+	{
+		m_bSaf82532RxOkAchFlag = FALSE;
+		*pChl=SAB82532_ACH;
+		for(i=0;i<SAB82532_BUFFER_SIZE;i++) pDat[i] = WORD_L(m_btSaf82532RxAchBuffer[i]);		
+		*pRxLen = SAB82532_BUFFER_SIZE;
+		return TRUE;
+	}
+	else
+	if(m_bSaf82532RxOkBchFlag)
+	{
+		m_bSaf82532RxOkBchFlag = FALSE;
+		*pChl=SAB82532_BCH;
+		for(i=0;i<SAB82532_BUFFER_SIZE;i++) pDat[i] = WORD_L(m_btSaf82532RxBchBuffer[i]);		
+		*pRxLen = SAB82532_BUFFER_SIZE;
+		return TRUE;
+	}
+	else
+	{
+		*pRxLen = 0;
+		return FALSE;
+	}
+
+	// 새로 갱신
+	/*
+	if(m_bSaf82532RxOkAchFlag)
+	{
+		m_bSaf82532RxOkAchFlag = FALSE;
+		
+		m_bNewRxOkAchFlag = TRUE;
+		for(i=0;i<SAB82532_BUFFER_SIZE;i++) m_btNewRxAchBuf[i] = WORD_L(m_btSaf82532RxAchBuffer[i]);		
+	}
+	
+	if(m_bSaf82532RxOkBchFlag)
+	{
+		m_bSaf82532RxOkBchFlag = FALSE;
+		
+		m_bNewRxOkBchFlag = TRUE;
+		for(i=0;i<SAB82532_BUFFER_SIZE;i++) m_btNewRxBchBuf[i] = WORD_L(m_btSaf82532RxBchBuffer[i]);		
+	}
+
+	// 전달
+	if(m_bNewRxOkAchFlag)
+	{
+		m_bNewRxOkAchFlag = FALSE;
+		*pChl=SAB82532_ACH;
+		memcpy(pDat,m_btNewRxAchBuf,SAB82532_BUFFER_SIZE);
+		*pRxLen = SAB82532_BUFFER_SIZE;
+		return TRUE;
+	}
+	else
+	if(m_bNewRxOkBchFlag)
+	{
+		m_bNewRxOkBchFlag = FALSE;
+		*pChl=SAB82532_BCH;
+		memcpy(pDat,m_btNewRxBchBuf,SAB82532_BUFFER_SIZE);
+		*pRxLen = SAB82532_BUFFER_SIZE;
+		return TRUE;
+	}
+	else
+	{
+		*pRxLen = 0;
+		return FALSE;
+	}
+	*/
+}
+
+//*****************************************************************************
+//	SCC2의 비동기 수신 함수
+//*****************************************************************************
+int Saf82532_GetAsyncRecv(int nChl,UCHAR *pBuf)
+{
+	int i;
+	int *pRr;
+	int *pFr;	
+	UCHAR *pRxBuf;
+	int nBufPos;
+	
+	switch(nChl)
+	{
+	case SAB82532_ACH:
+		pRr = &m_nSaf82532RxAchRear;
+		pFr = &m_nSaf82532RxAchFront;
+		pRxBuf = m_btSaf82532RxAchBuffer;
+		break;
+	case SAB82532_BCH:
+		pRr = &m_nSaf82532RxBchRear;
+		pFr = &m_nSaf82532RxBchFront;
+		pRxBuf = m_btSaf82532RxBchBuffer;
+		break;
+	}	
+
+	nBufPos = 0;
+	while(1)
+	{
+		i = (*pFr+1)%SAB82532_BUFFER_SIZE;
+		if(i != *pRr) pBuf[nBufPos++] = pRxBuf[i]; else	break;			
+		*pFr = i;
+	}
+	
+	return nBufPos;
+}
+
+//*****************************************************************************
+//	SCC2의 동기/비동기 수신 함수
+//*****************************************************************************
+int Saf82532_GetRecv(int nChl,UCHAR *pBuf)
+{
+	int i;
+			
+	// A체널
+	switch(nChl)
+	{
+	case SAB82532_ACH:
+		if(m_bSaf82532_IsAsyncAch)
+		{
+			return Saf82532_GetAsyncRecv(nChl,pBuf);
+		}
+		else
+		{
+			if(m_bSaf82532RxOkAchFlag)
+			{
+				m_bSaf82532RxOkAchFlag = FALSE;
+				for(i=0;i<SAB82532_BUFFER_SIZE;i++) pBuf[i] = WORD_L(m_btSaf82532RxAchBuffer[i]);		
+				return m_nSaf82532RxLenAch;
+			}
+		}
+		break;
+
+	// B체널
+	case SAB82532_BCH:
+		if(m_bSaf82532_IsAsyncBch)
+		{
+			return Saf82532_GetAsyncRecv(nChl,pBuf);
+		}
+		else
+		{
+			if(m_bSaf82532RxOkBchFlag)
+			{
+				m_bSaf82532RxOkBchFlag = FALSE;
+				for(i=0;i<SAB82532_BUFFER_SIZE;i++) pBuf[i] = WORD_L(m_btSaf82532RxBchBuffer[i]);		
+				return m_nSaf82532RxLenBch;
+			}
+		}
+		break;
+	}
+}
+
+
+//************************************************************************************
+//	SAF82532 ISR
+//************************************************************************************
+void saf82532_Isr()
+{
+	saf82532_Isr_Flag = 1;
+	if(m_bSaf82532_IsAsyncAch) saf82532_AsyncIsrAch(); else saf82532_HdlcIsrAch();
+	if(m_bSaf82532_IsAsyncBch) saf82532_AsyncIsrBch(); else saf82532_HdlcIsrBch();
+}
+
+//************************************************************************************
+//	SAF82532 HDLC용 ISR
+//************************************************************************************
+void saf82532_HdlcIsrAch()
+{
+	int i;
+	static nDataPosAch = 0;
+	static nDataPosBch = 0;
+	UCHAR nIsrStImr0;
+	UCHAR nIsrStImr1;
+	USHORT H,L;
+	PSAF82532HDLCREG pShReg = (SAF82532HDLCREG *)SAB82532_BASE;
+	
+	// A Channel
+	nIsrStImr0 = pShReg->ACHREG.ISR0_IMR0;
+	nIsrStImr1 = pShReg->ACHREG.ISR1_IMR1;
+	
+	// 수신	
+	if(nIsrStImr0 & SAF82532_HDLC_IMR0_RPF)
+	{
+		memcpy(&m_btSaf82532RxAchBuffer[(nDataPosAch%17)*SAF82532_FIFO_SIZE],pShReg->ACHREG.XFIFO,SAF82532_FIFO_SIZE);
+		pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_RMC;
+		nDataPosAch++;
+	}
+		
+	if(nIsrStImr0 & SAF82532_HDLC_IMR0_RME)
+	{	
+		H = BYTE_L(pShReg->ACHREG.RBCH_XBCH);
+		L = WORD_L(pShReg->ACHREG.RBCL_XBCL);
+		m_nSaf82532RxLenAch = MAKE_WORD(H,L);
+		memcpy(&m_btSaf82532RxAchBuffer[(nDataPosAch%17)*SAF82532_FIFO_SIZE],pShReg->ACHREG.XFIFO,SAF82532_FIFO_SIZE);
+		
+		pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_RMC;
+		//pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_RHR;
+
+		nDataPosAch = 0;		
+		
+		if(pShReg->ACHREG.PRE_RSTA & SAF82532_HDLC_RST_CRC)
+		{
+			m_bSaf82532RxOkAchFlag = TRUE;
+			m_nSaf82532RxOkAchCnt++;
+			m_nSaf82532RxLenAch -= 3; m_nSaf82532RxLenAch = MAX(m_nSaf82532RxLenAch,0);
+		}
+		else
+		{
+			m_nSaf82532RxOkAchErr++;
+		}
+	}
+
+	// 송신
+	if(nIsrStImr1 & SAF82532_HDLC_IMR1_XPR)
+	{
+		if(m_nSaf82532TxPosAch < 512)
+		{
+			memcpy(pShReg->ACHREG.XFIFO,&m_btSaf82532TxAchBuffer[m_nSaf82532TxPosAch],SAF82532_FIFO_SIZE);
+			pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_XTF;
+			m_nSaf82532TxPosAch+=32;
+			m_nSaf82532TxLedOnDlyAch = 10;
+		}
+		else
+		if(m_nSaf82532TxPosAch == 512)
+		{
+			memcpy(pShReg->ACHREG.XFIFO,&m_btSaf82532TxAchBuffer[m_nSaf82532TxPosAch],2);
+			pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_XTF | SAF82532_HDLC_CMD_XME;
+			m_nSaf82532TxPosAch+=2;
+		}
+		else
+		{
+			m_nSaf82532TxPosAch = 0;
+		}
+	}
+
+	if(nIsrStImr1 & SAF82532_HDLC_IMR1_ALLS)
+	{
+		//pShReg->ACHREG.STA_CMD = SAF82532_HDLC_CMD_XRES;
+	}
+}
+
+void saf82532_HdlcIsrBch()
+{
+	int i;
+	static nDataPosAch = 0;
+	static nDataPosBch = 0;
+	UCHAR nIsrStImr0;
+	UCHAR nIsrStImr1;
+	USHORT H,L;
+	PSAF82532HDLCREG pShReg = (SAF82532HDLCREG *)SAB82532_BASE;
+		
+	// B Channel
+	nIsrStImr0 = pShReg->BCHREG.ISR0_IMR0;
+	nIsrStImr1 = pShReg->BCHREG.ISR1_IMR1;	
+
+	// 수신
+	if(nIsrStImr0 & SAF82532_HDLC_IMR0_RPF)
+	{
+		memcpy(&m_btSaf82532RxBchBuffer[(nDataPosBch%17)*SAF82532_FIFO_SIZE],pShReg->BCHREG.XFIFO,SAF82532_FIFO_SIZE);
+		pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_RMC;
+		nDataPosBch++;
+	}
+		
+	if(nIsrStImr0 & SAF82532_HDLC_IMR0_RME)
+	{
+		H = BYTE_L(pShReg->BCHREG.RBCH_XBCH);
+		L = WORD_L(pShReg->BCHREG.RBCL_XBCL);
+		m_nSaf82532RxLenBch = MAKE_WORD(H,L);
+		memcpy(&m_btSaf82532RxBchBuffer[(nDataPosBch%17)*SAF82532_FIFO_SIZE],pShReg->BCHREG.XFIFO,SAF82532_FIFO_SIZE);
+		
+		pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_RMC;
+		//pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_RHR;
+
+		nDataPosBch = 0;		
+
+		if(pShReg->BCHREG.PRE_RSTA & SAF82532_HDLC_RST_CRC)
+		{
+			m_bSaf82532RxOkBchFlag = TRUE;
+			m_nSaf82532RxOkBchCnt++;
+			m_nSaf82532RxLenBch -= 3; m_nSaf82532RxLenBch = MAX(m_nSaf82532RxLenBch,0);
+		}
+		else
+		{
+			m_nSaf82532RxOkBchErr++;
+		}
+	}
+
+	// 송신
+	if(nIsrStImr1 & SAF82532_HDLC_IMR1_XPR)
+	{
+		if(m_nSaf82532TxPosBch < 512)
+		{
+			memcpy(pShReg->BCHREG.XFIFO,&m_btSaf82532TxBchBuffer[m_nSaf82532TxPosBch],SAF82532_FIFO_SIZE);
+			pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_XTF;		
+			m_nSaf82532TxPosBch+=32;
+			m_nSaf82532TxLedOnDlyBch = 10;
+		}
+		else
+		if(m_nSaf82532TxPosBch == 512)
+		{
+			memcpy(pShReg->BCHREG.XFIFO,&m_btSaf82532TxBchBuffer[m_nSaf82532TxPosBch],2);
+			pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_XTF | SAF82532_HDLC_CMD_XME;		
+			m_nSaf82532TxPosBch+=2;
+		}
+		else
+		{
+			m_nSaf82532TxPosBch = 0;
+		}
+	}
+
+	if(nIsrStImr1 & SAF82532_HDLC_IMR1_ALLS)
+	{
+		//pShReg->BCHREG.STA_CMD = SAF82532_HDLC_CMD_XRES;
+	}
+}
+
+//************************************************************************************
+//	SAF82532 ASYNC용 ISR
+//************************************************************************************
+void saf82532_AsyncIsrAch()
+{
+	int i;
+	UCHAR nIsrSt;
+	UCHAR btDat;
+	UCHAR btDatSt;
+	PSAF82532ASYNCREG pShReg = (SAF82532ASYNCREG *)SAB82532_BASE;
+	
+	// A Channel, Recieve	
+	nIsrSt = pShReg->ACHREG.ISR0_IMR0;
+	
+	
+	
+	if(nIsrSt & SAF82532_ASYNC_IMR0_RPF)
+	{
+		btDat = pShReg->ACHREG.XFIFO[0];
+		DUMMY_ACCESS;
+		btDatSt = pShReg->ACHREG.XFIFO[1];
+		pShReg->ACHREG.STA_CMD = SAF82532_ASYNC_CMD_RMC;
+		if(!(btDatSt&SAF82532_ASYNC_PARITYERR))
+		{
+			i = (m_nSaf82532RxAchRear+1)%SAB82532_BUFFER_SIZE;
+			if(m_nSaf82532RxAchFront != i)
+			{
+					
+				m_btSaf82532RxAchBuffer[m_nSaf82532RxAchRear] = btDat;
+				m_nSaf82532RxAchRear = i;
+			}		
+		}
+	}
+}
+
+void saf82532_AsyncIsrBch()
+{
+	int i;
+	UCHAR nIsrSt;
+	UCHAR btDat;
+	UCHAR btDatSt;
+
+	
+	PSAF82532ASYNCREG pShReg = (SAF82532ASYNCREG *)SAB82532_BASE;
+	
+	
+	// B Channel, Recieve
+	nIsrSt = pShReg->BCHREG.ISR0_IMR0;
+	
+	
+	
+	if(nIsrSt & SAF82532_ASYNC_IMR0_RPF)
+	{
+		btDat = pShReg->BCHREG.XFIFO[0];
+		DUMMY_ACCESS;
+		btDatSt = pShReg->BCHREG.XFIFO[1];
+		pShReg->BCHREG.STA_CMD = SAF82532_ASYNC_CMD_RMC;
+
+		if(!(btDatSt&SAF82532_ASYNC_PARITYERR))
+		{
+			i = (m_nSaf82532RxBchRear+1)%SAB82532_BUFFER_SIZE;
+			if(m_nSaf82532RxBchFront != i)
+			{	
+				m_btSaf82532RxBchBuffer[m_nSaf82532RxBchRear] = btDat;
+				m_nSaf82532RxBchRear = i;					
+			}
+		}
+	}
+}
+
+
+//************************************************************************************
+//	SAF82532 1ms Loop
+//************************************************************************************
+void saf82532_1msLoop()
+{
+	//static int nDly=0;
+	
+	//if(!(++nDly%500)) saf82532_SendFixed514Byte(SAB82532_ACH,(UCHAR *)"12343456789");
+	
+	if(m_nbSaf82532_TxDisable1msCntAch == 1) RS485_TX_ACHL_DISABLE;
+	if(m_nbSaf82532_TxDisable1msCntAch) m_nbSaf82532_TxDisable1msCntAch--;
+	if(m_nbSaf82532_TxDisable1msCntBch == 1) RS485_TX_BCHL_DISABLE;
+	if(m_nbSaf82532_TxDisable1msCntBch) m_nbSaf82532_TxDisable1msCntBch--;		
+	
+	if(m_nSaf82532TxLedOnDlyAch == 10) SCM_HDLC_TX1(1);
+	if(m_nSaf82532TxLedOnDlyAch == 1) SCM_HDLC_TX1(0);
+	if(m_nSaf82532TxLedOnDlyAch) m_nSaf82532TxLedOnDlyAch--;
+
+	if(m_nSaf82532TxLedOnDlyBch == 10) SCM_HDLC_TX2(1);
+	if(m_nSaf82532TxLedOnDlyBch == 1) SCM_HDLC_TX2(0);
+	if(m_nSaf82532TxLedOnDlyBch) m_nSaf82532TxLedOnDlyBch--;
+}

@@ -1,0 +1,2022 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     06/Apr/2015  18:37:26 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\memories\norflash\NorFlashCFI.c               #
+#    Command line =  "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\memories\norflash\NorFlashCFI.c" -D           #
+#                    at91sam7se512 -D flash -D TRACE_LEVEL=4 -lC              #
+#                    "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\List\" --remarks --diag_suppress     #
+#                    Pe826,Pe1375 -o "C:\Users\jang                           #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_ #
+#                    flash\Obj\" --no_cse --no_unroll --no_inline             #
+#                    --no_code_motion --no_tbaa --no_clustering               #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/peripherals\" -I "C:\Users\jang         #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/memories\" -I "C:\Users\jang                          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib\" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/components\" -I "C:\Users\jang          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/boards/at91sam7se-ek\" --interwork --cpu_mode arm     #
+#                    -On --use_c++_inline                                     #
+#    List file    =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\List\NorFlashCFI.lst                 #
+#    Object file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\Obj\NorFlashCFI.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91lib\memories\norflash\NorFlashCFI.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "NorFlashApi.h"
+     35          #include "NorFlashAmd.h"
+
+   \                                 In section .rodata, align 4
+   \   __absolute struct NorFlashOperations const amdOperations
+   \                     amdOperations:
+   \   00000000   0x........         DC32 AMD_Reset, AMD_Write_Data, AMD_ReadManufactoryId, AMD_ReadDeviceID
+   \              0x........   
+   \              0x........   
+   \              0x........   
+   \   00000010   0x........         DC32 AMD_EraseChip, AMD_EraseSector
+   \              0x........   
+     36          #include "NorFlashIntel.h"
+
+   \                                 In section .rodata, align 4
+   \   __absolute struct NorFlashOperations const intelOperations
+   \                     intelOperations:
+   \   00000000   0x........         DC32 INTEL_Reset, INTEL_Write_Data, INTEL_ReadManufactoryId
+   \              0x........   
+   \              0x........   
+   \   0000000C   0x........         DC32 INTEL_ReadDeviceID, INTEL_EraseChip, INTEL_EraseSector
+   \              0x........   
+   \              0x........   
+     37          #include "NorFlashCommon.h"
+     38          #include <utility/trace.h>
+     39          #include <string.h>
+     40          
+     41          //------------------------------------------------------------------------------
+     42          //         Internal definitions
+     43          //------------------------------------------------------------------------------
+     44          #define DUMP_CFI
+     45          
+     46          //------------------------------------------------------------------------------
+     47          //         Local functions
+     48          //------------------------------------------------------------------------------
+     49          
+     50          //------------------------------------------------------------------------------
+     51          /// Dump the Common Flash Interface Definition Table.
+     52          /// \param pNorFlashCFI  Pointer to an NorFlashCFI instance.
+     53          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     54          void NorFlash_CFI_DumpConfigruation(struct NorFlashCFI *pNorFlashCFI)
+     55          {
+   \                     NorFlash_CFI_DumpConfigruation:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     56              unsigned char i;
+     57              
+     58              printf("Common Flash Interface Definition Table\n\r");
+   \   00000008   0x........         LDR      R0,??DataTable1
+   \   0000000C   0x........         BL       printf
+     59              
+     60              TRACE_DEBUG("Addr. Data   Description \n\r");
+     61              
+     62              printf("0x10  %04Xh  Query Unique ASCII string\n\r",
+     63              pNorFlashCFI->norFlashCfiQueryInfo.queryUniqueString[0]);
+   \   00000010   0xE5D41000         LDRB     R1,[R4, #+0]
+   \   00000014   0x........         LDR      R0,??DataTable1_1
+   \   00000018   0x........         BL       printf
+     64              
+     65              printf("0x11  %04Xh  \n\r",
+     66              pNorFlashCFI->norFlashCfiQueryInfo.queryUniqueString[1]);
+   \   0000001C   0xE5D41001         LDRB     R1,[R4, #+1]
+   \   00000020   0x........         LDR      R0,??DataTable1_2
+   \   00000024   0x........         BL       printf
+     67              
+     68              printf("0x12  %04Xh  \n\r",
+     69              pNorFlashCFI->norFlashCfiQueryInfo.queryUniqueString[2]);
+   \   00000028   0xE5D41002         LDRB     R1,[R4, #+2]
+   \   0000002C   0x........         LDR      R0,??DataTable1_3
+   \   00000030   0x........         BL       printf
+     70              
+     71              printf("0x13  %04Xh  Primary OEM Command Set\n\r",
+     72              pNorFlashCFI->norFlashCfiQueryInfo.primaryCode);
+   \   00000034   0xE5D41004         LDRB     R1,[R4, #+4]
+   \   00000038   0xE5D40003         LDRB     R0,[R4, #+3]
+   \   0000003C   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   00000040   0xE1A01801         LSL      R1,R1,#+16
+   \   00000044   0xE1B01821         LSRS     R1,R1,#+16
+   \   00000048   0x........         LDR      R0,??DataTable1_4
+   \   0000004C   0x........         BL       printf
+     73              
+     74              printf("0x15  %04Xh  Address for Primary Extended Table\n\r",
+     75              pNorFlashCFI->norFlashCfiQueryInfo.primaryAddr);
+   \   00000050   0xE5D41006         LDRB     R1,[R4, #+6]
+   \   00000054   0xE5D40005         LDRB     R0,[R4, #+5]
+   \   00000058   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   0000005C   0xE1A01801         LSL      R1,R1,#+16
+   \   00000060   0xE1B01821         LSRS     R1,R1,#+16
+   \   00000064   0x........         LDR      R0,??DataTable1_5
+   \   00000068   0x........         BL       printf
+     76              
+     77              printf("0x17  %04Xh  Alternate OEM Command Set\n\r",
+     78              pNorFlashCFI->norFlashCfiQueryInfo.alternateCode);
+   \   0000006C   0xE5D41008         LDRB     R1,[R4, #+8]
+   \   00000070   0xE5D40007         LDRB     R0,[R4, #+7]
+   \   00000074   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   00000078   0xE1A01801         LSL      R1,R1,#+16
+   \   0000007C   0xE1B01821         LSRS     R1,R1,#+16
+   \   00000080   0x........         LDR      R0,??DataTable1_6
+   \   00000084   0x........         BL       printf
+     79              printf("0x19  %04Xh  Address for Alternate OEM Extended Table\n\r",
+     80              pNorFlashCFI->norFlashCfiQueryInfo.alternateAddr);
+   \   00000088   0xE5D4100A         LDRB     R1,[R4, #+10]
+   \   0000008C   0xE5D40009         LDRB     R0,[R4, #+9]
+   \   00000090   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   00000094   0xE1A01801         LSL      R1,R1,#+16
+   \   00000098   0xE1B01821         LSRS     R1,R1,#+16
+   \   0000009C   0x........         LDR      R0,??DataTable1_7
+   \   000000A0   0x........         BL       printf
+     81              printf("0x1B  %04Xh  VCC min write/erase\n\r",
+     82              pNorFlashCFI->norFlashCfiQueryInfo.minVcc);
+   \   000000A4   0xE5D4100B         LDRB     R1,[R4, #+11]
+   \   000000A8   0x........         LDR      R0,??DataTable1_8
+   \   000000AC   0x........         BL       printf
+     83              printf("0x1C  %04Xh  VCC max write/erase\n\r",
+     84              pNorFlashCFI->norFlashCfiQueryInfo.maxVcc);
+   \   000000B0   0xE5D4100C         LDRB     R1,[R4, #+12]
+   \   000000B4   0x........         LDR      R0,??DataTable1_9
+   \   000000B8   0x........         BL       printf
+     85              printf("0x1D  %04Xh  VPP min voltage\n\r",
+     86              pNorFlashCFI->norFlashCfiQueryInfo.minVpp);
+   \   000000BC   0xE5D4100D         LDRB     R1,[R4, #+13]
+   \   000000C0   0x........         LDR      R0,??DataTable1_10
+   \   000000C4   0x........         BL       printf
+     87              printf("0x1E  %04Xh  VPP max voltage\n\r",
+     88              pNorFlashCFI->norFlashCfiQueryInfo.maxVpp);
+   \   000000C8   0xE5D4100E         LDRB     R1,[R4, #+14]
+   \   000000CC   0x........         LDR      R0,??DataTable1_11
+   \   000000D0   0x........         BL       printf
+     89              printf("0x1F  %04Xh  Typical timeout per single word write\n\r",
+     90              pNorFlashCFI->norFlashCfiQueryInfo.minTimeOutWrite);
+   \   000000D4   0xE5D4100F         LDRB     R1,[R4, #+15]
+   \   000000D8   0x........         LDR      R0,??DataTable1_12
+   \   000000DC   0x........         BL       printf
+     91              printf("0x20  %04Xh  Typical timeout for Min. size buffer write\n\r",
+     92              pNorFlashCFI->norFlashCfiQueryInfo.minTimeOutBuffer);
+   \   000000E0   0xE5D41010         LDRB     R1,[R4, #+16]
+   \   000000E4   0x........         LDR      R0,??DataTable1_13
+   \   000000E8   0x........         BL       printf
+     93              printf("0x21  %04Xh  Typical timeout per individual block erase\n\r",
+     94              pNorFlashCFI->norFlashCfiQueryInfo.minTimeOutBlockErase);
+   \   000000EC   0xE5D41011         LDRB     R1,[R4, #+17]
+   \   000000F0   0x........         LDR      R0,??DataTable1_14
+   \   000000F4   0x........         BL       printf
+     95              printf("0x22  %04Xh  Typical timeout for full chip erase\n\r",
+     96              pNorFlashCFI->norFlashCfiQueryInfo.minTimeOutChipErase);
+   \   000000F8   0xE5D41012         LDRB     R1,[R4, #+18]
+   \   000000FC   0x........         LDR      R0,??DataTable1_15
+   \   00000100   0x........         BL       printf
+     97              printf("0x23  %04Xh  Max. timeout for word write\n\r",
+     98              pNorFlashCFI->norFlashCfiQueryInfo.maxTimeOutWrite);
+   \   00000104   0xE5D41013         LDRB     R1,[R4, #+19]
+   \   00000108   0x........         LDR      R0,??DataTable1_16
+   \   0000010C   0x........         BL       printf
+     99              printf("0x24  %04Xh  Max. timeout for buffer write\n\r",
+    100              pNorFlashCFI->norFlashCfiQueryInfo.maxTimeOutBuffer);
+   \   00000110   0xE5D41014         LDRB     R1,[R4, #+20]
+   \   00000114   0x........         LDR      R0,??DataTable1_17
+   \   00000118   0x........         BL       printf
+    101              printf("0x25  %04Xh  Max. timeout per individual block erase\n\r",
+    102              pNorFlashCFI->norFlashCfiQueryInfo.maxTimeOutBlockErase);
+   \   0000011C   0xE5D41015         LDRB     R1,[R4, #+21]
+   \   00000120   0x........         LDR      R0,??DataTable1_18
+   \   00000124   0x........         BL       printf
+    103              printf("0x26  %04Xh  Max. timeout for full chip erase\n\r",
+    104              pNorFlashCFI->norFlashCfiQueryInfo.maxTimeOutChipErase);
+   \   00000128   0xE5D41016         LDRB     R1,[R4, #+22]
+   \   0000012C   0x........         LDR      R0,??DataTable1_19
+   \   00000130   0x........         BL       printf
+    105              
+    106              printf("0x27  %04Xh  Device Size = 2N byte\n\r",
+    107              pNorFlashCFI->norFlashCfiDeviceGeometry.deviceSize);
+   \   00000134   0xE5D41017         LDRB     R1,[R4, #+23]
+   \   00000138   0x........         LDR      R0,??DataTable1_20
+   \   0000013C   0x........         BL       printf
+    108              printf("0x28  %04Xh  Flash Device Interface description\n\r",
+    109              pNorFlashCFI->norFlashCfiDeviceGeometry.deviceInterface);
+   \   00000140   0xE5D41019         LDRB     R1,[R4, #+25]
+   \   00000144   0xE5D40018         LDRB     R0,[R4, #+24]
+   \   00000148   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   0000014C   0xE1A01801         LSL      R1,R1,#+16
+   \   00000150   0xE1B01821         LSRS     R1,R1,#+16
+   \   00000154   0x........         LDR      R0,??DataTable1_21
+   \   00000158   0x........         BL       printf
+    110              printf("0x2A  %04Xh  Max. number of byte in multi-byte write\n\r",
+    111              pNorFlashCFI->norFlashCfiDeviceGeometry.numMultiWrite);
+   \   0000015C   0xE5D4101B         LDRB     R1,[R4, #+27]
+   \   00000160   0xE5D4001A         LDRB     R0,[R4, #+26]
+   \   00000164   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   00000168   0xE1A01801         LSL      R1,R1,#+16
+   \   0000016C   0xE1B01821         LSRS     R1,R1,#+16
+   \   00000170   0x........         LDR      R0,??DataTable1_22
+   \   00000174   0x........         BL       printf
+    112              printf("0x2C  %04Xh  Number of Erase Block Regions within device\n\r",
+    113              pNorFlashCFI->norFlashCfiDeviceGeometry.numEraseRegion);
+   \   00000178   0xE5D4101C         LDRB     R1,[R4, #+28]
+   \   0000017C   0x........         LDR      R0,??DataTable1_23
+   \   00000180   0x........         BL       printf
+    114              for(i = 0; i < pNorFlashCFI->norFlashCfiDeviceGeometry.numEraseRegion; i++) {
+   \   00000184   0xE3A00000         MOV      R0,#+0
+   \   00000188   0xE1B05000         MOVS     R5,R0
+   \                     ??NorFlash_CFI_DumpConfigruation_0:
+   \   0000018C   0xE5D4001C         LDRB     R0,[R4, #+28]
+   \   00000190   0xE21550FF         ANDS     R5,R5,#0xFF      ;; Zero extend
+   \   00000194   0xE1550000         CMP      R5,R0
+   \   00000198   0x2A000025         BCS      ??NorFlash_CFI_DumpConfigruation_1
+    115                  printf("0x%2X  %04Xh  Number of Erase Blocks of identical size within region %x \n\r",
+    116                      0x2D + i * 4, pNorFlashCFI->norFlashCfiDeviceGeometry.eraseRegionInfo[i].Y, i );
+   \   0000019C   0xE1B00005         MOVS     R0,R5
+   \   000001A0   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000001A4   0xE1B00100         LSLS     R0,R0,#+2
+   \   000001A8   0xE0900004         ADDS     R0,R0,R4
+   \   000001AC   0xE5D0201E         LDRB     R2,[R0, #+30]
+   \   000001B0   0xE5D0101D         LDRB     R1,[R0, #+29]
+   \   000001B4   0xE1912402         ORRS     R2,R1,R2, LSL #+8
+   \   000001B8   0xE1B03005         MOVS     R3,R5
+   \   000001BC   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   000001C0   0xE1A02802         LSL      R2,R2,#+16
+   \   000001C4   0xE1B02822         LSRS     R2,R2,#+16
+   \   000001C8   0xE1B00005         MOVS     R0,R5
+   \   000001CC   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000001D0   0xE3A01004         MOV      R1,#+4
+   \   000001D4   0xE0100091         MULS     R0,R1,R0
+   \   000001D8   0xE290102D         ADDS     R1,R0,#+45
+   \   000001DC   0x........         LDR      R0,??DataTable1_24
+   \   000001E0   0x........         BL       printf
+    117                  printf("0x%2X  %04Xh  (z) times 256 bytes within region %x \n\r",
+    118                      0x2E + i * 4, pNorFlashCFI->norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z, i );
+   \   000001E4   0xE1B00005         MOVS     R0,R5
+   \   000001E8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000001EC   0xE1B00100         LSLS     R0,R0,#+2
+   \   000001F0   0xE0900004         ADDS     R0,R0,R4
+   \   000001F4   0xE5D02020         LDRB     R2,[R0, #+32]
+   \   000001F8   0xE5D0101F         LDRB     R1,[R0, #+31]
+   \   000001FC   0xE1912402         ORRS     R2,R1,R2, LSL #+8
+   \   00000200   0xE1B03005         MOVS     R3,R5
+   \   00000204   0xE21330FF         ANDS     R3,R3,#0xFF      ;; Zero extend
+   \   00000208   0xE1A02802         LSL      R2,R2,#+16
+   \   0000020C   0xE1B02822         LSRS     R2,R2,#+16
+   \   00000210   0xE1B00005         MOVS     R0,R5
+   \   00000214   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000218   0xE3A01004         MOV      R1,#+4
+   \   0000021C   0xE0100091         MULS     R0,R1,R0
+   \   00000220   0xE290102E         ADDS     R1,R0,#+46
+   \   00000224   0x........         LDR      R0,??DataTable1_25
+   \   00000228   0x........         BL       printf
+    119              }
+   \   0000022C   0xE2955001         ADDS     R5,R5,#+1
+   \   00000230   0xEAFFFFD5         B        ??NorFlash_CFI_DumpConfigruation_0
+    120          }
+   \                     ??NorFlash_CFI_DumpConfigruation_1:
+   \   00000234   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000238   0xE12FFF1E         BX       LR               ;; return
+    121          
+    122          
+    123          //------------------------------------------------------------------------------
+    124          //         Exported functions
+    125          //------------------------------------------------------------------------------
+    126          
+    127          //------------------------------------------------------------------------------
+    128          /// Returns the numbers of block in all Norflash regions.
+    129          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    130          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    131          unsigned int NorFlash_GetDeviceNumOfBlocks(
+    132              struct NorFlashInfo *pNorFlashInfo)
+    133          {
+   \                     NorFlash_GetDeviceNumOfBlocks:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B01000         MOVS     R1,R0
+    134              unsigned char i;
+    135              unsigned int blocks = 0;
+   \   00000008   0xE3A00000         MOV      R0,#+0
+    136              unsigned short numBlockRegion;
+    137              
+    138              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   0000000C   0xE5D1C022         LDRB     R12,[R1, #+34]
+   \   00000010   0xE1B0300C         MOVS     R3,R12
+    139             
+    140              for (i = 0; i < numBlockRegion; i++) {
+   \   00000014   0xE3A0C000         MOV      R12,#+0
+   \   00000018   0xE1B0200C         MOVS     R2,R12
+   \                     ??NorFlash_GetDeviceNumOfBlocks_0:
+   \   0000001C   0xE1B0C002         MOVS     R12,R2
+   \   00000020   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000024   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000028   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000002C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000030   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000034   0xE15C0003         CMP      R12,R3
+   \   00000038   0x2A00000A         BCS      ??NorFlash_GetDeviceNumOfBlocks_1
+    141                  blocks += (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i]).Y + 1;
+   \   0000003C   0xE1B0C002         MOVS     R12,R2
+   \   00000040   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000044   0xE1B0C10C         LSLS     R12,R12,#+2
+   \   00000048   0xE09CC001         ADDS     R12,R12,R1
+   \   0000004C   0xE5DC4024         LDRB     R4,[R12, #+36]
+   \   00000050   0xE5DCE023         LDRB     LR,[R12, #+35]
+   \   00000054   0xE19E4404         ORRS     R4,LR,R4, LSL #+8
+   \   00000058   0xE294C001         ADDS     R12,R4,#+1
+   \   0000005C   0xE09C0000         ADDS     R0,R12,R0
+    142              }
+   \   00000060   0xE2922001         ADDS     R2,R2,#+1
+   \   00000064   0xEAFFFFEC         B        ??NorFlash_GetDeviceNumOfBlocks_0
+    143              return blocks;
+   \                     ??NorFlash_GetDeviceNumOfBlocks_1:
+   \   00000068   0xE8BD4010         POP      {R4,LR}
+   \   0000006C   0xE12FFF1E         BX       LR               ;; return
+    144          }
+    145          
+    146          //------------------------------------------------------------------------------
+    147          /// Returns the minimun block size in all Norflash regions.
+    148          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    149          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    150          unsigned int NorFlash_GetDeviceMinBlockSize(
+    151              struct NorFlashInfo *pNorFlashInfo)
+    152          {
+   \                     NorFlash_GetDeviceMinBlockSize:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B01000         MOVS     R1,R0
+    153              unsigned char i;
+    154              unsigned short numBlockRegion;
+    155              unsigned long size ;
+    156              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   00000008   0xE5D1C022         LDRB     R12,[R1, #+34]
+   \   0000000C   0xE1B0300C         MOVS     R3,R12
+    157              
+    158              size = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[0].Z) * 256;
+   \   00000010   0xE5D1E026         LDRB     LR,[R1, #+38]
+   \   00000014   0xE5D1C025         LDRB     R12,[R1, #+37]
+   \   00000018   0xE19CE40E         ORRS     LR,R12,LR, LSL #+8
+   \   0000001C   0xE1B0C40E         LSLS     R12,LR,#+8
+   \   00000020   0xE1B0000C         MOVS     R0,R12
+    159              
+    160              for (i = 1; i < numBlockRegion; i++) {
+   \   00000024   0xE3A0C001         MOV      R12,#+1
+   \   00000028   0xE1B0200C         MOVS     R2,R12
+   \                     ??NorFlash_GetDeviceMinBlockSize_0:
+   \   0000002C   0xE1B0C002         MOVS     R12,R2
+   \   00000030   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000034   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000038   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000003C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000040   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000044   0xE15C0003         CMP      R12,R3
+   \   00000048   0x2A000014         BCS      ??NorFlash_GetDeviceMinBlockSize_1
+    161                  if (size > (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256) {
+                                  ^
+Remark[Pe1873]: comparison between signed and unsigned operands
+   \   0000004C   0xE1B0C002         MOVS     R12,R2
+   \   00000050   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000054   0xE1B0C10C         LSLS     R12,R12,#+2
+   \   00000058   0xE09CC001         ADDS     R12,R12,R1
+   \   0000005C   0xE5DC4026         LDRB     R4,[R12, #+38]
+   \   00000060   0xE5DCE025         LDRB     LR,[R12, #+37]
+   \   00000064   0xE19E4404         ORRS     R4,LR,R4, LSL #+8
+   \   00000068   0xE1B0C404         LSLS     R12,R4,#+8
+   \   0000006C   0xE15C0000         CMP      R12,R0
+   \   00000070   0x2A000008         BCS      ??NorFlash_GetDeviceMinBlockSize_2
+    162                      size = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256 ;
+   \   00000074   0xE1B0C002         MOVS     R12,R2
+   \   00000078   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   0000007C   0xE1B0C10C         LSLS     R12,R12,#+2
+   \   00000080   0xE09CC001         ADDS     R12,R12,R1
+   \   00000084   0xE5DC4026         LDRB     R4,[R12, #+38]
+   \   00000088   0xE5DCE025         LDRB     LR,[R12, #+37]
+   \   0000008C   0xE19E4404         ORRS     R4,LR,R4, LSL #+8
+   \   00000090   0xE1B0C404         LSLS     R12,R4,#+8
+   \   00000094   0xE1B0000C         MOVS     R0,R12
+    163                  }
+    164              }
+   \                     ??NorFlash_GetDeviceMinBlockSize_2:
+   \   00000098   0xE2922001         ADDS     R2,R2,#+1
+   \   0000009C   0xEAFFFFE2         B        ??NorFlash_GetDeviceMinBlockSize_0
+    165              return size;
+   \                     ??NorFlash_GetDeviceMinBlockSize_1:
+   \   000000A0   0xE8BD4010         POP      {R4,LR}
+   \   000000A4   0xE12FFF1E         BX       LR               ;; return
+    166          }
+    167          
+    168          //------------------------------------------------------------------------------
+    169          /// Returns the maximun block size in all Norflash regions.
+    170          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    171          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    172          unsigned int NorFlash_GetDeviceMaxBlockSize(
+    173              struct NorFlashInfo *pNorFlashInfo)
+    174          {
+   \                     NorFlash_GetDeviceMaxBlockSize:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B01000         MOVS     R1,R0
+    175              unsigned char i;
+    176              unsigned short numBlockRegion;
+    177              unsigned long size ;
+    178              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   00000008   0xE5D1C022         LDRB     R12,[R1, #+34]
+   \   0000000C   0xE1B0300C         MOVS     R3,R12
+    179              
+    180              size = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[0].Z) * 256;
+   \   00000010   0xE5D1E026         LDRB     LR,[R1, #+38]
+   \   00000014   0xE5D1C025         LDRB     R12,[R1, #+37]
+   \   00000018   0xE19CE40E         ORRS     LR,R12,LR, LSL #+8
+   \   0000001C   0xE1B0C40E         LSLS     R12,LR,#+8
+   \   00000020   0xE1B0000C         MOVS     R0,R12
+    181              
+    182              for (i = 1; i < numBlockRegion; i++) {
+   \   00000024   0xE3A0C001         MOV      R12,#+1
+   \   00000028   0xE1B0200C         MOVS     R2,R12
+   \                     ??NorFlash_GetDeviceMaxBlockSize_0:
+   \   0000002C   0xE1B0C002         MOVS     R12,R2
+   \   00000030   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000034   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000038   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000003C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000040   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000044   0xE15C0003         CMP      R12,R3
+   \   00000048   0x2A000014         BCS      ??NorFlash_GetDeviceMaxBlockSize_1
+    183                  if (size < (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256) {
+                                  ^
+Remark[Pe1873]: comparison between signed and unsigned operands
+   \   0000004C   0xE1B0C002         MOVS     R12,R2
+   \   00000050   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   00000054   0xE1B0C10C         LSLS     R12,R12,#+2
+   \   00000058   0xE09CC001         ADDS     R12,R12,R1
+   \   0000005C   0xE5DC4026         LDRB     R4,[R12, #+38]
+   \   00000060   0xE5DCE025         LDRB     LR,[R12, #+37]
+   \   00000064   0xE19E4404         ORRS     R4,LR,R4, LSL #+8
+   \   00000068   0xE1B0C404         LSLS     R12,R4,#+8
+   \   0000006C   0xE150000C         CMP      R0,R12
+   \   00000070   0x2A000008         BCS      ??NorFlash_GetDeviceMaxBlockSize_2
+    184                      size = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256 ;
+   \   00000074   0xE1B0C002         MOVS     R12,R2
+   \   00000078   0xE21CC0FF         ANDS     R12,R12,#0xFF    ;; Zero extend
+   \   0000007C   0xE1B0C10C         LSLS     R12,R12,#+2
+   \   00000080   0xE09CC001         ADDS     R12,R12,R1
+   \   00000084   0xE5DC4026         LDRB     R4,[R12, #+38]
+   \   00000088   0xE5DCE025         LDRB     LR,[R12, #+37]
+   \   0000008C   0xE19E4404         ORRS     R4,LR,R4, LSL #+8
+   \   00000090   0xE1B0C404         LSLS     R12,R4,#+8
+   \   00000094   0xE1B0000C         MOVS     R0,R12
+    185                  }
+    186              }
+   \                     ??NorFlash_GetDeviceMaxBlockSize_2:
+   \   00000098   0xE2922001         ADDS     R2,R2,#+1
+   \   0000009C   0xEAFFFFE2         B        ??NorFlash_GetDeviceMaxBlockSize_0
+    187              return size;
+   \                     ??NorFlash_GetDeviceMaxBlockSize_1:
+   \   000000A0   0xE8BD4010         POP      {R4,LR}
+   \   000000A4   0xE12FFF1E         BX       LR               ;; return
+    188          }
+    189          
+    190          //------------------------------------------------------------------------------
+    191          /// Returns the block size in giving block number.
+    192          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    193          /// \param sector  Sector number.
+    194          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    195          unsigned int NorFlash_GetDeviceBlockSize(
+    196              struct NorFlashInfo *pNorFlashInfo,
+    197              unsigned int sector)
+    198          {
+   \                     NorFlash_GetDeviceBlockSize:
+   \   00000000   0xE92D40F0         PUSH     {R4-R7,LR}
+   \   00000004   0xE1B02000         MOVS     R2,R0
+    199              unsigned short i;
+    200              unsigned short j;
+    201              unsigned short numBlockRegion,numBlockPerRegion;
+    202              unsigned int block = 0;
+   \   00000008   0xE3A05000         MOV      R5,#+0
+    203              
+    204              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   0000000C   0xE5D20022         LDRB     R0,[R2, #+34]
+   \   00000010   0xE1B0E000         MOVS     LR,R0
+    205              for (i = 0; i < numBlockRegion; i++) {
+   \   00000014   0xE3A00000         MOV      R0,#+0
+   \   00000018   0xE1B03000         MOVS     R3,R0
+   \                     ??NorFlash_GetDeviceBlockSize_0:
+   \   0000001C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000020   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000024   0xE1A0E80E         LSL      LR,LR,#+16
+   \   00000028   0xE1B0E82E         LSRS     LR,LR,#+16
+   \   0000002C   0xE153000E         CMP      R3,LR
+   \   00000030   0x2A000021         BCS      ??NorFlash_GetDeviceBlockSize_1
+    206                  numBlockPerRegion = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i]).Y + 1;
+   \   00000034   0xE1B00003         MOVS     R0,R3
+   \   00000038   0xE1A00800         LSL      R0,R0,#+16
+   \   0000003C   0xE1B00820         LSRS     R0,R0,#+16
+   \   00000040   0xE1B00100         LSLS     R0,R0,#+2
+   \   00000044   0xE0900002         ADDS     R0,R0,R2
+   \   00000048   0xE5D07024         LDRB     R7,[R0, #+36]
+   \   0000004C   0xE5D06023         LDRB     R6,[R0, #+35]
+   \   00000050   0xE1967407         ORRS     R7,R6,R7, LSL #+8
+   \   00000054   0xE2970001         ADDS     R0,R7,#+1
+   \   00000058   0xE1B04000         MOVS     R4,R0
+    207                  for (j = 0; j < numBlockPerRegion; j++) {
+   \   0000005C   0xE3A00000         MOV      R0,#+0
+   \   00000060   0xE1B0C000         MOVS     R12,R0
+   \                     ??NorFlash_GetDeviceBlockSize_2:
+   \   00000064   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000068   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000006C   0xE1A04804         LSL      R4,R4,#+16
+   \   00000070   0xE1B04824         LSRS     R4,R4,#+16
+   \   00000074   0xE15C0004         CMP      R12,R4
+   \   00000078   0x2A00000D         BCS      ??NorFlash_GetDeviceBlockSize_3
+    208                      if (block == sector) {
+   \   0000007C   0xE1550001         CMP      R5,R1
+   \   00000080   0x1A000008         BNE      ??NorFlash_GetDeviceBlockSize_4
+    209                          return (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256 ;
+   \   00000084   0xE1A03803         LSL      R3,R3,#+16
+   \   00000088   0xE1B03823         LSRS     R3,R3,#+16
+   \   0000008C   0xE1B00103         LSLS     R0,R3,#+2
+   \   00000090   0xE0900002         ADDS     R0,R0,R2
+   \   00000094   0xE5D03026         LDRB     R3,[R0, #+38]
+   \   00000098   0xE5D02025         LDRB     R2,[R0, #+37]
+   \   0000009C   0xE1923403         ORRS     R3,R2,R3, LSL #+8
+   \   000000A0   0xE1B00403         LSLS     R0,R3,#+8
+   \   000000A4   0xEA000005         B        ??NorFlash_GetDeviceBlockSize_5
+    210                      }
+    211                      block++;
+   \                     ??NorFlash_GetDeviceBlockSize_4:
+   \   000000A8   0xE2955001         ADDS     R5,R5,#+1
+    212                  }
+   \   000000AC   0xE29CC001         ADDS     R12,R12,#+1
+   \   000000B0   0xEAFFFFEB         B        ??NorFlash_GetDeviceBlockSize_2
+    213              }
+   \                     ??NorFlash_GetDeviceBlockSize_3:
+   \   000000B4   0xE2933001         ADDS     R3,R3,#+1
+   \   000000B8   0xEAFFFFD7         B        ??NorFlash_GetDeviceBlockSize_0
+    214              return 0;
+   \                     ??NorFlash_GetDeviceBlockSize_1:
+   \   000000BC   0xE3A00000         MOV      R0,#+0
+   \                     ??NorFlash_GetDeviceBlockSize_5:
+   \   000000C0   0xE8BD40F0         POP      {R4-R7,LR}
+   \   000000C4   0xE12FFF1E         BX       LR               ;; return
+    215          }
+    216          
+    217          //------------------------------------------------------------------------------
+    218          /// Returns secort number on specified memory offset.
+    219          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    220          /// \param memoryOffset  Memory offset.
+    221          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    222          unsigned short NorFlash_GetDeviceSectorInRegion(
+    223              struct NorFlashInfo *pNorFlashInfo,
+    224              unsigned int memoryOffset)
+    225          {
+   \                     NorFlash_GetDeviceSectorInRegion:
+   \   00000000   0xE92D43F0         PUSH     {R4-R9,LR}
+   \   00000004   0xE1B02000         MOVS     R2,R0
+    226              unsigned short numBlockRegion,numBlockPerRegion;
+    227              unsigned short sectorId = 0;
+   \   00000008   0xE3A00000         MOV      R0,#+0
+    228              unsigned int size = 0;
+   \   0000000C   0xE3A0E000         MOV      LR,#+0
+    229              unsigned char done = 0;
+   \   00000010   0xE3A04000         MOV      R4,#+0
+    230              unsigned short i , j;
+    231              
+    232              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   00000014   0xE5D27022         LDRB     R7,[R2, #+34]
+   \   00000018   0xE1B03007         MOVS     R3,R7
+    233              
+    234              for (i = 0; i < numBlockRegion; i++) {
+   \   0000001C   0xE3A07000         MOV      R7,#+0
+   \   00000020   0xE1B05007         MOVS     R5,R7
+   \                     ??NorFlash_GetDeviceSectorInRegion_0:
+   \   00000024   0xE1A05805         LSL      R5,R5,#+16
+   \   00000028   0xE1B05825         LSRS     R5,R5,#+16
+   \   0000002C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000030   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000034   0xE1550003         CMP      R5,R3
+   \   00000038   0x2A000028         BCS      ??NorFlash_GetDeviceSectorInRegion_1
+    235                  numBlockPerRegion = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i]).Y + 1;
+   \   0000003C   0xE1B07005         MOVS     R7,R5
+   \   00000040   0xE1A07807         LSL      R7,R7,#+16
+   \   00000044   0xE1B07827         LSRS     R7,R7,#+16
+   \   00000048   0xE1B07107         LSLS     R7,R7,#+2
+   \   0000004C   0xE0977002         ADDS     R7,R7,R2
+   \   00000050   0xE5D79024         LDRB     R9,[R7, #+36]
+   \   00000054   0xE5D78023         LDRB     R8,[R7, #+35]
+   \   00000058   0xE1989409         ORRS     R9,R8,R9, LSL #+8
+   \   0000005C   0xE2997001         ADDS     R7,R9,#+1
+   \   00000060   0xE1B0C007         MOVS     R12,R7
+    236                  for (j = 0; j < numBlockPerRegion; j++) {
+   \   00000064   0xE3A07000         MOV      R7,#+0
+   \   00000068   0xE1B06007         MOVS     R6,R7
+   \                     ??NorFlash_GetDeviceSectorInRegion_2:
+   \   0000006C   0xE1A06806         LSL      R6,R6,#+16
+   \   00000070   0xE1B06826         LSRS     R6,R6,#+16
+   \   00000074   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000078   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000007C   0xE156000C         CMP      R6,R12
+   \   00000080   0x2A000011         BCS      ??NorFlash_GetDeviceSectorInRegion_3
+    237                      size+= (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256 ;
+   \   00000084   0xE1B07005         MOVS     R7,R5
+   \   00000088   0xE1A07807         LSL      R7,R7,#+16
+   \   0000008C   0xE1B07827         LSRS     R7,R7,#+16
+   \   00000090   0xE1B07107         LSLS     R7,R7,#+2
+   \   00000094   0xE0977002         ADDS     R7,R7,R2
+   \   00000098   0xE5D79026         LDRB     R9,[R7, #+38]
+   \   0000009C   0xE5D78025         LDRB     R8,[R7, #+37]
+   \   000000A0   0xE1989409         ORRS     R9,R8,R9, LSL #+8
+   \   000000A4   0xE3A07F40         MOV      R7,#+256
+   \   000000A8   0xE02EE997         MLA      LR,R7,R9,LR
+    238                      if(size > memoryOffset) {
+   \   000000AC   0xE151000E         CMP      R1,LR
+   \   000000B0   0x2A000002         BCS      ??NorFlash_GetDeviceSectorInRegion_4
+    239                          done = 1;
+   \   000000B4   0xE3A07001         MOV      R7,#+1
+   \   000000B8   0xE1B04007         MOVS     R4,R7
+    240                          break;
+   \   000000BC   0xEA000002         B        ??NorFlash_GetDeviceSectorInRegion_3
+    241                      }
+    242                      sectorId++;
+   \                     ??NorFlash_GetDeviceSectorInRegion_4:
+   \   000000C0   0xE2900001         ADDS     R0,R0,#+1
+    243                  }
+   \   000000C4   0xE2966001         ADDS     R6,R6,#+1
+   \   000000C8   0xEAFFFFE7         B        ??NorFlash_GetDeviceSectorInRegion_2
+    244                  if (done) break;
+   \                     ??NorFlash_GetDeviceSectorInRegion_3:
+   \   000000CC   0xE21440FF         ANDS     R4,R4,#0xFF      ;; Zero extend
+   \   000000D0   0xE3540000         CMP      R4,#+0
+   \   000000D4   0x1A000001         BNE      ??NorFlash_GetDeviceSectorInRegion_1
+    245              }
+   \                     ??NorFlash_GetDeviceSectorInRegion_5:
+   \   000000D8   0xE2955001         ADDS     R5,R5,#+1
+   \   000000DC   0xEAFFFFD0         B        ??NorFlash_GetDeviceSectorInRegion_0
+    246              
+    247              return sectorId;
+   \                     ??NorFlash_GetDeviceSectorInRegion_1:
+   \   000000E0   0xE1A00800         LSL      R0,R0,#+16
+   \   000000E4   0xE1B00820         LSRS     R0,R0,#+16
+   \   000000E8   0xE8BD43F0         POP      {R4-R9,LR}
+   \   000000EC   0xE12FFF1E         BX       LR               ;; return
+    248          }
+    249          
+    250          //------------------------------------------------------------------------------
+    251          /// Returns start address of specified sector number.
+    252          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    253          /// \param sector  Sector number.
+    254          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    255          unsigned int NorFlash_GetDeviceSectorAddress(
+    256              struct NorFlashInfo *pNorFlashInfo,
+    257              unsigned int sector)
+    258          {
+   \                     NorFlash_GetDeviceSectorAddress:
+   \   00000000   0xE92D43F0         PUSH     {R4-R9,LR}
+   \   00000004   0xE1B02000         MOVS     R2,R0
+    259              unsigned short numBlockRegion,numBlockPerRegion;
+    260              unsigned short sectorId = 0;
+   \   00000008   0xE3A0E000         MOV      LR,#+0
+    261              unsigned int address = 0;
+   \   0000000C   0xE3A00000         MOV      R0,#+0
+    262              unsigned char done = 0;
+   \   00000010   0xE3A04000         MOV      R4,#+0
+    263              unsigned short i , j;
+    264              
+    265              numBlockRegion = pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.numEraseRegion;
+   \   00000014   0xE5D27022         LDRB     R7,[R2, #+34]
+   \   00000018   0xE1B03007         MOVS     R3,R7
+    266              for (i = 0; i < numBlockRegion; i++) {
+   \   0000001C   0xE3A07000         MOV      R7,#+0
+   \   00000020   0xE1B05007         MOVS     R5,R7
+   \                     ??NorFlash_GetDeviceSectorAddress_0:
+   \   00000024   0xE1A05805         LSL      R5,R5,#+16
+   \   00000028   0xE1B05825         LSRS     R5,R5,#+16
+   \   0000002C   0xE1A03803         LSL      R3,R3,#+16
+   \   00000030   0xE1B03823         LSRS     R3,R3,#+16
+   \   00000034   0xE1550003         CMP      R5,R3
+   \   00000038   0x2A00002B         BCS      ??NorFlash_GetDeviceSectorAddress_1
+    267                  numBlockPerRegion = (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i]).Y + 1;
+   \   0000003C   0xE1B07005         MOVS     R7,R5
+   \   00000040   0xE1A07807         LSL      R7,R7,#+16
+   \   00000044   0xE1B07827         LSRS     R7,R7,#+16
+   \   00000048   0xE1B07107         LSLS     R7,R7,#+2
+   \   0000004C   0xE0977002         ADDS     R7,R7,R2
+   \   00000050   0xE5D79024         LDRB     R9,[R7, #+36]
+   \   00000054   0xE5D78023         LDRB     R8,[R7, #+35]
+   \   00000058   0xE1989409         ORRS     R9,R8,R9, LSL #+8
+   \   0000005C   0xE2997001         ADDS     R7,R9,#+1
+   \   00000060   0xE1B0C007         MOVS     R12,R7
+    268                  for (j = 0; j < numBlockPerRegion; j++) {
+   \   00000064   0xE3A07000         MOV      R7,#+0
+   \   00000068   0xE1B06007         MOVS     R6,R7
+   \                     ??NorFlash_GetDeviceSectorAddress_2:
+   \   0000006C   0xE1A06806         LSL      R6,R6,#+16
+   \   00000070   0xE1B06826         LSRS     R6,R6,#+16
+   \   00000074   0xE1A0C80C         LSL      R12,R12,#+16
+   \   00000078   0xE1B0C82C         LSRS     R12,R12,#+16
+   \   0000007C   0xE156000C         CMP      R6,R12
+   \   00000080   0x2A000014         BCS      ??NorFlash_GetDeviceSectorAddress_3
+    269                      if (sector == sectorId) {
+   \   00000084   0xE1B0700E         MOVS     R7,LR
+   \   00000088   0xE1A07807         LSL      R7,R7,#+16
+   \   0000008C   0xE1B07827         LSRS     R7,R7,#+16
+   \   00000090   0xE1510007         CMP      R1,R7
+   \   00000094   0x1A000002         BNE      ??NorFlash_GetDeviceSectorAddress_4
+    270                          done = 1;
+   \   00000098   0xE3A07001         MOV      R7,#+1
+   \   0000009C   0xE1B04007         MOVS     R4,R7
+    271                          break;
+   \   000000A0   0xEA00000C         B        ??NorFlash_GetDeviceSectorAddress_3
+    272                      }
+    273                      address+= (pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.eraseRegionInfo[i].Z) * 256 ;
+   \                     ??NorFlash_GetDeviceSectorAddress_4:
+   \   000000A4   0xE1B07005         MOVS     R7,R5
+   \   000000A8   0xE1A07807         LSL      R7,R7,#+16
+   \   000000AC   0xE1B07827         LSRS     R7,R7,#+16
+   \   000000B0   0xE1B07107         LSLS     R7,R7,#+2
+   \   000000B4   0xE0977002         ADDS     R7,R7,R2
+   \   000000B8   0xE5D79026         LDRB     R9,[R7, #+38]
+   \   000000BC   0xE5D78025         LDRB     R8,[R7, #+37]
+   \   000000C0   0xE1989409         ORRS     R9,R8,R9, LSL #+8
+   \   000000C4   0xE3A07F40         MOV      R7,#+256
+   \   000000C8   0xE0200997         MLA      R0,R7,R9,R0
+    274                      sectorId++;
+   \   000000CC   0xE29EE001         ADDS     LR,LR,#+1
+    275                  }
+   \   000000D0   0xE2966001         ADDS     R6,R6,#+1
+   \   000000D4   0xEAFFFFE4         B        ??NorFlash_GetDeviceSectorAddress_2
+    276                  if (done) break;
+   \                     ??NorFlash_GetDeviceSectorAddress_3:
+   \   000000D8   0xE21440FF         ANDS     R4,R4,#0xFF      ;; Zero extend
+   \   000000DC   0xE3540000         CMP      R4,#+0
+   \   000000E0   0x1A000001         BNE      ??NorFlash_GetDeviceSectorAddress_1
+    277              }
+   \                     ??NorFlash_GetDeviceSectorAddress_5:
+   \   000000E4   0xE2955001         ADDS     R5,R5,#+1
+   \   000000E8   0xEAFFFFCD         B        ??NorFlash_GetDeviceSectorAddress_0
+    278              
+    279              return address;
+   \                     ??NorFlash_GetDeviceSectorAddress_1:
+   \   000000EC   0xE8BD43F0         POP      {R4-R9,LR}
+   \   000000F0   0xE12FFF1E         BX       LR               ;; return
+    280          }
+    281          
+    282          //------------------------------------------------------------------------------
+    283          /// Convert address to byte addressing.
+    284          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    285          /// \Param offset Address offset
+    286          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    287          unsigned int NorFlash_GetByteAddress(
+    288             struct NorFlashInfo *pNorFlashInfo, unsigned int offset)
+    289          {
+    290              return (offset * pNorFlashInfo-> deviceChipWidth);
+   \                     NorFlash_GetByteAddress:
+   \   00000000   0xE5D02004         LDRB     R2,[R0, #+4]
+   \   00000004   0xE0100192         MULS     R0,R2,R1
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    291          }
+    292          
+    293          //------------------------------------------------------------------------------
+    294          /// Convert address to byte addressing and return the address in chip.
+    295          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    296          /// \Param offset Address offset
+    297          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    298          unsigned int NorFlash_GetByteAddressInChip(
+    299             struct NorFlashInfo *pNorFlashInfo, unsigned int offset)
+    300          {
+    301              return (pNorFlashInfo->baseAddress + (offset * pNorFlashInfo-> deviceChipWidth));
+   \                     NorFlash_GetByteAddressInChip:
+   \   00000000   0xE5902000         LDR      R2,[R0, #+0]
+   \   00000004   0xE5D03004         LDRB     R3,[R0, #+4]
+   \   00000008   0xE0202193         MLA      R0,R3,R1,R2
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    302          }
+    303          
+    304          
+    305          //------------------------------------------------------------------------------
+    306          /// Returns the address in chip.
+    307          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    308          /// \Param offset Address offset
+    309          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    310          unsigned int NorFlash_GetAddressInChip(struct NorFlashInfo *pNorFlashInfo, unsigned int offset)
+    311          {
+    312              return (pNorFlashInfo->baseAddress + offset);
+   \                     NorFlash_GetAddressInChip:
+   \   00000000   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000004   0xE0910000         ADDS     R0,R1,R0
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    313          }
+    314          
+    315          //------------------------------------------------------------------------------
+    316          /// Returns bus width in bits of giving device.
+    317          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    318          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    319          unsigned char NorFlash_GetDataBusWidth( struct NorFlashInfo *pNorFlashInfo)
+    320          {
+    321              return (pNorFlashInfo->deviceChipWidth * 8);
+   \                     NorFlash_GetDataBusWidth:
+   \   00000000   0xE5D00004         LDRB     R0,[R0, #+4]
+   \   00000004   0xE1B00180         LSLS     R0,R0,#+3
+   \   00000008   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    322          }
+    323              
+    324          //------------------------------------------------------------------------------
+    325          /// Returns the size of the whole device in bytes 
+    326          /// \param pNorFlashInfo  Pointer to a NorFlashInfo instance.
+    327          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    328          unsigned long  NorFlash_GetDeviceSizeInBytes(
+    329             struct NorFlashInfo *pNorFlashInfo)
+    330          {
+    331              return ((unsigned long) 2 << ((pNorFlashInfo->cfiDescription.norFlashCfiDeviceGeometry.deviceSize) - 1));
+   \                     NorFlash_GetDeviceSizeInBytes:
+   \   00000000   0xE3A01002         MOV      R1,#+2
+   \   00000004   0xE5D0001D         LDRB     R0,[R0, #+29]
+   \   00000008   0xE2500001         SUBS     R0,R0,#+1
+   \   0000000C   0xE1B00011         LSLS     R0,R1,R0
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    332          }
+    333          
+    334          //------------------------------------------------------------------------------
+    335          /// Looks for query struct in Norflash common flash interface.
+    336          /// If found, the model variable is filled with the correct values.
+    337          /// This function returns 0 if a matching model has been found; otherwise it
+    338          /// returns NorCommon_ERROR_UNKNOWNMODEL.
+    339          //------------------------------------------------------------------------------
+    340          
+
+   \                                 In section .bss, align 4
+    341              unsigned char abcd[100];
+   \                     abcd:
+   \   00000000                      DS8 100
+
+   \                                 In section .text, align 4, keep-with-next
+    342          unsigned char NorFlash_CFI_Detect(
+    343              struct NorFlash *pNorFlash, 
+    344              unsigned char hardwareBusWidth)
+    345          {
+   \                     NorFlash_CFI_Detect:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    346              
+    347              unsigned char i;
+    348              unsigned char *pCfi = (unsigned char*)(&(pNorFlash->norFlashInfo.cfiDescription));
+   \   0000000C   0xE294700A         ADDS     R7,R4,#+10
+    349              unsigned int address;
+    350              
+    351              
+    352              /*
+    353              pNorFlash->norFlashInfo.cfiCompatible = 0;
+    354              pNorFlash->norFlashInfo.deviceChipWidth = hardwareBusWidth;
+    355              address = CFI_QUERY_OFFSET;
+    356              
+    357              for(i = 0; i< sizeof(struct NorFlashInfo) ; i++){
+    358                  WriteCommand(8, NorFlash_GetByteAddressInChip(&(pNorFlash->norFlashInfo), CFI_QUERY_ADDRESS), CFI_QUERY_COMMAND);
+    359                  ReadRawData(8, NorFlash_GetByteAddressInChip(&(pNorFlash->norFlashInfo), address), pCfi);
+    360                  address++;
+    361                  pCfi++;
+    362                  
+    363              }
+    364              */
+    365              
+    366              
+    367          
+    368              pNorFlash->norFlashInfo.cfiCompatible = 0;
+   \   00000010   0xE3A00000         MOV      R0,#+0
+   \   00000014   0xE5C40009         STRB     R0,[R4, #+9]
+    369              pNorFlash->norFlashInfo.deviceChipWidth = hardwareBusWidth;
+   \   00000018   0xE5C45008         STRB     R5,[R4, #+8]
+    370              address = 0x20;
+   \   0000001C   0xE3A00020         MOV      R0,#+32
+   \   00000020   0xE1B06000         MOVS     R6,R0
+    371              
+    372              for(i = 0; i< sizeof(struct NorFlashInfo) ; i++){
+   \   00000024   0xE3A00000         MOV      R0,#+0
+   \   00000028   0xE1B08000         MOVS     R8,R0
+   \                     ??NorFlash_CFI_Detect_0:
+   \   0000002C   0xE21880FF         ANDS     R8,R8,#0xFF      ;; Zero extend
+   \   00000030   0xE3580064         CMP      R8,#+100
+   \   00000034   0x2A000011         BCS      ??NorFlash_CFI_Detect_1
+    373                  WriteCommand(8, NorFlash_GetByteAddressInChip(&(pNorFlash->norFlashInfo), 0xAA), CFI_QUERY_COMMAND);
+   \   00000038   0xE3A010AA         MOV      R1,#+170
+   \   0000003C   0xE2940004         ADDS     R0,R4,#+4
+   \   00000040   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000044   0xE3A02098         MOV      R2,#+152
+   \   00000048   0xE1B01000         MOVS     R1,R0
+   \   0000004C   0xE3A00008         MOV      R0,#+8
+   \   00000050   0x........         BL       WriteCommand
+    374                  ReadRawData(8, NorFlash_GetByteAddressInChip(&(pNorFlash->norFlashInfo), address), pCfi);
+   \   00000054   0xE1B01006         MOVS     R1,R6
+   \   00000058   0xE2940004         ADDS     R0,R4,#+4
+   \   0000005C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000060   0xE1B01000         MOVS     R1,R0
+   \   00000064   0xE1B02007         MOVS     R2,R7
+   \   00000068   0xE3A00008         MOV      R0,#+8
+   \   0000006C   0x........         BL       ReadRawData
+    375                  address+=2;
+   \   00000070   0xE2966002         ADDS     R6,R6,#+2
+    376                  pCfi++;
+   \   00000074   0xE2977001         ADDS     R7,R7,#+1
+    377                  
+    378              }
+   \   00000078   0xE2988001         ADDS     R8,R8,#+1
+   \   0000007C   0xEAFFFFEA         B        ??NorFlash_CFI_Detect_0
+    379              
+    380          
+    381              // Check the query-unique ASCII string "QRY"
+    382              if( (pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.queryUniqueString[0] != 'Q' )
+    383                  || (pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.queryUniqueString[1] != 'R') 
+    384                  || (pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.queryUniqueString[2] != 'Y') ) {
+   \                     ??NorFlash_CFI_Detect_1:
+   \   00000080   0xE5D4000A         LDRB     R0,[R4, #+10]
+   \   00000084   0xE3500051         CMP      R0,#+81
+   \   00000088   0x1A000005         BNE      ??NorFlash_CFI_Detect_2
+   \   0000008C   0xE5D4000B         LDRB     R0,[R4, #+11]
+   \   00000090   0xE3500052         CMP      R0,#+82
+   \   00000094   0x1A000002         BNE      ??NorFlash_CFI_Detect_2
+   \   00000098   0xE5D4000C         LDRB     R0,[R4, #+12]
+   \   0000009C   0xE3500059         CMP      R0,#+89
+   \   000000A0   0x0A000001         BEQ      ??NorFlash_CFI_Detect_3
+    385                  return NorCommon_ERROR_UNKNOWNMODEL;
+   \                     ??NorFlash_CFI_Detect_2:
+   \   000000A4   0xE3A00001         MOV      R0,#+1
+   \   000000A8   0xEA000020         B        ??NorFlash_CFI_Detect_4
+    386              }
+    387              
+    388          #ifdef DUMP_CFI    
+    389               //NorFlash_CFI_DumpConfigruation(&(pNorFlash->norFlashInfo.cfiDescription)); // CF 정보를 출력 한다.
+    390          #endif
+    391          
+    392              
+    393              if ((pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.primaryCode) == CMD_SET_AMD) {
+   \                     ??NorFlash_CFI_Detect_3:
+   \   000000AC   0xE5D4100E         LDRB     R1,[R4, #+14]
+   \   000000B0   0xE5D4000D         LDRB     R0,[R4, #+13]
+   \   000000B4   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   000000B8   0xE3510002         CMP      R1,#+2
+   \   000000BC   0x1A000002         BNE      ??NorFlash_CFI_Detect_5
+    394                  pNorFlash->pOperations = &amdOperations;
+   \   000000C0   0x........         LDR      R0,??DataTable1_26
+   \   000000C4   0xE5840000         STR      R0,[R4, #+0]
+   \   000000C8   0xEA00000E         B        ??NorFlash_CFI_Detect_6
+    395              }
+    396              else if ((pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.primaryCode == CMD_SET_INTEL_EXT)
+    397               || (pNorFlash->norFlashInfo.cfiDescription.norFlashCfiQueryInfo.primaryCode == CMD_SET_INTEL)) {
+   \                     ??NorFlash_CFI_Detect_5:
+   \   000000CC   0xE5D4100E         LDRB     R1,[R4, #+14]
+   \   000000D0   0xE5D4000D         LDRB     R0,[R4, #+13]
+   \   000000D4   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   000000D8   0xE3510001         CMP      R1,#+1
+   \   000000DC   0x0A000004         BEQ      ??NorFlash_CFI_Detect_7
+   \   000000E0   0xE5D4100E         LDRB     R1,[R4, #+14]
+   \   000000E4   0xE5D4000D         LDRB     R0,[R4, #+13]
+   \   000000E8   0xE1901401         ORRS     R1,R0,R1, LSL #+8
+   \   000000EC   0xE3510003         CMP      R1,#+3
+   \   000000F0   0x1A000002         BNE      ??NorFlash_CFI_Detect_8
+    398                  pNorFlash->pOperations = &intelOperations;
+   \                     ??NorFlash_CFI_Detect_7:
+   \   000000F4   0x........         LDR      R0,??DataTable1_27
+   \   000000F8   0xE5840000         STR      R0,[R4, #+0]
+   \   000000FC   0xEA000001         B        ??NorFlash_CFI_Detect_6
+    399              }
+    400              else {
+    401                  return NorCommon_ERROR_UNKNOWNMODEL;
+   \                     ??NorFlash_CFI_Detect_8:
+   \   00000100   0xE3A00001         MOV      R0,#+1
+   \   00000104   0xEA000009         B        ??NorFlash_CFI_Detect_4
+    402              }
+    403              
+    404              pNorFlash->norFlashInfo.cfiCompatible = 1;
+   \                     ??NorFlash_CFI_Detect_6:
+   \   00000108   0xE3A00001         MOV      R0,#+1
+   \   0000010C   0xE5C40009         STRB     R0,[R4, #+9]
+    405              
+    406              
+    407              pNorFlash->pOperations = &amdOperations;
+   \   00000110   0x........         LDR      R0,??DataTable1_26
+   \   00000114   0xE5840000         STR      R0,[R4, #+0]
+    408              pNorFlash->norFlashInfo.cfiCompatible = 1;
+   \   00000118   0xE3A00001         MOV      R0,#+1
+   \   0000011C   0xE5C40009         STRB     R0,[R4, #+9]
+    409              NORFLASH_Reset(pNorFlash, 0);
+   \   00000120   0xE3A01000         MOV      R1,#+0
+   \   00000124   0xE1B00004         MOVS     R0,R4
+   \   00000128   0x........         BL       NORFLASH_Reset
+    410              return 0;
+   \   0000012C   0xE3A00000         MOV      R0,#+0
+   \                     ??NorFlash_CFI_Detect_4:
+   \   00000130   0xE8BD41F0         POP      {R4-R8,LR}
+   \   00000134   0xE12FFF1E         BX       LR               ;; return
+    411          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     `?<Constant "Common Flash Interfac...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     `?<Constant "0x10  %04Xh  Query Un...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     `?<Constant "0x11  %04Xh  \\n\\r">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x........         DC32     `?<Constant "0x12  %04Xh  \\n\\r">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x........         DC32     `?<Constant "0x13  %04Xh  Primary ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_5:
+   \   00000000   0x........         DC32     `?<Constant "0x15  %04Xh  Address ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_6:
+   \   00000000   0x........         DC32     `?<Constant "0x17  %04Xh  Alternat...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_7:
+   \   00000000   0x........         DC32     `?<Constant "0x19  %04Xh  Address ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_8:
+   \   00000000   0x........         DC32     `?<Constant "0x1B  %04Xh  VCC min ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_9:
+   \   00000000   0x........         DC32     `?<Constant "0x1C  %04Xh  VCC max ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_10:
+   \   00000000   0x........         DC32     `?<Constant "0x1D  %04Xh  VPP min ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_11:
+   \   00000000   0x........         DC32     `?<Constant "0x1E  %04Xh  VPP max ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_12:
+   \   00000000   0x........         DC32     `?<Constant "0x1F  %04Xh  Typical ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_13:
+   \   00000000   0x........         DC32     `?<Constant "0x20  %04Xh  Typical ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_14:
+   \   00000000   0x........         DC32     `?<Constant "0x21  %04Xh  Typical ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_15:
+   \   00000000   0x........         DC32     `?<Constant "0x22  %04Xh  Typical ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_16:
+   \   00000000   0x........         DC32     `?<Constant "0x23  %04Xh  Max. tim...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_17:
+   \   00000000   0x........         DC32     `?<Constant "0x24  %04Xh  Max. tim...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_18:
+   \   00000000   0x........         DC32     `?<Constant "0x25  %04Xh  Max. tim...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_19:
+   \   00000000   0x........         DC32     `?<Constant "0x26  %04Xh  Max. tim...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_20:
+   \   00000000   0x........         DC32     `?<Constant "0x27  %04Xh  Device S...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_21:
+   \   00000000   0x........         DC32     `?<Constant "0x28  %04Xh  Flash De...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_22:
+   \   00000000   0x........         DC32     `?<Constant "0x2A  %04Xh  Max. num...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_23:
+   \   00000000   0x........         DC32     `?<Constant "0x2C  %04Xh  Number o...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_24:
+   \   00000000   0x........         DC32     `?<Constant "0x%2X  %04Xh  Number ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_25:
+   \   00000000   0x........         DC32     `?<Constant "0x%2X  %04Xh  (z) tim...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_26:
+   \   00000000   0x........         DC32     amdOperations
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_27:
+   \   00000000   0x........         DC32     intelOperations
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Common Flash Interfac...">`:
+   \   00000000   0x43 0x6F          DC8 "Common Flash Interface Definition Table\012\015"
+   \              0x6D 0x6D    
+   \              0x6F 0x6E    
+   \              0x20 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x20 0x49    
+   \              0x6E 0x74    
+   \              0x65 0x72    
+   \              0x66 0x61    
+   \              0x63 0x65    
+   \              0x20 0x44    
+   \              0x65 0x66    
+   \              0x69 0x6E    
+   \              0x69 0x74    
+   \              0x69 0x6F    
+   \              0x6E 0x20    
+   \              0x54 0x61    
+   \              0x62 0x6C    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+   \   0000002A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x10  %04Xh  Query Un...">`:
+   \   00000000   0x30 0x78          DC8 "0x10  %04Xh  Query Unique ASCII string\012\015"
+   \              0x31 0x30    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x51    
+   \              0x75 0x65    
+   \              0x72 0x79    
+   \              0x20 0x55    
+   \              0x6E 0x69    
+   \              0x71 0x75    
+   \              0x65 0x20    
+   \              0x41 0x53    
+   \              0x43 0x49    
+   \              0x49 0x20    
+   \              0x73 0x74    
+   \              0x72 0x69    
+   \              0x6E 0x67    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x11  %04Xh  \\n\\r">`:
+   \   00000000   0x30 0x78          DC8 "0x11  %04Xh  \012\015"
+   \              0x31 0x31    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x12  %04Xh  \\n\\r">`:
+   \   00000000   0x30 0x78          DC8 "0x12  %04Xh  \012\015"
+   \              0x31 0x32    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x13  %04Xh  Primary ...">`:
+   \   00000000   0x30 0x78          DC8 "0x13  %04Xh  Primary OEM Command Set\012\015"
+   \              0x31 0x33    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x50    
+   \              0x72 0x69    
+   \              0x6D 0x61    
+   \              0x72 0x79    
+   \              0x20 0x4F    
+   \              0x45 0x4D    
+   \              0x20 0x43    
+   \              0x6F 0x6D    
+   \              0x6D 0x61    
+   \              0x6E 0x64    
+   \              0x20 0x53    
+   \              0x65 0x74    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000027   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x15  %04Xh  Address ...">`:
+   \   00000000   0x30 0x78          DC8 "0x15  %04Xh  Address for Primary Extended Table\012\015"
+   \              0x31 0x35    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x41    
+   \              0x64 0x64    
+   \              0x72 0x65    
+   \              0x73 0x73    
+   \              0x20 0x66    
+   \              0x6F 0x72    
+   \              0x20 0x50    
+   \              0x72 0x69    
+   \              0x6D 0x61    
+   \              0x72 0x79    
+   \              0x20 0x45    
+   \              0x78 0x74    
+   \              0x65 0x6E    
+   \              0x64 0x65    
+   \              0x64 0x20    
+   \              0x54 0x61    
+   \              0x62 0x6C    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x17  %04Xh  Alternat...">`:
+   \   00000000   0x30 0x78          DC8 "0x17  %04Xh  Alternate OEM Command Set\012\015"
+   \              0x31 0x37    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x41    
+   \              0x6C 0x74    
+   \              0x65 0x72    
+   \              0x6E 0x61    
+   \              0x74 0x65    
+   \              0x20 0x4F    
+   \              0x45 0x4D    
+   \              0x20 0x43    
+   \              0x6F 0x6D    
+   \              0x6D 0x61    
+   \              0x6E 0x64    
+   \              0x20 0x53    
+   \              0x65 0x74    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x19  %04Xh  Address ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 31H, 39H, 20H, 20H, 25H, 30H
+   \              0x31 0x39    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 41H, 64H, 64H
+   \              0x68 0x20    
+   \              0x20 0x41    
+   \              0x64 0x64    
+   \   00000010   0x72 0x65          DC8 72H, 65H, 73H, 73H, 20H, 66H, 6FH, 72H
+   \              0x73 0x73    
+   \              0x20 0x66    
+   \              0x6F 0x72    
+   \   00000018   0x20 0x41          DC8 20H, 41H, 6CH, 74H, 65H, 72H, 6EH, 61H
+   \              0x6C 0x74    
+   \              0x65 0x72    
+   \              0x6E 0x61    
+   \   00000020   0x74 0x65          DC8 74H, 65H, 20H, 4FH, 45H, 4DH, 20H, 45H
+   \              0x20 0x4F    
+   \              0x45 0x4D    
+   \              0x20 0x45    
+   \   00000028   0x78 0x74          DC8 78H, 74H, 65H, 6EH, 64H, 65H, 64H, 20H
+   \              0x65 0x6E    
+   \              0x64 0x65    
+   \              0x64 0x20    
+   \   00000030   0x54 0x61          DC8 54H, 61H, 62H, 6CH, 65H, 0AH, 0DH, 0
+   \              0x62 0x6C    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x1B  %04Xh  VCC min ...">`:
+   \   00000000   0x30 0x78          DC8 "0x1B  %04Xh  VCC min write/erase\012\015"
+   \              0x31 0x42    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x56    
+   \              0x43 0x43    
+   \              0x20 0x6D    
+   \              0x69 0x6E    
+   \              0x20 0x77    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x2F 0x65    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x1C  %04Xh  VCC max ...">`:
+   \   00000000   0x30 0x78          DC8 "0x1C  %04Xh  VCC max write/erase\012\015"
+   \              0x31 0x43    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x56    
+   \              0x43 0x43    
+   \              0x20 0x6D    
+   \              0x61 0x78    
+   \              0x20 0x77    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x2F 0x65    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000023   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x1D  %04Xh  VPP min ...">`:
+   \   00000000   0x30 0x78          DC8 "0x1D  %04Xh  VPP min voltage\012\015"
+   \              0x31 0x44    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x56    
+   \              0x50 0x50    
+   \              0x20 0x6D    
+   \              0x69 0x6E    
+   \              0x20 0x76    
+   \              0x6F 0x6C    
+   \              0x74 0x61    
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x1E  %04Xh  VPP max ...">`:
+   \   00000000   0x30 0x78          DC8 "0x1E  %04Xh  VPP max voltage\012\015"
+   \              0x31 0x45    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x56    
+   \              0x50 0x50    
+   \              0x20 0x6D    
+   \              0x61 0x78    
+   \              0x20 0x76    
+   \              0x6F 0x6C    
+   \              0x74 0x61    
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x1F  %04Xh  Typical ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 31H, 46H, 20H, 20H, 25H, 30H
+   \              0x31 0x46    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 54H, 79H, 70H
+   \              0x68 0x20    
+   \              0x20 0x54    
+   \              0x79 0x70    
+   \   00000010   0x69 0x63          DC8 69H, 63H, 61H, 6CH, 20H, 74H, 69H, 6DH
+   \              0x61 0x6C    
+   \              0x20 0x74    
+   \              0x69 0x6D    
+   \   00000018   0x65 0x6F          DC8 65H, 6FH, 75H, 74H, 20H, 70H, 65H, 72H
+   \              0x75 0x74    
+   \              0x20 0x70    
+   \              0x65 0x72    
+   \   00000020   0x20 0x73          DC8 20H, 73H, 69H, 6EH, 67H, 6CH, 65H, 20H
+   \              0x69 0x6E    
+   \              0x67 0x6C    
+   \              0x65 0x20    
+   \   00000028   0x77 0x6F          DC8 77H, 6FH, 72H, 64H, 20H, 77H, 72H, 69H
+   \              0x72 0x64    
+   \              0x20 0x77    
+   \              0x72 0x69    
+   \   00000030   0x74 0x65          DC8 74H, 65H, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000035   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x20  %04Xh  Typical ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 30H, 20H, 20H, 25H, 30H
+   \              0x32 0x30    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 54H, 79H, 70H
+   \              0x68 0x20    
+   \              0x20 0x54    
+   \              0x79 0x70    
+   \   00000010   0x69 0x63          DC8 69H, 63H, 61H, 6CH, 20H, 74H, 69H, 6DH
+   \              0x61 0x6C    
+   \              0x20 0x74    
+   \              0x69 0x6D    
+   \   00000018   0x65 0x6F          DC8 65H, 6FH, 75H, 74H, 20H, 66H, 6FH, 72H
+   \              0x75 0x74    
+   \              0x20 0x66    
+   \              0x6F 0x72    
+   \   00000020   0x20 0x4D          DC8 20H, 4DH, 69H, 6EH, 2EH, 20H, 73H, 69H
+   \              0x69 0x6E    
+   \              0x2E 0x20    
+   \              0x73 0x69    
+   \   00000028   0x7A 0x65          DC8 7AH, 65H, 20H, 62H, 75H, 66H, 66H, 65H
+   \              0x20 0x62    
+   \              0x75 0x66    
+   \              0x66 0x65    
+   \   00000030   0x72 0x20          DC8 72H, 20H, 77H, 72H, 69H, 74H, 65H, 0AH
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x65 0x0A    
+   \   00000038   0x0D 0x00          DC8 0DH, 0
+   \   0000003A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x21  %04Xh  Typical ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 31H, 20H, 20H, 25H, 30H
+   \              0x32 0x31    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 54H, 79H, 70H
+   \              0x68 0x20    
+   \              0x20 0x54    
+   \              0x79 0x70    
+   \   00000010   0x69 0x63          DC8 69H, 63H, 61H, 6CH, 20H, 74H, 69H, 6DH
+   \              0x61 0x6C    
+   \              0x20 0x74    
+   \              0x69 0x6D    
+   \   00000018   0x65 0x6F          DC8 65H, 6FH, 75H, 74H, 20H, 70H, 65H, 72H
+   \              0x75 0x74    
+   \              0x20 0x70    
+   \              0x65 0x72    
+   \   00000020   0x20 0x69          DC8 20H, 69H, 6EH, 64H, 69H, 76H, 69H, 64H
+   \              0x6E 0x64    
+   \              0x69 0x76    
+   \              0x69 0x64    
+   \   00000028   0x75 0x61          DC8 75H, 61H, 6CH, 20H, 62H, 6CH, 6FH, 63H
+   \              0x6C 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \   00000030   0x6B 0x20          DC8 6BH, 20H, 65H, 72H, 61H, 73H, 65H, 0AH
+   \              0x65 0x72    
+   \              0x61 0x73    
+   \              0x65 0x0A    
+   \   00000038   0x0D 0x00          DC8 0DH, 0
+   \   0000003A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x22  %04Xh  Typical ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 32H, 20H, 20H, 25H, 30H
+   \              0x32 0x32    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 54H, 79H, 70H
+   \              0x68 0x20    
+   \              0x20 0x54    
+   \              0x79 0x70    
+   \   00000010   0x69 0x63          DC8 69H, 63H, 61H, 6CH, 20H, 74H, 69H, 6DH
+   \              0x61 0x6C    
+   \              0x20 0x74    
+   \              0x69 0x6D    
+   \   00000018   0x65 0x6F          DC8 65H, 6FH, 75H, 74H, 20H, 66H, 6FH, 72H
+   \              0x75 0x74    
+   \              0x20 0x66    
+   \              0x6F 0x72    
+   \   00000020   0x20 0x66          DC8 20H, 66H, 75H, 6CH, 6CH, 20H, 63H, 68H
+   \              0x75 0x6C    
+   \              0x6C 0x20    
+   \              0x63 0x68    
+   \   00000028   0x69 0x70          DC8 69H, 70H, 20H, 65H, 72H, 61H, 73H, 65H
+   \              0x20 0x65    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x23  %04Xh  Max. tim...">`:
+   \   00000000   0x30 0x78          DC8 "0x23  %04Xh  Max. timeout for word write\012\015"
+   \              0x32 0x33    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \              0x2E 0x20    
+   \              0x74 0x69    
+   \              0x6D 0x65    
+   \              0x6F 0x75    
+   \              0x74 0x20    
+   \              0x66 0x6F    
+   \              0x72 0x20    
+   \              0x77 0x6F    
+   \              0x72 0x64    
+   \              0x20 0x77    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x24  %04Xh  Max. tim...">`:
+   \   00000000   0x30 0x78          DC8 "0x24  %04Xh  Max. timeout for buffer write\012\015"
+   \              0x32 0x34    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \              0x2E 0x20    
+   \              0x74 0x69    
+   \              0x6D 0x65    
+   \              0x6F 0x75    
+   \              0x74 0x20    
+   \              0x66 0x6F    
+   \              0x72 0x20    
+   \              0x62 0x75    
+   \              0x66 0x66    
+   \              0x65 0x72    
+   \              0x20 0x77    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x25  %04Xh  Max. tim...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 35H, 20H, 20H, 25H, 30H
+   \              0x32 0x35    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 4DH, 61H, 78H
+   \              0x68 0x20    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \   00000010   0x2E 0x20          DC8 2EH, 20H, 74H, 69H, 6DH, 65H, 6FH, 75H
+   \              0x74 0x69    
+   \              0x6D 0x65    
+   \              0x6F 0x75    
+   \   00000018   0x74 0x20          DC8 74H, 20H, 70H, 65H, 72H, 20H, 69H, 6EH
+   \              0x70 0x65    
+   \              0x72 0x20    
+   \              0x69 0x6E    
+   \   00000020   0x64 0x69          DC8 64H, 69H, 76H, 69H, 64H, 75H, 61H, 6CH
+   \              0x76 0x69    
+   \              0x64 0x75    
+   \              0x61 0x6C    
+   \   00000028   0x20 0x62          DC8 20H, 62H, 6CH, 6FH, 63H, 6BH, 20H, 65H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x65    
+   \   00000030   0x72 0x61          DC8 72H, 61H, 73H, 65H, 0AH, 0DH, 0
+   \              0x73 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000037   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x26  %04Xh  Max. tim...">`:
+   \   00000000   0x30 0x78          DC8 "0x26  %04Xh  Max. timeout for full chip erase\012\015"
+   \              0x32 0x36    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \              0x2E 0x20    
+   \              0x74 0x69    
+   \              0x6D 0x65    
+   \              0x6F 0x75    
+   \              0x74 0x20    
+   \              0x66 0x6F    
+   \              0x72 0x20    
+   \              0x66 0x75    
+   \              0x6C 0x6C    
+   \              0x20 0x63    
+   \              0x68 0x69    
+   \              0x70 0x20    
+   \              0x65 0x72    
+   \              0x61 0x73    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x27  %04Xh  Device S...">`:
+   \   00000000   0x30 0x78          DC8 "0x27  %04Xh  Device Size = 2N byte\012\015"
+   \              0x32 0x37    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x44    
+   \              0x65 0x76    
+   \              0x69 0x63    
+   \              0x65 0x20    
+   \              0x53 0x69    
+   \              0x7A 0x65    
+   \              0x20 0x3D    
+   \              0x20 0x32    
+   \              0x4E 0x20    
+   \              0x62 0x79    
+   \              0x74 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000025   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x28  %04Xh  Flash De...">`:
+   \   00000000   0x30 0x78          DC8 "0x28  %04Xh  Flash Device Interface description\012\015"
+   \              0x32 0x38    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \              0x34 0x58    
+   \              0x68 0x20    
+   \              0x20 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x20 0x44    
+   \              0x65 0x76    
+   \              0x69 0x63    
+   \              0x65 0x20    
+   \              0x49 0x6E    
+   \              0x74 0x65    
+   \              0x72 0x66    
+   \              0x61 0x63    
+   \              0x65 0x20    
+   \              0x64 0x65    
+   \              0x73 0x63    
+   \              0x72 0x69    
+   \              0x70 0x74    
+   \              0x69 0x6F    
+   \              0x6E 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x2A  %04Xh  Max. num...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 41H, 20H, 20H, 25H, 30H
+   \              0x32 0x41    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 4DH, 61H, 78H
+   \              0x68 0x20    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \   00000010   0x2E 0x20          DC8 2EH, 20H, 6EH, 75H, 6DH, 62H, 65H, 72H
+   \              0x6E 0x75    
+   \              0x6D 0x62    
+   \              0x65 0x72    
+   \   00000018   0x20 0x6F          DC8 20H, 6FH, 66H, 20H, 62H, 79H, 74H, 65H
+   \              0x66 0x20    
+   \              0x62 0x79    
+   \              0x74 0x65    
+   \   00000020   0x20 0x69          DC8 20H, 69H, 6EH, 20H, 6DH, 75H, 6CH, 74H
+   \              0x6E 0x20    
+   \              0x6D 0x75    
+   \              0x6C 0x74    
+   \   00000028   0x69 0x2D          DC8 69H, 2DH, 62H, 79H, 74H, 65H, 20H, 77H
+   \              0x62 0x79    
+   \              0x74 0x65    
+   \              0x20 0x77    
+   \   00000030   0x72 0x69          DC8 72H, 69H, 74H, 65H, 0AH, 0DH, 0
+   \              0x74 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000037   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x2C  %04Xh  Number o...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 32H, 43H, 20H, 20H, 25H, 30H
+   \              0x32 0x43    
+   \              0x20 0x20    
+   \              0x25 0x30    
+   \   00000008   0x34 0x58          DC8 34H, 58H, 68H, 20H, 20H, 4EH, 75H, 6DH
+   \              0x68 0x20    
+   \              0x20 0x4E    
+   \              0x75 0x6D    
+   \   00000010   0x62 0x65          DC8 62H, 65H, 72H, 20H, 6FH, 66H, 20H, 45H
+   \              0x72 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x45    
+   \   00000018   0x72 0x61          DC8 72H, 61H, 73H, 65H, 20H, 42H, 6CH, 6FH
+   \              0x73 0x65    
+   \              0x20 0x42    
+   \              0x6C 0x6F    
+   \   00000020   0x63 0x6B          DC8 63H, 6BH, 20H, 52H, 65H, 67H, 69H, 6FH
+   \              0x20 0x52    
+   \              0x65 0x67    
+   \              0x69 0x6F    
+   \   00000028   0x6E 0x73          DC8 6EH, 73H, 20H, 77H, 69H, 74H, 68H, 69H
+   \              0x20 0x77    
+   \              0x69 0x74    
+   \              0x68 0x69    
+   \   00000030   0x6E 0x20          DC8 6EH, 20H, 64H, 65H, 76H, 69H, 63H, 65H
+   \              0x64 0x65    
+   \              0x76 0x69    
+   \              0x63 0x65    
+   \   00000038   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   0000003B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x%2X  %04Xh  Number ...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 25H, 32H, 58H, 20H, 20H, 25H
+   \              0x25 0x32    
+   \              0x58 0x20    
+   \              0x20 0x25    
+   \   00000008   0x30 0x34          DC8 30H, 34H, 58H, 68H, 20H, 20H, 4EH, 75H
+   \              0x58 0x68    
+   \              0x20 0x20    
+   \              0x4E 0x75    
+   \   00000010   0x6D 0x62          DC8 6DH, 62H, 65H, 72H, 20H, 6FH, 66H, 20H
+   \              0x65 0x72    
+   \              0x20 0x6F    
+   \              0x66 0x20    
+   \   00000018   0x45 0x72          DC8 45H, 72H, 61H, 73H, 65H, 20H, 42H, 6CH
+   \              0x61 0x73    
+   \              0x65 0x20    
+   \              0x42 0x6C    
+   \   00000020   0x6F 0x63          DC8 6FH, 63H, 6BH, 73H, 20H, 6FH, 66H, 20H
+   \              0x6B 0x73    
+   \              0x20 0x6F    
+   \              0x66 0x20    
+   \   00000028   0x69 0x64          DC8 69H, 64H, 65H, 6EH, 74H, 69H, 63H, 61H
+   \              0x65 0x6E    
+   \              0x74 0x69    
+   \              0x63 0x61    
+   \   00000030   0x6C 0x20          DC8 6CH, 20H, 73H, 69H, 7AH, 65H, 20H, 77H
+   \              0x73 0x69    
+   \              0x7A 0x65    
+   \              0x20 0x77    
+   \   00000038   0x69 0x74          DC8 69H, 74H, 68H, 69H, 6EH, 20H, 72H, 65H
+   \              0x68 0x69    
+   \              0x6E 0x20    
+   \              0x72 0x65    
+   \   00000040   0x67 0x69          DC8 67H, 69H, 6FH, 6EH, 20H, 25H, 78H, 20H
+   \              0x6F 0x6E    
+   \              0x20 0x25    
+   \              0x78 0x20    
+   \   00000048   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   0000004B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "0x%2X  %04Xh  (z) tim...">`:
+   \   00000000   0x30 0x78          DC8 30H, 78H, 25H, 32H, 58H, 20H, 20H, 25H
+   \              0x25 0x32    
+   \              0x58 0x20    
+   \              0x20 0x25    
+   \   00000008   0x30 0x34          DC8 30H, 34H, 58H, 68H, 20H, 20H, 28H, 7AH
+   \              0x58 0x68    
+   \              0x20 0x20    
+   \              0x28 0x7A    
+   \   00000010   0x29 0x20          DC8 29H, 20H, 74H, 69H, 6DH, 65H, 73H, 20H
+   \              0x74 0x69    
+   \              0x6D 0x65    
+   \              0x73 0x20    
+   \   00000018   0x32 0x35          DC8 32H, 35H, 36H, 20H, 62H, 79H, 74H, 65H
+   \              0x36 0x20    
+   \              0x62 0x79    
+   \              0x74 0x65    
+   \   00000020   0x73 0x20          DC8 73H, 20H, 77H, 69H, 74H, 68H, 69H, 6EH
+   \              0x77 0x69    
+   \              0x74 0x68    
+   \              0x69 0x6E    
+   \   00000028   0x20 0x72          DC8 20H, 72H, 65H, 67H, 69H, 6FH, 6EH, 20H
+   \              0x65 0x67    
+   \              0x69 0x6F    
+   \              0x6E 0x20    
+   \   00000030   0x25 0x78          DC8 25H, 78H, 20H, 0AH, 0DH, 0
+   \              0x20 0x0A    
+   \              0x0D 0x00    
+   \   00000036   0x00 0x00          DC8 0, 0
+    412          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       24  NorFlash_CFI_Detect
+             24 -> NORFLASH_Reset
+             24 -> NorFlash_GetByteAddressInChip
+             24 -> ReadRawData
+             24 -> WriteCommand
+       16  NorFlash_CFI_DumpConfigruation
+             16 -> printf
+        0  NorFlash_GetAddressInChip
+        0  NorFlash_GetByteAddress
+        0  NorFlash_GetByteAddressInChip
+        0  NorFlash_GetDataBusWidth
+       20  NorFlash_GetDeviceBlockSize
+        8  NorFlash_GetDeviceMaxBlockSize
+        8  NorFlash_GetDeviceMinBlockSize
+        8  NorFlash_GetDeviceNumOfBlocks
+       28  NorFlash_GetDeviceSectorAddress
+       28  NorFlash_GetDeviceSectorInRegion
+        0  NorFlash_GetDeviceSizeInBytes
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      56  ?<Constant "0x%2X  %04Xh  (z) tim...">
+      76  ?<Constant "0x%2X  %04Xh  Number ...">
+      44  ?<Constant "0x10  %04Xh  Query Un...">
+      16  ?<Constant "0x11  %04Xh  \n\r">
+      16  ?<Constant "0x12  %04Xh  \n\r">
+      40  ?<Constant "0x13  %04Xh  Primary ...">
+      52  ?<Constant "0x15  %04Xh  Address ...">
+      44  ?<Constant "0x17  %04Xh  Alternat...">
+      56  ?<Constant "0x19  %04Xh  Address ...">
+      36  ?<Constant "0x1B  %04Xh  VCC min ...">
+      36  ?<Constant "0x1C  %04Xh  VCC max ...">
+      32  ?<Constant "0x1D  %04Xh  VPP min ...">
+      32  ?<Constant "0x1E  %04Xh  VPP max ...">
+      56  ?<Constant "0x1F  %04Xh  Typical ...">
+      60  ?<Constant "0x20  %04Xh  Typical ...">
+      60  ?<Constant "0x21  %04Xh  Typical ...">
+      52  ?<Constant "0x22  %04Xh  Typical ...">
+      44  ?<Constant "0x23  %04Xh  Max. tim...">
+      48  ?<Constant "0x24  %04Xh  Max. tim...">
+      56  ?<Constant "0x25  %04Xh  Max. tim...">
+      48  ?<Constant "0x26  %04Xh  Max. tim...">
+      40  ?<Constant "0x27  %04Xh  Device S...">
+      52  ?<Constant "0x28  %04Xh  Flash De...">
+      56  ?<Constant "0x2A  %04Xh  Max. num...">
+      60  ?<Constant "0x2C  %04Xh  Number o...">
+      44  ?<Constant "Common Flash Interfac...">
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_10
+       4  ??DataTable1_11
+       4  ??DataTable1_12
+       4  ??DataTable1_13
+       4  ??DataTable1_14
+       4  ??DataTable1_15
+       4  ??DataTable1_16
+       4  ??DataTable1_17
+       4  ??DataTable1_18
+       4  ??DataTable1_19
+       4  ??DataTable1_2
+       4  ??DataTable1_20
+       4  ??DataTable1_21
+       4  ??DataTable1_22
+       4  ??DataTable1_23
+       4  ??DataTable1_24
+       4  ??DataTable1_25
+       4  ??DataTable1_26
+       4  ??DataTable1_27
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+       4  ??DataTable1_5
+       4  ??DataTable1_6
+       4  ??DataTable1_7
+       4  ??DataTable1_8
+       4  ??DataTable1_9
+     312  NorFlash_CFI_Detect
+     572  NorFlash_CFI_DumpConfigruation
+      12  NorFlash_GetAddressInChip
+      12  NorFlash_GetByteAddress
+      16  NorFlash_GetByteAddressInChip
+      16  NorFlash_GetDataBusWidth
+     200  NorFlash_GetDeviceBlockSize
+     168  NorFlash_GetDeviceMaxBlockSize
+     168  NorFlash_GetDeviceMinBlockSize
+     112  NorFlash_GetDeviceNumOfBlocks
+     244  NorFlash_GetDeviceSectorAddress
+     240  NorFlash_GetDeviceSectorInRegion
+      20  NorFlash_GetDeviceSizeInBytes
+     100  abcd
+      24  amdOperations
+      24  intelOperations
+
+ 
+   100 bytes in section .bss
+ 1 260 bytes in section .rodata
+ 2 204 bytes in section .text
+ 
+ 2 204 bytes of CODE  memory
+ 1 260 bytes of CONST memory
+   100 bytes of DATA  memory
+
+Errors: none
+Warnings: none

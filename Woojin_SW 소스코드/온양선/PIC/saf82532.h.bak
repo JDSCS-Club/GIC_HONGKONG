@@ -1,0 +1,327 @@
+#include "def.h"
+
+#ifndef _SAF82532_H_
+#define _SAF82532_H_
+
+#define SAB82532_BASE 0xA00000
+
+#define SAB82532_ACH 0x00
+#define SAB82532_BCH 0x40
+
+#define SAF82532_INTOSCCLK_HZ 10000000 // 10MHz
+
+//
+#define SAF82532_FIFO_SIZE 32
+#define SAB82532_BUFFER_SIZE 514
+
+// HDLC통신일때 레지스터
+typedef struct
+{
+	UCHAR XFIFO[SAF82532_FIFO_SIZE];
+	UCHAR STA_CMD; // [0x20]
+	UCHAR PRE_RSTA;
+	UCHAR MODE;
+	UCHAR TIMR;
+	UCHAR XAD1;
+	UCHAR XAD2;
+	UCHAR RAH1;
+	UCHAR RAH2;
+	UCHAR RAL1;
+	UCHAR RAL2_RHCR;
+	UCHAR RBCL_XBCL;
+	UCHAR RBCH_XBCH;
+	UCHAR CCR0;
+	UCHAR CCR1;
+	UCHAR CCR2;
+	UCHAR CCR3; // [0x2F]
+	UCHAR TSAX; // [0x30]
+	UCHAR TSAR;
+	UCHAR XCCR;
+	UCHAR RCCR;
+	UCHAR VSTR_BGR;
+	UCHAR RLCR;
+	UCHAR AML;
+	UCHAR AMH;
+	UCHAR GIS_IVA;
+	UCHAR IPC;
+	UCHAR ISR0_IMR0;
+	UCHAR ISR1_IMR1;
+	UCHAR PVR;
+	UCHAR PIS_PIM;
+	UCHAR PCR;
+	UCHAR CCR4; // [0x3F]
+} SAF82532HDLCREG1CH, *PSAF82532HDLCREG1CH;
+
+/***********************************************************************************************************
+					TX_RX 프로토콜			JYJ
+***********************************************************************************************************/
+typedef struct
+{
+	BYTE nSTX_02; //1.시작 비트
+	BYTE nPA_Add; //2.방송 Add
+	BYTE nTCMS_Code; //3.TCMS 코드
+	BYTE nCOMM_Code; //4.명령코드
+	BYTE nCONT_Code; //5.제어코드
+	BYTE nNOW_ST; //6.이번역
+	BYTE nNEXT_ST; //7.다음역
+	BYTE nDEST_ST; //8.종착영 코드
+	BYTE nDOOR; //9.출입문 코드
+	BYTE SIMUL_Code ; //10.시험코드
+	BYTE nT_NUM; //11.열차번호
+	BYTE nDIS_ST; //12.거리정보
+	BYTE nSOUND_ST; //13.음량정보
+	BYTE nSPARE_Code; //14.예비코드
+} TCMSSDR, *PTCMSSDR;
+
+
+
+typedef struct
+{
+	SAF82532HDLCREG1CH ACHREG;
+	SAF82532HDLCREG1CH BCHREG;
+} SAF82532HDLCREG, *PSAF82532HDLCREG;
+
+// [HDLC]-MODE
+#define SAF82532_HDLC_MODE_AUTO			0x00 // AutoMode
+#define SAF82532_HDLC_MODE_NONAUTO  	0x40 // Non AutoMode
+#define SAF82532_HDLC_MODE_TRAN 		0x80 // Transparent Mode
+#define SAF82532_HDLC_MODE_ETRAN 		0xC0 // Extended Transparent Mode
+#define SAF82532_HDLC_MODE_ADDRESS8 	0x00 // 8Bit Address
+#define SAF82532_HDLC_MODE_ADDRESS16 	0x20 // 16Bit Address
+#define SAF82532_HDLC_MODE_RCVA			0x08 // Receive Active
+
+// [HDLC]-RST
+#define SAF82532_HDLC_RST_CRC		0x20
+
+// [HDLC]-CMD
+#define SAF82532_HDLC_CMD_RMC		0x80
+#define SAF82532_HDLC_CMD_RHR		0x40
+#define SAF82532_HDLC_CMD_RNR		0x20
+#define SAF82532_HDLC_CMD_STI		0x10
+#define SAF82532_HDLC_CMD_XTF		0x08
+#define SAF82532_HDLC_CMD_XIF		0x04
+#define SAF82532_HDLC_CMD_XME		0x02
+#define SAF82532_HDLC_CMD_XRES		0x01
+
+// [HDLC]-CCR0
+#define SAF82532_HDLC_CCR0_PWDN		0x00
+#define SAF82532_HDLC_CCR0_PWUP		0x80
+#define SAF82532_HDLC_CCR0_MCE		0x40
+#define SAF82532_HDLC_CCR0_NRZ		0x00
+#define SAF82532_HDLC_CCR0_NRZI		0x08
+#define SAF82532_HDLC_CCR0_FM0		0x10
+#define SAF82532_HDLC_CCR0_FM1		0x14
+#define SAF82532_HDLC_CCR0_MANCST	0x18
+#define SAF82532_HDLC_CCR0_HDLC		0x00
+#define SAF82532_HDLC_CCR0_SDLCLP	0x01
+#define SAF82532_HDLC_CCR0_BISYNC	0x02
+#define SAF82532_HDLC_CCR0_ASYNC	0x03
+ 
+// [HDLC]-CCR1
+#define SAF82532_HDLC_CCR1_ODS 		0x10
+#define SAF82532_HDLC_CCR1_ITF 		0x08 // 0:Continuous '1', 1:Flasg(0x7E)
+#define SAF82532_HDLC_CCR1_CM0 		0x00
+#define SAF82532_HDLC_CCR1_CM1 		0x01
+#define SAF82532_HDLC_CCR1_CM2 		0x02
+#define SAF82532_HDLC_CCR1_CM3 		0x03
+#define SAF82532_HDLC_CCR1_CM4 		0x04
+#define SAF82532_HDLC_CCR1_CM5 		0x05
+#define SAF82532_HDLC_CCR1_CM6 		0x06
+#define SAF82532_HDLC_CCR1_CM7 		0x07
+#define SAF82532_HDLC_CCR1_SFLG 	0x80 // Enable Shared Flags
+
+// [HDLC]-CCR2 
+#define SAF82532_HDLC_CCR2_BR9    	0x80 // Baud Rate Bit 9              
+#define SAF82532_HDLC_CCR2_BR8    	0x40 // Baud Rate Bit 8              
+#define SAF82532_HDLC_CCR2_BDF    	0x20 // Baud Rate Division Factor    
+#define SAF82532_HDLC_CCR2_SSEL   	0x10 // Clock Source Select          
+#define SAF82532_HDLC_CCR2_TOE    	0x08 // Transmit Clock Output Enable 
+#define SAF82532_HDLC_CCR2_CRC32   	0x02 // CRC-32
+#define SAF82532_HDLC_CCR2_CCITT   	0x00 // CCITT
+
+// [HDLC]-CCR3 
+#define SAF82532_HDLC_CCR3_PRE1		0x00 // Preamble Time 1
+#define SAF82532_HDLC_CCR3_PRE2		0x40 // Preamble Time 2
+#define SAF82532_HDLC_CCR3_PRE4		0x80 // Preamble Time 3
+#define SAF82532_HDLC_CCR3_PRE8		0xC0 // Preamble Time 4
+
+#define SAF82532_HDLC_CCR3_EPT		0x20 // Enable Preamble Transmission
+#define SAF82532_HDLC_CCR3_RADD		0x10 // Receive Address Pushed FIFO
+#define SAF82532_HDLC_CCR3_RCRC		0x04 // Receive CRC On/Off
+#define SAF82532_HDLC_CCR3_XCRC		0x02 // Transmit CRC On/Off
+#define SAF82532_HDLC_CCR3_PSD		0x01 // DPLL Phase Shift Disable
+
+// [HDLC]-XBCH(Transmit Byte Count High)
+#define SAF82532_HDLC_XCBH_DMA		0x80 // DMA Mode
+#define SAF82532_HDLC_XCBH_NRM		0x40 // Normal Reponse Mode
+#define SAF82532_HDLC_XCBH_CAS		0x20 // Carrier Detect Auto Start
+#define SAF82532_HDLC_XCBH_XC		0x10 // Transmit Continously
+
+// [HDLC]-RBCH(Transmit Byte Count High)
+#define SAF82532_HDLC_RCBH_DMA		0x80 // DMA Mode
+#define SAF82532_HDLC_RCBH_NRM		0x40 // Normal Reponse Mode
+#define SAF82532_HDLC_RCBH_CAS		0x20 // Carrier Detect Auto Start
+#define SAF82532_HDLC_RCBH_XC		0x10 // Transmit Continously
+
+// [HDLC]-RFC
+#define SAF82532_HDLC_RFC_DPS     	0x40 // Disable Parity Storage 
+#define SAF82532_HDLC_RFC_RFDF    	0x10 // RFIFO Data Format      
+#define SAF82532_HDLC_RFC_RFTH1   	0x08 // Treshold Level 1       
+#define SAF82532_HDLC_RFC_RFTH0   	0x04 // Treshold Level 0       
+#define SAF82532_HDLC_RFC_TCDE    	0x01 // Termination Character 
+
+// [HDLC]-IMR0
+#define SAF82532_HDLC_IMR0_RME 		0x80 // Recieve Message End
+#define SAF82532_HDLC_IMR0_RPF 		0x01 // Recieve Pull
+
+// [HDLC]-IMR1
+#define SAF82532_HDLC_IMR1_XPR 		0x01 // Transmit Pool
+#define SAF82532_HDLC_IMR1_XDU 		0x10 // Transmit Data Underrun / Extended Transmission End
+#define SAF82532_HDLC_IMR1_ALLS 	0x20 // All Send
+
+
+// ASYNC통신일때 레지스터
+typedef struct
+{
+	UCHAR XFIFO[SAF82532_FIFO_SIZE];
+	UCHAR STA_CMD;		// [0x20]
+	int : 32;			// [0x21]
+	UCHAR MODE;			// [0x22]
+	UCHAR TIMR;			// [0x23]
+	UCHAR XON;			// [0x24]
+	UCHAR XOFF;			// [0x25]
+	UCHAR TCR;			// [0x26]
+	UCHAR DAFO;			// [0x27]
+	UCHAR RFC;			// [0x28]
+	int : 32;			// [0x29]
+	UCHAR RBCL_XBCL;	// [0x2A]
+	UCHAR RBCH_XBCH;	// [0x2B]
+	UCHAR CCR0;			// [0x2C]
+	UCHAR CCR1;			// [0x2D]
+	UCHAR CCR2;			// [0x2E]
+	UCHAR CCR3;			// [0x2F]
+	UCHAR TSAX;			// [0x30]
+	UCHAR TSAR;			// [0x31]
+	UCHAR XCCR;			// [0x32]
+	UCHAR RCCR;			// [0x33]
+	UCHAR VSTR_BGR;		// [0x34]
+	UCHAR TIC;			// [0x35]
+	UCHAR MXN;			// [0x36]
+	UCHAR MXF;			// [0x37]
+	UCHAR GIS_IVA;		// [0x38]
+	UCHAR IPC;			// [0x39]
+	UCHAR ISR0_IMR0;	// [0x3A]
+	UCHAR ISR1_IMR1;	// [0x3B]
+	UCHAR PVR;			// [0x3C]
+	UCHAR PIS_PIM;		// [0x3D]
+	UCHAR PCR;			// [0x3E]
+	UCHAR CCR4; 		// [0x3F]
+} SAF82532ASYNCREG1CH, *PSAF82532ASYNCREG1CH;
+
+typedef struct
+{
+	SAF82532ASYNCREG1CH ACHREG;
+	SAF82532ASYNCREG1CH BCHREG;
+} SAF82532ASYNCREG, *PSAF82532ASYNCREG;
+
+
+// [ASYNC]-MODE
+#define SAF82532_ASYNC_MODE_RCVA		0x08 // Receive Active
+
+// [ASYNC]-CMD
+#define SAF82532_ASYNC_CMD_RMC		0x80
+#define SAF82532_ASYNC_CMD_RRES		0x40
+#define SAF82532_ASYNC_CMD_RFRD		0x20
+#define SAF82532_ASYNC_CMD_STI		0x10
+#define SAF82532_ASYNC_CMD_XF		0x08
+#define SAF82532_ASYNC_CMD_XME		0x02
+#define SAF82532_ASYNC_CMD_XRES		0x01
+
+// [ASYNC]-CCR0
+#define SAF82532_ASYNC_CCR0_PWDN	0x00
+#define SAF82532_ASYNC_CCR0_PWUP	0x80
+#define SAF82532_ASYNC_CCR0_MCE		0x40
+#define SAF82532_ASYNC_CCR0_NRZ		0x00
+#define SAF82532_ASYNC_CCR0_NRZI	0x08
+#define SAF82532_ASYNC_CCR0_FM0		0x10
+#define SAF82532_ASYNC_CCR0_FM1		0x14
+#define SAF82532_ASYNC_CCR0_MANCST	0x18
+#define SAF82532_ASYNC_CCR0_HDLC	0x00
+#define SAF82532_ASYNC_CCR0_SDLCLP	0x01
+#define SAF82532_ASYNC_CCR0_BISYNC	0x02
+#define SAF82532_ASYNC_CCR0_ASYNC	0x03
+
+// [ASYNC]-CCR1
+#define SAF82532_ASYNC_CCR1_ODS 	0x10
+#define SAF82532_ASYNC_CCR1_BCR 	0x08 // Bit Clock Rate
+#define SAF82532_ASYNC_CCR1_CM0 	0x00
+#define SAF82532_ASYNC_CCR1_CM1 	0x01
+#define SAF82532_ASYNC_CCR1_CM2 	0x02
+#define SAF82532_ASYNC_CCR1_CM3 	0x03
+#define SAF82532_ASYNC_CCR1_CM4 	0x04
+#define SAF82532_ASYNC_CCR1_CM5 	0x05
+#define SAF82532_ASYNC_CCR1_CM6 	0x06
+#define SAF82532_ASYNC_CCR1_CM7 	0x07
+
+// [ASYNC]-CCR2 
+#define SAF82532_ASYNC_CCR2_BDF    	0x20 // Baud Rate Division Factor    
+#define SAF82532_ASYNC_CCR2_SSEL   	0x10 // Clock Source Select          
+#define SAF82532_ASYNC_CCR2_TOE    	0x08 // Transmit Clock Output Enable 
+
+// [ASYNC]-CCR3 
+#define SAF82532_ASYNC_CCR3_PSD		0x00 // DPLL Phase shift disable
+
+// [ASYNC]-IMR0
+#define SAF82532_ASYNC_IMR0_TCD		0x80 // Termination Character Detected
+#define SAF82532_ASYNC_IMR0_RPF		0x01 // Receive Pool Full
+
+// [ASYNC]-IMR1
+#define SAF82532_ASYNC_IMR1_XPR 	0x01 // Transmit Pool
+#define SAF82532_ASYNC_IMR1_XOFF 	0x10 // XOFF Character Detected
+#define SAF82532_ASYNC_IMR1_ALLS 	0x20 // All Send
+
+// [ASYNC]-DAFO
+#define SAF82532_ASYNC_1STOPBIT		0x00 // 1StopBit
+#define SAF82532_ASYNC_2STOPBIT		0x01 // 2StopBit
+
+#define SAF82532_ASYNC_NONEPARITY	0x00 // None Parity
+#define SAF82532_ASYNC_ODDPARITY	0x01 // Odd Parity
+#define SAF82532_ASYNC_EVENPARITY	0x02 // Even Parity
+
+#define SAF82532_ASYNC_DATABIT8		0x00 // DataBit 8
+#define SAF82532_ASYNC_DATABIT7		0x01 // DataBit 7
+#define SAF82532_ASYNC_DATABIT6		0x02 // DataBit 6
+#define SAF82532_ASYNC_DATABIT5		0x03 // DataBit 5
+
+// [ASYNC]-BPS
+#define SAF82532_9600BPS		9600
+#define SAF82532_19200BPS		19200
+#define SAF82532_38400BPS		38400
+#define SAF82532_57600BPS		57600
+
+// [ASYNC]-수신시 ERROR
+#define SAF82532_ASYNC_PARITYERR	0x80 // Parity Error
+#define SAF82532_ASYNC_FRAMEERR		0x40 // 프레임 Error
+
+
+/***********************************************************************************
+	Function Prototype
+************************************************************************************/
+void saf82532_SyncInit(int nChl,UCHAR btSerialMode,UCHAR btCrcKind,BOOL bTxIntEn);
+void saf82532_AsyncInit(int nChl,int nBps,int nDataBit,int nParity,int nStopBit,BOOL bIs485Chl);
+void saf82532_Send(UCHAR btChl,UCHAR *pDat,int nTxLen);
+void saf82532_HdlcSend(UCHAR btChl,UCHAR *pDat,int nTxLen);
+void saf82532_AsyncSend(UCHAR btChl,UCHAR *pDat,int nTxLen);
+void saf82532_SendFixed514Byte(UCHAR btChl,UCHAR *pDat);
+UCHAR saf82532_GetVersion();
+BOOL saf82532_GetHdlcRecv(UCHAR *pChl,UCHAR *pDat,int *pRxLen);
+int Saf82532_GetAsyncRecv(int nChl,UCHAR *pBuf);
+int Saf82532_GetRecv(int nChl,UCHAR *pBuf);
+void saf82532_Isr();
+void saf82532_HdlcIsrAch();
+void saf82532_HdlcIsrBch();
+void saf82532_AsyncIsrAch();
+void saf82532_AsyncIsrBch();
+void saf82532_1msLoop();
+
+#endif

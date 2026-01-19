@@ -1,0 +1,5375 @@
+/*******************************************************************/
+/* gp  .c                                                          */
+/*******************************************************************/
+#include <vxWorks.h>
+#include <ioLib.h>
+#include <semLib.h>
+#include <stdlib.h>
+#include <wdlib.h>
+
+#include "mmtype.h"
+#include "ds1647.h"
+#include "GpLib.h"
+#include "gp.h"
+#include "gdms.h"
+#include "operation.h"
+
+#ifndef _GP_C_
+#define _GP_C_
+
+int m_nContinousDataTaskId;	/* 주기적 업데이터 Task ID */
+
+USHORT m_wClearMemorySel;
+
+USHORT m_wBeforeFaultScreenNo;
+PFAULTLIST m_pEventedFaultList;
+
+UINT m_nGpOpCnt;		/* GP 동작 카운터 */
+int m_nSelCarHo;		/* 선택된 차량 */
+int m_nSelLSysNo;		/* 선택된 장치 */
+int m_nSelCursor;		/* 현재 커서의 위치 */
+
+BYTE m_AsModeCounter ;
+USHORT m_wCommChannel;
+
+USHORT m_wRawKeyPadCnt;
+USHORT m_wRawKeyPadNumber;
+UINT m_nFaultStatePage;
+
+USHORT m_bAsModeActive;
+UCHAR m_bTraSetRdMode;
+
+/*********************************************************/
+/* 펌웨어 다운로드용 초기화                              */
+/*********************************************************/
+int m_nFirmwareWaitTimerID=0;
+USHORT m_wFirmwareDataSel;
+USHORT m_wFirmwareLock; 
+USHORT m_wFirmDownEnd[MAX_TRAIN_SIZE];			
+USHORT m_wFirmDownBitID[MAX_TRAIN_SIZE];		/* BIT00(CC-SCM5) , BIT01(CC-SCM6) , BIT02(CC-SCM7) : BIT08(TC-LIU1-SCM1), BIT09(TC-LIU1-SCM2) , BIT10(TC-LIU2-SCM1) , BIT11(TC-LIU2-SCM2)  : */
+USHORT m_wDownloadPos_Tc;
+USHORT m_wDownloadPos_Cc;
+int   m_nDownloadTick[2];
+BOOL m_bFirmwareMpuBoot;
+BOOL m_bFirmwareNoLiu2;
+BOOL m_bFirmwareSelfTc;
+int m_nSetFaultLine;
+USHORT m_nOldFaultViewScrNo;	/* 고장화면 진입시 어디로 갈것인지 결정 */
+
+USHORT m_wPreBlockScrNo;	/* Firmware Download Block Screen 전환 이전의화면 */
+
+USHORT m_bAsModeActive;
+
+UINT m_nCiCutCount[MAX_TRAIN_SIZE];	/* CI-CUT 표출용 카운터 */
+
+
+/*********************************************************/
+/* 변수 초기화                                           */
+/*********************************************************/
+void gp_FirmwareArgInit()
+{
+	m_wFirmwareDataSel = 0;
+	m_wFirmwareLock = 0;
+	m_nFirmwareWaitTimerID = 0;
+	memset(m_wFirmDownBitID,0,sizeof(m_wFirmDownBitID));
+	memset(m_wFirmDownEnd,0,sizeof(m_wFirmDownEnd));
+	m_bFirmwareMpuBoot = FALSE;
+	m_bFirmwareNoLiu2 = FALSE;
+	m_bFirmwareSelfTc = FALSE;
+	m_wDownloadPos_Tc = 0;
+	m_wDownloadPos_Cc = 0;
+	m_nDownloadTick[0] = -1;
+	m_nDownloadTick[1] = -1;
+	m_wPreBlockScrNo = 0;
+
+
+}
+
+void gp_ArgInit()
+{
+	m_nContinousDataTaskId = -1;
+	m_TcThis.wCurScrNo = 1;		/* 디폴트 화면번호 */
+	m_AsModeCounter = 0;
+	m_nSelCarHo = 0;
+	m_nSelLSysNo = -1;
+	m_nSelCursor = 0;
+	m_wCommChannel = 0;
+
+	m_bAsModeActive = FALSE;
+
+	m_wBeforeFaultScreenNo = 0;
+	m_wClearMemorySel = 0;
+	m_nSetFaultLine = 0;
+	m_nOldFaultViewScrNo = 10;
+}
+
+
+/*********************************************************/
+/* 초기화                                                */
+/*********************************************************/
+void gp_Init(BOOL bFail)
+{
+	gp_ArgInit();
+	gp_LibInit(bFail);
+
+	gp_ReadingWord(2000); /* 화면의 버전정보를 읽어온다. */
+
+	if(!bFail)
+	{
+		gp_ScreenChangeAp(10);
+
+		m_nContinousDataTaskId = taskSpawn("uGpCtnSend",GP_PRIORITY+2,0,10000,gp_ContinousGP_SendData,0,0,0,0,0,0,0,0,0,0);
+	}
+}
+
+/*********************************************************/
+/* GP 중지                                               */
+/*********************************************************/
+void gp_Close()
+{	
+	
+	if(taskIdVerify(m_nContinousDataTaskId) == OK) taskDelete(m_nContinousDataTaskId);
+
+	gp_LibClose();
+	
+}
+
+
+void gp_KeyPadClear()
+{
+	m_wRawKeyPadCnt = 0;
+	m_wRawKeyPadNumber = 0;
+
+	gp_WritingWord(380,m_wRawKeyPadNumber);
+}
+
+void gp_KeyPadEvent(int nBinCode)
+{
+	if(m_wRawKeyPadCnt <4)
+	{
+		if(!m_wRawKeyPadCnt) m_wRawKeyPadNumber = nBinCode;
+		else 
+		{
+			m_wRawKeyPadNumber *= 10;
+			m_wRawKeyPadNumber += nBinCode;
+		}
+		m_wRawKeyPadCnt++;
+		
+		gp_WritingWord(380,m_wRawKeyPadNumber);
+	}
+}
+
+
+
+
+void gp_ShowCarSel()
+{
+	gp_WritingWord(300,(1<<m_nSelCarHo));
+}
+
+
+
+void gp_B1701()
+{
+	gp_ShowCarSel();
+}
+
+/*********************************************************/
+/* GP 화면에서 값을 받기                                 */
+/*********************************************************/
+BOOL gp_AnswerWord(USHORT nReadAddr,const UCHAR Ptl[],int size)
+{	
+	int i,nTemp;
+	USHORT wTemp;
+	LPBYTE pchTemp;
+	char buf[GP_MAX_PTL];
+	
+	switch(nReadAddr)
+	{
+	case 4: /* GP의 시간을 얻어 온값 */
+		sprintf(buf,"%02X%02X%02X%02X%02X00",Ptl[3],Ptl[5],Ptl[1],Ptl[7],Ptl[9]);
+		timeSet(buf);
+		TRACE("system was set time from GP. : %s \n",buf);
+		break;
+	case 15: /* GP의 현재 화면 번호 */
+		wTemp = MAKE_WORD(Ptl[0],Ptl[1]);
+		TRACE("Answer Screen No => %d\n",wTemp);
+		break;
+	case 1076:
+		m_bTraSetRdMode = 1;
+		nTemp = gp_TrainSetInfo(Ptl);
+		if(nTemp != 0)
+		{
+			gp_SetCursor(nTemp);
+		}
+		break;
+	case 1106:
+		m_bTraSetRdMode = 2;
+		nTemp = gp_TrainSetInfo(Ptl);
+		if(nTemp != 0)
+		{
+			gp_SetCursor(nTemp);
+		}
+		else
+		{
+			gp_ScreenChangeAp(100);
+		}
+		break;
+	case 1167:
+		nTemp = gp_TimeSetInfo(Ptl);
+		if(nTemp !=0)
+		{
+			if(m_nSelCursor > 0) gp_WritingWord(1179 + (m_nSelCursor / 2), 0x00);
+			m_nSelCursor = nTemp;
+			gp_ButtonRight(SETMODE_TIMEINFO);
+		}
+		else
+		{
+			tg_SetChgValByMComm(MC_TIMESET);
+			gp_ScreenChangeAp(100);
+		}
+		break;
+	case 2000:
+		/* GP의 현재 버전 번호 */
+		wTemp = MAKE_WORD(Ptl[0],Ptl[1]);
+		m_TcThis.chScreenVer = wTemp;
+		TRACE("Screen Ver => %d\n",wTemp);
+		break;
+	}
+	
+	return TRUE;
+}
+
+
+/* 전동차 차종별 그림 */
+void gp_B600()
+{
+	int nCarHo;
+	USHORT wTemp;
+	
+	/* 차종 */
+	for(nCarHo=0;nCarHo<MAX_TRAIN_SIZE;nCarHo++)
+	{
+		if(nCarHo<m_nTrainSize)
+		{
+			if(m_TcThis.bCC_ComStarted[nCarHo])
+			{
+				if(!nCarHo) 
+				{
+					gp_WritingWord(8000+nCarHo,1); 
+				}
+				else if(nCarHo == (m_nTrainSize-1))
+				{
+					gp_WritingWord(8000+nCarHo,2); 
+				}
+				else
+				{
+					switch(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]))
+					{
+					default:
+					case TRTYPE_T1:
+					case TRTYPE_T2:
+						gp_WritingWord(8000+nCarHo,4); 
+						break;
+					case TRTYPE_M_:
+					case TRTYPE_MD:
+						gp_WritingWord(8000+nCarHo,3); 
+						break;
+					}
+				}
+				
+				gp_WritingWord(8010+nCarHo,1+((BYTE_H(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])+9)%10));
+			}
+			else
+			{
+				gp_WritingWord(8000+nCarHo,4); 
+				gp_WritingWord(8010+nCarHo,1+((BYTE_H(m_chCcHexaID[nCarHo])+9)%10));
+			}
+		}
+		else
+		{
+			gp_WritingWord(8000+nCarHo,0); 
+			gp_WritingWord(8010+nCarHo,0);
+		}
+	}
+
+	
+
+	/* HCR 진행방향 */
+
+	if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_F) wTemp=1;
+	else if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_R) wTemp=2;
+	else wTemp=0;
+	gp_WritingWord(8020,wTemp); 
+
+	if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_F) wTemp=3;
+	else if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_R) wTemp=2;
+	else wTemp=1;
+
+	if(m_nTrainSize == 6) gp_WritingWord(8021,wTemp); 
+	else if(m_nTrainSize == 8) gp_WritingWord(8022,wTemp); 
+	else gp_WritingWord(8023,wTemp); 
+
+	
+}
+
+/*********************************************************/
+/* 계속적으로 GP에 전송 -Task Routine                    */
+/* - 1. 공통화면 업데이트                                */
+/* - 2. 일반화면 업데이트                                */
+/*********************************************************/
+void gp_ContinousGP_SendData()
+{
+	int nForceScreenNo=0;
+	m_nGpOpCnt=0;
+
+	while(1)
+	{
+		gp_B600(); /* 차량그림 */
+
+		gp_CommonScreenUpdate();
+		gp_ScreenUpdate(m_TcThis.wCurScrNo);
+
+		taskDelay(200);
+		m_nGpOpCnt++;
+	}
+}
+
+
+
+/*********************************************************/
+/* GP의 화면을 전환                                      */
+/* - 화면전환 후 현재 화면번호를 전환된 화면으로 설정한다. */
+/*********************************************************/
+void gp_ScreenChangeAp(int nToScr)
+{
+	m_TcThis.wCurScrNo = nToScr;
+	gp_ScreenInitUpdate(nToScr);
+	gp_ScreenChange(nToScr);
+	taskDelay(300);
+}
+
+
+
+/* 중앙장치 채널 (0~3) */
+void gp_SetLocalSysDataModified(int nPort)
+{
+	m_wCommChannel = 0x0000|nPort;
+	gp_ScreenChange(1510 + nPort);
+}
+
+/* 단말장치채널 (0~7) */
+void gp_SetUnderSysDataModified(int nPort)
+{
+	m_wCommChannel = 0x0100|nPort;
+	gp_ScreenChange(1520 + nPort);
+}
+
+
+void gp_WatchDogEnable(BOOL bEnable)
+{
+	gp_WritingWord(93,bEnable);
+}
+
+/*********************************************************/
+/* 펌웨어 다운로드용                                     */
+/*********************************************************/
+
+void gp_FirmwareBlockScreenEvent(BOOL bActive)
+{
+	if(bActive)
+	{
+		if(!m_wPreBlockScrNo)
+		{
+			m_wPreBlockScrNo = m_TcThis.wCurScrNo;
+		}
+
+		gp_ScreenChangeAp(SCRNO_DOWNLOAD);
+	}
+	else
+	{
+		gp_ScreenChangeAp(m_wPreBlockScrNo);
+		m_wPreBlockScrNo = 0;
+	}
+}
+
+void gp_FirmWareButtonState(BOOL bStarted)
+{
+	USHORT wBtnState[5];
+	USHORT wTemp;
+
+	memset(wBtnState,0,sizeof(wBtnState));
+
+	if(!bStarted)
+	{
+		wBtnState[0] |=  (m_wFirmwareLock&BIT00)?BIT00:0; /* MPU 선택 번튼 */
+		wBtnState[1] |=  (m_wFirmwareLock&BIT01)?BIT00:0;
+		wBtnState[4] |=  (m_wFirmwareLock&BIT02)?BIT00:0;
+	}
+
+	wBtnState[0] |=  (m_wFirmwareDataSel==1) ?BIT01:0;
+	wBtnState[1] |=  (m_wFirmwareDataSel==2) ?BIT01:0;
+	wBtnState[4] |=  (m_wFirmwareDataSel==3) ?BIT01:0;
+
+	wBtnState[2] = m_wFirmwareDataSel ? ( bStarted ? BIT01 : BIT00) : 0;
+	wBtnState[3] = m_wFirmwareDataSel ? ( bStarted ? 0 : BIT00) : 0;
+
+	gp_WritingWord(5086,bStarted ? 0 : BIT00);			/* 검색버튼,BOOTROM 버튼 Lock */
+	
+	gp_WritingWord(5080,wBtnState[0]); 
+	gp_WritingWord(5081,wBtnState[1]);
+	gp_WritingWord(5084,wBtnState[4]);
+
+	gp_WritingWord(5082,wBtnState[2]);
+	gp_WritingWord(5083,wBtnState[3]);
+
+	wTemp = 0;
+	wTemp |= m_bFirmwareMpuBoot ? BIT00 : 0;
+	wTemp |= m_bFirmwareNoLiu2 ? BIT01 : 0;
+	wTemp |= m_bFirmwareSelfTc ? BIT02 : 0;
+	gp_WritingWord(5085,wTemp);
+
+}
+
+void gp_FirmScreenInitialUpdate()
+{
+	m_wFirmwareLock = 0;
+	m_wFirmwareDataSel = 0;
+	gp_FirmWareButtonState(FALSE);
+	gp_WritingWordFill(1140,0,12);
+}
+
+#define TCMS_IMG_NONE	0
+#define TCMS_IMG_NG		1
+#define TCMS_IMG_OK		2
+
+void gp_FirmScreenUpdate()
+{
+	USHORT wTemp;
+	int nCarHo,nScmNum;
+	USHORT wSelBit =0,wMpuTCState[2][2],wScm2CCState[2*FIRM_CCSCM2_NUM],wScm2TCState[2][2*FIRM_TCSCM2_NUM];
+	SYSTIMETYPE EstimatedTime;
+
+	memset(wMpuTCState,0,sizeof(wMpuTCState));
+	memset(wScm2TCState,0,sizeof(wScm2TCState));
+	memset(wScm2CCState,0,sizeof(wScm2CCState));
+
+	/* 1) 각 중앙장치 및 단말장치 상태 */
+	/* 1.0) 중앙장치 상태 */
+
+	for(nCarHo=0;nCarHo<MAX_TRAIN_SIZE;nCarHo++)
+	{
+		if(nCarHo<m_nTrainSize)
+		{
+			if(m_TcThis.nCarHo == nCarHo)
+			{
+				gp_WritingWord(5010+nCarHo,TCMS_IMG_OK); /* LIU - 자기 것 상태 */
+				gp_WritingWord(5000+nCarHo,TCMS_IMG_OK);	/* TC BOX 상태 */
+
+				gp_WritingWord(5030+nCarHo,TCMS_IMG_NONE);
+			}
+			else if(m_TcOppe.nCarHo == nCarHo)
+			{
+				if(!m_TcOppe.sFlag.bThisSysFault)
+				{
+					gp_WritingWord(5010+nCarHo,TCMS_IMG_OK); /* LIU - 자기 것 상태 */
+					gp_WritingWord(5000+nCarHo,TCMS_IMG_OK);	/* TC BOX 상태 */
+				}
+				else
+				{
+					gp_WritingWord(5010+nCarHo,TCMS_IMG_NG); /* LIU - 자기 것 상태 */
+					gp_WritingWord(5000+nCarHo,TCMS_IMG_NG);	/* TC BOX 상태 */
+				}
+
+				gp_WritingWord(5030+nCarHo,TCMS_IMG_NONE);
+				
+			}
+			else
+			{
+				gp_WritingWord(5000+nCarHo,TCMS_IMG_NONE);
+				gp_WritingWord(5010+nCarHo,TCMS_IMG_NONE);
+				gp_WritingWord(5020+nCarHo,TCMS_IMG_NONE);
+
+				gp_WritingWord(5030+nCarHo,m_TcThis.bCC_ComFault[nCarHo] ? TCMS_IMG_NG :TCMS_IMG_OK);
+			}
+			
+			
+			
+		}
+		
+	}
+
+	/* 다운로드 결과상태 */
+	gp_WritingWord(5040,(m_wDownloadPos_Tc));	/* 다운로드 중... */
+	gp_WritingWord(5041,(m_wDownloadPos_Cc));
+
+	if(m_nDownloadTick[0] == -1) 
+	{
+		gp_WritingWord(5070,0);
+		gp_WritingWord(5071,0);
+		gp_WritingWord(5072,0);
+	}
+	else 
+	{
+		mx_Tick2SysTime(&EstimatedTime,m_nDownloadTick[0],(m_nDownloadTick[1] == -1) ? tickGet(): m_nDownloadTick[1]);
+
+		gp_WritingWord(5070,EstimatedTime.hour);
+		gp_WritingWord(5071,EstimatedTime.minute);
+		gp_WritingWord(5072,EstimatedTime.second);
+	}
+
+
+	/* 중앙장치 - Mpu */
+	if(m_wFirmDownEnd[m_TcThis.nCarHo]&BIT12)
+	{
+		if(m_wFirmDownBitID[m_TcThis.nCarHo]&BIT12) wMpuTCState[0][0] |= 1<<(m_TcThis.nCarHo);
+		else wMpuTCState[0][1] |= 1<<(m_TcThis.nCarHo);
+	}
+	
+	if(m_wFirmDownEnd[m_TcOppe.nCarHo]&BIT12)
+	{
+		if(m_wFirmDownBitID[m_TcOppe.nCarHo]&BIT12) wMpuTCState[0][0] |= 1<<(m_TcOppe.nCarHo);
+		else wMpuTCState[0][1] |= 1<<(m_TcOppe.nCarHo);
+	}
+	
+
+	gp_WritingWord(5050,wMpuTCState[0][0]);	/* LIU1-MPU-OK */
+	gp_WritingWord(5051,wMpuTCState[0][1]);	/* LIU1-MPU-NG */
+	gp_WritingWord(5052,wMpuTCState[1][0]);	/* LIU2-MPU-OK */
+	gp_WritingWord(5053,wMpuTCState[1][1]);	/* LIU2-MPU-NG */
+	
+	/* 중앙 장치-SCM2 */
+	if(m_wFirmDownEnd[m_TcThis.nCarHo]&BIT08)
+	{
+		if(m_wFirmDownBitID[m_TcThis.nCarHo]&BIT08) wScm2TCState[0][0] |= 1<<(m_TcThis.nCarHo);
+		else wScm2TCState[0][1] |= 1<<(m_TcThis.nCarHo);
+	}
+	if(m_wFirmDownEnd[m_TcOppe.nCarHo]&BIT08)
+	{
+		if(m_wFirmDownBitID[m_TcOppe.nCarHo]&BIT08) wScm2TCState[0][0] |= 1<<(m_TcOppe.nCarHo);
+		else wScm2TCState[0][1] |= 1<<(m_TcOppe.nCarHo);
+	}
+	
+
+	gp_WritingWord(5054,wScm2TCState[0][0]);	/* LIU1-SCM1-OK */
+	gp_WritingWord(5055,wScm2TCState[0][1]);	/* LIU1-SCM1-NG */
+
+	
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		for(nScmNum=0;nScmNum<FIRM_CCSCM2_NUM;nScmNum++)
+		{
+			if(m_wFirmDownEnd[nCarHo]&(1<<nScmNum))
+			{
+				if(m_wFirmDownBitID[nCarHo]&(1<<nScmNum))
+				{
+					wScm2CCState[0+2*nScmNum] |= (1<<(nCarHo));
+				}
+				else
+				{
+					wScm2CCState[1+2*nScmNum] |= (1<<(nCarHo));
+					
+				}
+			}
+		}
+	}
+
+	for(nScmNum=0;nScmNum<FIRM_CCSCM2_NUM;nScmNum++)
+	{
+		gp_WritingWord(5058+2*nScmNum,wScm2CCState[0+2*nScmNum]);
+		gp_WritingWord(5059+2*nScmNum,wScm2CCState[1+2*nScmNum]);
+	}
+
+}
+
+
+
+
+
+
+void gp_FirmwareFileSelect(BYTE nSelBitNo)
+{
+	BYTE szMsg[100];
+	char szFileName[3][30] = {FIRM_FILENAME_MCPU,FIRM_FILENAME_SCM2,REC_DIA_FILENAME};
+	memset(m_wFirmDownEnd,0,sizeof(m_wFirmDownEnd));
+	m_wDownloadPos_Tc = 0;
+	m_wDownloadPos_Cc = 0;
+	m_nDownloadTick[0] = -1;
+	m_nDownloadTick[1] = -1;
+	m_wFirmwareDataSel = nSelBitNo+1;
+
+	gp_FirmWareButtonState(FALSE);
+
+	sprintf(szMsg,"%s 파일을 다운로드",szFileName[nSelBitNo]); 
+	gp_WritingWStrN(5090,szMsg,50);
+
+}
+
+
+BOOL gp_FirmwareDownloadByFile(char szFileName[],USHORT wDataType,BOOL bAtCard)
+{
+	int nCarHo,nDataSize,i;
+	LPBYTE pDataBuf = NULL;
+	BOOL bNoLiu2;
+	if(tg_IsMaster())
+	{
+		
+		nDataSize = sm_GetFileReadMemory(szFileName,&pDataBuf,bAtCard);
+
+		if(nDataSize)
+		{
+			m_nDownloadTick[0] = tickGet();
+			wDataType = sm_FirmwareCheckMem(pDataBuf,nDataSize,wDataType);
+			
+			/* DIA의 경우 압축 전송한다. */
+			if(wDataType == FW_TYPE_DIA)
+			{
+				nDataSize = sm_DataMemoryCompress(&pDataBuf,nDataSize);
+			}
+
+			m_wDownloadPos_Tc = (1<<m_TcThis.nCarHo);
+			m_wDownloadPos_Cc = 0;
+
+			bNoLiu2 = TRUE;
+			m_wFirmDownBitID[m_TcThis.nCarHo] |= sm_DownloadByMem_TC(m_TcThis.chHexaID,pDataBuf,nDataSize,wDataType,bNoLiu2);
+			m_wFirmDownEnd[m_TcThis.nCarHo] |= sm_DownloadByMem_TcForm(wDataType,bNoLiu2);
+
+			if(wDataType == FW_TYPE_SCM2 && !m_bFirmwareSelfTc)
+			{
+				for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) 
+				{
+					if(m_TcThis.nCarHo==nCarHo || m_TcOppe.nCarHo==nCarHo) continue;
+
+					m_wDownloadPos_Cc = (1<<nCarHo);
+					m_wDownloadPos_Tc = 0;
+					
+					if(!m_TcThis.bCC_ComFault[nCarHo])
+					{
+						m_wFirmDownBitID[nCarHo] |= sm_DownloadByMem_Scm_CC(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0],pDataBuf,nDataSize);
+						m_wFirmDownEnd[nCarHo] |= sm_DownloadByMem_Scm_CcForm();
+					}
+					
+				}
+			}
+			
+			if(!m_TcOppe.sFlag.bThisSysFault && !m_bFirmwareSelfTc)
+			{
+				m_wDownloadPos_Tc = (1<<m_TcOppe.nCarHo);
+				m_wDownloadPos_Cc = 0;
+				bNoLiu2 = TRUE;
+				m_wFirmDownBitID[m_TcOppe.nCarHo] |= sm_DownloadByMem_TC(m_TcOppe.chHexaID,pDataBuf,nDataSize,wDataType,bNoLiu2);
+				m_wFirmDownEnd[m_TcOppe.nCarHo] |= sm_DownloadByMem_TcForm(wDataType,bNoLiu2);
+			}
+
+
+			m_wDownloadPos_Tc = 0;
+			m_wDownloadPos_Cc = 0;
+			
+			free(pDataBuf);
+
+			m_nDownloadTick[1] = tickGet();
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+void gp_FirmwareDownload(char szFileName[],BOOL bAtCard)
+{
+	BYTE szMsg[100];
+	int i;
+	USHORT wDataType;
+
+	if(szFileName)
+	{
+		m_wDownloadPos_Tc = 0;
+		m_wDownloadPos_Cc = 0;
+		memset(m_wFirmDownEnd,0,sizeof(m_wFirmDownEnd));
+		
+		gp_WritingWStr(5090,"다운로드 중...");
+		
+		if(!tg_IsMaster())
+		{
+			tg_SetMaster();
+			for(i=0;i<30&&!tg_IsMaster();i++) taskDelay(100);
+			taskDelay(300);
+		}
+		
+		if(tg_IsMaster())
+		{
+			mx_BeginEstimatedTime();
+
+			gp_WritingWStr(5090,"=>Firmware Check...");
+			wDataType = sm_FirmwareCheck(szFileName,bAtCard);
+
+			if(wDataType == FW_TYPE_MCPU) m_wFirmwareDataSel = 1;
+			else if(wDataType == FW_TYPE_SCM2) m_wFirmwareDataSel = 2;
+			else if(wDataType == FW_TYPE_DIA) m_wFirmwareDataSel = 3;
+
+			sprintf(szMsg,"=>Download Ready...[%d]",wDataType);
+			gp_WritingWStr(5090,szMsg);
+			if(wDataType != FW_TYPE_NONE)
+			{
+				gp_FirmwareDownloadByFile(szFileName,wDataType,bAtCard);
+				gp_WritingWStr(5090,"다운로드 완료");
+			}
+			else
+			{
+				gp_WritingWStr(5090,"=> Unknown Firmware Format... \n");
+			}
+			
+			mx_EndEstimatedTime(NULL);
+		}
+		else gp_WritingWStr(5090,"마스터 전환 오류 !!!");
+	}
+}
+
+void gp_B1720_FirmwareDownloadEvent()
+{
+	char szFileName[3][30] = {FIRM_FILENAME_MCPU,FIRM_FILENAME_SCM2,REC_DIA_FILENAME};
+	int nFileNo = m_wFirmwareDataSel-1;
+
+	tg_BeginFirmwareDownload();
+
+	if(m_wFirmwareDataSel)
+	{
+		if(ISRANGE(nFileNo,0,2))
+		{
+			gp_FirmwareDownload(szFileName[nFileNo],TRUE);
+		}
+		else gp_WritingWStr(5090,"Logical Error !!!");
+		
+	}
+	m_wFirmwareDataSel = 0;
+	gp_TripleAlarmBuzzer();
+
+	tg_EndFirmwareDownload();
+	
+}
+
+void gp_FirmwareDownStart()
+{
+	gp_FirmWareButtonState(TRUE);
+
+	gp_B1720_FirmwareDownloadEvent();
+
+	gp_FirmWareButtonState(FALSE);
+
+	taskDelay(1000);
+}
+
+
+/* 펌웨어 다운로드 화면의 검색 버튼 (B1720)*/
+void gp_FirmwareFindEvent()
+{
+	BYTE szMsg[100];
+	int nSelDrive = REC_MENUAL_DRIVENO;
+	
+	memset(szMsg,0,sizeof(szMsg));
+	if(!tg_IsMaster())
+	{
+		tg_SetMaster();
+		taskDelay(2000);
+	}
+
+	if(tg_IsMaster())
+	{
+		if(pc_CardDetect(nSelDrive))
+		{
+			if(pc_CardInit(FALSE,nSelDrive))
+			{
+				m_wFirmwareLock = 0;
+				m_wFirmwareLock |= pc_IsExistFile(FIRM_FILENAME_MCPU)		? BIT00 : 0;
+				m_wFirmwareLock |= pc_IsExistFile(FIRM_FILENAME_SCM2)		? BIT01 : 0;
+				m_wFirmwareLock |= pc_IsExistFile(REC_DIA_FILENAME)			? BIT02 : 0;
+				
+				gp_FirmWareButtonState(FALSE);
+				
+				
+				strcpy(szMsg,"다운로드할 항목을 선택 하세요");
+			}
+			else strcpy(szMsg,"카드인식 불가 !!!");
+		}
+		else strcpy(szMsg,"카드를 삽입하십시요 !!!");
+	}
+	else strcpy(szMsg,"마스터 측에서만 가능합니다. !!!");
+
+	gp_WritingWStr(5090,szMsg);
+}
+
+void gp_FirmwareDownloadRecode(USHORT nRecode,USHORT nMaxRecode,char szName[])
+{
+	BYTE szMsg[100];
+	if(m_wFirmwareDataSel)
+	{
+		gp_WritingWord(5065,100*(nRecode+1)/nMaxRecode); /* 그래프 */
+		sprintf(szMsg,"%s- Record = %d/%d...",szName,nRecode+1,nMaxRecode);
+		gp_WritingWStr(5090,szMsg);
+	}
+}
+
+void gp_FirmwareWaitTimer(UINT nMaxTick)
+{
+	int i;
+	for(i=0;i<(nMaxTick/100);i++)
+	{
+		gp_WritingWord(5065,i*100/(nMaxTick/100));
+		taskDelay(100);
+	}
+	gp_WritingWord(5065,100);
+	m_nFirmwareWaitTimerID = 0;
+}
+
+void gp_FirmwareMessage(int nPercent,char szMsg[])
+{
+	gp_WritingWord(5065,nPercent);
+	gp_WritingWStr(5090,szMsg);
+}
+
+void gp_FirmwareBeginWait(UINT nMaxTick,char szMsg[])
+{
+	if(m_wFirmwareDataSel)
+	{
+		gp_WritingWStr(5090,szMsg);
+		if(m_nFirmwareWaitTimerID) taskDelete(m_nFirmwareWaitTimerID);
+		if(nMaxTick) m_nFirmwareWaitTimerID = taskSpawn("WaitTime",100,0,10000,(FUNCPTR)gp_FirmwareWaitTimer,nMaxTick,0,0,0,0,0,0,0,0,0);
+	}
+}
+
+void gp_FirmwareEndWait()
+{
+	if(m_nFirmwareWaitTimerID) 
+	{
+		taskDelete(m_nFirmwareWaitTimerID);
+		gp_WritingWord(6831,100);
+		m_nFirmwareWaitTimerID = 0;
+	}
+}
+
+
+void gp_FirmwareDataCancel()
+{
+	m_wFirmwareDataSel = 0;
+	gp_FirmWareButtonState(FALSE);
+}
+
+void gp_FirwareBootromToggle()
+{
+	m_bFirmwareMpuBoot ^= TRUE;
+	gp_FirmWareButtonState(FALSE);
+}
+
+void gp_FirmwareNoLiu2Toggle()
+{
+	m_bFirmwareNoLiu2 ^= TRUE;
+	gp_FirmWareButtonState(FALSE);
+}
+
+void gp_FirmwareSelfSystemToggle()
+{
+	m_bFirmwareSelfTc ^= TRUE;
+	gp_FirmWareButtonState(FALSE);
+}
+/*********************************************************/
+
+
+
+/*********************************************************/
+/* GP의 공통화면을 업데이트                              */
+/*********************************************************/
+
+
+USHORT gp_SpeedoMetorWord(int nBitNo)
+{
+	int i;
+	USHORT wRet=0;
+	for(i=0;i<=nBitNo;i++) wRet |= (1<<i);
+	return wRet;
+}
+
+void gp_UnderSystemUpdate()
+{
+	
+}
+
+void gp_CommonScreenUpdate()
+{
+	PSYSTIMETYPE pSystime = &m_TcThis.sFlag.systime;
+	USHORT wBNotch,wTemp;
+	char szTemp[20];
+	/* 시각정보 */
+	gp_WritingWord(1700,pSystime->year);
+	gp_WritingWord(1702,pSystime->month);
+	gp_WritingWord(1704,pSystime->day);
+	gp_WritingWord(1706,pSystime->hour);
+	gp_WritingWord(1708,pSystime->minute);
+	gp_WritingWord(1710,pSystime->second);
+
+	/* 주행거리 정보 */
+	gp_WritingDWord(66,m_TcThis.nForeverDist/1000);
+	gp_WritingWord(70,op_GetSpeed());
+	gp_WritingWStr(72,"SMSC");
+	gp_WritingWord(75,op_GetAtcCode());
+	sprintf(szTemp,"P%d%%",op_GetPowerNotchRate());
+	gp_WritingWStr(78,szTemp);
+
+	wBNotch = op_GetBrakeNotch();
+	if(wBNotch == NOTCH_EB) strcpy(szTemp,"EB");
+	else sprintf(szTemp,"B%d",wBNotch);
+	gp_WritingWStr(81,szTemp);
+
+	/* 고장정보 */
+	wTemp = 0;
+	if(op_GetLevelFaultsUpperLevel(FL_MINOR)) wTemp |= BIT00;
+	if(op_GetCarTypePaAlarm()) wTemp |= BIT01;
+
+	gp_WritingWord(84,wTemp);
+
+	gp_TrainFormUpdate();
+
+}
+
+/*****************************************************/
+/* 일반화면 공통 정보                                */
+/* 1,운전1,운전2,출고,기록                           */
+/*****************************************************/
+void gp_GeneralBase()
+{
+	USHORT wTemp;
+
+	wTemp = 0;
+	wTemp |= m_nFCodeTop ? BIT00 : 0;
+	gp_WritingWord(86,wTemp);
+
+}
+
+/*****************************************************/
+/* 운전화면 1                                        */
+/*****************************************************/
+void gp_B10()
+{
+	gp_GeneralBase();
+	gp_PAInfo();
+	gp_WTInfo();	
+	gp_ACInfo();	
+	gp_ESKInfo();
+}
+
+/*****************************************************/
+/* 운전화면 2                                        */
+/*****************************************************/
+void gp_B20()
+{
+	int nCarHo;
+	USHORT wCiCutOFF,wCiCutON;
+
+	wCiCutOFF = wCiCutON = 0;
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+		{
+			if(!m_TcThis.bCC_ComFault[nCarHo])
+			{
+				if(op_IsCiLSysCut(nCarHo)) 
+				{
+					if(m_nCiCutCount[nCarHo] <= CICUT_VIEWTIME) m_nCiCutCount[nCarHo]++;
+				}
+				else if(m_nCiCutCount[nCarHo]) m_nCiCutCount[nCarHo]--;
+
+				if(m_nCiCutCount[nCarHo] > CICUT_VIEWTIME) wCiCutON |= (1<<nCarHo);
+				
+			}
+		}
+
+		if(!m_nCiCutCount[nCarHo]) wCiCutOFF |= (1<<nCarHo);
+	}
+
+	gp_GeneralBase();
+	gp_MCBInfo();
+	gp_DoorInfo();
+	gp_IMInfo(wCiCutON,wCiCutOFF);
+	gp_BCInfo();
+
+
+}
+
+
+/*****************************************************/
+/* 출고화면 1                                        */
+/*****************************************************/
+USHORT gp_B30_GetMaxPage()
+{
+	int i,nFaults=0;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultSummery[m_FaultList[i].wFltIndex].chLevel >= FL_MINOR) nFaults++;
+	}
+	if(nFaults) return ((nFaults-1)/10 + 1);
+	else return 1;
+}
+
+void gp_B30()
+{
+	int i,nStartNo,nCarHo,nFaultNo,nLineNo;
+	static BYTE szCarHo[10][10],szFCode[10][10],szFName[10][100];
+	BYTE szTemp[100];
+	BOOL bLineUpdate;
+	USHORT wNG,wTemp,wFaultCar,wForm;
+	nStartNo = m_nFaultStatePage*10;
+
+	gp_GeneralBase();
+
+	gp_WritingWord(1561,m_nFaultStatePage+1);
+	gp_WritingWord(1562,gp_B30_GetMaxPage());
+
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) wForm |= (1<<nCarHo);
+
+	wFaultCar = 0;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultSummery[m_FaultList[i].wFltIndex].chLevel >= FL_MINOR)
+		{
+			wFaultCar |= (1<<m_FaultList[i].wCarHo);
+			if(wFaultCar == wForm) break;
+		}
+	}
+	gp_WritingWord(212,wFaultCar);
+	
+	wNG=0;
+	for(nLineNo=nFaultNo=i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultSummery[m_FaultList[i].wFltIndex].chLevel >= FL_MINOR)
+		{
+			if(ISRANGE(nFaultNo,nStartNo,nStartNo+9))
+			{
+				bLineUpdate = FALSE;
+				sprintf(szTemp,"%d",m_FaultList[i].wCarHo+1);
+				if(strcmp(szCarHo[nLineNo],szTemp)) 
+				{
+					strcpy(szCarHo[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				
+				sprintf(szTemp,"%d",m_FaultSummery[m_FaultList[i].wFltIndex].wFltCode);
+				if(strcmp(szFCode[nLineNo],szTemp))
+				{
+					strcpy(szFCode[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				
+				strcpy(szTemp,m_FaultSummery[m_FaultList[i].wFltIndex].szName);
+				if(strcmp(szFName[nLineNo],szTemp))
+				{
+					strcpy(szFName[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				if(bLineUpdate)
+				{
+					gp_WritingWStr(213+nLineNo,szCarHo[nLineNo]);
+					gp_WritingWStr(223+nLineNo*2,szFCode[nLineNo]);
+					gp_WritingWStr(1333+nLineNo*20,szFName[nLineNo]);
+				}
+				nLineNo++;
+			}
+
+			wNG |= 1<<m_FaultList[i].wCarHo;
+
+			nFaultNo++;
+		}
+	}
+
+	for(;nLineNo<10;nLineNo++)
+	{
+		szCarHo[nLineNo][0] = szFCode[nLineNo][0] = szFName[nLineNo][0] = NULL;
+		gp_WritingWord(213+nLineNo,0);
+		gp_WritingWord(223+nLineNo*2,0);
+		gp_WritingWord(1333+nLineNo*20,0);
+	}
+
+}
+
+void gp_B40()
+{
+	int nCarHo,i;
+	USHORT wSysForm[6],wFaultMsg[6],wFltCode;
+
+	memset(wFaultMsg,0,sizeof(wFaultMsg));
+	memset(wSysForm,0,sizeof(wSysForm));
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_TC) 
+		{
+			wSysForm[0] |= (1<<nCarHo);
+		}
+		if(op_IsExistLSys(nCarHo,LSYSID_BRAKE)) wSysForm[1] |= (1<<nCarHo);
+		if(op_IsExistLSys(nCarHo,LSYSID_CI)) wSysForm[2] |= (1<<nCarHo);
+		if(op_IsExistLSys(nCarHo,LSYSID_SIV)) 
+		{
+			wSysForm[3] |= (1<<nCarHo);
+			wSysForm[4] |= (1<<nCarHo);
+		}
+		wSysForm[5] |= (1<<nCarHo);
+
+	}
+
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		wFltCode = m_FaultSummery[m_FaultList[i].wFltIndex].wFltCode;
+		nCarHo = m_FaultList[i].wCarHo;
+
+		     if(ISRANGE(wFltCode,100,199)) wFaultMsg[0] |= (1<<nCarHo); /* ATC/ATS */
+		else if(ISRANGE(wFltCode,300,399)) wFaultMsg[1] |= (1<<nCarHo); /* BRAKE */
+		else if(ISRANGE(wFltCode,200,299)) wFaultMsg[2] |= (1<<nCarHo); /* CI */
+		else if(ISRANGE(wFltCode,400,499)) wFaultMsg[3] |= (1<<nCarHo); /* SIV */
+		else if(ISRANGE(wFltCode,700,799)) wFaultMsg[4] |= (1<<nCarHo); /* CM */
+		else wFaultMsg[5] |= (1<<nCarHo); /* etc. */
+	}
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		gp_WritingWord(384,wSysForm[0]&wFaultMsg[0]);
+		gp_WritingWord(386,wSysForm[1]&wFaultMsg[1]);
+		gp_WritingWord(388,wSysForm[2]&wFaultMsg[2]);
+		gp_WritingWord(390,wSysForm[3]&wFaultMsg[3]);
+		gp_WritingWord(392,wSysForm[4]&wFaultMsg[4]);
+		gp_WritingWord(394,wSysForm[5]&wFaultMsg[5]);
+
+		gp_WritingWord(383,wSysForm[0]&~wFaultMsg[0]);
+		gp_WritingWord(385,wSysForm[1]&~wFaultMsg[1]);
+		gp_WritingWord(387,wSysForm[2]&~wFaultMsg[2]);
+		gp_WritingWord(389,wSysForm[3]&~wFaultMsg[3]);
+		gp_WritingWord(391,wSysForm[4]&~wFaultMsg[4]);
+		gp_WritingWord(393,wSysForm[5]&~wFaultMsg[5]);
+	}
+
+}
+
+/*****************************************************/
+/* 고장정보                                          */
+/*****************************************************/
+void gp_B100()
+{
+	USHORT wTemp;
+	/* 고장정보 버튼 */
+	wTemp = 0;
+	wTemp |= BIT00;
+	gp_WritingWord(86,wTemp);
+
+	gp_WritingWord(6830,m_bAsModeActive);
+}
+
+/*****************************************************/
+/* 운전 성능 정보                                    */
+/*****************************************************/
+void gp_B110()
+{
+	USHORT wNotechRate, wBrakeNotch;
+	short wASpeed;
+	UCHAR szStr[10];
+	int nCarHo;
+	USHORT wCiCutOFF,wCiCutON;
+
+	wCiCutOFF = wCiCutON = 0;
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+		{
+			if(!m_TcThis.bCC_ComFault[nCarHo])
+			{
+				if(op_IsCiLSysCut(nCarHo)) 
+				{
+					if(m_nCiCutCount[nCarHo] <= CICUT_VIEWTIME) m_nCiCutCount[nCarHo]++;
+				}
+				else if(m_nCiCutCount[nCarHo]) m_nCiCutCount[nCarHo]--;
+
+				if(m_nCiCutCount[nCarHo] > CICUT_VIEWTIME) wCiCutON |= (1<<nCarHo);
+				
+			}
+		}
+
+		if(!m_nCiCutCount[nCarHo]) wCiCutOFF |= (1<<nCarHo);
+	}
+	
+
+	gp_GeneralBase();
+	
+	wNotechRate = op_GetPowerNotchRate();
+	wBrakeNotch = op_GetBrakeNotch();
+	wASpeed = (short)op_GetASpeed();
+
+	gp_WritingWord(395,wNotechRate);
+	gp_WritingWord(396,wBrakeNotch);
+
+	gp_WritingWord(397,wASpeed > 0 ?     wASpeed : 0);
+	gp_WritingWord(398,wASpeed < 0 ? abs(wASpeed): 0);
+
+	gp_WritingWord(411, wASpeed);
+
+	gp_WritingWord(399,m_xMoment.wPowerTime);
+	gp_WritingDWord(402,m_xMoment.nPowerDist);
+
+	gp_WritingWord(405,m_xMoment.wBrakeTime);
+	gp_WritingDWord(408,m_xMoment.nBrakeDist);
+
+	gp_WritingDWord(413,m_xMoment.nMotTotalDist);
+
+	gp_IMInfo(wCiCutON,wCiCutOFF);
+	gp_BCInfo();
+}
+
+/*****************************************************/
+/* 제동 확인 정보                                    */
+/*****************************************************/
+void gp_B120()
+{
+	gp_GeneralBase();
+	
+	gp_BCInfo();
+	gp_ASInfo();
+	gp_BEDInfo();
+	gp_BEAInfo();
+}
+
+/*****************************************************/
+/* 기동 확인 정보                                    */
+/*****************************************************/
+void gp_B130()
+{
+	int nCarHo;
+	USHORT wSelfTestNG,wSelfTestOK;
+	USHORT wCiCutOFF,wCiCutON;
+
+	gp_GeneralBase();
+
+	wSelfTestOK = wSelfTestNG = 0;
+	wCiCutOFF = wCiCutON = 0;
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+		{
+			if(!m_TcThis.bCC_ComFault[nCarHo])
+			{
+				if(!m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Head.bComFault)
+				{
+					wSelfTestNG |=  ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->ESTF ? (1<<nCarHo) : 0;
+					wSelfTestOK |= !((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->ESTF ? (1<<nCarHo) : 0;
+				}
+
+				if(op_IsCiLSysCut(nCarHo)) 
+				{
+					if(m_nCiCutCount[nCarHo] <= CICUT_VIEWTIME) m_nCiCutCount[nCarHo]++;
+				}
+				else if(m_nCiCutCount[nCarHo]) m_nCiCutCount[nCarHo]--;
+
+				if(m_nCiCutCount[nCarHo] > CICUT_VIEWTIME) wCiCutON |= (1<<nCarHo);
+				
+			}
+		}
+
+		if(!m_nCiCutCount[nCarHo]) wCiCutOFF |= (1<<nCarHo);
+	}
+
+	gp_WritingWord(573,wSelfTestOK);
+	gp_WritingWord(574,wSelfTestNG);
+
+	gp_EFCInfo(wCiCutON,wCiCutOFF);
+	gp_IMInfo(wCiCutON,wCiCutOFF);
+	gp_TEDInfo(wCiCutON,wCiCutOFF);
+	gp_TEInfo(wCiCutON,wCiCutOFF);
+	gp_PWMInfo();
+
+}
+
+/*****************************************************/
+/* siv 동작 확인 정보                                */
+/*****************************************************/
+void gp_B140()
+{
+	gp_GeneralBase();
+	gp_DCVInfo();
+	gp_ESKInfo();
+	gp_VOInfo();
+	gp_IOInfo();
+	gp_FOInfo();
+
+
+	if(m_TcThis.xSivTest.bTestComplete)
+	{
+		gp_WritingWord(582,0);
+		gp_WritingWord(584,m_TcThis.xSivTest.bTxTestStart ? (m_TcThis.xSivTest.wApplyForm & ~(m_TcThis.xSivTest.wTestNG|m_TcThis.xSivTest.wTestOK)) : 0);
+		
+		gp_WritingWord(583,m_TcThis.xSivTest.wTestNG & m_TcThis.xSivTest.wStartForm);
+		gp_WritingWord(581,m_TcThis.xSivTest.wTestOK & m_TcThis.xSivTest.wStartForm);
+	}
+	else
+	{
+		gp_WritingWord(582,0);
+		gp_WritingWord(584,0);
+		
+		gp_WritingWord(583,0);
+		gp_WritingWord(581,0);
+	}
+
+	gp_WritingWord(8047, ( tg_IsMaster() && !m_TcThis.xSivTest.bTxTestStart) ? BIT00 : 0);
+}
+
+/*****************************************************/
+/* 고장기록 표시                                     */
+/*****************************************************/
+void gp_B150_Init()
+{
+	PGM_FAULTLIST pGmFaultList;
+	USHORT wSysForm[6],wFaultMsg[6],wFltCode;
+	int nFaultTop = gm_GetTotalFaultMaxNumber();
+	int nCarHo,i;
+
+	memset(wFaultMsg,0,sizeof(wFaultMsg));
+	memset(wSysForm,0,sizeof(wSysForm));
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_TC) 
+		{
+			wSysForm[0] |= (1<<nCarHo);
+		}
+		if(op_IsExistLSys(nCarHo,LSYSID_BRAKE)) wSysForm[1] |= (1<<nCarHo);
+		if(op_IsExistLSys(nCarHo,LSYSID_CI)) wSysForm[2] |= (1<<nCarHo);
+		if(op_IsExistLSys(nCarHo,LSYSID_SIV)) 
+		{
+			wSysForm[3] |= (1<<nCarHo);
+			wSysForm[4] |= (1<<nCarHo);
+		}
+		wSysForm[5] |= (1<<nCarHo);
+
+	}
+
+	for(i=(nFaultTop-1);i>=0;i--)
+	{
+		pGmFaultList = gm_GetTotalFaultList(i);
+		wFltCode = pGmFaultList->wFltCode;
+		nCarHo = (int)pGmFaultList[i].chCarHo;
+
+		if(ISRANGE(wFltCode,100,199)) wFaultMsg[0] |= (1<<nCarHo); /* ATC/ATS */
+		else if(ISRANGE(wFltCode,300,399)) wFaultMsg[1] |= (1<<nCarHo); /* BRAKE */
+		else if(ISRANGE(wFltCode,200,299)) wFaultMsg[2] |= (1<<nCarHo); /* CI */
+		else if(ISRANGE(wFltCode,400,499)) wFaultMsg[3] |= (1<<nCarHo); /* SIV */
+		else if(ISRANGE(wFltCode,700,799)) wFaultMsg[4] |= (1<<nCarHo); /* CM */
+		else wFaultMsg[5] |= (1<<nCarHo); /* etc. */
+	}
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		gp_WritingWord(384,wSysForm[0]&wFaultMsg[0]);
+		gp_WritingWord(386,wSysForm[1]&wFaultMsg[1]);
+		gp_WritingWord(388,wSysForm[2]&wFaultMsg[2]);
+		gp_WritingWord(390,wSysForm[3]&wFaultMsg[3]);
+		gp_WritingWord(392,wSysForm[4]&wFaultMsg[4]);
+		gp_WritingWord(394,wSysForm[5]&wFaultMsg[5]);
+
+		gp_WritingWord(383,wSysForm[0]&~wFaultMsg[0]);
+		gp_WritingWord(385,wSysForm[1]&~wFaultMsg[1]);
+		gp_WritingWord(387,wSysForm[2]&~wFaultMsg[2]);
+		gp_WritingWord(389,wSysForm[3]&~wFaultMsg[3]);
+		gp_WritingWord(391,wSysForm[4]&~wFaultMsg[4]);
+		gp_WritingWord(393,wSysForm[5]&~wFaultMsg[5]);
+	}
+}
+
+void gp_B150()
+{
+	USHORT wForm;
+	int nCarHo,i;
+
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) wForm |= (1<<nCarHo);
+
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+
+}
+
+void gp_ShowCarRedMark(USHORT wRedCarHoBit)
+{
+	int nCarHo;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(wRedCarHoBit & (1<<nCarHo)) 
+		{
+			if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_TC) 
+			{
+				gp_WritingWord(8030+nCarHo,nCarHo ? 4 : 2);
+			}
+			else gp_WritingWord(8030+nCarHo,1);
+		}
+		else gp_WritingWord(8030+nCarHo,0);
+	}
+}
+
+UINT gp_GetRecFaultMaxPage()
+{
+	int nFaults = gm_GetFaultMaxByCarHo(m_nSelCarHo);
+	if(nFaults) return ((nFaults)/10 + 1);
+	else return 1;
+}
+
+void gp_B160(int nSelCarHo)
+{
+	int i,nStartNo,nFaultNo,nLineNo;
+	static BYTE szDate[10][10],szTime[10][10],szDist[10][10],szCode[10][5],szFName[10][45],szTrace[10][5];
+	BYTE szTemp[50];
+	BOOL bLineUpdate;
+	int nFaultTop = gm_GetTotalFaultMaxNumber();
+	PGM_FAULTLIST pGmFaultList;
+	nStartNo = m_nFaultStatePage*10;
+	
+	gp_ShowCarRedMark(1<<nSelCarHo);
+
+	for(nLineNo=nFaultNo=0,i=(nFaultTop-1);i>=0;i--)
+	{
+		
+		pGmFaultList = gm_GetTotalFaultList(i);
+		if(pGmFaultList->chCarHo == (BYTE)nSelCarHo)
+		{
+			if(ISRANGE(nFaultNo,nStartNo,nStartNo+9))
+			{
+				bLineUpdate=FALSE;
+				sprintf(szTemp,"%02X/%02X/%02X",pGmFaultList->sTime.year,pGmFaultList->sTime.month,pGmFaultList->sTime.day);
+				if(strcmp(szDate[nLineNo],szTemp))
+				{
+					strcpy(szDate[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				sprintf(szTemp,"%02X:%02X:%02X",pGmFaultList->sTime.hour,pGmFaultList->sTime.minute,pGmFaultList->sTime.second);
+				if(strcmp(szTime[nLineNo],szTemp))
+				{
+					strcpy(szTime[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				sprintf(szTemp,"%d",pGmFaultList->wDistance);
+				if(strcmp(szDist[nLineNo],szTemp))
+				{
+					strcpy(szDist[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+				}
+				sprintf(szTemp,"%d",pGmFaultList->wFltCode);
+				if(strcmp(szCode[nLineNo],szTemp))
+				{
+					strcpy(szCode[nLineNo],szTemp);
+					strcpy((char*)szFName[nLineNo],(char*)m_FaultSummery[pGmFaultList->wFltIndex].szName);
+					bLineUpdate |= TRUE;
+				}
+				
+				sprintf(szTemp,"%s",pGmFaultList->nTraceLink ? "*":"-");
+				if(strcmp(szTrace[nLineNo],szTemp))
+				{
+					strcpy(szTrace[nLineNo],szTemp);
+					bLineUpdate |= TRUE;
+					
+				}
+				if(bLineUpdate)
+				{
+					gp_WritingWStr(594+nLineNo* 6,szDate[nLineNo]);
+					gp_WritingWStr(654+nLineNo* 6,szTime[nLineNo]);
+					gp_WritingWStr(714+nLineNo* 2,szDist[nLineNo]);
+					gp_WritingWStr(734+nLineNo* 2,szCode[nLineNo]);
+					gp_WritingWStr(754+nLineNo*20,szFName[nLineNo]);
+					gp_WritingWStr(954+nLineNo* 1,szTrace[nLineNo]);
+				}
+
+				nLineNo++;
+			}
+			nFaultNo++;
+		}
+	}
+	for(;nLineNo<10;nLineNo++)
+	{
+		memset(szDate[nLineNo],0,sizeof(szDate[nLineNo]));
+		memset(szTime[nLineNo],0,sizeof(szTime[nLineNo]));
+		memset(szDist[nLineNo],0,sizeof(szDist[nLineNo]));
+		memset(szCode[nLineNo],0,sizeof(szCode[nLineNo]));
+		memset(szFName[nLineNo],0,sizeof(szFName[nLineNo]));
+		memset(szTrace[nLineNo],0,sizeof(szTrace[nLineNo]));
+
+		gp_WritingWord(594+nLineNo* 6,0);
+		gp_WritingWord(654+nLineNo* 6,0);
+		gp_WritingWord(714+nLineNo* 2,0);
+		gp_WritingWord(734+nLineNo* 2,0);
+		gp_WritingWord(754+nLineNo*20,0);
+		gp_WritingWord(954+nLineNo* 1,0);
+	}
+}
+
+void gp_Download_ButtonState(BOOL bDetect)
+{
+	USHORT wTemp;
+
+	wTemp = 0;
+	wTemp |= (!bDetect || !tg_IsMaster() || m_TcThis.sFlag.bDownloadStarted) ? 0 : BIT00;
+	gp_WritingWord(8043,wTemp);
+}
+
+void gp_B170()
+{
+	USHORT wTemp;
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+
+	wTemp = 0;
+	wTemp |= bDetect?BIT00:0;
+	
+	gp_WritingWord(8041,wTemp);
+
+	gp_Download_ButtonState(bDetect);
+}
+
+void gp_EnergyStatus()
+{
+	int nCarHo;
+	BYTE szTemp[20];
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_MD) 
+		{
+			sprintf(szTemp,"%d",m_pDirectMem->nGenerPowerKwh[nCarHo]);
+			gp_WritingWStr(2600+nCarHo*4,szTemp);
+
+			sprintf(szTemp,"%d",m_pDirectMem->nRegenPowerKwh[nCarHo]);
+			gp_WritingWStr(2640+nCarHo*4,szTemp);
+		}
+		else
+		{
+			gp_WritingWStr(2600+nCarHo*4," ");
+			gp_WritingWStr(2640+nCarHo*4," ");
+		}
+	}
+}
+
+void gp_B180()
+{
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+	gp_Download_ButtonState(bDetect);
+
+	
+}
+
+void gp_B190()
+{
+	USHORT wTemp;
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+
+	wTemp = 0;
+	wTemp |= bDetect?BIT00:0;
+	
+	gp_WritingWord(8041,wTemp);
+
+	gp_Download_ButtonState(bDetect);
+
+}
+
+void gp_B200()
+{
+	USHORT wTemp;
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+
+	wTemp = 0;
+	wTemp |= bDetect?BIT00:0;
+	
+	gp_WritingWord(8041,wTemp);
+
+	gp_EnergyStatus();
+
+	gp_Download_ButtonState(bDetect);
+}
+
+
+void gp_RecodeErrorDisplay(int nErrNo)
+{
+	BYTE szMsg[10][30] = {"기록완료","기록할 내용 없음","기록파일 생성 실패","운전기록 카드 읽기 실패","기록 실패","버퍼링 실패","카드 접근 실패","용량 부족"};
+	gp_LineMessageBar(szMsg[nErrNo]);
+}
+
+
+
+
+
+BOOL gp_CardInit()
+{
+	return pc_CardInit(FALSE,REC_MENUAL_DRIVENO);
+}
+
+int gp_Manual_DrvDownload()
+{
+	BOOL bSuc;
+	int nPercent,nOldPercent;
+	USHORT wField;
+	int nIndex,j,nFileSize,nTemp,nFd,nWSize=0,nTotalWSize=0; 
+	UINT nRemainKByte,nMaxHeadNum,nFieldStart,nBodySize,nHeadPos;
+	char chHeadBuf[1024],chBodyBuf[1024],szFileName[20],szTemp[20];
+	PDRVHEADTYPE pVmeHead = (PDRVHEADTYPE)REC_ADDR(REC_DRV_HEADOFFSET);
+	PDRVBODYTYPE pVmeBody = (PDRVBODYTYPE)REC_ADDR(REC_DRV_BODYOFFSET);
+
+	gm_GetDrvFileName(szFileName,0);
+
+	/* 0) 카드에 쓰기가 가능한지를 찾는다. */
+	gp_LineMessageBar("운전기록을 카드에 기록합니다.");
+
+	mx_BeginEstimatedTime();
+
+	/* 1) 파일을 형성 한다.*/
+	nMaxHeadNum = gw_GetDrvRecHeadNumber();
+	if(op_IsHcrOn()) nMaxHeadNum++;
+
+	nFileSize = gw_GetDrvRecFullSize(nMaxHeadNum);
+	if(nFileSize) nFileSize += 512;
+	else return 1;
+
+	TRACE("DrvRec[%d] File Size = %d byte...\n",nMaxHeadNum,nFileSize);
+
+	if(pc_IsExistFile(szFileName))
+	{
+		bSuc = pc_FileDel(szFileName);
+		if(!bSuc) 
+		{
+			TRACE("=> FILE [%s] can not delete !!!\n",szFileName);
+			return 2;
+		}
+	}
+	gp_LineMessageBar("용량측정중입니다.");
+	nRemainKByte = pc_GetDiskFreeKByte(REC_MENUAL_DRIVENO);
+	if(nRemainKByte < nFileSize/1024) return 7;
+	nFd = pc_vFileOpen(szFileName,0x201,nFileSize);	
+	if(nFd == -1) 
+	{
+		TRACE("=> File [%s] can not create !!!\n",szFileName);
+		return 2;
+	}
+	gp_LineMessageBar("기록을 시작합니다.");
+
+
+	/* 3) 기록중*/
+	
+
+	/* 3.1) 운전기록 FileHeader 생성 */
+	memset(chHeadBuf,0,sizeof(chHeadBuf));
+	gm_MakeFileHeader(chHeadBuf,REC_DRV_DATATYPE,nMaxHeadNum,0);
+	nTemp = pc_vFileWrite(nFd,chHeadBuf,512);
+	bSuc = (nTemp != 512) ? FALSE : TRUE ;
+	if(bSuc == FALSE) { pc_vFileClose(nFd);return 4;}
+
+	nTotalWSize += 512;
+
+	/* 3.2) 운전기록 Sampling 작성 */
+	nOldPercent = 0;
+	bSuc = OK;
+	for(nIndex=0;nIndex<nMaxHeadNum;nIndex++)
+	{
+		memset(chHeadBuf,0,sizeof(chHeadBuf));
+		nHeadPos = gw_GetDrvRecPosByIndex(nIndex);
+
+		if(pVmeHead[nHeadPos].Data_Type == REC_DRV_DATATYPE)
+		{
+			nFieldStart = MK_DWORD(pVmeHead[nHeadPos].wBodyField_H,pVmeHead[nHeadPos].wBodyField_L);
+			printf("Drv[%d] - %d:(%d)...\n",nHeadPos,nFieldStart,pVmeHead[nHeadPos].wData_Count);
+
+			sprintf(szTemp,"다운로드중 - %d/%d",nIndex+1,nMaxHeadNum);
+			gp_WritingWStr(8050,szTemp);
+			
+			if(pVmeHead[nHeadPos].wData_Count)
+			{
+				nWSize = pc_vFileWrite(nFd,&pVmeHead[nHeadPos],REC_DRV_HEADWRITESIZE);
+				if(nWSize != REC_DRV_HEADWRITESIZE)
+				{
+					bSuc = ERROR;
+					break;
+				}
+				nTotalWSize += nWSize;
+				
+				
+				
+				for(wField=0;wField<pVmeHead[nHeadPos].wData_Count;wField++)
+				{
+					memset(chBodyBuf,0,sizeof(chBodyBuf));
+					nWSize = pc_vFileWrite(nFd,&pVmeBody[(nFieldStart+wField)%REC_DRV_BODYSIZE],sizeof(DRVBODYTYPE));
+					if(nWSize != sizeof(DRVBODYTYPE))
+					{
+						bSuc = ERROR;
+						break;
+					}
+					nTotalWSize += nWSize;
+					
+					nPercent = (int)(nTotalWSize*100./nFileSize);
+					
+					if(nOldPercent != nPercent) 
+					{
+						gp_WritingWord(593,nPercent);
+						nOldPercent = nPercent;
+					}
+					
+				}
+
+				pVmeHead[nHeadPos].bAutoDownCheck = TRUE;
+			}
+		}
+
+		if(bSuc == ERROR) break;
+	}
+
+	gp_WritingWStr(8050," ");
+
+	pc_vFileClose(nFd);
+
+	mx_EndEstimatedTime(NULL);
+
+	if(bSuc == ERROR) return 4;
+	gp_WritingWord(593,100);
+
+	return 0;
+}
+
+
+
+int gp_Manual_FltDownload()
+{
+	BOOL bSuc;
+	USHORT nPercent,nOldPercent;
+	int i,j,nFileSize,nTemp,nFd; 
+	UINT nRemainKByte;
+	char chBuf[1024],szFileName[20];
+	UCHAR *pSam = (UCHAR*)REC_ADDR(REC_FLT_BODYOFFSET);
+
+	gm_GetFltFileName(szFileName,0);
+
+	/* 0) 카드에 쓰기가 가능한지를 찾는다. */
+	gp_LineMessageBar("고장기록을 다운로드를 시작합니다.");
+
+	/* 1) 파일을 형성 한다.*/
+	nFileSize = REC_FTL_DOWNSIZE+512;
+
+	if(pc_IsExistFile(szFileName))
+	{
+		bSuc = pc_FileDel(szFileName);
+		if(!bSuc) 
+		{
+			TRACE("=> FILE [%s] can not delete !!!\n",szFileName);
+			return 2;
+		}
+	}
+	gp_LineMessageBar("용량측정중입니다.");
+	nRemainKByte = pc_GetDiskFreeKByte();
+	if(nRemainKByte < nFileSize/1024) return 7;
+	nFd = pc_FileOpen(szFileName,0x201,nFileSize);	
+	if(nFd == -1) 
+	{
+		TRACE("=> File [%s] can not create !!!\n",szFileName);
+		return 2;
+	}
+
+	gp_LineMessageBar("고장기록을 카드에 기록중입니다.");
+
+	/* 3) 기록중*/
+	
+
+	/* 3.1) 고장기록 FileHeader 생성 */
+	memset(chBuf,0,sizeof(chBuf));
+	gm_MakeFileHeader(chBuf,REC_FLT_DATATYPE,MK_DWORD(m_pDirectMem->nFaultListRear,m_pDirectMem->nFaultListFront),gm_IsFaultListOverwrite()?BIT01:0);
+	nTemp = pc_vFileWrite(nFd,chBuf,512);
+	bSuc = (nTemp != 512) ? FALSE : TRUE ;
+	if(bSuc == FALSE) { pc_FileClose(nFd);return 4;}
+	nFileSize -= 512;
+
+	/* 3.2) 고장기록 Sampling 작성 */
+	nOldPercent = 0;
+	bSuc = OK;
+	memset(chBuf,0,sizeof(chBuf));
+	for(i=0;i<nFileSize/512;i++)
+	{
+		gm_memcpy(chBuf,&pSam[i*512],512);
+
+		nTemp = pc_vFileWrite(nFd,chBuf,512);
+		if(nTemp != 512)
+		{
+			bSuc = ERROR;
+			break;
+		}
+		nPercent = i*100/(nFileSize/512);
+		if(nOldPercent != nPercent) 
+		{
+			gp_WritingWord(593,nPercent);
+			nOldPercent = nPercent;
+		}
+	}
+
+	if(bSuc != ERROR && (nFileSize%512))
+	{
+		gm_memcpy(chBuf,pSam+i*512,512);
+
+		nTemp = pc_vFileWrite(nFd,chBuf,nFileSize%512);
+		if(nTemp != nFileSize%512)
+		{
+			bSuc = ERROR;
+		}
+		gp_WritingWord(593,100);
+	}
+
+	if(bSuc == ERROR) { pc_FileClose(nFd);return 4;}
+
+
+	pc_FileClose(nFd);
+	if(bSuc == ERROR) return 4;
+	
+	return 0;
+}
+
+int gp_Manual_SttDownload()
+{
+	BOOL bSuc;
+	USHORT nPercent,nOldPercent;
+	int i,j,nFileSize,nTemp,nFd; 
+	UINT nRemainKByte;
+	char chBuf[1024],szFileName[20];
+	UCHAR *pSam = (UCHAR*)REC_ADDR(REC_STT_HEADOFFSET);
+
+	gm_GetSttFileName(szFileName,0);
+
+	/* 0) 카드에 쓰기가 가능한지를 찾는다. */
+	gp_LineMessageBar("Status Trace 기록 다운로드를 시작합니다.");
+
+	/* 1) 파일을 형성 한다.*/
+	nFileSize = REC_STT_MEMSIZE+512;
+
+	if(pc_IsExistFile(szFileName))
+	{
+		bSuc = pc_FileDel(szFileName);
+		if(!bSuc) 
+		{
+			TRACE("=> FILE [%s] can not delete !!!\n",szFileName);
+			return 2;
+		}
+	}
+
+	nFd = pc_FileOpen(szFileName,0x201,nFileSize);	
+	if(nFd == -1) 
+	{
+		TRACE("=> File [%s] can not create !!!\n",szFileName);
+		return 2;
+	}
+
+	gp_LineMessageBar("StatusTrace기록을 카드에 기록중입니다.");
+
+	/* 3) 기록중*/
+	
+
+	/* 3.1) Statis Trace 기록 FileHeader 생성 */
+	memset(chBuf,0,sizeof(chBuf));
+	gm_MakeFileHeader(chBuf,REC_STT_DATATYPE,m_pDirectMem->nRcTrsPos,m_pDirectMem->bRcTrsOverwrite?BIT01:0);
+	nTemp = pc_vFileWrite(nFd,chBuf,512);
+	bSuc = (nTemp != 512) ? FALSE : TRUE ;
+	if(bSuc == FALSE) { pc_FileClose(nFd);return 4;}
+	nFileSize -= 512;
+
+	/* 3.2) Status Trace 기록 Sampling 작성 */
+	nOldPercent = 0;
+	bSuc = OK;
+	memset(chBuf,0,sizeof(chBuf));
+	for(i=0;i<nFileSize/512;i++)
+	{
+		gm_memcpy(chBuf,&pSam[i*512],512);
+
+		nTemp = pc_vFileWrite(nFd,chBuf,512);
+		if(nTemp != 512)
+		{
+			bSuc = ERROR;
+			break;
+		}
+		nPercent = i*100/(nFileSize/512);
+		if(nOldPercent != nPercent) 
+		{
+			gp_WritingWord(593,nPercent);
+			nOldPercent = nPercent;
+		}
+	}
+
+	if(bSuc != ERROR && (nFileSize%512))
+	{
+		gm_memcpy(chBuf,pSam+i*512,512);
+
+		nTemp = pc_vFileWrite(nFd,chBuf,nFileSize%512);
+		if(nTemp != nFileSize%512)
+		{
+			bSuc = ERROR;
+		}
+		gp_WritingWord(593,100);
+	}
+
+	if(bSuc == ERROR) { pc_FileClose(nFd);return 4;}
+
+
+	pc_FileClose(nFd);
+	if(bSuc == ERROR) return 4;
+	
+	return 0;
+}
+
+int gp_Manual_DistDownload()
+{
+	BOOL bSuc;
+	USHORT nPercent,nOldPercent;
+	int i,j,nFileSize,nTemp,nFd; 
+	UINT nRemainKByte;
+	char chBuf[1024],szFileName[20];
+	UCHAR *pSam = (UCHAR*)REC_ADDR(REC_DIST_HEADOFFSET);
+
+	gm_GetDistFileName(szFileName,0);
+
+	/* 0) 카드에 쓰기가 가능한지를 찾는다. */
+	gp_LineMessageBar("주행거리기록을 다운로드를 시작합니다.");
+
+	/* 1) 파일을 형성 한다.*/
+	nFileSize = REC_DIST_MEMSIZE+512;
+
+	if(pc_IsExistFile(szFileName))
+	{
+		bSuc = pc_FileDel(szFileName);
+		if(!bSuc) 
+		{
+			TRACE("=> FILE [%s] can not delete !!!\n",szFileName);
+			return 2;
+		}
+	}
+	gp_LineMessageBar("용량측정 중입니다.");
+	nRemainKByte = pc_GetDiskFreeKByte();
+	if(nRemainKByte < nFileSize/1024) return 7;
+	nFd = pc_FileOpen(szFileName,0x201,nFileSize);	
+	if(nFd == -1) 
+	{
+		TRACE("=> File [%s] can not create !!!\n",szFileName);
+		return 2;
+	}
+
+	gp_LineMessageBar("주행거리기록을 카드에 기록중입니다.");
+
+	/* 3) 기록중*/
+	
+
+	/* 3.1) 주행기록 FileHeader 생성 */
+	memset(chBuf,0,sizeof(chBuf));
+	gm_MakeFileHeader(chBuf,REC_DIST_DATATYPE,m_pDirectMem->nHisDistBodyPos,m_pDirectMem->bHisDistOverwrite?BIT01:0);
+	nTemp = pc_vFileWrite(nFd,chBuf,512);
+	bSuc = (nTemp != 512) ? FALSE : TRUE ;
+	if(bSuc == FALSE) { pc_FileClose(nFd);return 4;}
+	nFileSize -= 512;
+
+	/* 3.2) 적산기록 Sampling 작성 */
+	nOldPercent = 0;
+	bSuc = OK;
+	memset(chBuf,0,sizeof(chBuf));
+	for(i=0;i<nFileSize/512;i++)
+	{
+		gm_memcpy(chBuf,&pSam[i*512],512);
+		nTemp = pc_vFileWrite(nFd,chBuf,512);
+		if(nTemp != 512)
+		{
+			bSuc = ERROR;
+			break;
+		}
+		nPercent = i*100/(nFileSize/512);
+		if(nOldPercent != nPercent) 
+		{
+			gp_WritingWord(593,nPercent);
+			nOldPercent = nPercent;
+		}
+	}
+
+	if(bSuc != ERROR && (nFileSize%512))
+	{
+		gm_memcpy(chBuf,pSam+i*512,512);
+		nTemp = pc_vFileWrite(nFd,chBuf,nFileSize%512);
+		if(nTemp != nFileSize%512) bSuc = ERROR;
+			
+		gp_WritingWord(593,100);
+	}
+
+
+	pc_FileClose(nFd);
+	if(bSuc == ERROR) return 4;
+	
+	return 0;
+}
+
+int gp_Manual_LoadDownload()
+{
+	BOOL bSuc;
+	USHORT nPercent,nOldPercent;
+	int i,j,nFileSize,nTemp,nFd; 
+	UINT nRemainKByte;
+	char chBuf[1024],szFileName[20];
+	UCHAR *pSam = (UCHAR*)REC_ADDR(REC_LOAD_HEADOFFSET);
+
+	gm_GetLoadFileName(szFileName,0);
+
+	/* 0) 카드에 쓰기가 가능한지를 찾는다. */
+	gp_LineMessageBar("승객하중기록 다운로드를 시작합니다.");
+
+	/* 1) 파일을 형성 한다.*/
+	nFileSize = REC_LOAD_BODYSIZE+512;
+
+	if(pc_IsExistFile(szFileName))
+	{
+		bSuc = pc_FileDel(szFileName);
+		if(!bSuc) 
+		{
+			TRACE("=> FILE [%s] can not delete !!!\n",szFileName);
+			return 2;
+		}
+	}
+	gp_LineMessageBar("용량측정 중입니다.");
+	nRemainKByte = pc_GetDiskFreeKByte();
+	if(nRemainKByte < nFileSize/1024) return 7;
+	nFd = pc_FileOpen(szFileName,0x201,nFileSize);	
+	if(nFd == -1) 
+	{
+		TRACE("=> File [%s] can not create !!!\n",szFileName);
+		return 2;
+	}
+
+	gp_LineMessageBar("승객하중기록을 카드에 기록중입니다.");
+
+	/* 3) 기록중*/
+	
+
+	/* 3.1) 승객하중기록 FileHeader 생성 */
+	memset(chBuf,0,sizeof(chBuf));
+	gm_MakeFileHeader(chBuf,REC_LOAD_DATATYPE,m_pDirectMem->nHisLoadBodyPos,m_pDirectMem->bHisLoadOverwrite?BIT01:0);
+	nTemp = pc_vFileWrite(nFd,chBuf,512);
+	bSuc = (nTemp != 512) ? FALSE : TRUE ;
+	if(bSuc == FALSE) { pc_FileClose(nFd);return 4;}
+	nFileSize -= 512;
+
+	/* 3.2) 적산기록 Sampling 작성 */
+	nOldPercent = 0;
+	bSuc = OK;
+	memset(chBuf,0,sizeof(chBuf));
+	for(i=0;i<nFileSize/512;i++)
+	{
+		gm_memcpy(chBuf,&pSam[i*512],512);
+		nTemp = pc_vFileWrite(nFd,chBuf,512);
+		if(nTemp != 512)
+		{
+			bSuc = ERROR;
+			break;
+		}
+		nPercent = i*100/(nFileSize/512);
+		if(nOldPercent != nPercent) 
+		{
+			gp_WritingWord(593,nPercent);
+			nOldPercent = nPercent;
+		}
+	}
+
+	if(bSuc != ERROR && (nFileSize%512))
+	{
+		gm_memcpy(chBuf,pSam+i*512,512);
+		nTemp = pc_vFileWrite(nFd,chBuf,nFileSize%512);
+		if(nTemp != nFileSize%512) bSuc = ERROR;
+			
+		gp_WritingWord(593,100);
+	}
+
+
+	pc_FileClose(nFd);
+	if(bSuc == ERROR) return 4;
+	
+	return 0;
+}
+
+
+
+void gp_B170_Download()
+{
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+	BOOL bInitial;
+	UINT nPreCardInitID;
+	int nError = FALSE;
+	int nOldPriority,nTaskID = taskIdSelf();
+	if(!bDetect) return;
+
+	m_TcThis.sFlag.bDownloadStarted = TRUE;
+	
+	
+	mx_BeginEstimatedTime();
+	
+	taskPriorityGet(nTaskID,&nOldPriority);
+	taskPrioritySet(nTaskID,120);
+	
+	gp_Download_ButtonState(bDetect);
+	
+	nPreCardInitID = taskSpawn("xCardInit",120,0,10000,gp_CardInit,0,0,0,0,0,0,0,0,0,0);
+	
+	taskDelay(100);
+	bInitial = (taskIsReady(nPreCardInitID) == TRUE) ? FALSE : TRUE;
+	
+	if(bInitial) bInitial = pc_CardInit(0,REC_MENUAL_DRIVENO);
+	else taskDelete(nPreCardInitID);
+	
+	if(bInitial)
+	{
+		/* 1) 고장기록 다운로드 */
+		
+		m_bRcWriteEnable = FALSE;
+		nError = gp_Manual_FltDownload();
+		gp_RecodeErrorDisplay(nError);
+		if(!nError)
+		{
+			nError = gp_Manual_SttDownload();
+			gp_RecodeErrorDisplay(nError);
+		}
+
+		m_bRcWriteEnable = TRUE;
+		
+		if(!nError)
+		{
+			gp_LineMessageBar("다운로드 완료");
+			
+		}
+		
+		gp_TripleAlarmBuzzer();
+		m_TcThis.sFlag.bDownloadComplete  = TRUE;
+		
+		gm_GetSystemTime(&m_pDirectMem->DrvRecDownLastTime);
+	}
+	else
+	{
+		gp_LineMessageBar("다운로드 카드 인식 불가");
+		
+	}
+	
+	taskDelay(2000);
+
+	taskPrioritySet(nTaskID,nOldPriority);
+
+	mx_EndEstimatedTime(NULL);
+
+	m_TcThis.sFlag.bDownloadStarted = FALSE;
+	
+}
+
+void gp_B180_Download()
+{
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+	BOOL bInitial;
+	UINT nPreCardInitID;
+	int nError = FALSE;
+	int nOldPriority,nTaskID = taskIdSelf();
+	if(!bDetect) return;
+
+	m_TcThis.sFlag.bDownloadStarted = TRUE;
+	
+	
+	mx_BeginEstimatedTime();
+	
+	taskPriorityGet(nTaskID,&nOldPriority);
+	taskPrioritySet(nTaskID,120);
+	
+	gp_Download_ButtonState(bDetect);
+	
+	nPreCardInitID = taskSpawn("xCardInit",120,0,10000,gp_CardInit,0,0,0,0,0,0,0,0,0,0);
+	
+	taskDelay(100);
+	bInitial = (taskIsReady(nPreCardInitID) == TRUE) ? FALSE : TRUE;
+	
+	if(bInitial) bInitial = pc_CardInit(0,REC_MENUAL_DRIVENO);
+	else taskDelete(nPreCardInitID);
+	
+	if(bInitial)
+	{
+		m_bRcWriteEnable = FALSE;
+		nError = gp_Manual_DistDownload();
+		m_bRcWriteEnable = TRUE;
+		gp_RecodeErrorDisplay(nError);
+		
+		if(!nError)
+		{
+			gp_LineMessageBar("다운로드 완료");
+			
+		}
+		
+		gp_TripleAlarmBuzzer();
+		m_TcThis.sFlag.bDownloadComplete  = TRUE;
+		
+		gm_GetSystemTime(&m_pDirectMem->DrvRecDownLastTime);
+	}
+	else
+	{
+		gp_LineMessageBar("다운로드 카드 인식 불가");
+		
+	}
+	
+	taskDelay(2000);
+
+	taskPrioritySet(nTaskID,nOldPriority);
+
+	mx_EndEstimatedTime(NULL);
+
+	m_TcThis.sFlag.bDownloadStarted = FALSE;
+	
+}
+
+void gp_B190_Download()
+{
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+	BOOL bInitial;
+	UINT nPreCardInitID;
+	int nError = FALSE;
+	int nOldPriority,nTaskID = taskIdSelf();
+	if(!bDetect) return;
+
+	m_TcThis.sFlag.bDownloadStarted = TRUE;
+	
+	
+	mx_BeginEstimatedTime();
+	
+	taskPriorityGet(nTaskID,&nOldPriority);
+	taskPrioritySet(nTaskID,120);
+	
+	gp_Download_ButtonState(bDetect);
+	
+	nPreCardInitID = taskSpawn("xCardInit",120,0,10000,gp_CardInit,0,0,0,0,0,0,0,0,0,0);
+	
+	taskDelay(100);
+	bInitial = (taskIsReady(nPreCardInitID) == TRUE) ? FALSE : TRUE;
+	
+	if(bInitial) bInitial = pc_CardInit(0,REC_MENUAL_DRIVENO);
+	else taskDelete(nPreCardInitID);
+	
+	if(bInitial)
+	{
+		/* 1) 운전기록 다운로드 */
+		
+		m_bRcWriteEnable = FALSE;
+		nError = gp_Manual_DrvDownload();
+		m_bRcWriteEnable = TRUE;
+		gp_RecodeErrorDisplay(nError);
+		
+		if(!nError)
+		{
+			gp_LineMessageBar("다운로드 완료");
+			
+		}
+		
+		gp_TripleAlarmBuzzer();
+		m_TcThis.sFlag.bDownloadComplete  = TRUE;
+		
+		gm_GetSystemTime(&m_pDirectMem->DrvRecDownLastTime);
+	}
+	else
+	{
+		gp_LineMessageBar("다운로드 카드 인식 불가");
+		
+	}
+	
+	taskDelay(2000);
+
+	taskPrioritySet(nTaskID,nOldPriority);
+
+	mx_EndEstimatedTime(NULL);
+
+	m_TcThis.sFlag.bDownloadStarted = FALSE;
+	
+}
+
+void gp_B200_Download()
+{
+	BOOL bDetect = pc_CardDetect(REC_MENUAL_DRIVENO);
+	BOOL bInitial;
+	UINT nPreCardInitID;
+	int nError = FALSE;
+	int nOldPriority,nTaskID = taskIdSelf();
+	if(!bDetect) return;
+
+	m_TcThis.sFlag.bDownloadStarted = TRUE;
+	
+	
+	mx_BeginEstimatedTime();
+	
+	taskPriorityGet(nTaskID,&nOldPriority);
+	taskPrioritySet(nTaskID,120);
+	
+	gp_Download_ButtonState(bDetect);
+	
+	nPreCardInitID = taskSpawn("xCardInit",120,0,10000,gp_CardInit,0,0,0,0,0,0,0,0,0,0);
+	
+	taskDelay(100);
+	bInitial = (taskIsReady(nPreCardInitID) == TRUE) ? FALSE : TRUE;
+	
+	if(bInitial) bInitial = pc_CardInit(0,REC_MENUAL_DRIVENO);
+	else taskDelete(nPreCardInitID);
+	
+	if(bInitial)
+	{
+		m_bRcWriteEnable = FALSE;
+		nError = gp_Manual_LoadDownload();
+		m_bRcWriteEnable = TRUE;
+		gp_RecodeErrorDisplay(nError);
+		
+		if(!nError)
+		{
+			gp_LineMessageBar("다운로드 완료");
+			
+		}
+		
+		gp_TripleAlarmBuzzer();
+		m_TcThis.sFlag.bDownloadComplete  = TRUE;
+		
+		gm_GetSystemTime(&m_pDirectMem->DrvRecDownLastTime);
+	}
+	else
+	{
+		gp_LineMessageBar("다운로드 카드 인식 불가");
+		
+	}
+	
+	taskDelay(2000);
+
+	taskPrioritySet(nTaskID,nOldPriority);
+
+	mx_EndEstimatedTime(NULL);
+
+	m_TcThis.sFlag.bDownloadStarted = FALSE;
+	
+}
+/*****************************************************/
+/* 초기설정                                          */
+/*****************************************************/
+void gp_B210()
+{
+	int nCarHo, nPos;
+	int nTrainSizeUpdate = m_pDirectMem->nTrainSize;
+
+	for(nCarHo=0;nCarHo < m_nTrainSize;nCarHo++)
+	{
+		if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+		{
+			nPos = nCarHo*3;
+			gp_WritingWord(1076+nPos++,(m_pDirectMem->wCarWheelDia[nCarHo]/100)+100);
+			gp_WritingWord(1076+nPos++,((m_pDirectMem->wCarWheelDia[nCarHo]%100)/10)+100);
+			gp_WritingWord(1076+nPos,(m_pDirectMem->wCarWheelDia[nCarHo]%10)+100);
+		}
+	}
+	
+	nPos = 0;
+	gp_WritingWord(1106+nPos++, m_TcThis.nForeverDist / 10000000);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 10000000)/1000000);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 1000000)/100000);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 100000)/10000);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 10000)/1000);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 1000)/100);
+	gp_WritingWord(1106+nPos++, (m_TcThis.nForeverDist % 100)/10);
+	gp_WritingWord(1106+nPos, m_TcThis.nForeverDist % 10);
+
+	nPos = 0;
+	gp_WritingWord(1114+nPos++, m_TcOppe.nForeverDist / 10000000);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 10000000)/1000000);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 1000000)/100000);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 100000)/10000);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 10000)/1000);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 1000)/100);
+	gp_WritingWord(1114+nPos++, (m_TcOppe.nForeverDist % 100)/10);
+	gp_WritingWord(1114+nPos, m_TcOppe.nForeverDist % 10);
+
+	nPos = 0;
+	gp_WritingWord(1122+nPos++,m_pDirectMem->wFormNumber/100);
+	gp_WritingWord(1122+nPos++,(m_pDirectMem->wFormNumber%100)/10);
+	gp_WritingWord(1122+nPos,m_pDirectMem->wFormNumber%10);
+
+	nPos = 0;
+	gp_WritingWord(1125+nPos++,m_pDirectMem->wPassengerWeight/10);
+	gp_WritingWord(1125+nPos,m_pDirectMem->wPassengerWeight%10);
+
+	nPos = 0;
+	gp_WritingWord(1127+nPos++,nTrainSizeUpdate/10);
+	gp_WritingWord(1127+nPos,nTrainSizeUpdate%10);
+
+}
+
+/*****************************************************/
+/* 시간설정                                          */
+/*****************************************************/
+void gp_B220()
+{
+	PSYSTIMETYPE pSystime = &m_TcThis.sFlag.systime;
+
+	gp_WritingWord(1167, (pSystime->year >> 4) & 0x0f);
+	gp_WritingWord(1168, pSystime->year & 0x0f);
+	gp_WritingWord(1169, (pSystime->month >> 4) & 0x0f);
+	gp_WritingWord(1170, pSystime->month & 0x0f);
+	gp_WritingWord(1171, (pSystime->day >> 4) & 0x0f);
+	gp_WritingWord(1172, pSystime->day & 0x0f);
+
+	gp_WritingWord(1173, (pSystime->hour >> 4) & 0x0f);
+	gp_WritingWord(1174, pSystime->hour & 0x0f);
+	gp_WritingWord(1175, (pSystime->minute >> 4) & 0x0f);
+	gp_WritingWord(1176, pSystime->minute & 0x0f);
+	gp_WritingWord(1177, (pSystime->second >> 4) & 0x0f);
+	gp_WritingWord(1178, pSystime->second & 0x0f);
+}
+
+/* 전송검사 정보 화면 */
+void gp_B230()
+{
+	int nCarHo;
+	char szTemp[10];
+	
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(m_TcThis.nCarHo == nCarHo || m_TcOppe.nCarHo == nCarHo) gp_WritingWord(1196+nCarHo,0);
+		else gp_WritingWord(1196+nCarHo,10000);
+
+		gp_WritingWord(1206+nCarHo,MINOR_1(m_TcThis.nCC_ComFaultCnt[nCarHo]));
+
+		if(op_IsExistLSys(nCarHo,LSYSID_SIV))
+		{
+			gp_WritingWord(1236+nCarHo,m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Head.wComFaultCnt/10);
+		}
+		else gp_WritingWord(1236+nCarHo,10000);
+
+		if(op_IsExistLSys(nCarHo,LSYSID_CI))
+		{
+			gp_WritingWord(1226+nCarHo,m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Head.wComFaultCnt/10);
+		}
+		else gp_WritingWord(1226+nCarHo,10000);
+
+		if(op_IsExistLSys(nCarHo,LSYSID_BRAKE))
+		{
+			gp_WritingWord(1216+nCarHo,m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_BRAKE]->Head.wComFaultCnt/10);
+		}
+		else gp_WritingWord(1216+nCarHo,10000);
+
+		
+	}
+}
+
+/* TGIS 자기진단 화면 */
+void gp_B250()
+{
+	int nCarHo;
+	USHORT wMaster, wSlave, wNon;
+	UCHAR szStr[10];
+	USHORT wVer;
+
+	gp_WritingWord(6830,m_bAsModeActive);
+
+	wMaster = wSlave = wNon = 0;
+	wMaster |= tg_IsMaster() ? (1<<m_TcThis.nCarHo) : (1<<m_TcOppe.nCarHo);
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(!(wMaster & (1<<nCarHo)))
+		{
+			if(!m_TcThis.bCC_ComFault[nCarHo])
+			{
+				wSlave |= 0x01 << nCarHo;
+			}
+			else
+			{
+				wNon |= 0x01 << nCarHo;
+			}
+		}
+	}
+
+	gp_WritingWord(1266,wMaster);
+	gp_WritingWord(1267,wSlave);
+	gp_WritingWord(1268,wNon);
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(m_TcThis.nCarHo == nCarHo)
+		{
+			wVer = m_TcThis.chScreenVer;
+			gp_WritingWord(2700+nCarHo*2,wVer);
+			
+			wVer = m_TcThis.chMpuVer;
+			gp_WritingWord(2720+nCarHo*3,wVer);
+		}
+		else if(m_TcOppe.nCarHo == nCarHo)
+		{
+			wVer = m_TcOppe.chScreenVer;
+			gp_WritingWord(2700+nCarHo*2,wVer);
+			
+			wVer = m_TcOppe.chMpuVer;
+			gp_WritingWord(2720+nCarHo*3,wVer);
+		}
+		else 
+		{
+			gp_WritingWord(2700+nCarHo*2, 0x00);
+			gp_WritingWord(2720+nCarHo*3, 0x00);
+
+			
+		}
+
+		sprintf(szStr,"%c", m_CC_Info.RxInfo[nCarHo].Head.Version[0].chTag);
+		gp_WritingWStr(2770+nCarHo,szStr);
+		gp_WritingWord(2750+nCarHo*2, m_CC_Info.RxInfo[nCarHo].Head.Version[0].chVerNum);	
+	}
+}
+
+USHORT gp_GetInterfaceScreenNo(int nSelCarHo)
+{
+	switch(TRTYPE(m_CC_Info.RxInfo[nSelCarHo].Head.chHexaID[0]))
+	{
+	case TRTYPE_TC: return 270;
+	case TRTYPE_T1: return 279;
+	case TRTYPE_T2: return 281;
+	case TRTYPE_MD: return 274;
+	}
+
+	return m_TcThis.wCurScrNo;
+}
+
+/***************** INTERFACE 화면 ********************/
+void gp_InterfaceBase()
+{
+	int nCarHo;
+	USHORT wTemp;
+
+	wTemp = (1<<m_TcThis.nCarHo);
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(!m_TcThis.bCC_ComFault[nCarHo]) wTemp |= (1<<nCarHo);
+	}
+	if(!m_TcOppe.sFlag.bThisSysFault) wTemp |= (1<<m_TcOppe.nCarHo);
+
+	gp_WritingWord(2800,wTemp);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+}
+
+/**** TC I/F ***/
+void gp_B270()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* ccDi */
+	gp_WritingWord(1534,MK_WORD(pchData[1],pchData[0]));
+	gp_WritingWord(1535,MK_WORD(pchData[3],pchData[2]));
+
+
+}
+void gp_B271()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* ccDi */
+	gp_WritingWord(1534,MK_WORD(pchData[5],pchData[4]));
+
+	/* tcDi */
+	if(nSelCarHo == 0 || nSelCarHo==m_nTrainSize-1)
+	{
+		pchData = (LPBYTE)&m_pTc[!nSelCarHo]->tcDi;
+		gp_WritingWord(1535,MK_WORD(pchData[1],pchData[0]));
+	}
+}
+void gp_B272()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+	USHORT wTemp;
+	PSIVSDTYPE pSivSD;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* tcDi */
+	if(nSelCarHo == 0 || nSelCarHo==m_nTrainSize-1)
+	{
+		pchData = (LPBYTE)&m_pTc[!nSelCarHo]->tcDi;
+		gp_WritingWord(1534,MK_WORD(pchData[3],pchData[2]));
+
+		/* SDI */
+		pSivSD = (PSIVSDTYPE)m_pTc[!nSelCarHo]->pCCInfo->pLSysRx[LSYSID_SIV]->Body.chDataPack;
+		wTemp = 0;
+		wTemp |= pSivSD->START ? BIT00 : 0;
+		gp_WritingWord(1535,wTemp);
+
+		gp_WritingWord(244,!m_pTc[!nSelCarHo]->chScreenVer ? 1 : 0);
+		gp_WritingWord(245,0);
+		gp_WritingWord(246,m_pTc[!nSelCarHo]->sFlag.bAutoDownFail ? 1 : 0);
+		gp_WritingWord(247,0);
+
+		gp_WritingWord(248,m_pTc[!nSelCarHo]->pCCInfo->pLSysRx[LSYSID_SIV]->Head.bComFault ? 1 : 0);
+		gp_WritingWord(249,0);
+		gp_WritingWord(250,m_pTc[!nSelCarHo]->xDerive.MOT);	/* MOT */
+		gp_WritingWord(251,m_pTc[!nSelCarHo]->xDerive.BRK);
+	}
+
+	
+}
+
+void gp_B273()
+{
+	PSIVSDTYPE pSivSD = (PSIVSDTYPE)m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack;
+	gp_InterfaceBase();
+
+	gp_WritingWord(1536,pSivSD->DCV);
+	gp_WritingWord(1538,pSivSD->OUTVDC);
+	gp_WritingWord(1540,pSivSD->OUTCDC);
+	gp_WritingWord(1542,pSivSD->OUTF);
+
+
+	gp_WritingWord(252,(tg_GetMasterCarHo() == m_nSelCarHo) ? 1 : 0); /* Master */
+	gp_WritingWord(253,tg_GetHcrCarHo() ); /* Head */
+	gp_WritingWord(254,0); /* SCRN TYPE */
+	gp_WritingWord(255,1); /* Master OK */
+	gp_WritingWord(256,1); /* Head OK */
+	gp_WritingWord(257,!m_TcThis.bCC_ComFault[m_nSelCarHo] ? 1 : 0); /* Car OK */
+
+}
+
+void gp_B274()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* ccDi */
+	gp_WritingWord(1534,MK_WORD(pchData[1],pchData[0]));
+	gp_WritingWord(1535,MK_WORD(pchData[3],pchData[2]));
+}
+
+void gp_B275()
+{
+	USHORT wTemp;
+	int nSelCarHo = m_nSelCarHo%10;
+	PCISDTYPE pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack;
+	PBRAKESDTYPE pBrakeSD = (PBRAKESDTYPE)m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* SDI */
+	wTemp = 0;
+	wTemp |= pCiSD->HB1		? BIT00 : 0;
+	wTemp |= pCiSD->HB2		? BIT01 : 0;
+	wTemp |= pCiSD->MCO		? BIT02 : 0;
+	wTemp |= pCiSD->_M		? BIT03 : 0;
+	wTemp |= pCiSD->_B		? BIT04 : 0;
+	wTemp |= pBrakeSD->B1		? BIT05 : 0;
+	wTemp |= pBrakeSD->B2		? BIT06 : 0;
+	wTemp |= pBrakeSD->B4		? BIT07 : 0;
+
+	wTemp |= pBrakeSD->BUF	? BIT08 : 0;
+	wTemp |= pCiSD->WSPM	? BIT09 : 0;
+
+	gp_WritingWord(1534,wTemp);
+
+	gp_WritingWord(258,m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_BRAKE]->Head.bComFault);
+	gp_WritingWord(259,0);
+	gp_WritingWord(260,m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_CI]->Head.bComFault);
+	gp_WritingWord(261,0);
+	gp_WritingWord(262,m_CC_Info.xDerive[nSelCarHo].CUT);
+
+}
+
+void gp_B276()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	PCISDTYPE pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack;
+	PBRAKESDTYPE pBrakeSD = (PBRAKESDTYPE)m_CC_Info.RxInfo[nSelCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack;
+
+	gp_InterfaceBase();
+
+	gp_WritingWord(1546,pCiSD->SPD_H);
+	gp_WritingWord(1548,pCiSD->SPD_L);
+	gp_WritingWord(1550,pCiSD->PWM);
+	gp_WritingWord(1552,pBrakeSD->WTM);
+	gp_WritingWord(1554,pBrakeSD->WTT);
+	gp_WritingWord(1556,pCiSD->EFC);
+	gp_WritingWord(1558,pCiSD->IL);
+	gp_WritingWord(1560,0);
+	gp_WritingWord(1562,pCiSD->BCPM);
+	gp_WritingWord(1564,pCiSD->BCPT);
+	gp_WritingWord(1566,pBrakeSD->LDPM);
+	gp_WritingWord(1568,pBrakeSD->LDPT);
+	gp_WritingWord(1570,pBrakeSD->BED);
+	gp_WritingWord(1572,pBrakeSD->BEA);
+	gp_WritingWord(1574,pCiSD->TED);
+	gp_WritingWord(1576,pCiSD->TE);
+
+	gp_WritingWord(265,(tg_GetMasterCarHo() == nSelCarHo) ? 1 : 0); /* Master */
+	gp_WritingWord(266,tg_GetHcrCarHo() ); /* Head */
+	gp_WritingWord(267,1); /* Master OK */
+	gp_WritingWord(268,1); /* Head OK */
+	gp_WritingWord(269,m_TcThis.bCC_ComFault[nSelCarHo]); /* Car OK */
+
+}
+
+
+void gp_B279()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+
+	gp_InterfaceBase();
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* ccDi */
+	gp_WritingWord(1534,MK_WORD(pchData[1],pchData[0]));
+	gp_WritingWord(1535,MK_WORD(pchData[3],pchData[2]));
+}
+void gp_B280()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+
+	gp_InterfaceBase();
+	gp_WritingWord(1533,nSelCarHo);
+
+	gp_WritingWord(272,(tg_GetMasterCarHo() == nSelCarHo) ? 1 : 0); /* Master */
+	gp_WritingWord(273,tg_GetHcrCarHo() ); /* Head */
+	gp_WritingWord(274,1); /* Master OK */
+	gp_WritingWord(275,1); /* Head OK */
+	gp_WritingWord(276,m_TcThis.bCC_ComFault[nSelCarHo]); /* Car OK */
+
+}
+void gp_B281()
+{
+	int nSelCarHo = m_nSelCarHo%10;
+	LPBYTE pchData = m_CC_Info.RxInfo[nSelCarHo].Head.ccDi;
+
+	gp_InterfaceBase();
+	gp_WritingWord(1533,nSelCarHo);
+
+	/* ccDi */
+	gp_WritingWord(1534,MK_WORD(pchData[1],pchData[0]));
+	gp_WritingWord(1535,MK_WORD(pchData[3],pchData[2]));
+
+	/* SDI */
+}
+void gp_B282()
+{
+	USHORT wTemp;
+	PSIVSDTYPE pSivSD = (PSIVSDTYPE)m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack;
+	gp_InterfaceBase();
+
+	gp_WritingWord(2900,pSivSD->DCV);
+	gp_WritingWord(2902,pSivSD->OUTVDC);
+	gp_WritingWord(2904,pSivSD->OUTCDC);
+	gp_WritingWord(2906,pSivSD->OUTF);
+
+	wTemp = 0;
+	wTemp |= pSivSD->START ? BIT04 : 0;
+	gp_WritingWord(1534,wTemp);
+
+	gp_WritingWord(279,m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[LSYSID_SIV]->Head.bComFault ? 1 : 0);
+	gp_WritingWord(280,0);
+
+	gp_WritingWord(281,(tg_GetMasterCarHo() == m_nSelCarHo) ? 1 : 0); /* Master */
+	gp_WritingWord(282,tg_GetHcrCarHo() ); /* Head */
+	gp_WritingWord(283,1); /* Master OK */
+	gp_WritingWord(284,1); /* Head OK */
+	gp_WritingWord(285,!m_TcThis.bCC_ComFault[m_nSelCarHo] ? 1 : 0); /* Car OK */
+}
+
+void gp_TrainFormUpdate()
+{
+	int nCarHo;
+	char szCarNumber[10];
+	BOOL bTcRightPos;
+	USHORT wDirImg[2];
+	USHORT wCarNoActive;
+	BOOL bCCFault;
+
+	bTcRightPos = FALSE;
+	wCarNoActive = 0;
+	for(nCarHo=0;nCarHo<MAX_TRAIN_SIZE;nCarHo++)
+	{
+		if(nCarHo<m_nTrainSize)
+		{
+			strcpy(szCarNumber,"０");
+			szCarNumber[1] += nCarHo+1;
+			gp_WritingWStr(7500+nCarHo*4,szCarNumber);
+			wCarNoActive |= (1<<nCarHo);
+			
+			
+			if((ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_TC) || !nCarHo) 
+			{
+				gp_WritingWord(7530+nCarHo,bTcRightPos ? 2 : 1);
+				gp_WritingWord(7540+nCarHo,0);
+				gp_WritingWord(7550+nCarHo,0);
+				
+				bTcRightPos ^= 1;
+			}
+			else if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_MD) 
+			{
+				if(m_TcThis.bCC_ComStarted[nCarHo])
+				{
+					gp_WritingWord(7530+nCarHo,3);
+					gp_WritingWord(7540+nCarHo,!((PCCDIMTYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->PANPS1 ? 2 : 1);
+					gp_WritingWord(7550+nCarHo,!((PCCDIMTYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->PANPS2 ? 2 : 1);
+				}
+				else
+				{
+					gp_WritingWord(7530+nCarHo,3);
+					gp_WritingWord(7540+nCarHo,1);
+					gp_WritingWord(7550+nCarHo,1);
+				}
+			}
+			else /*if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])==TRTYPE_T2) */
+			{
+				gp_WritingWord(7530+nCarHo,3);
+				gp_WritingWord(7540+nCarHo,0);
+				gp_WritingWord(7550+nCarHo,0);
+			}
+		}
+		
+	}
+
+	gp_WritingWord(7499,wCarNoActive);
+
+	/* HCR/TCR FORWARD/BACKWARD */
+
+	if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->HCR)/* 1호차 */
+	{
+		wDirImg[0] = 1;
+		if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_F) wDirImg[0] = 2; /* 좌측방향 */
+		else if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_R) wDirImg[0] = 3; /* 우측방향 */
+
+		if(((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_F && ((PCCDITYPE)m_pTc[1]->pCCInfo->Head.ccDi)->_R) wDirImg[0] = 1; /* 동시투입 */
+	}
+	else wDirImg[0] = 0;
+
+	/* 4호차용 */
+	if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->HCR)
+	{
+		wDirImg[1] = 1;
+		if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_F) wDirImg[1] = 3; /* 우측방향 */
+		else if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_R) wDirImg[1] = 2; /* 좌측방향 */
+
+		if(((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_F && ((PCCDITYPE)m_pTc[0]->pCCInfo->Head.ccDi)->_R) wDirImg[1] = 1; /* 동시투입 */
+	}
+	else wDirImg[1] = 0;
+
+	gp_WritingWord(7610,wDirImg[0]);
+	gp_WritingWord(7611,wDirImg[1]);
+}
+
+
+
+void gp_B510_FaultDetailListView(PFAULTLIST pFaultList)
+{
+	BYTE chTemp[100];
+	int i,nMentNo;
+
+	if(pFaultList)
+	{
+		if(pFaultList->wFltIndex)
+		{
+			sprintf(chTemp,"%d",m_FaultSummery[pFaultList->wFltIndex].wFltCode);
+			gp_WritingWStr(3100,chTemp);
+			
+			gp_WritingWStr(3102,m_FaultSummery[pFaultList->wFltIndex].szName);
+			
+			gp_WritingWord(8040,m_FaultSummery[pFaultList->wFltIndex].wMentNo[0]);
+
+			gp_ShowCarRedMark(1<<pFaultList->wCarHo);
+		}
+	}
+	else
+	{
+		gp_ShowCarRedMark(0);
+		gp_WritingWStr(3100," ");
+		gp_WritingWStr(3102," ");
+
+		gp_WritingWord(8040,5000);
+	}
+}
+
+void gp_B500()
+{
+	gp_B510_FaultDetailListView(&m_FaultList[m_nSetFaultLine]);
+}
+
+void gp_B510()
+{
+	gp_WritingWord(8042, op_GetNotCheckFaultListNumber()>1 ? BIT00: 0 ); /* 전체확인 버튼 */
+
+	gp_B510_FaultDetailListView(m_pEventedFaultList);
+}
+
+void gp_B6000()
+{
+	DATE_TIME_TYPE sTime;
+
+	gp_WritingWord(6860,tg_IsMaster() ? BIT00 : 0);
+
+	gp_WritingWStr(6870,"");
+
+	gp_WritingWord(6876,m_TcThis.nNearCiCarHo);
+	gp_WritingWord(6877,m_TcThis.nNearBcuCarHo);
+
+	gp_WritingWord(6878,m_TcThis.nMComTxTime);
+	gp_WritingWord(6879,m_TcThis.nMComRxTime);
+	gp_WritingWord(6880,m_TcThis.nMComTxMaxTime);
+	gp_WritingWord(6881,m_TcThis.nFCheckTime);
+
+	gp_WritingWord(6882,m_pDirectMem->nAutoDownFailCnt);
+	gp_WritingWord(6883,m_pDirectMem->nAutoDownLastError);
+	gp_WritingWord(6884,m_pDirectMem->nAutoDownFileNumber);
+
+	gm_SysTimeToRtc(&sTime,m_pDirectMem->nAutoDownSysTimeCnt);
+	gp_WritingWord(6900,sTime.year);
+	gp_WritingWord(6901,sTime.month);
+	gp_WritingWord(6902,sTime.day);
+	gp_WritingWord(6903,sTime.hour);
+	gp_WritingWord(6904,sTime.minute);
+	gp_WritingWord(6905,sTime.second);
+
+	gp_WritingWord(6892,m_TcThis.sFlag.bOnAutoDownload ? 1 : 0);
+}
+
+/* 펌웨어 다운로드 화면 (Oldbase - B1720)*/
+void gp_B6001()
+{
+	gp_TrainFormUpdate();
+	gp_FirmScreenUpdate();
+}
+
+
+void gp_B6002()
+{
+	int i;
+	gp_WritingWord(6861,m_wClearMemorySel);
+
+	for(i=0;i<4;i++)
+	{
+		if(ISRANGE(m_pDirectMem->DataClearTime[i].month,0x01,0x12))
+		{
+			gp_WritingWord(7340+i*10,m_pDirectMem->DataClearTime[i].year);
+			gp_WritingWord(7341+i*10,m_pDirectMem->DataClearTime[i].month);
+			gp_WritingWord(7342+i*10,m_pDirectMem->DataClearTime[i].day);
+			gp_WritingWord(7343+i*10,m_pDirectMem->DataClearTime[i].hour);
+			gp_WritingWord(7344+i*10,m_pDirectMem->DataClearTime[i].minute);
+			gp_WritingWord(7345+i*10,m_pDirectMem->DataClearTime[i].second);
+		}
+		else
+		{
+			gp_WritingWord(7340+i*10,0x00);
+			gp_WritingWord(7341+i*10,0x00);
+			gp_WritingWord(7342+i*10,0x00);
+			gp_WritingWord(7343+i*10,0x00);
+			gp_WritingWord(7344+i*10,0x00);
+			gp_WritingWord(7345+i*10,0x00);
+		}
+	}
+}
+
+
+void gp_B6002_DrvMemoryClear()
+{
+	int i,nPercent,nOldPercent=0,nMaxSize;
+	PDRVHEADTYPE pVmeHead = (PDRVHEADTYPE)REC_ADDR(REC_DRV_HEADOFFSET);
+	PDRVBODYTYPE pVmeBody = (PDRVBODYTYPE)REC_ADDR(REC_DRV_BODYOFFSET);
+
+	if(gm_IsMemoryEnable())
+	{
+		
+		taskDelay(1000);
+		gp_WritingWStr(6833,"운전기록을 삭제 중입니다.");
+
+		nMaxSize = REC_DRV_HEADSIZE;
+		for(i=0;i<nMaxSize;i++)
+		{
+			gm_memset(pVmeHead[i],0,sizeof(DRVHEADTYPE));
+		}
+		
+
+		nMaxSize = REC_DRV_BODYSIZE; 
+		for(i=0;i<nMaxSize;i++)
+		{
+			gm_memset(pVmeBody[i],0,sizeof(DRVBODYTYPE));
+
+			nPercent = 100*i/nMaxSize;
+			if(nPercent != nOldPercent)
+			{
+				gp_WritingWord(6831,nPercent);
+				nOldPercent = nPercent;
+			}
+		}
+		gw_ResetDrvRc();
+		
+		gp_WritingWord(6831,100);
+
+		gp_WritingWStr(6833,"운전기록을 삭제 완료");
+		taskDelay(1000);
+	}
+
+	m_wClearMemorySel &= ~BIT00;
+	gp_B6002();
+	
+}
+
+/* 주행거리기록 삭제: 승객하중, 소비적력량/주행거리 영역삭제 */
+void gp_B6002_DistMemoryClear()
+{
+	int i,nPercent,nOldPercent=0,nEraseMSize;
+	LPBYTE pGmFaultList = (LPBYTE)REC_ADDR(REC_DIST_HEADOFFSET);
+	nEraseMSize = 0;
+	nEraseMSize += REC_DIST_MEMSIZE;
+
+	if(gm_IsMemoryEnable())
+	{
+		gp_WritingWStr(6833,"주행거리기록을 삭제 중입니다.");
+		for(i=0;i<nEraseMSize/512;i++)
+		{
+			gm_memset(pGmFaultList+i*512,0,512);
+			taskDelay(10);
+
+			nPercent = 100*i/(nEraseMSize/512);
+			if(nPercent != nOldPercent)
+			{
+				gp_WritingWord(6831,nPercent);
+				nOldPercent = nPercent;
+			}
+		}
+
+
+		gp_WritingWord(6831,100);
+		gw_ResetDistRec();
+
+		gp_WritingWStr(6833,"주행거리기록을 삭제 완료");
+		taskDelay(1000);
+	}
+	m_wClearMemorySel &= ~BIT01;
+	gp_B6002();
+}
+
+/* 승객하중기록 삭제: 승객하중기록 영역삭제 */
+void gp_B6002_LoadMemoryClear()
+{
+	int i,nPercent,nOldPercent=0,nEraseMSize;
+	LPBYTE pGmFaultList = (LPBYTE)REC_LOAD_HEADOFFSET;
+	nEraseMSize = 0;
+	nEraseMSize += REC_LOAD_MEMSIZE;
+
+	if(gm_IsMemoryEnable())
+	{
+		gp_WritingWStr(6833,"승객하중기록을 삭제 중입니다.");
+		for(i=0;i<nEraseMSize/512;i++)
+		{
+			gm_memset(pGmFaultList+i*512,0,512);
+			taskDelay(10);
+
+			nPercent = 100*i/(nEraseMSize/512);
+			if(nPercent != nOldPercent)
+			{
+				gp_WritingWord(6831,nPercent);
+				nOldPercent = nPercent;
+			}
+		}
+
+
+		gp_WritingWord(6831,100);
+		gw_ResetLoadRec();
+
+		gp_WritingWStr(6833,"시험기록을 삭제 완료");
+		taskDelay(1000);
+	}
+	m_wClearMemorySel &= ~BIT02;
+	gp_B6002();
+}
+
+/* 고장기록 삭제: 고장리스트,열차상태,StatusTrace,로거기록 영역삭제 */
+void gp_B6002_FaultMemoryClear()
+{
+	int i,nPercent,nOldPercent=0,nEraseMSize;
+	LPBYTE pGmFaultList = (LPBYTE)REC_FLT_BODYOFFSET;
+	nEraseMSize = 0;
+	nEraseMSize += REC_FTL_MEMSIZE;
+	nEraseMSize += REC_TRACE_MEMSIZE;
+	nEraseMSize += REC_STT_MEMSIZE;
+	
+
+	if(gm_IsMemoryEnable())
+	{
+		gp_WritingWStr(6833,"고장기록을 삭제 중입니다.");
+		for(i=0;i<nEraseMSize/512;i++)
+		{
+			gm_memset(pGmFaultList+i*512,0,512);
+
+			nPercent = 100*i/(nEraseMSize/512);
+			if(nPercent != nOldPercent)
+			{
+				gp_WritingWord(6831,nPercent);
+				nOldPercent = nPercent;
+			}
+		}
+		gp_WritingWord(6831,100);
+		gw_ResetFaultList();
+		gw_ResetTraceList();
+		gw_ResetTrs();
+
+		gp_WritingWStr(6833,"고장기록을 삭제 완료");
+		taskDelay(1000);
+	}
+	m_wClearMemorySel &= ~BIT03;
+	gp_B6002();
+}
+
+
+void gp_B6002_ClearMemoryEvent()
+{
+	int nOldPriority,nTaskID = taskIdSelf();
+
+	if(m_wClearMemorySel)
+	{
+		gp_WritingWord(6852,0);
+		
+		m_TcThis.sFlag.bDownloadStarted = TRUE;
+		
+		mx_BeginEstimatedTime();
+		
+		taskPriorityGet(nTaskID,&nOldPriority);
+		taskPrioritySet(nTaskID,120);
+		
+		if(m_wClearMemorySel & BIT00) gp_B6002_DrvMemoryClear();
+		
+		if(m_wClearMemorySel & BIT01) gp_B6002_DistMemoryClear();
+		if(m_wClearMemorySel & BIT02) gp_B6002_LoadMemoryClear();
+		
+		if(m_wClearMemorySel & BIT03) gp_B6002_FaultMemoryClear();
+		
+		
+		taskPrioritySet(nTaskID,nOldPriority);
+		
+		mx_EndEstimatedTime(NULL);
+		
+		m_wClearMemorySel = 0;
+		
+		m_TcThis.sFlag.bDownloadStarted = FALSE;
+	}
+	else
+	{
+		gp_WritingWStr(6833,"삭제할 항목을 선택하세요");
+	}
+}
+
+
+void gp_Clear_DataSelect(BYTE nSelBitNo)
+{
+	m_wClearMemorySel ^= nSelBitNo;
+	gp_WritingWord(6852,BIT00);
+}
+
+
+
+#define MINOR_1(X)	( ISRANGE(X,1,49) ? ((X)-1) : (X) )		/* 49 보다 큰경우 1을 차감한다. */
+void gp_TgisStatus()
+{
+	int nCarHo;
+	USHORT wTemp;
+
+	gp_WritingWord(6830,m_bAsModeActive);
+	gp_WritingWord(6860,tg_IsMaster() ? BIT00 : 0);
+
+	gp_TrainFormUpdate();
+
+	
+	/* 1) 각 중앙장치 및 단말장치 상태 */
+	/* 1.0) 중앙장치 상태 */
+	for(nCarHo=0;nCarHo<MAX_TRAIN_SIZE;nCarHo++)
+	{
+		if(nCarHo<m_nTrainSize)
+		{
+			if(m_TcThis.nCarHo == nCarHo)
+			{
+				gp_WritingWord(5010+nCarHo,TCMS_IMG_OK); /* LIU - 자기 것 상태 */
+				gp_WritingWord(5000+nCarHo,TCMS_IMG_OK);	/* TC BOX 상태 */
+				
+				gp_WritingWord(7570+nCarHo,0);
+
+				gp_WritingWord(7590+nCarHo,10000);
+				gp_WritingWord(5030+nCarHo,TCMS_IMG_NONE);
+				
+			}
+			else if(m_TcOppe.nCarHo == nCarHo)
+			{
+				if(!m_TcOppe.sFlag.bThisSysFault)
+				{
+					gp_WritingWord(5010+nCarHo,TCMS_IMG_OK); /* LIU - 자기 것 상태 */
+					gp_WritingWord(5000+nCarHo,TCMS_IMG_OK);	/* TC BOX 상태 */
+					
+					gp_WritingWord(7570+nCarHo,m_TcOppe.nTC_ComFaultCnt);
+				}
+				else
+				{
+					gp_WritingWord(5010+nCarHo,TCMS_IMG_NG); /* LIU - 자기 것 상태 */
+					gp_WritingWord(5000+nCarHo,TCMS_IMG_NG);	/* TC BOX 상태 */
+					
+					gp_WritingWord(7570+nCarHo,m_TcOppe.nTC_ComFaultCnt);
+				}
+
+				gp_WritingWord(7590+nCarHo,10000);
+				gp_WritingWord(5030+nCarHo,TCMS_IMG_NONE);
+				
+			}
+			else
+			{
+				gp_WritingWord(5000+nCarHo,TCMS_IMG_NONE);
+				gp_WritingWord(5010+nCarHo,TCMS_IMG_NONE);
+				gp_WritingWord(5020+nCarHo,TCMS_IMG_NONE);
+				
+				gp_WritingWord(7570+nCarHo+ 0,10000);
+			
+					/* 전송카운터 */
+				gp_WritingWord(7590+nCarHo,MINOR_1(m_TcThis.nCC_ComFaultCnt[nCarHo]));
+
+				gp_WritingWord(5030+nCarHo,m_TcThis.bCC_ComFault[nCarHo] ? TCMS_IMG_NG :TCMS_IMG_OK);
+				
+			}
+			
+			
+			
+			
+		}
+		else
+		{
+			gp_WritingWord(5000+nCarHo,TCMS_IMG_NONE);
+			gp_WritingWord(5010+nCarHo,TCMS_IMG_NONE);
+		
+			gp_WritingWord(7570+nCarHo+ 0,10000);
+			gp_WritingWord(7570+nCarHo+10,10000);
+		
+			gp_WritingWord(7590+nCarHo,10000);
+			gp_WritingWord(7600+nCarHo,10000);
+			gp_WritingWord(7620+nCarHo,10000);
+		}		
+		
+	}
+
+
+	gp_WritingWord(7612,m_nMComTxByteSize*100/(SCM_RXBYTES-4)); /* TC TX 사용 버퍼율 */
+}
+
+void gp_B6003()
+{
+	USHORT wTemp;
+	int nCarHo;
+
+	gp_TgisStatus();
+
+
+	/* 1) 각 중앙장치 및 단말장치 상태 */
+	/* 1.0) 중앙장치 상태 */
+
+	for(nCarHo=0;nCarHo<MAX_TRAIN_SIZE;nCarHo++)
+	{
+		if(nCarHo<m_nTrainSize)
+		{
+			if(m_TcThis.nCarHo == nCarHo)
+			{
+				gp_WritingWord(7660+nCarHo,1);
+				
+				gp_WritingWord(7620+nCarHo,0);
+
+				gp_WritingWord(7640+nCarHo,10000);
+
+				gp_WritingWord(7650+nCarHo,10000);
+				gp_WritingWord(7660+nCarHo,10000);
+			}
+			else if(m_TcOppe.nCarHo == nCarHo)
+			{
+				gp_WritingWord(7660+nCarHo,2);
+				
+				gp_WritingWord(7620+nCarHo,m_TcOppe.nTC_ComFaultMaxCnt);
+
+				gp_WritingWord(7640+nCarHo,10000);
+
+				gp_WritingWord(7650+nCarHo,10000);
+				gp_WritingWord(7660+nCarHo,10000);
+				
+			}
+			else
+			{
+				gp_WritingWord(7660+nCarHo,10000);
+				gp_WritingWord(7620+nCarHo   ,10000);
+				gp_WritingWord(7620+nCarHo+10,10000);
+
+				gp_WritingWord(7640+nCarHo,m_TcThis.nCC_ComFaultMaxCnt[nCarHo]);
+
+				/* CC 사용 버퍼율: RX.BUF[%] */
+				gp_WritingWord(7600+nCarHo,m_nMComRxByteSize[nCarHo]*100/(SCM_RXBYTES-4));
+				gp_WritingWord(7650+nCarHo,m_nMComRxByteMaxSize[nCarHo]*100/(SCM_RXBYTES-4));
+			}
+			
+			
+			
+		}
+		else
+		{
+			gp_WritingWord(7600+nCarHo,10000);
+			gp_WritingWord(7620+nCarHo,10000);
+			gp_WritingWord(7630+nCarHo,10000);
+			gp_WritingWord(7640+nCarHo,10000);
+			gp_WritingWord(7650+nCarHo,10000);
+			gp_WritingWord(7660+nCarHo,10000);
+		}
+		
+	}
+	
+
+	gp_WritingWord(7613,m_nMComTxByteMaxSize*100/(SCM_RXBYTES-4));
+
+
+
+}
+
+void gp_B6004()
+{
+	USHORT wTemp;
+	int nFormPos=0,nCarPos;
+	int nCarHo;
+
+	gp_TrainFormUpdate();
+
+
+	/* 1) 각 중앙장치 및 단말장치 상태 */
+	/* 1.0) 중앙장치 상태 */
+	nFormPos = (8-m_nTrainSize)/2;
+	if(!ISRANGE(nFormPos,0,4)) nFormPos = 0;
+	nCarHo=0;
+
+	for(nCarPos=0;nCarPos<10;nCarPos++)
+	{
+		if(ISRANGE(nCarPos,nFormPos,nFormPos+m_nTrainSize-1))
+		{
+			if(m_TcThis.nCarHo == nCarHo)
+			{
+				gp_WritingWord(7310+nCarPos,m_TcThis.chScreenVer);
+
+				gp_WritingWord(7320+nCarPos,m_TcThis.chMiuCpldVer);
+				gp_WritingWord(7330+nCarPos,m_TcThis.chMiuCpldVer);
+			}
+			else if(m_TcOppe.nCarHo == nCarHo)
+			{
+				gp_WritingWord(7310+nCarPos,m_TcOppe.chScreenVer);
+
+				gp_WritingWord(7320+nCarPos,m_TcOppe.chMiuCpldVer);
+				gp_WritingWord(7330+nCarPos,m_TcOppe.chMiuCpldVer);
+				
+			}
+			else
+			{
+				gp_WritingWord(7310+nCarPos,10000);
+
+				gp_WritingWord(7320+nCarPos,10000);
+				gp_WritingWord(7330+nCarPos,10000);
+			}
+
+
+			nCarHo++;
+		}
+		else
+		{
+			gp_WritingWord(7310+nCarPos,10000);
+			gp_WritingWord(7320+nCarPos,10000);
+			gp_WritingWord(7330+nCarPos,10000);
+		}
+	}
+}
+
+/*********************************************************/
+/* 디지털 I/F 화면                                       */
+/*********************************************************/
+USHORT gp_GetAsInfScreenNo(int nSelCarHo)
+{
+	switch(TRTYPE(m_CC_Info.RxInfo[nSelCarHo].Head.chHexaID[0]))
+	{
+	case TRTYPE_TC: return 6005;
+	case TRTYPE_T1: return 6007;
+	case TRTYPE_T2: return 6008;
+	case TRTYPE_MD: return 6006;
+	}
+
+	return m_TcThis.wCurScrNo;
+}
+
+void gp_B6005()
+{
+	USHORT wForm;
+	int i,nCarHo;
+	LPBYTE pchData = m_CC_Info.RxInfo[nCarHo].Head.ccDi;
+
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) wForm |= (1<<nCarHo);
+
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+	gp_WritingWord(2949,m_TcThis.bCC_ComFault[m_nSelCarHo] ? BIT00 : 0);
+
+	/* ccDi */
+	pchData = m_CC_Info.RxInfo[m_nSelCarHo].Head.ccDi;
+	for(i=0;i<6;i++)
+	{
+		gp_WritingWord(2950+i,pchData[i]);
+	}
+
+		/* tcDi */
+	pchData = (LPBYTE)&m_pTc[!m_nSelCarHo]->tcDi;
+	for(i=0;i<4;i++)
+	{
+		gp_WritingWord(2956+i,pchData[i]);
+	}
+}
+
+void gp_B6006()
+{
+	USHORT wForm;
+	int i,nCarHo;
+	BOOL bCommFault;
+	LPBYTE pchData = m_CC_Info.RxInfo[nCarHo].Head.ccDi;
+
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) wForm |= (1<<nCarHo);
+
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+	bCommFault = m_TcThis.bCC_ComFault[m_nSelCarHo];
+	gp_WritingWord(2949,m_TcThis.bCC_ComFault[m_nSelCarHo] ? BIT00 : 0);
+
+	/* ccDi */
+	pchData = m_CC_Info.RxInfo[m_nSelCarHo].Head.ccDi;
+	for(i=0;i<6;i++)
+	{
+		gp_WritingWord(2950+i,bCommFault ? 0 : pchData[i]);
+	}
+
+}
+
+void gp_B6009()
+{
+	USHORT wForm;
+	int i,nCarHo,nLSysID = LSYSID_BRAKE;
+	BOOL bCommFault;
+
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) 
+	{
+		if(op_IsExistLSys(nCarHo,nLSysID)) wForm |= (1<<nCarHo);
+	}
+
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+	bCommFault = !op_IsValideLinkOK(m_nSelCarHo,nLSysID);
+	gp_WritingWord(2949, bCommFault ? BIT00 : 0);
+
+	for(i=0;i<m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.nSize;i++)
+	{
+		gp_WritingWord(2960+i,bCommFault ? 0 : m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.chDataPack[2+i]);
+	}
+
+}
+
+void gp_B6010()
+{
+	USHORT wForm;
+	int i,nCarHo,nLSysID = LSYSID_SIV;
+	BOOL bCommFault;
+	
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) 
+	{
+		if(op_IsExistLSys(nCarHo,nLSysID)) wForm |= (1<<nCarHo);
+	}
+
+	
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+	bCommFault = !op_IsValideLinkOK(m_nSelCarHo,nLSysID);
+	gp_WritingWord(2949, bCommFault ? BIT00 : 0);
+
+	for(i=0;i<m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.nSize;i++)
+	{
+		
+		gp_WritingWord(2980+i,bCommFault ? 0 : m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.chDataPack[2+i]);
+	}
+
+}
+
+void gp_B6011()
+{
+	USHORT wForm;
+	int i,nCarHo,nLSysID = LSYSID_CI;
+	BOOL bCommFault;
+	
+	wForm = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) 
+	{
+		if(op_IsExistLSys(nCarHo,nLSysID)) wForm |= (1<<nCarHo);
+	}
+
+	gp_WritingWord(2800,wForm);
+	gp_WritingWord(2801,1<<m_nSelCarHo);
+	bCommFault = !op_IsValideLinkOK(m_nSelCarHo,nLSysID);
+	gp_WritingWord(2949, bCommFault ? BIT00 : 0);
+
+	for(i=0;i<m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.nSize;i++)
+	{
+		gp_WritingWord(3010+i,bCommFault ? 0 : m_CC_Info.RxInfo[m_nSelCarHo].pLSysRx[nLSysID]->Body.chDataPack[3+i]);
+	}
+}
+
+
+
+/*********************************************************/
+/* 버튼(T태그) 처리기                                    */
+/* 버튼의 13번 ADDRESS의 상수를 받아서 처리한다.         */
+/*********************************************************/
+BOOL gp_ButtonProcess(const UCHAR Ptl[],int size)
+{
+	int i,nTemp;
+	char chBuf[GP_MAX_PTL];
+	char szTemp[10];
+	UCHAR * pchTemp;
+	USHORT nToChangeScr = m_TcThis.wCurScrNo;
+	USHORT wCurScrNo = m_TcThis.wCurScrNo;
+
+	if(size == 0)
+	{
+		INT_TRACE("프로토콜 길이가 없음\n");
+		return FALSE;
+	}
+
+	switch(Ptl[0])
+	{
+	case 34:
+		if(wCurScrNo == 250) m_bAsModeActive ^= TRUE;
+		break;
+	case 35:
+		if(m_bAsModeActive)
+		{
+			m_AsModeCounter++;
+			if(m_AsModeCounter == 5) 
+			{
+				nToChangeScr = 6000;		/* AS MODE */
+				m_AsModeCounter = 0;
+			}
+		}
+		break;
+	case 36:
+		if(ISRANGE_ASMODE(wCurScrNo)) 
+		{
+			nToChangeScr = 6001;		/* AS MODE - 펌웨어*/
+		}
+		break;
+	case 37:
+		switch(wCurScrNo) /* 펌웨어 다운로드 화면 */
+		{
+		case 6001:
+			gp_FirmwareFindEvent();
+			break;
+		}
+		break;
+	case 38:
+		if(wCurScrNo == 6001) 
+		{
+			gp_FirmwareFileSelect(0);
+		}
+		break;
+	case 39:
+		if(wCurScrNo == 6001) 
+		{
+			gp_FirmwareFileSelect(1);
+		}
+		break;
+	case 40:
+		switch(wCurScrNo) 
+		{
+		case 6001:
+			gp_FirmwareFileSelect(2);
+			break;
+		}
+		break;
+	case 41: 
+		switch(wCurScrNo) 
+		{
+		case 6001: /* 펌웨어 다운로드 확인 버튼 */
+			gp_FirmwareDownStart();
+			break;
+		}
+		break;
+	case 42: 
+		switch(wCurScrNo) 
+		{
+		case 6001: /* 펌웨어 다운로드 취소 버튼 */
+			gp_FirmwareDataCancel();
+			break;
+		case 6002: /* Memory Clear 확인 */
+			if(m_wClearMemorySel)
+			{
+				gp_B6002_ClearMemoryEvent();
+			}
+			break;
+		}
+	case 43:
+		if(ISRANGE_ASMODE(wCurScrNo)) nToChangeScr = 6002;
+		break;
+	case 49:
+		if(ISRANGE_ASMODE(wCurScrNo)) nToChangeScr = 6003;
+		break;
+	case 50: /* 운전화면 전환요청*/
+		nToChangeScr = 10;
+		break;
+	case 51:
+		nToChangeScr = 20;
+		break;
+	case 52:
+		m_nFaultStatePage = 0;
+		nToChangeScr = 30;
+		break;
+	case 53:
+		if(ISRANGE_NORMALMODE(wCurScrNo) || wCurScrNo==100)
+		{
+			m_nOldFaultViewScrNo = m_TcThis.wCurScrNo;
+			nToChangeScr = 500;
+		}
+		break;
+	case 54:
+		nToChangeScr = 40;
+		break;
+	case 55:	/* 검수화면 진입 */
+		switch(wCurScrNo)
+		{
+		case 310:	/* 화면검사 */
+			nToChangeScr = 315;
+			break;
+		case 315:
+			nToChangeScr = 320;
+			break;
+		case 320:
+			nToChangeScr = 325;
+			break;
+		case 325:
+			nToChangeScr = 100;
+			break;
+		default:
+			if(wCurScrNo <100) nToChangeScr = 90;
+			if(ISRANGE_ASMODE(wCurScrNo)) nToChangeScr = 100;
+			else nToChangeScr = 100;
+			if(ISRANGE_SETMODE(wCurScrNo)) gp_CursorDestroy(wCurScrNo);
+			break;
+		}
+		break;
+	case 56:
+		nToChangeScr = 110;
+		break;
+	case 57:
+		nToChangeScr = 120;
+		break;
+	case 58:
+		if(wCurScrNo == 6000) tg_SetSlave();
+		else nToChangeScr = 130;
+		break;
+	case 59:
+		if(wCurScrNo == 6000) tg_SetMaster();
+		else nToChangeScr = 140;
+		break;
+	case 60:
+		if(wCurScrNo == 100) 
+		{
+			nToChangeScr = 150;
+			m_nSelCarHo = m_TcThis.nCarHo;
+		}
+		else if(wCurScrNo == 160) nToChangeScr = 150;
+
+		break;
+	case 61:
+		nToChangeScr = 170;
+		tg_SetAutoDownBrake();
+		break;
+	case 62:
+		nToChangeScr = 180;
+		tg_SetAutoDownBrake();
+		break;
+	case 63:
+		nToChangeScr = 190;
+		tg_SetAutoDownBrake();
+		break;
+	case 64:
+		nToChangeScr = 200;
+		tg_SetAutoDownBrake();
+		break;
+	case 65:
+		nToChangeScr = 210;
+		gp_CursorInit(nToChangeScr);
+		break;
+	case 66:
+		nToChangeScr = 220;
+		gp_CursorInit(nToChangeScr);
+		break;
+	case 67:
+		nToChangeScr = 230;
+		break;
+	case 68:
+		if(wCurScrNo == 100) 
+		{
+			nToChangeScr = 270;
+			m_nSelCarHo = m_TcThis.nCarHo;
+		}
+		break;
+	case 69:
+		if(wCurScrNo == 6003) tg_SetChgValByMComm(MC_MAXTRIGCLEAR);
+		else 
+		{
+			tg_SetChgValByMComm(MC_VER_REQ);
+			nToChangeScr = 250;
+		}
+		break;
+	case 70:
+		nToChangeScr = 310;
+		break;
+	case 72:
+		switch(wCurScrNo) 
+		{
+		case 6001:
+			gp_FirmwareSelfSystemToggle();		/* 다운로드시 자기 것만 */
+			break;
+		}
+		break;
+	case 73:
+		if(wCurScrNo == 500)
+		{
+			nToChangeScr = m_nOldFaultViewScrNo ? m_nOldFaultViewScrNo : 10;
+		}
+		break;
+	case 74: /* 이전페이지 */
+		if(wCurScrNo == 30) /* 출고화면 */
+		{
+			if(m_nFaultStatePage>0) m_nFaultStatePage--;
+		}
+		else if(wCurScrNo == 160)
+		{
+			if(m_nFaultStatePage>0) m_nFaultStatePage--;
+		}
+		else if(ISRANGE_INTERFACE(wCurScrNo))  nToChangeScr = wCurScrNo-1;
+		else if(ISRANGE_SETMODE(wCurScrNo)) gp_ButtonUp(wCurScrNo);
+		break;
+	case 75: /* 다음페이지 */
+		if(wCurScrNo == 30) /* 출고화면 */
+		{
+			if(m_nFaultStatePage+1<gp_B30_GetMaxPage()) m_nFaultStatePage++;
+		}
+		else if(wCurScrNo == 160)
+		{
+			if(m_nFaultStatePage+1<gp_GetRecFaultMaxPage()) m_nFaultStatePage++;
+		}
+		else if(ISRANGE_INTERFACE(wCurScrNo))  nToChangeScr = wCurScrNo+1;
+		else if(ISRANGE_ASMODE(wCurScrNo)) nToChangeScr = 6004;
+		else if(ISRANGE_SETMODE(wCurScrNo)) gp_ButtonDown(wCurScrNo);
+		break;
+	case 76:
+		if(ISRANGE_SETMODE(wCurScrNo)) gp_ButtonRight(wCurScrNo);
+		break;
+	case 77:
+		if(ISRANGE_SETMODE(wCurScrNo)) gp_ButtonLeft(wCurScrNo);
+		break;
+	case 78:
+		if(wCurScrNo == 500) /* 이전고장 */
+		{
+			if(m_nSetFaultLine > 0) 
+			{
+				m_nSetFaultLine--;
+				gp_B500();
+			}
+		}
+		break;
+	case 79:
+		if(wCurScrNo == 500) /* 다음고장 */
+		{
+			if(m_nSetFaultLine < (m_nFCodeTop-1)) 
+			{
+				m_nSetFaultLine++;
+				gp_B500();
+			}
+		}
+		break;
+	case 80:	/* 고장기록 정보 확인 */
+		if(wCurScrNo == 150) nToChangeScr = 160;
+		else if(wCurScrNo == 140) op_SivTestStart();
+		break;
+
+	case 100:case 101:case 102:case 103:case 104: /* 차량선택 */
+	case 105:case 106:case 107:case 108:case 109:
+		if((Ptl[0]-100) < m_nTrainSize)
+		{
+			m_nSelCarHo = (Ptl[0]-100);
+			if(ISRANGE_INTERFACE(wCurScrNo))  nToChangeScr = gp_GetInterfaceScreenNo(m_nSelCarHo);
+			else if(ISRANGE_ASIFSCR(wCurScrNo))  nToChangeScr = gp_GetAsInfScreenNo(m_nSelCarHo);
+		}
+
+		if(ISRANGE_SETMODE(wCurScrNo)) gp_CursorInput(wCurScrNo, Ptl[0]);
+
+		break;
+	case 110:
+		if(ISRANGE_SETMODE(wCurScrNo))
+		{
+			gp_SetModeInput(wCurScrNo);
+			gp_CursorDestroy(wCurScrNo);
+		}
+		break;
+	case 128:/* 중고장 전체확인 버튼 */
+		if(ISRANGE_FISMODE(m_TcThis.wCurScrNo))
+		{
+			if(!m_wBeforeFaultScreenNo) m_wBeforeFaultScreenNo = 10;
+			op_FaultListAllCheck();
+			m_nFaultStatePage = 0;
+			nToChangeScr = 30;
+		}
+		break;
+	case 131:
+		if(ISRANGE_FISMODE(m_TcThis.wCurScrNo))
+		{
+			op_FaultListCheck(m_pEventedFaultList);
+			nToChangeScr = m_wBeforeFaultScreenNo;
+		}
+		else if(ISRANGE_ASMODE(wCurScrNo)) nToChangeScr = 6000;
+		break;
+	case 132:
+		if(wCurScrNo == 6002) gp_Clear_DataSelect(BIT00);
+		break;
+	case 133:
+		if(wCurScrNo == 6002) gp_Clear_DataSelect(BIT01);
+		break;
+	case 134:
+		if(wCurScrNo == 6002) gp_Clear_DataSelect(BIT02);
+		break;
+	case 135:
+		if(wCurScrNo == 6002) gp_Clear_DataSelect(BIT03);
+		break;
+	case 140:
+		if(ISRANGE_ASMODE(wCurScrNo)) 
+		{
+			nToChangeScr = 6005;
+			m_nSelCarHo = m_TcThis.nCarHo;
+		}
+		break;
+	case 141:
+		if(ISRANGE_ASMODE(wCurScrNo)) 
+		{
+			nToChangeScr = 6009;
+			if(!op_IsExistLSys(m_nSelCarHo,LSYSID_BRAKE)) m_nSelCarHo = op_GetFirstLSysCarType(LSYSID_BRAKE);
+		}
+		break;
+	case 142:
+		if(ISRANGE_ASMODE(wCurScrNo)) 
+		{
+			nToChangeScr = 6010;
+			if(!op_IsExistLSys(m_nSelCarHo,LSYSID_SIV)) m_nSelCarHo = op_GetFirstLSysCarType(LSYSID_SIV);
+		}
+		break;
+	case 143:
+		if(ISRANGE_ASMODE(wCurScrNo)) 
+		{
+			nToChangeScr = 6011;
+			if(!op_IsExistLSys(m_nSelCarHo,LSYSID_CI)) m_nSelCarHo = op_GetFirstLSysCarType(LSYSID_CI);
+		}
+		break;
+	case 145:
+		switch(wCurScrNo)
+		{
+		case 170:
+			printf("FltRec-download ....\n");
+			gp_B170_Download();
+			break;
+		case 180:
+			printf("DistRec-download ....\n");
+			gp_B180_Download();
+			break;
+		case 190:
+			printf("DrvRec-download ....\n");
+			gp_B190_Download();
+			break;
+		case 200:
+			printf("LoadRec-download ....\n");
+			gp_B200_Download();
+			break;
+		}
+		break;
+
+
+	case 200:case 201:case 202:case 203:case 204:
+	case 205:case 206:case 207:case 208:case 209:
+		gp_KeyPadEvent((Ptl[0] - 200));
+		break;
+	case 211:	/* key pad clear */
+		gp_KeyPadClear();
+		break;
+	case 212:	/* key pad set */
+		switch(wCurScrNo)
+		{
+		case 90: /* 검수메뉴 패스워드 */
+			if(m_wRawKeyPadNumber) nToChangeScr = 100;
+			break;
+		}
+		break;
+	case 220:
+		
+		break;
+	default:
+		INT_TRACE("UnRegisted Interrupt [SCN:%d ,I:%d]\n",wCurScrNo,Ptl[0]);
+	}
+	
+	printf("UnRegisted Interrupt [SCN:%d ,I:%d]\n",m_TcThis.wCurScrNo,Ptl[0]);
+	if(m_TcThis.wCurScrNo != nToChangeScr) gp_ScreenChangeAp(nToChangeScr);
+	return TRUE;
+}
+
+
+/*********************************************************/
+/* GP의 화면을 전환                                      */
+/* - 화면을 한번만 업데이트한다.                         */
+/*********************************************************/
+void gp_ScreenInitUpdate(int nScrNo)
+{
+	int i;
+	char szTemp[30];
+	LPBYTE pchTemp;
+	switch(nScrNo)
+	{
+	case 10:
+		break;
+	case 20:
+		memset(m_nCiCutCount,0,sizeof(m_nCiCutCount));
+		break;
+	case 90:
+		gp_KeyPadClear();
+		break;
+	case 110:
+		memset(m_nCiCutCount,0,sizeof(m_nCiCutCount));
+		tg_MotMemoryReset();
+		break;
+	case 130:
+		memset(m_nCiCutCount,0,sizeof(m_nCiCutCount));
+		break;
+	case 150:gp_B150_Init();break;
+
+	case 170:
+	case 180:
+	case 190:
+	case 200:
+		gp_WritingWStr(8050,"");
+		gp_WritingWord(593,0);
+		break;
+
+	case 230:gp_B230();break;
+	case 270:gp_B270();break;
+	case 271:gp_B271();break;
+	case 272:gp_B272();break;
+	case 273:gp_B273();break;
+	case 274:gp_B274();break;
+	case 275:gp_B275();break;
+	case 276:gp_B276();break;
+	case 279:gp_B279();break;
+	case 280:gp_B280();break;
+	case 281:gp_B281();break;
+	case 282:gp_B282();break;
+		break;
+	case 500: gp_B500();break;
+	case 510: gp_B510();break;
+		
+	}
+	gp_ScreenUpdate(nScrNo);
+}
+
+/*********************************************************/
+/* GP의 화면을 업데이트                                  */
+/* - 주기적으로 화면을 업데이트한다.                     */
+/*********************************************************/
+void gp_ScreenUpdate(int nScrNo)
+{
+	switch(nScrNo)
+	{
+	case 10:		/* 운전정보 1*/
+		gp_B10();
+		break;
+	case 20:		/* 운전정보 2*/
+		gp_B20();
+		break;
+	case 30:
+		gp_B30();
+		break;
+	case 40:
+		gp_B40();
+		break;
+	case 110:		/* 운전 성능 정보*/
+		gp_B110();
+		break;
+	case 120:		/* 제동 확인 정보*/
+		gp_B120();
+		break;
+	case 130:		/* 기동 확인 정보*/
+		gp_B130();
+		break;
+	case 140:		/* SIV 동작 확인 정보*/
+		gp_B140();
+		break;
+	case 150:		/* SIV 동작 확인 정보*/
+		gp_B150();
+		break;
+	case 160:
+		gp_B160(m_nSelCarHo);
+		break;
+	case 170:gp_B170();break;
+	case 180:gp_B180();break;
+	case 190:gp_B190();break;
+	case 200:gp_B200();break;
+	case 210:		/* 초기 설정 */
+		break;
+	case 220:		/* 초기 설정 */
+		break;
+	case 230:gp_B230();break;
+	case 250:gp_B250();break;
+	case 270:gp_B270();break;
+	case 271:gp_B271();break;
+	case 272:gp_B272();break;
+	case 273:gp_B273();break;
+	case 274:gp_B274();break;
+	case 275:gp_B275();break;
+	case 276:gp_B276();break;
+	case 279:gp_B279();break;
+	case 280:gp_B280();break;
+	case 281:gp_B281();break;
+	case 282:gp_B282();break;
+	
+	case 6000:
+		gp_B6000();
+		break;
+	case 6001:			/* ASMODE : 펌웨어 */
+		gp_B6001();
+		break;
+	case 6002:			/* ASMODE : 초기화 */
+		gp_B6002();
+		break;
+	case 6003:
+		gp_B6003();
+		break;
+	case 6004:
+		gp_B6004();
+		break;
+	case 6005:
+		gp_B6005();
+		break;
+	case 6006:
+	case 6007:
+	case 6008:
+		gp_B6006();
+		break;
+	case 6009: gp_B6009();break;
+	case 6010: gp_B6010();break;
+	case 6011: gp_B6011();break;
+	}
+}
+
+void gp_ManagerPushEvent()
+{
+	if(m_TcThis.wCurScrNo < 100) gp_ScreenChangeAp(100);
+	else if(!ISRANGE_ASMODE(m_TcThis.wCurScrNo)) gp_ScreenChangeAp(10);
+}
+
+
+
+/*********************************************************/
+/* 현재 GP의 화면번호를 가져온다.                        */
+/*********************************************************/
+void gp_ControlPowerOff()
+{
+	gp_ScreenChangeAp(2);
+}
+
+/*********************************************************/
+/* 현재 GP의 화면번호를 가져온다.                        */
+/*********************************************************/
+void gp_GetScreenNo()
+{
+	printf("Current Screen No = %d\n",m_TcThis.wCurScrNo);
+}
+
+void gp_LineMessageBar(LPBYTE szMessage)
+{
+	gp_WritingWStr(8050,szMessage);
+}
+
+void gp_OnMajorFaultEvent(PFAULTLIST pFaultList)
+{
+	if(pFaultList)
+	{
+		if(!ISRANGE_FISMODE(m_TcThis.wCurScrNo) && SCRNO_DOWNLOAD != m_TcThis.wCurScrNo && !ISRANGE_ASMODE(m_TcThis.wCurScrNo)
+			&& !ISRANGE_INTERFACE(m_TcThis.wCurScrNo) && !op_IsOnTest())
+		{
+			m_wBeforeFaultScreenNo = m_TcThis.wCurScrNo;
+			m_pEventedFaultList = pFaultList;
+			taskSpawn("xFBuzzer",100,0,10000,gp_BuzzerTimer,1000,0,0,0,0,0,0,0,0,0);
+			
+			gp_ScreenChangeAp(510);
+		}
+		
+	}
+}
+
+void gp_AddFaultListEvent()
+{
+}
+
+void gp_CursorInit(int nScrNo)
+{
+	int nCarHo;
+	int nPos;
+	UCHAR szStr[50];
+
+	sprintf(szStr, " ");
+	gp_WritingWStr(8050, szStr);
+
+	if(nScrNo == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor > 0)
+		{
+			if(m_nSelCursor < 30)
+			{
+				nPos = m_nSelCursor / 3;
+				gp_WritingWord(1131+nPos,0x00);
+			}
+			else if(m_nSelCursor < 46)
+			{
+				nPos = (m_nSelCursor-30) / 8;
+				gp_WritingWord(1141+nPos,0x00);
+			}
+			else if(m_nSelCursor < 49)
+			{
+				gp_WritingWord(1143,0x00);
+			}
+			else 
+			{
+				nPos = (m_nSelCursor-49) / 2;
+				gp_WritingWord(1144+nPos,0x00);
+			}
+		}
+
+		for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				m_nSelCursor = nCarHo*3;
+				gp_WritingWord(1131+nCarHo,0x01);
+				gp_B210();
+				break;
+			}
+		}
+		
+	}
+	if(nScrNo == SETMODE_TIMEINFO)
+	{
+		if(m_nSelCursor > 0) gp_WritingWord(1179 + (m_nSelCursor / 2), 0x00);
+		gp_WritingWord(1179, 0x01);
+		m_nSelCursor = 0;
+		gp_B220();
+	}
+}
+
+void gp_ButtonDown(int nScreen)
+{
+	int nPos, nOldPos = m_nSelCursor, nAddress=0;
+	
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor < 30)
+		{
+			nPos = 30;
+		}
+		else if(m_nSelCursor < 46)
+		{
+			nPos = 46;
+		}
+		else if(m_nSelCursor < 49)
+		{
+			nPos = 49;
+		}
+		else if(m_nSelCursor < 51)
+		{
+			nPos = 51;
+		}
+		else
+		{
+			nPos = m_nSelCursor;
+		}
+		
+		if(nPos != nOldPos)
+		{
+			nAddress = gp_InitSetCursorPosition(nOldPos);
+			gp_WritingWord(1131+nAddress,0x00);
+			nAddress = gp_InitSetCursorPosition(nPos);
+			printf("Down : %d\n",nAddress);
+			gp_WritingWord(1131+nAddress,0x01);	
+			m_nSelCursor = nPos;
+		}
+	}
+	else
+	{
+		if(m_nSelCursor < 6) nPos = 6;
+		else nPos = m_nSelCursor;
+		if(nPos != nOldPos)
+		{
+			printf("Down : %d %d\n",nPos, nOldPos);
+			gp_WritingWord(1179+(nOldPos/2), 0x00);
+			gp_WritingWord(1179+(nPos/2), 0x01);
+			m_nSelCursor = nPos;
+		}
+	}
+}
+
+void gp_ButtonUp(int nScreen)
+{
+	int nPos=m_nSelCursor, nOldPos = m_nSelCursor, nAddress=0, nCarHo;
+
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor >= 51)
+		{
+			nPos = 49;
+		}
+		else if(m_nSelCursor >= 49)
+		{
+			nPos = 46;
+		}
+		else if(m_nSelCursor >= 46)
+		{
+			nPos = 30;
+		}
+		else if(m_nSelCursor >= 30)
+		{
+			for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+			{
+				if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+				{
+					nPos = nCarHo*3;
+					break;
+				}
+			}
+		}
+		else
+		{
+			nPos = m_nSelCursor;
+		}
+		
+		if(nPos != nOldPos)
+		{
+			nAddress = gp_InitSetCursorPosition(nOldPos);
+			gp_WritingWord(1131+nAddress,0x00);
+			nAddress = gp_InitSetCursorPosition(nPos);
+			printf("Down : %d\n",nAddress);
+			gp_WritingWord(1131+nAddress,0x01);	
+			m_nSelCursor = nPos;
+		}
+	}
+	else
+	{
+		if(m_nSelCursor >= 6) nPos = 0;
+		else nPos = m_nSelCursor;
+
+		if(nPos != nOldPos)
+		{
+			printf("Up : %d %d\n",nPos, nOldPos);
+			gp_WritingWord(1179+(nOldPos/2), 0x00);
+			gp_WritingWord(1179+(nPos/2), 0x01);
+			m_nSelCursor = nPos;
+		}
+	}
+}
+
+void gp_ButtonLeft(int nScreen)
+{
+	int nPos, nOldPos, nCurIdx;
+	UCHAR chBit;
+
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor >= 0 && m_nSelCursor < 30)
+		{
+			nCurIdx = m_nSelCursor - 0;
+			nOldPos = nCurIdx / 3;
+			
+			while(nCurIdx < 30)
+			{
+				nCurIdx++;
+				nPos = nCurIdx / 3;
+				if(TRTYPE(m_CC_Info.RxInfo[nPos].Head.chHexaID[0]) == TRTYPE_MD)
+				{
+					gp_WritingWord(1131+nOldPos,0x00);	
+					chBit = nCurIdx % 3;
+					gp_WritingWord(1131+nPos,0x01<<chBit);
+					m_nSelCursor = nCurIdx;
+					break;
+				}
+			}
+			if(nCurIdx >= 30) gp_ButtonDown(nScreen);
+		}
+		else if(m_nSelCursor >= 30 && m_nSelCursor < 46)
+		{
+			nCurIdx = m_nSelCursor - 30;
+			nOldPos = nCurIdx / 8;
+			nCurIdx++;
+			nPos = nCurIdx / 8;
+			chBit = nCurIdx % 8;
+			if(nCurIdx < 16)
+			{
+				gp_WritingWord(1141+nOldPos,0x00);
+				gp_WritingWord(1141+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 30;
+			}
+			else
+			{
+				gp_ButtonDown(nScreen);
+			}
+		}
+		else if(m_nSelCursor >= 46 && m_nSelCursor < 49)
+		{
+			nCurIdx = m_nSelCursor - 46;
+			nOldPos = nCurIdx / 3;
+			nCurIdx++;
+			nPos = nCurIdx / 3;
+			chBit = nCurIdx % 3;
+			if(nCurIdx < 3)
+			{
+				gp_WritingWord(1143+nOldPos,0x00);
+				gp_WritingWord(1143+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 46;
+			}
+			else
+			{
+				gp_ButtonDown(nScreen);
+			}
+		}
+		else if(m_nSelCursor >= 49 && m_nSelCursor < 51)
+		{
+			nCurIdx = m_nSelCursor - 49;
+			nOldPos = nCurIdx / 2;
+			nCurIdx++;
+			nPos = nCurIdx / 2;
+			chBit = nCurIdx % 2;
+			if(nCurIdx < 2)
+			{
+				gp_WritingWord(1144+nOldPos,0x00);
+				gp_WritingWord(1144+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 49;
+			}
+			else
+			{
+				gp_ButtonDown(nScreen);
+			}
+		}
+		else if(m_nSelCursor >= 51 && m_nSelCursor < 53)
+		{
+			nCurIdx = m_nSelCursor - 51;
+			nOldPos = nCurIdx / 2;
+			nCurIdx++;
+			nPos = nCurIdx / 2;
+			chBit = nCurIdx % 2;
+			if(nCurIdx < 2)
+			{
+				gp_WritingWord(1145+nOldPos,0x00);
+				gp_WritingWord(1145+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 51;
+			} 
+		}
+	}
+	else
+	{
+		nCurIdx = m_nSelCursor;
+		nOldPos = nCurIdx / 2;
+		nCurIdx++;
+		nPos = nCurIdx / 2;
+		chBit = nCurIdx % 2;
+		if(nCurIdx < 12)
+		{
+			gp_WritingWord(1179+nOldPos,0x00);
+			gp_WritingWord(1179+nPos,0x01<<chBit);
+			m_nSelCursor = nCurIdx;
+		} 
+	}
+}
+
+void gp_ButtonRight(int nScreen)
+{
+	int nPos, nOldPos, nCurIdx;
+	UCHAR chBit;
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor >= 0 && m_nSelCursor < 30)
+		{
+			nCurIdx = m_nSelCursor - 0;
+			nOldPos = nCurIdx / 3;
+			
+			while(nCurIdx > 0)
+			{
+				nCurIdx--;
+				nPos = nCurIdx / 3;
+				if(TRTYPE(m_CC_Info.RxInfo[nPos].Head.chHexaID[0]) == TRTYPE_MD)
+				{
+					gp_WritingWord(1131+nOldPos,0x00);	
+					chBit = nCurIdx % 3;
+					gp_WritingWord(1131+nPos,0x01<<chBit);
+					m_nSelCursor = nCurIdx;
+					break;
+				}
+			}
+		}
+		else if(m_nSelCursor >= 30 && m_nSelCursor < 46)
+		{
+			nCurIdx = m_nSelCursor - 30;
+			nOldPos = nCurIdx / 8;
+			
+			nCurIdx--;
+			nPos = nCurIdx / 8;
+			chBit = nCurIdx % 8;
+			if(nCurIdx >= 0)
+			{
+				gp_WritingWord(1141+nOldPos,0x00);
+				gp_WritingWord(1141+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 30;
+			}
+			else
+			{
+				gp_ButtonUp(nScreen);
+			}
+			
+		}
+		else if(m_nSelCursor >= 46 && m_nSelCursor < 49)
+		{
+			nCurIdx = m_nSelCursor - 46;
+			nOldPos = nCurIdx / 3;
+			
+			nCurIdx--;
+			nPos = nCurIdx / 3;
+			chBit = nCurIdx % 3;
+			if(nCurIdx >= 0)
+			{
+				gp_WritingWord(1143+nOldPos,0x00);
+				gp_WritingWord(1143+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 46;
+			}
+			else
+			{
+				gp_ButtonUp(nScreen);
+			}
+		}
+		else if(m_nSelCursor >= 49 && m_nSelCursor < 51)
+		{
+			nCurIdx = m_nSelCursor - 49;
+			nOldPos = nCurIdx / 2;
+			
+			nCurIdx--;
+			nPos = nCurIdx / 2;
+			chBit = nCurIdx % 2;
+			if(nCurIdx >= 0)
+			{
+				gp_WritingWord(1144+nOldPos,0x00);
+				gp_WritingWord(1144+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 49;
+			}
+			else
+			{
+				gp_ButtonUp(nScreen);
+			}
+		}
+		else if(m_nSelCursor >= 51 && m_nSelCursor < 53)
+		{
+			nCurIdx = m_nSelCursor - 51;
+			nOldPos = nCurIdx / 2;
+			
+			nCurIdx--;
+			nPos = nCurIdx / 2;
+			chBit = nCurIdx % 2;
+			if(nCurIdx >= 0)
+			{
+				gp_WritingWord(1145+nOldPos,0x00);
+				gp_WritingWord(1145+nPos,0x01<<chBit);
+				m_nSelCursor = nCurIdx + 51;
+			}
+			else
+			{
+				gp_ButtonUp(nScreen);
+			}
+		}
+	}
+	else
+	{
+		nCurIdx = m_nSelCursor;
+		nOldPos = nCurIdx / 2;
+		nCurIdx--;
+		nPos = nCurIdx / 2;
+		chBit = nCurIdx % 2;
+		if(nCurIdx >= 0)
+		{
+			gp_WritingWord(1179+nOldPos,0x00);
+			gp_WritingWord(1179+nPos,0x01<<chBit);
+			m_nSelCursor = nCurIdx;
+		} 
+	}
+
+}
+
+int gp_InitSetCursorPosition(int nPos)
+{
+	int nSelPos = 0;
+
+	if((nPos >= 0) && (nPos < 30))
+	{
+		nSelPos = nPos / 3;
+	}
+	
+	if((nPos >= 30) && (nPos < 46))
+	{
+		nSelPos = 10 + ((nPos - 30) / 8);
+	}
+	 
+	if((nPos >= 46) && (nPos < 49))
+	{
+		nSelPos = 12;
+	}
+	
+	if((nPos >= 49) && (nPos < 51))
+	{
+		nSelPos = 13;
+	}
+
+	if((nPos >= 51) && (nPos < 53))
+	{
+		nSelPos = 14;
+	}
+
+	printf("Down Start : %d %d\n",nPos, nSelPos);
+	return nSelPos;
+}
+
+void gp_CursorInput(int nScreen, int nNum)
+{
+	
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor >= 30)
+			nNum = nNum - 100;
+		gp_WritingWord(1076+m_nSelCursor,nNum);
+	}
+	else
+	{
+		nNum = nNum - 100;
+		gp_WritingWord(1167+m_nSelCursor,nNum);
+	}
+
+	gp_ButtonLeft(nScreen);
+}
+
+int gp_SetModeInput(int nScreen)
+{
+	int nToChangeScr = 10;
+
+	if(nScreen == SETMODE_TRAININFO)
+	{
+		gp_ReadingWordData(1076, 30);
+	}
+	else
+	{
+		gp_ReadingWordData(1167, 12);	
+	}
+
+	if(ISRANGE_ASMODE(nScreen)) nToChangeScr = 100;
+	else nToChangeScr = 100;
+
+	return nToChangeScr;
+}
+
+int gp_TrainSetInfo(const UCHAR pSendData[])
+{
+	int i,nCarHo, nPos,nTemp;
+	USHORT wWheelDia[10];
+	UINT nThisDistance,nOppeDistance;
+	USHORT wFormNumber,wPassengerWeight;
+	int nTrainSizeUpdate;
+	UCHAR szStr[50];
+
+	gm_memcpy(wWheelDia,m_pDirectMem->wCarWheelDia,sizeof(wWheelDia));
+	nThisDistance = m_TcThis.nForeverDist;
+	nOppeDistance = m_TcOppe.nForeverDist;
+	wFormNumber = m_pDirectMem->wFormNumber;
+	wPassengerWeight = m_pDirectMem->wPassengerWeight;
+	nTrainSizeUpdate = m_pDirectMem->nTrainSize;
+	
+	if(m_bTraSetRdMode == 1)
+	{
+		for(nCarHo=0;nCarHo < m_nTrainSize; nCarHo++)
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				 nPos = (nCarHo * 3) * 2;
+				 nTemp = ((pSendData[nPos+1] % 100) * 100) + ((pSendData[nPos+3] % 100) * 10) + ((pSendData[nPos+5] % 100) * 1);
+				 
+				 if(ISRANGE(nTemp,780,865))
+				 {
+					 wWheelDia[nCarHo] = nTemp;
+				 }
+				 else
+				 {
+					 sprintf(szStr, "%d호차 차륜경이 설정 범위를 넘어갔습니다.",nCarHo);
+					 gp_WritingWStr(8050, szStr);
+					 return ((nCarHo * 3)+1);
+				 }
+			}
+			else
+			{
+				wWheelDia[nCarHo] = 0;
+			}
+			printf("[%d : %d]",nCarHo,wWheelDia[nCarHo]);
+		}
+		gp_ReadingWordData(1106, 23);
+	}
+	else if(m_bTraSetRdMode == 2)
+	{
+		nThisDistance = (pSendData[1] * 10000000) + (pSendData[3] * 1000000) + (pSendData[5] * 100000) + (pSendData[7] * 10000) + (pSendData[9] * 1000) +
+			(pSendData[11] * 100) + (pSendData[13] * 10) + pSendData[15];
+		nOppeDistance = (pSendData[17] * 10000000) + (pSendData[19] * 1000000) + (pSendData[21] * 100000) + (pSendData[23] * 10000) + (pSendData[25] * 1000) +
+			(pSendData[27] * 100) + (pSendData[29] * 10) + pSendData[31];
+
+		wFormNumber = (pSendData[33] * 100) + (pSendData[35] * 10) + pSendData[37];
+		
+		
+		nTemp = (pSendData[39] * 10) + pSendData[41];
+
+		if(ISRANGE(nTemp, 40, 80))
+		{
+			wPassengerWeight = (USHORT)nTemp;
+		}
+		else
+		{
+			sprintf(szStr, "승객 체중 설정 범위를 넘어갔습니다");
+			gp_WritingWStr(8050, szStr);
+			return 50;
+		}
+		
+		nTrainSizeUpdate = (pSendData[43] * 10) + pSendData[45];
+
+		
+
+	}
+
+	sprintf(szStr, " ");
+	gp_WritingWStr(8050, szStr);
+
+	if(memcmp(m_pDirectMem->wCarWheelDia,wWheelDia,sizeof(wWheelDia)))
+	{
+		gm_memcpy(m_pDirectMem->wCarWheelDia,wWheelDia,sizeof(wWheelDia));
+		tg_SetChgValByMComm(MC_SETWHEELDIA);
+	}
+	if(m_TcThis.nForeverDist != nThisDistance || m_TcOppe.nForeverDist != nOppeDistance)
+	{
+		gm_SetForeverDist(nThisDistance);
+		m_TcOppe.nForeverDist = nOppeDistance;
+		tg_SetChgValByMComm(MC_SETTHISDIST);
+		tg_SetChgValByMComm(MC_SETOPPEDIST);
+	}
+	
+	if(m_pDirectMem->wFormNumber != wFormNumber)
+	{
+		m_pDirectMem->wFormNumber = wFormNumber;
+		tg_SetChgValByMComm(MC_SETFORMNUMBER);
+		printf("=> FormNumber = %04d...\n",wFormNumber);
+	}
+	if(m_pDirectMem->wPassengerWeight != wPassengerWeight)
+	{
+		m_pDirectMem->wPassengerWeight = wPassengerWeight;
+		tg_SetChgValByMComm(MC_SETPSSWEIGHT);
+	}
+	if(m_pDirectMem->nTrainSize != nTrainSizeUpdate)
+	{
+		m_pDirectMem->nTrainSize = nTrainSizeUpdate;
+		tg_SetChgValByMComm(MC_SETTRAINSIZE);
+	}
+	
+	for(i=0;i<3;i++)
+	{
+		sprintf(szStr, "입력 완료");
+		gp_WritingWStr(8050, szStr);
+		taskDelay(200);
+		gp_WritingWStr(8050," ");
+	}
+
+	return 0;
+}
+
+int gp_TimeSetInfo(const UCHAR pSendData[])
+{
+	SYSTIMETYPE pSystime;
+	int nTemp,i;
+	UCHAR szStr[50];
+
+	pSystime.year = ((pSendData[1] << 4) & 0xf0) | (pSendData[3] & 0x0f);
+	nTemp = ((pSendData[5] << 4) & 0xf0) | (pSendData[7] & 0x0f);
+	if(ISRANGE(((((nTemp>>4)&0x0f) * 10)+(nTemp&0x0f)), 1, 12))
+	{
+		pSystime.month = nTemp;
+	}
+	else
+	{
+		sprintf(szStr, "월은 01~12까지 입력 하십시오.");
+			gp_WritingWStr(8050, szStr);
+		return 3;
+	}
+	nTemp = ((pSendData[9] << 4) & 0xf0) | (pSendData[11] & 0x0f);
+	if(ISRANGE(((((nTemp>>4)&0x0f) * 10)+(nTemp&0x0f)), 1, 31))
+	{
+		pSystime.day = nTemp;
+	}
+	else
+	{
+		sprintf(szStr, "일은 01~31까지 입력 하십시오.");
+			gp_WritingWStr(8050, szStr);
+		return 5;
+	}
+	nTemp = ((pSendData[13] << 4) & 0xf0) | (pSendData[15] & 0x0f);
+	if(ISRANGE(((((nTemp>>4)&0x0f) * 10)+(nTemp&0x0f)), 0, 23))
+	{
+		pSystime.hour = nTemp;
+	}
+	else
+	{
+		sprintf(szStr, "시는 00~23까지 입력 하십시오.");
+			gp_WritingWStr(8050, szStr);
+		return 7;
+	}
+	nTemp = ((pSendData[17] << 4) & 0xf0) | (pSendData[19] & 0x0f);
+	if(ISRANGE(((((nTemp>>4)&0x0f) * 10)+(nTemp&0x0f)), 0, 59))
+	{
+		pSystime.minute = nTemp;
+	}
+	else
+	{
+		sprintf(szStr, "분은 00~59까지 입력 하십시오.");
+			gp_WritingWStr(8050, szStr);
+		return 9;
+	}
+	nTemp = ((pSendData[21] << 4) & 0xf0) | (pSendData[23] & 0x0f);
+	if(ISRANGE(((((nTemp>>4)&0x0f) * 10)+(nTemp&0x0f)), 0, 59))
+	{
+		pSystime.second = nTemp;
+	}
+	else
+	{
+		sprintf(szStr, "초는 00~59까지 입력 하십시오.");
+			gp_WritingWStr(8050, szStr);
+		return 11;
+	}
+
+	gm_SetSystemTime(&pSystime);
+	printf("%02x/%02x/%02x_%02x:%02x:%02x\n",pSystime.year,pSystime.month,pSystime.day,pSystime.hour,pSystime.minute,pSystime.second);
+
+	for(i=0;i<3;i++)
+	{
+		sprintf(szStr, "시간입력 완료");
+		gp_WritingWStr(8050, szStr);
+		taskDelay(200);
+		gp_WritingWStr(8050," ");
+	}
+	
+
+	return 0;
+}
+
+void gp_PAInfo()
+{
+	gp_WritingWord(87,op_GetCarTypePaAlarm());
+}
+
+void gp_WTInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			sprintf(szStr, "%d", op_GetPassengerWeight(nCarHo));
+		}
+		gp_WritingWStr(88 + (nCarHo*3), szStr);
+	}
+
+}
+
+void gp_ACInfo()
+{
+	int nCarHo;
+	USHORT wAcOn, wAcOff, wAcNg;
+
+	/* 공기 압축기*/
+	wAcOn = wAcOff = wAcNg =0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				if(( (PCCDITCTYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BYPR ) wAcNg |= (1<<nCarHo);
+				else if(  ((PCCDITCTYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MC1 || ((PCCDITCTYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MC3 )  wAcOn |= (1<<nCarHo);
+				else if( m_CC_Info.xDerive[nCarHo].nCMGR_Counter > 20 ) wAcNg |= (1<<nCarHo);
+				else wAcOff |= (1<<nCarHo);
+			}
+		}
+	}
+	gp_WritingWord(118,wAcOn);
+	gp_WritingWord(120,wAcOff);
+	gp_WritingWord(121,wAcNg);
+
+}
+void gp_ESKInfo()
+{
+	int nCarHo;
+	USHORT wSivOn, wSivOff, wSivNg, wSiv, wTemp,wSivIE;
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		wTemp = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC)
+			{
+				if(nCarHo == (m_nTrainSize-1)) wTemp = 2;
+				else wTemp = 1;
+			}
+			else if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2)
+			{
+				wTemp = 5;
+			}
+			else if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T1)
+			{
+				if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ESK) wTemp = 8;
+				else wTemp = 7;
+			}
+			else 
+			{
+				wTemp = 6;
+			}
+		}
+		else
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC)
+			{
+				if(nCarHo == (m_nTrainSize-1)) wTemp = 4;
+				else wTemp = 3;
+			}
+			else
+			{
+				wTemp = 6;
+			}
+		}
+		gp_WritingWord(1061+nCarHo, wTemp);
+	}
+
+	wSivIE = wSiv = wSivOn = wSivOff = wSivNg = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				if((!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVCN)  && (!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVMFR))  wSivOff |= (1<<nCarHo);
+				else if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVMFR)  wSivNg |= (1<<nCarHo);
+				else if(m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Head.bComFault) wSivIE |= (1<<nCarHo);
+				else if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVCN && (!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVMFR))  wSivOn |= (1<<nCarHo);
+				
+				else wSiv |= (1<<nCarHo);
+			}
+		}
+	}
+	gp_WritingWord(142,wSivIE);
+	gp_WritingWord(144,wSivOn);
+	gp_WritingWord(145,wSivOff);
+	gp_WritingWord(146,wSivNg);
+}
+
+void gp_MCBInfo()
+{
+	int nCarHo;
+	USHORT wMcbOn, wMcbOff, wMcbNg;
+	
+	wMcbOn = wMcbOff = wMcbNg = 0;
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				if(op_IsCiLSysCut(nCarHo))	wMcbNg |= 0x01 << nCarHo;
+				else
+				{
+					if(op_IsHscbStatus(nCarHo) )	wMcbOn |= 0x01 << nCarHo;
+					else wMcbOff |= 0x01 << nCarHo;
+				}
+			}
+		}
+	}
+
+	gp_WritingWord(143, wMcbNg);
+	gp_WritingWord(147, wMcbOn);
+	gp_WritingWord(148, wMcbOff);
+}
+
+void gp_DoorInfo()
+{
+	int nCarHo;
+	USHORT wDoorInfo,wCarDoor;
+	
+
+	wCarDoor =0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		wDoorInfo =0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(nCarHo < m_nTrainSize)
+			{
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS1;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS2 << 1;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS3 << 2;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS4 << 3;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS5 << 4;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS6 << 5;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS7 << 6;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS8 << 7;
+			}
+			/*else
+			{
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS1 << 1;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS2;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS3 << 3;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS4 << 2;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS5 << 5;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS6 << 4;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS7 << 7;
+				wDoorInfo |= ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS8 << 6;
+			}*/
+			
+		}
+		gp_WritingWord(151 + nCarHo, wDoorInfo);
+		wCarDoor |= 0x01<<nCarHo;
+	}
+	gp_WritingWord(149, wCarDoor);
+	gp_WritingWord(150, wCarDoor);
+}
+
+void gp_IMInfo(USHORT wCiCutON,USHORT wCiCutOFF)
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				if(wCiCutOFF & (1<<nCarHo))
+				{
+					/*
+					if(!m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Head.bComFault) 
+					{
+						nValue = abs(((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->IL);
+						nValue = (nValue * 10);
+					}
+					*/
+					nValue = op_GetIMValue(nCarHo);
+					
+					sprintf(szStr, "%d", nValue);
+				}
+			}
+		}
+
+		gp_WritingWord(161+nCarHo, nValue);
+		gp_WritingWStr(340 + (nCarHo*2), szStr);
+	}
+	gp_WritingWord(171, wCiCutON);
+
+}
+void gp_BCInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			nValue = op_GetBcpValue(nCarHo);
+
+			nValue = (nValue * 800) / 0xFF;
+			nValue = ((nValue * 10) / 98);
+			sprintf(szStr, "%1d.%1d", nValue/10, nValue%10);
+		}
+		gp_WritingWord(181+nCarHo, nValue);
+		gp_WritingWStr(191 + (nCarHo*2), szStr);
+	}
+
+}
+
+void gp_ASInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			nValue = op_GetAcpValue(nCarHo);
+			nValue = (nValue * 800) / 0xFF;
+			nValue = ((nValue * 10) / 98);
+			sprintf(szStr, "%1d.%1d", nValue/10, nValue%10);
+		}
+		gp_WritingWord(416+nCarHo, nValue);
+		gp_WritingWStr(426 + (nCarHo*2), szStr);
+	}
+
+
+}
+
+void gp_BEDInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				nValue = ((PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack)->BED;
+				nValue = ((nValue*100)/0xFF);
+				sprintf(szStr, "%3d", nValue);
+			}
+			
+		}
+		gp_WritingWord(446+nCarHo, nValue);
+		gp_WritingWStr(456 + (nCarHo*2), szStr);
+	}
+}
+
+void gp_BEAInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				nValue = ((PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack)->BEA;
+				nValue = ((nValue*100)/0xFF);
+				sprintf(szStr, "%3d", nValue);
+			}
+			
+		}
+		gp_WritingWord(2401+nCarHo, nValue);
+		gp_WritingWStr(2411 + (nCarHo*2), szStr);
+	}
+}
+
+void gp_EFCInfo(USHORT wCiCutON,USHORT wCiCutOFF)
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	USHORT wCiCutState;
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				if(wCiCutOFF & (1<<nCarHo))
+				{
+					nValue = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->EFC;
+					nValue = ((nValue * 2550) / 0xFF);
+					sprintf(szStr, "%d", nValue);
+				}
+			}
+			
+		}
+		gp_WritingWord(486+nCarHo, nValue);
+		gp_WritingWStr(496+(nCarHo*2), szStr);
+		gp_WritingWStr(301+(nCarHo*3), szStr);
+	}
+	gp_WritingWord(516, wCiCutON);
+}
+
+void gp_TEDInfo(USHORT wCiCutON,USHORT wCiCutOFF)
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				if(wCiCutOFF & (1<<nCarHo))
+				{
+					nValue = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->TED;
+					nValue = ((nValue * 1275) / 0xFF) / 10;
+					sprintf(szStr, "%3d", nValue);
+				}
+			}
+		}
+		gp_WritingWord(2441+nCarHo, nValue);
+		gp_WritingWStr(2451 + (nCarHo*2), szStr);
+	}
+	gp_WritingWord(2471, wCiCutON);
+}
+
+void gp_TEInfo(USHORT wCiCutON,USHORT wCiCutOFF)
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=0; nCarHo < m_nTrainSize; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				if(wCiCutOFF & (1<<nCarHo))
+				{
+					nValue = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->TE;
+					nValue = ((nValue * 1275) / 0xFF) / 10;
+					sprintf(szStr, "%d", nValue);
+				}
+			}
+		}
+		gp_WritingWord(526+nCarHo, nValue);
+		gp_WritingWStr(536 + (nCarHo*2), szStr);
+	}
+	gp_WritingWord(556, wCiCutON);
+}
+
+void gp_PWMInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+	
+	for(nCarHo=1; nCarHo < m_nTrainSize-1; nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		nValue = 0;
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if(TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD)
+			{
+				nValue = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->PWM;
+				nValue = ((nValue * 100) / 0xFF);
+				sprintf(szStr, "%3d", nValue);
+			}
+			
+		}
+		gp_WritingWStr(557 + ((nCarHo-1)*2), szStr);
+	}
+}
+
+void gp_DCVInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				nValue = ((PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack)->DCV;
+				nValue = ((nValue * 3570) / 0xFF);
+				if( nValue > 0)	sprintf(szStr, "%d", nValue);
+				else sprintf(szStr, "   0");
+			}
+		}
+		gp_WritingWStr(2481+(nCarHo*2),szStr);
+	}
+}
+
+void gp_VOInfo()
+{
+	int nCarHo, nValue=0;
+	UCHAR szStr[10];
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		nValue=0;
+		memset(szStr,0x00,sizeof(szStr));
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				nValue = ((PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack)->OUTVDC;
+				nValue = ((nValue * 510) / 0xFF);
+				if( nValue > 0)	sprintf(szStr, "%d", nValue);
+				else sprintf(szStr, "0");
+			}
+		}
+		gp_WritingWord(1582+nCarHo, nValue);
+		gp_WritingWStr(1592+(nCarHo*2),szStr);
+	}
+}
+
+void gp_IOInfo()
+{
+	int nCarHo, nValue=0;
+	UCHAR szStr[10];
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		nValue=0;
+		memset(szStr,0x00,sizeof(szStr));
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				nValue = ((PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack)->OUTCDC;
+				nValue = ((nValue * 510) / 0xFF);
+				if( nValue > 0)	sprintf(szStr, "%d", nValue);
+				else sprintf(szStr, "0");
+			}
+		}
+		gp_WritingWord(1612+nCarHo, nValue);
+		gp_WritingWStr(1622+(nCarHo*2),szStr);
+	}
+}
+
+void gp_FOInfo()
+{
+	int nCarHo, nValue;
+	UCHAR szStr[10];
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		memset(szStr,0x00,sizeof(szStr));
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if((TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) || (TRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2))
+			{
+				nValue = ((PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack)->OUTF;
+				nValue = ((nValue * 1275) / 0xFF) / 10;
+				if( nValue > 0)	sprintf(szStr, "%d", nValue);
+				else sprintf(szStr, "0");
+			}
+		}
+		gp_WritingWStr(1642+(nCarHo*3),szStr);
+	}
+}
+
+void gp_SetCursor(int nChangePos)
+{
+	int nPos;
+
+	if(m_nSelCursor > 0)
+	{
+		if(m_nSelCursor < 30)
+		{
+			nPos = m_nSelCursor / 3;
+			gp_WritingWord(1131+nPos,0x00);
+		}
+		else if(m_nSelCursor < 46)
+		{
+			nPos = (m_nSelCursor-30) / 8;
+			gp_WritingWord(1141+nPos,0x00);
+		}
+		else if(m_nSelCursor < 49)
+		{
+			gp_WritingWord(1143,0x00);
+		}
+		else 
+		{
+			nPos = (m_nSelCursor-49) / 2;
+			gp_WritingWord(1144+nPos,0x00);
+		}
+	}
+	m_nSelCursor = nChangePos;
+	gp_ButtonRight(SETMODE_TRAININFO);
+}
+
+void gp_CursorDestroy(int nScrNo)
+{
+	int nPos;
+
+	if(nScrNo == SETMODE_TRAININFO)
+	{
+		if(m_nSelCursor > 0)
+		{
+			if(m_nSelCursor < 30)
+			{
+				nPos = m_nSelCursor / 3;
+				gp_WritingWord(1131+nPos,0x00);
+			}
+			else if(m_nSelCursor < 46)
+			{
+				nPos = (m_nSelCursor-30) / 8;
+				gp_WritingWord(1141+nPos,0x00);
+			}
+			else if(m_nSelCursor < 49)
+			{
+				gp_WritingWord(1143,0x00);
+			}
+			else 
+			{
+				nPos = (m_nSelCursor-49) / 2;
+				gp_WritingWord(1144+nPos,0x00);
+			}
+		}		
+	}
+	if(nScrNo == SETMODE_TIMEINFO)
+	{
+		if(m_nSelCursor > 0) gp_WritingWord(1179 + (m_nSelCursor / 2), 0x00);
+	}
+}
+#endif /* _GP_C_ */

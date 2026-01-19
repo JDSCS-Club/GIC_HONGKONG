@@ -1,0 +1,47 @@
+﻿Build started 2011-05-19 오전 7:17:45.
+     1>Project "D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\SEPTA_LIC.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\SEPTA_LIC.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TC /analyze- /errorReport:prompt main.c user.c
+         user.c
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(250): warning C4013: 'sprintf' undefined; assuming extern returning int
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(301): warning C4101: 'i' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(353): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(325): warning C4101: 'szBuf2' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(757): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1080): warning C4333: '>>' : right shift by too large amount, data loss
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1081): warning C4333: '>>' : right shift by too large amount, data loss
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1414): warning C4018: '>=' : signed/unsigned mismatch
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1226): warning C4101: 'pLic_Cncs' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1217): warning C4101: 'HL' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1217): warning C4101: 'LL' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1209): warning C4101: 'sTimeBuf' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1217): warning C4101: 'LH' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1217): warning C4101: 'HH' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1592): warning C4333: '>>' : right shift by too large amount, data loss
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1593): warning C4333: '>>' : right shift by too large amount, data loss
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1914): warning C4013: 'ConvDec2Hex' undefined; assuming extern returning int
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\user.c(1683): warning C4101: 'i' : unreferenced local variable
+         main.c
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\def.h(98): warning C4005: 'NULL' : macro redefinition
+                 d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\stdio.h(67) : see previous definition of 'NULL'
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\main.c(65): warning C4013: 'asm' undefined; assuming extern returning int
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\main.c(68): warning C4013: 'Debug3xInit' undefined; assuming extern returning int
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\main.c(62): warning C4101: 'i' : unreferenced local variable
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\main.c(63): warning C4101: 'tmBuf' : unreferenced local variable
+         Generating Code...
+     1>d:\작업공간\septa\개발 자료\lic\firmware\mpu\septa_lic - 2011-05-14\main.c(474): warning C4716: 'Delay' : must return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\Debug\SEPTA_LIC.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\SEPTA_LIC.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\Debug\SEPTA_LIC.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\Debug\SEPTA_LIC.lib" /MACHINE:X86 Debug\en29lv040.obj
+         Debug\main.obj
+         Debug\user.obj
+         Debug\xr16l784.obj
+     1>main.obj : error LNK2019: unresolved external symbol _Debug3xInit referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _asm referenced in function _main
+     1>D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\Debug\SEPTA_LIC.exe : fatal error LNK1120: 2 unresolved externals
+     1>Done Building Project "D:\작업공간\SEPTA\개발 자료\LIC\Firmware\MPU\SEPTA_LIC - 2011-05-14\SEPTA_LIC.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.67

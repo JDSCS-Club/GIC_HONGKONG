@@ -1,0 +1,150 @@
+; Echelon Dependency File - do not edit.
+; D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM\LIC.nxdep
+; Created Thursday, November 01, 2012, 15:42:36
+
+[Global]
+Provider=Echelon NEURON CHIP (r) Exporter
+Version=1
+Inputs=8
+Outputs=6
+Switches=23
+Parameters=0
+
+[Input_1]
+Basename=LIC.NLDEP
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM\LIC.NLDEP
+Type=0
+Size=2707
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1434e990
+
+[Input_2]
+Basename=neuron.xml
+Fullname=C:\Program Files\LonWorks\types\neuron.xml
+Type=0
+Size=75175
+TimestampHigh=0x1cac14d
+TimestampLow=0x3045be00
+
+[Input_3]
+Basename=stdxcvr.xml
+Fullname=C:\Program Files\LonWorks\types\stdxcvr.xml
+Type=0
+Size=43857
+TimestampHigh=0x1cac14d
+TimestampLow=0x3045be00
+
+[Input_4]
+Basename=LIC.NXE
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM\LIC.NXE
+Type=0
+Size=29983
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1434e990
+
+[Input_5]
+Basename=LIC.BF2
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM\LIC.BF2
+Type=0
+Size=197
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1415f7b0
+
+[Input_6]
+Basename=LIC.BIF
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM\LIC.BIF
+Type=0
+Size=5911
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1415f7b0
+
+[Input_7]
+Basename=SYS3150.sym
+Fullname=C:\Program Files\LonWorks\Images\Ver16\SYS3150.sym
+Type=0
+Size=9909
+TimestampHigh=0x1ca566e
+TimestampLow=0xa817be00
+
+[Input_8]
+Basename=SYS3150.NX
+Fullname=C:\Program Files\LonWorks\Images\Ver16\SYS3150.NX
+Type=0
+Size=39437
+TimestampHigh=0x1ca566e
+TimestampLow=0xa817be00
+
+[Output_1]
+Basename=LIC.NXE
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.NXE
+Type=0
+Size=29983
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x14563cd0
+
+[Output_2]
+Basename=LIC.XIF
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.XIF
+Type=0
+Size=6105
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x14589e30
+
+[Output_3]
+Basename=LIC.XFB
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.XFB
+Type=0
+Size=4561
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x145d60f0
+
+[Output_4]
+Basename=LIC.APB
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.APB
+Type=0
+Size=14503
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1472cd50
+
+[Output_5]
+Basename=LIC.NEI
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.NEI
+Type=0
+Size=78861
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x14779010
+
+[Output_6]
+Basename=LIC.NDL
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\LIC.NDL
+Type=0
+Size=30742
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x147c52d0
+
+[Switches]
+29=1024
+30=18169
+31=2
+24=1
+23=0
+22=6
+57=0.500000
+21=7
+1=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development\IM
+2=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Development
+3=LIC
+33=1
+34=1
+39=1
+37=1
+35=1
+36=1
+38=0
+55=1
+59=0
+61=0
+62=255
+17=4c49430000000000
+
+[Parameters]

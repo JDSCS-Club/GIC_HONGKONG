@@ -1,0 +1,317 @@
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    1
+
+        1                   ;******************************************************************************
+        2                   ;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+        3                   ;* Date/Time created: Fri Sep 17 14:23:54 2010                                *
+        4                   ;******************************************************************************
+        5                           .regalias       ; enable floating point register aliases
+        6          0000000b fp      .set    ar3
+        7          0000000b FP      .set    ar3
+        8                   ;******************************************************************************
+        9                   ;* GLOBAL FILE PARAMETERS                                                     *
+       10                   ;*                                                                            *
+       11                   ;*   Optimization       : Always Choose Smaller Code Size                     *
+       12                   ;*   Memory             : Small Memory Model                                  *
+       13                   ;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+       14                   ;*   Multiply           : in Hardware (24 bits max)                           *
+       15                   ;*   Memory Info        : Unmapped Memory Exists                              *
+       16                   ;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+       17                   ;*   Calls              : Normal Library ASM calls                            *
+       18                   ;*   Debug Info         : Optimized TI Debug Information                      *
+       19                   ;******************************************************************************
+       20                   ;       c:\lang\tms320c3x\511\bin\ac30.exe norflash.c C:\Users\jds\AppData\Local\Temp\norflash.if 
+       21                           .file   "norflash.c"
+       22                           .file   "All_def.h"
+       23                           .sym    _DWORD,0,15,13,32
+       24                           .sym    _USHORT,0,13,13,32
+       25                           .sym    _UCHAR,0,12,13,32
+       26                           .sym    _WORD,0,14,13,32
+       27                           .file   "NorFlash.h"
+       28                           .file   "norflash.c"
+       29 00000000                  .sect    ".text"
+       30                   
+       31                           .global _NorFlashAllErase
+       32                           .sym    _NorFlashAllErase,_NorFlashAllErase,36,2,0
+       33                           .func   12
+       34                   ;******************************************************************************
+       35                   ;* FUNCTION NAME: _NorFlashAllErase                                           *
+       36                   ;*                                                                            *
+       37                   ;*   Architecture       : TMS320C30                                           *
+       38                   ;*   Calling Convention : Stack Parameter Convention                          *
+       39                   ;*   Function Uses Regs : r0,ar0                                              *
+       40                   ;*   Regs Saved         :                                                     *
+       41                   ;*   Stack Frame        : Full (w/ debug)                                     *
+       42                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+       43                   ;******************************************************************************
+       44 00000000          _NorFlashAllErase:
+       45                           .line   1
+       46                   ;----------------------------------------------------------------------
+       47                   ;  12 | int NorFlashAllErase()                                                 
+       48                   ;----------------------------------------------------------------------
+       49 00000000 0f2b0000         push      fp
+       50 00000001 500b0014         ldiu      sp,fp
+       51                           .line   3
+       52                   ;----------------------------------------------------------------------
+       53                   ;  14 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xaa;                         
+       54                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    2
+
+       55 00000002 50280000-        ldiu      @CL1,ar0
+       56 00000003 506000aa         ldiu      170,r0
+       57 00000004 1540c000         sti       r0,*ar0
+       58                           .line   4
+       59                   ;----------------------------------------------------------------------
+       60                   ;  15 | (*(UCHAR *)(NORFLASH_ADDR + 0x002aaa)) = 0x55;                         
+       61                   ;----------------------------------------------------------------------
+       62 00000005 50280001-        ldiu      @CL2,ar0
+       63 00000006 50600055         ldiu      85,r0
+       64 00000007 1540c000         sti       r0,*ar0
+       65                           .line   5
+       66                   ;----------------------------------------------------------------------
+       67                   ;  16 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0x80;                         
+       68                   ;----------------------------------------------------------------------
+       69 00000008 50280000-        ldiu      @CL1,ar0
+       70 00000009 50600080         ldiu      128,r0
+       71 0000000a 1540c000         sti       r0,*ar0
+       72                           .line   6
+       73                   ;----------------------------------------------------------------------
+       74                   ;  17 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xaa;                         
+       75                   ;----------------------------------------------------------------------
+       76 0000000b 506000aa         ldiu      170,r0
+       77 0000000c 1540c000         sti       r0,*ar0
+       78                           .line   7
+       79                   ;----------------------------------------------------------------------
+       80                   ;  18 | (*(UCHAR *)(NORFLASH_ADDR + 0x002aaa)) = 0x55;                         
+       81                   ;----------------------------------------------------------------------
+       82 0000000d 50280001-        ldiu      @CL2,ar0
+       83 0000000e 50600055         ldiu      85,r0
+       84 0000000f 1540c000         sti       r0,*ar0
+       85                           .line   8
+       86                   ;----------------------------------------------------------------------
+       87                   ;  19 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0x10;                         
+       88                   ;----------------------------------------------------------------------
+       89 00000010 50280000-        ldiu      @CL1,ar0
+       90 00000011 50600010         ldiu      16,r0
+       91 00000012 1540c000         sti       r0,*ar0
+       92                           .line   9
+       93                   ;----------------------------------------------------------------------
+       94                   ;  20 | return TRUE;                                                           
+       95                   ;----------------------------------------------------------------------
+       96 00000013 50600001         ldiu      1,r0
+       97                           .line   10
+       98 00000014 50480b01         ldiu      *-fp(1),ar0
+       99 00000015 504bc300         ldiu      *fp,fp
+      100 00000016 18740002         subi      2,sp
+      101 00000017 68000008         bu        ar0
+      102                   ;*      Branch Occurs to ar0 
+      103                           .endfunc        21,000000000h,0
+      104                   
+      105                   
+      106 00000018                  .sect    ".text"
+      107                   
+      108                           .global _NorFlashBlockErase
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    3
+
+      109                           .sym    _NorFlashBlockErase,_NorFlashBlockErase,36,2,0
+      110                           .func   26
+      111                   ;******************************************************************************
+      112                   ;* FUNCTION NAME: _NorFlashBlockErase                                         *
+      113                   ;*                                                                            *
+      114                   ;*   Architecture       : TMS320C30                                           *
+      115                   ;*   Calling Convention : Stack Parameter Convention                          *
+      116                   ;*   Function Uses Regs : r0,ar0,ir0                                          *
+      117                   ;*   Regs Saved         :                                                     *
+      118                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      119                   ;*   Total Frame Size   : 2 Call + 1 Parm + 0 Auto + 0 SOE = 3 words          *
+      120                   ;******************************************************************************
+      121 00000018          _NorFlashBlockErase:
+      122                           .sym    _nErsBlk,-2,15,9,32
+      123                           .line   1
+      124                   ;----------------------------------------------------------------------
+      125                   ;  26 | int NorFlashBlockErase(DWORD nErsBlk)                                  
+      126                   ;----------------------------------------------------------------------
+      127 00000018 0f2b0000         push      fp
+      128 00000019 500b0014         ldiu      sp,fp
+      129                           .line   2
+      130                           .line   3
+      131                   ;----------------------------------------------------------------------
+      132                   ;  28 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xaa;                         
+      133                   ;----------------------------------------------------------------------
+      134 0000001a 50280000-        ldiu      @CL1,ar0
+      135 0000001b 506000aa         ldiu      170,r0
+      136 0000001c 1540c000         sti       r0,*ar0
+      137                           .line   4
+      138                   ;----------------------------------------------------------------------
+      139                   ;  29 | (*(UCHAR *)(NORFLASH_ADDR + 0x002aaa)) = 0x55;                         
+      140                   ;----------------------------------------------------------------------
+      141 0000001d 50280001-        ldiu      @CL2,ar0
+      142 0000001e 50600055         ldiu      85,r0
+      143 0000001f 1540c000         sti       r0,*ar0
+      144                           .line   5
+      145                   ;----------------------------------------------------------------------
+      146                   ;  30 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0x80;                         
+      147                   ;----------------------------------------------------------------------
+      148 00000020 50280000-        ldiu      @CL1,ar0
+      149 00000021 50600080         ldiu      128,r0
+      150 00000022 1540c000         sti       r0,*ar0
+      151                           .line   6
+      152                   ;----------------------------------------------------------------------
+      153                   ;  31 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xaa;                         
+      154                   ;----------------------------------------------------------------------
+      155 00000023 506000aa         ldiu      170,r0
+      156 00000024 1540c000         sti       r0,*ar0
+      157                           .line   7
+      158                   ;----------------------------------------------------------------------
+      159                   ;  32 | (*(UCHAR *)(NORFLASH_ADDR + 0x002aaa)) = 0x55;                         
+      160                   ;----------------------------------------------------------------------
+      161 00000025 50280001-        ldiu      @CL2,ar0
+      162 00000026 50600055         ldiu      85,r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    4
+
+      163 00000027 1540c000         sti       r0,*ar0
+      164                           .line   8
+      165                   ;----------------------------------------------------------------------
+      166                   ;  33 | (*(UCHAR *)(NORFLASH_ADDR + (nErsBlk*0x10000))) = 0x30;                
+      167                   ;----------------------------------------------------------------------
+      168 00000028 50510b02         ldiu      *-fp(2),ir0
+      169 00000029 50280002-        ldiu      @CL3,ar0
+      170 0000002a 0ab10003-        mpyi      @CL4,ir0
+      171 0000002b 50600030         ldiu      48,r0
+      172 0000002c 15404000         sti       r0,*+ar0(ir0)
+      173                           .line   10
+      174                   ;----------------------------------------------------------------------
+      175                   ;  35 | return TRUE;                                                           
+      176                   ;----------------------------------------------------------------------
+      177 0000002d 50600001         ldiu      1,r0
+      178                           .line   11
+      179 0000002e 50510b01         ldiu      *-fp(1),ir0
+      180 0000002f 504bc300         ldiu      *fp,fp
+      181 00000030 18740002         subi      2,sp
+      182 00000031 68000011         bu        ir0
+      183                   ;*      Branch Occurs to ir0 
+      184                           .endfunc        36,000000000h,0
+      185                   
+      186                   
+      187 00000032                  .sect    ".text"
+      188                   
+      189                           .global _NorFlashWrite
+      190                           .sym    _NorFlashWrite,_NorFlashWrite,32,2,0
+      191                           .func   41
+      192                   ;******************************************************************************
+      193                   ;* FUNCTION NAME: _NorFlashWrite                                              *
+      194                   ;*                                                                            *
+      195                   ;*   Architecture       : TMS320C30                                           *
+      196                   ;*   Calling Convention : Stack Parameter Convention                          *
+      197                   ;*   Function Uses Regs : r0,r1,r2,ar0,ir0,st                                 *
+      198                   ;*   Regs Saved         :                                                     *
+      199                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      200                   ;*   Total Frame Size   : 2 Call + 2 Parm + 0 Auto + 0 SOE = 4 words          *
+      201                   ;******************************************************************************
+      202 00000032          _NorFlashWrite:
+      203                           .sym    _nOffset,-2,15,9,32
+      204                           .sym    _nDat,-3,12,9,32
+      205                           .line   1
+      206                   ;----------------------------------------------------------------------
+      207                   ;  41 | void NorFlashWrite(DWORD nOffset, UCHAR nDat)                          
+      208                   ;----------------------------------------------------------------------
+      209 00000032 0f2b0000         push      fp
+      210 00000033 500b0014         ldiu      sp,fp
+      211                           .line   2
+      212                           .line   3
+      213                   ;----------------------------------------------------------------------
+      214                   ;  43 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xaa;                         
+      215                   ;----------------------------------------------------------------------
+      216 00000034 50280000-        ldiu      @CL1,ar0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    5
+
+      217 00000035 506000aa         ldiu      170,r0
+      218 00000036 1540c000         sti       r0,*ar0
+      219                           .line   4
+      220                   ;----------------------------------------------------------------------
+      221                   ;  44 | (*(UCHAR *)(NORFLASH_ADDR + 0x002aaa)) = 0x55;                         
+      222                   ;----------------------------------------------------------------------
+      223 00000037 50280001-        ldiu      @CL2,ar0
+      224 00000038 50600055         ldiu      85,r0
+      225 00000039 1540c000         sti       r0,*ar0
+      226                           .line   5
+      227                   ;----------------------------------------------------------------------
+      228                   ;  45 | (*(UCHAR *)(NORFLASH_ADDR + 0x005555)) = 0xa0;                         
+      229                   ;----------------------------------------------------------------------
+      230 0000003a 50280000-        ldiu      @CL1,ar0
+      231 0000003b 506000a0         ldiu      160,r0
+      232 0000003c 1540c000         sti       r0,*ar0
+      233                           .line   6
+      234                   ;----------------------------------------------------------------------
+      235                   ;  46 | (*(UCHAR *)(NORFLASH_ADDR + (nOffset))) = WORD_L(nDat);                
+      236                   ;----------------------------------------------------------------------
+      237 0000003d 506200ff         ldiu      255,r2
+      238 0000003e 50280002-        ldiu      @CL3,ar0
+      239 0000003f 506000ff         ldiu      255,r0
+      240 00000040 50510b02         ldiu      *-fp(2),ir0
+      241 00000041 02c00b03         and       *-fp(3),r0
+      242 00000042 15404000         sti       r0,*+ar0(ir0)
+      243 00000043          L8:        
+      244                           .line   8
+      245                   ;----------------------------------------------------------------------
+      246                   ;  48 | while(((*(UCHAR *)(NORFLASH_ADDR + (nOffset)))&0xff) != WORD_L(nDat)); 
+      247                   ;----------------------------------------------------------------------
+      248 00000043 506000ff         ldiu      255,r0
+      249 00000044 50510b02         ldiu      *-fp(2),ir0
+      250 00000045 50280002-        ldiu      @CL3,ar0
+      251 00000046 02c00b03         and       *-fp(3),r0
+      252 00000047 21a14002         and3      r2,*+ar0(ir0),r1
+      253 00000048 23800100         cmpi3     r0,r1
+      254 00000049 6a06fff9         bne       L8
+      255                   ;*      Branch Occurs to L8 
+      256                           .line   9
+      257                   ;----------------------------------------------------------------------
+      258                   ;  49 | }                                                                      
+      259                   ;----------------------------------------------------------------------
+      260 0000004a 50510b01         ldiu      *-fp(1),ir0
+      261 0000004b 504bc300         ldiu      *fp,fp
+      262 0000004c 18740002         subi      2,sp
+      263 0000004d 68000011         bu        ir0
+      264                   ;*      Branch Occurs to ir0 
+      265                           .endfunc        49,000000000h,0
+      266                   
+      267                   
+      268                   ;******************************************************************************
+      269                   ;* CONSTANT TABLE                                                             *
+      270                   ;******************************************************************************
+TMS320C3x/4x COFF AssemblerVersion 5.11     Fri Sep 17 14:23:54 2010
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l norflash.asm norflash.obj -tC:\Users\jds\AppData\Local\Temp\norflash.tmp 
+
+norflash.asm                                                         PAGE    6
+
+      271 00000000                  .sect   ".const"
+      272 00000000                  .bss    CL1,1
+      273 00000001                  .bss    CL2,1
+      274 00000002                  .bss    CL3,1
+      275 00000003                  .bss    CL4,1
+      276                   
+      277 00000000                  .sect   ".cinit"
+      278 00000000 00000004         .field          4,32
+      279 00000001 00000000-        .field          CL1+0,32
+      280 00000002 00905555         .field          9459029,32
+      281 00000003 00902aaa         .field          9448106,32
+      282 00000004 00900000         .field          9437184,32
+      283 00000005 00010000         .field          65536,32
+      284                   
+      285 0000004e                  .sect   ".text"
+
+ No Errors,  No Warnings

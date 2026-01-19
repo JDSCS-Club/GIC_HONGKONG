@@ -1,0 +1,617 @@
+/*******************************************************
+	표시기 프로그램
+	2003.5
+	작성 : Yeon jun sang
+********************************************************/
+
+//#define DOWNLOAD
+
+//typedef unsigned char BYTE;
+typedef unsigned char UCHAR;
+//typedef unsigned int WORD;
+typedef unsigned int USHORT;
+
+#include "ALL_DEF.h"
+#include "debug3x.h"
+
+#include "i85c30.h"
+#include "i85c30.c"
+
+#include "NandFlash.h"
+
+#include "LDM.h"
+
+#include "HAN.H"
+
+
+
+/***********************************************************
+	#define
+************************************************************/
+#define RELAY_ON (*(int *)0x818000) = 1
+#define RELAY_OFF (*(int *)0x818000) = 0
+
+#define RS485_ON RELAY_ON
+#define RS485_OFF RELAY_OFF
+
+#define HEXA_SW ((~(*(BYTE *)0x814000))&0xff)
+
+#define BOOT_TO_INT (*(int *)0x810000) = 0
+
+#define FLASH_STATION_ADDR 40000
+#define FLASH_ANI_ADDR 600000+40000
+
+
+
+/***********************************************************
+	변수 정의
+************************************************************/
+int gTextBitLength;			// 문자열의 길이에 대한 비트 수 [영문자 8*1, 한글 8*2]
+
+int gAniMovePos = 0;
+
+int nStrStartPos = 0;			// 표출문자열의 처음 시작 위치
+
+
+extern BYTE gRxBuffer[32];			// 데이터 수신 버퍼 [기본길이 16+spare 16]
+extern BYTE gRxPos;			// 데이터 수신 위치 [초기값->0]
+extern int gRxComplete;	// 수신 정상 Flag [수신비정상->0, 수신정상->1]
+
+extern BYTE gRxExcCode[3];			// 수신 실행 코드
+extern BYTE gRxStTemp;			// 수신받은 역코드를 계산
+
+int gNextImg = 1;			// 다음 역명 이미지 [초기값->한글역명]
+int gTimer1SFg = FALSE;		// 1초 토클
+
+int gDisAllAction = FALSE;
+
+int gImTextPos = 0;
+int gImTextMaxCnt = 1;
+int gImTextEnd = FALSE;
+
+BYTE gHexaSw;
+
+/***********************************************************
+	함수 정의
+************************************************************/
+void c_int01(void); //
+void c_int02(void); // SCC Interrupt
+void c_int03(void); //
+void c_int04(void); // UART Interrupt
+void c_int06(void); // Serial Interrupt
+void c_int09(void); // Timer 0
+void c_int10(void); // Timer 1
+
+void DSP_INIT(void); // DSP의 초기화
+
+void AniMainLoop(); // 에니메이션 루프
+void TextMainLoop(); // 문자 루프
+int IsBCCOK(BYTE *pDat,int nLen);
+
+
+/***********************************************************
+	변수 정의
+************************************************************/
+unsigned int glDebugCnt = 0;
+
+
+/***********************************************************
+	메인 프로그램
+************************************************************/
+
+int yyy=0;
+BYTE nBuff[512];	
+
+void main(void)
+{
+	int i,j;
+	
+	DINT; // 전역 인어텁트 불가능
+	DSP_INIT() ;
+	SCC_8530_Initial(); // 통신 칩 초기화
+	Han_Init(); // 한글 폰트 초기화
+	Debug3xInit(TMS320C32);
+	BOOT_TO_INT;
+	gHexaSw = HEXA_SW;
+	EINT; // 전역 인어텁트 가능
+	
+
+	RS485_ON; // RS485가능하게 하는 Relay 기동
+	RS485_TX_DISABLE;
+	
+#ifdef DOWNLOAD
+	for(i=0;i<64+32;i++)
+	{
+		FlashErase((WORD)i*32);
+		
+		for(j=0;j<0xfffff;j++);	
+	}
+	
+	while(1)
+	{
+		for(i=0;i<0xffff;i++);
+		glDebugCnt++;
+	}
+#endif
+
+	
+	memset((int *)DOT_VIDEO,0,TOTAL_SCREEN_DOT_SIZE);	// 화면초기화[깨끗히 지운다
+
+	TextMainLoop();
+	
+}
+
+int nIsSrl = FALSE;			// 스크롤 상태 off
+int nIsFls = FALSE;			// 깜빡임 상태 off
+int nIsAni = FALSE;
+
+void TextMainLoop()
+{
+	int i;	
+	BYTE nActionCode = 0;	
+	BYTE nBuff[2880];
+	char *gTxt[5];
+	
+	
+	//gRxExcCode[0] = 0x0a;
+	//gRxExcCode[1] = 0x01;
+	//gRxExcCode[2] = 0x64;	
+	//gRxComplete = 1;	
+
+	nIsAni = TRUE;
+
+	while(1)
+	{
+
+		
+		
+		LDM_AB(glDebugCnt);
+		for(i=0;i<24;i++)
+		{
+			LDM_ADDR(i);
+			memcpy(LDM_DATA_ADDR,DOT_VIDEO+(DOT_WIDTH*i),DOT_WIDTH);			
+			LdmLatchClk(0);
+			
+			// 아랫줄 표출
+			if(nIsSrl==FALSE)				// 스크롤 상태가 off 일때
+			{
+				memcpy(LDM_DATA_ADDR,DOT_VIDEO+(DOT_WIDTH*i),DOT_WIDTH);			
+			}
+			else
+			{
+				memcpy(LDM_DATA_ADDR,DOT_VIDEO+(gTextBitLength*i)+nStrStartPos,DOT_WIDTH);
+			}
+			
+			LdmLatchClk(1);
+		}		
+		LDM_AB(~glDebugCnt);		
+		glDebugCnt++;
+		
+		
+		if(gImTextEnd && nIsSrl)
+		{
+			gImTextEnd = FALSE;
+			nStrStartPos = 0;
+
+			gTextBitLength = Han_GetTextBitCnt(gTxt[gImTextPos]);
+			Han_ImgPrintf(gTxt[gImTextPos],(WORD)strlen(gTxt[gImTextPos]));
+			gImTextPos = (gImTextPos + 1) % gImTextMaxCnt;
+		}
+		
+		
+		if(nIsAni)
+		{
+			GetLirAdrImg(FLASH_ANI_ADDR+gAniMovePos*2880,nBuff,2880);
+			ImageMake(nBuff);
+			gDisAllAction = FALSE;			
+		}		
+		else
+		if(!nIsSrl)
+		switch(nActionCode)
+		{
+			case 0x0a:
+				break;
+
+			case 0x1c:
+				if(nIsFls)			// 깜빡임 상태 flag가 on
+				{
+					if(gTimer1SFg)		// 1초 상태 flag
+					{
+						switch(gNextImg)	// 다음표출 이미지
+						{
+							default:
+							case 1:				// 역명(한글)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+0)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=2;
+								break;
+
+							case 2:				// 빈역명(한글)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(192+0)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=3;
+								break;
+
+							case 3:				// 역명(한글)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+0)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=4;
+								break;
+
+							case 4:				// 역명(영어)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+1)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=5;
+								break;
+
+							case 5:				// 빈역명(영어)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(192+1)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=6;
+								break;
+
+							case 6:				// 역명(영어)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+1)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=7;
+								break;
+
+							case 7:				// 역명(한자)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+2)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=8;
+								break;
+
+							case 8:				// 빈역명(한자)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(192+2)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=9;
+								break;
+
+							case 9:				// 역명(한자)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+2)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=10;
+								break;
+								
+							case 10:	
+								gDisAllAction = FALSE;	
+								gNextImg = 1;							
+								break;
+							
+						}
+						gTimer1SFg=FALSE;	// 1초 상태 flag 초기화
+						
+					
+					}
+				}
+				else			// 깜빡임 상태 flag가 off
+				{
+					if(gTimer1SFg)		// 1초 상태 flag
+					{
+						switch(gNextImg)	// 다음 표출 이미지
+						{
+							default:
+							case 1:				// 역명(한글)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+0)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=2;
+								break;
+					
+
+							case 2:				// 역명(영어)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+1)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=3;
+								break;
+
+							case 3:				// 역명(한자)
+								GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+2)),nBuff,2880);					
+								ImageMake(nBuff);	// 이미지 생성
+								gNextImg=4;
+								
+								break;
+								
+							case 4: 	
+								gDisAllAction = FALSE;
+								gNextImg = 1;
+								break;
+
+						}
+						gTimer1SFg=FALSE;	// 1초 상태 flag 초기화
+					}
+				}
+
+				break;
+			}
+			
+		// 데이터 수신 완료 처리
+		if(gRxComplete)					// 수신이 완료되었다면...
+		{
+			if(!gDisAllAction)
+			{
+				gRxComplete = FALSE;		// 수신상태 Flag 초기화
+				gDisAllAction = TRUE;
+				
+				nActionCode = gRxExcCode[0];
+				
+	
+				/* if(gRxExcCode[1] < 0x34)						// 역코드 중 16~43까지 일때
+					gRxStTemp = ((gRxExcCode[1]-16)*3)%126;
+				else											// 역코드 중 52~54까지 일때
+					gRxStTemp = ((gRxExcCode[1]-24)*3)%126;
+				*/
+				
+				gRxStTemp = (((gRxExcCode[1]-1)*3%196));
+							
+				switch(gRxExcCode[0])		// 역명,홍보문인가 체크
+				{
+					case 0x0a:
+						if(gRxExcCode[2] == 101)
+						{
+							nIsAni = TRUE;
+							gAniMovePos = 0;
+							nIsSrl = FALSE;
+							break;
+						}
+						else
+						if(gRxExcCode[2] == 102)
+						{
+							nIsSrl = FALSE;
+							nIsAni = FALSE;						
+							gDisAllAction = FALSE;
+							memset((int *)DOT_VIDEO,0,TOTAL_SCREEN_DOT_SIZE);	// 화면초기화[깨끗히 지운다
+							break;
+						}
+
+						
+						nIsAni = FALSE;						
+						
+						if(gRxExcCode[2] != 100)
+						{
+											// 홍보문 현시 [우->좌 스크롤]											
+							GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+0)),nBuff,2880);					
+							ImageMake(nBuff);	// 이미지 생성
+						}
+	
+						gNextImg = 1;
+						switch(gRxExcCode[2])		// 홍보문 종류 체크
+						{
+							case 0x01:					// 1번 홍보문
+								gTxt[0] = "                출입문에 기대거나 손을 짚으면 다칠 위험이 있사오니 조심하시기 바랍니다.                ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 1;
+								break;
+	
+							case 0x02:					// 2번 홍보문
+								gTxt[0] = "                전동차내에서 이동전화를 사용할 때에는 진동상태로 전환하여 주시기 바랍니다.                ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 1;
+								break;
+	
+							case 0x03:					// 3번 홍보문
+								gTxt[0] = "                이 역은 승강장과 전동차 사이가 넓습니다. 내리고 타실 때 조심하시기 바랍니다.                ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 1;
+								break;
+	
+							case 0x04:					// 4번 홍보문
+								gTxt[0] = "                주변에 노약자, 장애인이 서 계시면 자리를 양보합시다.                ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 1;
+								break;
+	
+							case 0x05:					// 5번 홍보문
+								gTxt[0] = "                복잡한 열차내에서 승객에게 불편을 주는 행위를 하지 맙시다.                ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 1;
+								break;
+								
+							case 0x64:
+								memset((int *)DOT_VIDEO,0,TOTAL_SCREEN_DOT_SIZE);	// 화면초기화[깨끗히 지운다
+
+								gTxt[0] = "               (주)우진산전은 300여명의 우진 가족들이 연매출 400억 규모의 전동차 부품을 연구, 생산해 온 중견기업으로서 지난 29년간 한국전동차의 국산화와 표준화를 위하여 밤낮없이 연구개발에 힘써왔습니다.               ";
+								gTxt[1] = "               그 연구성과에 힘입어 우진산전은 KS와 EM마크 그리고 ISO9001을 획득, 기술경쟁력 우수기업, 우수벤처기업으로서 선정 되었습니다.               ";
+								gTxt[2] = "               저희 (주)우진산전은 고객의 기대와 한국 전동차의 경쟁력을 위해 끊임없이 노력하는 기업으로 발전해 나가겠습니다.               ";
+								gImTextPos = 0;
+								gImTextMaxCnt = 3;
+								
+								gDisAllAction = FALSE;
+								break;
+						}
+	
+						// 이미지 표출
+						gTextBitLength = Han_GetTextBitCnt(gTxt[gImTextPos]);
+						Han_ImgPrintf(gTxt[gImTextPos],(WORD)strlen(gTxt[gImTextPos]));
+						
+						gImTextPos = (gImTextPos + 1) % gImTextMaxCnt;
+						
+						
+						// end of 이미지 표출
+	
+						// 상태 flag 설정
+						nStrStartPos = 0;			// 시작 위치 설정
+						nIsSrl = TRUE;				// 스크롤 상태를 on
+						nIsFls = FALSE;				// 깜빡임 상태를 off
+						nIsAni = FALSE;						
+						
+						// end of 상태 flag 설정
+						break;
+	
+					case 0x1c: // 다음역명 현시
+											// 홍보문 현시 [우->좌 스크롤]
+						GetLirAdrImg(FLASH_STATION_ADDR+(2880*(gRxStTemp+0)),nBuff,2880);					
+						ImageMake(nBuff);	// 이미지 생성
+
+						nIsSrl = FALSE;
+						nIsAni = FALSE;						
+						
+						switch(gRxExcCode[2])		// 깜빡임 상태 체크
+						{
+							case 0x00:					// 고정 표출일때
+								nIsFls = FALSE;				// 깜빡임 상태를 off
+								break;
+								
+							default:	
+							case 0x01:					// 깜박임 표출일때
+								nIsFls = TRUE;				// 깜빡임 상태를 on
+								break;
+						}
+												
+						gNextImg = 1;
+						break;
+
+					default:
+						nIsSrl = FALSE;			// 스크롤 상태 off
+						nIsFls = FALSE;			// 깜빡임 상태 off						
+						nIsAni = FALSE;
+						
+						gDisAllAction = FALSE;
+						
+				}
+			}
+		} 
+	}
+}
+
+void AniMainLoop()
+{
+	int i;
+	BYTE nBuff[2880];
+
+	while(1)
+	{
+		GetLirAdrImg(FLASH_ANI_ADDR+gAniMovePos*2880,nBuff,2880);
+		ImageMake(nBuff);
+		
+		LDM_AB(glDebugCnt);
+		for(i=0;i<24;i++)
+		{
+			LDM_ADDR(i);
+			
+			memcpy(LDM_DATA_ADDR,DOT_VIDEO+(DOT_WIDTH*i),DOT_WIDTH);
+			LdmLatchClk(0);
+			LdmLatchClk(1);
+		}
+		LDM_AB(~glDebugCnt);		
+		glDebugCnt++;		
+		
+		//FlashPageRead(ddd,ppp);
+	}
+}
+
+/***********************************************************
+	DSP를 초기화 한다.
+************************************************************/
+void DSP_INIT(void)
+{
+	int temp;
+
+	/* primary bus control reg. */
+	STRB0_CTRL = 0x000f0408;	/* Bank=1M, Wait=1, SWW=3 wait by software */
+	STRB1_CTRL = 0x000f0448;	/* Bank=1M, Wait=0, SWW=0 wait by software */
+
+	IOSTRB_CTRL = 0x00000088;	/* Wait=2, SWW=11 wait by software */
+
+	/* timer0 init */
+	TMR0_CTRL = 0x02C2 ;		/* General Out port : TCLK0 */
+	TMR0_PERD = 14745*100;		// 58.9824 MHz/4/1474.6 = 1000Hz = 1ms
+
+	/* timer1 init */
+	TMR1_CTRL = 0x02C2 ;		/* General Out port : TCLK1 */
+	TMR1_PERD = 14745*15;		// 58.9824 MHz/4/1474.6 = 1000Hz = 1ms
+
+	INT1_VECT		 = OP_BR | (int)c_int02 ; 	// SCC Interrupt
+	TIMER0_INT_VECT	 = OP_BR | (int)c_int09 ; 	// Timer 0
+	TIMER1_INT_VECT	 = OP_BR | (int)c_int10 ; 	// Timer 1
+
+	EDGE_INT;			/* EDGE INTERRUPT */
+
+	/* Timer 1:b9, Timer 0:b8, serial port int:b5, EINT3:b3, EINT2:b2 ,EINT1:b1, EINT0:b0 */
+	asm("	OR	0100h,IE");		// Timer 0
+	asm("	OR	0200h,IE"); 	// Timer 1
+	asm("	OR	0002h,IE"); 	// Int1(UART)
+}
+
+/******************************************************************************
+	### BCC Check [TEXT~ETX] ###
+
+	Input	: *pDat->수신 데이터 / nLen->수신 데이터 길이
+	Output	: BCCOK->TRUE[1] / BCCNG->FALSE[0]
+******************************************************************************/
+int IsBCCOK(BYTE *pDat,int nLen)
+{
+	int i;
+	BYTE nBCC[2];
+
+	nBCC[0] = nBCC[1] = 0x00;
+
+	for(i=0;i<nLen;i++)
+	{
+		nBCC[(i&0x01)] ^= pDat[i];
+	}
+
+	if(nBCC[0] != pDat[nLen] || nBCC[1] != pDat[nLen+1])
+	{
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;
+	}
+}
+
+/***********************************************************
+	INT1 - Interrupt Routine
+************************************************************/
+void c_int02(void) // SCC Interrupt
+{
+#ifndef DOWNLOAD
+	SCC_ISR();
+#else
+	SCC_DownloadISR();
+#endif
+}
+
+/***********************************************************
+	Timer0 - Interrupt Routine (100ms)
+************************************************************/
+void c_int09(void)		// Timer 0
+{
+	static int nAniDelay = 0;
+	static int nTimerDelay = 0;
+	
+	if(!nAniDelay)
+	{
+		if(gAniMovePos == 197)
+			nAniDelay = 30;
+		else
+			gAniMovePos = (gAniMovePos+1) % 198;	
+	}
+	else
+	{		
+		nAniDelay--;
+		if(!nAniDelay) gAniMovePos = 0;
+	}
+	
+	nTimerDelay = (nTimerDelay+1) % 15;
+	
+	if(!nTimerDelay) gTimer1SFg = TRUE; else gTimer1SFg = FALSE; 
+}
+
+/***********************************************************
+	Timer1 - Interrupt Routine
+************************************************************/
+void c_int10(void)		// Timer 1
+{
+	if(!nIsSrl) return;
+	
+	nStrStartPos++;														// 왼쪽으로 스크롤[위치값을 빼면서 표출]
+	if(nStrStartPos > (gTextBitLength-DOT_WIDTH))
+	{
+		nStrStartPos = 0;		// 왼쪽스크롤이 끝나면 처음위치로 이동
+		gDisAllAction = FALSE;
+		
+		gImTextEnd = TRUE;
+	}
+}

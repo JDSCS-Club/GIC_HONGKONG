@@ -1,0 +1,615 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:44 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\peripherals\pio\pio.c                 #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\peripherals\pio\pio.c" -D             #
+#                    at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC               #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\pio.lst                  #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\pio.o                     #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\peripherals\pio\pio.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "pio.h"
+     35          #include <board.h>
+     36          
+     37          //------------------------------------------------------------------------------
+     38          //         Local Functions
+     39          //------------------------------------------------------------------------------
+     40          
+     41          //------------------------------------------------------------------------------
+     42          /// Configures one or more pin(s) of a PIO controller as being controlled by
+     43          /// peripheral A. Optionally, the corresponding internal pull-up(s) can be
+     44          /// enabled.
+     45          /// \param pio  Pointer to a PIO controller.
+     46          /// \param mask  Bitmask of one or more pin(s) to configure.
+     47          /// \param enablePullUp  Indicates if the pin(s) internal pull-up shall be
+     48          ///                      configured.
+     49          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     50          static void PIO_SetPeripheralA(
+     51              AT91S_PIO *pio,
+     52              unsigned int mask,
+     53              unsigned char enablePullUp)
+     54          {
+     55              // Disable interrupts on the pin(s)
+     56              pio->PIO_IDR = mask;
+   \                     PIO_SetPeripheralA:
+   \   00000000   0xE5801044         STR      R1,[R0, #+68]
+     57          
+     58              // Enable the pull-up(s) if necessary
+     59              if (enablePullUp) {
+   \   00000004   0xE3520000         CMP      R2,#+0
+     60          
+     61                  pio->PIO_PPUER = mask;
+   \   00000008   0x15801064         STRNE    R1,[R0, #+100]
+     62              }
+     63              else {
+     64          
+     65                  pio->PIO_PPUDR = mask;
+   \   0000000C   0x05801060         STREQ    R1,[R0, #+96]
+     66              }
+     67          
+     68              // Configure pin
+     69              pio->PIO_ASR = mask;
+   \   00000010   0xE5801070         STR      R1,[R0, #+112]
+     70              pio->PIO_PDR = mask;
+   \   00000014   0xE5801004         STR      R1,[R0, #+4]
+     71          }
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+     72          
+     73          //------------------------------------------------------------------------------
+     74          /// Configures one or more pin(s) of a PIO controller as being controlled by
+     75          /// peripheral B. Optionally, the corresponding internal pull-up(s) can be
+     76          /// enabled.
+     77          /// \param pio  Pointer to a PIO controller.
+     78          /// \param mask  Bitmask of one or more pin(s) to configure.
+     79          /// \param enablePullUp  Indicates if the pin(s) internal pull-up shall be
+     80          ///                      configured.
+     81          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     82          static void PIO_SetPeripheralB(
+     83              AT91S_PIO *pio,
+     84              unsigned int mask,
+     85              unsigned char enablePullUp)
+     86          {
+     87              // Disable interrupts on the pin(s)
+     88              pio->PIO_IDR = mask;
+   \                     PIO_SetPeripheralB:
+   \   00000000   0xE5801044         STR      R1,[R0, #+68]
+     89          
+     90              // Enable the pull-up(s) if necessary
+     91              if (enablePullUp) {
+   \   00000004   0xE3520000         CMP      R2,#+0
+     92          
+     93                  pio->PIO_PPUER = mask;
+   \   00000008   0x15801064         STRNE    R1,[R0, #+100]
+     94              }
+     95              else {
+     96          
+     97                  pio->PIO_PPUDR = mask;
+   \   0000000C   0x05801060         STREQ    R1,[R0, #+96]
+     98              }
+     99          
+    100              // Configure pin
+    101              pio->PIO_BSR = mask;
+   \   00000010   0xE5801074         STR      R1,[R0, #+116]
+    102              pio->PIO_PDR = mask;
+   \   00000014   0xE5801004         STR      R1,[R0, #+4]
+    103          }
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+    104          
+    105          //------------------------------------------------------------------------------
+    106          /// Configures one or more pin(s) or a PIO controller as inputs. Optionally,
+    107          /// the corresponding internal pull-up(s) and glitch filter(s) can be
+    108          /// enabled.
+    109          /// \param pio  Pointer to a PIO controller.
+    110          /// \param mask  Bitmask indicating which pin(s) to configure as input(s).
+    111          /// \param enablePullUp  Indicates if the internal pull-up(s) must be enabled.
+    112          /// \param enableFilter  Indicates if the glitch filter(s) must be enabled.
+    113          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    114          static void PIO_SetInput(
+    115              AT91S_PIO *pio,
+    116              unsigned int mask,
+    117              unsigned char enablePullUp,
+    118              unsigned char enableFilter)
+    119          {
+    120              // Disable interrupts
+    121              pio->PIO_IDR = mask;
+   \                     PIO_SetInput:
+   \   00000000   0xE5801044         STR      R1,[R0, #+68]
+    122          
+    123              // Enable pull-up(s) if necessary
+    124              if (enablePullUp) {
+   \   00000004   0xE3520000         CMP      R2,#+0
+    125              
+    126                  pio->PIO_PPUER = mask;
+   \   00000008   0x15801064         STRNE    R1,[R0, #+100]
+    127              }
+    128              else {
+    129              
+    130                  pio->PIO_PPUDR = mask;
+   \   0000000C   0x05801060         STREQ    R1,[R0, #+96]
+    131              }
+    132          
+    133              // Enable filter(s) if necessary
+    134              if (enableFilter) {
+   \   00000010   0xE3530000         CMP      R3,#+0
+    135              
+    136                  pio->PIO_IFER = mask;
+   \   00000014   0x15801020         STRNE    R1,[R0, #+32]
+    137              }
+    138              else {
+    139              
+    140                  pio->PIO_IFDR = mask;
+   \   00000018   0x05801024         STREQ    R1,[R0, #+36]
+    141              }
+    142          
+    143              // Configure pin as input
+    144              pio->PIO_ODR = mask;
+   \   0000001C   0xE5801014         STR      R1,[R0, #+20]
+    145              pio->PIO_PER = mask;
+   \   00000020   0xE5801000         STR      R1,[R0, #+0]
+    146          }
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+    147          
+    148          //------------------------------------------------------------------------------
+    149          /// Configures one or more pin(s) of a PIO controller as outputs, with the
+    150          /// given default value. Optionally, the multi-drive feature can be enabled
+    151          /// on the pin(s).
+    152          /// \param pio  Pointer to a PIO controller.
+    153          /// \param mask  Bitmask indicating which pin(s) to configure.
+    154          /// \param defaultValue  Default level on the pin(s).
+    155          /// \param enableMultiDrive  Indicates if the pin(s) shall be configured as
+    156          ///                          open-drain.
+    157          /// \param enablePullUp  Indicates if the pin shall have its pull-up activated.
+    158          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    159          static void PIO_SetOutput(
+    160              AT91S_PIO *pio,
+    161              unsigned int mask,
+    162              unsigned char defaultValue,
+    163              unsigned char enableMultiDrive,
+    164              unsigned char enablePullUp)
+    165          {
+   \                     PIO_SetOutput:
+   \   00000000   0xE5DDC000         LDRB     R12,[SP, #+0]
+    166              // Disable interrupts
+    167              pio->PIO_IDR = mask;
+   \   00000004   0xE5801044         STR      R1,[R0, #+68]
+    168          
+    169              // Enable pull-up(s) if necessary
+    170              if (enablePullUp) {
+   \   00000008   0xE35C0000         CMP      R12,#+0
+    171              
+    172                  pio->PIO_PPUER = mask;
+   \   0000000C   0x15801064         STRNE    R1,[R0, #+100]
+    173              }
+    174              else {
+    175              
+    176                  pio->PIO_PPUDR = mask;
+   \   00000010   0x05801060         STREQ    R1,[R0, #+96]
+    177              }
+    178          
+    179              // Enable multi-drive if necessary
+    180              if (enableMultiDrive) {
+   \   00000014   0xE3530000         CMP      R3,#+0
+    181              
+    182                  pio->PIO_MDER = mask;
+   \   00000018   0x15801050         STRNE    R1,[R0, #+80]
+    183              }
+    184              else {
+    185              
+    186                  pio->PIO_MDDR = mask;
+   \   0000001C   0x05801054         STREQ    R1,[R0, #+84]
+    187              }
+    188          
+    189              // Set default value
+    190              if (defaultValue) {
+   \   00000020   0xE3520000         CMP      R2,#+0
+    191          
+    192                  pio->PIO_SODR = mask;
+   \   00000024   0x15801030         STRNE    R1,[R0, #+48]
+    193              }
+    194              else {
+    195          
+    196                  pio->PIO_CODR = mask;
+   \   00000028   0x05801034         STREQ    R1,[R0, #+52]
+    197              }
+    198          
+    199              // Configure pin(s) as output(s)
+    200              pio->PIO_OER = mask;
+   \   0000002C   0xE5801010         STR      R1,[R0, #+16]
+    201              pio->PIO_PER = mask;
+   \   00000030   0xE5801000         STR      R1,[R0, #+0]
+    202          }
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+    203          
+    204          //------------------------------------------------------------------------------
+    205          //         Global Functions
+    206          //------------------------------------------------------------------------------
+    207          
+    208          //------------------------------------------------------------------------------
+    209          /// Configures a list of Pin instances, each of which can either hold a single
+    210          /// pin or a group of pins, depending on the mask value; all pins are configured
+    211          /// by this function. The size of the array must also be provided and is easily
+    212          /// computed using PIO_LISTSIZE whenever its length is not known in advance.
+    213          /// \param list  Pointer to a list of Pin instances.
+    214          /// \param size  Size of the Pin list (calculated using PIO_LISTSIZE).
+    215          /// \return 1 if the pins have been configured properly; otherwise 0.
+    216          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    217          unsigned char PIO_Configure(const Pin *list, unsigned int size)
+    218          {
+   \                     PIO_Configure:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0x0A00000E         BEQ      ??PIO_Configure_1
+    219              // Configure pins
+    220              while (size > 0) {
+    221              
+    222                  switch (list->type) {
+   \                     ??PIO_Configure_2:
+   \   00000010   0xE5D40009         LDRB     R0,[R4, #+9]
+   \   00000014   0xE3500004         CMP      R0,#+4
+   \   00000018   0x8A00002F         BHI      ??PIO_Configure_3
+   \   0000001C   0xE7DF1000         LDRB     R1,[PC, R0]
+   \   00000020   0xE08FF101         ADD      PC,PC,R1, LSL #+2
+   \                     ??PIO_Configure_0:
+   \   00000024   0x01 0x0C          DC8      0x1,0xC,0x12,0x20
+   \              0x12 0x20    
+   \   00000028   0x20 0x00          DC8      0x20,0x0,0x0,0x0
+   \              0x00 0x00    
+    223              
+    224                      case PIO_PERIPH_A:
+    225                          PIO_SetPeripheralA(list->pio,
+    226                                             list->mask,
+    227                                             (list->attribute & PIO_PULLUP) ? 1 : 0);
+   \                     ??PIO_Configure_4:
+   \   0000002C   0xE5D4000A         LDRB     R0,[R4, #+10]
+   \   00000030   0xE2002001         AND      R2,R0,#0x1
+   \   00000034   0xE5941000         LDR      R1,[R4, #+0]
+   \   00000038   0xE5940004         LDR      R0,[R4, #+4]
+   \   0000003C   0x........         BL       PIO_SetPeripheralA
+    228                          break;
+    229              
+    230                      case PIO_PERIPH_B:
+    231                          PIO_SetPeripheralB(list->pio,
+    232                                             list->mask,
+    233                                             (list->attribute & PIO_PULLUP) ? 1 : 0);
+    234                          break;
+    235              
+    236                      case PIO_INPUT:
+    237                          AT91C_BASE_PMC->PMC_PCER = 1 << list->id;
+    238                          PIO_SetInput(list->pio,
+    239                                       list->mask,
+    240                                       (list->attribute & PIO_PULLUP) ? 1 : 0,
+    241                                       (list->attribute & PIO_DEGLITCH)? 1 : 0);
+    242                          break;
+    243              
+    244                      case PIO_OUTPUT_0:
+    245                      case PIO_OUTPUT_1:
+    246                          PIO_SetOutput(list->pio,
+    247                                        list->mask,
+    248                                        (list->type == PIO_OUTPUT_1),
+    249                                        (list->attribute & PIO_OPENDRAIN) ? 1 : 0,
+    250                                        (list->attribute & PIO_PULLUP) ? 1 : 0);
+    251                          break;
+    252              
+    253                      default: return 0;
+    254                  }
+    255          
+    256                  list++;
+   \                     ??PIO_Configure_5:
+   \   00000040   0xE284400C         ADD      R4,R4,#+12
+    257                  size--;
+   \   00000044   0xE2555001         SUBS     R5,R5,#+1
+   \   00000048   0x1AFFFFF0         BNE      ??PIO_Configure_2
+    258              }
+    259          
+    260              return 1;
+   \                     ??PIO_Configure_1:
+   \   0000004C   0xE3A00001         MOV      R0,#+1
+   \                     ??PIO_Configure_6:
+   \   00000050   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+   \                     ??PIO_Configure_7:
+   \   00000058   0xE5D4000A         LDRB     R0,[R4, #+10]
+   \   0000005C   0xE2002001         AND      R2,R0,#0x1
+   \   00000060   0xE5941000         LDR      R1,[R4, #+0]
+   \   00000064   0xE5940004         LDR      R0,[R4, #+4]
+   \   00000068   0x........         BL       PIO_SetPeripheralB
+   \   0000006C   0xEAFFFFF3         B        ??PIO_Configure_5
+   \                     ??PIO_Configure_8:
+   \   00000070   0xE3A00001         MOV      R0,#+1
+   \   00000074   0xE1D410D8         LDRSB    R1,[R4, #+8]
+   \   00000078   0xE1A00110         LSL      R0,R0,R1
+   \   0000007C   0xE3E010EF         MVN      R1,#+239
+   \   00000080   0xE3C11FC0         BIC      R1,R1,#0x300
+   \   00000084   0xE5810000         STR      R0,[R1, #+0]
+   \   00000088   0xE5D4000A         LDRB     R0,[R4, #+10]
+   \   0000008C   0xE3A01001         MOV      R1,#+1
+   \   00000090   0xE00130A0         AND      R3,R1,R0, LSR #+1
+   \   00000094   0xE2002001         AND      R2,R0,#0x1
+   \   00000098   0xE5941000         LDR      R1,[R4, #+0]
+   \   0000009C   0xE5940004         LDR      R0,[R4, #+4]
+   \   000000A0   0x........         BL       PIO_SetInput
+   \   000000A4   0xEAFFFFE5         B        ??PIO_Configure_5
+   \                     ??PIO_Configure_9:
+   \   000000A8   0xE5D4000A         LDRB     R0,[R4, #+10]
+   \   000000AC   0xE2000001         AND      R0,R0,#0x1
+   \   000000B0   0xE5D4100A         LDRB     R1,[R4, #+10]
+   \   000000B4   0xE3A02001         MOV      R2,#+1
+   \   000000B8   0xE0023121         AND      R3,R2,R1, LSR #+2
+   \   000000BC   0xE5D41009         LDRB     R1,[R4, #+9]
+   \   000000C0   0xE3510004         CMP      R1,#+4
+   \   000000C4   0x13A02000         MOVNE    R2,#+0
+   \   000000C8   0xE58D0000         STR      R0,[SP, #+0]
+   \   000000CC   0xE5941000         LDR      R1,[R4, #+0]
+   \   000000D0   0xE5940004         LDR      R0,[R4, #+4]
+   \   000000D4   0x........         BL       PIO_SetOutput
+   \   000000D8   0xEAFFFFD8         B        ??PIO_Configure_5
+   \                     ??PIO_Configure_3:
+   \   000000DC   0xE3A00000         MOV      R0,#+0
+   \   000000E0   0xEAFFFFDA         B        ??PIO_Configure_6
+    261          }
+    262          
+    263          //------------------------------------------------------------------------------
+    264          /// Sets a high output level on all the PIOs defined in the given Pin instance.
+    265          /// This has no immediate effects on PIOs that are not output, but the PIO
+    266          /// controller will memorize the value they are changed to outputs.
+    267          /// \param pin  Pointer to a Pin instance describing one or more pins.
+    268          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    269          void PIO_Set(const Pin *pin)
+    270          {
+    271              pin->pio->PIO_SODR = pin->mask;
+   \                     PIO_Set:
+   \   00000000   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000008   0xE5810030         STR      R0,[R1, #+48]
+    272          }
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    273          
+    274          //------------------------------------------------------------------------------
+    275          /// Sets a low output level on all the PIOs defined in the given Pin instance.
+    276          /// This has no immediate effects on PIOs that are not output, but the PIO
+    277          /// controller will memorize the value they are changed to outputs.
+    278          /// \param pin  Pointer to a Pin instance describing one or more pins.
+    279          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    280          void PIO_Clear(const Pin *pin)
+    281          {
+    282              pin->pio->PIO_CODR = pin->mask;
+   \                     PIO_Clear:
+   \   00000000   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000004   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000008   0xE5810034         STR      R0,[R1, #+52]
+    283          }
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    284          
+    285          //------------------------------------------------------------------------------
+    286          /// Returns 1 if one or more PIO of the given Pin instance currently have a high
+    287          /// level; otherwise returns 0. This method returns the actual value that is
+    288          /// being read on the pin. To return the supposed output value of a pin, use
+    289          /// PIO_GetOutputDataStatus() instead.
+    290          /// \param pin  Pointer to a Pin instance describing one or more pins.
+    291          /// \return 1 if the Pin instance contains at least one PIO that currently has
+    292          /// a high level; otherwise 0.
+    293          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    294          unsigned char PIO_Get(const Pin *pin)
+    295          {
+    296              unsigned int reg;
+    297              if ((pin->type == PIO_OUTPUT_0) || (pin->type == PIO_OUTPUT_1)) {
+   \                     PIO_Get:
+   \   00000000   0xE5D01009         LDRB     R1,[R0, #+9]
+   \   00000004   0xE3510003         CMP      R1,#+3
+   \   00000008   0x13510004         CMPNE    R1,#+4
+    298          
+    299                  reg = pin->pio->PIO_ODSR;
+   \   0000000C   0x05901004         LDREQ    R1,[R0, #+4]
+   \   00000010   0x05911038         LDREQ    R1,[R1, #+56]
+    300              }
+    301              else {
+    302          
+    303                  reg = pin->pio->PIO_PDSR;
+   \   00000014   0x15901004         LDRNE    R1,[R0, #+4]
+   \   00000018   0x1591103C         LDRNE    R1,[R1, #+60]
+    304              }
+    305          
+    306              if ((reg & pin->mask) == 0) {
+   \   0000001C   0x........         B        ?Subroutine0
+    307          
+    308                  return 0;
+    309              }
+    310              else {
+    311          
+    312                  return 1;
+    313              }
+    314          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000004   0xE1100001         TST      R0,R1
+   \   00000008   0x03A00000         MOVEQ    R0,#+0
+   \   0000000C   0x13A00001         MOVNE    R0,#+1
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    315          
+    316          
+    317          //------------------------------------------------------------------------------
+    318          /// Returns 1 if one or more PIO of the given Pin are configured to output a
+    319          /// high level (even if they are not output).
+    320          /// To get the actual value of the pin, use PIO_Get() instead.
+    321          /// \param pin  Pointer to a Pin instance describing one or more pins.
+    322          /// \return 1 if the Pin instance contains at least one PIO that is configured
+    323          /// to output a high level; otherwise 0.
+    324          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    325          unsigned char PIO_GetOutputDataStatus(const Pin *pin)
+    326          {
+    327              if ((pin->pio->PIO_ODSR & pin->mask) == 0) {
+   \                     PIO_GetOutputDataStatus:
+   \   00000000   0xE5901004         LDR      R1,[R0, #+4]
+   \   00000004   0xE5911038         LDR      R1,[R1, #+56]
+   \   00000008                      REQUIRE ?Subroutine0
+   \   00000008                      ;; // Fall through to label ?Subroutine0
+    328          
+    329                  return 0;
+    330              }
+    331              else {
+    332          
+    333                  return 1;
+    334              }
+    335          }
+    336          
+    337          //------------------------------------------------------------------------------
+    338          /// Returns the value of ISR for the PIO controller of the pin.
+    339          /// Reading this register acknoledges all the ITs.
+    340          /// \param pin  Pointer to a Pin instance describing one or more pins.
+    341          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    342          unsigned int PIO_GetISR(const Pin *pin)
+    343          {
+    344              return (pin->pio->PIO_ISR);
+   \                     PIO_GetISR:
+   \   00000000   0xE5900004         LDR      R0,[R0, #+4]
+   \   00000004   0xE590004C         LDR      R0,[R0, #+76]
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    345          }
+    346          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  PIO_Clear
+       16  PIO_Configure
+             16 -> PIO_SetInput
+             16 -> PIO_SetOutput
+             16 -> PIO_SetPeripheralA
+             16 -> PIO_SetPeripheralB
+        0  PIO_Get
+        0  PIO_GetISR
+        0  PIO_GetOutputDataStatus
+        0  PIO_Set
+        0  PIO_SetInput
+        0  PIO_SetOutput
+        0  PIO_SetPeripheralA
+        0  PIO_SetPeripheralB
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      20  ?Subroutine0
+      16  PIO_Clear
+     228  PIO_Configure
+      32  PIO_Get
+      12  PIO_GetISR
+       8  PIO_GetOutputDataStatus
+      16  PIO_Set
+      40  PIO_SetInput
+      56  PIO_SetOutput
+      28  PIO_SetPeripheralA
+      28  PIO_SetPeripheralB
+
+ 
+ 484 bytes in section .text
+ 
+ 484 bytes of CODE memory
+
+Errors: none
+Warnings: none

@@ -1,0 +1,122 @@
+[Stack]
+FillEnabled=0
+OverflowWarningsEnabled=1
+WarningThreshold=90
+SpWarningsEnabled=1
+WarnLogOnly=1
+UseTrigger=1
+TriggerName=main
+LimitSize=0
+ByteLimit=50
+[JLinkDriver]
+WatchCond=_ 0
+Watch0=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
+Watch1=_ 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 "0x00000000" 0 0 0 0
+[DebugChecksum]
+Checksum=952680620
+[Exceptions]
+StopOnUncaught=_ 0
+StopOnThrow=_ 0
+[CallStack]
+ShowArgs=0
+[Disassembly]
+MixedMode=1
+[Breakpoints]
+Count=0
+[TraceHelper]
+Enabled=0
+ShowSource=1
+[InterruptLog]
+LogEnabled=0
+SumEnabled=0
+GraphEnabled=0
+ShowTimeLog=1
+ShowTimeSum=1
+SumSortOrder=0
+[Interrupts]
+Enabled=1
+[MemoryMap]
+Enabled=0
+Base=0
+UseAuto=0
+TypeViolation=1
+UnspecRange=1
+ActionState=1
+[Trace1]
+Enabled=0
+ShowSource=1
+[array_types]
+Fmt0=unsigned int[100]	4	0
+[watch_formats]
+Fmt0={W}0:(sLineCnt*224)	4	0
+Fmt1={W}0:ADD_CHECK	4	0
+Fmt2={W}0:CRC	4	0
+Fmt3={W}0:Font_Save_posi	4	0
+Fmt4={W}0:RxBuf1	0	4
+Fmt5={W}0:RxTimerBuf	4	4
+Fmt6={W}0:U_pso_Vel	4	0
+Fmt7={W}0:address	4	0
+Fmt8={W}0:blockAddress	4	0
+Fmt9={W}0:bytesReceived	4	0
+Fmt10={W}0:mHexSwitchAdd	4	0
+Fmt11={W}0:mTc1_Cnt	3	0
+Fmt12={W}0:nTemp	4	0
+Fmt13={W}0:nfBusWidth	4	0
+Fmt14={W}0:no	3	0
+Fmt15={W}0:sCom_Data	4	0
+Fmt16={W}0:sCrc	4	0
+Fmt17={W}0:sCrc_Ch	4	0
+Fmt18={W}0:spiMr	4	0
+Fmt19={W}0:~CRC	4	0
+[Disassemble mode]
+mode=0
+[Breakpoints2]
+Bp0=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.232.1" 0 0 1 "" 0 "" 0
+Bp1=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.389.2" 0 0 1 "" 0 "" 0
+Bp2=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.611.9" 0 0 1 "" 0 "" 0
+Bp3=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.190.5" 0 0 1 "" 0 "" 0
+Bp4=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp5=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp6=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp7=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.430.5" 0 0 1 "" 0 "" 0
+Bp8=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp9=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp10=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.284.5" 0 0 1 "" 0 "" 0
+Bp11=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.174.3" 0 0 1 "" 0 "" 0
+Bp12=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.196.5" 0 0 1 "" 0 "" 0
+Bp13=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp14=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp15=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp16=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp17=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.620.1" 0 0 1 "" 0 "" 0
+Bp18=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\basic-usart-hw-handshaking-project-at91sam7se-ek(7)}.166.14" 0 0 1 "" 0 "" 0
+Bp19=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows\system32}.436.23" 0 0 1 "" 0 "" 0
+Bp20=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows}.157.3" 0 0 1 "" 0 "" 0
+Bp21=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\..\..\..\..\..\..\..\..\..\..\Windows}.976.6" 0 0 1 "" 0 "" 0
+Bp22=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.265.6" 0 0 1 "" 0 "" 0
+Bp23=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.333.10" 0 0 1 "" 0 "" 0
+Bp24=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.265.6" 0 0 1 "" 0 "" 0
+Bp25=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.341.10" 0 0 1 "" 0 "" 0
+Bp26=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.879.6" 0 0 1 "" 0 "" 0
+Bp27=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.675.11" 0 0 1 "" 0 "" 0
+Bp28=_ 0 "EMUL_CODE" "{$PROJ_DIR$\..\LED_Display.c}.902.6" 0 0 1 "" 0 "" 0
+Bp29=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\main.c}.508.2" 0 0 1 "" 0 "" 0
+Count=30
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
+[Aliases]
+Count=0
+SuppressDialog=0
+[CallStackLog]
+Enabled=0
+[DriverProfiling]
+Enabled=0
+Mode=0
+Graph=0
+Symbiont=0
+Exclusions=

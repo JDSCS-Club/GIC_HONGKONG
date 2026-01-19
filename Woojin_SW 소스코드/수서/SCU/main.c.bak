@@ -1,0 +1,690 @@
+////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+//
+//
+
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#include <string.h>
+#include <stdio.h>
+#include "main.h"
+#include "def.h"
+#include "xr16l784.h"
+
+UCHAR m_nUartTxBuf1[UART_BUF_MAX+4];
+UCHAR m_nUartRxBuf1[UART_BUF_MAX+4];
+int m_nUartTxPos1 = 0;
+int m_nUartTxLen1 = 10;
+int m_nUartRxRear1 = 1;
+int m_nUartRxFront1 = 0;
+int m_nUartRxPos1 = 0;
+int m_nUartRxLen1 = 6;
+
+BOOL m_n1000msFlag1 = FALSE;
+BOOL m_n1000msFlag = FALSE;
+BOOL m_n250msFlag = FALSE;
+BOOL m_n500msFlag = FALSE;
+USHORT m_nTgisRxFaultTimer20000ms = 0;
+
+USHORT m_nHsync1 = 0;
+USHORT m_nHsync2 = 0;
+USHORT m_nVsync1 = 0;
+USHORT m_nVsync2 = 0;
+USHORT m_nHsyncHz1 = 0;
+USHORT m_nHsyncHz2 = 0;
+USHORT m_nVsyncHz1 = 0;
+USHORT m_nVsyncHz2 = 0;
+
+BOOL m_bVsyncEn1 = FALSE;
+BOOL m_bVsyncEn2 = FALSE;
+BOOL m_bHsyncEn1 = FALSE;
+BOOL m_bHsyncEn2 = FALSE;
+
+UCHAR m_nRxTgisByteGapDly = 0;
+UCHAR m_btRxTgisBuf[20];
+
+UCHAR m_nRxRepeatByteGapDly = 0;
+UCHAR m_btRxRepeatBuf[8][20];
+UCHAR m_nRepeatSerialErr[8];
+
+UCHAR m_nRxAmpByteGapDly = 0;
+UCHAR m_nAmpSerialErr;
+UCHAR m_btRxAmpBuf[20];
+
+char m_chBuf[16];
+
+const char *m_pLogo[]={
+	"RGB-SP-TOP board monitor, version:0.0.4",
+	"HSYNC1 enable : ",
+	"VSYNC1 enable : ",
+	"HSYNC2 enable : ",
+	"VSYNC2 enable : ",
+	NULL
+	};
+
+
+//**********************************************************************************
+//	main() 함수
+//**********************************************************************************
+int main()
+{
+	USHORT nLinkCnt;
+
+	// 
+	MCUCR = 0x80;
+
+	XMCRA = 0x0a;
+
+	// Timer1
+	TIMSK 	= 0x80;		//	-	-	ICIE1	-	OCIE1C	OCIE1B	OCIE1A	TOIE1
+	OCR2	= 230;  	//	14745600 / 64 / 230 =  1000 Hz (1 ms)
+	TCNT2 	= 0x00;		//
+	TCCR2	= 0x03;		//
+	TCCR1A  = 0x00;		//	COM1A1	COM1A0	COM1B1	COM1B0	COM1C1	COM1C0	WGM11	WGM10	:
+	TCCR1B 	= 0x03;		//	ICNC1,  ICES1, - , WGM13, WGM12, CS12, CS11, CS10	:  CLK/64
+	
+	// USART1
+	UCSR1B = 0x18 | 0xc0; // RX interrupt Enabel. RX Enable
+	UCSR1C = 0x06; // StopBit:1,ParityBit:None,DataBit:8
+	UBRR1H = 0x00; // 14745600Hz/16/9600bps = 96 = 0x60
+	UBRR1L = 0x60; // 14745600Hz/16/9600bps = 96 = 0x60
+
+	// PORT 설정
+	RUN_LED(0);
+	ERR_LED(0);
+	DDRF |= 0xF;
+
+	LINK1_LED(0);
+	LINK2_LED(0);
+	DDRB |= 0xC0;
+
+	DDRB |= 0x01; // Watchdog port
+
+	DDRE &= 0x0F;
+
+	DDRG |= 0x03; // Read & write
+
+	DDRD |= 0x0C;
+
+	DDRE |= 0x0C;
+
+
+	// 외부 인터럽트 설정
+	EICRA |= 0x00; // Interrupt0 level edge (XL16L784)
+	EICRB |= 0xC0; // Interrupt7 rising edge setting (VSYNC2)
+	EICRB |= 0x30; // Interrupt6 rising edge setting (VSYNC1)
+	EICRB |= 0x0C; // Interrupt5 rising edge setting (HSYNC2)
+	EICRB |= 0x03; // Interrupt4 rising edge setting (HSYNC1)
+	EIMSK |= 0xF1; // Interrupt mask
+	//EIMSK |= 0x01; // Interrupt mask
+
+	xr16l784_Init(COM_TGIS_CHL,9600,XR16L784_DATA8,XR16L784_NONEPARITY,XR16L784_1STOPBIT);
+	xr16l784_Init(COM_REPEATER_CHL,9600,XR16L784_DATA8,XR16L784_NONEPARITY,XR16L784_1STOPBIT);
+	xr16l784_Init(COM_AMP_CHL,9600,XR16L784_DATA8,XR16L784_NONEPARITY,XR16L784_1STOPBIT);
+
+	XR16L784_TXDIS(COM_TGIS_CHL);
+	XR16L784_TXDIS(COM_REPEATER_CHL);
+	XR16L784_TXDIS(COM_AMP_CHL);
+
+	memset(m_btRxRepeatBuf,0xFF,sizeof(m_btRxRepeatBuf));
+	memset(m_nRepeatSerialErr,0,sizeof(m_nRepeatSerialErr));
+	memset(m_btRxTgisBuf,0x00,sizeof(m_btRxTgisBuf)); m_btRxTgisBuf[3] = 0x01; // AMP MUTE;
+	memset(m_btRxAmpBuf,0x00,sizeof(m_btRxAmpBuf));
+	m_nAmpSerialErr = 0;
+
+	ENABLE_INT;
+
+	while(1)
+	{
+		// Loop
+		xr16l784_Loop();
+
+		// HSYNC, VSYNC 신호 체크
+		if(m_n1000msFlag1)
+		{
+			m_n1000msFlag1 = FALSE;
+
+			m_bHsyncEn1 = m_nHsync1 >= 20000 ? TRUE : FALSE;
+			m_bHsyncEn2 = m_nHsync2 >= 20000 ? TRUE : FALSE;
+			m_bVsyncEn1 = m_nVsync1 >= 30 ? TRUE : FALSE;
+			m_bVsyncEn2 = m_nVsync2 >= 30 ? TRUE : FALSE;
+			m_nHsyncHz1 = m_nHsync1;
+			m_nHsyncHz2 = m_nHsync2;
+			m_nVsyncHz1 = m_nVsync1;
+			m_nVsyncHz2 = m_nVsync2;
+			m_nHsync1 = 0;
+			m_nHsync2 = 0;
+			m_nVsync1 = 0;
+			m_nVsync2 = 0;
+
+
+			if(!m_bVsyncEn1 && m_bHsyncEn1) LINK1_LED((nLinkCnt%2))
+			else
+			if(m_bVsyncEn1 && !m_bHsyncEn1) LINK1_LED((nLinkCnt%4))
+			else
+			if(m_bVsyncEn1 && m_bHsyncEn1) LINK1_LED(1)
+			else
+			LINK1_LED(0);		
+
+			if(!m_bVsyncEn2 && m_bHsyncEn2) LINK2_LED((nLinkCnt%2))
+			else
+			if(m_bVsyncEn2 && !m_bHsyncEn2) LINK2_LED((nLinkCnt%4))
+			else
+			if(m_bVsyncEn2 && m_bHsyncEn2) LINK2_LED(1)
+			else
+			LINK2_LED(0);
+
+			nLinkCnt++;
+
+
+			// LINK 신호 출력
+			if(((m_bHsyncEn1 && m_bVsyncEn1) && (!m_bHsyncEn2 || !m_bVsyncEn2)) || ((!m_bHsyncEn1 || !m_bVsyncEn1) && (m_bHsyncEn2 && m_bVsyncEn2))) 
+					{LINK1_OUT((nLinkCnt&1));LINK2_OUT((nLinkCnt&1));}
+			else if((m_bHsyncEn1 && m_bVsyncEn1) && (m_bHsyncEn2 && m_bVsyncEn2)) {LINK1_OUT(1);LINK2_OUT(1);}
+			else {LINK1_OUT((nLinkCnt&2));LINK2_OUT((nLinkCnt&2));}
+		}
+
+		// TGIS와의 통신
+		RecvTgisLoop();
+
+		// LCD REPEAT와 전송
+		if(m_n250msFlag)
+		{
+			m_n250msFlag = FALSE;
+			SendRepeaterLoop();
+		}
+		RecvRepeaterLoop();
+
+		// AMP와의 통신
+		if(m_n500msFlag)
+		{
+			m_n500msFlag = FALSE;
+			SendAmpLoop();
+		}
+		RecvAmpLoop();
+
+		// Logo 전송
+		if(m_n1000msFlag)
+		{
+			m_n1000msFlag = FALSE;
+
+			Uart1_SendTo((char *)m_pLogo[0],strlen(m_pLogo[0]));Uart1_SendTo("\r\n",2);
+
+			m_chBuf[0] = m_bHsyncEn1+'0';
+			m_chBuf[1] = ',';
+			Ushort2Str(m_nHsyncHz1,&m_chBuf[2]);
+			strcat(m_chBuf,"Hz");
+			Uart1_SendTo((char *)m_pLogo[1],strlen(m_pLogo[1]));Uart1_SendTo(m_chBuf,strlen(m_chBuf));Uart1_SendTo("\r\n",2);
+
+			m_chBuf[0] = m_bVsyncEn1+'0';
+			m_chBuf[1] = ',';
+			Ushort2Str(m_nVsyncHz1,&m_chBuf[2]);
+			strcat(m_chBuf,"Hz");
+			Uart1_SendTo((char *)m_pLogo[2],strlen(m_pLogo[2]));Uart1_SendTo(m_chBuf,strlen(m_chBuf));Uart1_SendTo("\r\n",2);
+
+			m_chBuf[0] = m_bHsyncEn2+'0';
+			m_chBuf[1] = ',';
+			Ushort2Str(m_nHsyncHz2,&m_chBuf[2]);
+			strcat(m_chBuf,"Hz");
+			Uart1_SendTo((char *)m_pLogo[3],strlen(m_pLogo[3]));Uart1_SendTo(m_chBuf,strlen(m_chBuf));Uart1_SendTo("\r\n",2);
+
+			m_chBuf[0] = m_bVsyncEn2+'0';
+			m_chBuf[1] = ',';
+			Ushort2Str(m_nVsyncHz2,&m_chBuf[2]);
+			strcat(m_chBuf,"Hz");
+			Uart1_SendTo((char *)m_pLogo[4],strlen(m_pLogo[4]));Uart1_SendTo(m_chBuf,strlen(m_chBuf));Uart1_SendTo("\r\n",2);
+			Uart1_SendTo("\r\n",2);
+		}
+
+		WDIOUT;
+	}
+
+	return 0;
+}
+
+//**********************************************************************************
+//	TGIS로 SD전송
+//**********************************************************************************
+void SendTgisLoop()
+{
+	int nTxPos;
+	USHORT wBcc;
+	UCHAR btTxBuf[32];
+
+	nTxPos = 0;
+	btTxBuf[nTxPos++] = 0xAA;
+	btTxBuf[nTxPos++] = 0xBB;
+	btTxBuf[nTxPos++] = 0xCC;
+
+	btTxBuf[nTxPos++] = 0x0E;
+	btTxBuf[nTxPos++] = 0xCC;
+	btTxBuf[nTxPos++] = 0x20;
+
+	btTxBuf[nTxPos++] = INSBIT((m_btRxAmpBuf[4]&0x10 && m_btRxAmpBuf[4]&0x01)?0:1,5) | INSBIT(m_nAmpSerialErr>=LCD_AMP_ERR_MAX?1:0,4) | 
+						INSBIT(!m_bVsyncEn2,3) | INSBIT(!m_bHsyncEn2,2) | INSBIT(!m_bVsyncEn1,1) | INSBIT(!m_bHsyncEn1,0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_nRepeatSerialErr[7]>=LCD_REPEAT_ERR_MAX?1:0,7) | INSBIT(m_nRepeatSerialErr[6]>=LCD_REPEAT_ERR_MAX?1:0,6) |
+						INSBIT(m_nRepeatSerialErr[5]>=LCD_REPEAT_ERR_MAX?1:0,5) | INSBIT(m_nRepeatSerialErr[4]>=LCD_REPEAT_ERR_MAX?1:0,4) |
+						INSBIT(m_nRepeatSerialErr[3]>=LCD_REPEAT_ERR_MAX?1:0,3) | INSBIT(m_nRepeatSerialErr[2]>=LCD_REPEAT_ERR_MAX?1:0,2) |
+						INSBIT(m_nRepeatSerialErr[1]>=LCD_REPEAT_ERR_MAX?1:0,1) | INSBIT(m_nRepeatSerialErr[0]>=LCD_REPEAT_ERR_MAX?1:0,0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_btRxRepeatBuf[7][3]>>4,7) | INSBIT(m_btRxRepeatBuf[6][3]>>4,6) |
+						INSBIT(m_btRxRepeatBuf[5][3]>>4,5) | INSBIT(m_btRxRepeatBuf[4][3]>>4,4) |
+						INSBIT(m_btRxRepeatBuf[3][3]>>4,3) | INSBIT(m_btRxRepeatBuf[2][3]>>4,2) |
+						INSBIT(m_btRxRepeatBuf[1][3]>>4,1) | INSBIT(m_btRxRepeatBuf[0][3]>>4,0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_btRxRepeatBuf[7][3],7) | INSBIT(m_btRxRepeatBuf[6][3],6) |
+						INSBIT(m_btRxRepeatBuf[5][3],5) | INSBIT(m_btRxRepeatBuf[4][3],4) |
+						INSBIT(m_btRxRepeatBuf[3][3],3) | INSBIT(m_btRxRepeatBuf[2][3],2) |
+						INSBIT(m_btRxRepeatBuf[1][3],1) | INSBIT(m_btRxRepeatBuf[0][3],0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_btRxRepeatBuf[7][3]>>1,7) | INSBIT(m_btRxRepeatBuf[6][3]>>1,6) |
+						INSBIT(m_btRxRepeatBuf[5][3]>>1,5) | INSBIT(m_btRxRepeatBuf[4][3]>>1,4) |
+						INSBIT(m_btRxRepeatBuf[3][3]>>1,3) | INSBIT(m_btRxRepeatBuf[2][3]>>1,2) |
+						INSBIT(m_btRxRepeatBuf[1][3]>>1,1) | INSBIT(m_btRxRepeatBuf[0][3]>>1,0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_btRxRepeatBuf[7][3]>>2,7) | INSBIT(m_btRxRepeatBuf[6][3]>>2,6) |
+						INSBIT(m_btRxRepeatBuf[5][3]>>2,5) | INSBIT(m_btRxRepeatBuf[4][3]>>2,4) |
+						INSBIT(m_btRxRepeatBuf[3][3]>>2,3) | INSBIT(m_btRxRepeatBuf[2][3]>>2,2) |
+						INSBIT(m_btRxRepeatBuf[1][3]>>2,1) | INSBIT(m_btRxRepeatBuf[0][3]>>2,0);
+
+	btTxBuf[nTxPos++] = 
+						INSBIT(m_btRxRepeatBuf[7][3]>>3,7) | INSBIT(m_btRxRepeatBuf[6][3]>>3,6) |
+						INSBIT(m_btRxRepeatBuf[5][3]>>3,5) | INSBIT(m_btRxRepeatBuf[4][3]>>3,4) |
+						INSBIT(m_btRxRepeatBuf[3][3]>>3,3) | INSBIT(m_btRxRepeatBuf[2][3]>>3,2) |
+						INSBIT(m_btRxRepeatBuf[1][3]>>3,1) | INSBIT(m_btRxRepeatBuf[0][3]>>3,0);
+
+	btTxBuf[nTxPos++] = ETX;
+
+	wBcc = GetBcc(&btTxBuf[3],nTxPos-3);
+
+	btTxBuf[nTxPos++] = WORD_H(wBcc);
+	btTxBuf[nTxPos++] = WORD_L(wBcc);
+
+	xr16l784_RtsDelayStartSend(COM_TGIS_CHL,btTxBuf,nTxPos,10);
+}
+
+
+//**********************************************************************************
+//	TGIS로 SDR수신
+//**********************************************************************************
+void RecvTgisLoop()
+{
+	USHORT wTemp;
+	static int nRxPos = 0;
+	static UCHAR btRxBuf[32];
+	int nRxLen;
+	UCHAR btBuf[16];
+
+	nRxLen = xr16l784_GetRxBuffer1Ch(btBuf,sizeof(btBuf));
+	if(nRxLen)
+	{
+		if(!m_nRxTgisByteGapDly) nRxPos = 0;
+		m_nRxTgisByteGapDly = 10;
+
+		if((nRxPos + nRxLen) >= sizeof(btRxBuf)) nRxPos = 0;
+		else
+		{
+			memcpy(&btRxBuf[nRxPos],btBuf,nRxLen);
+			nRxPos += nRxLen;
+			if(nRxPos >= 16)
+			{
+				if(btRxBuf[0] == 0xAA && btRxBuf[1] == 0xBB && btRxBuf[2] == 0xCC && btRxBuf[3] == 0x0E && btRxBuf[4] == 0xCC && btRxBuf[13] == ETX)
+				{
+					wTemp = GetBcc(&btRxBuf[3],11);
+					if(wTemp == MAKE_WORD(btRxBuf[14],btRxBuf[15]))
+					{
+						switch(btRxBuf[5])
+						{
+						case 0x20: // Case Status
+							memcpy(m_btRxTgisBuf,&btRxBuf[3],10);
+							SendTgisLoop();
+							break;
+						}
+
+						m_nTgisRxFaultTimer20000ms = 0;
+					}
+				}
+				nRxPos = 0;
+			}
+		}
+	}
+}
+
+//**********************************************************************************
+//	REPEATER로 SDR전송
+//**********************************************************************************
+void SendRepeaterLoop()
+{
+	int nTxPos;
+	USHORT wBcc;
+	UCHAR btTxBuf[32];
+	static UCHAR nTxAddr = 0;
+
+	nTxPos = 0;
+	btTxBuf[nTxPos++] = 0xAA;
+	btTxBuf[nTxPos++] = 0xBB;
+	btTxBuf[nTxPos++] = 0xCC;
+
+	btTxBuf[nTxPos++] = nTxAddr % 8;
+	btTxBuf[nTxPos++] = 0x0E;
+	btTxBuf[nTxPos++] = 0x20;
+
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x00;
+
+	btTxBuf[nTxPos++] = ETX;
+
+	wBcc = GetBcc(&btTxBuf[3],nTxPos-3);
+
+	btTxBuf[nTxPos++] = WORD_H(wBcc);
+	btTxBuf[nTxPos++] = WORD_L(wBcc);
+
+	xr16l784_RtsDelayStartSend(COM_REPEATER_CHL,btTxBuf,nTxPos,10);
+	
+	if(m_nRepeatSerialErr[nTxAddr] < LCD_REPEAT_ERR_MAX) m_nRepeatSerialErr[nTxAddr]++;
+
+	nTxAddr = (nTxAddr+1) % 8;
+}
+
+//**********************************************************************************
+//	REPEATER로 SD수신
+//**********************************************************************************
+void RecvRepeaterLoop()
+{
+	int i;
+	USHORT wTemp;
+	static int nRxPos = 0;
+	static UCHAR btRxBuf[32];
+	int nRxLen;
+	UCHAR btBuf[16];
+
+	nRxLen = xr16l784_GetRxBuffer2Ch(btBuf,sizeof(btBuf));
+	if(nRxLen)
+	{
+		if(!m_nRxRepeatByteGapDly) nRxPos = 0;
+		m_nRxRepeatByteGapDly = 10;
+
+		if((nRxPos + nRxLen) >= sizeof(btRxBuf)) nRxPos = 0;
+		else
+		{
+			memcpy(&btRxBuf[nRxPos],btBuf,nRxLen);
+			nRxPos += nRxLen;
+			if(nRxPos >= 16)
+			{
+				if(btRxBuf[0] == 0xAA && btRxBuf[1] == 0xBB && btRxBuf[2] == 0xCC && btRxBuf[3] == 0x0E && btRxBuf[13] == ETX)
+				{
+					wTemp = GetBcc(&btRxBuf[3],11);
+					if(wTemp == MAKE_WORD(btRxBuf[14],btRxBuf[15]))
+					{
+						i = btRxBuf[4];
+						if(i >= 0 && i <= 7)
+						{
+							memcpy(m_btRxRepeatBuf[i],&btRxBuf[3],10);
+							m_nRepeatSerialErr[i] = 0;
+						}
+					}
+				}
+				nRxPos = 0;
+			}
+		}
+	}
+}
+
+//**********************************************************************************
+//	AMP로 SDR전송
+//**********************************************************************************
+void SendAmpLoop()
+{
+	int nTxPos;
+	USHORT wBcc;
+	UCHAR btTxBuf[32];
+
+	nTxPos = 0;
+	btTxBuf[nTxPos++] = 0x02;
+
+	btTxBuf[nTxPos++] = 0x60;
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = 0x4F;
+	btTxBuf[nTxPos++] = 0x21;
+	btTxBuf[nTxPos++] = m_btRxTgisBuf[3]&0x01 || (m_nTgisRxFaultTimer20000ms >= 20000) ? 0xFF : 0xAA; // MUTE On/Off
+	btTxBuf[nTxPos++] = 0x00;
+	btTxBuf[nTxPos++] = ETX;
+
+	wBcc = GetBcc(&btTxBuf[1],nTxPos-1);
+
+	btTxBuf[nTxPos++] = WORD_H(wBcc);
+	btTxBuf[nTxPos++] = WORD_L(wBcc);
+
+	xr16l784_RtsDelayStartSend(COM_AMP_CHL,btTxBuf,nTxPos,10);
+	
+	// 고장이 LCD_AMP_ERR_MAX개 이상이면 버퍼를 클리어한다.
+	if(m_nAmpSerialErr < LCD_AMP_ERR_MAX) m_nAmpSerialErr++;
+}
+
+//**********************************************************************************
+//	AMP로 SD수신
+//**********************************************************************************
+void RecvAmpLoop()
+{
+	USHORT wTemp;
+	static int nRxPos = 0;
+	static UCHAR btRxBuf[32];
+	int nRxLen;
+	UCHAR btBuf[16];
+
+	nRxLen = xr16l784_GetRxBuffer3Ch(btBuf,sizeof(btBuf));
+	if(nRxLen)
+	{
+		if(!m_nRxAmpByteGapDly) nRxPos = 0;
+		m_nRxAmpByteGapDly = 10;
+
+		if((nRxPos + nRxLen) >= sizeof(btRxBuf)) nRxPos = 0;
+		else
+		{
+			memcpy(&btRxBuf[nRxPos],btBuf,nRxLen);
+			nRxPos += nRxLen;
+			if(nRxPos >= 10)
+			{
+				if(btRxBuf[0] == STX && btRxBuf[7] == ETX)
+				{
+					wTemp = GetBcc(&btRxBuf[1],7);
+					if(wTemp == MAKE_WORD(btRxBuf[8],btRxBuf[9]))
+					{
+						memcpy(m_btRxAmpBuf,&btRxBuf[1],6);
+						m_nAmpSerialErr = 0;
+					}
+				}
+				nRxPos = 0;
+			}
+		}
+	}
+}
+
+//***********************************************************************************
+//	BCC 체크를 만든다. BCC를 만들어 리턴한다.
+//***********************************************************************************
+USHORT GetBcc(UCHAR *pDat,int nLen)
+{
+	int i;
+	UCHAR btBcc[2];
+	btBcc[0] = btBcc[1] = 0x00;
+	for(i=0;i<nLen;i++)	btBcc[i&0x01] ^= pDat[i];
+	return MAKE_WORD(btBcc[0],btBcc[1]);
+}
+
+//***********************************************************************************
+//	Unsigned short형을 string으로 바꾼다.
+//	return : OK : TRUE, NG : FALSE
+//***********************************************************************************
+void Ushort2Str(USHORT nDat,char *pBuf)
+{
+	int i;
+	char chBuf[8];
+
+	chBuf[6] = 0;
+	chBuf[5] = nDat%10+'0';
+	chBuf[4] = nDat/10%10+'0';
+	chBuf[3] = nDat/100%10+'0';
+	chBuf[2] = nDat/1000%10+'0';
+	chBuf[1] = nDat/10000%10+'0';
+	chBuf[0] = nDat/100000%10+'0';
+
+	for(i=0;i<5;i++) if(chBuf[i] != '0') break;
+	strcpy(pBuf,&chBuf[i]);
+}
+
+//**********************************************************************************
+//	Uart 전송
+//**********************************************************************************
+void Uart1_SendTo(char *pBuf,int nLen)
+{
+	if(!m_nUartTxPos1)
+	{
+		memcpy(m_nUartTxBuf1,pBuf,nLen);
+		m_nUartTxLen1 = nLen;
+		m_nUartTxPos1 = 1;
+		UDR1 = m_nUartTxBuf1[0];
+	}
+	else
+	{
+		if((m_nUartTxLen1 + nLen) > UART_BUF_MAX) nLen = UART_BUF_MAX - m_nUartTxLen1;
+		memcpy(&m_nUartTxBuf1[m_nUartTxLen1],pBuf,nLen);
+		m_nUartTxLen1 += nLen;
+	}
+}
+
+//**********************************************************************************
+//	Uart 수신
+//**********************************************************************************
+int Uart1_RxBuffer(char *pBuf,int nRxBuffLen)
+{
+	int i;
+	int *pRr = NULL;
+	int *pFr = NULL;	
+	UCHAR *pRxBuf = NULL;
+	int nBufPos;
+	
+	pRr = &m_nUartRxRear1;
+	pFr = &m_nUartRxFront1;
+	pRxBuf = m_nUartRxBuf1;
+
+	nBufPos = 0;
+	while(1)
+	{
+		i = (*pFr+1)%UART_BUF_MAX;
+		if(i != *pRr) {pBuf[nBufPos++] = pRxBuf[i]; if(nBufPos >= nRxBuffLen) break;} else break;
+		*pFr = i;
+	}
+	return nBufPos;
+}
+
+//**********************************************************************************
+// Timer Interrupt
+//**********************************************************************************
+ISR(SIG_OUTPUT_COMPARE2)
+{
+	static USHORT nDlyCnt=1;
+
+	TCNT2 = 0x00;
+
+	xr16l784_1msLoop();
+
+	if(!(nDlyCnt % 250)) m_n250msFlag = TRUE;
+	if(!(nDlyCnt % 1000)) m_n1000msFlag1 = TRUE;
+	if(!(nDlyCnt % 1000)) m_n1000msFlag = TRUE;	
+	if(!(nDlyCnt % 500)) m_n500msFlag = TRUE;
+
+	RUN_LED(nDlyCnt&0x20);
+
+	if(m_nRxRepeatByteGapDly) m_nRxRepeatByteGapDly--;
+	if(m_nRxTgisByteGapDly) m_nRxTgisByteGapDly--;
+	if(m_nRxAmpByteGapDly) m_nRxAmpByteGapDly--;
+	if(m_nTgisRxFaultTimer20000ms < 20000) m_nTgisRxFaultTimer20000ms++;
+
+	nDlyCnt++;
+}
+
+//***********************************************************************************
+//	Uart1 Receive Interrupt
+//***********************************************************************************
+ISR(USART1_RX_vect)
+{
+	short i;
+	UCHAR btBuf;
+	
+	btBuf = UDR1; 
+	
+	i = (m_nUartRxRear1 + 1) % UART_BUF_MAX;
+	if(m_nUartRxFront1 != i)
+	{
+		m_nUartRxBuf1[m_nUartRxRear1] = btBuf;
+		m_nUartRxRear1 = (m_nUartRxRear1 + 1) % UART_BUF_MAX;	
+	}
+}
+
+//************************************************************************************
+//	Uart1 Transmit Interrupt
+//************************************************************************************
+ISR(USART1_TX_vect)
+{
+	if(m_nUartTxPos1 < m_nUartTxLen1)
+	{
+		UDR1 = m_nUartTxBuf1[m_nUartTxPos1++];
+	}
+	else
+	{
+		m_nUartTxPos1 = 0;
+	}
+}
+
+//************************************************************************************
+//	Interrupt0
+//************************************************************************************
+ISR(SIG_INTERRUPT0)
+{
+	xr16l784_Isr();
+}
+
+//************************************************************************************
+//	Interrupt4
+//************************************************************************************
+ISR(SIG_INTERRUPT4)
+{
+	m_nHsync1++;
+}
+
+//************************************************************************************
+//	Interrupt5
+//************************************************************************************
+ISR(SIG_INTERRUPT5)
+{
+	m_nHsync2++;
+}
+
+//************************************************************************************
+//	Interrupt6
+//************************************************************************************
+ISR(SIG_INTERRUPT6)
+{
+	m_nVsync1++;
+}
+
+//************************************************************************************
+//	Interrupt7
+//************************************************************************************
+ISR(SIG_INTERRUPT7)
+{
+	m_nVsync2++;
+}
+

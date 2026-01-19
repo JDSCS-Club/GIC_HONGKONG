@@ -1,0 +1,14 @@
+# Auto-Project file created by RVDEBUG. Do not hand edit unless
+# you know what you are doing. Use the Settings Window
+# Copyright (c) 2002 - ARM Ltd
+$make_prj
+[PROJECT] 
+source_search="C:\
+	\Users\JDS\Desktop\JDS_PRO\êµ­ë‚´ í”„ë¡œì íŠ¸\ëŒ€êµ¬ ëª¨ë…¸ë ˆì¼\í”„ë¡œê·¸ë¨"
+source_mapping="C:\
+	\Users\JDS\Desktop\JDS_PRO\±¹³» ÇÁ·ÎÁ§Æ®\´ë±¸ ¸ğ³ë·¹ÀÏ\ÇÁ·Î±×·¥->C:\
+	\Users\JDS\Desktop\JDS_PRO\êµ­ë‚´ í”„ë¡œì íŠ¸\ëŒ€êµ¬ ëª¨ë…¸ë ˆì¼\í”„ë¡œê·¸ë¨"
+[MAKEFILE=default] 
+application="at91sam7se512_flash.out"
+arguments="This project does not build anything"
+command="@echo $a"

@@ -1,0 +1,267 @@
+*****************************************************
+TMS320C3x/4x COFF Linker        Version 4.70
+*****************************************************
+Tue Feb  3 12:40:02 2015
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00700001
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         SRAM      00700000  000010000  0000655b     RWIX      
+         IRAM      0087fe10  0000001f0  00000000     RWIX      
+         FROM      00900000  000080000  00000000     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00700000    000000e3     
+                  00700000    00000001     start.obj (.text)
+                  00700001    0000001b     rts30.lib : boot.obj (.text)
+                  0070001c    00000033               : divu.obj (.text)
+                  0070004f    00000022               : modi.obj (.text)
+                  00700071    0000002a               : modu.obj (.text)
+                  0070009b    00000026               : exit.obj (.text)
+                  007000c1    00000012               : memcpy.obj (.text)
+                  007000d3    00000010               : memset.obj (.text)
+
+.text      0    007000e3    00000d3b     
+                  007000e3    00000d3b     main.obj (.text)
+
+.cinit     0    00700e1e    0000042d     
+                  00700e1e    00000426     main.obj (.cinit)
+                  00701244    00000006     rts30.lib : exit.obj (.cinit)
+                  0070124a    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    0070124b    00000019     
+                  0070124b    00000019     main.obj (.const)
+
+.data      0    00700000    00000000     UNINITIALIZED
+                  00700000    00000000     start.obj (.data)
+                  00700000    00000000     rts30.lib : memset.obj (.data)
+                  00700000    00000000               : memcpy.obj (.data)
+                  00700000    00000000               : exit.obj (.data)
+                  00700000    00000000               : modu.obj (.data)
+                  00700000    00000000               : modi.obj (.data)
+                  00700000    00000000               : divu.obj (.data)
+                  00700000    00000000               : boot.obj (.data)
+                  00700000    00000000     main.obj (.data)
+
+.stack     0    00701264    00004000     UNINITIALIZED
+                  00701264    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00705264    000012f7     UNINITIALIZED
+                  00705264    00000000     start.obj (.bss)
+                  00705264    00000000     rts30.lib : memset.obj (.bss)
+                  00705264    00000000               : memcpy.obj (.bss)
+                  00705264    00000000               : modu.obj (.bss)
+                  00705264    00000000               : modi.obj (.bss)
+                  00705264    00000000               : divu.obj (.bss)
+                  00705264    00000000               : boot.obj (.bss)
+                  00705264    000012d5     main.obj (.bss)
+                  00706539    00000022     rts30.lib : exit.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00705264 .bss                             00004000 __STACK_SIZE
+00700000 .data                            00700000 edata
+007000e3 .text                            00700000 .data
+0070001c DIV_U30                          00700001 _c_int00
+0070004f MOD_I30                          0070001c DIV_U30
+00700071 MOD_U30                          0070004f MOD_I30
+00705b6d _AAA_jang                        00700071 MOD_U30
+00700729 _ADDRESS_JUMP                    0070009b _exit
+00700b56 _AUTO_LINE_PRINT                 007000a9 _atexit
+00705537 _Average_Dist                    007000bc _abort
+00705393 _BACK_BIT                        007000c1 _memcpy
+007006e7 _BIT_OPE                         007000d3 _memset
+007053a3 _Back_Distance                   007000e3 .text
+00700a50 _CHECK_TEST                      007000e3 _c_int06
+0070539a _COUNT                           00700130 _Debug3xInit
+00705264 _CRC_Table                       00700157 _SCC_8530_Initial
+00705394 _ChangBit                        007001a1 _SCC2_SendTo
+00705395 _ChangBit2                       007001f2 _SCC_ISR
+0070553c _Check_Blink                     00700287 _FlashBusyWait
+00705539 _Check_CLK                       0070028c _GetFlashId
+0070553b _Check_NOUT                      007002aa _FlashPageRead
+0070553a _Check_OUT                       007002d4 _GetLirAdrImg
+00705392 _ComP                            0070030a _FlashPageWrite
+007054d7 _Correct_DMC_Seoul_Station       00700355 _FlashErase
+0070549b _Correct_Geomam_Station          0070038b _NorFlashAllErase
+007054af _Correct_Gimp_Geomam_Station     00700397 _NorFlashBlockErase
+007054c3 _Correct_Inch_DMC_Station        007003ad _NorFlashWrite
+0070547d _Correct_Station                 007003c6 _LdmInit
+00705365 _DATA_LEN                        007003ca _LdmLatchClk
+00700aeb _DSP_INIT                        00700400 _JUMPDOWLOAD
+00700130 _Debug3xInit                     00700405 _NORFLASH_MEMORY
+00705541 _Direction                       00700439 _NorFlash_Data_Tx
+00705565 _Dist_Re                         00700475 _START_CHAK_DATA
+007053a4 _Distance_Point                  007004fa _STATION_DB
+00705535 _Dist                            007006e7 _BIT_OPE
+0070553f _Distance                        00700729 _ADDRESS_JUMP
+0070538e _END_BIT                         00700774 _PATTREN
+0070551e _End                             007007cd _Station_Count
+00700287 _FlashBusyWait                   007007e5 _Start_End
+00700355 _FlashErase                      00700843 _Station_Distance_Led
+007002aa _FlashPageRead                   007008ad _Station_Led_Point
+0070030a _FlashPageWrite                  00700970 _Station_Distance_Move
+0070553d _GREEN_Flag                      007009e8 _START_DISTANCE_VALUE
+00700a74 _GREEN_RED_FLAG                  00700a2b _ONTD
+0070553e _GREEN_RED_FLAG_Time             00700a50 _CHECK_TEST
+0070028c _GetFlashId                      00700a74 _GREEN_RED_FLAG
+007002d4 _GetLirAdrImg                    00700a99 _SEND_DATA
+0070539b _HI_SEND                         00700ad5 _RTS
+00700b11 _IsBCCOK                         00700aeb _DSP_INIT
+00700400 _JUMPDOWLOAD                     00700b11 _IsBCCOK
+007053a2 _LED_DATA_CHACK                  00700b39 _cal_CRC16
+007053a1 _LINE_DATA_1                     00700b56 _AUTO_LINE_PRINT
+00705568 _LINE_LED_PRINT                  00700bbf _c_int02
+0070539c _LOW_SEND                        00700bf9 _c_int09
+007003c6 _LdmInit                         00700c7e _c_int10
+007003ca _LdmLatchClk                     00700ccb _main
+00705536 _Led_Dist                        00700e1e etext
+00705b82 _Line_Buff                       00700e1e cinit
+00700405 _NORFLASH_MEMORY                 00701264 __stack
+0070609e _NOR_VAL                         00705264 _CRC_Table
+0070538f _NOW_BIT                         00705264 .bss
+0070539e _NUM_TX_DATA                     00705364 _gRxComplete
+0070038b _NorFlashAllErase                00705365 _DATA_LEN
+00700397 _NorFlashBlockErase              00705366 _cRc
+007003ad _NorFlashWrite                   00705367 _gRxPos
+00700439 _NorFlash_Data_Tx                00705368 _gRxStTemp
+00705521 _Nor_Cou                         00705369 _SCC_INIT_ASYNC_9600BPS
+00705523 _Nor_Jump                        0070538b _gSccRxTimeout
+00705522 _Nor_Sav_C                       0070538c _gDownloadRxBlockPos
+00705520 _Nor_T_F                         0070538d _STR_BIT
+00700a2b _ONTD                            0070538e _END_BIT
+00705390 _OPEN_SAT                        0070538f _NOW_BIT
+00705396 _PAT                             00705390 _OPEN_SAT
+00700774 _PATTREN                         00705391 _glDebugCnt
+007053a7 _ROAD                            00705392 _ComP
+00700ad5 _RTS                             00705393 _BACK_BIT
+00705525 _Rem_End                         00705394 _ChangBit
+00705526 _Rem_Now                         00705395 _ChangBit2
+00705527 _Rem_Open                        00705396 _PAT
+00705528 _Rem_StaCode                     00705397 _SAVE_NOW
+00705524 _Rem_Str                         00705398 _STOP_STA
+0070552a _Rem_Road                        00705399 _STOP_MOVE
+00705534 _Rem                             0070539a _COUNT
+00705529 _Rem_StationCod                  0070539b _HI_SEND
+00705533 _Rem_Station_cnt                 0070539c _LOW_SEND
+007054a5 _ReverseGimp_Geomam_Station      0070539d _num_TX
+007054cd _Reverse_DMC_Seoul_Station       0070539e _NUM_TX_DATA
+00705491 _Reverse_Geomam_Station          0070539f _TX_DA_ENA_COUNT
+007054b9 _Reverse_Inch_DMC_Station        007053a0 _send_glDebugCnt
+00705469 _Reverse_Station                 007053a1 _LINE_DATA_1
+00705397 _SAVE_NOW                        007053a2 _LED_DATA_CHACK
+00705c4a _SCC1_Init_AChl                  007053a3 _Back_Distance
+007060bc _SCC1_Init_BChl                  007053a4 _Distance_Point
+007001a1 _SCC2_SendTo                     007053a5 _Station_cnt
+00700157 _SCC_8530_Initial                007053a6 _Staton_All_Count
+00705369 _SCC_INIT_ASYNC_9600BPS          007053a7 _ROAD
+007001f2 _SCC_ISR                         007053a8 _STATION_LIST
+00700a99 _SEND_DATA                       007053b3 _STATION_BACK_LIST
+00706083 _SEND_DATA_BUFF                  007053be _STATIOM_Back_Geomam_List
+00700475 _START_CHAK_DATA                 007053c8 _STATION_B_Gimpo_Geomam_List
+007009e8 _START_DISTANCE_VALUE            007053d2 _STATION_B_Inch_DMC_List
+007053be _STATIOM_Back_Geomam_List        007053dc _STATION_B_DMC_Seoul_List
+00705540 _STATION                         007053e6 _STATION_CORRECT_LIST
+007053b3 _STATION_BACK_LIST               007053f1 _STATION_CORRECT_Geomam_List
+007053dc _STATION_B_DMC_Seoul_List        007053fb _STATION_Gimpo_Geomam_List
+007053c8 _STATION_B_Gimpo_Geomam_List     00705405 _STATION_Inch_DMC_List
+007053d2 _STATION_B_Inch_DMC_List         0070540f _STATION_DMC_Seoul_List
+007053f1 _STATION_CORRECT_Geomam_List     00705419 _Station_All
+007053e6 _STATION_CORRECT_LIST            0070542d _Station_Led
+007004fa _STATION_DB                      00705455 _Station
+0070540f _STATION_DMC_Seoul_List          00705469 _Reverse_Station
+007053fb _STATION_Gimpo_Geomam_List       0070547d _Correct_Station
+00705405 _STATION_Inch_DMC_List           00705491 _Reverse_Geomam_Station
+007053a8 _STATION_LIST                    0070549b _Correct_Geomam_Station
+00705542 _STATION_VALUE                   007054a5 _ReverseGimp_Geomam_Station
+00705399 _STOP_MOVE                       007054af _Correct_Gimp_Geomam_Station
+00705398 _STOP_STA                        007054b9 _Reverse_Inch_DMC_Station
+0070538d _STR_BIT                         007054c3 _Correct_Inch_DMC_Station
+0070551d _Start                           007054cd _Reverse_DMC_Seoul_Station
+007007e5 _Start_End                       007054d7 _Correct_DMC_Seoul_Station
+00705419 _Station_All                     007054e1 _Station_Distance_Value
+007054f5 _Station_Basic_Distance_Value    007054f5 _Station_Basic_Distance_Value
+007007cd _Station_Count                   00705509 _Station_Geomam_Distance_Value
+00700970 _Station_Distance_Move           0070551d _Start
+007064c3 _Station_Distance                0070551e _End
+00700843 _Station_Distance_Led            0070551f _Station_blink
+007054e1 _Station_Distance_Value          00705520 _Nor_T_F
+00705509 _Station_Geomam_Distance_Value   00705521 _Nor_Cou
+007008ad _Station_Led_Point               00705522 _Nor_Sav_C
+0070542d _Station_Led                     00705523 _Nor_Jump
+00705455 _Station                         00705524 _Rem_Str
+0070551f _Station_blink                   00705525 _Rem_End
+007053a5 _Station_cnt                     00705526 _Rem_Now
+00705b6e _Station_piece                   00705527 _Rem_Open
+007053a6 _Staton_All_Count                00705528 _Rem_StaCode
+0070539f _TX_DA_ENA_COUNT                 00705529 _Rem_StationCod
+00705532 _Test                            0070552a _Rem_Road
+00004000 __STACK_SIZE                     0070552b _nMemo_DataTxFlag
+0070609d __glDebugAddr                    0070552c _gpVersion
+0070609c __glDebugData                    0070552d _nNorTxCnt
+00701264 __stack                          0070552e _d_DB_T_1
+007000bc _abort                           0070552f _d_DB_T_2
+007000a9 _atexit                          00705530 _d_DB_F_1
+00705366 _cRc                             00705531 _d_DB_F_2
+00700001 _c_int00                         00705532 _Test
+00700bbf _c_int02                         00705533 _Rem_Station_cnt
+007000e3 _c_int06                         00705534 _Rem
+00700bf9 _c_int09                         00705535 _Dist
+00700c7e _c_int10                         00705536 _Led_Dist
+00700b39 _cal_CRC16                       00705537 _Average_Dist
+0070556a _d_Bit_Chk_F                     00705538 _nLedPlus_Cnt
+00705569 _d_Bit_Chk_T                     00705539 _Check_CLK
+00705530 _d_DB_F_1                        0070553a _Check_OUT
+00705531 _d_DB_F_2                        0070553b _Check_NOUT
+0070552e _d_DB_T_1                        0070553c _Check_Blink
+0070552f _d_DB_T_2                        0070553d _GREEN_Flag
+0070556b _d_DestStaRem                    0070553e _GREEN_RED_FLAG_Time
+00705563 _d_Dis_St                        0070553f _Distance
+00705562 _d_Next_St                       00705540 _STATION
+00705561 _d_Now_St                        00705541 _Direction
+00705564 _d_Sta_St                        00705542 _STATION_VALUE
+00705543 _d_Station_ListBuf               00705543 _d_Station_ListBuf
+0070554d _d_distance_ST                   0070554d _d_distance_ST
+0070009b _exit                            00705561 _d_Now_St
+0070576c _gDownLoadBuf                    00705562 _d_Next_St
+0070538c _gDownloadRxBlockPos             00705563 _d_Dis_St
+0070596c _gHexaSw                         00705564 _d_Sta_St
+0070556c _gRxBuffer                       00705565 _Dist_Re
+00705364 _gRxComplete                     00705566 _nScc_Time
+0070596d _gRxExcCode                      00705567 _time
+00705367 _gRxPos                          00705568 _LINE_LED_PRINT
+00705368 _gRxStTemp                       00705569 _d_Bit_Chk_T
+0070538b _gSccRxTimeout                   0070556a _d_Bit_Chk_F
+00705391 _glDebugCnt                      0070556b _d_DestStaRem
+0070552c _gpVersion                       0070556c _gRxBuffer
+00706051 _mRndRxBuf                       0070576c _gDownLoadBuf
+00700ccb _main                            0070596c _gHexaSw
+007000c1 _memcpy                          0070596d _gRxExcCode
+007000d3 _memset                          00705b6d _AAA_jang
+00705538 _nLedPlus_Cnt                    00705b6e _Station_piece
+0070552b _nMemo_DataTxFlag                00705b82 _Line_Buff
+00706065 _nNorTxBuf                       00705c4a _SCC1_Init_AChl
+0070552d _nNorTxCnt                       00706051 _mRndRxBuf
+00705566 _nScc_Time                       00706065 _nNorTxBuf
+0070539d _num_TX                          00706083 _SEND_DATA_BUFF
+007053a0 _send_glDebugCnt                 0070609c __glDebugData
+00705567 _time                            0070609d __glDebugAddr
+00700e1e cinit                            0070609e _NOR_VAL
+00700000 edata                            007060bc _SCC1_Init_BChl
+0070655b end                              007064c3 _Station_Distance
+00700e1e etext                            0070655b end
+
+[191 symbols]

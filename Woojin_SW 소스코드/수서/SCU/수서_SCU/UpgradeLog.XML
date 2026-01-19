@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="수서_SCU">
+</Property><Property Name="솔루션 파일" Value="C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.sln">
+</Property><Property Name="사용자 옵션 파일" Value="C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.suo">
+</Property><Property Name="Date" Value="2010년 7월 5일 월요일">
+</Property><Property Name="Time" Value="오후 14:12">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="수서_SCU.sln" Description="파일을 C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.sln.old(으)로 백업했습니다.">
+</Event><Event ErrorLevel="0" Project="" Source="수서_SCU.suo" Description="파일을 C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.suo.old(으)로 백업했습니다.">
+</Event><Event ErrorLevel="0" Project="수서_SCU" Source="수서_SCU.vcproj" Description="Converting project file 'C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.vcproj'.">
+</Event><Event ErrorLevel="1" Project="수서_SCU" Source="수서_SCU.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="0" Project="수서_SCU" Source="수서_SCU.vcproj" Description="Done converting to new project file 'C:\AVR_PRO\프로그램\Ver1.0.2_수서\수서_SCU\수서_SCU.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="수서_SCU" Source="수서_SCU.vcproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="수서_SCU.sln" Description="솔루션을 변환했습니다.">
+</Event><Event ErrorLevel="3" Project="" Source="수서_SCU.sln" Description="Converted">
+</Event></UpgradeLog>

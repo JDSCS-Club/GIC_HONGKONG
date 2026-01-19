@@ -1,0 +1,90 @@
+******************************************************************************
+TMS320C3x/4x COFF Linker                Version 5.11                   
+******************************************************************************
+>> Linked Wed Oct 30 13:59:56 2002
+
+OUTPUT FILE NAME:   <test.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00809811
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         ROM       00000000  000004000  00000000     RWIX      
+         RAM0      00809810  0000007b0  000001d0     RWIX      
+         SRAM      00900000  00001ffff  00000000     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00809810    00000042     
+                  00809810    00000001     start.obj (.text)
+                  00809811    0000001b     rts30.lib : boot.obj (.text)
+                  0080982c    00000026               : exit.obj (.text)
+
+.text      0    00809852    00000099     
+                  00809852    00000099     main.obj (.text)
+
+.cinit     0    008098eb    0000001e     
+                  008098eb    00000017     main.obj (.cinit)
+                  00809902    00000006     rts30.lib : exit.obj (.cinit)
+                  00809908    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    00809810    00000000     UNINITIALIZED
+                  00809810    00000000     main.obj (.const)
+
+.data      0    00809810    00000000     UNINITIALIZED
+                  00809810    00000000     start.obj (.data)
+                  00809810    00000000     rts30.lib : exit.obj (.data)
+                  00809810    00000000               : boot.obj (.data)
+                  00809810    00000000     main.obj (.data)
+
+.stack     0    00809909    000000a0     UNINITIALIZED
+                  00809909    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    008099a9    00000037     UNINITIALIZED
+                  008099a9    00000000     start.obj (.bss)
+                  008099a9    00000000     rts30.lib : boot.obj (.bss)
+                  008099a9    00000015     main.obj (.bss)
+                  008099be    00000022     rts30.lib : exit.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+008099a9 .bss                             000000a0 __STACK_SIZE
+00809810 .data                            00809810 ___data__
+00809852 .text                            00809810 .data
+00809898 _Debug3xInit                     00809810 ___edata__
+000000a0 __STACK_SIZE                     00809810 edata
+008099a9 ___bss__                         00809811 _c_int00
+008098eb ___cinit__                       0080982c _exit
+00809810 ___data__                        0080983a _atexit
+00809810 ___edata__                       0080984d _abort
+008099e0 ___end__                         00809852 ___text__
+008098eb ___etext__                       00809852 .text
+ffffffff ___pinit__                       00809852 _c_int06
+00809852 ___text__                        00809898 _Debug3xInit
+008099ab __glDebugAddr                    008098bf _main
+008099aa __glDebugData                    008098d7 _dsp_init
+00809909 __stack                          008098eb ___cinit__
+0080984d _abort                           008098eb ___etext__
+0080983a _atexit                          008098eb etext
+00809811 _c_int00                         008098eb cinit
+00809852 _c_int06                         00809909 __stack
+008098d7 _dsp_init                        008099a9 ___bss__
+0080982c _exit                            008099a9 .bss
+008099a9 _glDebugCnt                      008099a9 _glDebugCnt
+008098bf _main                            008099aa __glDebugData
+008098eb cinit                            008099ab __glDebugAddr
+00809810 edata                            008099e0 ___end__
+008099e0 end                              008099e0 end
+008098eb etext                            ffffffff ___pinit__
+ffffffff pinit                            ffffffff pinit
+
+[29 symbols]

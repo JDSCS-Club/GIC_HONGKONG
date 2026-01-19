@@ -1,0 +1,485 @@
+//*****************************************************************************************
+//	ONYANG32-A0 소스
+//	Program By : 바보나무
+//	
+//	주의사항 : 건들면 주거~!
+//	
+//	버젼
+//	1) Ver 0.01:2008/03/04 -> 처음시작
+//	수정사함: 1. 지금 현 문서가 통신 까지 체크 한 사항(08년 3월 11일)
+//	첨부사항: 1.  펄스 입력 까지 수정
+//            2. 기본적인 속도 및 거리계산  및 속도계산(3월 17일)
+//            3. 기본 셋팅 및 보드 체크 완료 기능 구현 시작(3월 18일)
+//			  		4. A1보드 통신 체크(05.5.29)
+//            5. GP 화면 HEX -> BCC
+//            6. 열번설정, 자기진단, 긴급안내, 스피커 볼륨, 모의시험 화면 추가(080619) A1.6   
+//            7. RS422 A, B 채널 main  문에 작성     
+//						8. TCMS 통신프로토콜 작성   
+//								- 
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//*****************************************************************************************
+#include "def.h"
+#include "debug3x.h"
+#include "xr16l788.h"
+#include "user.h"
+#include "cf.h"
+#include "saf82532.h"
+#include "GpProface.h"
+#include "main.h"
+
+
+extern UCHAR m_btSaf82532TxAchBuffer[32];
+
+//*****************************************************************************************
+//	변수 정의
+//*****************************************************************************************
+int m_nMnCommRtxLedDelayCnt = 0;
+UCHAR m_nLedBuf = 0xff;
+int m_nDebugCnt = 0;
+
+BOOL m_nTimer100ms = FALSE;
+BOOL m_nTimer300ms = FALSE;
+UCHAR bt_TCMS_TX_Buf[18]={0x02,0x20,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x03};
+UCHAR bt_TCMS_RX_Backup_Buf[22]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+UCHAR iibuf[100];
+BYTE m_pGpRXData[12];
+BYTE m_pGpRXDatb[12];
+UCHAR ccbuf[50];
+UCHAR d_SafBufA[100];
+UCHAR d_SafBufB[10];
+UCHAR GP_DATA[100];
+UCHAR d_SAFBUF_B[20];
+UCHAR d_CH_SAFBUF_A[20];
+
+
+//*****************************************************************************************
+//	변수 정의
+//*****************************************************************************************
+BYTE nFIR_ST=0;
+BYTE nNOW_ST=0;
+BYTE nNEXT_ST=0;
+BYTE nDEST_ST=0;
+
+BYTE nTNUM_Firs = 0;
+BYTE nTNUM_Seco = 0;
+BYTE nTNUM_Thir = 0;
+BYTE nTNUM_Four = 0;
+//*****************************************************************************************
+//	메인 함수
+//**************************************************************************************
+int ii=0;
+int jj=0;
+int n_BUF_CNT=0;
+int nTX_Ok_Cnt=0;
+int nTX_Ok_Flag=0;
+int TX_OK_FLAG=0;
+int GP_RX_OK_Flag=0;  //GP통신 RX 플래그
+int TX_OK_FLAGA=0;
+int n_Timer300ms_CNT=0;
+int CNT_A=0;
+int CNT_B=0;
+int CNT_C=0;
+int P_ST=0;
+int nWrite = 0;
+int BUF_CNT =0;
+int DATA_A=0;
+int DATA_B=0;
+int DATA_C=0;
+int DATA_D=0;
+//**********************************************************************************8
+UCHAR btTempBuf[32];  //PA 통신
+UCHAR btTempBuf_A[32];  //PA 통신
+UCHAR btBuf_A[32];  //PA 통신
+int nRxPos_A = 0;
+int nRX_OK_FLAG=0;
+int nRX_OK_CNT= 0;
+int nTX_ON_FLAG=0;
+
+UCHAR btTempBuf_B[8]; //GP 통신
+UCHAR btBuf_B[8];  //GP통신
+int nRxPos_B = 0;
+
+UCHAR btTempBuf_C[32]; //TCMS 통신
+UCHAR bt_TCMS_RX_Buf[22];  //TCMS 통신 -> 
+int nRxPos_C = 0;
+//*************************************************************************************
+void main(void)
+{
+	int i;
+	int nLen;
+	UCHAR *pBuf = iibuf;
+	
+
+	DINT;
+	WDI_ACT;
+	DspInit();
+	Debug3xInit(TMS320C31);
+	
+	//cf_Init();
+ 	//cf_InfoRead();
+ 	
+	
+	saf82532_AsyncInit(SAB82532_ACH,SAF82532_19200BPS,SAF82532_ASYNC_DATABIT8,SAF82532_ASYNC_NONEPARITY,SAF82532_ASYNC_1STOPBIT,TRUE);	
+	saf82532_AsyncInit(SAB82532_BCH,SAF82532_19200BPS,SAF82532_ASYNC_DATABIT8,SAF82532_ASYNC_NONEPARITY,SAF82532_ASYNC_1STOPBIT,TRUE);	
+
+	EINT;
+
+	//XR16L788_TXDIS(XR16L788_1CHL);
+	//XR16L788_TXDIS(XR16L788_2CHL);
+	//XR16L788_TXDIS(XR16L788_3CHL);
+	//XR16L788_TXDIS(XR16L788_4CHL);
+	
+ 	xr16l788_Init(XR16L788_1CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+ 	xr16l788_Init(XR16L788_2CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);
+	xr16l788_Init(XR16L788_3CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+	xr16l788_Init(XR16L788_4CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+	
+	/*
+ 	xr16l788_Init(XR16L788_5CHL,9600,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+ 	xr16l788_Init(XR16L788_6CHL,9600,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);
+	xr16l788_Init(XR16L788_8CHL,9600,XR16L788_DATA8,XR16L788_NONEPARITY,XR16L788_1STOPBIT);
+	*/
+	
+	//ii=saf82532_GetVersion();
+	
+	memset(m_pGpRXData, 0, sizeof(m_pGpRXData));
+	memset(m_pGpRXDatb, 0, sizeof(m_pGpRXDatb));
+	
+	while(1)
+	{
+		m_nDebugCnt++;
+
+		
+			
+		if(m_nTimer100ms)
+		{
+			m_nTimer100ms = FALSE;
+			//EsccSend(ESCC_ACH,100);
+			
+			//XR16L788_TXDIS(XR16L788_1CHL);
+		
+			//Delay(1000000);
+			//XR16L788_TXEN(XR16L788_1CHL);
+			
+			//xr16l788_Send(XR16L788_3CHL,(UCHAR *)"iibuf",10);
+			//xr16l788_Send(XR16L788_2CHL,jjbuf,35);
+			//xr16l788_Send(XR16L788_3CHL,jjbuf,35);
+			//xr16l788_Send(XR16L788_4CHL,jjbuf,35);
+			
+			//saf82532_Send(SAB82532_ACH,(UCHAR *)"5333333333",10);  //" "안의 내용은 ASCII 코드 값으로 저장된다.
+			//saf82532_Send(SAB82532_BCH,glTxBufA3,500);  //" "안의 내용은 ASCII 코드 값으로 저장된다.
+	
+		}
+		
+		//Saf82532_GetRecv(SAB82532_ACH,d_SafBufA);  //SAF82532_ACH RX 데이타를 iibuf에 저장하는것 
+		//Saf82532_GetRecv(SAB82532_BCH,d_SafBufB);  //SAF82532_ACH RX 데이타를 iibuf에 저장하는것 
+		
+		Saf82532_GetRecv_ACH();
+		Saf82532_GetRecv_BCH();
+		
+		TCMS_RX_DATA();
+		TCMS_DATA_CH();
+		TCMS_DATA_CH_CH();
+		TCMS_TX_DATA();
+		
+	
+		if(!XR16L788_INT_ST)
+		{
+			xr16l788_Isr();
+		}
+		
+		//xr16l788_GetRxBuffer(XR16L788_1CHL,(UCHAR *)btTempBuf,10); //만약 788에 RX데이타가 들어 온다면, 
+		
+		/*
+		if(nLen = xr16l788_GetRxBuffer(XR16L788_1CHL,(UCHAR *)btTempBuf,10)) //만약 788에 RX데이타가 들어 온다면, 
+		{
+			if((&pBuf[0] - &iibuf[0]) < 100)  //pBuf가 jjbuf보다 크다면 
+				for(i=0;i<nLen;i++) *pBuf++ = btTempBuf[i];
+		}
+		*/
+		
+		WDI_ACT;
+
+	/*			
+		if(m_nTimer1000ms)
+		{
+			m_nTimer1000ms = FALSE;
+			
+			PIbuf[aaa%100] = PI_ST;
+			
+			aaa++;
+			
+			if(aaa>1)
+ 			{
+				DV = PIbuf[(aaa-1)%100] -  PIbuf[(aaa-2)%100];
+			}
+     		D=(3.14*0.8*DV)/T_S_PUSE * 3.6; //Km 환산한것
+     
+    		D_buf[aaa%100] = D;
+		}
+	*/
+	
+		/////////////////////////// PI 입력부// 끝 ///////////////////////
+		
+	}
+}
+
+/*******************************************************************************************
+      GP_ 통신 RX_처리
+********************************************************************************************/
+/********************************************************************************************
+	     MPU설정
+*********************************************************************************************/
+void DspInit(void)
+{
+	PRIMBUSREG = 0x10e8;
+	EN_CACHE; 
+
+	// Timer 0
+	TMR0_CTRL = 0x0282;										// Internal CLK(H1/2),Pulse mode, Outport
+	TMR0_PERD = 25000; // 100,000,000MHz / 4 / 25000(x) = 1000Hz(1000us)
+	TMR0_CTRL |=0x0040;         					//start timer		
+	
+
+	INT0_VECT	= OP_BR | (int)c_int01; // Ext Int 0	
+	INT1_VECT	= OP_BR | (int)c_int02; // Ext Int 1	
+	TINT0_VECT	= OP_BR | (int)c_int10; // Timer 0	
+	
+	EI_INT0;
+	EI_TINT0;
+	
+	BOOT2INT;
+	
+	*(int *)0x100000 = 0;	// Boot SW => 인터럽트를 본래의 기능으로..BOOT2INT=0;
+}
+
+
+//*****************************************************************************************
+//	거리를 계산한다.
+//*****************************************************************************************
+void DIST()
+{
+	//if(DV>0)
+		//{
+			//dis_CAL = DV * 0.8 * 3600; 
+		//}
+	
+}
+//*****************************************************************************************
+//	ASC를 DEC로 바꾼다.
+//*****************************************************************************************
+int ConvAsc2Dec(char nCh)
+{
+	int nBuf = 0;	
+	if(nCh >= '0' && nCh <= '9') nBuf = nCh-'0';		
+	return nBuf;
+}
+//*****************************************************************************************
+//	TCMS_DATA_변수로 저장
+//*****************************************************************************************
+void TCMS_DATA_CH()
+{
+	nFIR_ST = bt_TCMS_RX_Backup_Buf[3];
+	nNOW_ST = bt_TCMS_RX_Backup_Buf[4];
+	nNEXT_ST = bt_TCMS_RX_Backup_Buf[5];
+	nDEST_ST = bt_TCMS_RX_Backup_Buf[6];
+	nTNUM_Firs = bt_TCMS_RX_Backup_Buf[9];
+	nTNUM_Seco = bt_TCMS_RX_Backup_Buf[10];
+	nTNUM_Thir = bt_TCMS_RX_Backup_Buf[11];
+	nTNUM_Four = bt_TCMS_RX_Backup_Buf[12];
+
+}
+
+//*****************************************************************************************
+//	TCMS_DATA_변형
+//*****************************************************************************************
+void TCMS_DATA_CH_CH()
+{
+	bt_TCMS_TX_Buf[0]=0x02;
+	bt_TCMS_TX_Buf[1]=0x20;
+	bt_TCMS_TX_Buf[2]=0x00;
+	bt_TCMS_TX_Buf[3]=nFIR_ST;
+	bt_TCMS_TX_Buf[4]=nNOW_ST;
+	bt_TCMS_TX_Buf[5]=nNEXT_ST;
+	bt_TCMS_TX_Buf[6]=nDEST_ST;
+	bt_TCMS_TX_Buf[7]=0x00;
+	bt_TCMS_TX_Buf[8]=0x00;
+	bt_TCMS_TX_Buf[9]=0x00;
+	bt_TCMS_TX_Buf[10]=0x00;
+	bt_TCMS_TX_Buf[11]=0x00;
+	bt_TCMS_TX_Buf[12]=0x00;
+	bt_TCMS_TX_Buf[13]=0x00;
+	bt_TCMS_TX_Buf[14]=0x00;
+	bt_TCMS_TX_Buf[15]=0x03;
+	
+	MakeBcc(&bt_TCMS_TX_Buf[1],15);
+	
+}
+
+//*****************************************************************************************
+//	HEX를 ASC로 바꾼다.
+//*****************************************************************************************
+char ConvHex2Asc(UCHAR btCh)
+{
+	char chBuf = '0';
+	if(btCh >= 0 && btCh <= 9) chBuf = btCh+'0';
+	else if(btCh >= 10 && btCh <= 15) chBuf = (btCh-10)+'A';
+	return chBuf;
+}
+
+//*****************************************************************************************
+//	A채널 통신 RX(PA)
+//*****************************************************************************************
+void Saf82532_GetRecv_ACH()
+{	
+	int i;
+    int nLen;
+    
+		if(nLen = Saf82532_GetRecv(SAB82532_ACH,(UCHAR *)btTempBuf_A)) //만약 788에 RX데이타가 들어 온다면, 
+		{			
+			for(i=0;i<nLen;i++) 
+			{
+				btBuf_A[nRxPos_A++] = btTempBuf_A[i];				
+				if(nRxPos_A == 1 && btBuf_A[0] != STX) nRxPos_A = 0;
+				else
+				if(nRxPos_A == 18)
+				{
+					//gp_Receive(btBuf_A);
+					nRxPos_A = 0;
+				}
+			}			
+		}
+}
+
+//*****************************************************************************************
+//	A채널 통신 TX(PA)
+//*****************************************************************************************
+
+//*****************************************************************************************
+//	
+//*****************************************************************************************
+void Saf82532_GetRecv_BCH()
+{
+	int i;
+    int nLen;
+    
+		if(nLen = Saf82532_GetRecv(SAB82532_BCH,(UCHAR *)btTempBuf_B)) //만약 788에 RX데이타가 들어 온다면, 
+		{			
+			for(i=0;i<nLen;i++) 
+			{
+				btBuf_B[nRxPos_B++] = btTempBuf_B[i];				
+				if(nRxPos_B == 1 && btBuf_B[0] != ESC) nRxPos_B = 0;
+				else
+				if(nRxPos_B == 4)
+				{
+					gp_Receive(btBuf_B);
+					nRxPos_B = 0;
+				}
+			}			
+		}
+}
+
+//*****************************************************************************************
+//	xr16l788 1채널 TX  : TO TCMS
+//*****************************************************************************************
+void TCMS_TX_DATA()
+{
+	if(nTX_Ok_Flag)
+	{
+		nTX_Ok_Flag=0;
+		xr16l788_Send(XR16L788_1CHL,bt_TCMS_TX_Buf,18);
+		//TCMS_TX_DATA_FUNC();
+	
+	}
+}
+//*****************************************************************************************
+//	xr16l788 1채널 RX  : FROM TCMS
+//*****************************************************************************************
+//void xr16l788_GetRxBuffer_1ch()
+void TCMS_RX_DATA()
+{
+	
+	int i;
+  int nLen;
+   
+	if(nLen = xr16l788_GetRxBuffer(XR16L788_1CHL,(UCHAR *)btTempBuf_C,22))
+	{
+		for(i=0;i<nLen;i++) 
+			{
+				 
+				bt_TCMS_RX_Buf[nRxPos_C++] = btTempBuf_C[i];				
+				if(nRxPos_C == 1 && bt_TCMS_RX_Buf[0] != STX) 
+				{
+					nRxPos_C = 0;
+				}
+				else
+				if(nRxPos_C == 22)
+				{
+					nRxPos_C = 0;
+					nRX_OK_FLAG=1;
+				}
+				memcpy(bt_TCMS_RX_Backup_Buf,bt_TCMS_RX_Buf,22);
+			}
+	}
+}
+
+//*****************************************************************************************
+//	지연
+//*****************************************************************************************
+int Delay(int nCnt)
+{
+	while(nCnt--) WDI_ACT;	
+}
+
+//*****************************************************************************************
+//	Interrupt 0
+//*****************************************************************************************
+int test=0;
+void c_int01()
+{
+	test++;
+	saf82532_Isr();
+}
+
+//*****************************************************************************************
+//	Interrupt 1
+//*****************************************************************************************
+
+void c_int02()
+{
+	//xr16l788_Isr();
+}
+
+//*****************************************************************************************
+//	Timer0(1ms)
+//*****************************************************************************************
+void c_int10(void)
+{
+	static UINT nDlyCnt = 1;
+
+	if(!(nDlyCnt%100)) m_nTimer100ms = TRUE;
+	if(!(nDlyCnt%1000)) m_nTimer300ms = TRUE;
+	
+	nDlyCnt++;
+	
+	if(nRX_OK_FLAG)
+	{
+		nTX_Ok_Cnt++;
+		if(nTX_Ok_Cnt==30)
+		{
+			nTX_Ok_Cnt=0;
+			nRX_OK_FLAG=0;
+			nTX_Ok_Flag=1;
+		}
+	}
+	
+	xr16l788_1msLoop();  
+	saf82532_1msLoop();	 
+}

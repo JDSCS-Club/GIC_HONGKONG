@@ -1,0 +1,951 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     06/May/2013  11:09:24 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\at26.c             #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\at26.c" -D         #
+#                    at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC               #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\at26.lst                 #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\at26.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\spi-flash\at26.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "at26.h"
+     35          #include <board.h>
+     36          #include <utility/assert.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //         Internal definitions
+     40          //------------------------------------------------------------------------------
+     41          
+     42          /// SPI clock frequency used in Hz.
+     43          #define SPCK            20000000 //속도 조절 클럭
+     44          
+     45          /// SPI chip select configuration value.
+     46          #define CSR             (AT91C_SPI_NCPHA | \
+     47                                   SPID_CSR_DLYBCT(BOARD_MCK, 100) | \
+     48                                   SPID_CSR_DLYBS(BOARD_MCK, 5) | \
+     49                                   SPID_CSR_SCBR(BOARD_MCK, SPCK))
+     50          
+     51          /// Number of recognized dataflash.
+     52          #define NUMDATAFLASH    (sizeof(at26Devices) / sizeof(At26Desc))
+     53          
+     54          //------------------------------------------------------------------------------
+     55          //         Internal variables
+     56          //------------------------------------------------------------------------------
+     57          
+     58          /// Array of recognized serial firmware dataflash chips.
+
+   \                                 In section .rodata, align 4
+     59          static const At26Desc at26Devices[] = {
+   \                     at26Devices:
+   \   00000000   0x........         DC32 `?<Constant "AT25DF041A">`, 82975, 1048576, 256, 65536, 216
+   \              0x0001441F   
+   \              0x00100000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000018   0x........         DC32 `?<Constant "AT25DF161">`, 149023, 2097152, 256, 65536, 216
+   \              0x0002461F   
+   \              0x00200000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000030   0x........         DC32 `?<Constant "AT26DF081A">`, 83231, 1048576, 256, 65536, 216
+   \              0x0001451F   
+   \              0x00100000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000048   0x........         DC32 `?<Constant "AT26DF0161">`, 17951, 2097152, 256, 65536, 216
+   \              0x0000461F   
+   \              0x00200000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000060   0x........         DC32 `?<Constant "AT26DF161A">`, 83487, 2097152, 256, 65536, 216
+   \              0x0001461F   
+   \              0x00200000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000078   0x........         DC32 `?<Constant "AT26DF321 ">`, 18207, 8388608, 256, 65536, 216
+   \              0x0000471F   
+   \              0x00800000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000090   0x........         DC32 `?<Constant "M25P05">`, 1056800, 65536, 256, 32768, 216
+   \              0x00102020   
+   \              0x00010000   
+   \              0x00000100   
+   \              0x00008000   
+   \              0x000000D8   
+   \   000000A8   0x........         DC32 `?<Constant "M25P10">`, 1122336, 131072, 256, 32768, 216
+   \              0x00112020   
+   \              0x00020000   
+   \              0x00000100   
+   \              0x00008000   
+   \              0x000000D8   
+   \   000000C0   0x........         DC32 `?<Constant "M25P20">`, 1187872, 262144, 256, 65536, 216
+   \              0x00122020   
+   \              0x00040000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000000D8   0x........         DC32 `?<Constant "M25P40">`, 1253408, 524288, 256, 65536, 216
+   \              0x00132020   
+   \              0x00080000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000000F0   0x........         DC32 `?<Constant "M25P80">`, 1318944, 1048576, 256, 65536, 216
+   \              0x00142020   
+   \              0x00100000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000108   0x........         DC32 `?<Constant "M25P16">`, 1384480, 2097152, 256, 65536, 216
+   \              0x00152020   
+   \              0x00200000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000120   0x........         DC32 `?<Constant "M25P32">`, 1450016, 4194304, 256, 65536, 216
+   \              0x00162020   
+   \              0x00400000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000138   0x........         DC32 `?<Constant "M25P64">`, 1515552, 8388608, 256, 65536, 216
+   \              0x00172020   
+   \              0x00800000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000150   0x........         DC32 `?<Constant "W25X10">`, 1126639, 131072, 256, 65536, 216
+   \              0x001130EF   
+   \              0x00020000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000168   0x........         DC32 `?<Constant "W25X20">`, 1192175, 262144, 256, 65536, 216
+   \              0x001230EF   
+   \              0x00040000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000180   0x........         DC32 `?<Constant "W25X40">`, 1257711, 524288, 256, 65536, 216
+   \              0x001330EF   
+   \              0x00080000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   00000198   0x........         DC32 `?<Constant "W25X80">`, 1323247, 1048576, 256, 65536, 216
+   \              0x001430EF   
+   \              0x00100000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000001B0   0x........         DC32 `?<Constant "MX25L512">`, 1056962, 65536, 256, 65536, 216
+   \              0x001020C2   
+   \              0x00010000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000001C8   0x........         DC32 `?<Constant "MX25L3205">`, 1450178, 4194304, 256, 65536, 216
+   \              0x001620C2   
+   \              0x00400000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000001E0   0x........         DC32 `?<Constant "MX25L6405">`, 1515714, 8388608, 256, 65536, 216
+   \              0x001720C2   
+   \              0x00800000   
+   \              0x00000100   
+   \              0x00010000   
+   \              0x000000D8   
+   \   000001F8   0x........         DC32 `?<Constant "SST25VF512">`, 18623, 65536, 256, 32768, 82
+   \              0x000048BF   
+   \              0x00010000   
+   \              0x00000100   
+   \              0x00008000   
+   \              0x00000052   
+     60              // name, Jedec ID, size, page size, block size, block erase command
+     61              {"AT25DF041A" , 0x0001441F, 1 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     62              {"AT25DF161"  , 0x0002461F, 2 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     63              {"AT26DF081A" , 0x0001451F, 1 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     64              {"AT26DF0161" , 0x0000461F, 2 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     65              {"AT26DF161A" , 0x0001461F, 2 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     66              {"AT26DF321 " , 0x0000471F, 8 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     67              // Manufacturer: ST
+     68              {"M25P05"     , 0x00102020,       64 * 1024, 256, 32 * 1024, AT26_BLOCK_ERASE_64K},
+     69              {"M25P10"     , 0x00112020,      128 * 1024, 256, 32 * 1024, AT26_BLOCK_ERASE_64K},
+     70              {"M25P20"     , 0x00122020,      256 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     71              {"M25P40"     , 0x00132020,      512 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     72              {"M25P80"     , 0x00142020, 1 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     73              {"M25P16"     , 0x00152020, 2 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     74              {"M25P32"     , 0x00162020, 4 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     75              {"M25P64"     , 0x00172020, 8 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     76              // Manufacturer: Windbond
+     77              {"W25X10"     , 0x001130EF,      128 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     78              {"W25X20"     , 0x001230EF,      256 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     79              {"W25X40"     , 0x001330EF,      512 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     80              {"W25X80"     , 0x001430EF, 1 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     81              // Manufacturer: Macronix
+     82              {"MX25L512"   , 0x001020C2,       64 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     83              {"MX25L3205"  , 0x001620C2, 4 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     84              {"MX25L6405"  , 0x001720C2, 8 * 1024 * 1024, 256, 64 * 1024, AT26_BLOCK_ERASE_64K},
+     85              // Other
+     86              {"SST25VF512" , 0x000048BF,       64 * 1024, 256, 32 * 1024, AT26_BLOCK_ERASE_32K}
+     87          };
+     88          
+     89          //------------------------------------------------------------------------------
+     90          //         Exported functions
+     91          //------------------------------------------------------------------------------
+     92          
+     93          //------------------------------------------------------------------------------
+     94          /// Initializes an AT26 driver instance with the given SPI driver and chip 
+     95          /// select value.
+     96          /// \param pAt26  Pointer to an AT26 driver instance.
+     97          /// \param pSpid  Pointer to an SPI driver instance.
+     98          /// \param cs  Chip select value to communicate with the serial flash.
+     99          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    100          void AT26_Configure(At26 *pAt26, Spid *pSpid, unsigned char cs)
+    101          {
+   \                     AT26_Configure:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    102              SpidCmd *pCommand;
+    103          
+    104              SANITY_CHECK(pAt26);
+   \   00000010   0xE3540000         CMP      R4,#+0
+   \   00000014   0x1A000006         BNE      ??AT26_Configure_0
+   \   00000018   0x........         LDR      R0,??DataTable2
+   \   0000001C   0x........         BL       printf
+   \   00000020   0xE3A02068         MOV      R2,#+104
+   \   00000024   0x........         LDR      R1,??DataTable2_1
+   \   00000028   0x........         LDR      R0,??DataTable2_2
+   \   0000002C   0x........         BL       printf
+   \                     ??AT26_Configure_1:
+   \   00000030   0xEAFFFFFE         B        ??AT26_Configure_1
+    105              SANITY_CHECK(pSpid);
+   \                     ??AT26_Configure_0:
+   \   00000034   0xE3550000         CMP      R5,#+0
+   \   00000038   0x1A000006         BNE      ??AT26_Configure_2
+   \   0000003C   0x........         LDR      R0,??DataTable2
+   \   00000040   0x........         BL       printf
+   \   00000044   0xE3A02069         MOV      R2,#+105
+   \   00000048   0x........         LDR      R1,??DataTable2_1
+   \   0000004C   0x........         LDR      R0,??DataTable2_2
+   \   00000050   0x........         BL       printf
+   \                     ??AT26_Configure_3:
+   \   00000054   0xEAFFFFFE         B        ??AT26_Configure_3
+    106              SANITY_CHECK(cs < 4);
+   \                     ??AT26_Configure_2:
+   \   00000058   0xE3560004         CMP      R6,#+4
+   \   0000005C   0x3A000006         BCC      ??AT26_Configure_4
+   \   00000060   0x........         LDR      R0,??DataTable2
+   \   00000064   0x........         BL       printf
+   \   00000068   0xE3A0206A         MOV      R2,#+106
+   \   0000006C   0x........         LDR      R1,??DataTable2_1
+   \   00000070   0x........         LDR      R0,??DataTable2_2
+   \   00000074   0x........         BL       printf
+   \                     ??AT26_Configure_5:
+   \   00000078   0xEAFFFFFE         B        ??AT26_Configure_5
+    107          
+    108              // Configure the SPI chip select for the serial flash
+    109              SPID_ConfigureCS(pSpid, cs, CSR);
+   \                     ??AT26_Configure_4:
+   \   0000007C   0x........         LDR      R2,??DataTable2_3  ;; 0x1010202
+   \   00000080   0xE1A01006         MOV      R1,R6
+   \   00000084   0xE1A00005         MOV      R0,R5
+   \   00000088   0x........         BL       SPID_ConfigureCS
+    110          
+    111              // Initialize the AT26 fields
+    112              pAt26->pSpid = pSpid;
+   \   0000008C   0xE5845000         STR      R5,[R4, #+0]
+    113              pAt26->pDesc = 0;
+   \   00000090   0xE3A00000         MOV      R0,#+0
+   \   00000094   0xE584001C         STR      R0,[R4, #+28]
+    114          
+    115              // Initialize the command structure
+    116              pCommand = &(pAt26->command);
+   \   00000098   0xE2840004         ADD      R0,R4,#+4
+    117              pCommand->pCmd = (unsigned char *) pAt26->pCmdBuffer;
+   \   0000009C   0xE2841020         ADD      R1,R4,#+32
+   \   000000A0   0xE5801000         STR      R1,[R0, #+0]
+    118              pCommand->callback = 0;
+   \   000000A4   0xE3A01000         MOV      R1,#+0
+   \   000000A8   0xE5801010         STR      R1,[R0, #+16]
+    119              pCommand->pArgument = 0;
+   \   000000AC   0xE5801014         STR      R1,[R0, #+20]
+    120              pCommand->spiCs = cs;    
+   \   000000B0   0xE5C0600E         STRB     R6,[R0, #+14]
+    121          }
+   \   000000B4   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000B8   0xE12FFF1E         BX       LR               ;; return
+    122          
+    123          //------------------------------------------------------------------------------
+    124          /// Returns 1 if the serial flash driver is currently busy executing a command;
+    125          /// otherwise returns 0.
+    126          /// \param pAt26  Pointer to an At26 driver instance.
+    127          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    128          unsigned char AT26_IsBusy(At26 *pAt26)
+    129          {
+    130              return SPID_IsBusy(pAt26->pSpid);
+   \                     AT26_IsBusy:
+   \   00000000   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000004   0x........         B        SPID_IsBusy      ;; tailcall
+    131          }
+    132              
+    133          //------------------------------------------------------------------------------
+    134          /// Sends a command to the serial flash through the SPI. The command is made up
+    135          /// of two parts: the first is used to transmit the command byte and optionally,
+    136          /// address and dummy bytes. The second part is the data to send or receive.
+    137          /// This function does not block: it returns as soon as the transfer has been
+    138          /// started. An optional callback can be invoked to notify the end of transfer.
+    139          /// Return 0 if successful; otherwise, returns AT26_ERROR_BUSY if the AT26
+    140          /// driver is currently executing a command, or AT26_ERROR_SPI if the command
+    141          /// cannot be sent because of a SPI error.
+    142          /// \param pAt26  Pointer to an At26 driver instance.
+    143          /// \param cmd  Command byte.
+    144          /// \param cmdSize  Size of command (command byte + address bytes + dummy bytes).
+    145          /// \param pData Data buffer.
+    146          /// \param dataSize  Number of bytes to send/receive.
+    147          /// \param address  Address to transmit.
+    148          /// \param callback  Optional user-provided callback to invoke at end of transfer.
+    149          /// \param pArgument  Optional argument to the callback function.
+    150          //------------------------------------------------------------------------------
+    151          
+
+   \                                 In section .bss, align 4
+    152          unsigned char dTextSIP[5000];
+   \                     dTextSIP:
+   \   00000000                      DS8 5000
+
+   \                                 In section .text, align 4, keep-with-next
+    153          unsigned char AT26_SendCommand(
+    154              At26 *pAt26,
+    155              unsigned char cmd,
+    156              unsigned char cmdSize,
+    157              unsigned char *pData,
+    158              unsigned int dataSize,
+    159              unsigned int address,
+    160              SpidCallback callback,
+    161              void *pArgument)
+    162          
+    163          {
+   \                     AT26_SendCommand:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE59DC010         LDR      R12,[SP, #+16]
+   \   00000008   0xE59D5014         LDR      R5,[SP, #+20]
+   \   0000000C   0xE59DE018         LDR      LR,[SP, #+24]
+   \   00000010   0xE59D401C         LDR      R4,[SP, #+28]
+    164              SpidCmd *pCommand;
+    165              
+    166              SANITY_CHECK(pAt26);
+   \   00000014   0xE3500000         CMP      R0,#+0
+   \   00000018   0x1A000006         BNE      ??AT26_SendCommand_0
+   \   0000001C   0x........         LDR      R0,??DataTable2
+   \   00000020   0x........         BL       printf
+   \   00000024   0xE3A020A6         MOV      R2,#+166
+   \   00000028   0x........         LDR      R1,??DataTable2_1
+   \   0000002C   0x........         LDR      R0,??DataTable2_2
+   \   00000030   0x........         BL       printf
+   \                     ??AT26_SendCommand_1:
+   \   00000034   0xEAFFFFFE         B        ??AT26_SendCommand_1
+    167          
+    168              
+    169              // Check if the SPI driver is available //수정.
+    170              /*
+    171              if (AT26_IsBusy(pAt26)) {
+    172              
+    173                  return AT26_ERROR_BUSY;
+    174              }
+    175              */
+    176             
+    177              
+    178              // Store command and address in command buffer
+    179              pAt26->pCmdBuffer[0] = (cmd & 0x000000FF)
+    180                                     | ((address & 0x0000FF) << 24)
+    181                                     | ((address & 0x00FF00) << 8)
+    182                                     | ((address & 0xFF0000) >> 8);
+   \                     ??AT26_SendCommand_0:
+   \   00000038   0xE1811C05         ORR      R1,R1,R5, LSL #+24
+   \   0000003C   0xE2056CFF         AND      R6,R5,#0xFF00
+   \   00000040   0xE1811406         ORR      R1,R1,R6, LSL #+8
+   \   00000044   0xE3A06CFF         MOV      R6,#+65280
+   \   00000048   0xE0065425         AND      R5,R6,R5, LSR #+8
+   \   0000004C   0xE1851001         ORR      R1,R5,R1
+   \   00000050   0xE5801020         STR      R1,[R0, #+32]
+    183          
+    184              
+    185              // Update the SPI transfer descriptor
+    186               pCommand = &(pAt26->command);
+   \   00000054   0xE2801004         ADD      R1,R0,#+4
+    187               pCommand->cmdSize = cmdSize;
+   \   00000058   0xE5C12004         STRB     R2,[R1, #+4]
+    188               pCommand->pData = pData;
+   \   0000005C   0xE5813008         STR      R3,[R1, #+8]
+    189               pCommand->dataSize = dataSize;
+   \   00000060   0xE1C1C0BC         STRH     R12,[R1, #+12]
+    190               pCommand->callback = callback;
+   \   00000064   0xE581E010         STR      LR,[R1, #+16]
+    191               pCommand->pArgument = pArgument;
+   \   00000068   0xE5814014         STR      R4,[R1, #+20]
+    192               
+    193               
+    194               // Start the SPI transfer
+    195               if (SPID_SendCommand(pAt26->pSpid, pCommand)) {
+   \   0000006C   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000070   0x........         BL       SPID_SendCommand
+    196          
+    197                   //return AT26_ERROR_SPI;
+    198               }
+    199               
+    200               return 0;
+   \   00000074   0xE3A00000         MOV      R0,#+0
+   \   00000078   0xE8BD4070         POP      {R4-R6,LR}
+   \   0000007C   0xE12FFF1E         BX       LR               ;; return
+    201          }
+    202          
+    203          //------------------------------------------------------------------------------
+    204          /// Tries to detect a serial firmware flash device given its JEDEC identifier.
+    205          /// The JEDEC id can be retrieved by sending the correct command to the device.
+    206          /// Returns the corresponding AT26 descriptor if found; otherwise returns 0.
+    207          /// \param pAt26  Pointer to an AT26 driver instance.
+    208          /// \param jedecId  JEDEC identifier of device.
+    209          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    210          const At26Desc * AT26_FindDevice(At26 *pAt26, unsigned int jedecId)
+    211          {
+   \                     AT26_FindDevice:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+    212              unsigned int i = 0;
+    213          
+    214              SANITY_CHECK(pAt26);
+   \   00000004   0xE3500000         CMP      R0,#+0
+   \   00000008   0x1A000006         BNE      ??AT26_FindDevice_0
+   \   0000000C   0x........         LDR      R0,??DataTable2
+   \   00000010   0x........         BL       printf
+   \   00000014   0xE3A020D6         MOV      R2,#+214
+   \   00000018   0x........         LDR      R1,??DataTable2_1
+   \   0000001C   0x........         LDR      R0,??DataTable2_2
+   \   00000020   0x........         BL       printf
+   \                     ??AT26_FindDevice_1:
+   \   00000024   0xEAFFFFFE         B        ??AT26_FindDevice_1
+    215          
+    216              // Search if device is recognized
+    217              pAt26->pDesc = 0;
+   \                     ??AT26_FindDevice_0:
+   \   00000028   0xE3A02000         MOV      R2,#+0
+   \   0000002C   0xE580201C         STR      R2,[R0, #+28]
+   \   00000030   0x........         LDR      R2,??DataTable2_4
+   \   00000034   0xE3A03016         MOV      R3,#+22
+    218              while ((i < NUMDATAFLASH) && !(pAt26->pDesc)) {
+    219              
+    220                  if (jedecId == at26Devices[i].jedecId) {
+   \                     ??AT26_FindDevice_2:
+   \   00000038   0xE592C004         LDR      R12,[R2, #+4]
+   \   0000003C   0xE151000C         CMP      R1,R12
+    221          
+    222                      pAt26->pDesc = &(at26Devices[i]);
+   \   00000040   0x0580201C         STREQ    R2,[R0, #+28]
+    223                  }
+    224          
+    225                  i++;
+   \   00000044   0xE2822018         ADD      R2,R2,#+24
+   \   00000048   0xE2533001         SUBS     R3,R3,#+1
+    226              }
+   \   0000004C   0x0A000002         BEQ      ??AT26_FindDevice_3
+   \   00000050   0xE590C01C         LDR      R12,[R0, #+28]
+   \   00000054   0xE35C0000         CMP      R12,#+0
+   \   00000058   0x0AFFFFF6         BEQ      ??AT26_FindDevice_2
+    227          
+    228              return pAt26->pDesc;
+   \                     ??AT26_FindDevice_3:
+   \   0000005C   0xE590001C         LDR      R0,[R0, #+28]
+   \   00000060   0xE8BD4002         POP      {R1,LR}
+   \   00000064   0xE12FFF1E         BX       LR               ;; return
+    229          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_1:
+   \   00000000   0x........         DC32     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_2:
+   \   00000000   0x........         DC32     `?<Constant "Sanity check failed a...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_3:
+   \   00000000   0x01010202         DC32     0x1010202
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable2_4:
+   \   00000000   0x........         DC32     at26Devices
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT25DF041A">`:
+   \   00000000   0x41 0x54          DC8 "AT25DF041A"
+   \              0x32 0x35    
+   \              0x44 0x46    
+   \              0x30 0x34    
+   \              0x31 0x41    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT25DF161">`:
+   \   00000000   0x41 0x54          DC8 "AT25DF161"
+   \              0x32 0x35    
+   \              0x44 0x46    
+   \              0x31 0x36    
+   \              0x31 0x00    
+   \   0000000A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT26DF081A">`:
+   \   00000000   0x41 0x54          DC8 "AT26DF081A"
+   \              0x32 0x36    
+   \              0x44 0x46    
+   \              0x30 0x38    
+   \              0x31 0x41    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT26DF0161">`:
+   \   00000000   0x41 0x54          DC8 "AT26DF0161"
+   \              0x32 0x36    
+   \              0x44 0x46    
+   \              0x30 0x31    
+   \              0x36 0x31    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT26DF161A">`:
+   \   00000000   0x41 0x54          DC8 "AT26DF161A"
+   \              0x32 0x36    
+   \              0x44 0x46    
+   \              0x31 0x36    
+   \              0x31 0x41    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "AT26DF321 ">`:
+   \   00000000   0x41 0x54          DC8 "AT26DF321 "
+   \              0x32 0x36    
+   \              0x44 0x46    
+   \              0x33 0x32    
+   \              0x31 0x20    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P05">`:
+   \   00000000   0x4D 0x32          DC8 "M25P05"
+   \              0x35 0x50    
+   \              0x30 0x35    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P10">`:
+   \   00000000   0x4D 0x32          DC8 "M25P10"
+   \              0x35 0x50    
+   \              0x31 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P20">`:
+   \   00000000   0x4D 0x32          DC8 "M25P20"
+   \              0x35 0x50    
+   \              0x32 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P40">`:
+   \   00000000   0x4D 0x32          DC8 "M25P40"
+   \              0x35 0x50    
+   \              0x34 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P80">`:
+   \   00000000   0x4D 0x32          DC8 "M25P80"
+   \              0x35 0x50    
+   \              0x38 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P16">`:
+   \   00000000   0x4D 0x32          DC8 "M25P16"
+   \              0x35 0x50    
+   \              0x31 0x36    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P32">`:
+   \   00000000   0x4D 0x32          DC8 "M25P32"
+   \              0x35 0x50    
+   \              0x33 0x32    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "M25P64">`:
+   \   00000000   0x4D 0x32          DC8 "M25P64"
+   \              0x35 0x50    
+   \              0x36 0x34    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "W25X10">`:
+   \   00000000   0x57 0x32          DC8 "W25X10"
+   \              0x35 0x58    
+   \              0x31 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "W25X20">`:
+   \   00000000   0x57 0x32          DC8 "W25X20"
+   \              0x35 0x58    
+   \              0x32 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "W25X40">`:
+   \   00000000   0x57 0x32          DC8 "W25X40"
+   \              0x35 0x58    
+   \              0x34 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "W25X80">`:
+   \   00000000   0x57 0x32          DC8 "W25X80"
+   \              0x35 0x58    
+   \              0x38 0x30    
+   \              0x00         
+   \   00000007   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MX25L512">`:
+   \   00000000   0x4D 0x58          DC8 "MX25L512"
+   \              0x32 0x35    
+   \              0x4C 0x35    
+   \              0x31 0x32    
+   \              0x00         
+   \   00000009   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MX25L3205">`:
+   \   00000000   0x4D 0x58          DC8 "MX25L3205"
+   \              0x32 0x35    
+   \              0x4C 0x33    
+   \              0x32 0x30    
+   \              0x35 0x00    
+   \   0000000A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "MX25L6405">`:
+   \   00000000   0x4D 0x58          DC8 "MX25L6405"
+   \              0x32 0x35    
+   \              0x4C 0x36    
+   \              0x34 0x30    
+   \              0x35 0x00    
+   \   0000000A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "SST25VF512">`:
+   \   00000000   0x53 0x53          DC8 "SST25VF512"
+   \              0x54 0x32    
+   \              0x35 0x56    
+   \              0x46 0x35    
+   \              0x31 0x32    
+   \              0x00         
+   \   0000000B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Sanity check failed a...">`:
+   \   00000000   0x53 0x61          DC8 "Sanity check failed at %s:%d\012\015"
+   \              0x6E 0x69    
+   \              0x74 0x79    
+   \              0x20 0x63    
+   \              0x68 0x65    
+   \              0x63 0x6B    
+   \              0x20 0x66    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x61 0x74    
+   \              0x20 0x25    
+   \              0x73 0x3A    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`:
+   \   00000000   0x43 0x3A          DC8 43H, 3AH, 5CH, 55H, 73H, 65H, 72H, 73H
+   \              0x5C 0x55    
+   \              0x73 0x65    
+   \              0x72 0x73    
+   \   00000008   0x5C 0x4A          DC8 5CH, 4AH, 44H, 53H, 5CH, 44H, 65H, 73H
+   \              0x44 0x53    
+   \              0x5C 0x44    
+   \              0x65 0x73    
+   \   00000010   0x6B 0x74          DC8 6BH, 74H, 6FH, 70H, 5CH, 4AH, 44H, 53H
+   \              0x6F 0x70    
+   \              0x5C 0x4A    
+   \              0x44 0x53    
+   \   00000018   0x5F 0x50          DC8 5FH, 50H, 52H, 4FH, 5CH, 0B1H, 0B9H, 0B3H
+   \              0x52 0x4F    
+   \              0x5C 0xB1    
+   \              0xB9 0xB3    
+   \   00000020   0xBB 0x20          DC8 0BBH, 20H, 0C7H, 0C1H, 0B7H, 0CEH, 0C1H, 0A7H
+   \              0xC7 0xC1    
+   \              0xB7 0xCE    
+   \              0xC1 0xA7    
+   \   00000028   0xC6 0xAE          DC8 0C6H, 0AEH, 5CH, 0B4H, 0EBH, 0B1H, 0B8H, 20H
+   \              0x5C 0xB4    
+   \              0xEB 0xB1    
+   \              0xB8 0x20    
+   \   00000030   0xB8 0xF0          DC8 0B8H, 0F0H, 0B3H, 0EBH, 0B7H, 0B9H, 0C0H, 0CFH
+   \              0xB3 0xEB    
+   \              0xB7 0xB9    
+   \              0xC0 0xCF    
+   \   00000038   0x5C 0xC7          DC8 5CH, 0C7H, 0C1H, 0B7H, 0CEH, 0B1H, 0D7H, 0B7H
+   \              0xC1 0xB7    
+   \              0xCE 0xB1    
+   \              0xD7 0xB7    
+   \   00000040   0xA5 0x5C          DC8 0A5H, 5CH, 62H, 61H, 73H, 69H, 63H, 2DH
+   \              0x62 0x61    
+   \              0x73 0x69    
+   \              0x63 0x2D    
+   \   00000048   0x75 0x73          DC8 75H, 73H, 61H, 72H, 74H, 2DH, 68H, 77H
+   \              0x61 0x72    
+   \              0x74 0x2D    
+   \              0x68 0x77    
+   \   00000050   0x2D 0x68          DC8 2DH, 68H, 61H, 6EH, 64H, 73H, 68H, 61H
+   \              0x61 0x6E    
+   \              0x64 0x73    
+   \              0x68 0x61    
+   \   00000058   0x6B 0x69          DC8 6BH, 69H, 6EH, 67H, 2DH, 70H, 72H, 6FH
+   \              0x6E 0x67    
+   \              0x2D 0x70    
+   \              0x72 0x6F    
+   \   00000060   0x6A 0x65          DC8 6AH, 65H, 63H, 74H, 2DH, 61H, 74H, 39H
+   \              0x63 0x74    
+   \              0x2D 0x61    
+   \              0x74 0x39    
+   \   00000068   0x31 0x73          DC8 31H, 73H, 61H, 6DH, 37H, 73H, 65H, 2DH
+   \              0x61 0x6D    
+   \              0x37 0x73    
+   \              0x65 0x2D    
+   \   00000070   0x65 0x6B          DC8 65H, 6BH, 5CH, 61H, 74H, 39H, 31H, 6CH
+   \              0x5C 0x61    
+   \              0x74 0x39    
+   \              0x31 0x6C    
+   \   00000078   0x69 0x62          DC8 69H, 62H, 5CH, 6DH, 65H, 6DH, 6FH, 72H
+   \              0x5C 0x6D    
+   \              0x65 0x6D    
+   \              0x6F 0x72    
+   \   00000080   0x69 0x65          DC8 69H, 65H, 73H, 5CH, 73H, 70H, 69H, 2DH
+   \              0x73 0x5C    
+   \              0x73 0x70    
+   \              0x69 0x2D    
+   \   00000088   0x66 0x6C          DC8 66H, 6CH, 61H, 73H, 68H, 5CH, 61H, 74H
+   \              0x61 0x73    
+   \              0x68 0x5C    
+   \              0x61 0x74    
+   \   00000090   0x32 0x36          DC8 32H, 36H, 2EH, 63H, 0
+   \              0x2E 0x63    
+   \              0x00         
+   \   00000095   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+    230          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       16  AT26_Configure
+             16 -> SPID_ConfigureCS
+             16 -> printf
+        8  AT26_FindDevice
+              8 -> printf
+        0  AT26_IsBusy
+              0 -> SPID_IsBusy
+       16  AT26_SendCommand
+             16 -> SPID_SendCommand
+             16 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ?<Constant "-F- ASSERT: ">
+      12  ?<Constant "AT25DF041A">
+      12  ?<Constant "AT25DF161">
+      12  ?<Constant "AT26DF0161">
+      12  ?<Constant "AT26DF081A">
+      12  ?<Constant "AT26DF161A">
+      12  ?<Constant "AT26DF321 ">
+     152  ?<Constant "C:\\Users\\JDS\\Desktop\\...">
+       8  ?<Constant "M25P05">
+       8  ?<Constant "M25P10">
+       8  ?<Constant "M25P16">
+       8  ?<Constant "M25P20">
+       8  ?<Constant "M25P32">
+       8  ?<Constant "M25P40">
+       8  ?<Constant "M25P64">
+       8  ?<Constant "M25P80">
+      12  ?<Constant "MX25L3205">
+      12  ?<Constant "MX25L512">
+      12  ?<Constant "MX25L6405">
+      12  ?<Constant "SST25VF512">
+      32  ?<Constant "Sanity check failed a...">
+       8  ?<Constant "W25X10">
+       8  ?<Constant "W25X20">
+       8  ?<Constant "W25X40">
+       8  ?<Constant "W25X80">
+       4  ??DataTable2
+       4  ??DataTable2_1
+       4  ??DataTable2_2
+       4  ??DataTable2_3
+       4  ??DataTable2_4
+     188  AT26_Configure
+     104  AT26_FindDevice
+       8  AT26_IsBusy
+     128  AT26_SendCommand
+     528  at26Devices
+    5000  dTextSIP
+
+ 
+ 5 000 bytes in section .bss
+   944 bytes in section .rodata
+   448 bytes in section .text
+ 
+   448 bytes of CODE  memory
+   944 bytes of CONST memory
+ 5 000 bytes of DATA  memory
+
+Errors: none
+Warnings: none

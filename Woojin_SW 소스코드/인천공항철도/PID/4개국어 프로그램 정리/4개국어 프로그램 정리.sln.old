@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4개국어 프로그램 정리", "4개국어 프로그램 정리.vcproj", "{BA15C877-3212-48B2-B2C5-C6246CF695E8}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{BA15C877-3212-48B2-B2C5-C6246CF695E8}.Debug.ActiveCfg = Debug|Win32
+		{BA15C877-3212-48B2-B2C5-C6246CF695E8}.Debug.Build.0 = Debug|Win32
+		{BA15C877-3212-48B2-B2C5-C6246CF695E8}.Release.ActiveCfg = Release|Win32
+		{BA15C877-3212-48B2-B2C5-C6246CF695E8}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

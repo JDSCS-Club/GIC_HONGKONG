@@ -1,0 +1,1342 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:30 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\SkipBlockNandFlash #
+#                    .c                                                       #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\SkipBlockNandFlash #
+#                    .c" -D at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC        #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\SkipBlockNandFlash.lst   #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\SkipBlockNandFlash.o      #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\SkipBlockNandFlash.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "SkipBlockNandFlash.h"
+     35          #include "NandSpareScheme.h"
+     36          #include "NandFlashModel.h"
+     37          #include "RawNandFlash.h"
+     38          #include <utility/trace.h>
+     39          #include <utility/assert.h>
+     40          
+     41          #include <string.h>
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memset(void *, int, size_t)
+   \                     memset:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A00002         MOV      R0,R2
+   \   0000000C   0xE1A02001         MOV      R2,R1
+   \   00000010   0xE1A01000         MOV      R1,R0
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       __aeabi_memset
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0xE8BD4010         POP      {R4,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+     42          
+     43          //------------------------------------------------------------------------------
+     44          //         Internal definitions
+     45          //------------------------------------------------------------------------------
+     46          
+     47          // Casts
+     48          #define ECC(skipBlock)    ((struct EccNandFlash *) skipBlock)
+     49          #define RAW(skipBlock)    ((struct RawNandFlash *) skipBlock)
+     50          #define MODEL(skipBlock)  ((struct NandFlashModel *) skipBlock)
+     51          
+     52          
+     53          //------------------------------------------------------------------------------
+     54          //         Internal functions
+     55          //------------------------------------------------------------------------------
+     56          
+     57          
+     58          //------------------------------------------------------------------------------
+     59          //         Exported functions
+     60          //------------------------------------------------------------------------------
+     61          
+     62          //------------------------------------------------------------------------------
+     63          /// Returns BADBLOCK if the given block of a nandflash device is bad; returns
+     64          /// GOODBLOCK if the block is good; or returns a NandCommon_ERROR code.
+     65          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+     66          /// \param block  Number of block to check.
+     67          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     68          unsigned char SkipBlockNandFlash_CheckBlock(
+     69              const struct SkipBlockNandFlash *skipBlock,
+     70              unsigned short block)
+     71          {
+   \                     SkipBlockNandFlash_CheckBlock:
+   \   00000000   0xE92D40F0         PUSH     {R4-R7,LR}
+   \   00000004   0xE24DD04C         SUB      SP,SP,#+76
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+     72          	#if !defined (OP_BOOTSTRAP_on)
+     73              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+     74              unsigned char error;
+     75              unsigned char badBlockMarker;
+     76              const struct NandSpareScheme *scheme;
+     77          
+     78          
+     79              // Retrieve model scheme
+     80              scheme = NandFlashModel_GetScheme(MODEL(skipBlock));
+   \   00000010   0x........         BL       NandFlashModel_GetScheme
+   \   00000014   0xE1A06000         MOV      R6,R0
+     81              
+     82              // Read spare area of first page of block
+     83              error = RawNandFlash_ReadPage(RAW(skipBlock), block, 0, 0, spare);
+   \   00000018   0xE28D0008         ADD      R0,SP,#+8
+   \   0000001C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000020   0xE3A03000         MOV      R3,#+0
+   \   00000024   0xE3A02000         MOV      R2,#+0
+   \   00000028   0xE1A01005         MOV      R1,R5
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       RawNandFlash_ReadPage
+   \   00000034   0xE1B07000         MOVS     R7,R0
+     84              if (error) {
+     85          
+     86                  TRACE_ERROR("CheckBlock: Cannot read page #0 of block #%d\n\r", block);
+   \   00000038   0x11A01005         MOVNE    R1,R5
+   \   0000003C   0x........         LDRNE    R0,??DataTable6
+   \   00000040   0x1A000011         BNE      ??SkipBlockNandFlash_CheckBlock_0
+     87                  return error;
+     88              }
+     89          
+     90              NandSpareScheme_ReadBadBlockMarker(scheme, spare, &badBlockMarker);
+   \   00000044   0xE28D2004         ADD      R2,SP,#+4
+   \   00000048   0xE28D1008         ADD      R1,SP,#+8
+   \   0000004C   0xE1A00006         MOV      R0,R6
+   \   00000050   0x........         BL       NandSpareScheme_ReadBadBlockMarker
+     91              if (badBlockMarker != 0xFF) {
+   \   00000054   0xE5DD0004         LDRB     R0,[SP, #+4]
+   \   00000058   0xE35000FF         CMP      R0,#+255
+   \   0000005C   0x1A000014         BNE      ??SkipBlockNandFlash_CheckBlock_1
+     92          
+     93                  return BADBLOCK;
+     94              }
+     95          
+     96              // Read spare area of second page of block
+     97              error = RawNandFlash_ReadPage(RAW(skipBlock), block, 1, 0, spare);
+   \   00000060   0xE28D0008         ADD      R0,SP,#+8
+   \   00000064   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000068   0xE3A03000         MOV      R3,#+0
+   \   0000006C   0xE3A02001         MOV      R2,#+1
+   \   00000070   0xE1A01005         MOV      R1,R5
+   \   00000074   0xE1A00004         MOV      R0,R4
+   \   00000078   0x........         BL       RawNandFlash_ReadPage
+   \   0000007C   0xE1B07000         MOVS     R7,R0
+     98              if (error) {
+   \   00000080   0x0A000004         BEQ      ??SkipBlockNandFlash_CheckBlock_2
+     99          
+    100                  TRACE_ERROR("CheckBlock: Cannot read page #1 of block #%d\n\r", block);
+   \   00000084   0xE1A01005         MOV      R1,R5
+   \   00000088   0x........         LDR      R0,??DataTable6_1
+   \                     ??SkipBlockNandFlash_CheckBlock_0:
+   \   0000008C   0x........         BL       printf
+    101                  return error;
+   \   00000090   0xE1A00007         MOV      R0,R7
+   \   00000094   0xEA000009         B        ??SkipBlockNandFlash_CheckBlock_3
+    102              }
+    103          
+    104              NandSpareScheme_ReadBadBlockMarker(scheme, spare, &badBlockMarker);
+   \                     ??SkipBlockNandFlash_CheckBlock_2:
+   \   00000098   0xE28D2004         ADD      R2,SP,#+4
+   \   0000009C   0xE28D1008         ADD      R1,SP,#+8
+   \   000000A0   0xE1A00006         MOV      R0,R6
+   \   000000A4   0x........         BL       NandSpareScheme_ReadBadBlockMarker
+    105              if (badBlockMarker != 0xFF) {
+   \   000000A8   0xE5DD0004         LDRB     R0,[SP, #+4]
+   \   000000AC   0xE35000FF         CMP      R0,#+255
+   \   000000B0   0x0A000001         BEQ      ??SkipBlockNandFlash_CheckBlock_4
+    106          
+    107                  return BADBLOCK;
+   \                     ??SkipBlockNandFlash_CheckBlock_1:
+   \   000000B4   0xE3A000FF         MOV      R0,#+255
+   \   000000B8   0xEA000000         B        ??SkipBlockNandFlash_CheckBlock_3
+    108              }
+    109          	#endif
+    110          
+    111              return GOODBLOCK;
+   \                     ??SkipBlockNandFlash_CheckBlock_4:
+   \   000000BC   0xE3A000FE         MOV      R0,#+254
+   \                     ??SkipBlockNandFlash_CheckBlock_3:
+   \   000000C0   0xE28DD04C         ADD      SP,SP,#+76       ;; stack cleaning
+   \   000000C4   0xE8BD40F0         POP      {R4-R7,LR}
+   \   000000C8   0xE12FFF1E         BX       LR               ;; return
+    112          }
+    113          
+    114          
+    115          //------------------------------------------------------------------------------
+    116          /// Initializes a SkipBlockNandFlash instance. Scans the device to retrieve or
+    117          /// create block status information.
+    118          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    119          /// \param model  Pointer to the underlying nand chip model. Can be 0.
+    120          /// \param commandAddress  Address at which commands are sent.
+    121          /// \param addressAddress  Address at which addresses are sent.
+    122          /// \param dataAddress  Address at which data is sent.
+    123          /// \param pinChipEnable  Pin controlling the CE signal of the NandFlash.
+    124          /// \param pinReadyBusy  Pin used to monitor the ready/busy signal of the Nand.
+    125          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    126          unsigned char SkipBlockNandFlash_Initialize(
+    127              struct SkipBlockNandFlash *skipBlock,
+    128              const struct NandFlashModel *model,
+    129              unsigned int commandAddress,
+    130              unsigned int addressAddress,
+    131              unsigned int dataAddress,
+    132              const Pin pinChipEnable,
+    133              const Pin pinReadyBusy)
+    134          {
+   \                     SkipBlockNandFlash_Initialize:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD020         SUB      SP,SP,#+32
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE59D0030         LDR      R0,[SP, #+48]
+    135              unsigned char error;
+    136          	#if !defined(OP_BOOTSTRAP_on)
+    137              unsigned int numBlocks;
+    138              unsigned int block;
+    139          	#endif
+    140          
+    141              TRACE_DEBUG("SkipBlockNandFlash_Initialize()\n\r");
+    142          
+    143              // Initialize SkipBlockNandFlash
+    144              #if !defined(OP_BOOTSTRAP_on)
+    145              error = EccNandFlash_Initialize(ECC(skipBlock),
+    146              								model,
+    147                                              commandAddress,
+    148                                              addressAddress,
+    149                                              dataAddress,
+    150                                              pinChipEnable,
+    151                                              pinReadyBusy);
+   \   00000010   0xE28DC040         ADD      R12,SP,#+64
+   \   00000014   0xE28D5010         ADD      R5,SP,#+16
+   \   00000018   0xE8BC4040         LDM      R12!,{R6,LR}
+   \   0000001C   0xE8A54040         STM      R5!,{R6,LR}
+   \   00000020   0xE59C6000         LDR      R6,[R12, #0]
+   \   00000024   0xE5856000         STR      R6,[R5, #+0]
+   \   00000028   0xE28DC034         ADD      R12,SP,#+52
+   \   0000002C   0xE28D5004         ADD      R5,SP,#+4
+   \   00000030   0xE8BC4040         LDM      R12!,{R6,LR}
+   \   00000034   0xE8A54040         STM      R5!,{R6,LR}
+   \   00000038   0xE59C6000         LDR      R6,[R12, #0]
+   \   0000003C   0xE5856000         STR      R6,[R5, #+0]
+   \   00000040   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000044   0xE1A00004         MOV      R0,R4
+   \   00000048   0x........         BL       EccNandFlash_Initialize
+    152              #else
+    153              error = RawNandFlash_Initialize(RAW(skipBlock),
+    154                                              model,
+    155                                              commandAddress,
+    156                                              addressAddress,
+    157                                              dataAddress,
+    158                                              pinChipEnable,
+    159                                              pinReadyBusy);
+    160          	#endif
+    161          
+    162          	#if !defined(OP_BOOTSTRAP_on)
+    163              if (error) {
+   \   0000004C   0xE3500000         CMP      R0,#+0
+   \   00000050   0x1A000012         BNE      ??SkipBlockNandFlash_Initialize_0
+    164          
+    165                  return error;
+    166              }
+    167          
+    168              // Retrieve model information
+    169              numBlocks = NandFlashModel_GetDeviceSizeInBlocks(MODEL(skipBlock));
+   \   00000054   0xE1A00004         MOV      R0,R4
+   \   00000058   0x........         BL       NandFlashModel_GetDeviceSizeInBlocks
+   \   0000005C   0xE1B05000         MOVS     R5,R0
+    170          
+    171              // Initialize block statuses
+    172              TRACE_DEBUG("Retrieving bad block information ...\n\r");
+    173          
+    174              // Retrieve block status from their first page spare area
+    175              for (block = 0; block < numBlocks; block++) {
+   \   00000060   0xE3A06000         MOV      R6,#+0
+   \   00000064   0x0A00000C         BEQ      ??SkipBlockNandFlash_Initialize_1
+    176          
+    177                  // Read spare of first page
+    178                  error = SkipBlockNandFlash_CheckBlock(skipBlock, block);
+   \                     ??SkipBlockNandFlash_Initialize_2:
+   \   00000068   0xE1A01806         LSL      R1,R6,#+16
+   \   0000006C   0xE1A01821         LSR      R1,R1,#+16
+   \   00000070   0xE1A00004         MOV      R0,R4
+   \   00000074   0x........         BL       SkipBlockNandFlash_CheckBlock
+    179          
+    180                  if (error != GOODBLOCK) {
+   \   00000078   0xE35000FE         CMP      R0,#+254
+    181                      
+    182                      if (error == BADBLOCK) {
+   \   0000007C   0x135000FF         CMPNE    R0,#+255
+   \   00000080   0x0A000002         BEQ      ??SkipBlockNandFlash_Initialize_3
+    183                          
+    184                          TRACE_DEBUG("Block #%d is bad\n\r", block);
+    185                      }
+    186                      else {
+    187                          
+    188                          TRACE_ERROR(
+    189                          "SkipBlockNandFlash_Initialize: Cannot retrieve info from block #%u\n\r", block);
+   \   00000084   0xE1A01006         MOV      R1,R6
+   \   00000088   0x........         LDR      R0,??DataTable6_2
+   \   0000008C   0x........         BL       printf
+    190                      }
+    191                  }
+    192              }
+   \                     ??SkipBlockNandFlash_Initialize_3:
+   \   00000090   0xE2866001         ADD      R6,R6,#+1
+   \   00000094   0xE1560005         CMP      R6,R5
+   \   00000098   0x3AFFFFF2         BCC      ??SkipBlockNandFlash_Initialize_2
+    193          	#endif
+    194          
+    195              return 0;
+   \                     ??SkipBlockNandFlash_Initialize_1:
+   \   0000009C   0xE3A00000         MOV      R0,#+0
+   \                     ??SkipBlockNandFlash_Initialize_0:
+   \   000000A0   0xE28DD020         ADD      SP,SP,#+32       ;; stack cleaning
+   \   000000A4   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000A8   0xE12FFF1E         BX       LR               ;; return
+    196          }
+    197          
+    198          
+    199          //------------------------------------------------------------------------------
+    200          /// Erases a block of a SkipBlock NandFlash.
+    201          /// Returns the RawNandFlash_EraseBlock code or NandCommon_ERROR_WRONGSTATUS.
+    202          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    203          /// \param block  Number of block to erase.
+    204          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    205          unsigned char SkipBlockNandFlash_EraseBlock(
+    206              struct SkipBlockNandFlash *skipBlock,
+    207              unsigned short block,
+    208              unsigned int eraseType)
+    209          {
+   \                     SkipBlockNandFlash_EraseBlock:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD048         SUB      SP,SP,#+72
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    210              unsigned char error;
+    211              const struct NandSpareScheme *scheme;
+    212              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    213          
+    214          //    TRACE_INFO("SkipBlockNandFlash_EraseBlock(%d)\n\r", block);
+    215          
+    216              if (eraseType != SCRUB_ERASE) {
+   \   00000010   0xE3A00011         MOV      R0,#+17
+   \   00000014   0xE3800CEA         ORR      R0,R0,#0xEA00
+   \   00000018   0xE1520000         CMP      R2,R0
+   \   0000001C   0x0A000007         BEQ      ??SkipBlockNandFlash_EraseBlock_0
+    217                  // Check block status
+    218                  if (SkipBlockNandFlash_CheckBlock(skipBlock, block) != GOODBLOCK) {
+   \   00000020   0xE1A00004         MOV      R0,R4
+   \   00000024   0x........         BL       SkipBlockNandFlash_CheckBlock
+   \   00000028   0xE35000FE         CMP      R0,#+254
+   \   0000002C   0x0A000003         BEQ      ??SkipBlockNandFlash_EraseBlock_0
+    219              
+    220                      TRACE_INFO("SkipBlockNandFlash_EraseBlock: Block is BAD\n\r");
+   \   00000030   0x........         LDR      R0,??DataTable6_3
+   \   00000034   0x........         BL       printf
+    221                      return NandCommon_ERROR_BADBLOCK;
+   \   00000038   0xE3A0000C         MOV      R0,#+12
+   \   0000003C   0xEA000018         B        ??SkipBlockNandFlash_EraseBlock_1
+    222                  }
+    223              }
+    224          
+    225              // Erase block
+    226              error = RawNandFlash_EraseBlock(RAW(skipBlock), block);
+    227              if (error) {
+   \                     ??SkipBlockNandFlash_EraseBlock_0:
+   \   00000040   0xE1A01005         MOV      R1,R5
+   \   00000044   0xE1A00004         MOV      R0,R4
+   \   00000048   0x........         BL       RawNandFlash_EraseBlock
+   \   0000004C   0xE3500000         CMP      R0,#+0
+   \   00000050   0x0A000013         BEQ      ??SkipBlockNandFlash_EraseBlock_1
+    228          
+    229                  // Try to mark the block as BAD
+    230                  TRACE_ERROR("SkipBlockNandFlash_EraseBlock: Cannot erase block, try to mark it BAD\n\r");
+   \   00000054   0x........         LDR      R0,??DataTable6_4
+   \   00000058   0x........         BL       printf
+    231          
+    232                  // Retrieve model scheme
+    233                  scheme = NandFlashModel_GetScheme(MODEL(skipBlock));
+   \   0000005C   0xE1A00004         MOV      R0,R4
+   \   00000060   0x........         BL       NandFlashModel_GetScheme
+   \   00000064   0xE1A06000         MOV      R6,R0
+    234          
+    235                  memset(spare, 0xFF, NandCommon_MAXPAGESPARESIZE);
+   \   00000068   0xE3A02040         MOV      R2,#+64
+   \   0000006C   0xE3A010FF         MOV      R1,#+255
+   \   00000070   0xE28D0004         ADD      R0,SP,#+4
+   \   00000074   0x........         BL       memset
+    236                  NandSpareScheme_WriteBadBlockMarker(scheme, spare, NandBlockStatus_BAD);
+   \   00000078   0xE3A020BA         MOV      R2,#+186
+   \   0000007C   0xE28D1004         ADD      R1,SP,#+4
+   \   00000080   0xE1A00006         MOV      R0,R6
+   \   00000084   0x........         BL       NandSpareScheme_WriteBadBlockMarker
+    237                  return RawNandFlash_WritePage(RAW(skipBlock), block, 0, 0, spare);
+   \   00000088   0xE28D0004         ADD      R0,SP,#+4
+   \   0000008C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000090   0xE3A03000         MOV      R3,#+0
+   \   00000094   0xE3A02000         MOV      R2,#+0
+   \   00000098   0xE1A01005         MOV      R1,R5
+   \   0000009C   0xE1A00004         MOV      R0,R4
+   \   000000A0   0x........         BL       RawNandFlash_WritePage
+    238              }
+    239          
+    240              return 0;
+   \                     ??SkipBlockNandFlash_EraseBlock_1:
+   \   000000A4   0xE28DD048         ADD      SP,SP,#+72       ;; stack cleaning
+   \   000000A8   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000AC   0xE12FFF1E         BX       LR               ;; return
+    241          }
+    242          
+    243          //------------------------------------------------------------------------------
+    244          /// Reads the data and/or the spare area of a page on a SkipBlock nandflash. If
+    245          /// the data pointer is not 0, then the block MUST not be BAD
+    246          /// Returns NandCommon_ERROR_BADBLOCK if the block is BAD; Otherwise, returns
+    247          /// EccNandFlash_ReadPage().
+    248          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    249          /// \param block  Number of block to read page from.
+    250          /// \param page  Number of page to read inside the given block.
+    251          /// \param data  Data area buffer, can be 0.
+    252          /// \param spare  Spare area buffer, can be 0.
+    253          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    254          unsigned char SkipBlockNandFlash_ReadPage(
+    255              const struct SkipBlockNandFlash *skipBlock,
+    256              unsigned short block,
+    257              unsigned short page,
+    258              void *data,
+    259              void *spare)
+    260          {
+   \                     SkipBlockNandFlash_ReadPage:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8020         LDR      R8,[SP, #+32]
+    261          	#if !defined(OP_BOOTSTRAP_on)
+    262              // Check that the block is not BAD if data is requested
+    263              if (SkipBlockNandFlash_CheckBlock(skipBlock, block) != GOODBLOCK) {
+   \   0000001C   0x........         BL       SkipBlockNandFlash_CheckBlock
+   \   00000020   0xE35000FE         CMP      R0,#+254
+   \   00000024   0x0A000003         BEQ      ??SkipBlockNandFlash_ReadPage_0
+    264          
+    265                  TRACE_ERROR("SkipBlockNandFlash_ReadPage: Block is BAD.\n\r");
+   \   00000028   0x........         LDR      R0,??DataTable6_5
+   \   0000002C   0x........         BL       printf
+    266                  return NandCommon_ERROR_BADBLOCK;
+   \   00000030   0xE3A0000C         MOV      R0,#+12
+   \   00000034   0xEA000005         B        ??SkipBlockNandFlash_ReadPage_1
+    267              }
+    268          
+    269              // Read data with ECC verification
+    270              return EccNandFlash_ReadPage(ECC(skipBlock), block, page, data, spare);
+   \                     ??SkipBlockNandFlash_ReadPage_0:
+   \   00000038   0xE58D8000         STR      R8,[SP, #+0]
+   \   0000003C   0xE1A03007         MOV      R3,R7
+   \   00000040   0xE1A02006         MOV      R2,R6
+   \   00000044   0xE1A01005         MOV      R1,R5
+   \   00000048   0xE1A00004         MOV      R0,R4
+   \   0000004C   0x........         BL       EccNandFlash_ReadPage
+   \                     ??SkipBlockNandFlash_ReadPage_1:
+   \   00000050   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    271          	#else
+    272          	return RawNandFlash_ReadPage(RAW(skipBlock), block, page, data, spare);
+    273          	#endif
+    274          }
+    275          
+    276          //------------------------------------------------------------------------------
+    277          /// Reads the data of a whole block on a SkipBlock nandflash.
+    278          /// Returns NandCommon_ERROR_BADBLOCK if the block is BAD; Otherwise, returns
+    279          /// EccNandFlash_ReadPage().
+    280          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    281          /// \param block  Number of block to read page from.
+    282          /// \param page  Number of page to read inside the given block.
+    283          /// \param data  Data area buffer, can be 0.
+    284          /// \param spare  Spare area buffer, can be 0.
+    285          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    286          unsigned char SkipBlockNandFlash_ReadBlock(
+    287              const struct SkipBlockNandFlash *skipBlock,
+    288              unsigned short block,
+    289              void *data)
+    290          {
+   \                     SkipBlockNandFlash_ReadBlock:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A08002         MOV      R8,R2
+    291              /// Number of pages per block
+    292              unsigned int numPagesPerBlock, pageSize;
+    293              // Page index
+    294              unsigned short i;
+    295              // Error returned by SkipBlockNandFlash_WritePage
+    296              unsigned char error = 0;
+    297              
+    298              // Retrieve model information
+    299              pageSize = NandFlashModel_GetPageDataSize(MODEL(skipBlock));
+   \   00000014   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000018   0xE1A06000         MOV      R6,R0
+    300              numPagesPerBlock = NandFlashModel_GetBlockSizeInPages(MODEL(skipBlock));
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000024   0xE1A07000         MOV      R7,R0
+    301          
+    302              // Check that the block is not BAD if data is requested
+    303              if (SkipBlockNandFlash_CheckBlock(skipBlock, block) != GOODBLOCK) {
+   \   00000028   0xE1A01005         MOV      R1,R5
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       SkipBlockNandFlash_CheckBlock
+   \   00000034   0xE35000FE         CMP      R0,#+254
+   \   00000038   0x0A000003         BEQ      ??SkipBlockNandFlash_ReadBlock_0
+    304          
+    305                  TRACE_ERROR("SkipBlockNandFlash_ReadBlock: Block is BAD.\n\r");
+   \   0000003C   0x........         LDR      R0,??DataTable6_6
+   \   00000040   0x........         BL       printf
+    306                  return NandCommon_ERROR_BADBLOCK;
+   \   00000044   0xE3A0000C         MOV      R0,#+12
+   \   00000048   0xEA000019         B        ??SkipBlockNandFlash_ReadBlock_1
+    307              }
+    308          
+    309              // Read all the pages of the block
+    310              for (i = 0; i < numPagesPerBlock; i++) {
+   \                     ??SkipBlockNandFlash_ReadBlock_0:
+   \   0000004C   0xE3A09000         MOV      R9,#+0
+   \   00000050   0xE3570000         CMP      R7,#+0
+   \   00000054   0x0A000015         BEQ      ??SkipBlockNandFlash_ReadBlock_2
+    311                  error = EccNandFlash_ReadPage(ECC(skipBlock), block, i, data, 0);
+   \                     ??SkipBlockNandFlash_ReadBlock_3:
+   \   00000058   0xE3A00000         MOV      R0,#+0
+   \   0000005C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000060   0xE1A03008         MOV      R3,R8
+   \   00000064   0xE1A02809         LSL      R2,R9,#+16
+   \   00000068   0xE1A02822         LSR      R2,R2,#+16
+   \   0000006C   0xE1A01005         MOV      R1,R5
+   \   00000070   0xE1A00004         MOV      R0,R4
+   \   00000074   0x........         BL       EccNandFlash_ReadPage
+   \   00000078   0xE1B0A000         MOVS     R10,R0
+    312                  if (error) {
+   \   0000007C   0x0A000006         BEQ      ??SkipBlockNandFlash_ReadBlock_4
+    313          
+    314                      TRACE_ERROR("SkipBlockNandFlash_ReadBlock: Cannot read page %d of block %d.\n\r", i, block);
+   \   00000080   0xE1A02005         MOV      R2,R5
+   \   00000084   0xE1A01809         LSL      R1,R9,#+16
+   \   00000088   0xE1A01821         LSR      R1,R1,#+16
+   \   0000008C   0x........         LDR      R0,??DataTable6_7
+   \   00000090   0x........         BL       printf
+    315                      return error;
+   \   00000094   0xE1A0000A         MOV      R0,R10
+   \   00000098   0xEA000005         B        ??SkipBlockNandFlash_ReadBlock_1
+    316                  }
+    317                  data = (void *) ((unsigned char *) data + pageSize);
+   \                     ??SkipBlockNandFlash_ReadBlock_4:
+   \   0000009C   0xE0868008         ADD      R8,R6,R8
+    318              }
+   \   000000A0   0xE2899001         ADD      R9,R9,#+1
+   \   000000A4   0xE1A00809         MOV      R0,R9, LSL #+16
+   \   000000A8   0xE1570820         CMP      R7,R0, LSR #+16
+   \   000000AC   0x8AFFFFE9         BHI      ??SkipBlockNandFlash_ReadBlock_3
+    319              
+    320              return 0;
+   \                     ??SkipBlockNandFlash_ReadBlock_2:
+   \   000000B0   0xE3A00000         MOV      R0,#+0
+   \                     ??SkipBlockNandFlash_ReadBlock_1:
+   \   000000B4   0xE8BD47F6         POP      {R1,R2,R4-R10,LR}
+   \   000000B8   0xE12FFF1E         BX       LR               ;; return
+    321          }
+    322          
+    323          //------------------------------------------------------------------------------
+    324          /// Writes the data and/or spare area of a page on a SkipBlock NandFlash.
+    325          /// Returns NandCommon_ERROR_BADBLOCK if the page is BAD; otherwise,
+    326          /// returns EccNandFlash_WritePage().
+    327          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    328          /// \param block  Number of the block to write.
+    329          /// \param page  Number of the page to write inside the given block.
+    330          /// \param data  Data area buffer.
+    331          /// \param spare  Spare area buffer.
+    332          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    333          unsigned char SkipBlockNandFlash_WritePage(
+    334              const struct SkipBlockNandFlash *skipBlock,
+    335              unsigned short block,
+    336              unsigned short page,
+    337              void *data,
+    338              void *spare)
+    339          {
+   \                     SkipBlockNandFlash_WritePage:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8020         LDR      R8,[SP, #+32]
+    340              // Check that the block is LIVE
+    341              if (SkipBlockNandFlash_CheckBlock(skipBlock, block) != GOODBLOCK) {
+   \   0000001C   0x........         BL       SkipBlockNandFlash_CheckBlock
+   \   00000020   0xE35000FE         CMP      R0,#+254
+   \   00000024   0x0A000003         BEQ      ??SkipBlockNandFlash_WritePage_0
+    342          
+    343                  TRACE_ERROR("SkipBlockNandFlash_WritePage: Block is BAD.\n\r");
+   \   00000028   0x........         LDR      R0,??DataTable6_8
+   \   0000002C   0x........         BL       printf
+    344                  return NandCommon_ERROR_BADBLOCK;
+   \   00000030   0xE3A0000C         MOV      R0,#+12
+   \   00000034   0xEA000005         B        ??SkipBlockNandFlash_WritePage_1
+    345              }
+    346          
+    347              // Write data with ECC calculation
+    348              return EccNandFlash_WritePage(ECC(skipBlock), block, page, data, spare);
+   \                     ??SkipBlockNandFlash_WritePage_0:
+   \   00000038   0xE58D8000         STR      R8,[SP, #+0]
+   \   0000003C   0xE1A03007         MOV      R3,R7
+   \   00000040   0xE1A02006         MOV      R2,R6
+   \   00000044   0xE1A01005         MOV      R1,R5
+   \   00000048   0xE1A00004         MOV      R0,R4
+   \   0000004C   0x........         BL       EccNandFlash_WritePage
+   \                     ??SkipBlockNandFlash_WritePage_1:
+   \   00000050   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    349          }
+    350          
+    351          //------------------------------------------------------------------------------
+    352          /// Writes the data of a whole block on a SkipBlock nandflash.
+    353          /// Returns NandCommon_ERROR_BADBLOCK if the block is BAD; Otherwise, returns
+    354          /// EccNandFlash_ReadPage().
+    355          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    356          /// \param block  Number of block to read page from.
+    357          /// \param data  Data area buffer, can be 0.
+    358          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    359          unsigned char SkipBlockNandFlash_WriteBlock(
+    360              const struct SkipBlockNandFlash *skipBlock,
+    361              unsigned short block,
+    362              void *data)
+    363          {
+   \                     SkipBlockNandFlash_WriteBlock:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    364              // Number of pages per block
+    365              unsigned int numPagesPerBlock;
+    366              // Page size
+    367              unsigned int pageSize;
+    368              // Page index
+    369              unsigned short i;
+    370              // Error returned by SkipBlockNandFlash_WritePage
+    371              unsigned char error = 0;
+    372              
+    373              // Retrieve model information
+    374              pageSize = NandFlashModel_GetPageDataSize(MODEL(skipBlock));
+   \   00000010   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000014   0xE1A07000         MOV      R7,R0
+    375              numPagesPerBlock = NandFlashModel_GetBlockSizeInPages(MODEL(skipBlock));
+   \   00000018   0xE1A00004         MOV      R0,R4
+   \   0000001C   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000020   0xE1A08000         MOV      R8,R0
+    376          
+    377              // Check that the block is LIVE
+    378              if (SkipBlockNandFlash_CheckBlock(skipBlock, block) != GOODBLOCK) {
+   \   00000024   0xE1A01005         MOV      R1,R5
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       SkipBlockNandFlash_CheckBlock
+   \   00000030   0xE35000FE         CMP      R0,#+254
+   \   00000034   0x0A000003         BEQ      ??SkipBlockNandFlash_WriteBlock_0
+    379          
+    380                  TRACE_ERROR("SkipBlockNandFlash_WriteBlock: Block is BAD.\n\r");
+   \   00000038   0x........         LDR      R0,??DataTable6_9
+   \   0000003C   0x........         BL       printf
+    381                  return NandCommon_ERROR_BADBLOCK;
+   \   00000040   0xE3A0000C         MOV      R0,#+12
+   \   00000044   0xEA000019         B        ??SkipBlockNandFlash_WriteBlock_1
+    382              }    
+    383              
+    384              for (i = 0; i < numPagesPerBlock; i++) {
+   \                     ??SkipBlockNandFlash_WriteBlock_0:
+   \   00000048   0xE3A09000         MOV      R9,#+0
+   \   0000004C   0xE3580000         CMP      R8,#+0
+   \   00000050   0x0A000015         BEQ      ??SkipBlockNandFlash_WriteBlock_2
+    385                  error = EccNandFlash_WritePage(ECC(skipBlock), block, i, data, 0);       
+    386                  if (error) {
+   \                     ??SkipBlockNandFlash_WriteBlock_3:
+   \   00000054   0xE3A00000         MOV      R0,#+0
+   \   00000058   0xE58D0000         STR      R0,[SP, #+0]
+   \   0000005C   0xE1A03006         MOV      R3,R6
+   \   00000060   0xE1A02809         LSL      R2,R9,#+16
+   \   00000064   0xE1A02822         LSR      R2,R2,#+16
+   \   00000068   0xE1A01005         MOV      R1,R5
+   \   0000006C   0xE1A00004         MOV      R0,R4
+   \   00000070   0x........         BL       EccNandFlash_WritePage
+   \   00000074   0xE3500000         CMP      R0,#+0
+   \   00000078   0x0A000006         BEQ      ??SkipBlockNandFlash_WriteBlock_4
+    387          
+    388                      TRACE_ERROR("SkipBlockNandFlash_WriteBlock: Cannot write page %d of block %d.\n\r", i, block);
+   \   0000007C   0xE1A02005         MOV      R2,R5
+   \   00000080   0xE1A01809         LSL      R1,R9,#+16
+   \   00000084   0xE1A01821         LSR      R1,R1,#+16
+   \   00000088   0x........         LDR      R0,??DataTable6_10
+   \   0000008C   0x........         BL       printf
+    389                      return NandCommon_ERROR_CANNOTWRITE;
+   \   00000090   0xE3A00007         MOV      R0,#+7
+   \   00000094   0xEA000005         B        ??SkipBlockNandFlash_WriteBlock_1
+    390                  }
+    391                  data = (void *) ((unsigned char *) data + pageSize);
+   \                     ??SkipBlockNandFlash_WriteBlock_4:
+   \   00000098   0xE0876006         ADD      R6,R7,R6
+    392              }
+   \   0000009C   0xE2899001         ADD      R9,R9,#+1
+   \   000000A0   0xE1A00809         MOV      R0,R9, LSL #+16
+   \   000000A4   0xE1580820         CMP      R8,R0, LSR #+16
+   \   000000A8   0x8AFFFFE9         BHI      ??SkipBlockNandFlash_WriteBlock_3
+    393          
+    394              return 0;
+   \                     ??SkipBlockNandFlash_WriteBlock_2:
+   \   000000AC   0xE3A00000         MOV      R0,#+0
+   \                     ??SkipBlockNandFlash_WriteBlock_1:
+   \   000000B0   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   000000B4   0xE12FFF1E         BX       LR               ;; return
+    395          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6:
+   \   00000000   0x........         DC32     `?<Constant "-E- CheckBlock: Canno...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_1:
+   \   00000000   0x........         DC32     `?<Constant "-E- CheckBlock: Canno...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_2:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_3:
+   \   00000000   0x........         DC32     `?<Constant "-I- SkipBlockNandFlas...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_4:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_5:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_2`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_6:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_3`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_7:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_4`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_8:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_5`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_9:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_6`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable6_10:
+   \   00000000   0x........         DC32     `?<Constant "-E- SkipBlockNandFlas...">_7`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CheckBlock: Canno...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 43H, 68H, 65H, 63H
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x65 0x63    
+   \   00000008   0x6B 0x42          DC8 6BH, 42H, 6CH, 6FH, 63H, 6BH, 3AH, 20H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \   00000010   0x43 0x61          DC8 43H, 61H, 6EH, 6EH, 6FH, 74H, 20H, 72H
+   \              0x6E 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x72    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 64H, 20H, 70H, 61H, 67H, 65H
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000020   0x20 0x23          DC8 20H, 23H, 30H, 20H, 6FH, 66H, 20H, 62H
+   \              0x30 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x62    
+   \   00000028   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 23H, 25H, 64H
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CheckBlock: Canno...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 43H, 68H, 65H, 63H
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x65 0x63    
+   \   00000008   0x6B 0x42          DC8 6BH, 42H, 6CH, 6FH, 63H, 6BH, 3AH, 20H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \   00000010   0x43 0x61          DC8 43H, 61H, 6EH, 6EH, 6FH, 74H, 20H, 72H
+   \              0x6E 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x72    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 64H, 20H, 70H, 61H, 67H, 65H
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000020   0x20 0x23          DC8 20H, 23H, 31H, 20H, 6FH, 66H, 20H, 62H
+   \              0x31 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x62    
+   \   00000028   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 23H, 25H, 64H
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 53H, 6BH, 69H, 70H
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \   00000008   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 4EH, 61H, 6EH
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \   00000010   0x64 0x46          DC8 64H, 46H, 6CH, 61H, 73H, 68H, 5FH, 49H
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x49    
+   \   00000018   0x6E 0x69          DC8 6EH, 69H, 74H, 69H, 61H, 6CH, 69H, 7AH
+   \              0x74 0x69    
+   \              0x61 0x6C    
+   \              0x69 0x7A    
+   \   00000020   0x65 0x3A          DC8 65H, 3AH, 20H, 43H, 61H, 6EH, 6EH, 6FH
+   \              0x20 0x43    
+   \              0x61 0x6E    
+   \              0x6E 0x6F    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 72H, 65H, 74H, 72H, 69H, 65H
+   \              0x72 0x65    
+   \              0x74 0x72    
+   \              0x69 0x65    
+   \   00000030   0x76 0x65          DC8 76H, 65H, 20H, 69H, 6EH, 66H, 6FH, 20H
+   \              0x20 0x69    
+   \              0x6E 0x66    
+   \              0x6F 0x20    
+   \   00000038   0x66 0x72          DC8 66H, 72H, 6FH, 6DH, 20H, 62H, 6CH, 6FH
+   \              0x6F 0x6D    
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \   00000040   0x63 0x6B          DC8 63H, 6BH, 20H, 23H, 25H, 75H, 0AH, 0DH
+   \              0x20 0x23    
+   \              0x25 0x75    
+   \              0x0A 0x0D    
+   \   00000048   0x00               DC8 0
+   \   00000049   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- SkipBlockNandFlas...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- SkipBlockNandFlash_EraseBlock: Block is BAD\012\015"
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x45    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x3A    
+   \              0x20 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x69    
+   \              0x73 0x20    
+   \              0x42 0x41    
+   \              0x44 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 53H, 6BH, 69H, 70H
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \   00000008   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 4EH, 61H, 6EH
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \   00000010   0x64 0x46          DC8 64H, 46H, 6CH, 61H, 73H, 68H, 5FH, 45H
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x45    
+   \   00000018   0x72 0x61          DC8 72H, 61H, 73H, 65H, 42H, 6CH, 6FH, 63H
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000020   0x6B 0x3A          DC8 6BH, 3AH, 20H, 43H, 61H, 6EH, 6EH, 6FH
+   \              0x20 0x43    
+   \              0x61 0x6E    
+   \              0x6E 0x6F    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 65H, 72H, 61H, 73H, 65H, 20H
+   \              0x65 0x72    
+   \              0x61 0x73    
+   \              0x65 0x20    
+   \   00000030   0x62 0x6C          DC8 62H, 6CH, 6FH, 63H, 6BH, 2CH, 20H, 74H
+   \              0x6F 0x63    
+   \              0x6B 0x2C    
+   \              0x20 0x74    
+   \   00000038   0x72 0x79          DC8 72H, 79H, 20H, 74H, 6FH, 20H, 6DH, 61H
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x6D 0x61    
+   \   00000040   0x72 0x6B          DC8 72H, 6BH, 20H, 69H, 74H, 20H, 42H, 41H
+   \              0x20 0x69    
+   \              0x74 0x20    
+   \              0x42 0x41    
+   \   00000048   0x44 0x0A          DC8 44H, 0AH, 0DH, 0
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_2`:
+   \   00000000   0x2D 0x45          DC8 "-E- SkipBlockNandFlash_ReadPage: Block is BAD.\012\015"
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \              0x64 0x50    
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x69    
+   \              0x73 0x20    
+   \              0x42 0x41    
+   \              0x44 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000031   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_3`:
+   \   00000000   0x2D 0x45          DC8 "-E- SkipBlockNandFlash_ReadBlock: Block is BAD.\012\015"
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \              0x64 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x69 0x73    
+   \              0x20 0x42    
+   \              0x41 0x44    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_4`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 53H, 6BH, 69H, 70H
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \   00000008   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 4EH, 61H, 6EH
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \   00000010   0x64 0x46          DC8 64H, 46H, 6CH, 61H, 73H, 68H, 5FH, 52H
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 64H, 42H, 6CH, 6FH, 63H, 6BH
+   \              0x64 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000020   0x3A 0x20          DC8 3AH, 20H, 43H, 61H, 6EH, 6EH, 6FH, 74H
+   \              0x43 0x61    
+   \              0x6E 0x6E    
+   \              0x6F 0x74    
+   \   00000028   0x20 0x72          DC8 20H, 72H, 65H, 61H, 64H, 20H, 70H, 61H
+   \              0x65 0x61    
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \   00000030   0x67 0x65          DC8 67H, 65H, 20H, 25H, 64H, 20H, 6FH, 66H
+   \              0x20 0x25    
+   \              0x64 0x20    
+   \              0x6F 0x66    
+   \   00000038   0x20 0x62          DC8 20H, 62H, 6CH, 6FH, 63H, 6BH, 20H, 25H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x25    
+   \   00000040   0x64 0x2E          DC8 64H, 2EH, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000045   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_5`:
+   \   00000000   0x2D 0x45          DC8 "-E- SkipBlockNandFlash_WritePage: Block is BAD.\012\015"
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x69 0x73    
+   \              0x20 0x42    
+   \              0x41 0x44    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   00000032   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_6`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 53H, 6BH, 69H, 70H
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \   00000008   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 4EH, 61H, 6EH
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \   00000010   0x64 0x46          DC8 64H, 46H, 6CH, 61H, 73H, 68H, 5FH, 57H
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \   00000018   0x72 0x69          DC8 72H, 69H, 74H, 65H, 42H, 6CH, 6FH, 63H
+   \              0x74 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000020   0x6B 0x3A          DC8 6BH, 3AH, 20H, 42H, 6CH, 6FH, 63H, 6BH
+   \              0x20 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000028   0x20 0x69          DC8 20H, 69H, 73H, 20H, 42H, 41H, 44H, 2EH
+   \              0x73 0x20    
+   \              0x42 0x41    
+   \              0x44 0x2E    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- SkipBlockNandFlas...">_7`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 53H, 6BH, 69H, 70H
+   \              0x2D 0x20    
+   \              0x53 0x6B    
+   \              0x69 0x70    
+   \   00000008   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 4EH, 61H, 6EH
+   \              0x6F 0x63    
+   \              0x6B 0x4E    
+   \              0x61 0x6E    
+   \   00000010   0x64 0x46          DC8 64H, 46H, 6CH, 61H, 73H, 68H, 5FH, 57H
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \   00000018   0x72 0x69          DC8 72H, 69H, 74H, 65H, 42H, 6CH, 6FH, 63H
+   \              0x74 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000020   0x6B 0x3A          DC8 6BH, 3AH, 20H, 43H, 61H, 6EH, 6EH, 6FH
+   \              0x20 0x43    
+   \              0x61 0x6E    
+   \              0x6E 0x6F    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 77H, 72H, 69H, 74H, 65H, 20H
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x65 0x20    
+   \   00000030   0x70 0x61          DC8 70H, 61H, 67H, 65H, 20H, 25H, 64H, 20H
+   \              0x67 0x65    
+   \              0x20 0x25    
+   \              0x64 0x20    
+   \   00000038   0x6F 0x66          DC8 6FH, 66H, 20H, 62H, 6CH, 6FH, 63H, 6BH
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000040   0x20 0x25          DC8 20H, 25H, 64H, 2EH, 0AH, 0DH, 0
+   \              0x64 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000047   0x00               DC8 0
+    396          
+    397          //------------------------------------------------------------------------------
+    398          /// Writes the data of a whole block on a SkipBlock nandflash.
+    399          /// Returns NandCommon_ERROR_BADBLOCK if the block is BAD; Otherwise, returns
+    400          /// EccNandFlash_ReadPage().
+    401          /// \param skipBlock  Pointer to a SkipBlockNandFlash instance.
+    402          /// \param block  Number of block to read page from.
+    403          /// \param page  Number of page to read inside the given block.
+    404          /// \param data  Data area buffer, can be 0.
+    405          /// \param spare  Spare area buffer, can be 0.
+    406          //------------------------------------------------------------------------------
+    407          //unsigned char SkipBlockNandFlash_WriteBlockUnaligned(
+    408          //    const struct SkipBlockNandFlash *skipBlock,
+    409          //    unsigned short block,
+    410          //    void *data,
+    411          //    void *tmpBuffer,
+    412          //    )
+    413          //{
+    414          //    // Number of pages per block
+    415          //    unsigned int numPagesPerBlock;
+    416          //    // Page size
+    417          //    unsigned int pageSize;
+    418          //    // Page index
+    419          //    unsigned short i;
+    420          //    // Error returned by SkipBlockNandFlash_WritePage
+    421          //    unsigned char error = 0;
+    422          //    
+    423          //    // Retrieve model information
+    424          //    pageSize = NandFlashModel_GetPageDataSize(MODEL(skipBlock));
+    425          //    numPagesPerBlock = NandFlashModel_GetBlockSizeInPages(MODEL(skipBlock));
+    426          //
+    427          //    for (i = 0; i < numPagesPerBlock; i++) {
+    428          //        error = SkipBlockNandFlash_WritePage(skipBlock, block, i, data, 0);
+    429          //        if (error == NandCommon_ERROR_BADBLOCK) {
+    430          //
+    431          //            TRACE_ERROR("SkipBlockNandFlash_WriteBlock: Cannot write page %d of block %d.\n\r", i, block);
+    432          //            return NandCommon_ERROR_BADBLOCK;
+    433          //        }
+    434          //        else if (error) {
+    435          //
+    436          //            TRACE_ERROR("SkipBlockNandFlash_WriteBlock: Cannot write page %d of block %d.\n\r", i, block);
+    437          //            return NandCommon_ERROR_CANNOTWRITE;
+    438          //        }
+    439          //        data += pageSize;
+    440          //    }
+    441          //
+    442          //    return 0;
+    443          //}
+    444          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       96  SkipBlockNandFlash_CheckBlock
+             96 -> NandFlashModel_GetScheme
+             96 -> NandSpareScheme_ReadBadBlockMarker
+             96 -> RawNandFlash_ReadPage
+             96 -> printf
+       88  SkipBlockNandFlash_EraseBlock
+             88 -> NandFlashModel_GetScheme
+             88 -> NandSpareScheme_WriteBadBlockMarker
+             88 -> RawNandFlash_EraseBlock
+             88 -> RawNandFlash_WritePage
+             88 -> SkipBlockNandFlash_CheckBlock
+             88 -> memset
+             88 -> printf
+       48  SkipBlockNandFlash_Initialize
+             48 -> EccNandFlash_Initialize
+             48 -> NandFlashModel_GetDeviceSizeInBlocks
+             48 -> SkipBlockNandFlash_CheckBlock
+             48 -> printf
+       40  SkipBlockNandFlash_ReadBlock
+             40 -> EccNandFlash_ReadPage
+             40 -> NandFlashModel_GetBlockSizeInPages
+             40 -> NandFlashModel_GetPageDataSize
+             40 -> SkipBlockNandFlash_CheckBlock
+             40 -> printf
+       32  SkipBlockNandFlash_ReadPage
+             32 -> EccNandFlash_ReadPage
+             32 -> SkipBlockNandFlash_CheckBlock
+             32 -> printf
+       32  SkipBlockNandFlash_WriteBlock
+             32 -> EccNandFlash_WritePage
+             32 -> NandFlashModel_GetBlockSizeInPages
+             32 -> NandFlashModel_GetPageDataSize
+             32 -> SkipBlockNandFlash_CheckBlock
+             32 -> printf
+       32  SkipBlockNandFlash_WritePage
+             32 -> EccNandFlash_WritePage
+             32 -> SkipBlockNandFlash_CheckBlock
+             32 -> printf
+        8  memset
+              8 -> __aeabi_memset
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      52  ?<Constant "-E- CheckBlock: Canno...">
+      52  ?<Constant "-E- CheckBlock: Canno...">_1
+      76  ?<Constant "-E- SkipBlockNandFlas...">
+      76  ?<Constant "-E- SkipBlockNandFlas...">_1
+      52  ?<Constant "-E- SkipBlockNandFlas...">_2
+      52  ?<Constant "-E- SkipBlockNandFlas...">_3
+      72  ?<Constant "-E- SkipBlockNandFlas...">_4
+      52  ?<Constant "-E- SkipBlockNandFlas...">_5
+      52  ?<Constant "-E- SkipBlockNandFlas...">_6
+      72  ?<Constant "-E- SkipBlockNandFlas...">_7
+      52  ?<Constant "-I- SkipBlockNandFlas...">
+       4  ??DataTable6
+       4  ??DataTable6_1
+       4  ??DataTable6_10
+       4  ??DataTable6_2
+       4  ??DataTable6_3
+       4  ??DataTable6_4
+       4  ??DataTable6_5
+       4  ??DataTable6_6
+       4  ??DataTable6_7
+       4  ??DataTable6_8
+       4  ??DataTable6_9
+     204  SkipBlockNandFlash_CheckBlock
+     176  SkipBlockNandFlash_EraseBlock
+     172  SkipBlockNandFlash_Initialize
+     188  SkipBlockNandFlash_ReadBlock
+      88  SkipBlockNandFlash_ReadPage
+     184  SkipBlockNandFlash_WriteBlock
+      88  SkipBlockNandFlash_WritePage
+      40  memset
+
+ 
+   660 bytes in section .rodata
+ 1 184 bytes in section .text
+ 
+ 1 144 bytes of CODE  memory (+ 40 bytes shared)
+   660 bytes of CONST memory
+
+Errors: none
+Warnings: none

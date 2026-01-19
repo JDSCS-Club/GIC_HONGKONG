@@ -1,0 +1,135 @@
+#ifndef _XR16L788_H_
+#define _XR16L788_H_
+
+#define XR16L788_BASE 0x900000
+
+typedef struct
+{
+	int bRxDatEdy : 1;
+	int bRxOvr : 1;
+	int bRxParityErr : 1;
+	int bRxFrmErr : 1;
+	int bRxBreak : 1;
+	int bThrEmpty : 1;
+	int bTsrEmpty : 1;
+	int bRxFifoErr : 1;
+} XR16L788LSRBIT, *PXR16L788LSRBIT;
+
+/***********************************************************************************************************
+					TCMS_RX 프로토콜			JYJ
+***********************************************************************************************************/
+/*
+typedef struct
+{
+	BYTE nSTX_02; //1.시작 비트
+	BYTE nTCMS_ST; //2.상태
+	BYTE nSPARE1; //3.SPARE 코드
+	BYTE nFIR_ST; //4.시발역
+	BYTE nNOW_ST; //5.현재역
+	BYTE nNEXT_ST; //6.다음역
+	BYTE nDEST_ST; //7.종착역
+	BYTE nSPARE2; //8.SPARE 코드
+	BYTE nSPARE3; //9.SPARE 코드
+	BYTE nTR_NUM1; //10.1ST 열차번호
+	BYTE nTR_NUM2; //11.1ST 열차번호
+	BYTE nTR_NUM3; //12.1ST 열차번호
+	BYTE nTR_NUM4; //13.1ST 열차번호
+	BYTE nSPARE4; //14.SPARE 코드
+	BYTE nSPARE5; //15.SPARE 코드
+	BYTE nSPARE6; //16.SPARE 코드
+	BYTE nSPARE7; //17.SPARE 코드
+	BYTE nSPARE8; //18.SPARE 코드
+	BYTE nSPARE9; //19.SPARE 코드
+	BYTE nSPARE10; //20.SPARE 코드
+	BYTE nSPARE11; //21.SPARE 코드
+	BYTE nETS; //22.끝 비트
+} TCMSSDR, *PTCMSSDR;
+*/
+
+typedef struct
+{
+	union
+	{
+		UCHAR btRxd;
+		UCHAR btTxd;
+		UCHAR btDll;
+	} CREG1;
+	
+	union
+	{
+		UCHAR btDlm;
+		UCHAR btIer;
+	} CREG2;
+	
+	union
+	{	
+		UCHAR btIir;
+		UCHAR btFcr;
+	} CREG3;
+
+	UCHAR btLcr;	
+	UCHAR btMcr;	
+	UCHAR btLsr;
+	UCHAR btMsr_U;
+	UCHAR btScr;	
+	
+	UCHAR btSp[8];
+} XR16L788ST,*PXR16L788ST;
+
+typedef struct
+{
+	XR16L788ST xr16Reg[8];
+} XR16L788BDY, *PXR16L788BDY;
+
+// DateBit
+#define XR16L788_DATA5 0
+#define XR16L788_DATA6 1
+#define XR16L788_DATA7 2
+#define XR16L788_DATA8 3
+
+// ParityBit
+#define XR16L788_NONEPARITY 0x00
+#define XR16L788_EVENPARITY 0x18
+#define XR16L788_ODDPARITY 0x08
+
+// StopBit
+#define XR16L788_1STOPBIT 0x00
+#define XR16L788_2STOPBIT 0x04
+
+// 채널 위치
+#define XR16L788_1CHL 0
+#define XR16L788_2CHL 1
+#define XR16L788_3CHL 2
+#define XR16L788_4CHL 3
+#define XR16L788_5CHL 4
+#define XR16L788_6CHL 5
+#define XR16L788_7CHL 6
+#define XR16L788_8CHL 7
+
+// 외부 클럭 Hz단위
+#define XR16L788_EXCLK 14745600 
+
+// RTS High,Low
+#define XR16L788_RTS_L 0
+#define XR16L788_RTS_H 1
+
+#define XR16L788_BUF_MAX 38 // 버퍼 최대 크기 <바보나무>
+//#define XR16L788_BUF_MAX 384 // 버퍼 최대 크기 기존 크기
+
+#define XR16L788_TXEN(x) xr16l788_Rts(x,XR16L788_RTS_H)
+#define XR16L788_TXDIS(x) xr16l788_Rts(x,XR16L788_RTS_L)
+
+BYTE IsBCCOK(BYTE *pDat,int nLen);
+void MakeBcc(BYTE *pDat,int nLen);
+void TCMS_TX_DATA();
+
+void xr16l788_Init(int nChl,int nBps,int nDataBit,int nParityBit,int nStopBit);
+void xr16l788_Isr();
+void xr16l788_Rts(int nChl,BOOL nHl);
+int xr16l788_GetRxBuffer(int nChl,UCHAR *pBuf,int nLimit);
+void xr16l788_Loop();
+void xr16l788_Send(int nChl,UCHAR *pBuf,int nLen);
+void TEXT_TCMS_TX_DATA(BYTE *Text, BYTE nFIR_ST, BYTE nNOW_ST, BYTE nNEXT_ST, BYTE nDEST_ST);
+void xr16l788_1msLoop();
+
+#endif

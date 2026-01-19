@@ -1,0 +1,13 @@
+---- mTimerDebugCnt Matches (12 in 2 files) ----
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):volatile unsigned int mTimerDebugCnt = 0;
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):  mTimerDebugCnt++;
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):  if(!(mTimerDebugCnt%100))
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):        if(!(mTimerDebugCnt%1000))
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):          mTimerDebugCnt = 1;
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):              TextBuf[RxTimerBufCnt++] = mTimerDebugCnt;
+Main (from jds-macpro).c (at91sam7se-ek\basic-usart-hw-handshaking-project):              mTimerDebugCnt = 0;
+Main.c (at91sam7se-ek\basic-usart-hw-handshaking-project):volatile unsigned int mTimerDebugCnt = 0;
+Main.c (at91sam7se-ek\basic-usart-hw-handshaking-project):	mTimerDebugCnt++;
+Main.c (at91sam7se-ek\basic-usart-hw-handshaking-project):	if(!(mTimerDebugCnt%100))
+Main.c (at91sam7se-ek\basic-usart-hw-handshaking-project):        if(!(mTimerDebugCnt%1000))
+Main.c (at91sam7se-ek\basic-usart-hw-handshaking-project):          mTimerDebugCnt = 1;

@@ -1,0 +1,341 @@
+Document file - DO NOT EDIT
+
+<BEGIN> BUILD_PPC860gnu_MACRO_AR
+arppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_ARCHIVE
+$(PRJ_DIR)/PPC860gnu/wis_tgis_sa0.a
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_AS
+ccppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_CC
+ccppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_CFLAGS
+-g \
+	-mcpu=860 \
+	-ansi \
+	-nostdinc \
+	-DRW_MULTI_THREAD \
+	-D_REENTRANT \
+	-fvolatile \
+	-fno-builtin \
+	-fno-for-scope \
+	-I. \
+	-I$(WIND_BASE)/target/h \
+	-DCPU=PPC860
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_CFLAGS_AS
+-g \
+	-mcpu=860 \
+	-ansi \
+	-nostdinc \
+	-fvolatile \
+	-fno-builtin \
+	-fno-for-scope \
+	-P \
+	-x \
+	assembler-with-cpp \
+	-I. \
+	-I$(WIND_BASE)/target/h \
+	-DCPU=PPC860
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_CPP
+ccppc -E -P -xc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_LD
+ldppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_LDFLAGS
+-X -N
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_LD_PARTIAL_FLAGS
+-X -r
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_NM
+nmppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_OPTION_DEFINE_MACRO
+-D
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_OPTION_INCLUDE_DIR
+-I
+<END>
+
+<BEGIN> BUILD_PPC860gnu_MACRO_SIZE
+sizeppc
+<END>
+
+<BEGIN> BUILD_PPC860gnu_RO_DEPEND_PATH
+{$(WIND_BASE)/target/h/} \
+	{$(WIND_BASE)/target/src/} \
+	{$(WIND_BASE)/target/config/}
+<END>
+
+<BEGIN> BUILD_PPC860gnu_TC
+::tc_PPC860gnu
+<END>
+
+<BEGIN> BUILD__CURRENT
+PPC860gnu
+<END>
+
+<BEGIN> BUILD__LIST
+PPC860gnu
+<END>
+
+<BEGIN> CORE_INFO_TYPE
+::prj_vxApp
+<END>
+
+<BEGIN> CORE_INFO_VERSION
+2.0
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gdms.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gdms.c_dependencies
+$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/ds1647.h \
+	$(PRJ_DIR)/Gdms.h \
+	$(PRJ_DIR)/Gp.h \
+	$(PRJ_DIR)/Main.h \
+	$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/interface.h \
+	$(PRJ_DIR)/Operation.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gdms.c_objects
+Gdms.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gdms.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gp.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gp.c_dependencies
+$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/ds1647.h \
+	$(PRJ_DIR)/GpLib.h \
+	$(PRJ_DIR)/gp.h \
+	$(PRJ_DIR)/Main.h \
+	$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/interface.h \
+	$(PRJ_DIR)/gdms.h \
+	$(PRJ_DIR)/operation.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gp.c_objects
+Gp.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Gp.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/GpLib.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/GpLib.c_dependencies
+$(PRJ_DIR)/GpLib.h \
+	$(PRJ_DIR)/mmtype.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/GpLib.c_objects
+GpLib.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/GpLib.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Main.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Main.c_dependencies
+$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/Main.h \
+	$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/interface.h \
+	$(PRJ_DIR)/ds1647.h \
+	$(PRJ_DIR)/Gdms.h \
+	$(PRJ_DIR)/Gp.h \
+	$(PRJ_DIR)/operation.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Main.c_objects
+Main.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Main.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Mmtype.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Mmtype.c_dependencies
+$(PRJ_DIR)/mmtype.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Mmtype.c_objects
+Mmtype.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Mmtype.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Operation.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Operation.c_dependencies
+$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/Main.h \
+	$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/interface.h \
+	$(PRJ_DIR)/operation.h \
+	$(PRJ_DIR)/ds1647.h \
+	$(PRJ_DIR)/Gdms.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Operation.c_objects
+Operation.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Operation.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ScpLib.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ScpLib.c_dependencies
+$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/mmtype.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ScpLib.c_objects
+ScpLib.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ScpLib.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Wireless.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Wireless.c_dependencies
+$(PRJ_DIR)/Wireless.h \
+	$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/udpLib.h \
+	$(PRJ_DIR)/ds1647.h \
+	$(PRJ_DIR)/Gdms.h \
+	$(PRJ_DIR)/Main.h \
+	$(PRJ_DIR)/ScpLib.h \
+	$(PRJ_DIR)/interface.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Wireless.c_objects
+Wireless.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/Wireless.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ds1647.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ds1647.c_dependencies
+$(PRJ_DIR)/ds1647.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ds1647.c_objects
+ds1647.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/ds1647.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pcmcia_card.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pcmcia_card.c_dependencies
+$(PRJ_DIR)/pcmcia_card.h \
+	$(PRJ_DIR)/mmtype.h \
+	$(PRJ_DIR)/ds1647.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pcmcia_card.c_objects
+pcmcia_card.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/pcmcia_card.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/udpLib.c_dependDone
+TRUE
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/udpLib.c_dependencies
+$(PRJ_DIR)/udpLib.h \
+	$(PRJ_DIR)/mmtype.h
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/udpLib.c_objects
+udpLib.o
+<END>
+
+<BEGIN> FILE_$(PRJ_DIR)/udpLib.c_tool
+C/C++ compiler
+<END>
+
+<BEGIN> PROJECT_FILES
+$(PRJ_DIR)/Wireless.c \
+	$(PRJ_DIR)/ds1647.c \
+	$(PRJ_DIR)/Gdms.c \
+	$(PRJ_DIR)/Gp.c \
+	$(PRJ_DIR)/GpLib.c \
+	$(PRJ_DIR)/Main.c \
+	$(PRJ_DIR)/Mmtype.c \
+	$(PRJ_DIR)/Operation.c \
+	$(PRJ_DIR)/pcmcia_card.c \
+	$(PRJ_DIR)/ScpLib.c \
+	$(PRJ_DIR)/udpLib.c
+<END>
+
+<BEGIN> userComments
+<Enter description here>
+<END>
+

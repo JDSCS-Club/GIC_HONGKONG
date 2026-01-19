@@ -1,0 +1,1097 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V7.30.4.8167/W32 for ARM        02/Jul/2015  09:27:30
+# Copyright 1999-2014 IAR Systems AB.
+#
+#    Cpu mode     =  arm
+#    Endian       =  little
+#    Source file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashAmd.c
+#    Command line =  
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashAmd.c"
+#        -D at91sam7se512 -D flash -D TRACE_LEVEL=4 -lC
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\"
+#        --remarks --diag_suppress Pe826,Pe1375 -o
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\"
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little --cpu=ARM7TDMI
+#        -e --fpu=None --dlib_config "C:\Program Files\IAR Systems\Embedded
+#        Workbench 7.0\arm\INC\c\DLib_Config_Full.h" -I
+#        "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/peripherals\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/memories\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/components\"
+#        -I "F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"
+#        --interwork --cpu_mode arm -On --use_c++_inline
+#    List file    =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\List\NorFlashAmd.lst
+#    Object file  =  
+#        F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구
+#        모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_flash\Obj\NorFlashAmd.o
+#
+###############################################################################
+
+F:\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED(FDI)\at91lib\memories\norflash\NorFlashAmd.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          #include "NorFlashCFI.h"
+     34          #include "NorFlashCommon.h"
+     35          #include <utility/trace.h>
+     36          #include <string.h>
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //        Local defination
+     40          //------------------------------------------------------------------------------
+     41           
+     42          /// Command for vendor command set CMD_SET_AMD.
+     43          #define AMD_CMD_IDOUT         0x00F0
+     44          #define AMD_CMD_CFI           0x0098
+     45          #define AMD_CMD_IDIN          0x0090
+     46          #define AMD_CMD_UNLOCK_1      0x00AA
+     47          #define AMD_CMD_UNLOCK_2      0x0055
+     48          #define AMD_CMD_ERASE_SETUP   0x0080
+     49          #define AMD_CMD_ERASE_RESUME  0x0030
+     50          #define AMD_CMD_ERASE_CHIP    0x0010
+     51          #define AMD_CMD_ERASE_SECTOR  0x0030
+     52          #define AMD_CMD_PROGRAM       0x00A0
+     53          #define AMD_CMD_UNLOCK_BYPASS 0x0020
+     54          
+     55          // Command offset for vendor command set CMD_SET_AMD
+     56          //#define AMD_OFFSET_UNLOCK_1   0x05555
+     57          //#define AMD_OFFSET_UNLOCK_2   0x0AAAA
+     58          
+     59          
+     60          #define AMD_OFFSET_UNLOCK_1   0x000AAA
+     61          #define AMD_OFFSET_UNLOCK_2   0x000555
+     62          
+     63          /// Query command address.
+     64          #define FLASH_ADDRESS_CFI     0x0055
+     65          
+     66          /// AMD norflash device Identifier infomation address offset.
+     67          #define AMD_MANU_ID           0x00
+     68          #define AMD_DEVIDE_ID         0x01
+     69          
+     70          // Data polling mask for vendor command set CMD_SET_AMD
+     71          #define AMD_POLLING_DQ7       0x80
+     72          #define AMD_POLLING_DQ6       0x60
+     73          #define AMD_POLLING_DQ5       0x20
+     74          #define AMD_POLLING_DQ3       0x08
+     75          
+     76          
+     77          //------------------------------------------------------------------------------
+     78          //         Local functions
+     79          //------------------------------------------------------------------------------
+     80          
+     81          //------------------------------------------------------------------------------
+     82          /// It implements a RESET command.
+     83          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+     84          /// \param address  Dummy data for AMD.
+     85          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     86          void amd_Reset(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+     87          {
+   \                     amd_Reset:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+     88              unsigned char busWidth;
+     89              
+     90              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0xE1B00004         MOVS     R0,R4
+   \   00000010   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000014   0xE1B06000         MOVS     R6,R0
+     91              WriteCommand(busWidth, 
+     92                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+     93                           AMD_CMD_UNLOCK_1);
+   \   00000018   0xE3A010AA         MOV      R1,#+170
+   \   0000001C   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000020   0xE1B00004         MOVS     R0,R4
+   \   00000024   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000028   0xE3A020AA         MOV      R2,#+170
+   \   0000002C   0xE1B01000         MOVS     R1,R0
+   \   00000030   0xE1B00006         MOVS     R0,R6
+   \   00000034   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000038   0x........         BL       WriteCommand
+     94              WriteCommand(busWidth, 
+     95                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+     96                           AMD_CMD_UNLOCK_2);
+   \   0000003C   0xE3A01055         MOV      R1,#+85
+   \   00000040   0xE3811E50         ORR      R1,R1,#0x500
+   \   00000044   0xE1B00004         MOVS     R0,R4
+   \   00000048   0x........         BL       NorFlash_GetByteAddressInChip
+   \   0000004C   0xE1B01000         MOVS     R1,R0
+   \   00000050   0xE3A02055         MOV      R2,#+85
+   \   00000054   0xE1B00006         MOVS     R0,R6
+   \   00000058   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000005C   0x........         BL       WriteCommand
+     97              WriteCommand(busWidth, 
+     98                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+     99                           AMD_CMD_IDOUT);
+   \   00000060   0xE3A010AA         MOV      R1,#+170
+   \   00000064   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000068   0xE1B00004         MOVS     R0,R4
+   \   0000006C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000070   0xE3A020F0         MOV      R2,#+240
+   \   00000074   0xE1B01000         MOVS     R1,R0
+   \   00000078   0xE1B00006         MOVS     R0,R6
+   \   0000007C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000080   0x........         BL       WriteCommand
+    100          }
+   \   00000084   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000088   0xE12FFF1E         BX       LR               ;; return
+    101          
+    102          
+    103          //------------------------------------------------------------------------------
+    104          /// Read specified manufactory id or device id.
+    105          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    106          /// \param index 0: manufactorid 1: device id.
+    107          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    108          unsigned int amd_ReadIdentification(
+    109              struct NorFlashInfo *pNorFlashInfo, 
+    110              unsigned char index)
+    111          {
+   \                     amd_ReadIdentification:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    112              unsigned int id;
+    113              unsigned char busWidth;
+    114              unsigned int address;
+    115              
+    116              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0xE1B00004         MOVS     R0,R4
+   \   00000010   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000014   0xE1B06000         MOVS     R6,R0
+    117              
+    118              // The amd_Read identification command sequence is initiated by first
+    119              // writing two unlock cycles. 
+    120              WriteCommand(busWidth, 
+    121                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    122                           AMD_CMD_UNLOCK_1);
+   \   00000018   0xE3A010AA         MOV      R1,#+170
+   \   0000001C   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000020   0xE1B00004         MOVS     R0,R4
+   \   00000024   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000028   0xE3A020AA         MOV      R2,#+170
+   \   0000002C   0xE1B01000         MOVS     R1,R0
+   \   00000030   0xE1B00006         MOVS     R0,R6
+   \   00000034   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000038   0x........         BL       WriteCommand
+    123              WriteCommand(busWidth, 
+    124                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    125                           AMD_CMD_UNLOCK_2);
+   \   0000003C   0xE3A01055         MOV      R1,#+85
+   \   00000040   0xE3811E50         ORR      R1,R1,#0x500
+   \   00000044   0xE1B00004         MOVS     R0,R4
+   \   00000048   0x........         BL       NorFlash_GetByteAddressInChip
+   \   0000004C   0xE1B01000         MOVS     R1,R0
+   \   00000050   0xE3A02055         MOV      R2,#+85
+   \   00000054   0xE1B00006         MOVS     R0,R6
+   \   00000058   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000005C   0x........         BL       WriteCommand
+    126                           
+    127              // Followed by a third write cycle that contains the autoselect command.
+    128              WriteCommand(busWidth, 
+    129                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+    130                           AMD_CMD_IDIN);
+   \   00000060   0xE3A010AA         MOV      R1,#+170
+   \   00000064   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000068   0xE1B00004         MOVS     R0,R4
+   \   0000006C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000070   0xE3A02090         MOV      R2,#+144
+   \   00000074   0xE1B01000         MOVS     R1,R0
+   \   00000078   0xE1B00006         MOVS     R0,R6
+   \   0000007C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000080   0x........         BL       WriteCommand
+    131              
+    132              // The device then enters the autoselect mode. It may read at any address any 
+    133              // number of times without initiating another autoselect command sequence.   
+    134              address = NorFlash_GetByteAddressInChip(pNorFlashInfo, index);
+   \   00000084   0xE1B01005         MOVS     R1,R5
+   \   00000088   0xE21110FF         ANDS     R1,R1,#0xFF      ;; Zero extend
+   \   0000008C   0xE1B00004         MOVS     R0,R4
+   \   00000090   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000094   0xE1B07000         MOVS     R7,R0
+    135              ReadRawData(busWidth, address, (unsigned char*)&id);
+   \   00000098   0xE1B0200D         MOVS     R2,SP
+   \   0000009C   0xE1B01007         MOVS     R1,R7
+   \   000000A0   0xE1B00006         MOVS     R0,R6
+   \   000000A4   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000A8   0x........         BL       ReadRawData
+    136          
+    137              // The system must write the exit command to return to the read mode
+    138              WriteCommand(busWidth, 
+    139                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    140                           AMD_CMD_UNLOCK_1);
+   \   000000AC   0xE3A010AA         MOV      R1,#+170
+   \   000000B0   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   000000B4   0xE1B00004         MOVS     R0,R4
+   \   000000B8   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000BC   0xE3A020AA         MOV      R2,#+170
+   \   000000C0   0xE1B01000         MOVS     R1,R0
+   \   000000C4   0xE1B00006         MOVS     R0,R6
+   \   000000C8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000CC   0x........         BL       WriteCommand
+    141              WriteCommand(busWidth, 
+    142                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2),
+    143                           AMD_CMD_UNLOCK_2);
+   \   000000D0   0xE3A01055         MOV      R1,#+85
+   \   000000D4   0xE3811E50         ORR      R1,R1,#0x500
+   \   000000D8   0xE1B00004         MOVS     R0,R4
+   \   000000DC   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000E0   0xE3A02055         MOV      R2,#+85
+   \   000000E4   0xE1B01000         MOVS     R1,R0
+   \   000000E8   0xE1B00006         MOVS     R0,R6
+   \   000000EC   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000F0   0x........         BL       WriteCommand
+    144              WriteCommand(busWidth, 
+    145                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    146                           AMD_CMD_IDOUT);
+   \   000000F4   0xE3A010AA         MOV      R1,#+170
+   \   000000F8   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   000000FC   0xE1B00004         MOVS     R0,R4
+   \   00000100   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000104   0xE3A020F0         MOV      R2,#+240
+   \   00000108   0xE1B01000         MOVS     R1,R0
+   \   0000010C   0xE1B00006         MOVS     R0,R6
+   \   00000110   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000114   0x........         BL       WriteCommand
+    147              return id;
+   \   00000118   0xE59D0000         LDR      R0,[SP, #+0]
+   \   0000011C   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   00000120   0xE12FFF1E         BX       LR               ;; return
+    148          }
+    149          //------------------------------------------------------------------------------
+    150          /// It implement a program word command. Returns 0 if the operation was
+    151          /// successful; otherwise returns an error code.
+    152          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    153          /// \param address Start address offset to be wrote.
+    154          /// \param data word to be written.
+    155          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    156          unsigned char amd_Program(
+    157              struct NorFlashInfo *pNorFlashInfo,
+    158              unsigned int address,
+    159              unsigned int data)
+    160          {
+   \                     amd_Program:
+   \   00000000   0xE92D41F6         PUSH     {R1,R2,R4-R8,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    161              unsigned int pollingData;
+    162              unsigned int busAddress;
+    163              unsigned char done = 0;
+   \   0000000C   0xE3A07000         MOV      R7,#+0
+    164              unsigned char busWidth;
+    165              
+    166              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000010   0xE1B00004         MOVS     R0,R4
+   \   00000014   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000018   0xE1B08000         MOVS     R8,R0
+    167              // The program command sequence is initiated by writing two unlock write cycles.
+    168              WriteCommand(busWidth, 
+    169                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    170                           AMD_CMD_UNLOCK_1);
+   \   0000001C   0xE3A010AA         MOV      R1,#+170
+   \   00000020   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000024   0xE1B00004         MOVS     R0,R4
+   \   00000028   0x........         BL       NorFlash_GetByteAddressInChip
+   \   0000002C   0xE3A020AA         MOV      R2,#+170
+   \   00000030   0xE1B01000         MOVS     R1,R0
+   \   00000034   0xE1B00008         MOVS     R0,R8
+   \   00000038   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000003C   0x........         BL       WriteCommand
+    171              WriteCommand(busWidth, 
+    172                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    173                           AMD_CMD_UNLOCK_2);
+   \   00000040   0xE3A01055         MOV      R1,#+85
+   \   00000044   0xE3811E50         ORR      R1,R1,#0x500
+   \   00000048   0xE1B00004         MOVS     R0,R4
+   \   0000004C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000050   0xE1B01000         MOVS     R1,R0
+   \   00000054   0xE3A02055         MOV      R2,#+85
+   \   00000058   0xE1B00008         MOVS     R0,R8
+   \   0000005C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000060   0x........         BL       WriteCommand
+    174              // Followed by the program set-up command.               
+    175              WriteCommand(busWidth, 
+    176                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    177                           AMD_CMD_PROGRAM);
+   \   00000064   0xE3A010AA         MOV      R1,#+170
+   \   00000068   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   0000006C   0xE1B00004         MOVS     R0,R4
+   \   00000070   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000074   0xE3A020A0         MOV      R2,#+160
+   \   00000078   0xE1B01000         MOVS     R1,R0
+   \   0000007C   0xE1B00008         MOVS     R0,R8
+   \   00000080   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000084   0x........         BL       WriteCommand
+    178                           
+    179              // The program address and data are written next, 
+    180              // which in turn initiate the Embedded Program algorithm.
+    181              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo, address);
+   \   00000088   0xE1B01005         MOVS     R1,R5
+   \   0000008C   0xE1B00004         MOVS     R0,R4
+   \   00000090   0x........         BL       NorFlash_GetAddressInChip
+   \   00000094   0xE1B06000         MOVS     R6,R0
+    182              WriteRawData(busWidth, busAddress, (unsigned char*)&data);
+   \   00000098   0xE28D2004         ADD      R2,SP,#+4
+   \   0000009C   0xE1B01006         MOVS     R1,R6
+   \   000000A0   0xE1B00008         MOVS     R0,R8
+   \   000000A4   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000A8   0x........         BL       WriteRawData
+    183              
+    184              // Data polling 
+    185              do {
+    186                  ReadRawData(busWidth, busAddress, (unsigned char *)&pollingData);
+   \                     ??amd_Program_0:
+   \   000000AC   0xE1B0200D         MOVS     R2,SP
+   \   000000B0   0xE1B01006         MOVS     R1,R6
+   \   000000B4   0xE1B00008         MOVS     R0,R8
+   \   000000B8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000BC   0x........         BL       ReadRawData
+    187                  // Check if the chip program algorithm is completed.
+    188                  if ((pollingData & AMD_POLLING_DQ7) == (data & AMD_POLLING_DQ7)) {
+   \   000000C0   0xE59D0000         LDR      R0,[SP, #+0]
+   \   000000C4   0xE2100080         ANDS     R0,R0,#0x80
+   \   000000C8   0xE59D1004         LDR      R1,[SP, #+4]
+   \   000000CC   0xE2111080         ANDS     R1,R1,#0x80
+   \   000000D0   0xE1500001         CMP      R0,R1
+   \   000000D4   0x1A000002         BNE      ??amd_Program_1
+    189                      // Program operation successful. Device in read mode.
+    190                      done = 1;
+   \   000000D8   0xE3A00001         MOV      R0,#+1
+   \   000000DC   0xE1B07000         MOVS     R7,R0
+   \   000000E0   0xEA000015         B        ??amd_Program_2
+    191                  }
+    192                  else {
+    193                      // check if chip Program algrithm exceeded timing limits
+    194                      
+    195                      if (pollingData & AMD_POLLING_DQ5 ) {
+   \                     ??amd_Program_1:
+   \   000000E4   0xE59D0000         LDR      R0,[SP, #+0]
+   \   000000E8   0xE3100020         TST      R0,#0x20
+   \   000000EC   0x0A000012         BEQ      ??amd_Program_2
+    196                      
+    197                          // I/O should be rechecked.
+    198                          ReadRawData(busWidth, busAddress, (unsigned char *)&pollingData);
+   \   000000F0   0xE1B0200D         MOVS     R2,SP
+   \   000000F4   0xE1B01006         MOVS     R1,R6
+   \   000000F8   0xE1B00008         MOVS     R0,R8
+   \   000000FC   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000100   0x........         BL       ReadRawData
+    199                          
+    200                          if ((pollingData & AMD_POLLING_DQ7) == (data & AMD_POLLING_DQ7)) {
+   \   00000104   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000108   0xE2100080         ANDS     R0,R0,#0x80
+   \   0000010C   0xE59D1004         LDR      R1,[SP, #+4]
+   \   00000110   0xE2111080         ANDS     R1,R1,#0x80
+   \   00000114   0xE1500001         CMP      R0,R1
+   \   00000118   0x1A000002         BNE      ??amd_Program_3
+    201                              // Program operation successful. Device in read mode.
+    202                              done = 1;
+   \   0000011C   0xE3A00001         MOV      R0,#+1
+   \   00000120   0xE1B07000         MOVS     R7,R0
+   \   00000124   0xEA000004         B        ??amd_Program_2
+    203                          }
+    204                          else {
+    205                              // Program operation not successful, write reset command.
+    206                              amd_Reset(pNorFlashInfo, 0);
+   \                     ??amd_Program_3:
+   \   00000128   0xE3A01000         MOV      R1,#+0
+   \   0000012C   0xE1B00004         MOVS     R0,R4
+   \   00000130   0x........         BL       amd_Reset
+    207                              return NorCommon_ERROR_CANNOTWRITE;
+   \   00000134   0xE3A00003         MOV      R0,#+3
+   \   00000138   0xEA000004         B        ??amd_Program_4
+    208                          }
+    209                      }
+    210                  }
+    211              } while (!done);
+   \                     ??amd_Program_2:
+   \   0000013C   0xE1B00007         MOVS     R0,R7
+   \   00000140   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000144   0xE3500000         CMP      R0,#+0
+   \   00000148   0x0AFFFFD7         BEQ      ??amd_Program_0
+    212              return 0;
+   \   0000014C   0xE3A00000         MOV      R0,#+0
+   \                     ??amd_Program_4:
+   \   00000150   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000154   0xE12FFF1E         BX       LR               ;; return
+    213          }
+    214          
+    215          //------------------------------------------------------------------------------
+    216          //         Exported functions
+    217          //------------------------------------------------------------------------------
+    218          //------------------------------------------------------------------------------
+    219          /// It implements a RESET command.
+    220          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    221          /// \param address  Dummy data for AMD.
+    222          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    223          void AMD_Reset(struct NorFlashInfo *pNorFlashInfo, unsigned int address)
+    224          {
+   \                     AMD_Reset:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+    225              amd_Reset(pNorFlashInfo, address);
+   \   0000000C   0xE1B01005         MOVS     R1,R5
+   \   00000010   0xE1B00004         MOVS     R0,R4
+   \   00000014   0x........         BL       amd_Reset
+    226          }
+   \   00000018   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   0000001C   0xE12FFF1E         BX       LR               ;; return
+    227          
+    228          
+    229          //------------------------------------------------------------------------------
+    230          /// The Read Device Identifier command instructs the device to output manufacturer
+    231          /// code.
+    232          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    233          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    234          unsigned int AMD_ReadManufactoryId(struct NorFlashInfo *pNorFlashInfo)
+    235          {
+   \                     AMD_ReadManufactoryId:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+    236              return amd_ReadIdentification(pNorFlashInfo, AMD_MANU_ID);
+   \   00000008   0xE3A01000         MOV      R1,#+0
+   \   0000000C   0xE1B00004         MOVS     R0,R4
+   \   00000010   0x........         BL       amd_ReadIdentification
+   \   00000014   0xE8BD4010         POP      {R4,LR}
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+    237          }
+    238          
+    239          //------------------------------------------------------------------------------
+    240          /// The Read Device Identifier command instructs the device to output device id.
+    241          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    242          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    243          unsigned int AMD_ReadDeviceID(struct NorFlashInfo *pNorFlashInfo)
+    244          {
+   \                     AMD_ReadDeviceID:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+    245              return amd_ReadIdentification(pNorFlashInfo, AMD_DEVIDE_ID);
+   \   00000008   0xE3A01001         MOV      R1,#+1
+   \   0000000C   0xE1B00004         MOVS     R0,R4
+   \   00000010   0x........         BL       amd_ReadIdentification
+   \   00000014   0xE8BD4010         POP      {R4,LR}
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+    246          }
+    247          
+    248          //------------------------------------------------------------------------------
+    249          /// Erases the specified block of the device. Returns 0 if the operation was
+    250          /// successful; otherwise returns an error code.
+    251          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    252          /// \param address Address offset to be erase.
+    253          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    254          unsigned char AMD_EraseSector(
+    255              struct NorFlashInfo *pNorFlashInfo, 
+    256              unsigned int address)
+    257          {
+   \                     AMD_EraseSector:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1B04000         MOVS     R4,R0
+   \   0000000C   0xE1B05001         MOVS     R5,R1
+    258              unsigned int pollingData;
+    259              unsigned int busAddress;
+    260              unsigned char busWidth;
+    261              unsigned char done = 0;
+   \   00000010   0xE3A08000         MOV      R8,#+0
+    262              
+    263              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   00000014   0xE1B00004         MOVS     R0,R4
+   \   00000018   0x........         BL       NorFlash_GetDataBusWidth
+   \   0000001C   0xE1B07000         MOVS     R7,R0
+    264              
+    265              //Programming is a six-bus-cycle operation. 
+    266              // The erase command sequence is initiated by writing two unlock write cycles.
+    267              WriteCommand(busWidth, 
+    268                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+    269                           AMD_CMD_UNLOCK_1);
+   \   00000020   0xE3A010AA         MOV      R1,#+170
+   \   00000024   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000028   0xE1B00004         MOVS     R0,R4
+   \   0000002C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000030   0xE3A020AA         MOV      R2,#+170
+   \   00000034   0xE1B01000         MOVS     R1,R0
+   \   00000038   0xE1B00007         MOVS     R0,R7
+   \   0000003C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000040   0x........         BL       WriteCommand
+    270              WriteCommand(busWidth, 
+    271                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    272                           AMD_CMD_UNLOCK_2);
+   \   00000044   0xE3A01055         MOV      R1,#+85
+   \   00000048   0xE3811E50         ORR      R1,R1,#0x500
+   \   0000004C   0xE1B00004         MOVS     R0,R4
+   \   00000050   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000054   0xE1B01000         MOVS     R1,R0
+   \   00000058   0xE3A02055         MOV      R2,#+85
+   \   0000005C   0xE1B00007         MOVS     R0,R7
+   \   00000060   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000064   0x........         BL       WriteCommand
+    273              // Followed by the program set-up command.
+    274              WriteCommand(busWidth, 
+    275                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    276                           AMD_CMD_ERASE_SETUP);
+   \   00000068   0xE3A010AA         MOV      R1,#+170
+   \   0000006C   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000070   0xE1B00004         MOVS     R0,R4
+   \   00000074   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000078   0xE3A02080         MOV      R2,#+128
+   \   0000007C   0xE1B01000         MOVS     R1,R0
+   \   00000080   0xE1B00007         MOVS     R0,R7
+   \   00000084   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000088   0x........         BL       WriteCommand
+    277              // Two additional unlock cycles are written.
+    278              WriteCommand(busWidth, 
+    279                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+    280                           AMD_CMD_UNLOCK_1);
+   \   0000008C   0xE3A010AA         MOV      R1,#+170
+   \   00000090   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000094   0xE1B00004         MOVS     R0,R4
+   \   00000098   0x........         BL       NorFlash_GetByteAddressInChip
+   \   0000009C   0xE3A020AA         MOV      R2,#+170
+   \   000000A0   0xE1B01000         MOVS     R1,R0
+   \   000000A4   0xE1B00007         MOVS     R0,R7
+   \   000000A8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000AC   0x........         BL       WriteCommand
+    281              WriteCommand(busWidth, 
+    282                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    283                           AMD_CMD_UNLOCK_2);
+   \   000000B0   0xE3A01055         MOV      R1,#+85
+   \   000000B4   0xE3811E50         ORR      R1,R1,#0x500
+   \   000000B8   0xE1B00004         MOVS     R0,R4
+   \   000000BC   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000C0   0xE3A02055         MOV      R2,#+85
+   \   000000C4   0xE1B01000         MOVS     R1,R0
+   \   000000C8   0xE1B00007         MOVS     R0,R7
+   \   000000CC   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000D0   0x........         BL       WriteCommand
+    284                  
+    285              // Followed by the address of the sector to be erased, and the sector erase command.
+    286              busAddress = NorFlash_GetAddressInChip(pNorFlashInfo,address);              
+   \   000000D4   0xE1B01005         MOVS     R1,R5
+   \   000000D8   0xE1B00004         MOVS     R0,R4
+   \   000000DC   0x........         BL       NorFlash_GetAddressInChip
+   \   000000E0   0xE1B06000         MOVS     R6,R0
+    287              WriteCommand(busWidth, busAddress, AMD_CMD_ERASE_SECTOR);
+   \   000000E4   0xE3A02030         MOV      R2,#+48
+   \   000000E8   0xE1B01006         MOVS     R1,R6
+   \   000000EC   0xE1B00007         MOVS     R0,R7
+   \   000000F0   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000F4   0x........         BL       WriteCommand
+    288              
+    289              // Data polling 
+    290              do {
+    291                  ReadRawData(busWidth, busAddress, (unsigned char *)&pollingData);
+   \                     ??AMD_EraseSector_0:
+   \   000000F8   0xE1B0200D         MOVS     R2,SP
+   \   000000FC   0xE1B01006         MOVS     R1,R6
+   \   00000100   0xE1B00007         MOVS     R0,R7
+   \   00000104   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000108   0x........         BL       ReadRawData
+    292                  // Check if the chip erase algorithm is completed.
+    293                  if ((pollingData & AMD_POLLING_DQ7) == AMD_POLLING_DQ7 ) {
+   \   0000010C   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000110   0xE3100080         TST      R0,#0x80
+   \   00000114   0x0A000002         BEQ      ??AMD_EraseSector_1
+    294                      // Erase operation successful. Device in read mode.
+    295                      done = 1;
+   \   00000118   0xE3A00001         MOV      R0,#+1
+   \   0000011C   0xE1B08000         MOVS     R8,R0
+   \   00000120   0xEA000012         B        ??AMD_EraseSector_2
+    296                  }
+    297                  else {
+    298                      // check if sector earse algrithm exceeded timing limits
+    299                      if (pollingData & AMD_POLLING_DQ5 ) {
+   \                     ??AMD_EraseSector_1:
+   \   00000124   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000128   0xE3100020         TST      R0,#0x20
+   \   0000012C   0x0A00000F         BEQ      ??AMD_EraseSector_2
+    300                      
+    301                          // I/O should be rechecked.
+    302                          ReadRawData(busWidth, busAddress, (unsigned char *)&pollingData);
+   \   00000130   0xE1B0200D         MOVS     R2,SP
+   \   00000134   0xE1B01006         MOVS     R1,R6
+   \   00000138   0xE1B00007         MOVS     R0,R7
+   \   0000013C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000140   0x........         BL       ReadRawData
+    303                          if ((pollingData & AMD_POLLING_DQ7) == AMD_POLLING_DQ7 ){
+   \   00000144   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000148   0xE3100080         TST      R0,#0x80
+   \   0000014C   0x0A000002         BEQ      ??AMD_EraseSector_3
+    304                              // Erase operation successful. Device in read mode.
+    305                              done = 1;
+   \   00000150   0xE3A00001         MOV      R0,#+1
+   \   00000154   0xE1B08000         MOVS     R8,R0
+   \   00000158   0xEA000004         B        ??AMD_EraseSector_2
+    306                          }
+    307                          else {
+    308                              // Erase operation not successful, write reset command.
+    309                              amd_Reset(pNorFlashInfo, 0);
+   \                     ??AMD_EraseSector_3:
+   \   0000015C   0xE3A01000         MOV      R1,#+0
+   \   00000160   0xE1B00004         MOVS     R0,R4
+   \   00000164   0x........         BL       amd_Reset
+    310                              return NorCommon_ERROR_CANNOTERASE;
+   \   00000168   0xE3A00004         MOV      R0,#+4
+   \   0000016C   0xEA000004         B        ??AMD_EraseSector_4
+    311                          }
+    312                      }
+    313                  }
+    314              } while (!done);
+   \                     ??AMD_EraseSector_2:
+   \   00000170   0xE1B00008         MOVS     R0,R8
+   \   00000174   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000178   0xE3500000         CMP      R0,#+0
+   \   0000017C   0x0AFFFFDD         BEQ      ??AMD_EraseSector_0
+    315              return 0;
+   \   00000180   0xE3A00000         MOV      R0,#+0
+   \                     ??AMD_EraseSector_4:
+   \   00000184   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000188   0xE12FFF1E         BX       LR               ;; return
+    316          }
+    317          
+    318          //------------------------------------------------------------------------------
+    319          /// Erases all the block of the device. Returns 0 if the operation was successful;
+    320          /// otherwise returns an error code.
+    321          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    322          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    323          unsigned char AMD_EraseChip(struct NorFlashInfo *pNorFlashInfo)
+    324          {
+   \                     AMD_EraseChip:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+    325              unsigned int pollingData;
+    326              unsigned char busWidth;
+    327              unsigned int address;
+    328              unsigned char done = 0;
+   \   00000008   0xE3A07000         MOV      R7,#+0
+    329                  
+    330              busWidth = NorFlash_GetDataBusWidth(pNorFlashInfo);
+   \   0000000C   0xE1B00004         MOVS     R0,R4
+   \   00000010   0x........         BL       NorFlash_GetDataBusWidth
+   \   00000014   0xE1B05000         MOVS     R5,R0
+    331              
+    332              //Programming is a six-bus-cycle operation. 
+    333              // The erase command sequence is initiated by writing two unlock write cycles.
+    334              WriteCommand(busWidth , 
+    335                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    336                           AMD_CMD_UNLOCK_1);
+   \   00000018   0xE3A010AA         MOV      R1,#+170
+   \   0000001C   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000020   0xE1B00004         MOVS     R0,R4
+   \   00000024   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000028   0xE3A020AA         MOV      R2,#+170
+   \   0000002C   0xE1B01000         MOVS     R1,R0
+   \   00000030   0xE1B00005         MOVS     R0,R5
+   \   00000034   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000038   0x........         BL       WriteCommand
+    337              WriteCommand(busWidth , 
+    338                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    339                           AMD_CMD_UNLOCK_2);
+   \   0000003C   0xE3A01055         MOV      R1,#+85
+   \   00000040   0xE3811E50         ORR      R1,R1,#0x500
+   \   00000044   0xE1B00004         MOVS     R0,R4
+   \   00000048   0x........         BL       NorFlash_GetByteAddressInChip
+   \   0000004C   0xE1B01000         MOVS     R1,R0
+   \   00000050   0xE3A02055         MOV      R2,#+85
+   \   00000054   0xE1B00005         MOVS     R0,R5
+   \   00000058   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000005C   0x........         BL       WriteCommand
+    340              // Followed by the program set-up command.               
+    341              WriteCommand(busWidth , 
+    342                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1),
+    343                           AMD_CMD_ERASE_SETUP);
+   \   00000060   0xE3A010AA         MOV      R1,#+170
+   \   00000064   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   00000068   0xE1B00004         MOVS     R0,R4
+   \   0000006C   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000070   0xE3A02080         MOV      R2,#+128
+   \   00000074   0xE1B01000         MOVS     R1,R0
+   \   00000078   0xE1B00005         MOVS     R0,R5
+   \   0000007C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000080   0x........         BL       WriteCommand
+    344                           
+    345              // Two additional unlock cycles are written.                 
+    346              WriteCommand(busWidth , 
+    347                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+    348                           AMD_CMD_UNLOCK_1);
+   \   00000084   0xE3A010AA         MOV      R1,#+170
+   \   00000088   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   0000008C   0xE1B00004         MOVS     R0,R4
+   \   00000090   0x........         BL       NorFlash_GetByteAddressInChip
+   \   00000094   0xE3A020AA         MOV      R2,#+170
+   \   00000098   0xE1B01000         MOVS     R1,R0
+   \   0000009C   0xE1B00005         MOVS     R0,R5
+   \   000000A0   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000A4   0x........         BL       WriteCommand
+    349              WriteCommand(busWidth , 
+    350                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_2), 
+    351                           AMD_CMD_UNLOCK_2);
+   \   000000A8   0xE3A01055         MOV      R1,#+85
+   \   000000AC   0xE3811E50         ORR      R1,R1,#0x500
+   \   000000B0   0xE1B00004         MOVS     R0,R4
+   \   000000B4   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000B8   0xE3A02055         MOV      R2,#+85
+   \   000000BC   0xE1B01000         MOVS     R1,R0
+   \   000000C0   0xE1B00005         MOVS     R0,R5
+   \   000000C4   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000C8   0x........         BL       WriteCommand
+    352                           
+    353              // Then followed by the chip erase command.
+    354              WriteCommand(busWidth , 
+    355                           NorFlash_GetByteAddressInChip(pNorFlashInfo, AMD_OFFSET_UNLOCK_1), 
+    356                           AMD_CMD_ERASE_CHIP);
+   \   000000CC   0xE3A010AA         MOV      R1,#+170
+   \   000000D0   0xE3811EA0         ORR      R1,R1,#0xA00
+   \   000000D4   0xE1B00004         MOVS     R0,R4
+   \   000000D8   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000DC   0xE3A02010         MOV      R2,#+16
+   \   000000E0   0xE1B01000         MOVS     R1,R0
+   \   000000E4   0xE1B00005         MOVS     R0,R5
+   \   000000E8   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000EC   0x........         BL       WriteCommand
+    357                           
+    358              address = NorFlash_GetByteAddressInChip(pNorFlashInfo, 0);              
+   \   000000F0   0xE3A01000         MOV      R1,#+0
+   \   000000F4   0xE1B00004         MOVS     R0,R4
+   \   000000F8   0x........         BL       NorFlash_GetByteAddressInChip
+   \   000000FC   0xE1B06000         MOVS     R6,R0
+    359              // Data polling 
+    360              do {
+    361                  ReadRawData(busWidth , address, (unsigned char*)&pollingData);
+   \                     ??AMD_EraseChip_0:
+   \   00000100   0xE1B0200D         MOVS     R2,SP
+   \   00000104   0xE1B01006         MOVS     R1,R6
+   \   00000108   0xE1B00005         MOVS     R0,R5
+   \   0000010C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000110   0x........         BL       ReadRawData
+    362                  // Check if the chip erase algorithm is completed.
+    363                  if ((pollingData & AMD_POLLING_DQ7) == AMD_POLLING_DQ7 ) {
+   \   00000114   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000118   0xE3100080         TST      R0,#0x80
+   \   0000011C   0x0A000002         BEQ      ??AMD_EraseChip_1
+    364                      // Erase operation successful. Device in read mode.
+    365                      done = 1;
+   \   00000120   0xE3A00001         MOV      R0,#+1
+   \   00000124   0xE1B07000         MOVS     R7,R0
+   \   00000128   0xEA000017         B        ??AMD_EraseChip_2
+    366                  }
+    367                  else {
+    368                      
+    369                      // When the time-out period is complete, DQ3 switches from a “0” to a “1.”
+    370                      if (pollingData & AMD_POLLING_DQ3 ) {
+   \                     ??AMD_EraseChip_1:
+   \   0000012C   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000130   0xE3100008         TST      R0,#0x8
+   \   00000134   0x0A000001         BEQ      ??AMD_EraseChip_3
+    371                          return NorCommon_ERROR_CANNOTERASE;
+   \   00000138   0xE3A00004         MOV      R0,#+4
+   \   0000013C   0xEA000017         B        ??AMD_EraseChip_4
+    372                      }
+    373                      // check if chip earse algrithm exceeded timing limits
+    374                      if (pollingData & AMD_POLLING_DQ5 ) {
+   \                     ??AMD_EraseChip_3:
+   \   00000140   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000144   0xE3100020         TST      R0,#0x20
+   \   00000148   0x0A00000F         BEQ      ??AMD_EraseChip_2
+    375                          
+    376                          // I/O should be rechecked.
+    377                          ReadRawData(busWidth , address, (unsigned char*)&pollingData);
+   \   0000014C   0xE1B0200D         MOVS     R2,SP
+   \   00000150   0xE1B01006         MOVS     R1,R6
+   \   00000154   0xE1B00005         MOVS     R0,R5
+   \   00000158   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000015C   0x........         BL       ReadRawData
+    378                          if ((pollingData & AMD_POLLING_DQ7) == AMD_POLLING_DQ7 ){
+   \   00000160   0xE59D0000         LDR      R0,[SP, #+0]
+   \   00000164   0xE3100080         TST      R0,#0x80
+   \   00000168   0x0A000002         BEQ      ??AMD_EraseChip_5
+    379                              // Erase operation successful. Device in read mode.
+    380                              done = 1;
+   \   0000016C   0xE3A00001         MOV      R0,#+1
+   \   00000170   0xE1B07000         MOVS     R7,R0
+   \   00000174   0xEA000004         B        ??AMD_EraseChip_2
+    381                          }
+    382                          else {
+    383                              // Erase operation not successful, write reset command.
+    384                              amd_Reset(pNorFlashInfo, 0);
+   \                     ??AMD_EraseChip_5:
+   \   00000178   0xE3A01000         MOV      R1,#+0
+   \   0000017C   0xE1B00004         MOVS     R0,R4
+   \   00000180   0x........         BL       amd_Reset
+    385                              return NorCommon_ERROR_CANNOTERASE;
+   \   00000184   0xE3A00004         MOV      R0,#+4
+   \   00000188   0xEA000004         B        ??AMD_EraseChip_4
+    386                          }
+    387                      }
+    388                  }
+    389              } while (!done);
+   \                     ??AMD_EraseChip_2:
+   \   0000018C   0xE1B00007         MOVS     R0,R7
+   \   00000190   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000194   0xE3500000         CMP      R0,#+0
+   \   00000198   0x0AFFFFD8         BEQ      ??AMD_EraseChip_0
+    390              return 0;
+   \   0000019C   0xE3A00000         MOV      R0,#+0
+   \                     ??AMD_EraseChip_4:
+   \   000001A0   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   000001A4   0xE12FFF1E         BX       LR               ;; return
+    391          }
+    392          
+    393          
+    394          //------------------------------------------------------------------------------
+    395          /// Sends data to the NorFlashInfo chip from the provided buffer.
+    396          /// \param pNorFlashInfo  Pointer to an NorFlashInfo instance.
+    397          /// \param address Start address offset to be wrote.
+    398          /// \param buffer Buffer where the data is stored.
+    399          /// \param size Number of bytes that will be written.
+    400          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    401          unsigned char AMD_Write_Data(
+    402              struct NorFlashInfo *pNorFlashInfo,
+    403              unsigned int address,
+    404              unsigned char *buffer,
+    405              unsigned int size)
+    406          {
+   \                     AMD_Write_Data:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0xE1B06002         MOVS     R6,R2
+   \   00000010   0xE1B07003         MOVS     R7,R3
+    407              unsigned int i;
+    408              unsigned char busWidth;
+    409              busWidth = pNorFlashInfo->deviceChipWidth;
+   \   00000014   0xE5D40004         LDRB     R0,[R4, #+4]
+   \   00000018   0xE1B09000         MOVS     R9,R0
+    410              
+    411              if (busWidth == FLASH_CHIP_WIDTH_8BITS ){ 
+   \   0000001C   0xE1B00009         MOVS     R0,R9
+   \   00000020   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000024   0xE3500001         CMP      R0,#+1
+   \   00000028   0x1A00000E         BNE      ??AMD_Write_Data_0
+    412                  for(i=0; i < size; i++) {
+   \   0000002C   0xE3A00000         MOV      R0,#+0
+   \   00000030   0xE1B08000         MOVS     R8,R0
+   \                     ??AMD_Write_Data_1:
+   \   00000034   0xE1580007         CMP      R8,R7
+   \   00000038   0x2A000036         BCS      ??AMD_Write_Data_2
+    413                      if(amd_Program(pNorFlashInfo, address, buffer[i])) {
+   \   0000003C   0xE7D82006         LDRB     R2,[R8, +R6]
+   \   00000040   0xE1B01005         MOVS     R1,R5
+   \   00000044   0xE1B00004         MOVS     R0,R4
+   \   00000048   0x........         BL       amd_Program
+   \   0000004C   0xE3500000         CMP      R0,#+0
+   \   00000050   0x0A000001         BEQ      ??AMD_Write_Data_3
+    414                          return NorCommon_ERROR_CANNOTWRITE;
+   \   00000054   0xE3A00003         MOV      R0,#+3
+   \   00000058   0xEA00002F         B        ??AMD_Write_Data_4
+    415                      }
+    416                      address ++;
+   \                     ??AMD_Write_Data_3:
+   \   0000005C   0xE2955001         ADDS     R5,R5,#+1
+    417                  }
+   \   00000060   0xE2988001         ADDS     R8,R8,#+1
+   \   00000064   0xEAFFFFF2         B        ??AMD_Write_Data_1
+    418              }
+    419              else if( busWidth == FLASH_CHIP_WIDTH_16BITS ){
+   \                     ??AMD_Write_Data_0:
+   \   00000068   0xE1B00009         MOVS     R0,R9
+   \   0000006C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000070   0xE3500002         CMP      R0,#+2
+   \   00000074   0x1A000011         BNE      ??AMD_Write_Data_5
+    420                  unsigned short *buffer16 = (unsigned short *) buffer;
+   \   00000078   0xE1B0A006         MOVS     R10,R6
+    421                  size >>= 1;
+   \   0000007C   0xE1B070A7         LSRS     R7,R7,#+1
+    422                  for(i=0; i < size; i++) {
+   \   00000080   0xE3A00000         MOV      R0,#+0
+   \   00000084   0xE1B08000         MOVS     R8,R0
+   \                     ??AMD_Write_Data_6:
+   \   00000088   0xE1580007         CMP      R8,R7
+   \   0000008C   0x2A000021         BCS      ??AMD_Write_Data_2
+    423                      if(amd_Program(pNorFlashInfo, address, buffer16[i])){
+   \   00000090   0xE1B00088         LSLS     R0,R8,#+1
+   \   00000094   0xE19020BA         LDRH     R2,[R0, +R10]
+   \   00000098   0xE1B01005         MOVS     R1,R5
+   \   0000009C   0xE1B00004         MOVS     R0,R4
+   \   000000A0   0x........         BL       amd_Program
+   \   000000A4   0xE3500000         CMP      R0,#+0
+   \   000000A8   0x0A000001         BEQ      ??AMD_Write_Data_7
+    424                          return NorCommon_ERROR_CANNOTWRITE;
+   \   000000AC   0xE3A00003         MOV      R0,#+3
+   \   000000B0   0xEA000019         B        ??AMD_Write_Data_4
+    425                      }
+    426                      address+= 2;
+   \                     ??AMD_Write_Data_7:
+   \   000000B4   0xE2955002         ADDS     R5,R5,#+2
+    427                  }
+   \   000000B8   0xE2988001         ADDS     R8,R8,#+1
+   \   000000BC   0xEAFFFFF1         B        ??AMD_Write_Data_6
+    428              }
+    429              else if(busWidth == FLASH_CHIP_WIDTH_32BITS ){
+   \                     ??AMD_Write_Data_5:
+   \   000000C0   0xE1B00009         MOVS     R0,R9
+   \   000000C4   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   000000C8   0xE3500004         CMP      R0,#+4
+   \   000000CC   0x1A000011         BNE      ??AMD_Write_Data_2
+    430                  unsigned int *buffer32 = (unsigned int *) buffer;
+   \   000000D0   0xE1B0A006         MOVS     R10,R6
+    431                  size >>= 2;
+   \   000000D4   0xE1B07127         LSRS     R7,R7,#+2
+    432                  for(i=0; i < size; i++) {
+   \   000000D8   0xE3A00000         MOV      R0,#+0
+   \   000000DC   0xE1B08000         MOVS     R8,R0
+   \                     ??AMD_Write_Data_8:
+   \   000000E0   0xE1580007         CMP      R8,R7
+   \   000000E4   0x2A00000B         BCS      ??AMD_Write_Data_2
+    433                      if(amd_Program(pNorFlashInfo, address, buffer32[i])){
+   \   000000E8   0xE1B00108         LSLS     R0,R8,#+2
+   \   000000EC   0xE790200A         LDR      R2,[R0, +R10]
+   \   000000F0   0xE1B01005         MOVS     R1,R5
+   \   000000F4   0xE1B00004         MOVS     R0,R4
+   \   000000F8   0x........         BL       amd_Program
+   \   000000FC   0xE3500000         CMP      R0,#+0
+   \   00000100   0x0A000001         BEQ      ??AMD_Write_Data_9
+    434                          return NorCommon_ERROR_CANNOTWRITE;
+   \   00000104   0xE3A00003         MOV      R0,#+3
+   \   00000108   0xEA000003         B        ??AMD_Write_Data_4
+    435                      }
+    436                      address+= 4;
+   \                     ??AMD_Write_Data_9:
+   \   0000010C   0xE2955004         ADDS     R5,R5,#+4
+    437                  }
+   \   00000110   0xE2988001         ADDS     R8,R8,#+1
+   \   00000114   0xEAFFFFF1         B        ??AMD_Write_Data_8
+    438              }
+    439              return 0;
+   \                     ??AMD_Write_Data_2:
+   \   00000118   0xE3A00000         MOV      R0,#+0
+   \                     ??AMD_Write_Data_4:
+   \   0000011C   0xE8BD47F0         POP      {R4-R10,LR}
+   \   00000120   0xE12FFF1E         BX       LR               ;; return
+    440          }
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      24   AMD_EraseChip
+        24   -> NorFlash_GetByteAddressInChip
+        24   -> NorFlash_GetDataBusWidth
+        24   -> ReadRawData
+        24   -> WriteCommand
+        24   -> amd_Reset
+      32   AMD_EraseSector
+        32   -> NorFlash_GetAddressInChip
+        32   -> NorFlash_GetByteAddressInChip
+        32   -> NorFlash_GetDataBusWidth
+        32   -> ReadRawData
+        32   -> WriteCommand
+        32   -> amd_Reset
+       8   AMD_ReadDeviceID
+         8   -> amd_ReadIdentification
+       8   AMD_ReadManufactoryId
+         8   -> amd_ReadIdentification
+      16   AMD_Reset
+        16   -> amd_Reset
+      32   AMD_Write_Data
+        32   -> amd_Program
+      32   amd_Program
+        32   -> NorFlash_GetAddressInChip
+        32   -> NorFlash_GetByteAddressInChip
+        32   -> NorFlash_GetDataBusWidth
+        32   -> ReadRawData
+        32   -> WriteCommand
+        32   -> WriteRawData
+        32   -> amd_Reset
+      24   amd_ReadIdentification
+        24   -> NorFlash_GetByteAddressInChip
+        24   -> NorFlash_GetDataBusWidth
+        24   -> ReadRawData
+        24   -> WriteCommand
+      16   amd_Reset
+        16   -> NorFlash_GetByteAddressInChip
+        16   -> NorFlash_GetDataBusWidth
+        16   -> WriteCommand
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     424  AMD_EraseChip
+     396  AMD_EraseSector
+      28  AMD_ReadDeviceID
+      28  AMD_ReadManufactoryId
+      32  AMD_Reset
+     292  AMD_Write_Data
+     344  amd_Program
+     292  amd_ReadIdentification
+     140  amd_Reset
+
+ 
+ 1 976 bytes in section .text
+ 
+ 1 976 bytes of CODE memory
+
+Errors: none
+Warnings: none

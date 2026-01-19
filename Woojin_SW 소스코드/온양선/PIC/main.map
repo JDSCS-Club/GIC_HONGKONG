@@ -1,0 +1,519 @@
+******************************************************************************
+TMS320C3x/4x COFF Linker                Version 5.11                   
+******************************************************************************
+>> Linked Mon Apr 29 17:36:39 2013
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00804251
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         ROM       00000000  000004000  00000000     RWIX      
+         IRAM0     00800000  000008000  00006ab6     RWIX      
+         IRAM1     00809810  0000007b0  000003cc     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00800000    000043b8     
+                  00800000    00000001     start.obj (.text)
+                  00800001    0000006d     debug3x.obj (.text)
+                  0080006e    0000007d     en29lv040.obj (.text)
+                  008000eb    00000558     xr16788.obj (.text)
+                  00800643    00000314     PA_Pro.obj (.text)
+                  00800957    0000153d     user.obj (.text)
+                  00801e94    00000228     saf82532.obj (.text)
+                  008020bc    00001373     gpproface.obj (.text)
+                  0080342f    00000bb5     Disk.obj (.text)
+                  00803fe4    0000026b     LED_DOWNLOAD.obj (.text)
+                  0080424f    0000001b     rts30.lib : boot.obj (.text)
+                  0080426a    00000028               : divf.obj (.text)
+                  00804292    00000025               : divi.obj (.text)
+                  008042b7    00000033               : divu.obj (.text)
+                  008042ea    00000022               : modi.obj (.text)
+                  0080430c    0000002a               : modu.obj (.text)
+                  00804336    00000009               : mpyk.obj (.text)
+                  0080433f    00000026               : exit.obj (.text)
+                  00804365    0000001d               : memcpy.obj (.text)
+                  00804382    00000010               : memset.obj (.text)
+                  00804392    0000000d               : strlen.obj (.text)
+                  0080439f    00000019               : strncmp.obj (.text)
+
+.text      0    008043b8    000004ec     
+                  008043b8    000004ec     main.obj (.text)
+
+.cinit     0    00809810    000003cc     
+                  00809810    0000000e     debug3x.obj (.cinit)
+                  0080981e    00000003     en29lv040.obj (.cinit)
+                  00809821    0000012a     xr16788.obj (.cinit)
+                  0080994b    0000001d     PA_Pro.obj (.cinit)
+                  00809968    0000010c     user.obj (.cinit)
+                  00809a74    00000015     saf82532.obj (.cinit)
+                  00809a89    0000004d     gpproface.obj (.cinit)
+                  00809ad6    0000008e     Disk.obj (.cinit)
+                  00809b64    00000032     LED_DOWNLOAD.obj (.cinit)
+                  00809b96    00000036     main.obj (.cinit)
+                  00809bcc    00000009     rts30.lib : exit.obj (.cinit)
+                  00809bd5    00000003               : memcpy.obj (.cinit)
+                  00809bd8    00000003               : strncmp.obj (.cinit)
+                  00809bdb    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    008048a4    00000250     
+                  008048a4    00000000     debug3x.obj (.const)
+                  008048a4    00000000     rts30.lib : strncmp.obj (.const)
+                  008048a4    00000000               : memcpy.obj (.const)
+                  008048a4    00000000               : exit.obj (.const)
+                  008048a4    00000000     main.obj (.const)
+                  008048a4    00000000     LED_DOWNLOAD.obj (.const)
+                  008048a4    00000000     saf82532.obj (.const)
+                  008048a4    00000000     PA_Pro.obj (.const)
+                  008048a4    00000000     xr16788.obj (.const)
+                  008048a4    00000000     en29lv040.obj (.const)
+                  008048a4    00000070     user.obj (.const)
+                  00804914    00000191     gpproface.obj (.const)
+                  00804aa5    0000004f     Disk.obj (.const)
+
+.data      0    00800000    00000000     UNINITIALIZED
+                  00800000    00000000     start.obj (.data)
+                  00800000    00000000     rts30.lib : strncmp.obj (.data)
+                  00800000    00000000               : strlen.obj (.data)
+                  00800000    00000000               : memset.obj (.data)
+                  00800000    00000000               : memcpy.obj (.data)
+                  00800000    00000000               : exit.obj (.data)
+                  00800000    00000000               : mpyk.obj (.data)
+                  00800000    00000000               : modu.obj (.data)
+                  00800000    00000000               : modi.obj (.data)
+                  00800000    00000000               : divu.obj (.data)
+                  00800000    00000000               : divi.obj (.data)
+                  00800000    00000000               : divf.obj (.data)
+                  00800000    00000000               : boot.obj (.data)
+                  00800000    00000000     main.obj (.data)
+                  00800000    00000000     LED_DOWNLOAD.obj (.data)
+                  00800000    00000000     Disk.obj (.data)
+                  00800000    00000000     gpproface.obj (.data)
+                  00800000    00000000     saf82532.obj (.data)
+                  00800000    00000000     user.obj (.data)
+                  00800000    00000000     PA_Pro.obj (.data)
+                  00800000    00000000     xr16788.obj (.data)
+                  00800000    00000000     en29lv040.obj (.data)
+                  00800000    00000000     debug3x.obj (.data)
+
+.stack     0    00804af4    00001000     UNINITIALIZED
+                  00804af4    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00805af4    00000fc2     UNINITIALIZED
+                  00805af4    00000000     start.obj (.bss)
+                  00805af4    00000000     rts30.lib : strlen.obj (.bss)
+                  00805af4    00000000               : memset.obj (.bss)
+                  00805af4    00000000               : mpyk.obj (.bss)
+                  00805af4    00000000               : modu.obj (.bss)
+                  00805af4    00000000               : modi.obj (.bss)
+                  00805af4    00000000               : divu.obj (.bss)
+                  00805af4    00000000               : divi.obj (.bss)
+                  00805af4    00000000               : divf.obj (.bss)
+                  00805af4    00000000               : boot.obj (.bss)
+                  00805af4    0000000e     debug3x.obj (.bss)
+                  00805b02    00000001     en29lv040.obj (.bss)
+                  00805b03    00000221     xr16788.obj (.bss)
+                  00805d24    00000029     PA_Pro.obj (.bss)
+                  00805d4d    000003c5     user.obj (.bss)
+                  00806112    000000c3     saf82532.obj (.bss)
+                  008061d5    0000023f     gpproface.obj (.bss)
+                  00806414    0000062f     Disk.obj (.bss)
+                  00806a43    00000032     LED_DOWNLOAD.obj (.bss)
+                  00806a75    0000001c     main.obj (.bss)
+                  00806a91    00000023     rts30.lib : exit.obj (.bss)
+                  00806ab4    00000001               : memcpy.obj (.bss)
+                  00806ab5    00000001               : strncmp.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00805af4 .bss                             00001000 __STACK_SIZE
+00800000 .data                            00800000 ___data__
+008043b8 .text                            00800000 edata
+0080434d C$$EXIT                          00800000 ___edata__
+0080426a DIV_F30                          00800000 .data
+00804292 DIV_I30                          00800001 _c_int06
+008042b7 DIV_U30                          00800047 _Debug3xInit
+008042ea MOD_I30                          0080006e _en29_Init
+0080430c MOD_U30                          00800074 _en29_AllErase
+00804336 MPY_K30                          00800095 _en29_SectorErase
+00801dbd _ASC_TO_HEX                      008000bc _en29_WriteByte
+008021e9 _BCD_BIN                         008000de _en29_ReadByte
+00802208 _BIN_BCD                         008000eb _xr16l788_Init
+00805b04 _CRC_Table                       0080021c _xr16l788_Rts
+00803911 _Check_Header                    00800239 _xr16l788_Send
+00806540 _Cluster_OneFileBuf              008002c3 _xr16l788_GetRxBuffer
+0080448c _ConvAsc2Dec                     0080030d _xr16l788_Isr
+0080449e _ConvHex2Asc                     008003dd _xr16l788_Loop
+00805d4d _DISPLAY_UNIT_ADD                008003e3 _IsBCCOK
+00806a4e _DISPLAY_UNIT_FDD                0080041e _MakeBcc
+00806a46 _DISPLAY_UNIT_SDD                0080043c _cal_CRC16
+00804465 _DIST                            00800459 _Xr_TX_PROTOCOL
+00805b03 _DLY_Vlaue                       0080050a _Xr_TX_PIB_TEXT
+00801247 _DP_ALL_TEXT_CHECK               00800560 _Xr_Tx_TCMS_TEXT
+00801d80 _DP_ConvAsc2Hex                  00800594 _Xr_Tx_DownLoad_TEXT
+00801da4 _DP_ConvHex2Asc                  008005e3 _xr16l788_1msLoop
+00801d04 _DP_DISP_G__HAP                  00800643 _Pa_Pro_Init
+00800957 _DP_DataPro_Init                 00800649 _Pa_MainPro
+00800a8c _DP_DataPro_Main                 00800692 _Pa_RxData_Pro
+00800a73 _DP_DataPro_SendPro_Init         0080083e _Pa_TxData_Pro
+00801229 _DP_Door_CLOSE                   0080094e _Pa_Time1ms
+008011f4 _DP_Door_OPEN                    00800957 _DP_DataPro_Init
+008011b1 _DP_Door_Sequence                00800a73 _DP_DataPro_SendPro_Init
+0080116f _DP_Find_StationInfo             00800a8c _DP_DataPro_Main
+00800d14 _DP_GpDataChange                 00800b11 _DP_IDC_SW_UPLOAD_Pro
+00800b11 _DP_IDC_SW_UPLOAD_Pro            00800b73 _DP_SanDisk_Check
+008013c9 _DP_IM_PR_TEXT_READ              00800b95 _DP_SanDisk_InputTimeCheck
+0080148e _DP_Insert_SpecialCodeNew        00800baa _DP_TranNum_Chech
+00800d34 _DP_ONTD                         00800c14 _DP_STNAME_INFO_UP
+00801144 _DP_RING_BUF_POP                 00800c96 _DP_STNAME_INFO_UP_TCMS
+008010eb _DP_RING_BUF_PUSH                00800d14 _DP_GpDataChange
+00801ae7 _DP_SD_Format_Change             00800d34 _DP_ONTD
+00801810 _DP_SEND_PRO                     00800d58 _DP_SIMULATION
+00800d58 _DP_SIMULATION                   00800dbe _DP_SelfTest
+008017f7 _DP_STNAME_CHANGE                00800e39 _DP_Xr1677_RX_DATA_Pro_A
+00800c96 _DP_STNAME_INFO_UP_TCMS          00800f6b _DP_Xr1677_RX_DATA_Pro_B
+00800c14 _DP_STNAME_INFO_UP               00800f99 _DP_Xr1677_RX_DATA_Pro_C
+00801c6e _DP_STOP_PT_INFO_G_FUNCT         0080108e _DP_Xr1677_RX_DATA_Pro_D
+00801bca _DP_STOP_PT_INFO_ITEM_FUNCT      008010eb _DP_RING_BUF_PUSH
+00800b73 _DP_SanDisk_Check                00801144 _DP_RING_BUF_POP
+00800b95 _DP_SanDisk_InputTimeCheck       0080116f _DP_Find_StationInfo
+00801426 _DP_Scroll_Station_Name          008011b1 _DP_Door_Sequence
+00800dbe _DP_SelfTest                     008011f4 _DP_Door_OPEN
+00801290 _DP_Send_IDD_Check               00801229 _DP_Door_CLOSE
+00801ddd _DP_Timer_1ms_DataPro            00801247 _DP_ALL_TEXT_CHECK
+00800baa _DP_TranNum_Chech                00801290 _DP_Send_IDD_Check
+00800e39 _DP_Xr1677_RX_DATA_Pro_A         008013c9 _DP_IM_PR_TEXT_READ
+00800f6b _DP_Xr1677_RX_DATA_Pro_B         00801426 _DP_Scroll_Station_Name
+00800f99 _DP_Xr1677_RX_DATA_Pro_C         0080148e _DP_Insert_SpecialCodeNew
+0080108e _DP_Xr1677_RX_DATA_Pro_D         008017f7 _DP_STNAME_CHANGE
+00800047 _Debug3xInit                     00801810 _DP_SEND_PRO
+0080342f _Delay_Disk                      00801ae7 _DP_SD_Format_Change
+008047ca _Delay                           00801bca _DP_STOP_PT_INFO_ITEM_FUNCT
+0080443b _DspInit                         00801c6e _DP_STOP_PT_INFO_G_FUNCT
+00803791 _FDD_DATAFind                    00801d04 _DP_DISP_G__HAP
+00803701 _FDD_SWFind                      00801d80 _DP_ConvAsc2Hex
+0080366e _FileCompare1                    00801da4 _DP_ConvHex2Asc
+008036a0 _FileCompare2                    00801dbd _ASC_TO_HEX
+00803594 _FileEntry                       00801ddd _DP_Timer_1ms_DataPro
+00806912 _FileList                        00801e94 _saf82532_AsyncInit
+0080228d _GP_1msTime                      00801f5a _saf82532_Send
+00803132 _GP_AUTO_SELFTEST                00801f78 _saf82532_AsyncSend
+008028bd _GP_CLEAN                        00801fdc _Saf82532_GetAsyncRecv
+00802ae1 _GP_DEST_SCREEN                  00802011 _Saf82532_GetRecv
+008028aa _GP_DISPLAY_SAFETY               0080202b _saf82532_Isr
+008031bd _GP_DOWNLOAD_SDR                 00802033 _saf82532_AsyncIsrAch
+008031e8 _GP_IDC_SW_UPLOAD                0080205d _saf82532_AsyncIsrBch
+008028f4 _GP_MANUAL_SCREEN                00802087 _saf82532_1msLoop
+00802999 _GP_MENU_SCREEN                  008020bc _gp_WritingDWord
+00802e45 _GP_POINT_SCREEN                 00802109 _gp_WritingWord
+0080307a _GP_POINT_ST_PRO                 00802145 _gp_ReadingWord
+00802a1d _GP_SDR_PRINT                    00802176 _gp_WritingStr
+008029ac _GP_SDR_SCREEN                   008021c1 _Hex2ASCIIW
+00802ee0 _GP_SELFTEST_SCREEN              008021e9 _BCD_BIN
+0080231f _GP_SEND_SCREEN                  00802208 _BIN_BCD
+008032cd _GP_SFDD_SW_UPLOAD               00802231 _GpProface_Init
+008033b7 _GP_SFDD_SW_UPLOAD_CLEAN         00802259 _Gp_Pro_Main
+00802d82 _GP_SIMU_SCREEN                  0080228d _GP_1msTime
+008028ca _GP_STATE_SCREEN                 008022ab _gp_Receive
+00803023 _GP_TRAIN_SCREEN                 0080231f _GP_SEND_SCREEN
+008037c1 _GetUsedCluster                  008028aa _GP_DISPLAY_SAFETY
+00802231 _GpProface_Init                  008028bd _GP_CLEAN
+00802259 _Gp_Pro_Main                     008028ca _GP_STATE_SCREEN
+008021c1 _Hex2ASCIIW                      008028f4 _GP_MANUAL_SCREEN
+00803731 _IDD_SWFind                      00802999 _GP_MENU_SCREEN
+00805e7c _Idc_Load                        008029ac _GP_SDR_SCREEN
+008003e3 _IsBCCOK                         00802a1d _GP_SDR_PRINT
+0080416e _LED_DataDownLoad_ST1            00802ae1 _GP_DEST_SCREEN
+00804178 _LED_DataDownLoad_ST2            00802d82 _GP_SIMU_SCREEN
+008041aa _LED_DataSDR                     00802e45 _GP_POINT_SCREEN
+008040d8 _LED_ERASS_SDR                   00802ee0 _GP_SELFTEST_SCREEN
+00804092 _LED_ERASS                       00802fc1 _SDR_Routine_Complete
+00803fe4 _LED_Init                        00803023 _GP_TRAIN_SCREEN
+00803ffd _LED_Main                        0080307a _GP_POINT_ST_PRO
+0080423f _LED_Timer_1ms                   00803132 _GP_AUTO_SELFTEST
+00804034 _LED_WaitSDR                     008031bd _GP_DOWNLOAD_SDR
+0080041e _MakeBcc                         008031e8 _GP_IDC_SW_UPLOAD
+00803e65 _NVSRAM_Comp_StopP               008032cd _GP_SFDD_SW_UPLOAD
+00803e6b _NVSRAM_Comp_TrainNo             008033b7 _GP_SFDD_SW_UPLOAD_CLEAN
+00803a7b _NVSRAM_Display_Schedule         0080342f _Delay_Disk
+00803b9a _NVSRAM_Find_IM                  0080343f _SanDisk_WaitReady
+00803bda _NVSRAM_Find_PR                  00803462 _Sandisk_WaitDRQ
+00803dae _NVSRAM_Find_RootAllNo           00803485 _SanDisk_Info_Read
+00803b40 _NVSRAM_Find_Schedule_Cnt        008034be _SanDisk_ABS_RD
+00803f51 _NVSRAM_Find_StationRoot         008034f2 _Sandisk_Init
+00803c1b _NVSRAM_Get_StopP                00803594 _FileEntry
+00803fcb _NVSRAM_MEMCPY                   0080366e _FileCompare1
+00803e0c _NVSRAM_Rd_StationName_Code      008036a0 _FileCompare2
+00803c76 _NVSRAM_Rd_StationName           008036d1 _RND_SWFind
+00803cdd _NVSRAM_Rd_StationName_Total     00803701 _FDD_SWFind
+0080641f _NowSector                       00803731 _IDD_SWFind
+00803a29 _Nvsram_EditerData               00803761 _TND_SWFind
+00803944 _Nvsram_IDC_UpLoad_CK            00803791 _FDD_DATAFind
+008039df _Nvsram_IDC_UpLoad_Da            008037c1 _GetUsedCluster
+00800649 _Pa_MainPro                      0080388f _Seek_File
+00800643 _Pa_Pro_Init                     008038b9 _Seek_File_UNIT
+00800692 _Pa_RxData_Pro                   00803911 _Check_Header
+0080094e _Pa_Time1ms                      00803944 _Nvsram_IDC_UpLoad_CK
+0080083e _Pa_TxData_Pro                   008039df _Nvsram_IDC_UpLoad_Da
+0080641e _PreSector                       00803a29 _Nvsram_EditerData
+008036d1 _RND_SWFind                      00803a7b _NVSRAM_Display_Schedule
+00802fc1 _SDR_Routine_Complete            00803b40 _NVSRAM_Find_Schedule_Cnt
+0080612b _Saf82532_Ach                    00803b9a _NVSRAM_Find_IM
+0080616a _Saf82532_Bch                    00803bda _NVSRAM_Find_PR
+00801fdc _Saf82532_GetAsyncRecv           00803c1b _NVSRAM_Get_StopP
+008044b8 _Saf82532_GetRecv_ACH            00803c76 _NVSRAM_Rd_StationName
+00802011 _Saf82532_GetRecv                00803cdd _NVSRAM_Rd_StationName_Total
+0080453f _Saf82532_GetRecv_BCH            00803d6c _StationCode_Definite
+008034be _SanDisk_ABS_RD                  00803dae _NVSRAM_Find_RootAllNo
+00803485 _SanDisk_Info_Read               00803e0c _NVSRAM_Rd_StationName_Code
+008060b4 _SanDisk_Vari                    00803e65 _NVSRAM_Comp_StopP
+0080343f _SanDisk_WaitReady               00803e6b _NVSRAM_Comp_TrainNo
+008034f2 _Sandisk_Init                    00803f51 _NVSRAM_Find_StationRoot
+00803462 _Sandisk_WaitDRQ                 00803fcb _NVSRAM_MEMCPY
+008038b9 _Seek_File_UNIT                  00803fe4 _LED_Init
+0080388f _Seek_File                       00803ffd _LED_Main
+00803d6c _StationCode_Definite            00804034 _LED_WaitSDR
+00806422 _StationNameAll                  00804092 _LED_ERASS
+00806421 _StationName                     008040d8 _LED_ERASS_SDR
+00803761 _TND_SWFind                      0080416e _LED_DataDownLoad_ST1
+008045e9 _Xr1677_RX_Pro_A                 00804178 _LED_DataDownLoad_ST2
+0080465c _Xr1677_RX_Pro_B                 008041aa _LED_DataSDR
+008046b8 _Xr1677_RX_Pro_C                 0080423f _LED_Timer_1ms
+00804737 _Xr1677_RX_Pro_D                 00804251 _c_int00
+00804596 _Xr1677_Rx_Pro                   0080426a DIV_F30
+008045c2 _Xr1677_Tx_Pro                   00804292 DIV_I30
+00805cc8 _Xr16788_1Ch                     008042b7 DIV_U30
+00805cdb _Xr16788_2Ch                     008042ea MOD_I30
+00805c0c _Xr16788_3Ch                     0080430c MOD_U30
+00805c1f _Xr16788_4Ch                     00804336 MPY_K30
+0080050a _Xr_TX_PIB_TEXT                  0080433f _exit
+00800459 _Xr_TX_PROTOCOL                  0080434d C$$EXIT
+00800594 _Xr_Tx_DownLoad_TEXT             0080434f _atexit
+00800560 _Xr_Tx_TCMS_TEXT                 00804364 _abort
+00001000 __STACK_SIZE                     00804365 _memcpy
+00805af4 ___bss__                         00804382 _memset
+00809810 ___cinit__                       00804392 _strlen
+00800000 ___data__                        0080439f _strncmp
+00800000 ___edata__                       008043b8 _main
+00806ab6 ___end__                         008043b8 ___text__
+008048a4 ___etext__                       008043b8 .text
+ffffffff ___pinit__                       0080443b _DspInit
+008043b8 ___text__                        00804465 _DIST
+00806a92 __cleanup_ptr                    0080448c _ConvAsc2Dec
+00805af5 __glDebugAddr                    0080449e _ConvHex2Asc
+00805af4 __glDebugData                    008044b8 _Saf82532_GetRecv_ACH
+00804af4 __stack                          0080453f _Saf82532_GetRecv_BCH
+00804364 _abort                           00804596 _Xr1677_Rx_Pro
+0080434f _atexit                          008045c2 _Xr1677_Tx_Pro
+00804251 _c_int00                         008045e9 _Xr1677_RX_Pro_A
+00806a7a _c_int01_Flag                    0080465c _Xr1677_RX_Pro_B
+008047e0 _c_int01                         008046b8 _Xr1677_RX_Pro_C
+00806a7b _c_int02_Cnt                     00804737 _Xr1677_RX_Pro_D
+0080481c _c_int02                         008047b9 _user_DebugPrint
+00800001 _c_int06                         008047ca _Delay
+00804859 _c_int10                         008047e0 _c_int01
+0080043c _cal_CRC16                       0080481c _c_int02
+00805dc2 _dDistCnt_2_M                    00804859 _c_int10
+00805dc3 _dDistCnt_3_10M                  008048a4 ___etext__
+00805dc1 _dDistCnt_mm                     008048a4 etext
+00805d64 _dSelfCnt                        00804af4 __stack
+00806a7f _d_4ch_RX_Cnt                    00805af4 __glDebugData
+00805d7f _d_AllTextCnt                    00805af4 .bss
+00805d6b _d_AutoData                      00805af4 ___bss__
+00805d7d _d_DP_ALL_TEXT_CHECK_Cnt         00805af5 __glDebugAddr
+00805dc5 _d_DP_STOP_Buf                   00805b03 _DLY_Vlaue
+00805dbd _d_DP_STOP_PT_INFO_G_FUNCT       00805b04 _CRC_Table
+00805dbc _d_DP_STOP_PT_INFO_ITEM_FUNCT_2  00805c04 _d_xr16788_Isr_Cnt
+00805dbb _d_DP_STOP_PT_INFO_ITEM_FUNCT    00805c05 _d_crcCnt
+008069d2 _d_DestBuf                       00805c06 _m_ucXr16l788TxBuf2
+008069aa _d_DisBuf                        00805c0b _m_nHexSw
+00805d7b _d_DistSt1                       00805c0c _Xr16788_3Ch
+00805d7c _d_DistSt2                       00805c1f _Xr16788_4Ch
+00805d72 _d_DistSt_St                     00805c32 _m_ucXr16l788RxBuf1_BackUp
+00805dc4 _d_DoorFlag                      00805c4b _m_ucXr16l788GetRxBuf1
+00805d71 _d_DoorOpen                      00805c64 _m_ucXr16l788GetRxBuf2
+0080641a _d_GetUsedCluster_Pass           00805c69 _m_ucXr16l788GetRxBuf3
+00805d6c _d_IDC_Flag                      00805c6e _m_ucXr16l788GetRxBuf4
+00806996 _d_IM_sendBuf                    00805c73 _m_ucXr16l788RxBuf2_BackUp
+00806529 _d_IM_sned_cnt                   00805c78 _m_ucXr16l788RxBuf1
+00806525 _d_Idc_Up_Check_Flag             00805c91 _m_ucXr16l788RxBuf2
+00805d76 _d_IndexStCnt                    00805c96 _m_ucXr16l788RxBuf3
+00805d63 _d_Mast_Cnt                      00805caf _m_ucXr16l788RxBuf4
+0080653e _d_NVSRAM_Cnt                    00805cc8 _Xr16788_1Ch
+008068fd _d_NVSRAM_Get_StopP_Buf          00805cdb _Xr16788_2Ch
+00805d78 _d_NextSt                        00805cee _m_ucXr16l788TxBuf1
+00805d77 _d_NowSt                         00805d24 _nMc1_Flag
+00805d80 _d_PR_Cnt                        00805d25 _nPaTimeCnt
+00806419 _d_PassCount                     00805d26 _m_PA_SccTxCnt
+008061da _d_Point_Vel                     00805d27 _m_PA_M1_Cnt
+00805dda _d_Re_Det                        00805d28 _m_PA_M2_Cnt
+00805e46 _d_Re_Nexw                       00805d29 _m_PA_Tx_Flag
+00805dd9 _d_Re_Now                        00805d2a _m_PA_Self_Tcms_Tx_Info
+00805d70 _d_RingPush_POPCnt               00805d2b _d_paM_Data
+00805d6f _d_RingPush_SaveCnt              00805d2c _m_PA_SelfTest_Buf
+00805d62 _d_RingTxLen                     00805d4d _DISPLAY_UNIT_ADD
+00806526 _d_ScheduleCnt                   00805d61 _nSandiskInputCheck
+00806a55 _d_Sdr_A                         00805d62 _d_RingTxLen
+00806a56 _d_Sdr_B                         00805d63 _d_Mast_Cnt
+00805d6e _d_Sdr_C                         00805d64 _dSelfCnt
+00806524 _d_Seek_disk_ch                  00805d65 _d_disk_check
+00805d7a _d_SendTextCnt                   00805d66 _d_Trnum_Vel
+00805d81 _d_Send_Text_Cnt                 00805d67 _d_nStation_MaxCnt
+00805db9 _d_Side_TxCnt                    00805d68 _d_Simula_Cnt
+00805d68 _d_Simula_Cnt                    00805d69 _d_StaTextCnt
+00805d69 _d_StaTextCnt                    00805d6a _d_Trnum_Cnt
+00805d79 _d_Start_St                      00805d6b _d_AutoData
+00806a7e _d_TCMS_RX_CNT                   00805d6c _d_IDC_Flag
+00805d7e _d_TextCnt                       00805d6d _d_Tranmun_Vel
+00805d6d _d_Tranmun_Vel                   00805d6e _d_Sdr_C
+00805d6a _d_Trnum_Cnt                     00805d6f _d_RingPush_SaveCnt
+00805d66 _d_Trnum_Vel                     00805d70 _d_RingPush_POPCnt
+00805d74 _d_TxDisNew                      00805d71 _d_DoorOpen
+00805d73 _d_TxDisRe                       00805d72 _d_DistSt_St
+008061db _d_UPUP                          00805d73 _d_TxDisRe
+0080653f _d_abcd                          00805d74 _d_TxDisNew
+00805c05 _d_crcCnt                        00805d75 _d_sInfoNum
+00806528 _d_dddCheck                      00805d76 _d_IndexStCnt
+00806527 _d_dddCnt                        00805d77 _d_NowSt
+00805d65 _d_disk_check                    00805d78 _d_NextSt
+00805dbe _d_disp_g_cnt                    00805d79 _d_Start_St
+008069e7 _d_fileEntryBuf                  00805d7a _d_SendTextCnt
+008061d9 _d_gpReceive                     00805d7b _d_DistSt1
+008061d8 _d_gpTxCnt                       00805d7c _d_DistSt2
+00805d67 _d_nStation_MaxCnt               00805d7d _d_DP_ALL_TEXT_CHECK_Cnt
+00805d2b _d_paM_Data                      00805d7e _d_TextCnt
+00805d75 _d_sInfoNum                      00805d7f _d_AllTextCnt
+00805c04 _d_xr16788_Isr_Cnt               00805d80 _d_PR_Cnt
+00800074 _en29_AllErase                   00805d81 _d_Send_Text_Cnt
+0080006e _en29_Init                       00805db9 _d_Side_TxCnt
+008000de _en29_ReadByte                   00805dba _m_Fdi_Send_Cnt
+00800095 _en29_SectorErase                00805dbb _d_DP_STOP_PT_INFO_ITEM_FUNCT
+008000bc _en29_WriteByte                  00805dbc _d_DP_STOP_PT_INFO_ITEM_FUNCT_2
+0080433f _exit                            00805dbd _d_DP_STOP_PT_INFO_G_FUNCT
+00806416 _glDiskFail                      00805dbe _d_disp_g_cnt
+00806414 _glHeader                        00805dbf _nTimeDataPro_Cnt
+0080641d _glSecCnt                        00805dc0 _nTimeDataUnitCnt
+00806415 _glSectPerTrack                  00805dc1 _dDistCnt_mm
+00806417 _glSectorStartOffset             00805dc2 _dDistCnt_2_M
+0080641b _glStartCluster                  00805dc3 _dDistCnt_3_10M
+0080641c _glTotalClusterCnt               00805dc4 _d_DoorFlag
+00802145 _gp_ReadingWord                  00805dc5 _d_DP_STOP_Buf
+008022ab _gp_Receive                      00805dd9 _d_Re_Now
+008020bc _gp_WritingDWord                 00805dda _d_Re_Det
+00802176 _gp_WritingStr                   00805ddb _nIndex_Flag
+00802109 _gp_WritingWord                  00805df6 _sTime_Vel_H
+00805dba _m_Fdi_Send_Cnt                  00805df7 _nTmsRxData
+00806418 _m_FileSize                      00805e03 _nSelf_Test
+008061dc _m_GPTxDataBuf                   00805e45 _sTime_Vel_M
+008061d6 _m_GpTimeCnt                     00805e46 _d_Re_Nexw
+008061d5 _m_GpTxDataCnt                   00805e47 _nPssTcmsTxData
+00805d27 _m_PA_M1_Cnt                     00805e5d _nRingFlag
+00805d28 _m_PA_M2_Cnt                     00805e73 _sTime_Buf_H
+00805d26 _m_PA_SccTxCnt                   00805e78 _nTimeFlag
+00805d2c _m_PA_SelfTest_Buf               00805e7c _Idc_Load
+00805d2a _m_PA_Self_Tcms_Tx_Info          00805e83 _sTime_Buf_M
+00805d29 _m_PA_Tx_Flag                    00805e88 _nDi_Check
+008069ce _m_VolumeID                      00805ea0 _nTr_St_Info
+00806138 _m_btSaf82532RxAchBackUp         008060b4 _SanDisk_Vari
+00806151 _m_btSaf82532RxAchBuffer         008060b8 _nTcmsIdcInfo
+00806190 _m_btSaf82532RxAchGetBuf         008060bb _nSccSendFlag
+00806112 _m_btSaf82532RxBchBackUp         00806112 _m_btSaf82532RxBchBackUp
+00806177 _m_btSaf82532RxBchBuffer         0080612b _Saf82532_Ach
+008061a9 _m_btSaf82532RxBchGetBuf         00806138 _m_btSaf82532RxAchBackUp
+00806911 _m_nDataOffset                   00806151 _m_btSaf82532RxAchBuffer
+00806a77 _m_nDebugCnt                     0080616a _Saf82532_Bch
+008069c0 _m_nFat1Offset                   00806177 _m_btSaf82532RxBchBuffer
+008069bf _m_nFat                          00806190 _m_btSaf82532RxAchGetBuf
+00806734 _m_nFat2Offset                   008061a9 _m_btSaf82532RxBchGetBuf
+00806735 _m_nFatSize                      008061d5 _m_GpTxDataCnt
+008061d7 _m_nGpScreenNum                  008061d6 _m_GpTimeCnt
+00805c0b _m_nHexSw                        008061d7 _m_nGpScreenNum
+00806a76 _m_nLedBuf                       008061d8 _d_gpTxCnt
+00806a75 _m_nMnCommRtxLedDelayCnt         008061d9 _d_gpReceive
+008069e6 _m_nRootOffset                   008061da _d_Point_Vel
+008069be _m_nSecPerClust                  008061db _d_UPUP
+00806a79 _m_nTimer1ms_GPRx                008061dc _m_GPTxDataBuf
+00806a78 _m_nTimer1ms                     008063d0 _nSelect_Button
+008069c2 _m_szVolume                      00806414 _glHeader
+00805c4b _m_ucXr16l788GetRxBuf1           00806415 _glSectPerTrack
+00805c64 _m_ucXr16l788GetRxBuf2           00806416 _glDiskFail
+00805c69 _m_ucXr16l788GetRxBuf3           00806417 _glSectorStartOffset
+00805c6e _m_ucXr16l788GetRxBuf4           00806418 _m_FileSize
+00805c32 _m_ucXr16l788RxBuf1_BackUp       00806419 _d_PassCount
+00805c78 _m_ucXr16l788RxBuf1              0080641a _d_GetUsedCluster_Pass
+00805c73 _m_ucXr16l788RxBuf2_BackUp       0080641b _glStartCluster
+00805c91 _m_ucXr16l788RxBuf2              0080641c _glTotalClusterCnt
+00805c96 _m_ucXr16l788RxBuf3              0080641d _glSecCnt
+00805caf _m_ucXr16l788RxBuf4              0080641e _PreSector
+00805cee _m_ucXr16l788TxBuf1              0080641f _NowSector
+00805c06 _m_ucXr16l788TxBuf2              00806420 _nNvsram_Variable
+008069c1 _m_wTotalSec                     00806421 _StationName
+008043b8 _main                            00806422 _StationNameAll
+00804365 _memcpy                          00806523 _nFileEntryCnt
+00804382 _memset                          00806524 _d_Seek_disk_ch
+00805e88 _nDi_Check                       00806525 _d_Idc_Up_Check_Flag
+00806736 _nDisplayIndex                   00806526 _d_ScheduleCnt
+00806523 _nFileEntryCnt                   00806527 _d_dddCnt
+00805ddb _nIndex_Flag                     00806528 _d_dddCheck
+00806a43 _nLED_200ms_Flag                 00806529 _d_IM_sned_cnt
+00806a44 _nLED_Time_Change                0080652a _nStCodeList
+00806a45 _nLED_Time_Cnt                   0080653e _d_NVSRAM_Cnt
+00806a5c _nLedDataLoad                    0080653f _d_abcd
+00805d24 _nMc1_Flag                       00806540 _Cluster_OneFileBuf
+00806a7d _nMoveDist                       00806734 _m_nFat2Offset
+00806420 _nNvsram_Variable                00806735 _m_nFatSize
+00805d25 _nPaTimeCnt                      00806736 _nDisplayIndex
+00805e47 _nPssTcmsTxData                  008068fd _d_NVSRAM_Get_StopP_Buf
+00806a7c _nReDist                         00806911 _m_nDataOffset
+00805e5d _nRingFlag                       00806912 _FileList
+00805d61 _nSandiskInputCheck              00806994 _nStart_Address_Point
+008060bb _nSccSendFlag                    00806996 _d_IM_sendBuf
+008063d0 _nSelect_Button                  008069aa _d_DisBuf
+00805e03 _nSelf_Test                      008069be _m_nSecPerClust
+0080652a _nStCodeList                     008069bf _m_nFat
+00806994 _nStart_Address_Point            008069c0 _m_nFat1Offset
+008060b8 _nTcmsIdcInfo                    008069c1 _m_wTotalSec
+00805dbf _nTimeDataPro_Cnt                008069c2 _m_szVolume
+00805dc0 _nTimeDataUnitCnt                008069ce _m_VolumeID
+00805e78 _nTimeFlag                       008069d2 _d_DestBuf
+00805df7 _nTmsRxData                      008069e6 _m_nRootOffset
+00805ea0 _nTr_St_Info                     008069e7 _d_fileEntryBuf
+00805e73 _sTime_Buf_H                     00806a43 _nLED_200ms_Flag
+00805e83 _sTime_Buf_M                     00806a44 _nLED_Time_Change
+00805df6 _sTime_Vel_H                     00806a45 _nLED_Time_Cnt
+00805e45 _sTime_Vel_M                     00806a46 _DISPLAY_UNIT_SDD
+00802087 _saf82532_1msLoop                00806a4e _DISPLAY_UNIT_FDD
+00801e94 _saf82532_AsyncInit              00806a55 _d_Sdr_A
+00802033 _saf82532_AsyncIsrAch            00806a56 _d_Sdr_B
+0080205d _saf82532_AsyncIsrBch            00806a5c _nLedDataLoad
+00801f78 _saf82532_AsyncSend              00806a75 _m_nMnCommRtxLedDelayCnt
+0080202b _saf82532_Isr                    00806a76 _m_nLedBuf
+00801f5a _saf82532_Send                   00806a77 _m_nDebugCnt
+00804392 _strlen                          00806a78 _m_nTimer1ms
+0080439f _strncmp                         00806a79 _m_nTimer1ms_GPRx
+008047b9 _user_DebugPrint                 00806a7a _c_int01_Flag
+008005e3 _xr16l788_1msLoop                00806a7b _c_int02_Cnt
+008002c3 _xr16l788_GetRxBuffer            00806a7c _nReDist
+008000eb _xr16l788_Init                   00806a7d _nMoveDist
+0080030d _xr16l788_Isr                    00806a7e _d_TCMS_RX_CNT
+008003dd _xr16l788_Loop                   00806a7f _d_4ch_RX_Cnt
+0080021c _xr16l788_Rts                    00806a92 __cleanup_ptr
+00800239 _xr16l788_Send                   00806ab6 end
+00809810 cinit                            00806ab6 ___end__
+00800000 edata                            00809810 ___cinit__
+00806ab6 end                              00809810 cinit
+008048a4 etext                            ffffffff ___pinit__
+ffffffff pinit                            ffffffff pinit
+
+[378 symbols]

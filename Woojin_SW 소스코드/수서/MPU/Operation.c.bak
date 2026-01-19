@@ -1,0 +1,1958 @@
+/*******************************************************************/
+/* operation.c                                                     */
+/*******************************************************************/
+#include "mmtype.h"
+#include "Main.h"
+#include "operation.h"
+#include "Gdms.h"
+#include "ds1647.h"
+
+
+UINT m_nFCodeTop;
+FAULTLIST m_FaultList[MAX_FAULTLIST];
+BYTE m_chRxTraceNum[3][MAX_TRAIN_SIZE];					/* 추적기록의 장치별 RX 추적 갯수 [장치ID][호차]*/
+
+BOOL m_bOldDrOpenEvt;
+BOOL m_bDoorOpenEvt;
+BOOL m_bDoorCloseEvt;
+
+UINT m_ViewMajerFaultCounter;
+
+
+LOCAL int m_nHisLoadSaveTaskId = 0;
+
+/**********************************************************/
+/* 변수 초기화                                            */
+/**********************************************************/
+void op_ArgInit()
+{
+	memset(m_chRxTraceNum,0,sizeof(m_chRxTraceNum));
+	m_ViewMajerFaultCounter = 0;
+}
+
+
+
+/**********************************************************/
+/* 고장처리와 관련된 함수들                               */
+/**********************************************************/
+/**********************************************************/
+/* 고장 고드가 맞는지 체크한다.                           */
+/**********************************************************/
+BOOL op_IsFaultCode(USHORT wFltIndex,USHORT wCarHo)
+{
+	UINT i;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultList[i].wFltIndex == wFltIndex && wCarHo == m_FaultList[i].wCarHo) return TRUE;
+	}
+	return FALSE;
+}
+
+UINT op_GetGmFaultIndex(USHORT wFIndex,USHORT wCarHo)
+{
+	UINT i;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultList[i].wFltIndex == wFIndex && wCarHo == m_FaultList[i].wCarHo) return m_FaultList[i].dwGmFront;
+	}
+	return 0;
+}
+/**********************************************************/
+/* 확인되지 않고 남은 고장 리스트 갯수를 리턴한다..       */
+/**********************************************************/
+int op_GetNotCheckFaultListNumber()
+{
+	int i,nNumber=0;
+	if(!m_nFCodeTop) return 0;
+
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(!m_FaultList[i].bChecked) nNumber++;
+	}
+
+	return nNumber;
+}
+
+/**********************************************************/
+/* 확인되지 않고 남은 고장 리스트를 체크한다.             */
+/**********************************************************/
+BOOL op_IsRemainFaultListCheck()
+{
+	int i;
+	if(!m_nFCodeTop) return FALSE;
+
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(!m_FaultList[i].bChecked) return TRUE;
+	}
+	return FALSE;
+}
+/**********************************************************/
+/* 고장코드의 범위내에 고장이 있는지를 검사한다..         */
+/**********************************************************/
+BOOL op_IsFaultCodeRangeExist(USHORT wFromFltCode,USHORT wToFltCode)
+{
+	int i;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(ISRANGE(m_FaultSummery[m_FaultList[i].wFltIndex].wFltCode,wFromFltCode,wToFltCode)) return TRUE;
+	}
+	
+	return FALSE;
+}
+
+/* 중고장 중에서 Check 하지 않은 고장을 Return 한다.  */
+PFAULTLIST op_GetNonCheckMajerFault()
+{
+	int i;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultSummery[m_FaultList[i].wFltIndex].chLevel >= FL_MINOR)
+		{
+			if(!m_FaultList[i].bChecked) return &m_FaultList[i];
+		}
+	}
+	return FALSE;
+}
+
+/* chLevel 이상의 고쟁 갯수를 리턴한다. */
+USHORT op_GetLevelFaultsUpperLevel(BYTE chLevel)
+{
+	USHORT nFaults=0;
+	UINT i;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultSummery[m_FaultList[i].wFltIndex].chLevel >= chLevel)  nFaults++;
+	}
+	return nFaults;
+}
+
+void op_FaultListAllCheck()
+{
+	PFAULTLIST pMajorFault = (PFAULTLIST)op_GetNonCheckMajerFault();
+	m_ViewMajerFaultCounter = 0;
+	while(pMajorFault)
+	{
+		op_FaultListCheck(pMajorFault);
+		pMajorFault = (PFAULTLIST)op_GetNonCheckMajerFault();
+	}
+}
+
+/**********************************************************/
+/* 마지막 고장을 가져온다.                                */
+/**********************************************************/
+PFAULTLIST op_GetLastFault()
+{
+	return m_nFCodeTop ? &m_FaultList[m_nFCodeTop-1] : NULL;
+}
+
+void op_FaultListCheck(PFAULTLIST pFaultList)
+{
+	if(pFaultList) 
+	{
+		pFaultList->bChecked = TRUE;
+	}
+}
+
+/**********************************************************/
+/* 고장항목을 삭제한다.                                   */
+/**********************************************************/
+void op_DelFaultCode(USHORT wFltIndex,USHORT wCarHo)
+{
+	UINT i;
+	BOOL bFind=FALSE;
+	for(i=0;i<m_nFCodeTop;i++)
+	{
+		if(m_FaultList[i].wFltIndex == wFltIndex && wCarHo == m_FaultList[i].wCarHo)
+		{
+			m_FaultList[i].wFltIndex = 0;
+			m_FaultList[i].bChecked = FALSE;
+			bFind = TRUE;
+		}
+		if(bFind)
+		{
+			if(i==m_nFCodeTop-1) m_FaultList[i].wFltIndex = 0;
+			else MemCpy(&m_FaultList[i],&m_FaultList[i+1],sizeof(FAULTLIST)*(m_nFCodeTop-i-1));
+			break;
+		}
+	}
+
+	if(bFind) m_nFCodeTop--;
+
+}
+
+/**********************************************************/
+/* 고장코드 발생 함수                                     */
+/* wFltIndex : 0 ~  배열 코드번호                       */
+/* bFault : 고장발생(1) , 고장소멸(0)                     */
+/* wCarHo : 0 ~ 5 호차                                    */
+/**********************************************************/
+UINT op_AddFaultCode(USHORT wFltIndex,BOOL bFault,USHORT wCarHo)
+{
+	BOOL bFaulted = FALSE;  
+	DATE_TIME_TYPE sTime;
+	UINT nOldFCodeTop = m_nFCodeTop;
+	int dwGmFront = -1;
+	USHORT wMentIndex=1;
+
+	timeGet(&sTime);
+
+
+	if(bFault)
+	{
+		if(!op_IsFaultCode(wFltIndex,wCarHo))
+		{
+			if(m_nFCodeTop+1 < MAX_FAULTLIST)
+			{
+				if(wCarHo < m_nTrainSize)
+				{
+					m_FaultList[m_nFCodeTop].wFltIndex = wFltIndex;
+					m_FaultList[m_nFCodeTop].wCarHo = wCarHo;
+					m_FaultList[m_nFCodeTop].bChecked = 0;
+					m_FaultList[m_nFCodeTop].dwGmFront = gm_GetFaultListFront();
+					m_FaultList[m_nFCodeTop].wMentIndex = 0;
+					MemCpy(&m_FaultList[m_nFCodeTop].sTime,&sTime,sizeof(sTime));
+
+					bFaulted = TRUE;
+					m_nFCodeTop++;
+
+					
+				}
+			}
+		}
+		else bFaulted = FALSE; 
+	}
+	else
+	{
+		if(op_IsFaultCode(wFltIndex,wCarHo))
+		{
+			dwGmFront = op_GetGmFaultIndex(wFltIndex,wCarHo);
+			op_DelFaultCode(wFltIndex,wCarHo);
+			bFaulted = TRUE;
+		}
+	}
+
+	if(bFaulted) 
+	{
+		gp_AddFaultListEvent(bFaulted,nOldFCodeTop);
+	}
+
+	if(bFaulted) /* 기록 */
+	{
+		gm_SavingFaultList(wFltIndex,bFault,wCarHo,&sTime,wMentIndex,dwGmFront); /* 생성 및 소멸 기록 */
+
+		if(m_FaultSummery[wFltIndex].bMajorFault && bFault)
+		{
+			/* 열차상태/Status Trace 저장 지령 (저장중이면 지령 안함) */
+			if(!gw_GetTrsTimeCounter())
+			{
+				tg_TrsFaultTigger(wFltIndex,wCarHo);
+			}
+			else 
+			{
+				TRACE("Fault[%d] Save Canced =>[%d]..\n",wFltIndex,gw_GetTrsTimeCounter());
+			}
+		}
+	}
+	return 1; 
+}
+
+
+/**********************************************************/
+/* 각 고장항목을 체크하여 고장을 발생시킨다.              */
+/**********************************************************/
+void op_AllFaultCheck()
+{
+	int nCarHo,nTcIndex,nFltMentCode;
+	BOOL bLSysFault;
+	PCISDTYPE pCiSD;
+	PBRAKESDTYPE pBrakeSD;
+	PSIVSDTYPE pSivSD;
+	PFAULTLIST pMajorFault;
+
+	if(m_TcThis.nOpCnt < MAX_FCHECK_TIME) return; 
+
+
+	/* TC 통신 고장 영역 */
+	op_AddFaultCode(2,m_TcOppe.sFlag.bThisSysFault,m_TcOppe.nCarHo);
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		op_AddFaultCode(9,m_TcThis.bCC_ComFault[nCarHo],nCarHo);
+	}
+
+	/* TC DI 고장영역 */
+	for(nTcIndex=0;nTcIndex<2;nTcIndex++)
+	{
+		op_AddFaultCode(16,m_pTc[nTcIndex]->tcDi.ATCAR && 
+			((PCCDITYPE)m_pTc[nTcIndex]->pCCInfo->Head.ccDi)->HCR && 
+			((PCCDITYPE)m_pTc[nTcIndex]->pCCInfo->Head.ccDi)->_F,m_pTc[nTcIndex]->nCarHo);
+
+		op_AddFaultCode(91,!m_pTc[nTcIndex]->tcDi.VOSF,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(92,((PCCDITYPE)m_pTc[nTcIndex]->pCCInfo->Head.ccDi)->DIDF1,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(93,((PCCDITYPE)m_pTc[nTcIndex]->pCCInfo->Head.ccDi)->DIDF2,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(94,m_pTc[nTcIndex]->tcDi.DIDF3,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(95,m_pTc[nTcIndex]->tcDi.DICF,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(96,m_pTc[nTcIndex]->tcDi.ESBCF,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(97,m_pTc[nTcIndex]->tcDi.ESBLF,m_pTc[nTcIndex]->nCarHo);
+		op_AddFaultCode(98,m_pTc[nTcIndex]->tcDi.RPFR,m_pTc[nTcIndex]->nCarHo);
+	}
+
+	op_AddFaultCode(99,!op_GetCmNotBypassNumber() ,m_TcThis.nCarHo);
+
+	
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC ||
+			ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2) 
+		{
+			op_AddFaultCode(100,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BYPR_PANPS1,nCarHo);
+		}
+
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack;
+			bLSysFault = m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Head.bComFault;
+
+			op_AddFaultCode(37,bLSysFault,nCarHo);
+
+			op_AddFaultCode(17,pCiSD->MCO,nCarHo);
+			op_AddFaultCode(18,pCiSD->IDOCD,nCarHo);
+			op_AddFaultCode(19,pCiSD->PWMF,nCarHo);
+			op_AddFaultCode(20,!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MC1_DCTR1,nCarHo);
+			op_AddFaultCode(21,pCiSD->HSCBF,nCarHo);
+			op_AddFaultCode(22,pCiSD->_24LVD,nCarHo);
+			op_AddFaultCode(23,pCiSD->GPLVD,nCarHo);
+			op_AddFaultCode(24,pCiSD->PHAF,nCarHo);
+			op_AddFaultCode(25,pCiSD->PHBF,nCarHo);
+			op_AddFaultCode(26,pCiSD->PHCF,nCarHo);
+			op_AddFaultCode(27,pCiSD->DF,nCarHo);
+			op_AddFaultCode(28,pCiSD->FCF,nCarHo);
+			op_AddFaultCode(29,pCiSD->LOV,nCarHo);
+			op_AddFaultCode(30,pCiSD->MOCD,nCarHo);
+			op_AddFaultCode(31,pCiSD->CCTF && !pCiSD->_24LVD && !pCiSD->GPLVD && !pCiSD->LOV,nCarHo);
+			op_AddFaultCode(32,pCiSD->CCF,nCarHo);
+			op_AddFaultCode(33,pCiSD->FCC,nCarHo);
+			op_AddFaultCode(34,pCiSD->RILF,nCarHo);
+			op_AddFaultCode(35,pCiSD->ESTF,nCarHo);
+			op_AddFaultCode(36,pCiSD->ILTF,nCarHo);
+
+			op_AddFaultCode(38,pCiSD->PGD1,nCarHo);
+			op_AddFaultCode(39,pCiSD->PGD2,nCarHo);
+			op_AddFaultCode(40,pCiSD->PGD3,nCarHo);
+			op_AddFaultCode(41,pCiSD->PGD4,nCarHo);
+			op_AddFaultCode(42,pCiSD->VLSF,nCarHo);
+		}
+
+		
+		
+	}
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		op_AddFaultCode(45,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->NRBR,nCarHo);
+		op_AddFaultCode(46,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ISBR,nCarHo);
+		
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC) 
+		{
+			op_AddFaultCode(47,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MRPS,nCarHo);
+			op_AddFaultCode(52,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->PBPS && !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BEAR,nCarHo);
+		}
+		
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			if(!((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->MRPS)
+			{
+				op_AddFaultCode(48,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BYPR_PANPS1,nCarHo);
+				op_AddFaultCode(49,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MC3_PANPS2,nCarHo);
+			}
+
+			op_AddFaultCode(50,!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->CMGR_BPSUF,nCarHo);
+			
+			op_AddFaultCode(61,pBrakeSD->RBFF && ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->MC1_DCTR1 ,nCarHo);
+		}
+		
+		if(!((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->MRPS)
+		{
+			op_AddFaultCode(55,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ASPS1 && !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ASCS1,nCarHo);
+			op_AddFaultCode(56,((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ASPS2 && !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ASCS2,nCarHo);
+		}
+		
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_TC||
+			ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T1 ||
+			ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_T2) 
+		{
+			op_AddFaultCode(62,!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->WSPF,nCarHo);
+		}
+			
+		if(op_IsExistLSys(LSYSID_BRAKE))
+		{
+			pBrakeSD = (PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack;
+			bLSysFault = m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_BRAKE]->Head.bComFault;
+	
+			op_AddFaultCode(63,bLSysFault,nCarHo);
+	
+			op_AddFaultCode(43,pBrakeSD->BUF,nCarHo);
+			op_AddFaultCode(51,pBrakeSD->BUF && !pBrakeSD->LSPF && !pBrakeSD->BEAF && !pBrakeSD->EVCFM && !pBrakeSD->EVCFT,nCarHo);
+			op_AddFaultCode(53,pBrakeSD->RAMF,nCarHo);
+			op_AddFaultCode(54,pBrakeSD->TRCE,nCarHo);
+			
+			op_AddFaultCode(57,pBrakeSD->LSPF,nCarHo);
+			op_AddFaultCode(58,pBrakeSD->BEAF,nCarHo);
+			op_AddFaultCode(59,pBrakeSD->EVCFM,nCarHo);
+			op_AddFaultCode(60,pBrakeSD->EVCFT,nCarHo);
+			
+		}
+
+	}
+	op_AddFaultCode(44,op_GetBrakeCyliderCockOpenNumber() >4 ,nCarHo);
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			pSivSD = (PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Body.chDataPack;
+			bLSysFault = m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_SIV]->Head.bComFault;
+
+			op_AddFaultCode(90, bLSysFault,nCarHo);
+			
+			op_AddFaultCode(64, !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVMFR ||
+				((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVCN || 
+				!((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ACON,nCarHo);
+			
+			op_AddFaultCode(65, pSivSD->CHOV1,nCarHo);
+			op_AddFaultCode(66, pSivSD->CHOV2,nCarHo);
+			op_AddFaultCode(67, pSivSD->CHOC1,nCarHo);
+			op_AddFaultCode(68, pSivSD->CHOC2,nCarHo);
+			op_AddFaultCode(69, pSivSD->INVOV1,nCarHo);
+			op_AddFaultCode(70, pSivSD->INVOV2,nCarHo);
+			op_AddFaultCode(71, pSivSD->INVOC1,nCarHo);
+			op_AddFaultCode(72, pSivSD->INVOC2,nCarHo);
+			op_AddFaultCode(73, pSivSD->DCOV,nCarHo);
+			op_AddFaultCode(74, pSivSD->DCUDV,nCarHo);
+			op_AddFaultCode(75, pSivSD->OUTOV,nCarHo);
+			op_AddFaultCode(76, pSivSD->OUTUDV,nCarHo);
+			op_AddFaultCode(77, pSivSD->OUTOC,nCarHo);
+			op_AddFaultCode(78, pSivSD->OUTSH,nCarHo);
+			op_AddFaultCode(79, pSivSD->UNBAL,nCarHo);
+			op_AddFaultCode(80, pSivSD->CPSF,nCarHo);
+			op_AddFaultCode(81, pSivSD->BCF,nCarHo);
+			op_AddFaultCode(82, pSivSD->ARFT,nCarHo);
+			op_AddFaultCode(83, pSivSD->SIVFT,nCarHo);
+			op_AddFaultCode(84, pSivSD->STTERR,nCarHo);
+			op_AddFaultCode(85, pSivSD->CPUF,nCarHo);
+			op_AddFaultCode(86, pSivSD->PLCF,nCarHo);
+			op_AddFaultCode(87, pSivSD->OT,nCarHo);
+			op_AddFaultCode(88, !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->SIVCN,nCarHo);
+			op_AddFaultCode(89, pSivSD->START && !((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->ACON,nCarHo);
+			
+		}
+	}
+
+	/* Check 하지 않은 중고장이 있을 경우에는 Event를 발생시킨다. */
+	if(m_TcThis.wCurScrNo)
+	{
+		pMajorFault = op_GetNonCheckMajerFault();
+		if(pMajorFault)
+		{
+			if(!m_ViewMajerFaultCounter)
+			{
+				m_ViewMajerFaultCounter = 10;
+				gp_OnMajorFaultEvent(pMajorFault);
+			}
+		}
+		
+		if(m_ViewMajerFaultCounter) m_ViewMajerFaultCounter--;
+	}
+
+}
+
+USHORT op_GetLsysCarHo(int nLSysID)
+{
+	int nCarHo;
+	USHORT wRet=0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		/* 차호에 의한 결정 */
+		switch(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]))
+		{
+		case TRTYPE_TC:
+		case TRTYPE_T2:
+			if(nLSysID == LSYSID_SIV) wRet |= (1<<nCarHo);
+			break;
+		case TRTYPE_MD:
+			if(nLSysID == LSYSID_CI) wRet |= (1<<nCarHo);
+			if(nLSysID == LSYSID_BRAKE)  wRet |= (1<<nCarHo);
+			break;
+		
+		}
+		
+	}
+	return wRet;
+}
+
+BOOL op_IsHcrOn()
+{
+	return ((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->HCR;
+}
+
+BOOL op_IsTcrOn()
+{
+	return ((PCCDITYPE)m_TcOppe.pCCInfo->Head.ccDi)->HCR;
+}
+
+BOOL op_IsHcrSelected()
+{
+	return ((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->HCR || ((PCCDITYPE)m_TcOppe.pCCInfo->Head.ccDi)->HCR;
+}
+
+BOOL op_IsAllDoorClose()
+{
+	int nCarHo;
+	USHORT wDoorOpen = 0;
+
+	if(op_GetSpeed() > 5) return TRUE;
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS1 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS3 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS5 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS7 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS2 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS4 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS6 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+		if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->DS8 == DOOR_OPEN) wDoorOpen |= (1<<nCarHo);
+	}
+
+	return !wDoorOpen;
+}
+
+
+/************************************************/
+/* 역코드를 생성한다.							*/
+/* 역코드는 가상역코드로 맞지 않을 수 있다.		*/
+/* 상행/하행에서 역코드값을 서로 다르다.        */ 
+/************************************************/
+BYTE op_GetCurStCode()
+{
+	return m_TcThis.chCurStCode;
+}
+
+BYTE op_GetNxtStCode()
+{
+	return m_TcThis.chNxtStCode;
+}
+
+/************************************************************/
+/* 편성번호를 입력하여 차량번호(4자리)를 얻는다. [BIN]		*/
+/************************************************************/
+USHORT op_GetCarNumber(int nCarHo)
+{
+	USHORT wCarNumber=0;
+	wCarNumber += ((m_pDirectMem->wFormNumber%1000)/100)*1000;
+	wCarNumber += nCarHo*1000;
+	wCarNumber += m_pDirectMem->wFormNumber%100;
+
+	return wCarNumber;
+}
+
+USHORT op_GetThisCarNumber()
+{
+	return op_GetCarNumber(m_TcThis.nCarHo);
+}
+
+
+/************************************************************/
+/* 열차의 속도를 리턴한다.  km/h							*/
+/************************************************************/
+BYTE op_GetSpeed()
+{
+	return m_TcThis.nSpeed/100;
+}
+
+/************************************************************/
+/* 열차의 가속도를 리턴한다. 0.1 km/h/s/bit				    */
+/************************************************************/
+int op_GetASpeed()
+{
+	return m_TcThis.nASpeed/10;
+}
+
+/************************************************************/
+/* 역간 주행거리이다.										*/
+/* 리턴:주행거리 [m]										*/
+/************************************************************/
+UINT op_GetDistance()
+{
+	return m_TcThis.nRunningDist;
+}
+
+void op_RunDistClear()
+{
+	m_TcThis.nRunningDist = 0;
+}
+
+
+int op_GetBrakeCyliderCockOpenNumber()
+{
+	int nCarHo,nNumber=0;
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BCCS1) nNumber++;
+		if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BCCS2) nNumber++;
+	}
+	return nNumber;
+}
+
+
+int op_GetPowerEnergy(int nCarHo)
+{
+	int nEnergy;
+	PCISDTYPE pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack;
+	nEnergy = ((signed char)pCiSD->IL*10 * pCiSD->EFC*2550/0xFF);
+	return nEnergy;
+}
+
+USHORT op_GetCarTypePaAlarm()
+{
+	int nCarHo;
+	USHORT wPaAlam;
+	
+	/*비상 경보*/
+	wPaAlam = 0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(!m_TcThis.bCC_ComFault[nCarHo])
+		{
+			if( ((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->PA ) wPaAlam |= (1<<nCarHo);
+		}
+	}
+	return wPaAlam;
+}
+
+int op_GetCmNotBypassNumber()
+{
+	int nCarHo,nNumber=0;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		switch(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0])) 
+		{
+		case TRTYPE_TC:
+		case TRTYPE_T2:
+			if(((PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi)->BYPR_PANPS1) nNumber++;
+			break;
+		}
+	}
+	return nNumber;
+}
+
+/************************************************************/
+/* C/I로 부터의 역행노치 비율을 환산한다.					*/
+/* 리턴:0 ~ 100 [%]											*/
+/************************************************************/
+USHORT op_GetPowerNotchRate()
+{
+	PCISDTYPE pCiSD = (PCISDTYPE)(m_CC_Info.RxInfo[m_TcThis.nNearCiCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack);
+	return pCiSD->PWM*100/0xFF;
+}
+
+/************************************************************/
+/* C/I로 부터의 제동노치 비율을 환산한다.					*/
+/* 리턴: 0 ~ 7,EB(8) 										*/
+/************************************************************/
+USHORT op_GetBrakeNotch()
+{
+	USHORT wBrakeNotch=0;
+	PBRAKESDTYPE pBrakeSD = (PBRAKESDTYPE)(m_CC_Info.RxInfo[m_TcThis.nNearBcuCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack);
+
+	if(((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->BEAR) wBrakeNotch = NOTCH_EB;
+	else
+	{
+		wBrakeNotch = 0;
+		if(pBrakeSD->B1) wBrakeNotch |= BIT00;
+		if(pBrakeSD->B2) wBrakeNotch |= BIT01;
+		if(pBrakeSD->B4) wBrakeNotch |= BIT02;
+	}
+
+	return wBrakeNotch;
+}
+
+USHORT op_GetCiBrakeNotch()
+{
+	USHORT wBrakeNotch=0;
+	PCISDTYPE pCiSD = (PCISDTYPE)(m_CC_Info.RxInfo[m_TcThis.nNearBcuCarHo].pLSysRx[LSYSID_BRAKE]->Body.chDataPack);
+
+	if(((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->BEAR) wBrakeNotch = NOTCH_EB;
+	else
+	{
+		wBrakeNotch = 0;
+		if(pCiSD->B1) wBrakeNotch |= BIT00;
+		if(pCiSD->B2) wBrakeNotch |= BIT01;
+		if(pCiSD->B4) wBrakeNotch |= BIT02;
+	}
+
+	return wBrakeNotch;
+}
+
+
+/****************************************************************/
+/* ATC CODE를 반환한다.										    */
+/*" ","25Y","25","40","60","70","80","100","100YC","고장","개방"*/
+/****************************************************************/
+BYTE op_GetAtcCode()
+{
+	if(m_TcThis.tcDi.ATCCOS) return ATCCODE_CUT;
+	else if(m_TcThis.tcDi.ATCAR) return ATCCODE_FLT;
+	else if(m_TcThis.tcDi.YC) return ATCCODE_100YC;
+	else if(m_TcThis.tcDi._100KPH) return ATCCODE_100;
+	else if(m_TcThis.tcDi._80KPH) return ATCCODE_80;
+	else if(m_TcThis.tcDi._70KPH) return ATCCODE_70;
+	else if(m_TcThis.tcDi._60KPH) return ATCCODE_60;
+	else if(m_TcThis.tcDi._40KPH) return ATCCODE_40;
+	else if(m_TcThis.tcDi._25KPH) return ATCCODE_25;
+	else if(m_TcThis.tcDi.YAD2) return ATCCODE_25Y;
+
+	return ATCCODE_NONE;
+}
+
+
+
+void op_MakeBrakeProtocol(BOOL bTDC)
+{
+	static BYTE chLzCnt;
+	USHORT wBcc,wApplyCarHo;
+	int nTxSize=0;
+	int nLSysID = LSYSID_BRAKE;
+	PBRAKESDRTYPE pBrakeSDR = (PBRAKESDRTYPE)m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack;
+	
+	BOOL bTxSend = !(tg_GetMainCommTxCounter()%2) ? TRUE : FALSE;
+	
+	if(bTxSend)
+	{
+		wApplyCarHo = op_GetLsysCarHo(nLSysID);
+		
+		if(wApplyCarHo)
+		{
+			
+			nTxSize=sizeof(SIVSDRTYPE);
+			pBrakeSDR->usStx = 0x02;
+			pBrakeSDR->chDataType = 0x20;
+			
+			pBrakeSDR->YEAR = m_TcThis.sFlag.systime.year;
+			pBrakeSDR->MONTH = m_TcThis.sFlag.systime.month;
+			pBrakeSDR->DAY = m_TcThis.sFlag.systime.day;
+			pBrakeSDR->HOUR = m_TcThis.sFlag.systime.hour;
+			pBrakeSDR->MINUTE = m_TcThis.sFlag.systime.minute;
+			
+			pBrakeSDR->AMR = 0;
+			
+			pBrakeSDR->spare[0] = 0;
+			pBrakeSDR->spare[1] = 0;
+			pBrakeSDR->spare[2] = 0;
+			
+			pBrakeSDR->TDC = bTDC;
+			
+			pBrakeSDR->usEtx = 0x03;
+
+			wBcc = mx_GetBCCValue(1,nTxSize-2,(LPBYTE)pBrakeSDR);
+			pBrakeSDR->usBcc_H = WORD_H(wBcc);
+			pBrakeSDR->usBcc_L = WORD_L(wBcc);
+			
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chSubChannel = LSYSID_NONE;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.nSize = nTxSize;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.bSendData = bTxSend ? TRUE : FALSE;;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chEvent = 1;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chCycle = 0;
+		}
+	}
+
+
+	
+}
+
+
+
+USHORT op_MakeBrakeTraceProtocol()
+{
+	static BYTE chLzCnt;
+	USHORT wBcc,wApplyCarHo=0;
+	int nTxSize=0;
+	int nLSysID = LSYSID_BRAKE;
+	PBRAKETDRTYPE pBrakeTDR = (PBRAKETDRTYPE)m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack;
+	PTRACEFALG pLogFlag = &m_TcThis.logBrake;
+	
+	BOOL bTxSend = !(tg_GetMainCommTxCounter()%2) ? TRUE : FALSE;
+
+	if(bTxSend)
+	{
+		if(pLogFlag->nTraceClearCounter)
+		{
+			/* TDC */
+			wApplyCarHo = (1<<pLogFlag->nTraceClearCarHo);
+			op_MakeBrakeProtocol(TRUE);
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+		}
+		else
+		{
+			if(pLogFlag->bTraceReq)
+			{
+				if(pLogFlag->bTraceOrder)
+				{
+					wApplyCarHo = (1<<pLogFlag->chTxReqCarHo);
+					
+					nTxSize=sizeof(BRAKETDRTYPE);
+					pBrakeTDR->usStx = 0x02;
+					pBrakeTDR->chDataType = 0x21;
+					
+					pBrakeTDR->chTraceNo = pLogFlag->chTxTraceNum;
+					pBrakeTDR->chTraceBlock = (BYTE)pLogFlag->wTxTraceBlock;
+					
+					pBrakeTDR->usEtx = 0x03;
+					
+					wBcc = mx_GetBCCValue(1,nTxSize-2,(LPBYTE)pBrakeTDR);
+					pBrakeTDR->usBcc_H = WORD_H(wBcc);
+					pBrakeTDR->usBcc_L = WORD_L(wBcc);
+					
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chSubChannel = LSYSID_NONE;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.nSize = nTxSize;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.bSendData = bTxSend ? TRUE : FALSE;;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chEvent = 1;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chCycle = 0;
+				}
+			}
+		}
+	}
+	
+
+	return wApplyCarHo;
+}
+
+void op_MakeCIProtocol()
+{
+	static BYTE chLzCnt;
+	USHORT wCrc,wApplyCarHo=0;
+	int nTxSize=0,nTextSize=0,nTransSize;
+	int nLSysID = LSYSID_CI;
+	UCHAR chTxText[MAX_LCOM_SIZE];
+	
+	
+	BOOL bTxSend = !(tg_GetMainCommTxCounter()%2) ? TRUE : FALSE;
+	
+	if(bTxSend)
+	{
+		wApplyCarHo = op_GetLsysCarHo(nLSysID);
+		
+		if(wApplyCarHo)
+		{
+			nTxSize = 0;
+
+			memset(chTxText,0,MAX_LCOM_SIZE);
+
+			nTextSize=0;
+			chTxText[nTextSize++] = 0x16;
+			chTxText[nTextSize++] = 0x20;
+			chTxText[nTextSize++] = m_TcThis.sFlag.systime.year;
+			chTxText[nTextSize++] = m_TcThis.sFlag.systime.month;
+			chTxText[nTextSize++] = m_TcThis.sFlag.systime.day;
+			chTxText[nTextSize++] = m_TcThis.sFlag.systime.hour;
+			chTxText[nTextSize++] = m_TcThis.sFlag.systime.minute;
+			chTxText[nTextSize++] = 0;
+			chTxText[nTextSize++] = 0;
+			chTxText[nTextSize++] = 0;
+			chTxText[nTextSize++] = 0;
+			chTxText[nTextSize++] = 0;
+
+			wCrc = mx_GetCRC16IBM(0,nTextSize,chTxText);
+			chTxText[nTextSize++] = WORD_H(wCrc);
+			chTxText[nTextSize++] = WORD_L(wCrc);
+
+			nTransSize = mx_TxEscCharTrans(chTxText,nTextSize);
+
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack[nTxSize++] = 0xFC;
+			memcpy(m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack+nTxSize,chTxText,nTransSize);
+			nTxSize += nTransSize;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack[nTxSize++] = 0xF6;
+			
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chSubChannel = LSYSID_NONE;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.nSize = nTxSize;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.bSendData = bTxSend ? TRUE : FALSE;;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chEvent = 1;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chCycle = 0;
+		}
+	}
+}
+
+
+
+
+void op_MakeSivProtocol(BOOL bTDC)
+{
+	int nLSysID = LSYSID_SIV;
+	int nTxSize=0,nStep;
+	USHORT wBcc,wLength,wApplyCarHo=0;
+	USHORT wTestReady;
+	PSIVSDRTYPE pSivSDR = (PSIVSDRTYPE)m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack;
+	PSIVTSRTYPE pSivTSR = (PSIVTSRTYPE)m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack;
+	
+	BOOL bTxSend = !(tg_GetMainCommTxCounter()%5) ? TRUE : FALSE;
+	
+	if(bTxSend)
+	{
+		wApplyCarHo = op_GetLsysCarHo(nLSysID);
+		
+		if(wApplyCarHo)
+		{
+			if(m_TcThis.xSivTest.bTxTestStart)
+			{
+				nTxSize=sizeof(SIVTSRTYPE);
+
+				pSivTSR->usStx = 0x02;
+				pSivTSR->chDataType = 0x22 + m_TcThis.xSivTest.nStep;
+
+				pSivTSR->chText = 0x40;
+
+				pSivTSR->usEtx = 0x03;
+				
+				wBcc = mx_GetBCCValue(1,nTxSize-2,(LPBYTE)pSivTSR);
+				pSivTSR->usBcc_H = WORD_H(wBcc);
+				pSivTSR->usBcc_L = WORD_L(wBcc);
+
+			}
+			else
+			{
+				nTxSize=sizeof(SIVSDRTYPE);
+				
+				pSivSDR->usStx = 0x02;
+				pSivSDR->chDataType = 0x20;
+				
+				memcpy(&pSivSDR->sysTime,m_TcThis.sFlag.systime,sizeof(SYSTIMETYPE));
+				
+				pSivSDR->sysTime.second = 0xAA;
+				
+				pSivSDR->usEtx = 0x03;
+				
+				wBcc = mx_GetBCCValue(1,nTxSize-2,(LPBYTE)pSivSDR);
+				pSivSDR->usBcc_H = WORD_H(wBcc);
+				pSivSDR->usBcc_L = WORD_L(wBcc);
+				
+			}
+
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chSubChannel = LSYSID_NONE;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.nSize = nTxSize;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.bSendData = bTxSend ? TRUE : FALSE;;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chEvent = 1;
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chCycle = 0;
+		}
+	}
+}
+
+USHORT op_MakeSivTraceProtocol()
+{
+	int i,nLSysID = LSYSID_SIV;
+	int nTxSize=0;
+	USHORT wBcc,wLength,wApplyCarHo=0;
+	PSIVTDRTYPE pSivTDR = (PSIVTDRTYPE)m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.chDataPack;
+	PTRACEFALG pLogFlag = &m_TcThis.logSiv;
+
+	BOOL bTxSend = !(tg_GetMainCommTxCounter()%5) ? TRUE : FALSE;
+
+	if(m_TcThis.xSivTest.bTxTestStart) return 0;
+
+	if(bTxSend)
+	{
+		if(pLogFlag->nTraceClearCounter)
+		{
+			wApplyCarHo = (1<<pLogFlag->nTraceClearCarHo);
+			op_MakeSivProtocol(TRUE);
+			m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+		}
+		else
+		{
+			if(pLogFlag->bTraceReq)
+			{
+				if(pLogFlag->bTraceOrder)
+				{
+					/* TDR */
+					wApplyCarHo = (1<<pLogFlag->chTxReqCarHo);
+					
+					nTxSize=sizeof(SIVTDRTYPE);
+			
+					pSivTDR->usStx = 0x02;
+					pSivTDR->chDataType = 0x20;
+
+					pSivTDR->chTraceNo = pLogFlag->chTxTraceNum;
+					pSivTDR->chTraceBlock_H = WORD_H(pLogFlag->wTxTraceBlock);
+					pSivTDR->chTraceBlock_L = WORD_L(pLogFlag->wTxTraceBlock);
+					
+					pSivTDR->usEtx = 0x03;
+					
+					wBcc = mx_GetBCCValue(1,nTxSize-2,(LPBYTE)pSivTDR);
+					pSivTDR->usBcc_H = WORD_H(wBcc);
+					pSivTDR->usBcc_L = WORD_L(wBcc);
+					
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.wApplyCarHo = wApplyCarHo;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chSubChannel = LSYSID_NONE;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Body.nSize = nTxSize;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.bSendData = bTxSend ? TRUE : FALSE;;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chEvent = 1;
+					m_CC_Info.TxInfo.pLSysTx[nLSysID]->Head.chCycle = 0;
+					
+				}
+				
+				/* 추적기록 교번 여부 */
+				/*pLogFlag->bTraceOrder = !pLogFlag->bTraceOrder;*/
+			}
+		}
+	}
+
+	return wApplyCarHo;
+}
+
+int op_GetLSysLoggerID(int nLSysID)
+{
+	switch(nLSysID)
+	{
+	case LSYSID_BRAKE:	return 0;
+	case LSYSID_SIV:	return 1;
+	}
+	return -1;
+}
+
+PTRACEFALG op_GetLSysTraceFlag(int nLSysID)
+{
+	switch(nLSysID)
+	{
+	case LSYSID_BRAKE: return &m_TcThis.logBrake;
+	case LSYSID_SIV: return &m_TcThis.logSiv;
+	}
+	return NULL;
+}
+
+PTRACEFALG op_ShowLSysTraceFlag(int nLSysID)
+{
+	PTRACEFALG pLogFlag = op_GetLSysTraceFlag(nLSysID);
+	printf("--------- LSys Logging Flag -----------\n");
+	printf(" B) bTraceReq       : %d...\n",pLogFlag->bTraceReq);
+	printf(" B) bTraceOrder     : %d...\n",pLogFlag->bTraceOrder);
+	printf(" B) bRxUpdated      : %d...\n",pLogFlag->bRxUpdated);
+	printf(" B) bTerminated     : %d...\n",pLogFlag->bTerminated);
+	printf(" B) bBlockRxStarted : %d...\n",pLogFlag->bBlockRxStarted);
+	printf("---------------------------------------\n");
+	printf(" C) chTxTraceNum    : %d -> %d...\n",pLogFlag->wOldTxTraceNum,pLogFlag->chTxTraceNum);
+	printf(" C) wTxTraceBlock  : %d...\n",pLogFlag->wTxTraceBlock);
+	printf(" C) wRxTraceBlock  : %d -> %d...\n",pLogFlag->wOldRxTraceBlock,pLogFlag->wRxTraceBlock);
+	printf(" C) chTxReqCarHo    : %d...\n",pLogFlag->chTxReqCarHo);
+	printf(" C) chRxReqFault    : %d...\n",pLogFlag->chRxReqFault);
+	printf(" C) nTraceClearCarHo    : %d...\n",pLogFlag->nTraceClearCarHo);
+	printf(" C) nTraceClearCounter    : %d...\n",pLogFlag->nTraceClearCounter);
+
+	printf(" D) wFinishedCar    : %02Xh...\n",pLogFlag->wFinishedCar);
+	printf(" C) wBlockSize      : %d...\n",pLogFlag->wBlockSize);
+
+
+	return pLogFlag;
+}
+
+BYTE op_GetLSysTraceMaxBlock(int nLSysID)
+{
+	switch(nLSysID)
+	{
+	case LSYSID_SIV: return TDB_MAX_SIV;
+	case LSYSID_BRAKE: return TDB_MAX_ECU;
+	}
+
+	return 0;
+}
+
+BYTE op_GetTraceMaxNumber(BYTE chTraceBit)
+{
+	int i;
+	for(i=7;i>=0;i--)
+	{
+		if(chTraceBit&(1<<i)) return (BYTE)(i+1);
+	}
+	return 0;
+}
+
+BYTE op_GetLSysMaxTraceNumber(int nLSysID,int nCarHo)
+{
+	BYTE chMaxTraceNum=0;
+	PSIVSDTYPE pSivSD;
+	PBRAKESDTYPE pBrakeSD;
+
+
+	switch(nLSysID)
+	{
+	case LSYSID_BRAKE:
+		pBrakeSD = (PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack;
+		chMaxTraceNum = op_GetTraceMaxNumber(pBrakeSD->TRACE & 0x1F);
+		break;
+	case LSYSID_SIV:
+		pSivSD = (PSIVSDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack;
+		chMaxTraceNum = op_GetTraceMaxNumber(pSivSD->TRACE & 0x07);
+		break;
+	
+	}
+
+	return chMaxTraceNum;
+}
+
+void op_LoggerLSysSub(int nLSysID,int nCarHo,PTRACEFALG pLogFlag,BYTE chLogNumber,BYTE chEndBlock)
+{
+	int nLSysLoggerID = op_GetLSysLoggerID(nLSysID);
+
+	if(!ISRANGE(nLSysLoggerID,0,2)) return;
+
+
+	if(pLogFlag && chEndBlock)
+	{
+		if(!pLogFlag->bTraceReq)
+		{
+			if(chLogNumber)
+			{
+				/* 장치종에 대한 장치단위 초기화 */
+				pLogFlag->bTraceReq = TRUE;
+				pLogFlag->bTraceOrder = TRUE;
+				pLogFlag->chTxTraceNum = chLogNumber;
+				pLogFlag->wTxTraceBlock = 0;
+				pLogFlag->wRxTraceBlock = 0xFD;
+				pLogFlag->wOldRxTraceBlock = 0xFC;
+				pLogFlag->chRxReqFault = 0;
+				
+				pLogFlag->chTxReqCarHo = nCarHo;
+				pLogFlag->wErrorNo = 0;
+				
+				if(pLogFlag->wBlockSize) memset(pLogFlag->chRxTraceData,0,pLogFlag->wBlockSize);
+				
+				TRACE("=> %s[%d] TRACE DOWNLOAD STARTED....%02X \n",m_szLSysNameCC[nLSysID],nCarHo,chLogNumber);
+				TRACE("=> %s[%d] NEXT TRACE NUMBER................................%d/%d\n",m_szLSysNameCC[nLSysID],nCarHo,pLogFlag->chTxTraceNum,op_GetLSysMaxTraceNumber(nLSysID,nCarHo));
+				
+			}
+			
+			m_chRxTraceNum[nLSysLoggerID][nCarHo] = chLogNumber;
+		}
+	}
+}
+/****************************************************************/
+/* Event: 1)op_LoggerStart()                                    */
+/*        2) op_LoggerLSysSub() : Flag 설정						*/
+/* MComm: 3) op_LoggerCheckLSysFlags() : Max Logger 검지        */
+/*        4) op_LoggerLSysLoader()								*/
+/* Ex) op_LoggerStart(0,1,1,(1<<1));							*/
+/****************************************************************/
+
+void op_LoggerStart(int nLSysID,int nCarHo,BYTE chLogNumber,USHORT wApplyCarHo)
+{
+	PTRACEFALG pLogFlag = op_GetLSysTraceFlag(nLSysID);
+
+	/* 장치종에 대한 편성단위 초기화 */
+	pLogFlag->wLoggerSel = wApplyCarHo;
+	pLogFlag->wFinishedCar = 0;
+	pLogFlag->bTerminated = FALSE;
+
+	op_LoggerLSysSub(nLSysID,nCarHo,pLogFlag,chLogNumber,op_GetLSysTraceMaxBlock(nLSysID));
+}
+
+
+
+
+
+void op_LSysTraceTerminated(int nLSysID)
+{
+	PTRACEFALG pLogFlag = op_GetLSysTraceFlag(nLSysID);
+	TRACE("=> %s TRACE DOWNLOAD TERMIATIED....\n",m_szLSysNameCC[nLSysID]);
+	pLogFlag->bTerminated = TRUE;
+
+
+}
+
+void op_NextCarTraceCheck(int nLSysID,int nCarHo)
+{
+	BYTE chMaxTrace;
+	PTRACEFALG pLogFlag = op_GetLSysTraceFlag(nLSysID);
+	USHORT wApplyCarHo = op_GetLsysCarHo(nLSysID) & pLogFlag->wLoggerSel;
+	
+	pLogFlag->wFinishedCar |= (1<<nCarHo);
+	printf("=> nCarHo[%d] Trace Finished[%04X]...\n",nCarHo,pLogFlag->wFinishedCar);
+
+
+	nCarHo++;
+	if(nCarHo < m_nTrainSize)
+	{
+		chMaxTrace = op_GetLSysMaxTraceNumber(nLSysID,nCarHo);
+		if((wApplyCarHo & (1<<nCarHo)) && chMaxTrace)
+		{
+			op_LoggerLSysSub(nLSysID,nCarHo,op_GetLSysTraceFlag(nLSysID),1,op_GetLSysTraceMaxBlock(nLSysID));
+		}
+		else
+		{
+			op_NextCarTraceCheck(nLSysID,nCarHo);
+		}
+	}
+	else
+	{
+		op_LSysTraceTerminated(nLSysID);
+	}
+	
+}
+
+void op_TraceClear(int nCarHo,int nLSysID)
+{
+	PTRACEFALG pLogFlag = op_GetLSysTraceFlag(nLSysID);
+	pLogFlag->nTraceClearCarHo = nCarHo;
+	pLogFlag->nTraceClearCounter = 40;
+}
+
+void op_NextTraceNumCheck(int nLSysID,int nCarHo,PTRACEFALG pLogFlag)
+{
+	BYTE chMaxTrace = op_GetLSysMaxTraceNumber(nLSysID,nCarHo);
+
+	if(pLogFlag->chTxTraceNum < chMaxTrace)
+	{
+		/*TRACE("=> %s[%d] NEXT TRACE NUMBER................................%d/%d\n",m_szLSysNameCC[nLSysID],nCarHo,pLogFlag->chTxTraceNum+1,chMaxTrace);*/
+		op_LoggerLSysSub(nLSysID,nCarHo,op_GetLSysTraceFlag(nLSysID),pLogFlag->chTxTraceNum+1,op_GetLSysTraceMaxBlock(nLSysID));
+		
+	}
+	else
+	{
+		TRACE("=> %s[%d] TRACE REQUEST FINISHIED....\n",m_szLSysNameCC[nLSysID],nCarHo);
+		op_NextCarTraceCheck(nLSysID,nCarHo);
+	}
+}
+
+void op_LoggerLSysLoader(int nLSysID,int nCarHo,PTRACEFALG pLogFlag,BYTE chLogNumber,BYTE chEndBlock)
+{
+	int nLSysLoggerID = op_GetLSysLoggerID(nLSysID);
+
+	if(!ISRANGE(nLSysLoggerID,0,2)) return;
+	
+	if(tg_IsMaster())
+	{
+		
+		if(pLogFlag->nTraceClearCounter)
+		{
+			if(nCarHo == pLogFlag->nTraceClearCarHo)
+			{
+				if(!chLogNumber)
+				{
+					TRACE("=>%s[%d] TRACE DATA CLEARED....%d\n",m_szLSysNameCC[nLSysID],nCarHo);
+					
+					pLogFlag->nTraceClearCounter = 0;
+				}
+				else 
+				{
+					TRACE("=>%s[%d] TRACE DATA CLEAR FAILURE ..%d..!!!!....\n",m_szLSysNameCC[nLSysID],nCarHo,pLogFlag->nTraceClearCounter);
+					
+					pLogFlag->nTraceClearCounter--;
+				}
+			}
+		}
+		
+		if(pLogFlag->bTraceReq)
+		{
+			if(pLogFlag->chTxReqCarHo == (BYTE)nCarHo)
+			{
+				if(tg_IsMaster())
+				{
+					if(pLogFlag->wLoggerSel & (1<<nCarHo))
+					{
+						if(!m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Head.bComFault)
+						{
+							if(chLogNumber)
+							{
+								if(pLogFlag->wTxTraceBlock == pLogFlag->wRxTraceBlock)
+								{
+									if(pLogFlag->wRxTraceBlock == chEndBlock || pLogFlag->wRxTraceBlock == 0xFF)
+									{
+										TRACE("=> %s[%d] TRACE[%d] REQUEST END....\n",m_szLSysNameCC[nLSysID],nCarHo,pLogFlag->chTxTraceNum);
+										pLogFlag->bTraceReq = FALSE;
+										
+										op_NextTraceNumCheck(nLSysID,nCarHo,pLogFlag);
+										
+										/* 데이터는 사용자에 의해 삭제된다.*/
+										/*
+										pLogFlag->nTraceClearCarHo = nCarHo;
+										pLogFlag->nTraceClearCounter = 40;
+										*/
+									}
+									else
+									{
+										pLogFlag->wTxTraceBlock++;
+									}
+									
+									if(pLogFlag->chRxReqFault > 30)
+									{
+										TRACE("=> %s[%d] TRACE REQ.BLOCK Ready...%d !!!!....\n",m_szLSysNameCC[nLSysID],nCarHo,pLogFlag->chRxReqFault);
+										pLogFlag->chRxReqFault = 0;
+									}
+								}
+								else
+								{
+									
+									if(pLogFlag->chRxReqFault > 50)
+									{
+										pLogFlag->bTraceReq = FALSE;
+										pLogFlag->wErrorNo = 1;
+										TRACE("=> %s[%d] TRACE REQUEST TIMEOUT !!!!....\n",m_szLSysNameCC[nLSysID],nCarHo);
+										op_NextCarTraceCheck(nLSysID,nCarHo);
+									}
+									else
+									{
+										if(pLogFlag->chRxReqFault > 30)
+										{
+											if(pLogFlag->bRxUpdated)
+											{
+												TRACE("=> %s[%d] TRACE REQ.BLOCK DIFFERENT !!!!....\n",m_szLSysNameCC[nLSysID],nCarHo);
+											}
+											else
+											{
+												/*TRACE("=> %s[%d] TD CODE NOT RECEIVED !!!!....\n",m_szLSysNameCC[nLSysID],nCarHo);*/
+											}
+										}
+									}
+									
+									pLogFlag->chRxReqFault++;
+								}
+								
+								pLogFlag->bRxUpdated = FALSE;
+							}
+							else
+							{
+								pLogFlag->bTraceReq = FALSE;
+								pLogFlag->wErrorNo = 2;
+								TRACE("=> %s[%d] TRACE DOWNLOAD CANCELLED BY LSYS....\n",m_szLSysNameCC[nLSysID],nCarHo);
+								op_NextCarTraceCheck(nLSysID,nCarHo);
+							}
+						}
+						else
+						{
+							TRACE("=> %s[%d] TRACE DOWNLOAD CANCELLED BY LSYS FAULT....\n",m_szLSysNameCC[nLSysID],nCarHo);
+							pLogFlag->bTraceReq = FALSE;
+							op_NextCarTraceCheck(nLSysID,nCarHo);
+						}
+					}
+					else
+					{
+						pLogFlag->bTraceReq = FALSE;
+						op_NextCarTraceCheck(nLSysID,nCarHo);
+					}
+				}
+				else
+				{
+					pLogFlag->bTraceReq = FALSE;
+					pLogFlag->wErrorNo = 3;
+					TRACE("=> this system is slave , therefore cancelled....\n",m_szLSysNameCC[nLSysID],nCarHo);
+					op_NextCarTraceCheck(nLSysID,nCarHo);
+				}
+			}
+		}
+	}
+	else
+	{
+		pLogFlag->bTraceReq = FALSE;
+		pLogFlag->nTraceClearCounter = 0;
+		if(m_chRxTraceNum[nLSysLoggerID][nCarHo] != chLogNumber) 
+		{
+			m_chRxTraceNum[nLSysLoggerID][nCarHo] = chLogNumber;
+		}
+	}
+}
+
+
+
+
+
+/* 각차량에 전달할 TRACE 기록을 점검한다. */
+void op_LoggerCheckLSysFlags()
+{
+	int nCarHo,nLSysID,nSysIndex;
+	BYTE chLogNumber;
+
+	if(m_TcThis.nOpCnt > LSYSTRACE_START_TIME)
+	{
+		for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+		{
+			nLSysID = LSYSID_SIV;
+			if(op_IsExistLSys(nCarHo,nLSysID))
+			{
+				chLogNumber = op_GetLSysMaxTraceNumber(nLSysID,nCarHo);
+				op_LoggerLSysLoader(nLSysID,nCarHo,&m_TcThis.logSiv,chLogNumber,TDB_MAX_SIV);
+			}
+			
+			nLSysID = LSYSID_BRAKE;
+			chLogNumber = op_GetLSysMaxTraceNumber(nLSysID,nCarHo);
+			op_LoggerLSysLoader(nLSysID,nCarHo,&m_TcThis.logBrake,chLogNumber,TDB_MAX_ECU);
+		}
+	}
+}
+
+BOOL op_InitialLSysProtocol()
+{
+	BYTE chChannel;
+	PLSYSTXCOMTYPE  pLSysTx;
+
+	/* 초기화 */
+	for(chChannel=0;chChannel<MAX_LCOM_CHANNEL;chChannel++)
+	{
+		pLSysTx = m_CC_Info.TxInfo.pLSysTx[chChannel];
+		pLSysTx->Head.wAppliedCarHo = 0;
+	}
+}
+
+/* 각 차량의 CC를 이용한 서브장치 통신용           */
+/* RETURN : (FALSE) 차량별로 다를 필요가 없는 경우 */
+/*          (TRUE)  차량별로 다를 필요가 있는 경우 */
+/* 주기: 100ms 로 들어온다.						   */
+BOOL op_MakeLSysProtocol(BYTE chChannel)
+{
+	BYTE chLSysID = chChannel; /* 채널번호와 시스템 ID는 같다. */
+	BOOL bRet = FALSE;
+	static BOOL bLSysTimeSet;
+	
+	
+	switch(chLSysID) 
+	{
+	case LSYSID_BRAKE:	op_MakeBrakeProtocol(FALSE); return TRUE;
+	case LSYSID_CI:		op_MakeCIProtocol(); return TRUE;
+	case LSYSID_SIV:	op_MakeSivProtocol(FALSE); return FALSE;
+		
+	default: return FALSE;
+	}
+}
+
+/* 각 시스템 별 1개의 추적기록을 받는다. */
+/* 리턴 : 적용된 차량별 BITFIELD 를 리턴한다. */
+USHORT op_LoggerMakeLSysProtocol(BYTE chChannel)
+{
+	BYTE nLSysID = chChannel; /* 채널번호와 시스템 ID는 같다. */
+
+	switch(nLSysID) 
+	{
+		
+	case LSYSID_SIV:	return op_MakeSivTraceProtocol();
+	case LSYSID_BRAKE:	return op_MakeBrakeTraceProtocol();
+	default: break;
+	}
+
+	return 0;
+}
+
+
+/* 각 차량의 TC를 이용한 서브장치 통신용 */
+void op_CheckUSysProtocol(BYTE chChannel)
+{
+	if(tg_IsMaster())
+	{
+		if(m_CC_Info.TxInfo.pLSysTx[chChannel]->Head.wApplyCarHo & (1<<m_TcThis.nCarHo))
+		{
+			memcpy(&m_TcThis.USysTx[chChannel],m_CC_Info.TxInfo.pLSysTx[chChannel],sizeof(LSYSTXCOMTYPE));
+		}
+	}
+}
+
+
+
+/**********************************************************/
+/* TGIS 연산처리 -Task Routine                             */
+/**********************************************************/
+void op_DistancePrecess()
+{
+	static UINT nOldSpeed,nOldTick;
+	UINT nSpeed=0;
+	UINT nDeltaTick,nTick,nDeltaDist;
+	static UINT nMiliDist;
+	PCISDTYPE pCiSD = (PCISDTYPE)(m_CC_Info.RxInfo[m_TcThis.nNearCiCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack);
+
+	/* 0.0005 m/s/bit  = 0.0005 * 3600 = m/h/bit = 0.5 * 3600 km/h/bit = 1800 km/h/bit */
+	nSpeed = MK_WORD(pCiSD->SPD_H,pCiSD->SPD_L); 
+
+	nTick = tickGet();
+	nDeltaTick = nTick - nOldTick;
+
+	nDeltaDist = (nMiliDist + nSpeed * nDeltaTick);		/* 0.0005 mm /bit = 1/2000 mm/bit */  
+	m_TcThis.nRunningDist += (nDeltaDist/2000000);
+	m_TcThis.nDailyDist += (nDeltaDist/2000000);
+	m_TcThis.nForeverDist += (nDeltaDist/2000000);
+	m_pDirectMem->nForeverDist = m_TcThis.nForeverDist;
+	
+	nMiliDist = nDeltaDist%2000000;
+
+
+	m_TcThis.nSpeed = (nSpeed*18/100);	/* 0.01 km/h/bit  */
+
+	nOldSpeed = nSpeed;
+	nOldTick = tickGet();
+
+}
+
+
+BOOL op_IsExistLSys(int nSelCarHo,int nLSysID)
+{
+	if(nSelCarHo < m_nTrainSize)
+	{
+		
+		
+		switch(ISTRTYPE(m_CC_Info.RxInfo[nSelCarHo].Head.chHexaID[0]))
+		{
+		case TRTYPE_TC:
+		case TRTYPE_T2:
+			if(nLSysID == LSYSID_SIV) return TRUE;
+			break;
+		case TRTYPE_MD:
+			if(nLSysID == LSYSID_CI) return TRUE;
+			if(nLSysID == LSYSID_BRAKE) return TRUE;
+			break;
+		}
+	}
+
+	return FALSE;
+}
+
+int op_GetFirstLSysCarType(int nLSysID)
+{
+	int nCarHo;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		if(op_IsExistLSys(nCarHo,nLSysID)) return nCarHo;
+	}
+	return 0;
+}
+
+/**********************************************************/
+/* 해당호차에 대하여 하부장치의 존재/통신정상 가능여부    */
+/**********************************************************/
+BOOL op_IsValideLinkOK(int nSelCarHo,int nLSysID)
+{
+	int nCarHo;
+	if(m_TcThis.bCC_ComFault[nSelCarHo]) return FALSE;
+	if(!op_IsExistLSys(nSelCarHo,nLSysID)) return FALSE;
+	if(!m_CC_Info.RxInfo[nSelCarHo].pLSysRx[nLSysID]->Head.bComStarted) return FALSE;
+	if(m_CC_Info.RxInfo[nSelCarHo].pLSysRx[nLSysID]->Head.bComFault) return FALSE;
+	return TRUE;
+}
+
+int op_GetNearLSysCarHo(int nLSysID)
+{
+	int nCarHo;
+	
+	if(!m_TcThis.nCarHo)
+	{
+		for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+		{
+			if(op_IsValideLinkOK(nCarHo,nLSysID)) return nCarHo;
+		}
+	}
+	else
+	{
+		for(nCarHo=m_nTrainSize-1;nCarHo>0;nCarHo--)
+		{
+			if(op_IsValideLinkOK(nCarHo,nLSysID)) return nCarHo;
+		}
+	}
+	
+	
+
+	return 0;
+}
+
+int op_GetPairedCarHo(int nCarHo)
+{
+	return (nCarHo%2) ? (nCarHo-1) : (nCarHo+1);
+}
+
+BYTE op_GetBcpValue(int nCarHo)
+{
+	int nLSysID = LSYSID_CI;
+	int nPairedCarHo;
+	if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+	{
+		if(m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Head.bComFault) return 0;
+		return ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->BCPM;
+	}
+	else
+	{
+		nPairedCarHo = op_GetPairedCarHo(nCarHo);
+		if(ISTRTYPE(m_CC_Info.RxInfo[nPairedCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			if(m_CC_Info.RxInfo[nPairedCarHo].pLSysRx[nLSysID]->Head.bComFault) return 0;
+			return ((PCISDTYPE)m_CC_Info.RxInfo[nPairedCarHo].pLSysRx[nLSysID]->Body.chDataPack)->BCPT;
+		}
+		else return 0;
+	}
+}
+
+BYTE op_GetAcpValue(int nCarHo)
+{
+	int nLSysID = LSYSID_BRAKE;
+	int nPairedCarHo;
+	if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+	{
+		if(m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Head.bComFault) return 0;
+		return ((PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->LDPM;
+	}
+	else
+	{
+		nPairedCarHo = op_GetPairedCarHo(nCarHo);
+		if(ISTRTYPE(m_CC_Info.RxInfo[nPairedCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			if(m_CC_Info.RxInfo[nPairedCarHo].pLSysRx[nLSysID]->Head.bComFault) return 0;
+			return ((PBRAKESDTYPE)m_CC_Info.RxInfo[nPairedCarHo].pLSysRx[nLSysID]->Body.chDataPack)->LDPT;
+		}
+		else return 0;
+	}
+}
+
+int op_GetIMValueSub(int nCarHo)
+{
+	int nLSysID = LSYSID_CI;
+	float CIID,CIIQ;
+	CIID = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->CIID * 11.8671875;
+	CIIQ = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->CIIQ * 11.8671875;
+
+	return (int)((CIID*CIID + CIIQ*CIIQ)/3. );
+}
+/***********************************************************/
+/* 각차량별 모터전류(IM [A]).							   */
+/***********************************************************/
+int op_GetIMValue(int nCarHo)
+{
+	int nLSysID = LSYSID_CI;
+	int nValue;
+	float CIID,CIIQ;
+	if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+	{
+		if(m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Head.bComFault) return 0;
+		CIID = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->CIID * 11.8671875;
+		CIIQ = ((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->CIIQ * 11.8671875;
+
+		return (int)( sqrtf( (CIID*CIID + CIIQ*CIIQ)/3. ) );
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+/***********************************************************/
+/* 각차량별 승객하중 신호 이다.                            */
+/***********************************************************/
+BYTE op_GetPassengerWeight(int nCarHo)
+{
+	int nLSysID = LSYSID_BRAKE;
+	int nPairedCarHo;
+	if(ISTRTYPE(m_CC_Info.RxInfo[nCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+	{
+		return ((PBRAKESDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->LDPM;
+	}
+	else
+	{
+		nPairedCarHo = op_GetPairedCarHo(nCarHo);
+		if(ISTRTYPE(m_CC_Info.RxInfo[nPairedCarHo].Head.chHexaID[0]) == TRTYPE_MD) 
+		{
+			return ((PBRAKESDTYPE)m_CC_Info.RxInfo[nPairedCarHo].pLSysRx[nLSysID]->Body.chDataPack)->LDPT;
+		}
+		else return 0;
+	}
+}
+
+BOOL op_IsCiLSysCut(int nCarHo)
+{
+	int nLSysID = LSYSID_CI;
+	PCISDTYPE pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack;
+	PCCDITYPE pCcDi = (PCCDITYPE)m_CC_Info.RxInfo[nCarHo].Head.ccDi;
+
+	if(!op_IsExistLSys(nCarHo,nLSysID)) return FALSE;
+
+	if(pCiSD->MCO) return TRUE;
+
+	/*
+	if(pCcDi->MC1_DCTR1) return TRUE;
+	if(pCiSD->ESTF) return TRUE;
+	if(pCcDi->BYPR_PANPS1 && pCcDi->MC3_PANPS2 && !((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->MRPS) return TRUE;
+	if(pCcDi->RSR1_CCOS) return TRUE;
+	*/
+
+	return FALSE;
+}
+
+BOOL op_IsHscbStatus(int nCarHo)
+{
+	int nLSysID = LSYSID_CI;
+	PCISDTYPE pCiSD = (PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack;
+
+	if(!op_IsExistLSys(nCarHo,nLSysID)) return FALSE;
+
+	if((((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->HB1) && 
+		(((PCISDTYPE)m_CC_Info.RxInfo[nCarHo].pLSysRx[nLSysID]->Body.chDataPack)->HB2) )	return TRUE;
+
+	return FALSE;
+}
+
+void op_EventProcess()
+{
+	static BOOL bOldHcr,bOldMPB;
+	int nCarHo;
+
+
+	if(((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->HCR && !bOldHcr) tg_HcrEvent();
+	bOldHcr = ((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->HCR;
+
+	if(m_TcThis.nOpCnt > MAX_FAULT_COUNT) 
+	{
+		if(!bOldMPB && ((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->MPB ) gp_ManagerPushEvent();
+	}
+
+	bOldMPB = ((PCCDITYPE)m_TcThis.pCCInfo->Head.ccDi)->MPB;
+
+	m_TcThis.nNearBcuCarHo = op_GetNearLSysCarHo(LSYSID_BRAKE);
+	m_TcThis.nNearCiCarHo = op_GetNearLSysCarHo(LSYSID_CI);
+
+
+}
+
+void op_SivTestStart()
+{
+	int nCarHo;
+	if(!m_TcThis.xSivTest.bTxTestStart)
+	{
+		memset(&m_TcThis.xSivTest,0,sizeof(m_TcThis.xSivTest));
+		for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++) 
+		{
+			if(op_IsExistLSys(nCarHo,LSYSID_SIV)) m_TcThis.xSivTest.wStartForm |= (1<<nCarHo);
+			if(op_IsValideLinkOK(nCarHo,LSYSID_SIV)) m_TcThis.xSivTest.wApplyForm |= (1<<nCarHo);
+		}
+
+		m_TcThis.xSivTest.bTxTestStart = TRUE;
+		TRACE("=> SIV TEST STARTED...\n");
+	}
+}
+
+BOOL op_RecHisLoad()
+{
+	int nCarHo;
+	GMHIS_LOAD_TYPE WLoad;
+
+	taskDelay(3000);
+	
+	memset(&WLoad,0,sizeof(WLoad));
+	gm_GetSystemTime(&WLoad.datetime);
+
+	WLoad.chCurStCode = op_GetCurStCode();
+	WLoad.chNxtStCode = op_GetNxtStCode();
+
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		WLoad.chLDP[nCarHo] = op_GetPassengerWeight(nCarHo);
+	}
+	gw_PushHisLoadBody(&WLoad);
+
+	m_nHisLoadSaveTaskId = 0;
+}
+
+
+
+/*******************************************************************************
+	현재 차가 HCR이 되었을 때 수행
+********************************************************************************/
+
+void op_HeadProcess()
+{
+    int err;
+    UINT dist;
+	
+    if(m_bDoorOpenEvt)
+    {
+        m_bDoorOpenEvt = FALSE;
+
+
+		if(op_GetDistance() > 100 ) 
+		{
+			m_TcThis.chCurStCode++;
+		}
+		m_TcThis.chNxtStCode = m_TcThis.chCurStCode;
+
+		op_RunDistClear();
+    }
+
+    if(m_bDoorCloseEvt)
+    {
+        m_bDoorCloseEvt = FALSE;
+
+		if(m_TcThis.chNxtStCode == m_TcThis.chCurStCode)
+		{
+			m_TcThis.chNxtStCode++;
+		}
+
+
+		if(taskIdVerify(m_nHisLoadSaveTaskId) == OK) 
+		{
+			taskDelete(m_nHisLoadSaveTaskId);
+			m_nHisLoadSaveTaskId = 0;
+		}
+
+		if(tg_IsMaster())
+		{
+			m_nHisLoadSaveTaskId = taskSpawn("xHisLoad",135,0,10000,op_RecHisLoad,0,0,0,0,0,0,0,0,0,0);
+		}
+
+    }
+
+  
+}
+
+/***********************************************************/
+/* 파생신호를 만든다.                                      */
+/***********************************************************/
+void op_TcDeriveProcess()
+{
+	m_TcThis.xDerive.MOT = ((PCISDTYPE)m_CC_Info.RxInfo[m_TcThis.nNearCiCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->_M ? TRUE : FALSE;
+	m_TcThis.xDerive.BRK = ((PCISDTYPE)m_CC_Info.RxInfo[m_TcThis.nNearCiCarHo].pLSysRx[LSYSID_CI]->Body.chDataPack)->_B ? TRUE : FALSE;
+}
+
+void op_CCRxDervieProcess()
+{
+	int nCarHo;
+	for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+	{
+		m_CC_Info.xDerive[nCarHo].CUT = op_IsCiLSysCut(nCarHo);
+		m_CC_Info.xDerive[nCarHo].HSCB = op_IsHscbStatus(nCarHo); 
+	}
+}
+
+BOOL op_SivTestSequence()
+{
+	int nCarHo,nStep;
+	BOOL bSeqApplied;
+	static UINT nResultViewCounter;
+
+	if(!tg_IsMaster() && m_TcThis.xSivTest.bTxTestStart)
+	{
+		TRACE("=> SIV TEST CANCELED: MASTER LOSE !!!\n");
+		m_TcThis.xSivTest.bTxTestStart = FALSE;
+	}
+	
+	if(m_TcThis.xSivTest.bTxTestStart)
+	{
+		nStep = m_TcThis.xSivTest.nStep;
+
+		/* 1) 수신데이타 점검 */
+		for(nCarHo=0;nCarHo<m_nTrainSize;nCarHo++)
+		{
+			if(m_TcThis.xSivTest.wRxUpdated & (1<<nCarHo))
+			{
+				switch(m_TcThis.xSivTest.chRxTestData[nCarHo][1])
+				{
+				case 0x22:
+					if(m_TcThis.xSivTest.chRxTestData[nCarHo][2] & BIT05)
+					{
+						m_TcThis.xSivTest.wRxReady[0] |= (1<<nCarHo);
+						TRACE("=> nCarHo[%d]: SIV RX STEP-0 Update \n",nCarHo);
+					}
+					break;
+				case 0x23:
+					if(m_TcThis.xSivTest.chRxTestData[nCarHo][2] & BIT05)
+					{
+						m_TcThis.xSivTest.wRxReady[1] |= (1<<nCarHo);
+						TRACE("=> nCarHo[%d]: SIV RX STEP-1 Update \n",nCarHo);
+					}
+					break;
+				case 0x24:
+					if(m_TcThis.xSivTest.chRxTestData[nCarHo][2] & BIT07)
+					{
+						m_TcThis.xSivTest.wRxReady[2] |= (1<<nCarHo);
+						TRACE("=> nCarHo[%d]: SIV RX STEP-2 Update \n",nCarHo);
+
+						if(m_TcThis.xSivTest.chRxTestData[nCarHo][2] & BIT06) m_TcThis.xSivTest.wTestOK |= (1<<nCarHo);
+						else m_TcThis.xSivTest.wTestNG |= (1<<nCarHo);
+					}
+					break;
+				}
+
+				m_TcThis.xSivTest.wRxUpdated = m_TcThis.xSivTest.wRxUpdated&~(1<<nCarHo);
+			}
+		}
+
+		/* 시험시퀀스 동작 */
+		bSeqApplied = FALSE;
+		if(m_TcThis.xSivTest.wRxReady[nStep] && m_TcThis.xSivTest.wRxReady[nStep] != m_TcThis.xSivTest.wOldRxReady[nStep])
+		{
+			TRACE("=> nCarHo[%d]: SIV TEST STEP-%d PASS...\n",
+				mx_GetBitNo(m_TcThis.xSivTest.wRxReady[nStep] ^ m_TcThis.xSivTest.wOldRxReady[nStep]),nStep);
+			m_TcThis.xSivTest.wOldRxReady[nStep] = m_TcThis.xSivTest.wRxReady[nStep];
+			
+			if(m_TcThis.xSivTest.wRxReady[nStep] == m_TcThis.xSivTest.wApplyForm)
+			{
+				if(m_TcThis.xSivTest.nStep < 2) 
+				{
+					TRACE("=> SIV TEST NEXT STEP-%d -----------------\n",m_TcThis.xSivTest.nStep);
+					m_TcThis.xSivTest.nStep++;
+				}
+				else 
+				{
+					m_TcThis.xSivTest.bTxTestStart = FALSE;
+					m_TcThis.xSivTest.bTestComplete = TRUE;
+					TRACE("=> SIV TEST COMPLETE...\n");
+				}
+
+				m_TcThis.xSivTest.nRxReadyCounter = 0;
+				bSeqApplied = TRUE;
+			}
+		}
+
+		if(!bSeqApplied)
+		{
+			m_TcThis.xSivTest.nRxReadyCounter++;
+			
+			if(m_TcThis.xSivTest.nRxReadyCounter > 100)
+			{
+				if(m_TcThis.xSivTest.wRxReady[nStep] && nStep < 2)
+				{
+					TRACE("=> SIV TEST TIMEOUT NEXT STEP-%d -----------------[%04X]\n",m_TcThis.xSivTest.nStep,m_TcThis.xSivTest.wApplyForm);
+					m_TcThis.xSivTest.wApplyForm = m_TcThis.xSivTest.wRxReady[nStep];
+					m_TcThis.xSivTest.nStep++;
+					m_TcThis.xSivTest.nRxReadyCounter = 0;
+				}
+				else
+				{
+					m_TcThis.xSivTest.bTxTestStart = FALSE;
+					m_TcThis.xSivTest.bTestComplete = TRUE;
+					TRACE("=> SIV TEST CANCELED: STEP-%d TIME OUT !!!\n",m_TcThis.xSivTest.nStep);
+				}
+			}
+		}
+
+		if(m_TcThis.xSivTest.bTestComplete) nResultViewCounter = 100;
+	}
+	else
+	{
+		if(nResultViewCounter == 1) m_TcThis.xSivTest.wTestNG = m_TcThis.xSivTest.wTestOK = 0;
+		
+		if(nResultViewCounter) nResultViewCounter--;
+	}
+
+	return m_TcThis.xSivTest.bTxTestStart;
+}
+
+
+void op_Run()
+{
+	op_EventProcess();
+	op_DistancePrecess();
+
+	if(op_IsHcrOn()) op_HeadProcess();
+	op_TcDeriveProcess();
+	op_SivTestSequence();
+
+	if(m_TcThis.nOpCnt == REC_AUTO_STARTCNT) tg_AutoDrvRecEvent();
+	
+	m_TcThis.nOpCnt++;
+}
+
+

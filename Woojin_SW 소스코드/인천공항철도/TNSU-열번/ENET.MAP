@@ -1,0 +1,94 @@
+******************************************************************************
+TMS320C3x/4x COFF Linker                Version 5.11                   
+******************************************************************************
+>> Linked Mon Jun  4 12:22:24 2001
+
+OUTPUT FILE NAME:   <enet.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00a00001
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         IRAM      0087fe10  0000001f0  00000000     RWIX      
+         FROM      00900000  000080000  00000000     RWIX      
+         SRAM      00a00000  000100000  0000487b     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00a00000    00000042     
+                  00a00000    00000001     start.obj (.text)
+                  00a00001    0000001b     rts30.lib : boot.obj (.text)
+                  00a0001c    00000026               : exit.obj (.text)
+
+.text      0    00a00042    000000e6     
+                  00a00042    000000e6     enet.obj (.text)
+
+.cinit     0    00a00128    0000003f     
+                  00a00128    00000038     enet.obj (.cinit)
+                  00a00160    00000006     rts30.lib : exit.obj (.cinit)
+                  00a00166    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    00a00000    00000000     UNINITIALIZED
+                  00a00000    00000000     enet.obj (.const)
+
+.data      0    00a00000    00000000     UNINITIALIZED
+                  00a00000    00000000     start.obj (.data)
+                  00a00000    00000000     rts30.lib : exit.obj (.data)
+                  00a00000    00000000               : boot.obj (.data)
+                  00a00000    00000000     enet.obj (.data)
+
+.stack     0    00a00167    00000200     UNINITIALIZED
+                  00a00167    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00a00367    00004514     UNINITIALIZED
+                  00a00367    00000000     start.obj (.bss)
+                  00a00367    00000000     rts30.lib : boot.obj (.bss)
+                  00a00367    000044f2     enet.obj (.bss)
+                  00a04859    00000022     rts30.lib : exit.obj (.bss)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00a00367 .bss                             00000200 __STACK_SIZE
+00a00000 .data                            00a00000 ___data__
+00a00042 .text                            00a00000 .data
+00a000fa _DSP_INIT                        00a00000 ___edata__
+00a00042 _RTL8019_init                    00a00000 edata
+00000200 __STACK_SIZE                     00a00001 _c_int00
+00a00367 ___bss__                         00a0001c _exit
+00a00128 ___cinit__                       00a0002a _atexit
+00a00000 ___data__                        00a0003d _abort
+00a00000 ___edata__                       00a00042 .text
+00a0487b ___end__                         00a00042 ___text__
+00a00128 ___etext__                       00a00042 _RTL8019_init
+ffffffff ___pinit__                       00a000ae _main
+00a00042 ___text__                        00a000b8 _c_int06
+00a00167 __stack                          00a000fa _DSP_INIT
+00a0003d _abort                           00a00128 etext
+00a0002a _atexit                          00a00128 ___etext__
+00a00001 _c_int00                         00a00128 ___cinit__
+00a000b8 _c_int06                         00a00128 cinit
+00a0036e _debug_addr                      00a00167 __stack
+00a0036d _debug_data                      00a00367 .bss
+00a00367 _ether_mac_address               00a00367 _ether_mac_address
+00a0001c _exit                            00a00367 ___bss__
+00a000ae _main                            00a0036d _debug_data
+00a00370 _packet_buffer                   00a0036e _debug_addr
+00a04830 _packet_head                     00a0036f _tcnt
+00a0036f _tcnt                            00a00370 _packet_buffer
+00a04833 _xf_data                         00a04830 _packet_head
+00a00128 cinit                            00a04833 _xf_data
+00a00000 edata                            00a0487b ___end__
+00a0487b end                              00a0487b end
+00a00128 etext                            ffffffff ___pinit__
+ffffffff pinit                            ffffffff pinit
+
+[33 symbols]

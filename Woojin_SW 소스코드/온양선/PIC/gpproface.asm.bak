@@ -1,0 +1,5197 @@
+;******************************************************************************
+;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+;* Date/Time created: Fri May  9 15:30:44 2008                                *
+;******************************************************************************
+	.regalias	; enable floating point register aliases
+fp	.set	ar3
+FP	.set	ar3
+;******************************************************************************
+;* GLOBAL FILE PARAMETERS                                                     *
+;*                                                                            *
+;*   Optimization       : Always Choose Smaller Code Size                     *
+;*   Memory             : Small Memory Model                                  *
+;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+;*   Multiply           : in Hardware (24 bits max)                           *
+;*   Memory Info        : Unmapped Memory Exists                              *
+;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+;*   Calls              : Normal Library ASM calls                            *
+;*   Debug Info         : Optimized TI Debug Information                      *
+;******************************************************************************
+;	c:\lang\tms320c3x\511\bin\ac30.exe gpproface.c C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\gpproface.if 
+	.file	"gpproface.c"
+	.file	"ALL_DEF.h"
+	.sym	_BYTE,0,12,13,32
+	.sym	_WORD,0,14,13,32
+	.sym	_DWORD,0,15,13,32
+	.file	"main.h"
+	.stag	.fake0,256
+	.member	_nSDR_Flag,0,12,8,32
+	.member	_nSDR_Cnt,32,12,8,32
+	.member	_nSDR_Pos,64,12,8,32
+	.member	_nSDR_Buf,96,28,8,32
+	.member	_nADDRESSBuf,128,28,8,32
+	.member	_nSDR_TotalUnit,160,12,8,32
+	.member	_nSDR_OK,192,12,8,32
+	.member	_nSDR_Time,224,12,8,32
+	.eos
+	.sym	_SELFT_TEST,0,8,13,256,.fake0
+	.file	"z85c30.h"
+	.stag	.fake3,32
+	.member	_B0,0,14,18,1
+	.member	_B1,1,14,18,1
+	.member	_B2,2,14,18,1
+	.member	_B3,3,14,18,1
+	.member	_B4,4,14,18,1
+	.member	_B5,5,14,18,1
+	.member	_B6,6,14,18,1
+	.member	_B7,7,14,18,1
+	.eos
+	.utag	.fake2,32
+	.member	_BYTE,0,14,11,32
+	.member	_BIT,0,8,11,32,.fake3
+	.eos
+	.stag	.fake1,32
+	.member	_DR,0,9,8,32,.fake2
+	.eos
+	.sym	_SDR_DATA_BITSET,0,8,13,32,.fake1
+	.stag	.fake4,384
+	.member	_TxPos,0,12,8,32
+	.member	_TxLen,32,12,8,32
+	.member	_TxOK,64,12,8,32
+	.member	_TX_RTS_OFF_TIME,96,12,8,32
+	.member	_TxBuffer,128,28,8,32
+	.member	_RxDataTime,160,12,8,32
+	.member	_RxOK,192,12,8,32
+	.member	_RxPos,224,12,8,32
+	.member	_RxDlyTm,256,12,8,32
+	.member	_RxLen,288,12,8,32
+	.member	_RX_RTS_OFF_TIME,320,12,8,32
+	.member	_RxBuffer,352,28,8,32
+	.eos
+	.sym	_SCC_INIT_SHAPE,0,8,13,384,.fake4
+	.stag	.fake5,704
+	.member	_nSTX_60,0,12,8,32
+	.member	_nSTX_02,32,12,8,32
+	.member	_nSTX_13,64,12,8,32
+	.member	_nSTA,96,12,8,32
+	.member	_nPIS_Code,128,12,8,32
+	.member	_nNOW_ST,160,12,8,32
+	.member	_nNEXT_ST,192,12,8,32
+	.member	_nDEST_ST,224,12,8,32
+	.member	_nDOOR,256,12,8,32
+	.member	_nNUM,288,60,8,64,,2
+	.member	_nTEM,352,60,8,256,,8
+	.member	_nAGENCY_ST_CK,608,12,8,32
+	.member	_nVOL_CK,640,12,8,32
+	.member	_nLCD_CK,672,12,8,32
+	.eos
+	.sym	_TCMSSDR,0,8,13,704,.fake5
+	.sym	_PTCMSSDR,0,24,13,32,.fake5
+	.file	"GpProface.h"
+	.stag	.fake6,64
+	.member	_Address,0,12,8,32
+	.member	_Size,32,12,8,32
+	.eos
+	.sym	_FILE_ADDRESS_SIZE,0,8,13,64,.fake6
+	.stag	.fake7,416
+	.member	_DISPLAY_F,0,8,8,64,.fake6
+	.member	_DISPLAY_D,64,8,8,64,.fake6
+	.member	_PISC_F,128,8,8,64,.fake6
+	.member	_PISC_D,192,8,8,64,.fake6
+	.member	_nDISPLAY_F_SELECT,256,12,8,32
+	.member	_nDISPLAY_D_SELECT,288,12,8,32
+	.member	_nPISC_F_SELECT,320,12,8,32
+	.member	_nPISC_D_SELECT,352,12,8,32
+	.member	_nSELECT_IDD_SDD_FDD,384,12,8,32
+	.eos
+	.sym	_SELETC_BUTTON,0,8,13,416,.fake7
+	.file	"gpproface.c"
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTxA3_Len+0,32
+	.field  	1,32		; _glTxA3_Len @ 0
+
+	.sect	".text"
+
+	.global	_glTxA3_Len
+	.bss	_glTxA3_Len,1
+	.sym	_glTxA3_Len,_glTxA3_Len,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTestInnerCar+0,32
+	.field  	0,32		; _glTestInnerCar @ 0
+
+	.sect	".text"
+
+	.global	_glTestInnerCar
+	.bss	_glTestInnerCar,1
+	.sym	_glTestInnerCar,_glTestInnerCar,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glInner_Flag+0,32
+	.field  	0,32		; _glInner_Flag @ 0
+
+	.sect	".text"
+
+	.global	_glInner_Flag
+	.bss	_glInner_Flag,1
+	.sym	_glInner_Flag,_glInner_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTest+0,32
+	.field  	0,32		; _glTest @ 0
+
+	.sect	".text"
+
+	.global	_glTest
+	.bss	_glTest,1
+	.sym	_glTest,_glTest,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTestCnt+0,32
+	.field  	0,32		; _glTestCnt @ 0
+
+	.sect	".text"
+
+	.global	_glTestCnt
+	.bss	_glTestCnt,1
+	.sym	_glTestCnt,_glTestCnt,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nTNSUPattern_Flag+0,32
+	.field  	0,32		; _nTNSUPattern_Flag @ 0
+
+	.sect	".text"
+
+	.global	_nTNSUPattern_Flag
+	.bss	_nTNSUPattern_Flag,1
+	.sym	_nTNSUPattern_Flag,_nTNSUPattern_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_SP_VOLUME_Flag+0,32
+	.field  	0,32		; _SP_VOLUME_Flag @ 0
+
+	.sect	".text"
+
+	.global	_SP_VOLUME_Flag
+	.bss	_SP_VOLUME_Flag,1
+	.sym	_SP_VOLUME_Flag,_SP_VOLUME_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nTNSUPattern_TxCnt+0,32
+	.field  	0,32		; _nTNSUPattern_TxCnt @ 0
+
+	.sect	".text"
+
+	.global	_nTNSUPattern_TxCnt
+	.bss	_nTNSUPattern_TxCnt,1
+	.sym	_nTNSUPattern_TxCnt,_nTNSUPattern_TxCnt,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nTNSUDATA_ProFlag+0,32
+	.field  	0,32		; _nTNSUDATA_ProFlag @ 0
+
+	.sect	".text"
+
+	.global	_nTNSUDATA_ProFlag
+	.bss	_nTNSUDATA_ProFlag,1
+	.sym	_nTNSUDATA_ProFlag,_nTNSUDATA_ProFlag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_m_GpScreenNum+0,32
+	.field  	1,32		; _m_GpScreenNum @ 0
+
+	.sect	".text"
+
+	.global	_m_GpScreenNum
+	.bss	_m_GpScreenNum,1
+	.sym	_m_GpScreenNum,_m_GpScreenNum,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_n_AutoSimFlag+0,32
+	.field  	0,32		; _n_AutoSimFlag @ 0
+
+	.sect	".text"
+
+	.global	_n_AutoSimFlag
+	.bss	_n_AutoSimFlag,1
+	.sym	_n_AutoSimFlag,_n_AutoSimFlag,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_n_AutoDoorFlag+0,32
+	.field  	0,32		; _n_AutoDoorFlag @ 0
+
+	.sect	".text"
+
+	.global	_n_AutoDoorFlag
+	.bss	_n_AutoDoorFlag,1
+	.sym	_n_AutoDoorFlag,_n_AutoDoorFlag,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_n_AutoSpeed+0,32
+	.field  	0,32		; _n_AutoSpeed @ 0
+
+	.sect	".text"
+
+	.global	_n_AutoSpeed
+	.bss	_n_AutoSpeed,1
+	.sym	_n_AutoSpeed,_n_AutoSpeed,4,2,32
+	.sect	 ".text"
+
+	.global	_gp_WritingWord
+	.sym	_gp_WritingWord,_gp_WritingWord,32,2,0
+	.func	51
+;******************************************************************************
+;* FUNCTION NAME: _gp_WritingWord                                             *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,ar0,ir0                                       *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 2 Parm + 0 Auto + 0 SOE = 4 words          *
+;******************************************************************************
+_gp_WritingWord:
+	.sym	_Addr,-2,14,9,32
+	.sym	_nData,-3,14,9,32
+	.line	1
+;----------------------------------------------------------------------
+;  51 | void gp_WritingWord(unsigned int Addr,unsigned int nData)              
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+	.line	2
+	.line	3
+;----------------------------------------------------------------------
+;  53 | glTxBufA3[glTxA3_Len++] = STX;   //0                                   
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @CL1,ar0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      27,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	4
+;----------------------------------------------------------------------
+;  54 | glTxBufA3[glTxA3_Len++] = 'W';   //1                                   
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      87,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	5
+;----------------------------------------------------------------------
+;  55 | glTxBufA3[glTxA3_Len++] = (Addr>>8)&0xff;   //2                        
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      *-fp(2),r0
+        ldiu      @_glTxA3_Len+0,ir0
+        lsh       -8,r0
+        addi      ir0,r1
+        and       255,r0
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	6
+;----------------------------------------------------------------------
+;  56 | glTxBufA3[glTxA3_Len++] = Addr&0xff;   //3                             
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r1
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        and       *-fp(2),r0
+        sti       r0,*+ar0(ir0)
+	.line	7
+;----------------------------------------------------------------------
+;  57 | glTxBufA3[glTxA3_Len++] = 0x00;  //4                                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        addi      ir0,r0
+        ldiu      0,r1
+        sti       r0,@_glTxA3_Len+0
+        sti       r1,*+ar0(ir0)
+	.line	8
+;----------------------------------------------------------------------
+;  58 | glTxBufA3[glTxA3_Len++] = 0x01;   //5                                  
+;----------------------------------------------------------------------
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r0
+        addi      ir0,r0
+        ldiu      1,r1
+        sti       r0,@_glTxA3_Len+0
+        sti       r1,*+ar0(ir0)
+	.line	9
+;----------------------------------------------------------------------
+;  59 | glTxBufA3[glTxA3_Len++] = (nData >> 8) & 0xff;   //6                   
+;----------------------------------------------------------------------
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r0
+        addi      ir0,r0
+        sti       r0,@_glTxA3_Len+0
+        ldiu      *-fp(3),r0
+        lsh       -8,r0
+        and       255,r0
+        sti       r0,*+ar0(ir0)
+	.line	10
+;----------------------------------------------------------------------
+;  60 | glTxBufA3[glTxA3_Len++] = nData&0xff;   //7                            
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        addi      ir0,r1
+        and       *-fp(3),r0
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	11
+        ldiu      *-fp(1),ir0
+        ldiu      *fp,fp
+        subi      2,sp
+        bu        ir0
+;*      Branch Occurs to ir0 
+	.endfunc	61,000000000h,0
+
+
+	.sect	 ".text"
+
+	.global	_gp_ReadingWord
+	.sym	_gp_ReadingWord,_gp_ReadingWord,32,2,0
+	.func	63
+;******************************************************************************
+;* FUNCTION NAME: _gp_ReadingWord                                             *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,ar0,ir0                                       *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 2 Parm + 0 Auto + 0 SOE = 4 words          *
+;******************************************************************************
+_gp_ReadingWord:
+	.sym	_Addr,-2,14,9,32
+	.sym	_nCnt,-3,14,9,32
+	.line	1
+;----------------------------------------------------------------------
+;  63 | void gp_ReadingWord(unsigned int Addr,unsigned int nCnt)               
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+	.line	2
+	.line	3
+;----------------------------------------------------------------------
+;  65 | glTxBufA3[glTxA3_Len++] = STX;   //8                                   
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @CL1,ar0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      27,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	4
+;----------------------------------------------------------------------
+;  66 | glTxBufA3[glTxA3_Len++] = 'R';   //9                                   
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      82,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	5
+;----------------------------------------------------------------------
+;  67 | glTxBufA3[glTxA3_Len++] = (Addr>>8)&0xff;   //10                       
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      *-fp(2),r0
+        ldiu      @_glTxA3_Len+0,ir0
+        lsh       -8,r0
+        addi      ir0,r1
+        and       255,r0
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	6
+;----------------------------------------------------------------------
+;  68 | glTxBufA3[glTxA3_Len++] = Addr&0xff;   //11                            
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r1
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        and       *-fp(2),r0
+        sti       r0,*+ar0(ir0)
+	.line	7
+;----------------------------------------------------------------------
+;  69 | glTxBufA3[glTxA3_Len++] = (nCnt >> 8) & 0xff;   //12                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        addi      ir0,r0
+        sti       r0,@_glTxA3_Len+0
+        ldiu      *-fp(3),r0
+        lsh       -8,r0
+        and       255,r0
+        sti       r0,*+ar0(ir0)
+	.line	8
+;----------------------------------------------------------------------
+;  70 | glTxBufA3[glTxA3_Len++] = nCnt&0xff;   //13                            
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        and       *-fp(3),r0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r1
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	9
+        ldiu      *-fp(1),ir0
+        ldiu      *fp,fp
+        subi      2,sp
+        bu        ir0
+;*      Branch Occurs to ir0 
+	.endfunc	71,000000000h,0
+
+
+	.sect	 ".text"
+
+	.global	_gp_WritingStr
+	.sym	_gp_WritingStr,_gp_WritingStr,32,2,0
+	.func	73
+;******************************************************************************
+;* FUNCTION NAME: _gp_WritingStr                                              *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,ar0,ar1,ir0,ir1,st                            *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 3 Parm + 1 Auto + 0 SOE = 6 words          *
+;******************************************************************************
+_gp_WritingStr:
+	.sym	_Addr,-2,14,9,32
+	.sym	_Len,-3,14,9,32
+	.sym	_pData,-4,28,9,32
+	.sym	_i,1,4,1,32
+	.line	1
+;----------------------------------------------------------------------
+;  73 | void gp_WritingStr(unsigned int Addr,unsigned int Len, BYTE *pData)    
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      1,sp
+	.line	2
+;----------------------------------------------------------------------
+;  75 | int i;                                                                 
+;----------------------------------------------------------------------
+	.line	5
+;----------------------------------------------------------------------
+;  77 | glTxBufA3[glTxA3_Len++] = STX;      //14                               
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @CL1,ar0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      27,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	6
+;----------------------------------------------------------------------
+;  78 | glTxBufA3[glTxA3_Len++] = 'W';     //15                                
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      87,r0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	7
+;----------------------------------------------------------------------
+;  79 | glTxBufA3[glTxA3_Len++] = (Addr>>8)&0xff;   //16                       
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      *-fp(2),r0
+        ldiu      @_glTxA3_Len+0,ir0
+        lsh       -8,r0
+        addi      ir0,r1
+        and       255,r0
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	8
+;----------------------------------------------------------------------
+;  80 | glTxBufA3[glTxA3_Len++] = Addr&0xff;   //17                            
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      1,r1
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        and       *-fp(2),r0
+        sti       r0,*+ar0(ir0)
+	.line	9
+;----------------------------------------------------------------------
+;  81 | glTxBufA3[glTxA3_Len++] = (Len>>8)&0xff;   //18                        
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        addi      ir0,r0
+        sti       r0,@_glTxA3_Len+0
+        ldiu      *-fp(3),r0
+        lsh       -8,r0
+        and       255,r0
+        sti       r0,*+ar0(ir0)
+	.line	10
+;----------------------------------------------------------------------
+;  82 | glTxBufA3[glTxA3_Len++] = Len&0xff;   //19                             
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        and       *-fp(3),r0
+        ldiu      1,r1
+        ldiu      @_glTxA3_Len+0,ir0
+        addi      ir0,r1
+        sti       r1,@_glTxA3_Len+0
+        sti       r0,*+ar0(ir0)
+	.line	12
+;----------------------------------------------------------------------
+;  84 | for(i=0;i<Len*2;i++)                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      *-fp(3),r0
+        mpyi      2,r0
+        ldiu      *+fp(1),r1
+        cmpi3     r0,r1
+        bhs       L9
+;*      Branch Occurs to L9 
+L8:        
+	.line	14
+;----------------------------------------------------------------------
+;  86 | glTxBufA3[glTxA3_Len++] = pData[i];                                    
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      @_glTxA3_Len+0,ir0
+        ldiu      *-fp(4),ir1
+        ldiu      *+fp(1),ar1
+        ldiu      @CL1,ar0
+        addi      ir0,r0
+        ldiu      *+ar1(ir1),r1
+        sti       r0,@_glTxA3_Len+0
+        sti       r1,*+ar0(ir0)
+	.line	12
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        ldiu      *-fp(3),r0
+        ldiu      *+fp(1),r1
+        mpyi      2,r0
+        cmpi3     r0,r1
+        blo       L8
+;*      Branch Occurs to L8 
+L9:        
+	.line	16
+        ldiu      *-fp(1),ir1
+        ldiu      *fp,fp
+        subi      3,sp
+        bu        ir1
+;*      Branch Occurs to ir1 
+	.endfunc	88,000000000h,1
+
+
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_GP_PreTrainNo+0,32
+	.field  	0,32		; _GP_PreTrainNo @ 0
+
+	.sect	".text"
+
+	.global	_GP_PreTrainNo
+	.bss	_GP_PreTrainNo,1
+	.sym	_GP_PreTrainNo,_GP_PreTrainNo,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PreTrainNo+0,32
+	.field  	0,32		; _PreTrainNo @ 0
+
+	.sect	".text"
+
+	.global	_PreTrainNo
+	.bss	_PreTrainNo,1
+	.sym	_PreTrainNo,_PreTrainNo,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glComTrainNo+0,32
+	.field  	0,32		; _glComTrainNo @ 0
+
+	.sect	".text"
+
+	.global	_glComTrainNo
+	.bss	_glComTrainNo,1
+	.sym	_glComTrainNo,_glComTrainNo,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nSDR_Flag+0,32
+	.field  	0,32		; _nSDR_Flag @ 0
+
+	.sect	".text"
+
+	.global	_nSDR_Flag
+	.bss	_nSDR_Flag,1
+	.sym	_nSDR_Flag,_nSDR_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_FLAG+0,32
+	.field  	0,32		; _PR_FLAG @ 0
+
+	.sect	".text"
+
+	.global	_PR_FLAG
+	.bss	_PR_FLAG,1
+	.sym	_PR_FLAG,_PR_FLAG,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE0_Flag+0,32
+	.field  	0,32		; _PR_CODE0_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE0_Flag
+	.bss	_PR_CODE0_Flag,1
+	.sym	_PR_CODE0_Flag,_PR_CODE0_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE1_Flag+0,32
+	.field  	0,32		; _PR_CODE1_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE1_Flag
+	.bss	_PR_CODE1_Flag,1
+	.sym	_PR_CODE1_Flag,_PR_CODE1_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE2_Flag+0,32
+	.field  	0,32		; _PR_CODE2_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE2_Flag
+	.bss	_PR_CODE2_Flag,1
+	.sym	_PR_CODE2_Flag,_PR_CODE2_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE3_Flag+0,32
+	.field  	0,32		; _PR_CODE3_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE3_Flag
+	.bss	_PR_CODE3_Flag,1
+	.sym	_PR_CODE3_Flag,_PR_CODE3_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE4_Flag+0,32
+	.field  	0,32		; _PR_CODE4_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE4_Flag
+	.bss	_PR_CODE4_Flag,1
+	.sym	_PR_CODE4_Flag,_PR_CODE4_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE5_Flag+0,32
+	.field  	0,32		; _PR_CODE5_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE5_Flag
+	.bss	_PR_CODE5_Flag,1
+	.sym	_PR_CODE5_Flag,_PR_CODE5_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE6_Flag+0,32
+	.field  	0,32		; _PR_CODE6_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE6_Flag
+	.bss	_PR_CODE6_Flag,1
+	.sym	_PR_CODE6_Flag,_PR_CODE6_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE7_Flag+0,32
+	.field  	0,32		; _PR_CODE7_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE7_Flag
+	.bss	_PR_CODE7_Flag,1
+	.sym	_PR_CODE7_Flag,_PR_CODE7_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PR_CODE8_Flag+0,32
+	.field  	0,32		; _PR_CODE8_Flag @ 0
+
+	.sect	".text"
+
+	.global	_PR_CODE8_Flag
+	.bss	_PR_CODE8_Flag,1
+	.sym	_PR_CODE8_Flag,_PR_CODE8_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_1ON_Flag+0,32
+	.field  	0,32		; _LCD_1ON_Flag @ 0
+
+	.sect	".text"
+
+	.global	_LCD_1ON_Flag
+	.bss	_LCD_1ON_Flag,1
+	.sym	_LCD_1ON_Flag,_LCD_1ON_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_1OFF_Flag+0,32
+	.field  	0,32		; _LCD_1OFF_Flag @ 0
+
+	.sect	".text"
+
+	.global	_LCD_1OFF_Flag
+	.bss	_LCD_1OFF_Flag,1
+	.sym	_LCD_1OFF_Flag,_LCD_1OFF_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_2ON_Flag+0,32
+	.field  	0,32		; _LCD_2ON_Flag @ 0
+
+	.sect	".text"
+
+	.global	_LCD_2ON_Flag
+	.bss	_LCD_2ON_Flag,1
+	.sym	_LCD_2ON_Flag,_LCD_2ON_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_2OFF_Flag+0,32
+	.field  	0,32		; _LCD_2OFF_Flag @ 0
+
+	.sect	".text"
+
+	.global	_LCD_2OFF_Flag
+	.bss	_LCD_2OFF_Flag,1
+	.sym	_LCD_2OFF_Flag,_LCD_2OFF_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nLCD_ST+0,32
+	.field  	0,32		; _nLCD_ST @ 0
+
+	.sect	".text"
+
+	.global	_nLCD_ST
+	.bss	_nLCD_ST,1
+	.sym	_nLCD_ST,_nLCD_ST,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nVOL_ST+0,32
+	.field  	0,32		; _nVOL_ST @ 0
+
+	.sect	".text"
+
+	.global	_nVOL_ST
+	.bss	_nVOL_ST,1
+	.sym	_nVOL_ST,_nVOL_ST,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nPR_CODE_ST+0,32
+	.field  	0,32		; _nPR_CODE_ST @ 0
+
+	.sect	".text"
+
+	.global	_nPR_CODE_ST
+	.bss	_nPR_CODE_ST,1
+	.sym	_nPR_CODE_ST,_nPR_CODE_ST,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nAGENCY_ST+0,32
+	.field  	0,32		; _nAGENCY_ST @ 0
+
+	.sect	".text"
+
+	.global	_nAGENCY_ST
+	.bss	_nAGENCY_ST,1
+	.sym	_nAGENCY_ST,_nAGENCY_ST,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_ST+0,32
+	.field  	0,32		; _LCD_ST @ 0
+
+	.sect	".text"
+
+	.global	_LCD_ST
+	.bss	_LCD_ST,1
+	.sym	_LCD_ST,_LCD_ST,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_LCD_2St_Flag+0,32
+	.field  	0,32		; _LCD_2St_Flag @ 0
+
+	.sect	".text"
+
+	.global	_LCD_2St_Flag
+	.bss	_LCD_2St_Flag,1
+	.sym	_LCD_2St_Flag,_LCD_2St_Flag,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_AGENCY_Flag+0,32
+	.field  	0,32		; _AGENCY_Flag @ 0
+
+	.sect	".text"
+
+	.global	_AGENCY_Flag
+	.bss	_AGENCY_Flag,1
+	.sym	_AGENCY_Flag,_AGENCY_Flag,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_SP_VOLUME_CNT_ADD+0,32
+	.field  	0,32		; _SP_VOLUME_CNT_ADD @ 0
+
+	.sect	".text"
+
+	.global	_SP_VOLUME_CNT_ADD
+	.bss	_SP_VOLUME_CNT_ADD,1
+	.sym	_SP_VOLUME_CNT_ADD,_SP_VOLUME_CNT_ADD,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_SP_VOLUME_CNT_DEG+0,32
+	.field  	0,32		; _SP_VOLUME_CNT_DEG @ 0
+
+	.sect	".text"
+
+	.global	_SP_VOLUME_CNT_DEG
+	.bss	_SP_VOLUME_CNT_DEG,1
+	.sym	_SP_VOLUME_CNT_DEG,_SP_VOLUME_CNT_DEG,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_SP_VOLUME_CNT+0,32
+	.field  	0,32		; _SP_VOLUME_CNT @ 0
+
+	.sect	".text"
+
+	.global	_SP_VOLUME_CNT
+	.bss	_SP_VOLUME_CNT,1
+	.sym	_SP_VOLUME_CNT,_SP_VOLUME_CNT,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTestService+0,32
+	.field  	0,32		; _glTestService @ 0
+
+	.sect	".text"
+
+	.global	_glTestService
+	.bss	_glTestService,1
+	.sym	_glTestService,_glTestService,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glService_Flag+0,32
+	.field  	0,32		; _glService_Flag @ 0
+
+	.sect	".text"
+
+	.global	_glService_Flag
+	.bss	_glService_Flag,1
+	.sym	_glService_Flag,_glService_Flag,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_glTestAutoDoor+0,32
+	.field  	0,32		; _glTestAutoDoor @ 0
+
+	.sect	".text"
+
+	.global	_glTestAutoDoor
+	.bss	_glTestAutoDoor,1
+	.sym	_glTestAutoDoor,_glTestAutoDoor,12,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_PreDistance+0,32
+	.field  	0,32		; _PreDistance @ 0
+
+	.sect	".text"
+
+	.global	_PreDistance
+	.bss	_PreDistance,1
+	.sym	_PreDistance,_PreDistance,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_JYJ+0,32
+	.field  	0,32		; _JYJ @ 0
+
+	.sect	".text"
+
+	.global	_JYJ
+	.bss	_JYJ,1
+	.sym	_JYJ,_JYJ,12,2,32
+	.sect	 ".text"
+
+	.global	_Gp_Receive
+	.sym	_Gp_Receive,_Gp_Receive,32,2,0
+	.func	133
+;******************************************************************************
+;* FUNCTION NAME: _Gp_Receive                                                 *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,r2,ar0,ar1,fp,ir0,sp,st                       *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 1 Parm + 21 Auto + 0 SOE = 24 words        *
+;******************************************************************************
+_Gp_Receive:
+	.sym	_pGpRXData,-2,28,9,32
+	.sym	_i,1,4,1,32
+	.sym	_nGpTxBuf,2,60,1,640,,20
+	.line	1
+;----------------------------------------------------------------------
+; 133 | void Gp_Receive(BYTE *pGpRXData)                                       
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      21,sp
+	.line	2
+;----------------------------------------------------------------------
+; 135 | int i;                                                                 
+; 136 | BYTE nGpTxBuf[20];                                                     
+;----------------------------------------------------------------------
+	.line	6
+;----------------------------------------------------------------------
+; 138 | if(pGpRXData[1]==0x41) ///m_Scc2RXBuff_Bch¿Í µ¿ÀÏ ¿­Â÷¹øÈ£À» ´©·éÈÄ È®À
+;     | ÎÀ» ÇÏ´Â ¼ø°£ 0x41ÀÌ ³»ºÎÀûÀ¸·Î Ãâ·Â                                   
+;----------------------------------------------------------------------
+        ldiu      *-fp(2),ar0
+        ldiu      *+ar0(1),r0
+        cmpi      65,r0
+        bne       L13
+;*      Branch Occurs to L13 
+	.line	8
+;----------------------------------------------------------------------
+; 140 | glComTrainNo =(((pGpRXData[2]<<8)&0xff00)|pGpRXData[3]);               
+;----------------------------------------------------------------------
+        ldiu      ar0,ar1
+        ldiu      *+ar1(2),r0
+        ash       8,r0
+        and       65280,r0
+        or        *+ar0(3),r0
+        sti       r0,@_glComTrainNo+0
+	.line	9
+;----------------------------------------------------------------------
+; 141 | GP_PreTrainNo = glComTrainNo;                                          
+;----------------------------------------------------------------------
+        sti       r0,@_GP_PreTrainNo+0
+	.line	10
+;----------------------------------------------------------------------
+; 142 | nTNSUDATA_ProFlag = 4;          //&&jyj&& ¿­Â÷ ¹øÈ£ proFlagÀ» ¿Ö 2·Î ¼¼
+;     | ¿üÀ»±î?                                                                
+;----------------------------------------------------------------------
+        ldiu      4,r0
+        sti       r0,@_nTNSUDATA_ProFlag+0
+        bu        L211
+;*      Branch Occurs to L211 
+L13:        
+	.line	12
+;----------------------------------------------------------------------
+; 144 | else if(pGpRXData[1]==0x49)                                            
+; 146 |         switch(pGpRXData[3])     //¿Ö 3¹øÀ¸·Î ¸í·É¾î Ãâ·ÂÀÌ ³ª°¡´Â°ÍÀÏ±
+;     | î?                                                                     
+; 148 |         case 0x32:              //¸Þ´º                                 
+;----------------------------------------------------------------------
+        ldiu      *-fp(2),ar0
+        ldiu      *+ar0(1),r0
+        cmpi      73,r0
+        bne       L211
+;*      Branch Occurs to L211 
+        bud       L49
+        nop
+        ldiu      50,r0
+        ldiu      *+ar0(3),ir0
+;*      Branch Occurs to L49 
+L15:        
+	.line	17
+;----------------------------------------------------------------------
+; 149 | gpMENU;                                                                
+;----------------------------------------------------------------------
+        ldiu      65,r1
+        ldiu      15,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	18
+;----------------------------------------------------------------------
+; 150 | m_GpScreenNum = 0;                                                     
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	19
+;----------------------------------------------------------------------
+; 151 | m_SDR_Flag.nSDR_Flag = 0;                                              
+;----------------------------------------------------------------------
+        sti       r0,@_m_SDR_Flag+0
+	.line	20
+;----------------------------------------------------------------------
+; 152 | break;                                                                 
+; 153 | case 0x33:              //»óÅÂ                                         
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L16:        
+	.line	22
+;----------------------------------------------------------------------
+; 154 | m_GpScreenNum = 1;  //»óÅÂÈ­¸é¿¡¼­ÀÇ code, RVerÀ» Ç¥ÃâÇÏ±â À§ÇØ¼­ FlagÀ
+;     | » ¼¼¿öÁÖ´Â°Í                                                           
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	23
+;----------------------------------------------------------------------
+; 155 | gpSTATE;                                                               
+;----------------------------------------------------------------------
+        ldiu      60,r1
+        push      r1
+        ldiu      15,r0
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	24
+;----------------------------------------------------------------------
+; 156 | break;                                                                 
+; 157 | case 0x3C:              //                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L17:        
+	.line	26
+;----------------------------------------------------------------------
+; 158 | m_GpScreenNum = 0;                                                     
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	27
+;----------------------------------------------------------------------
+; 159 | gpMANU;                                                                
+;----------------------------------------------------------------------
+        ldiu      120,r1
+        push      r1
+        ldiu      15,r0
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	28
+;----------------------------------------------------------------------
+; 160 | break;                                                                 
+; 161 | case 0x34:              //¿­¹ø¼³Á¤                                     
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L18:        
+	.line	30
+;----------------------------------------------------------------------
+; 162 | m_GpScreenNum = 0;                                                     
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	31
+;----------------------------------------------------------------------
+; 163 | gpTRAINNUMBER;                                                         
+;----------------------------------------------------------------------
+        ldiu      51,r1
+        push      r1
+        ldiu      15,r0
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	32
+;----------------------------------------------------------------------
+; 164 | gpKEYACTIVE;                                                           
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      50,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	33
+;----------------------------------------------------------------------
+; 165 | gpKEYCLR;                                                              
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        push      r0
+        ldiu      74,r1
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	34
+;----------------------------------------------------------------------
+; 166 | gpKEYEN;                                                               
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      14,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	35
+;----------------------------------------------------------------------
+; 167 | gpSETCLR;                                                              
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        push      r0
+        ldiu      82,r1
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	36
+;----------------------------------------------------------------------
+; 168 | break;                                                                 
+; 169 | case 0x4D:              //¿­¹ø¼³Á¤ Å° È°¼ºÈ­                           
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L19:        
+	.line	38
+;----------------------------------------------------------------------
+; 170 | gpKEYINIT;                                                             
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        ldiu      75,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	39
+;----------------------------------------------------------------------
+; 171 | break;                                                                 
+; 172 | case 0x50:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L20:        
+	.line	41
+;----------------------------------------------------------------------
+; 173 | gpKEYCLR;                                                              
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        ldiu      74,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	42
+;----------------------------------------------------------------------
+; 174 | gpRDNUMBER;                                                            
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      100,r1
+        push      r0
+        push      r1
+        call      _gp_ReadingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	43
+;----------------------------------------------------------------------
+; 175 | gpKEYDIS;                                                              
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        ldiu      14,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	44
+;----------------------------------------------------------------------
+; 176 | gpTRNOSEEK;                                                            
+;----------------------------------------------------------------------
+        ldiu      4,r0
+        ldiu      82,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	45
+;----------------------------------------------------------------------
+; 177 | gpSETERR;                                                              
+;----------------------------------------------------------------------
+        ldiu      82,r1
+        ldiu      2,r0
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	46
+;----------------------------------------------------------------------
+; 178 | gpKEYEN;                                                               
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        push      r0
+        ldiu      14,r1
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	47
+;----------------------------------------------------------------------
+; 179 | break;                                                                 
+; 180 | case 0x38:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L21:        
+	.line	49
+;----------------------------------------------------------------------
+; 181 | gpROOT;                                                                
+;----------------------------------------------------------------------
+        ldiu      90,r0
+        ldiu      15,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	50
+;----------------------------------------------------------------------
+; 182 | gpROOTINIT;                                                            
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        ldiu      60,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+        ldiu      0,r0
+        ldiu      55,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	51
+;----------------------------------------------------------------------
+; 183 | gpROOTACTIVE;                                                          
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        ldiu      60,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	52
+;----------------------------------------------------------------------
+; 184 | break;                                                                 
+; 187 | case 0x35:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L22:        
+	.line	56
+;----------------------------------------------------------------------
+; 188 | gpTEST;                                                                
+;----------------------------------------------------------------------
+        ldiu      2070,r0
+        ldiu      15,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	57
+;----------------------------------------------------------------------
+; 189 | break;                                                                 
+; 190 | case 0x64: //   ¸ðÀÇÁÖÇà ½ÃÇè.                                         
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L23:        
+	.line	59
+;----------------------------------------------------------------------
+; 191 | n_AutoSimFlag= NOT(n_AutoSimFlag);                                     
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_n_AutoSimFlag+0,r0
+        sti       r0,@_n_AutoSimFlag+0
+	.line	60
+;----------------------------------------------------------------------
+; 192 | break;                                                                 
+; 193 | case 0x67:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L24:        
+	.line	62
+;----------------------------------------------------------------------
+; 194 | n_AutoDoorFlag= NOT(n_AutoDoorFlag);                                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_n_AutoDoorFlag+0,r0
+        sti       r0,@_n_AutoDoorFlag+0
+	.line	63
+;----------------------------------------------------------------------
+; 195 | break;  //ÃâÀÔ¹®½ÃÇè.                                                  
+; 198 | case 0x6F:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+	.line	67
+;----------------------------------------------------------------------
+; 199 | gpROOTINIT;                                                            
+;----------------------------------------------------------------------
+L26:        
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+        ldiu      0,r1
+        ldiu      55,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	68
+;----------------------------------------------------------------------
+; 200 | gpROOTDIS;                                                             
+;----------------------------------------------------------------------
+        ldiu      0,r1
+        ldiu      57,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	69
+;----------------------------------------------------------------------
+; 201 | break;                                                                 
+; 203 | case 0x42:  //LCD ON/OFF È­¸é                                          
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L27:        
+	.line	72
+;----------------------------------------------------------------------
+; 204 | gpLCD_ON_OFF;                                                          
+;----------------------------------------------------------------------
+        ldiu      3000,r1
+        ldiu      15,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	73
+;----------------------------------------------------------------------
+; 205 | break;                                                                 
+; 207 | case 0x3A:  //±ä±Þ¾È³»                                                 
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L28:        
+	.line	76
+;----------------------------------------------------------------------
+; 208 | gpPR_SCREEN;                                                           
+;----------------------------------------------------------------------
+        ldiu      3008,r1
+        ldiu      15,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	77
+;----------------------------------------------------------------------
+; 209 | AGENCY_Flag=1;                                                         
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_AGENCY_Flag+0
+	.line	78
+;----------------------------------------------------------------------
+; 210 | break;                                                                 
+; 212 | case 0x3B:   //±ä±Þ --> ±ä±Þ¾È³»1                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L29:        
+	.line	81
+;----------------------------------------------------------------------
+; 213 | PR_CODE1_Flag=NOT(PR_CODE1_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE1_Flag+0,r0
+        sti       r0,@_PR_CODE1_Flag+0
+	.line	82
+;----------------------------------------------------------------------
+; 214 | break;                                                                 
+; 216 | case 0x46:   //±ä±Þ --> ±ä±Þ¾È³»2                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L30:        
+	.line	85
+;----------------------------------------------------------------------
+; 217 | PR_CODE2_Flag=NOT(PR_CODE2_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE2_Flag+0,r0
+        sti       r0,@_PR_CODE2_Flag+0
+	.line	86
+;----------------------------------------------------------------------
+; 218 | break;                                                                 
+; 220 | case 0x47:   //±ä±Þ --> ±ä±Þ¾È³»3                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L31:        
+	.line	89
+;----------------------------------------------------------------------
+; 221 | PR_CODE3_Flag=NOT(PR_CODE3_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE3_Flag+0,r0
+        sti       r0,@_PR_CODE3_Flag+0
+	.line	90
+;----------------------------------------------------------------------
+; 222 | break;                                                                 
+; 224 | case 0x48:   //±ä±Þ --> ±ä±Þ¾È³»4                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L32:        
+	.line	93
+;----------------------------------------------------------------------
+; 225 | PR_CODE4_Flag=NOT(PR_CODE4_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE4_Flag+0,r0
+        sti       r0,@_PR_CODE4_Flag+0
+	.line	94
+;----------------------------------------------------------------------
+; 226 | break;                                                                 
+; 228 | case 0x49:   //±ä±Þ --> ±ä±Þ¾È³»5                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L33:        
+	.line	97
+;----------------------------------------------------------------------
+; 229 | PR_CODE5_Flag=NOT(PR_CODE5_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE5_Flag+0,r0
+        sti       r0,@_PR_CODE5_Flag+0
+	.line	98
+;----------------------------------------------------------------------
+; 230 | break;                                                                 
+; 232 | case 0x4C:   //±ä±Þ --> ±ä±Þ¾È³»6                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L34:        
+	.line	101
+;----------------------------------------------------------------------
+; 233 | PR_CODE6_Flag=NOT(PR_CODE6_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE6_Flag+0,r0
+        sti       r0,@_PR_CODE6_Flag+0
+	.line	102
+;----------------------------------------------------------------------
+; 234 | break;                                                                 
+; 236 | case 0x4E:   //±ä±Þ --> ±ä±Þ¾È³»7                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L35:        
+	.line	105
+;----------------------------------------------------------------------
+; 237 | PR_CODE7_Flag=NOT(PR_CODE7_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE7_Flag+0,r0
+        sti       r0,@_PR_CODE7_Flag+0
+	.line	106
+;----------------------------------------------------------------------
+; 238 | break;                                                                 
+; 240 | case 0x4F:   //±ä±Þ --> ±ä±Þ¾È³»8                                      
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L36:        
+	.line	109
+;----------------------------------------------------------------------
+; 241 | PR_CODE8_Flag=NOT(PR_CODE8_Flag);                                      
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_PR_CODE8_Flag+0,r0
+        sti       r0,@_PR_CODE8_Flag+0
+	.line	110
+;----------------------------------------------------------------------
+; 242 | break;                                                                 
+; 244 | case 0x37:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L37:        
+	.line	113
+;----------------------------------------------------------------------
+; 245 | m_GpScreenNum = 0;                                                     
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	114
+;----------------------------------------------------------------------
+; 246 | gpTEST; //½ÃÇè¸ðµå º¯È¯                                                
+;----------------------------------------------------------------------
+        ldiu      2070,r1
+        push      r1
+        ldiu      15,r0
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	115
+;----------------------------------------------------------------------
+; 247 | glTestCnt++;                                                           
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_glTestCnt+0,r0      ; Unsigned
+        sti       r0,@_glTestCnt+0
+	.line	116
+;----------------------------------------------------------------------
+; 248 | break;                                                                 
+; 250 | case 0x5D:      //ÆÐÅÏ                                                 
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L38:        
+	.line	119
+;----------------------------------------------------------------------
+; 251 | nTNSUPattern_Flag = NOT(nTNSUPattern_Flag);   //&&jyj&&¹ÝÀüÀ¸·Î ÇÑ ÀÌÀ¯
+;     | ´Â?                                                                    
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_nTNSUPattern_Flag+0,r0
+        sti       r0,@_nTNSUPattern_Flag+0
+	.line	120
+;----------------------------------------------------------------------
+; 252 | nTNSUPattern_TxCnt = 2;   ///¿Ö Ä«¿îÅÍ¸¦ 2·Î ÇßÀ»±î?                   
+;----------------------------------------------------------------------
+        ldiu      2,r0
+        sti       r0,@_nTNSUPattern_TxCnt+0
+	.line	121
+;----------------------------------------------------------------------
+; 253 | break;                                                                 
+; 255 | case 0x3D:  //ÀÚ±âÁø´Ü È­¸é                                            
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L39:        
+	.line	124
+;----------------------------------------------------------------------
+; 256 | m_GpScreenNum = 0;                                                     
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_m_GpScreenNum+0
+	.line	125
+;----------------------------------------------------------------------
+; 257 | gpSELFT_4;                                                             
+; 258 | //gp4RBLACK_S;gp6RWITE;gp8RWITE;gp8SELFITEM;                           
+; 259 | //gpSELFTESTINIT;//gpSETCLR;                                           
+;----------------------------------------------------------------------
+        ldiu      130,r1
+        push      r1
+        ldiu      15,r0
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	128
+;----------------------------------------------------------------------
+; 260 | m_SDR_Flag.nSDR_Flag = 1;                                              
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_m_SDR_Flag+0
+	.line	129
+;----------------------------------------------------------------------
+; 261 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x08; nGpTxBuf[i*2+1]= 0x06;} // 2054
+;     |  ¹«Ç¥½Ã  //0X07·Î ¼³Á¤µÊ                                               
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r1
+        cmpi      10,r1
+        bged      L41
+	nop
+        ldiu      6,r2
+        ldiu      8,r0
+;*      Branch Occurs to L41 
+L40:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r1
+        addi      *+fp(1),r1
+        sti       r1,*+fp(1)
+        cmpi      10,r1
+        blt       L40
+;*      Branch Occurs to L40 
+L41:        
+	.line	130
+;----------------------------------------------------------------------
+; 262 | gp_WritingStr(220,4,nGpTxBuf);                           // »óÅÂ µ¥ÀÌÅÍ
+;     |  Ç¥Ãâ 2003-12-05 8:18¿ÀÀü                                              
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      4,r1
+        ldiu      220,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	131
+;----------------------------------------------------------------------
+; 263 | memset(m_SDR_Flag.nSDR_Buf,0x01,10);   //ÃÊ±âÈ­                        
+;----------------------------------------------------------------------
+        ldiu      10,r0
+        ldiu      1,r1
+        push      r0
+        push      r1
+        ldiu      @_m_SDR_Flag+3,r0
+        push      r0
+        call      _memset
+                                        ; Call Occurs
+        subi      3,sp
+	.line	132
+;----------------------------------------------------------------------
+; 264 | break;                                                                 
+; 266 | case 0x70:  //LCD1_ON_OFF                                              
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L42:        
+	.line	135
+;----------------------------------------------------------------------
+; 267 | LCD_1ON_Flag=NOT(LCD_1ON_Flag);                                        
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_LCD_1ON_Flag+0,r0
+        sti       r0,@_LCD_1ON_Flag+0
+	.line	136
+;----------------------------------------------------------------------
+; 268 | if(LCD_1ON_Flag==1)                                                    
+;----------------------------------------------------------------------
+        cmpi      1,r0
+        bne       L44
+;*      Branch Occurs to L44 
+	.line	138
+;----------------------------------------------------------------------
+; 270 | nLCD_ST =0x08;                                                         
+; 272 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      8,r0
+        sti       r0,@_nLCD_ST+0
+        bu        L84
+;*      Branch Occurs to L84 
+L44:        
+	.line	142
+;----------------------------------------------------------------------
+; 274 | nLCD_ST =0x04;                                                         
+;----------------------------------------------------------------------
+        ldiu      4,r0
+        sti       r0,@_nLCD_ST+0
+	.line	144
+;----------------------------------------------------------------------
+; 276 | break;                                                                 
+; 277 | case 0x72:  //LCD2_ON_OFF                                              
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+L45:        
+	.line	146
+;----------------------------------------------------------------------
+; 278 | LCD_2ON_Flag=NOT(LCD_2ON_Flag);                                        
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        andn      @_LCD_2ON_Flag+0,r0
+        sti       r0,@_LCD_2ON_Flag+0
+	.line	147
+;----------------------------------------------------------------------
+; 279 | if(LCD_2ON_Flag==1)                                                    
+;----------------------------------------------------------------------
+        cmpi      1,r0
+        bne       L47
+;*      Branch Occurs to L47 
+	.line	149
+;----------------------------------------------------------------------
+; 281 | nLCD_ST = 0x02;                                                        
+; 283 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      2,r0
+        sti       r0,@_nLCD_ST+0
+        bu        L84
+;*      Branch Occurs to L84 
+L47:        
+	.line	153
+;----------------------------------------------------------------------
+; 285 | nLCD_ST=0x01;                                                          
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_nLCD_ST+0
+	.line	155
+;----------------------------------------------------------------------
+; 287 | break;                                                                 
+; 295 | /////////////////////////// ±ä±Þ¾È³»  ±â´É ////////////////////////////
+;     | /////////////////////////                                              
+; 296 | switch(pGpRXData[3])                                                   
+; 299 | case 0x3B:                                                             
+;----------------------------------------------------------------------
+        bu        L84
+;*      Branch Occurs to L84 
+	.line	14
+L49:        
+        subri     ir0,r0
+        cmpi      30,r0
+        bls       L57
+;*      Branch Occurs to L57 
+        cmpi      93,ir0
+        beq       L38
+;*      Branch Occurs to L38 
+        cmpi      100,ir0
+        beq       L23
+;*      Branch Occurs to L23 
+        cmpi      103,ir0
+        beq       L24
+;*      Branch Occurs to L24 
+        cmpi      111,ir0
+        beqd      L26
+	nop
+        ldieq     0,r1
+        ldieq     60,r0
+;*      Branch Occurs to L26 
+        cmpi      112,ir0
+        beq       L42
+;*      Branch Occurs to L42 
+        cmpi      114,ir0
+        beq       L45
+;*      Branch Occurs to L45 
+        bu        L84
+;*      Branch Occurs to L84 
+L57:        
+        subi      50,ir0                ; Unsigned
+        ldiu      @CL2,ar0
+        ldiu      *+ar0(ir0),r0
+        bu        r0
+
+	.sect	".text"
+SW0:	.word	L15	; 50
+	.word	L16	; 51
+	.word	L18	; 52
+	.word	L22	; 53
+	.word	L84	; 0
+	.word	L37	; 55
+	.word	L21	; 56
+	.word	L84	; 0
+	.word	L28	; 58
+	.word	L29	; 59
+	.word	L17	; 60
+	.word	L39	; 61
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L27	; 66
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L30	; 70
+	.word	L31	; 71
+	.word	L32	; 72
+	.word	L33	; 73
+	.word	L84	; 0
+	.word	L84	; 0
+	.word	L34	; 76
+	.word	L19	; 77
+	.word	L35	; 78
+	.word	L36	; 79
+	.word	L20	; 80
+	.sect	".text"
+;*      Branch Occurs to r0 
+L59:        
+	.line	168
+;----------------------------------------------------------------------
+; 300 | if(PR_CODE1_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE1_Flag+0,r0
+        cmpi      1,r0
+        bne       L61
+;*      Branch Occurs to L61 
+	.line	170
+;----------------------------------------------------------------------
+; 302 | nAGENCY_ST=0x01;                                                       
+; 304 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L61:        
+	.line	174
+;----------------------------------------------------------------------
+; 306 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	176
+;----------------------------------------------------------------------
+; 308 | break;                                                                 
+; 309 | case 0x46:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L62:        
+	.line	178
+;----------------------------------------------------------------------
+; 310 | if(PR_CODE2_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE2_Flag+0,r0
+        cmpi      1,r0
+        bne       L64
+;*      Branch Occurs to L64 
+	.line	180
+;----------------------------------------------------------------------
+; 312 | nAGENCY_ST=0x02;                                                       
+; 314 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      2,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L64:        
+	.line	184
+;----------------------------------------------------------------------
+; 316 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	186
+;----------------------------------------------------------------------
+; 318 | break;                                                                 
+; 319 | case 0x47:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L65:        
+	.line	188
+;----------------------------------------------------------------------
+; 320 | if(PR_CODE3_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE3_Flag+0,r0
+        cmpi      1,r0
+        bne       L67
+;*      Branch Occurs to L67 
+	.line	190
+;----------------------------------------------------------------------
+; 322 | nAGENCY_ST=0x04;                                                       
+; 324 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      4,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L67:        
+	.line	194
+;----------------------------------------------------------------------
+; 326 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	196
+;----------------------------------------------------------------------
+; 328 | break;                                                                 
+; 329 | case 0x48:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L68:        
+	.line	198
+;----------------------------------------------------------------------
+; 330 | if(PR_CODE4_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE4_Flag+0,r0
+        cmpi      1,r0
+        bne       L70
+;*      Branch Occurs to L70 
+	.line	200
+;----------------------------------------------------------------------
+; 332 | nAGENCY_ST=0x08;                                                       
+; 334 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      8,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L70:        
+	.line	204
+;----------------------------------------------------------------------
+; 336 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	206
+;----------------------------------------------------------------------
+; 338 | break;                                                                 
+; 339 | case 0x49:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L71:        
+	.line	208
+;----------------------------------------------------------------------
+; 340 | if(PR_CODE5_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE5_Flag+0,r0
+        cmpi      1,r0
+        bne       L73
+;*      Branch Occurs to L73 
+	.line	210
+;----------------------------------------------------------------------
+; 342 | nAGENCY_ST=0x10;                                                       
+; 344 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      16,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L73:        
+	.line	214
+;----------------------------------------------------------------------
+; 346 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	216
+;----------------------------------------------------------------------
+; 348 | break;                                                                 
+; 349 | case 0x4C:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L74:        
+	.line	218
+;----------------------------------------------------------------------
+; 350 | if(PR_CODE6_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE6_Flag+0,r0
+        cmpi      1,r0
+        bne       L76
+;*      Branch Occurs to L76 
+	.line	220
+;----------------------------------------------------------------------
+; 352 | nAGENCY_ST=0x20;                                                       
+; 354 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      32,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L76:        
+	.line	224
+;----------------------------------------------------------------------
+; 356 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	226
+;----------------------------------------------------------------------
+; 358 | break;                                                                 
+; 359 | case 0x4E:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L77:        
+	.line	228
+;----------------------------------------------------------------------
+; 360 | if(PR_CODE7_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE7_Flag+0,r0
+        cmpi      1,r0
+        bne       L79
+;*      Branch Occurs to L79 
+	.line	230
+;----------------------------------------------------------------------
+; 362 | nAGENCY_ST=0x40;                                                       
+; 364 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      64,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L79:        
+	.line	234
+;----------------------------------------------------------------------
+; 366 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	236
+;----------------------------------------------------------------------
+; 368 | break;                                                                 
+; 369 | case 0x4F:                                                             
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L80:        
+	.line	238
+;----------------------------------------------------------------------
+; 370 | if(PR_CODE8_Flag==1)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_PR_CODE8_Flag+0,r0
+        cmpi      1,r0
+        bne       L82
+;*      Branch Occurs to L82 
+	.line	240
+;----------------------------------------------------------------------
+; 372 | nAGENCY_ST=0x80;                                                       
+; 374 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      128,r0
+        sti       r0,@_nAGENCY_ST+0
+        bu        L92
+;*      Branch Occurs to L92 
+L82:        
+	.line	244
+;----------------------------------------------------------------------
+; 376 | nAGENCY_ST=0x00;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nAGENCY_ST+0
+	.line	246
+;----------------------------------------------------------------------
+; 378 | break;                                                                 
+; 382 | //      case 0x46:                                                     
+; 383 | //      nAGENCY_ST=0x02;                                               
+; 384 | //      break;                                                         
+; 386 | //      case 0x47:                                                     
+; 387 | //      nAGENCY_ST=0x04;                                               
+; 388 |         //break;                                                       
+; 390 | //      case 0x48:                                                     
+; 391 | //      nAGENCY_ST=0x08;                                               
+; 392 | //      break;                                                         
+; 394 | //      case 0x49:                                                     
+; 395 | //      nAGENCY_ST=0x09;                                               
+; 396 | //      break;                                                         
+; 398 | //      case 0x4C:                                                     
+; 399 | //      nAGENCY_ST=0x10;                                               
+; 400 | //      break;                                                         
+; 402 | //      case 0x4E:                                                     
+; 403 | //      nAGENCY_ST=0x20;                                               
+; 404 | //      break;                                                         
+; 406 | //      case 0x4F:                                                     
+; 407 |         //nAGENCY_ST=0x40;                                             
+; 408 | //      break;                                                         
+; 411 | /////////////////////////// ½ºÇÇÄ¿ º¼·ý Á¶Àý ±â´É /////////////////////
+;     | ////////////////////////////////                                       
+;----------------------------------------------------------------------
+        bu        L92
+;*      Branch Occurs to L92 
+L84:        
+	.line	164
+        ldiu      *-fp(2),ar0
+        ldiu      *+ar0(3),r0
+        cmpi      59,r0
+        beq       L59
+;*      Branch Occurs to L59 
+        cmpi      70,r0
+        beq       L62
+;*      Branch Occurs to L62 
+        cmpi      71,r0
+        beq       L65
+;*      Branch Occurs to L65 
+        cmpi      72,r0
+        beq       L68
+;*      Branch Occurs to L68 
+        cmpi      73,r0
+        beq       L71
+;*      Branch Occurs to L71 
+        cmpi      76,r0
+        beq       L74
+;*      Branch Occurs to L74 
+        cmpi      78,r0
+        beq       L77
+;*      Branch Occurs to L77 
+        cmpi      79,r0
+        beq       L80
+;*      Branch Occurs to L80 
+L92:        
+	.line	281
+;----------------------------------------------------------------------
+; 413 | if(SP_VOLUME_Flag==1&&pGpRXData[3]==0x51)                              
+;----------------------------------------------------------------------
+        ldiu      @_SP_VOLUME_Flag+0,r0
+        cmpi      1,r0
+        bne       L95
+;*      Branch Occurs to L95 
+        ldiu      *-fp(2),ar0
+        ldiu      *+ar0(3),r0
+        cmpi      81,r0
+        bne       L95
+;*      Branch Occurs to L95 
+	.line	283
+;----------------------------------------------------------------------
+; 415 | SP_VOLUME_CNT_ADD++;                                                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_SP_VOLUME_CNT_ADD+0,r0
+        sti       r0,@_SP_VOLUME_CNT_ADD+0
+	.line	284
+;----------------------------------------------------------------------
+; 416 | SP_VOLUME_CNT++;                                                       
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_SP_VOLUME_CNT+0,r0
+        sti       r0,@_SP_VOLUME_CNT+0
+        bu        L98
+;*      Branch Occurs to L98 
+L95:        
+	.line	286
+;----------------------------------------------------------------------
+; 418 | else if(SP_VOLUME_Flag==1&&pGpRXData[3]==0x52)                         
+;----------------------------------------------------------------------
+        ldiu      @_SP_VOLUME_Flag+0,r0
+        cmpi      1,r0
+        bne       L98
+;*      Branch Occurs to L98 
+        ldiu      *-fp(2),ar0
+        ldiu      *+ar0(3),r0
+        cmpi      82,r0
+        bne       L98
+;*      Branch Occurs to L98 
+	.line	288
+;----------------------------------------------------------------------
+; 420 | SP_VOLUME_CNT_DEG++;                                                   
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_SP_VOLUME_CNT_DEG+0,r0
+        sti       r0,@_SP_VOLUME_CNT_DEG+0
+	.line	289
+;----------------------------------------------------------------------
+; 421 | SP_VOLUME_CNT--;                                                       
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        subri     @_SP_VOLUME_CNT+0,r0
+        sti       r0,@_SP_VOLUME_CNT+0
+L98:        
+	.line	292
+;----------------------------------------------------------------------
+; 424 | if(SP_VOLUME_CNT>31)                                                   
+;----------------------------------------------------------------------
+        ldiu      @_SP_VOLUME_CNT+0,r0
+        cmpi      31,r0
+        ble       L100
+;*      Branch Occurs to L100 
+	.line	294
+;----------------------------------------------------------------------
+; 426 | SP_VOLUME_CNT=31;                                                      
+; 428 | //                      else if(SP_VOLUME_CNT_ADD>8)                   
+; 429 | //                              {                                      
+; 430 | //                                      SP_VOLUME_CNT_ADD=8;           
+; 431 | //                              }                                      
+; 432 | //                      else if(SP_VOLUME_CNT_DEG>8)                   
+; 433 | //                              {                                      
+; 434 | //                                      SP_VOLUME_CNT_DEG=8;           
+; 435 | //                              }                                      
+;----------------------------------------------------------------------
+        ldiu      31,r0
+        sti       r0,@_SP_VOLUME_CNT+0
+L100:        
+	.line	305
+;----------------------------------------------------------------------
+; 437 | if(SP_VOLUME_CNT<=0)                                                   
+;----------------------------------------------------------------------
+        ldi       @_SP_VOLUME_CNT+0,r0
+        bgt       L203
+;*      Branch Occurs to L203 
+	.line	307
+;----------------------------------------------------------------------
+; 439 | SP_VOLUME_CNT=0;                                                       
+; 441 | //                      else if(SP_VOLUME_CNT_ADD<=0)                  
+; 442 | //                              {                                      
+; 443 | //                                      SP_VOLUME_CNT_ADD=0;           
+; 444 | //                              }                                      
+; 445 | //                      else if(SP_VOLUME_CNT_DEG<=0)                  
+; 446 | //                              {                                      
+; 447 | //                                      SP_VOLUME_CNT_DEG=0;           
+; 448 | //                              }                                      
+; 449 | /////////////////////////// ½ºÇÇÄ¿ º¼·ý Á¶Àý ÇÁ·ÎÅäÄÝ//////////////////
+;     | /////////////////////                                                  
+; 452 | switch(SP_VOLUME_CNT)                                                  
+; 454 | case 0:                                                                
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_SP_VOLUME_CNT+0
+        bu        L203
+;*      Branch Occurs to L203 
+L102:        
+	.line	323
+;----------------------------------------------------------------------
+; 455 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC1;} // volu
+;     | me0                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      193,r1
+        bge       L104
+;*      Branch Occurs to L104 
+L103:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L103
+;*      Branch Occurs to L103 
+L104:        
+	.line	324
+;----------------------------------------------------------------------
+; 456 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	325
+;----------------------------------------------------------------------
+; 457 | nVOL_ST=0x00;                                                          
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_nVOL_ST+0
+	.line	326
+;----------------------------------------------------------------------
+; 458 | break;                                                                 
+; 459 | case 1:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L105:        
+	.line	328
+;----------------------------------------------------------------------
+; 460 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC2;} // volu
+;     | me1                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L107
+	nop
+        ldiu      11,r1
+        ldiu      194,r0
+;*      Branch Occurs to L107 
+L106:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L106
+;*      Branch Occurs to L106 
+L107:        
+	.line	329
+;----------------------------------------------------------------------
+; 461 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	330
+;----------------------------------------------------------------------
+; 462 | nVOL_ST=0x01;                                                          
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        sti       r0,@_nVOL_ST+0
+	.line	331
+;----------------------------------------------------------------------
+; 463 | break;                                                                 
+; 464 | case 2:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L108:        
+	.line	333
+;----------------------------------------------------------------------
+; 465 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC3;} // volu
+;     | me2                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L110
+	nop
+        ldiu      195,r1
+        ldiu      11,r0
+;*      Branch Occurs to L110 
+L109:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L109
+;*      Branch Occurs to L109 
+L110:        
+	.line	334
+;----------------------------------------------------------------------
+; 466 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	335
+;----------------------------------------------------------------------
+; 467 | nVOL_ST=0x02;                                                          
+;----------------------------------------------------------------------
+        ldiu      2,r0
+        sti       r0,@_nVOL_ST+0
+	.line	336
+;----------------------------------------------------------------------
+; 468 | break;                                                                 
+; 469 | case 3:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L111:        
+	.line	338
+;----------------------------------------------------------------------
+; 470 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC4;} // volu
+;     | me3                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L113
+	nop
+        ldiu      11,r1
+        ldiu      196,r0
+;*      Branch Occurs to L113 
+L112:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L112
+;*      Branch Occurs to L112 
+L113:        
+	.line	339
+;----------------------------------------------------------------------
+; 471 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	340
+;----------------------------------------------------------------------
+; 472 | nVOL_ST=0x03;                                                          
+;----------------------------------------------------------------------
+        ldiu      3,r0
+        sti       r0,@_nVOL_ST+0
+	.line	341
+;----------------------------------------------------------------------
+; 473 | break;                                                                 
+; 474 | case 4:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L114:        
+	.line	343
+;----------------------------------------------------------------------
+; 475 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC5;} // volu
+;     | me4                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L116
+	nop
+        ldiu      11,r1
+        ldiu      197,r0
+;*      Branch Occurs to L116 
+L115:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L115
+;*      Branch Occurs to L115 
+L116:        
+	.line	344
+;----------------------------------------------------------------------
+; 476 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	345
+;----------------------------------------------------------------------
+; 477 | break;                                                                 
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+	.line	346
+;----------------------------------------------------------------------
+; 478 | nVOL_ST=0x04;                                                          
+; 479 | case 5:                                                                
+;----------------------------------------------------------------------
+L118:        
+	.line	348
+;----------------------------------------------------------------------
+; 480 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC6;} // volu
+;     | me5                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L120
+	nop
+        ldiu      11,r1
+        ldiu      198,r0
+;*      Branch Occurs to L120 
+L119:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L119
+;*      Branch Occurs to L119 
+L120:        
+	.line	349
+;----------------------------------------------------------------------
+; 481 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	350
+;----------------------------------------------------------------------
+; 482 | nVOL_ST=0x05;                                                          
+;----------------------------------------------------------------------
+        ldiu      5,r0
+        sti       r0,@_nVOL_ST+0
+	.line	351
+;----------------------------------------------------------------------
+; 483 | break;                                                                 
+; 484 | case 6:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L121:        
+	.line	353
+;----------------------------------------------------------------------
+; 485 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC7;} // volu
+;     | me6                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L123
+	nop
+        ldiu      11,r1
+        ldiu      199,r0
+;*      Branch Occurs to L123 
+L122:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L122
+;*      Branch Occurs to L122 
+L123:        
+	.line	354
+;----------------------------------------------------------------------
+; 486 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	355
+;----------------------------------------------------------------------
+; 487 | nVOL_ST=0x06;                                                          
+;----------------------------------------------------------------------
+        ldiu      6,r0
+        sti       r0,@_nVOL_ST+0
+	.line	356
+;----------------------------------------------------------------------
+; 488 | break;                                                                 
+; 489 | case 7:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L124:        
+	.line	358
+;----------------------------------------------------------------------
+; 490 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC8;} // volu
+;     | me7                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L126
+	nop
+        ldiu      200,r1
+        ldiu      11,r0
+;*      Branch Occurs to L126 
+L125:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L125
+;*      Branch Occurs to L125 
+L126:        
+	.line	359
+;----------------------------------------------------------------------
+; 491 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	360
+;----------------------------------------------------------------------
+; 492 | nVOL_ST=0x07;                                                          
+;----------------------------------------------------------------------
+        ldiu      7,r0
+        sti       r0,@_nVOL_ST+0
+	.line	361
+;----------------------------------------------------------------------
+; 493 | break;                                                                 
+; 494 | case 8:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L127:        
+	.line	363
+;----------------------------------------------------------------------
+; 495 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xC9;} // volu
+;     | me8                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L129
+	nop
+        ldiu      11,r1
+        ldiu      201,r0
+;*      Branch Occurs to L129 
+L128:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L128
+;*      Branch Occurs to L128 
+L129:        
+	.line	364
+;----------------------------------------------------------------------
+; 496 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	365
+;----------------------------------------------------------------------
+; 497 | nVOL_ST=0x08;                                                          
+;----------------------------------------------------------------------
+        ldiu      8,r0
+        sti       r0,@_nVOL_ST+0
+	.line	366
+;----------------------------------------------------------------------
+; 498 | break;                                                                 
+; 499 | case 9:                                                                
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L130:        
+	.line	368
+;----------------------------------------------------------------------
+; 500 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCA;} // volu
+;     | me9                                                                    
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L132
+	nop
+        ldiu      11,r1
+        ldiu      202,r0
+;*      Branch Occurs to L132 
+L131:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L131
+;*      Branch Occurs to L131 
+L132:        
+	.line	369
+;----------------------------------------------------------------------
+; 501 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	370
+;----------------------------------------------------------------------
+; 502 | nVOL_ST=0x09;                                                          
+;----------------------------------------------------------------------
+        ldiu      9,r0
+        sti       r0,@_nVOL_ST+0
+	.line	371
+;----------------------------------------------------------------------
+; 503 | break;                                                                 
+; 504 | case 10:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L133:        
+	.line	373
+;----------------------------------------------------------------------
+; 505 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCB;} // volu
+;     | me10                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      203,r2
+        bge       L135
+;*      Branch Occurs to L135 
+L134:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L134
+;*      Branch Occurs to L134 
+L135:        
+	.line	374
+;----------------------------------------------------------------------
+; 506 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	375
+;----------------------------------------------------------------------
+; 507 | nVOL_ST=0x0A;                                                          
+;----------------------------------------------------------------------
+        ldiu      10,r0
+        sti       r0,@_nVOL_ST+0
+	.line	376
+;----------------------------------------------------------------------
+; 508 | break;                                                                 
+; 509 | case 11:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L136:        
+	.line	378
+;----------------------------------------------------------------------
+; 510 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCC;} // volu
+;     | me11                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      204,r1
+        bge       L138
+;*      Branch Occurs to L138 
+L137:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L137
+;*      Branch Occurs to L137 
+L138:        
+	.line	379
+;----------------------------------------------------------------------
+; 511 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	380
+;----------------------------------------------------------------------
+; 512 | nVOL_ST=0x0B;                                                          
+;----------------------------------------------------------------------
+        ldiu      11,r0
+        sti       r0,@_nVOL_ST+0
+	.line	381
+;----------------------------------------------------------------------
+; 513 | break;                                                                 
+; 514 | case 12:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L139:        
+	.line	383
+;----------------------------------------------------------------------
+; 515 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCD;} // volu
+;     | me12                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      205,r2
+        bge       L141
+;*      Branch Occurs to L141 
+L140:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L140
+;*      Branch Occurs to L140 
+L141:        
+	.line	384
+;----------------------------------------------------------------------
+; 516 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	385
+;----------------------------------------------------------------------
+; 517 | nVOL_ST=0x0C;                                                          
+;----------------------------------------------------------------------
+        ldiu      12,r0
+        sti       r0,@_nVOL_ST+0
+	.line	386
+;----------------------------------------------------------------------
+; 518 | break;                                                                 
+; 519 | case 13:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L142:        
+	.line	388
+;----------------------------------------------------------------------
+; 520 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCE;} // volu
+;     | me13                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      206,r1
+        bge       L144
+;*      Branch Occurs to L144 
+L143:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L143
+;*      Branch Occurs to L143 
+L144:        
+	.line	389
+;----------------------------------------------------------------------
+; 521 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	390
+;----------------------------------------------------------------------
+; 522 | nVOL_ST=0x0D;                                                          
+;----------------------------------------------------------------------
+        ldiu      13,r0
+        sti       r0,@_nVOL_ST+0
+	.line	391
+;----------------------------------------------------------------------
+; 523 | break;                                                                 
+; 524 | case 14:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L145:        
+	.line	393
+;----------------------------------------------------------------------
+; 525 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xCF;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r1
+        cmpi      10,r1
+        bged      L147
+	nop
+        ldiu      207,r2
+        ldiu      11,r0
+;*      Branch Occurs to L147 
+L146:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r1
+        addi      *+fp(1),r1
+        sti       r1,*+fp(1)
+        cmpi      10,r1
+        blt       L146
+;*      Branch Occurs to L146 
+L147:        
+	.line	394
+;----------------------------------------------------------------------
+; 526 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	395
+;----------------------------------------------------------------------
+; 527 | nVOL_ST=0x0E;                                                          
+;----------------------------------------------------------------------
+        ldiu      14,r0
+        sti       r0,@_nVOL_ST+0
+	.line	396
+;----------------------------------------------------------------------
+; 528 | break;                                                                 
+; 529 | case 15:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L148:        
+	.line	398
+;----------------------------------------------------------------------
+; 530 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD0;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      208,r2
+        bge       L150
+;*      Branch Occurs to L150 
+L149:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L149
+;*      Branch Occurs to L149 
+L150:        
+	.line	399
+;----------------------------------------------------------------------
+; 531 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	400
+;----------------------------------------------------------------------
+; 532 | nVOL_ST=0x0F;                                                          
+;----------------------------------------------------------------------
+        ldiu      15,r0
+        sti       r0,@_nVOL_ST+0
+	.line	401
+;----------------------------------------------------------------------
+; 533 | break;                                                                 
+; 534 | case 16:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L151:        
+	.line	403
+;----------------------------------------------------------------------
+; 535 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD1;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r1
+        cmpi      10,r1
+        bged      L153
+	nop
+        ldiu      11,r2
+        ldiu      209,r0
+;*      Branch Occurs to L153 
+L152:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r0,*+ar0(ir0)
+        ldiu      1,r1
+        addi      *+fp(1),r1
+        sti       r1,*+fp(1)
+        cmpi      10,r1
+        blt       L152
+;*      Branch Occurs to L152 
+L153:        
+	.line	404
+;----------------------------------------------------------------------
+; 536 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	405
+;----------------------------------------------------------------------
+; 537 | nVOL_ST=0x10;                                                          
+;----------------------------------------------------------------------
+        ldiu      16,r0
+        sti       r0,@_nVOL_ST+0
+	.line	406
+;----------------------------------------------------------------------
+; 538 | break;                                                                 
+; 539 | case 17:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L154:        
+	.line	408
+;----------------------------------------------------------------------
+; 540 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD2;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      210,r1
+        bge       L156
+;*      Branch Occurs to L156 
+L155:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L155
+;*      Branch Occurs to L155 
+L156:        
+	.line	409
+;----------------------------------------------------------------------
+; 541 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	410
+;----------------------------------------------------------------------
+; 542 | nVOL_ST=0x11;                                                          
+;----------------------------------------------------------------------
+        ldiu      17,r0
+        sti       r0,@_nVOL_ST+0
+	.line	411
+;----------------------------------------------------------------------
+; 543 | break;                                                                 
+; 544 | case 18:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L157:        
+	.line	413
+;----------------------------------------------------------------------
+; 545 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD3;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      211,r2
+        bge       L159
+;*      Branch Occurs to L159 
+L158:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L158
+;*      Branch Occurs to L158 
+L159:        
+	.line	414
+;----------------------------------------------------------------------
+; 546 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	415
+;----------------------------------------------------------------------
+; 547 | nVOL_ST=0x12;                                                          
+;----------------------------------------------------------------------
+        ldiu      18,r0
+        sti       r0,@_nVOL_ST+0
+	.line	416
+;----------------------------------------------------------------------
+; 548 | break;                                                                 
+; 549 | case 19:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L160:        
+	.line	418
+;----------------------------------------------------------------------
+; 550 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD4;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      212,r1
+        bge       L162
+;*      Branch Occurs to L162 
+L161:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L161
+;*      Branch Occurs to L161 
+L162:        
+	.line	419
+;----------------------------------------------------------------------
+; 551 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	420
+;----------------------------------------------------------------------
+; 552 | nVOL_ST=0x13;                                                          
+;----------------------------------------------------------------------
+        ldiu      19,r0
+        sti       r0,@_nVOL_ST+0
+	.line	421
+;----------------------------------------------------------------------
+; 553 | break;                                                                 
+; 554 | case 20:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L163:        
+	.line	423
+;----------------------------------------------------------------------
+; 555 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD5;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      213,r1
+        bge       L165
+;*      Branch Occurs to L165 
+L164:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L164
+;*      Branch Occurs to L164 
+L165:        
+	.line	424
+;----------------------------------------------------------------------
+; 556 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	425
+;----------------------------------------------------------------------
+; 557 | nVOL_ST=0x14;                                                          
+;----------------------------------------------------------------------
+        ldiu      20,r0
+        sti       r0,@_nVOL_ST+0
+	.line	426
+;----------------------------------------------------------------------
+; 558 | break;                                                                 
+; 559 | case 21:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L166:        
+	.line	428
+;----------------------------------------------------------------------
+; 560 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD6;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r2
+        cmpi      10,r2
+        bged      L168
+	nop
+        ldiu      214,r1
+        ldiu      11,r0
+;*      Branch Occurs to L168 
+L167:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r2
+        addi      *+fp(1),r2
+        sti       r2,*+fp(1)
+        cmpi      10,r2
+        blt       L167
+;*      Branch Occurs to L167 
+L168:        
+	.line	429
+;----------------------------------------------------------------------
+; 561 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	430
+;----------------------------------------------------------------------
+; 562 | nVOL_ST=0x15;                                                          
+;----------------------------------------------------------------------
+        ldiu      21,r0
+        sti       r0,@_nVOL_ST+0
+	.line	431
+;----------------------------------------------------------------------
+; 563 | break;                                                                 
+; 564 | case 22:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L169:        
+	.line	433
+;----------------------------------------------------------------------
+; 565 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD7;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      215,r2
+        bge       L171
+;*      Branch Occurs to L171 
+L170:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L170
+;*      Branch Occurs to L170 
+L171:        
+	.line	434
+;----------------------------------------------------------------------
+; 566 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	435
+;----------------------------------------------------------------------
+; 567 | nVOL_ST=0x16;                                                          
+;----------------------------------------------------------------------
+        ldiu      22,r0
+        sti       r0,@_nVOL_ST+0
+	.line	436
+;----------------------------------------------------------------------
+; 568 | break;                                                                 
+; 569 | case 23:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L172:        
+	.line	438
+;----------------------------------------------------------------------
+; 570 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD8;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      216,r2
+        bge       L174
+;*      Branch Occurs to L174 
+L173:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L173
+;*      Branch Occurs to L173 
+L174:        
+	.line	439
+;----------------------------------------------------------------------
+; 571 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	440
+;----------------------------------------------------------------------
+; 572 | nVOL_ST=0x17;                                                          
+;----------------------------------------------------------------------
+        ldiu      23,r0
+        sti       r0,@_nVOL_ST+0
+	.line	441
+;----------------------------------------------------------------------
+; 573 | break;                                                                 
+; 574 | case 24:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L175:        
+	.line	443
+;----------------------------------------------------------------------
+; 575 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xD9;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      217,r1
+        bge       L177
+;*      Branch Occurs to L177 
+L176:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L176
+;*      Branch Occurs to L176 
+L177:        
+	.line	444
+;----------------------------------------------------------------------
+; 576 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	445
+;----------------------------------------------------------------------
+; 577 | nVOL_ST=0x18;                                                          
+;----------------------------------------------------------------------
+        ldiu      24,r0
+        sti       r0,@_nVOL_ST+0
+	.line	446
+;----------------------------------------------------------------------
+; 578 | break;                                                                 
+; 579 | case 25:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L178:        
+	.line	448
+;----------------------------------------------------------------------
+; 580 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDA;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      218,r1
+        bge       L180
+;*      Branch Occurs to L180 
+L179:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L179
+;*      Branch Occurs to L179 
+L180:        
+	.line	449
+;----------------------------------------------------------------------
+; 581 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	450
+;----------------------------------------------------------------------
+; 582 | nVOL_ST=0x19;                                                          
+;----------------------------------------------------------------------
+        ldiu      25,r0
+        sti       r0,@_nVOL_ST+0
+	.line	451
+;----------------------------------------------------------------------
+; 583 | break;                                                                 
+; 584 | case 26:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L181:        
+	.line	453
+;----------------------------------------------------------------------
+; 585 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDB;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      219,r1
+        bge       L183
+;*      Branch Occurs to L183 
+L182:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L182
+;*      Branch Occurs to L182 
+L183:        
+	.line	454
+;----------------------------------------------------------------------
+; 586 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r1
+        ldiu      1,r2
+        ldiu      300,r0
+        addi      2,r1
+        push      r1
+        push      r2
+        push      r0
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	455
+;----------------------------------------------------------------------
+; 587 | nVOL_ST=0x1A;                                                          
+;----------------------------------------------------------------------
+        ldiu      26,r0
+        sti       r0,@_nVOL_ST+0
+	.line	456
+;----------------------------------------------------------------------
+; 588 | break;                                                                 
+; 589 | case 27:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L184:        
+	.line	458
+;----------------------------------------------------------------------
+; 590 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDC;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      220,r2
+        bge       L186
+;*      Branch Occurs to L186 
+L185:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L185
+;*      Branch Occurs to L185 
+L186:        
+	.line	459
+;----------------------------------------------------------------------
+; 591 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	460
+;----------------------------------------------------------------------
+; 592 | nVOL_ST=0x1B;                                                          
+;----------------------------------------------------------------------
+        ldiu      27,r0
+        sti       r0,@_nVOL_ST+0
+	.line	461
+;----------------------------------------------------------------------
+; 593 | break;                                                                 
+; 594 | case 28:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L187:        
+	.line	463
+;----------------------------------------------------------------------
+; 595 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDD;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      r0,r1
+        cmpi      10,r1
+        bged      L189
+	nop
+        ldiu      221,r2
+        ldiu      11,r0
+;*      Branch Occurs to L189 
+L188:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r1
+        addi      *+fp(1),r1
+        sti       r1,*+fp(1)
+        cmpi      10,r1
+        blt       L188
+;*      Branch Occurs to L188 
+L189:        
+	.line	464
+;----------------------------------------------------------------------
+; 596 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	465
+;----------------------------------------------------------------------
+; 597 | nVOL_ST=0x1C;                                                          
+;----------------------------------------------------------------------
+        ldiu      28,r0
+        sti       r0,@_nVOL_ST+0
+	.line	466
+;----------------------------------------------------------------------
+; 598 | break;                                                                 
+; 599 | case 29:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L190:        
+	.line	468
+;----------------------------------------------------------------------
+; 600 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDE;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      222,r2
+        bge       L192
+;*      Branch Occurs to L192 
+L191:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L191
+;*      Branch Occurs to L191 
+L192:        
+	.line	469
+;----------------------------------------------------------------------
+; 601 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	470
+;----------------------------------------------------------------------
+; 602 | nVOL_ST=0x1D;                                                          
+;----------------------------------------------------------------------
+        ldiu      29,r0
+        sti       r0,@_nVOL_ST+0
+	.line	471
+;----------------------------------------------------------------------
+; 603 | break;                                                                 
+; 604 | case 30:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L193:        
+	.line	473
+;----------------------------------------------------------------------
+; 605 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xDF;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      223,r1
+        bge       L195
+;*      Branch Occurs to L195 
+L194:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L194
+;*      Branch Occurs to L194 
+L195:        
+	.line	474
+;----------------------------------------------------------------------
+; 606 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r2
+        ldiu      1,r0
+        ldiu      300,r1
+        addi      2,r2
+        push      r2
+        push      r0
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	475
+;----------------------------------------------------------------------
+; 607 | nVOL_ST=0x1E;                                                          
+;----------------------------------------------------------------------
+        ldiu      30,r0
+        sti       r0,@_nVOL_ST+0
+	.line	476
+;----------------------------------------------------------------------
+; 608 | break;                                                                 
+; 609 | case 31:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L196:        
+	.line	478
+;----------------------------------------------------------------------
+; 610 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xE0;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r1
+        cmpi      10,r0
+        ldiu      224,r2
+        bge       L198
+;*      Branch Occurs to L198 
+L197:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r1,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r2,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L197
+;*      Branch Occurs to L197 
+L198:        
+	.line	479
+;----------------------------------------------------------------------
+; 611 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r2
+        ldiu      300,r1
+        addi      2,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	480
+;----------------------------------------------------------------------
+; 612 | nVOL_ST=0x1F;                                                          
+;----------------------------------------------------------------------
+        ldiu      31,r0
+        sti       r0,@_nVOL_ST+0
+	.line	481
+;----------------------------------------------------------------------
+; 613 | break;                                                                 
+; 614 | case 32:                                                               
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L199:        
+	.line	483
+;----------------------------------------------------------------------
+; 615 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x0B; nGpTxBuf[i*2+1]= 0xE1;} // volu
+;     | me14                                                                   
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      11,r2
+        cmpi      10,r0
+        ldiu      225,r1
+        bge       L201
+;*      Branch Occurs to L201 
+L200:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L200
+;*      Branch Occurs to L200 
+L201:        
+	.line	484
+;----------------------------------------------------------------------
+; 616 | gp_WritingStr(300,1,nGpTxBuf);                                         
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      1,r1
+        ldiu      300,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	485
+;----------------------------------------------------------------------
+; 617 | nVOL_ST=0x20;                                                          
+;----------------------------------------------------------------------
+        ldiu      32,r0
+        sti       r0,@_nVOL_ST+0
+	.line	486
+;----------------------------------------------------------------------
+; 618 | break;                                                                 
+; 620 | ////////////////////////// LCD Ç¥½Ã±â ON/OFF //////////////////////////
+;     | ////////////////////////////                                           
+;----------------------------------------------------------------------
+        bu        L205
+;*      Branch Occurs to L205 
+L203:        
+	.line	320
+        ldiu      @_SP_VOLUME_CNT+0,ir0
+        cmpi      32,ir0
+        bhi       L205
+;*      Branch Occurs to L205 
+        ldiu      @CL3,ar0
+        ldiu      *+ar0(ir0),r0
+        bu        r0
+
+	.sect	".text"
+SW1:	.word	L102	; 0
+	.word	L105	; 1
+	.word	L108	; 2
+	.word	L111	; 3
+	.word	L114	; 4
+	.word	L118	; 5
+	.word	L121	; 6
+	.word	L124	; 7
+	.word	L127	; 8
+	.word	L130	; 9
+	.word	L133	; 10
+	.word	L136	; 11
+	.word	L139	; 12
+	.word	L142	; 13
+	.word	L145	; 14
+	.word	L148	; 15
+	.word	L151	; 16
+	.word	L154	; 17
+	.word	L157	; 18
+	.word	L160	; 19
+	.word	L163	; 20
+	.word	L166	; 21
+	.word	L169	; 22
+	.word	L172	; 23
+	.word	L175	; 24
+	.word	L178	; 25
+	.word	L181	; 26
+	.word	L184	; 27
+	.word	L187	; 28
+	.word	L190	; 29
+	.word	L193	; 30
+	.word	L196	; 31
+	.word	L199	; 32
+	.sect	".text"
+;*      Branch Occurs to r0 
+L205:        
+	.line	489
+;----------------------------------------------------------------------
+; 621 | if(LCD_1ON_Flag==1&&LCD_2ON_Flag==1)                                   
+;----------------------------------------------------------------------
+        ldiu      @_LCD_1ON_Flag+0,r0
+        cmpi      1,r0
+        bne       L208
+;*      Branch Occurs to L208 
+        ldiu      @_LCD_2ON_Flag+0,r0
+        cmpi      1,r0
+        bne       L208
+;*      Branch Occurs to L208 
+	.line	491
+;----------------------------------------------------------------------
+; 623 | nLCD_ST=0x0A;                                                          
+;----------------------------------------------------------------------
+        ldiu      10,r0
+        sti       r0,@_nLCD_ST+0
+        bu        L211
+;*      Branch Occurs to L211 
+L208:        
+	.line	493
+;----------------------------------------------------------------------
+; 625 | else if(LCD_1ON_Flag==0&&LCD_2ON_Flag==0)                              
+;----------------------------------------------------------------------
+        ldi       @_LCD_1ON_Flag+0,r0
+        bne       L211
+;*      Branch Occurs to L211 
+        ldi       @_LCD_2ON_Flag+0,r0
+        bne       L211
+;*      Branch Occurs to L211 
+	.line	495
+;----------------------------------------------------------------------
+; 627 | nLCD_ST=0x05;                                                          
+;----------------------------------------------------------------------
+        ldiu      5,r0
+        sti       r0,@_nLCD_ST+0
+L211:        
+	.line	499
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      23,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	631,000000000h,21
+
+
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_d_Stat_Cnt+0,32
+	.field  	0,32		; _d_Stat_Cnt @ 0
+
+	.sect	".text"
+
+	.global	_d_Stat_Cnt
+	.bss	_d_Stat_Cnt,1
+	.sym	_d_Stat_Cnt,_d_Stat_Cnt,12,2,32
+	.sect	 ".text"
+
+	.global	_Gp_SendData
+	.sym	_Gp_SendData,_Gp_SendData,32,2,0
+	.func	636
+;******************************************************************************
+;* FUNCTION NAME: _Gp_SendData                                                *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,r2,ar0,fp,sp,st                               *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 1 Parm + 50 Auto + 0 SOE = 53 words        *
+;******************************************************************************
+_Gp_SendData:
+	.sym	_nScreenNum,-2,12,9,32
+	.sym	_glVer,1,60,1,1600,,50
+	.line	1
+;----------------------------------------------------------------------
+; 636 | void Gp_SendData(BYTE nScreenNum)                                      
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      50,sp
+	.line	2
+;----------------------------------------------------------------------
+; 638 | BYTE glVer[50];                                                        
+;----------------------------------------------------------------------
+	.line	4
+;----------------------------------------------------------------------
+; 639 | if(WORD_L(nScreenNum)==1)                                              
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        and       *-fp(2),r0
+        cmpi      1,r0
+        bne       L223
+;*      Branch Occurs to L223 
+	.line	7
+;----------------------------------------------------------------------
+; 642 | d_Stat_Cnt++;                                                          
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_d_Stat_Cnt+0,r0     ; Unsigned
+        sti       r0,@_d_Stat_Cnt+0
+	.line	8
+;----------------------------------------------------------------------
+; 643 | if(WORD_L(m_TCMS_Interface_Timer) > 5) gpCOMERR;                       
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        and       @_m_TCMS_Interface_Timer+0,r0
+        cmpi      5,r0
+        bled      L217
+	nop
+        ldile     0,r1
+        ldile     93,r0
+;*      Branch Occurs to L217 
+        ldiu      1,r1
+        ldiu      93,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+        bu        L218
+;*      Branch Occurs to L218 
+	.line	9
+;----------------------------------------------------------------------
+; 644 | else gpCOMCLR;                                                         
+;----------------------------------------------------------------------
+L217:        
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+L218:        
+	.line	11
+;----------------------------------------------------------------------
+; 646 | glVer[0] = (BYTE_H(m_Scc1RXBuffBackUp_Ach[4])%10)+0x30;                
+;----------------------------------------------------------------------
+        ldiu      @_m_Scc1RXBuffBackUp_Ach+4,r0
+        lsh       -4,r0
+        and       15,r0
+        ldiu      10,r1
+        call      MOD_U30
+                                        ; Call Occurs
+        ldiu      fp,ar0
+        addi      1,ar0
+        addi      48,r0                 ; Unsigned
+        sti       r0,*ar0
+	.line	12
+;----------------------------------------------------------------------
+; 647 | glVer[1] = (BYTE_L(m_Scc1RXBuffBackUp_Ach[4])%10)+0x30;                
+;----------------------------------------------------------------------
+        ldiu      15,r0
+        and       @_m_Scc1RXBuffBackUp_Ach+4,r0
+        ldiu      10,r1
+        call      MOD_U30
+                                        ; Call Occurs
+        ldiu      fp,ar0
+        addi      2,ar0
+        addi      48,r0                 ; Unsigned
+        sti       r0,*ar0
+	.line	13
+;----------------------------------------------------------------------
+; 648 | glVer[2] = ((ROM_VER /100)+0x30);                                      
+;----------------------------------------------------------------------
+        ldiu      fp,ar0
+        addi      3,ar0
+        ldiu      48,r0
+        sti       r0,*ar0
+	.line	14
+;----------------------------------------------------------------------
+; 649 | glVer[3] = (ROM_VER %100)/10+0x30;                                     
+;----------------------------------------------------------------------
+        ldiu      fp,ar0
+        addi      4,ar0
+        ldiu      51,r0
+        sti       r0,*ar0
+	.line	15
+;----------------------------------------------------------------------
+; 650 | glVer[4] = '.';                                                        
+;----------------------------------------------------------------------
+        ldiu      fp,ar0
+        addi      5,ar0
+        ldiu      46,r0
+        sti       r0,*ar0
+	.line	16
+;----------------------------------------------------------------------
+; 651 | glVer[5] = (ROM_VER %100)%10+0x30;                                     
+;----------------------------------------------------------------------
+        ldiu      fp,ar0
+        addi      6,ar0
+        ldiu      48,r0
+        sti       r0,*ar0
+	.line	18
+;----------------------------------------------------------------------
+; 653 | gp_WritingStr(0xC8,5,glVer);  //ADDR : 200                             
+;----------------------------------------------------------------------
+        ldiu      200,r2
+        ldiu      fp,r0
+        addi      1,r0
+        ldiu      5,r1
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	21
+;----------------------------------------------------------------------
+; 656 | if(glComTrainNo != PreTrainNo && PreTrainNo)                           
+;----------------------------------------------------------------------
+        ldiu      @_glComTrainNo+0,r0
+        cmpi      @_PreTrainNo+0,r0
+        beq       L221
+;*      Branch Occurs to L221 
+        ldi       @_PreTrainNo+0,r0
+        beq       L221
+;*      Branch Occurs to L221 
+	.line	23
+;----------------------------------------------------------------------
+; 658 | gp_WritingWord(0x64,PreTrainNo);  //ADDR : 100                         
+;----------------------------------------------------------------------
+        push      r0
+        ldiu      100,r1
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+        bu        L223
+;*      Branch Occurs to L223 
+L221:        
+	.line	25
+;----------------------------------------------------------------------
+; 660 | else if(!PreTrainNo)                                                   
+;----------------------------------------------------------------------
+        ldi       @_PreTrainNo+0,r0
+        bned      L223
+	nop
+        ldieq     @_GP_PreTrainNo+0,r1
+        ldieq     100,r0
+;*      Branch Occurs to L223 
+	.line	28
+;----------------------------------------------------------------------
+; 663 | gp_WritingWord(0x64,GP_PreTrainNo);  //ADDR : 100                      
+;----------------------------------------------------------------------
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+L223:        
+	.line	32
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      52,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	667,000000000h,50
+
+
+	.sect	 ".text"
+
+	.global	_SDR_Routine_Complete
+	.sym	_SDR_Routine_Complete,_SDR_Routine_Complete,32,2,0
+	.func	671
+;******************************************************************************
+;* FUNCTION NAME: _SDR_Routine_Complete                                       *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,r2,r3,ar0,fp,ir0,sp,st                        *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 1 Parm + 122 Auto + 0 SOE = 125 words      *
+;******************************************************************************
+_SDR_Routine_Complete:
+	.sym	_pSData,-2,28,9,32
+	.sym	_i,1,4,1,32
+	.sym	_data,2,4,1,32
+	.sym	_pDData,3,60,1,3840,,120
+	.line	1
+;----------------------------------------------------------------------
+; 671 | void SDR_Routine_Complete(BYTE *pSData)
+;     |  // GP¿Í ÀçÈ®ÀÎ ÇÒ °Í                                                  
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      122,sp
+	.line	2
+;----------------------------------------------------------------------
+; 673 | int i,data;                                                            
+; 674 | BYTE pDData[120];                                                      
+;----------------------------------------------------------------------
+	.line	6
+;----------------------------------------------------------------------
+; 676 | for(i=0;i<m_SDR_Flag.nSDR_TotalUnit;i++)
+;     |                                          //´ë±¸ ÁöÇÏÃ¶                 
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      *+fp(1),r0
+        cmpi      @_m_SDR_Flag+5,r0
+        bhs       L231
+;*      Branch Occurs to L231 
+L226:        
+	.line	8
+;----------------------------------------------------------------------
+; 678 | if(pSData[i]) {pDData[i*2]= 0x08; pDData[i*2+1]= 0x06;} // X Ç¥Ãâ (2054
+;     | )                                                                      
+;----------------------------------------------------------------------
+        ldiu      *-fp(2),ir0
+        ldiu      *+fp(1),ar0
+        ldi       *+ar0(ir0),r0
+        beqd      L229
+	nop
+        ldieq     *+fp(1),ir0
+        ldieq     fp,ar0
+;*      Branch Occurs to L229 
+        ldiu      ar0,ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      3,ar0
+        ldiu      8,r0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      3,ar0
+        addi      1,ir0
+        ldiu      6,r0
+        sti       r0,*+ar0(ir0)
+        bu        L230
+;*      Branch Occurs to L230 
+	.line	9
+;----------------------------------------------------------------------
+; 679 | else {pDData[i*2]= 0x08; pDData[i*2+1]= 0x05;}          // OÇ¥Ãâ  (2053
+;     | )                                                                      
+;----------------------------------------------------------------------
+L229:        
+        mpyi      2,ir0
+        addi      3,ar0
+        ldiu      8,r0
+        sti       r0,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      3,ar0
+        addi      1,ir0
+        ldiu      5,r0
+        sti       r0,*+ar0(ir0)
+L230:        
+	.line	6
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        ldiu      *+fp(1),r0
+        cmpi      @_m_SDR_Flag+5,r0
+        blo       L226
+;*      Branch Occurs to L226 
+L231:        
+	.line	11
+;----------------------------------------------------------------------
+; 681 | gp_WritingStr(220,(m_SDR_Flag.nSDR_TotalUnit*2),pDData);
+;     |                          // Address ¸¦ ¼øÂ÷ÀûÀ¸·Î Àâ¾Æ¼­ Ç¥Ãâ ÇÒ °Í    
+;----------------------------------------------------------------------
+        ldiu      2,r2
+        ldiu      @_m_SDR_Flag+5,r3
+        ldiu      fp,r0
+        ldiu      220,r1
+        mpyi3     r2,r3,r2
+        addi      3,r0
+        push      r0
+        push      r2
+        push      r1
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	13
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      124,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	683,000000000h,122
+
+
+	.sect	 ".text"
+
+	.global	_GpSelfSpeac
+	.sym	_GpSelfSpeac,_GpSelfSpeac,32,2,0
+	.func	689
+;******************************************************************************
+;* FUNCTION NAME: _GpSelfSpeac                                                *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,r2,ar0,fp,ir0,sp,st                           *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 0 Parm + 21 Auto + 0 SOE = 23 words        *
+;******************************************************************************
+_GpSelfSpeac:
+	.sym	_i,1,4,1,32
+	.sym	_nGpTxBuf,2,60,1,640,,20
+	.line	1
+;----------------------------------------------------------------------
+; 689 | void GpSelfSpeac()                                                     
+; 692 | int i;                                                                 
+; 693 | BYTE nGpTxBuf[20];                                                     
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      21,sp
+	.line	6
+;----------------------------------------------------------------------
+; 694 | for(i=0;i<10;i++) {nGpTxBuf[i*2]= 0x08; nGpTxBuf[i*2+1]= 0x07;} // ¹«Ç¥
+;     | Ãâ (2055)                                                              
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+        ldiu      8,r2
+        cmpi      10,r0
+        ldiu      7,r1
+        bge       L236
+;*      Branch Occurs to L236 
+L235:        
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        sti       r2,*+ar0(ir0)
+        ldiu      *+fp(1),ir0
+        ldiu      fp,ar0
+        mpyi      2,ir0
+        addi      2,ar0
+        addi      1,ir0
+        sti       r1,*+ar0(ir0)
+        ldiu      1,r0
+        addi      *+fp(1),r0
+        sti       r0,*+fp(1)
+        cmpi      10,r0
+        blt       L235
+;*      Branch Occurs to L235 
+L236:        
+	.line	7
+;----------------------------------------------------------------------
+; 695 | gp_WritingStr(220,4,nGpTxBuf);
+;     |                  // »óÅÂ µ¥ÀÌÅÍ Ç¥Ãâ 2003-12-05 8:18¿ÀÀü               
+; 696 | //      memset(m_SDR_Flag.nSDR_Buf,0x01,10);                           
+;----------------------------------------------------------------------
+        ldiu      fp,r0
+        ldiu      4,r1
+        ldiu      220,r2
+        addi      2,r0
+        push      r0
+        push      r1
+        push      r2
+        call      _gp_WritingStr
+                                        ; Call Occurs
+        subi      3,sp
+	.line	10
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      23,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	698,000000000h,21
+
+
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_nGp_TimeCnt+0,32
+	.field  	0,32		; _nGp_TimeCnt @ 0
+
+	.sect	".text"
+
+	.global	_nGp_TimeCnt
+	.bss	_nGp_TimeCnt,1
+	.sym	_nGp_TimeCnt,_nGp_TimeCnt,4,2,32
+	.sect	 ".text"
+
+	.global	_Gp_1msTime
+	.sym	_Gp_1msTime,_Gp_1msTime,32,2,0
+	.func	702
+;******************************************************************************
+;* FUNCTION NAME: _Gp_1msTime                                                 *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,r2,r3,fp,sp,st                                *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 0 Parm + 1 Auto + 0 SOE = 3 words          *
+;******************************************************************************
+_Gp_1msTime:
+	.sym	_sTxLen,1,4,1,32
+	.line	1
+;----------------------------------------------------------------------
+; 702 | void Gp_1msTime()                                                      
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+        addi      1,sp
+	.line	3
+;----------------------------------------------------------------------
+; 704 | int sTxLen = 0;                                                        
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,*+fp(1)
+	.line	4
+;----------------------------------------------------------------------
+; 705 | nGp_TimeCnt++;                                                         
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_nGp_TimeCnt+0,r0
+        sti       r0,@_nGp_TimeCnt+0
+	.line	6
+;----------------------------------------------------------------------
+; 707 | if(!(nGp_TimeCnt%3000))                                                
+;----------------------------------------------------------------------
+        ldiu      3000,r1
+        call      MOD_I30
+                                        ; Call Occurs
+        cmpi      0,r0
+        bne       L242
+;*      Branch Occurs to L242 
+	.line	8
+;----------------------------------------------------------------------
+; 709 | if(WORD_L(SCC2_INIT_B.TxOK))                                           
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        tstb      @_SCC2_INIT_B+2,r0
+        beq       L242
+;*      Branch Occurs to L242 
+	.line	10
+;----------------------------------------------------------------------
+; 711 | Gp_SendData(m_GpScreenNum);                                            
+;----------------------------------------------------------------------
+        ldiu      @_m_GpScreenNum+0,r0
+        push      r0
+        call      _Gp_SendData
+                                        ; Call Occurs
+        subi      1,sp
+L242:        
+	.line	14
+;----------------------------------------------------------------------
+; 715 | if(!(nGp_TimeCnt%1000))                                                
+;----------------------------------------------------------------------
+        ldiu      @_nGp_TimeCnt+0,r0
+        ldiu      1000,r1
+        call      MOD_I30
+                                        ; Call Occurs
+        cmpi      0,r0
+	.line	16
+;----------------------------------------------------------------------
+; 717 | nAuto_Fun();                                                           
+;----------------------------------------------------------------------
+        calleq    _nAuto_Fun
+                                        ; Call Occurs
+	.line	19
+;----------------------------------------------------------------------
+; 720 | if(!(nGp_TimeCnt%300))                                                 
+;----------------------------------------------------------------------
+        ldiu      @_nGp_TimeCnt+0,r0
+        ldiu      300,r1
+        call      MOD_I30
+                                        ; Call Occurs
+        cmpi      0,r0
+        bne       L246
+;*      Branch Occurs to L246 
+	.line	21
+;----------------------------------------------------------------------
+; 722 | if(WORD_L(SCC2_INIT_B.TxOK))                                           
+;----------------------------------------------------------------------
+        ldiu      255,r0
+        tstb      @_SCC2_INIT_B+2,r0
+        beq       L246
+;*      Branch Occurs to L246 
+	.line	23
+;----------------------------------------------------------------------
+; 724 | sTxLen = glTxA3_Len;                                                   
+;----------------------------------------------------------------------
+        ldiu      @_glTxA3_Len+0,r0
+        sti       r0,*+fp(1)
+	.line	24
+;----------------------------------------------------------------------
+; 725 | if(glTxA3_Len)                                                         
+;----------------------------------------------------------------------
+        ldi       @_glTxA3_Len+0,r0
+        beq       L246
+;*      Branch Occurs to L246 
+	.line	26
+;----------------------------------------------------------------------
+; 727 | glTxA3_Len=0;                                                          
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_glTxA3_Len+0
+	.line	27
+;----------------------------------------------------------------------
+; 728 | Delay_SCC2_SendTo(glTxBufA3,sTxLen,SCC_B_CHANNEL,2);                   
+;----------------------------------------------------------------------
+        ldiu      2,r1
+        ldiu      *+fp(1),r3
+        ldiu      1,r2
+        push      r1
+        ldiu      @CL1,r0
+        push      r2
+        push      r3
+        push      r0
+        call      _Delay_SCC2_SendTo
+                                        ; Call Occurs
+        subi      4,sp
+L246:        
+	.line	31
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      3,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	732,000000000h,1
+
+
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_CODE_CNT+0,32
+	.field  	0,32		; _CODE_CNT @ 0
+
+	.sect	".text"
+
+	.global	_CODE_CNT
+	.bss	_CODE_CNT,1
+	.sym	_CODE_CNT,_CODE_CNT,4,2,32
+
+	.sect	".cinit"
+	.field  	1,32
+	.field  	_N_CODE_CNT+0,32
+	.field  	0,32		; _N_CODE_CNT @ 0
+
+	.sect	".text"
+
+	.global	_N_CODE_CNT
+	.bss	_N_CODE_CNT,1
+	.sym	_N_CODE_CNT,_N_CODE_CNT,4,2,32
+	.sect	 ".text"
+
+	.global	_nAuto_Fun
+	.sym	_nAuto_Fun,_nAuto_Fun,32,2,0
+	.func	740
+;******************************************************************************
+;* FUNCTION NAME: _nAuto_Fun                                                  *
+;*                                                                            *
+;*   Architecture       : TMS320C30                                           *
+;*   Calling Convention : Stack Parameter Convention                          *
+;*   Function Uses Regs : r0,r1,fp,sp,st                                      *
+;*   Regs Saved         :                                                     *
+;*   Stack Frame        : Full (w/ debug)                                     *
+;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+;******************************************************************************
+_nAuto_Fun:
+	.line	1
+;----------------------------------------------------------------------
+; 740 | void nAuto_Fun()                                                       
+;----------------------------------------------------------------------
+        push      fp
+        ldiu      sp,fp
+	.line	3
+;----------------------------------------------------------------------
+; 742 | if(n_AutoSimFlag && n_AutoDoorFlag)                                    
+;----------------------------------------------------------------------
+        ldi       @_n_AutoSimFlag+0,r0
+        beq       L261
+;*      Branch Occurs to L261 
+        ldi       @_n_AutoDoorFlag+0,r0
+        beq       L261
+;*      Branch Occurs to L261 
+	.line	5
+;----------------------------------------------------------------------
+; 744 | if(n_AutoSpeed && n_AutoSpeed<=1000)                                   
+;----------------------------------------------------------------------
+        ldi       @_n_AutoSpeed+0,r0
+        beq       L253
+;*      Branch Occurs to L253 
+        cmpi      1000,r0
+        bgt       L253
+;*      Branch Occurs to L253 
+	.line	7
+;----------------------------------------------------------------------
+; 746 | gp_WritingWord(66,0);                                                  
+;----------------------------------------------------------------------
+        ldiu      0,r1
+        ldiu      66,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	9
+;----------------------------------------------------------------------
+; 748 | gp_WritingWord(103,n_AutoSpeed);                                       
+; 751 | else                                                                   
+;----------------------------------------------------------------------
+        ldiu      @_n_AutoSpeed+0,r1
+        ldiu      103,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+        bu        L260
+;*      Branch Occurs to L260 
+L253:        
+	.line	14
+;----------------------------------------------------------------------
+; 753 | gp_WritingWord(66,1);                                                  
+;----------------------------------------------------------------------
+        ldiu      1,r1
+        ldiu      66,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	16
+;----------------------------------------------------------------------
+; 755 | if(n_AutoSpeed>1300)  //ÃâÀÔ¹® °³Æó½Ã°£ ¼³Á¤                           
+;----------------------------------------------------------------------
+        ldiu      @_n_AutoSpeed+0,r0
+        cmpi      1300,r0
+        ble       L259
+;*      Branch Occurs to L259 
+	.line	18
+;----------------------------------------------------------------------
+; 757 | n_AutoSpeed = 0;                                                       
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        sti       r0,@_n_AutoSpeed+0
+	.line	19
+;----------------------------------------------------------------------
+; 758 | CODE_CNT++;                                                            
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_CODE_CNT+0,r0
+        sti       r0,@_CODE_CNT+0
+	.line	21
+;----------------------------------------------------------------------
+; 760 | N_CODE_CNT = CODE_CNT +1;                                              
+;----------------------------------------------------------------------
+        ldiu      1,r0
+        addi      @_CODE_CNT+0,r0
+        sti       r0,@_N_CODE_CNT+0
+	.line	22
+;----------------------------------------------------------------------
+; 761 | if(N_CODE_CNT>18) {N_CODE_CNT=0;}                                      
+;----------------------------------------------------------------------
+        cmpi      18,r0
+        ble       L256
+;*      Branch Occurs to L256 
+        ldiu      0,r0
+        sti       r0,@_N_CODE_CNT+0
+L256:        
+	.line	23
+;----------------------------------------------------------------------
+; 762 | if(CODE_CNT>18) {CODE_CNT = 0;}                                        
+;----------------------------------------------------------------------
+        ldiu      @_CODE_CNT+0,r0
+        cmpi      18,r0
+        ble       L258
+;*      Branch Occurs to L258 
+        ldiu      0,r0
+        sti       r0,@_CODE_CNT+0
+L258:        
+	.line	25
+;----------------------------------------------------------------------
+; 764 | gp_WritingWord(104,CODE_CNT);                                          
+;----------------------------------------------------------------------
+        ldiu      @_CODE_CNT+0,r1
+        ldiu      104,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+	.line	26
+;----------------------------------------------------------------------
+; 765 | gp_WritingWord(105,N_CODE_CNT);                                        
+;----------------------------------------------------------------------
+        ldiu      @_N_CODE_CNT+0,r1
+        ldiu      105,r0
+        push      r1
+        push      r0
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+L259:        
+	.line	29
+;----------------------------------------------------------------------
+; 768 | gp_WritingWord(103,0);                                                 
+;----------------------------------------------------------------------
+        ldiu      0,r0
+        ldiu      103,r1
+        push      r0
+        push      r1
+        call      _gp_WritingWord
+                                        ; Call Occurs
+        subi      2,sp
+L260:        
+	.line	33
+;----------------------------------------------------------------------
+; 772 | n_AutoSpeed+=32;                                                       
+;----------------------------------------------------------------------
+        ldiu      32,r0
+        addi      @_n_AutoSpeed+0,r0
+        sti       r0,@_n_AutoSpeed+0
+L261:        
+	.line	38
+        ldiu      *-fp(1),bk
+        ldiu      *fp,fp
+        subi      2,sp
+        bu        bk
+;*      Branch Occurs to bk 
+	.endfunc	777,000000000h,0
+
+
+
+	.global	_glTxBufA3
+	.bss	_glTxBufA3,500
+	.sym	_glTxBufA3,_glTxBufA3,60,2,16000,,500
+
+	.global	_nSelect_Button
+	.bss	_nSelect_Button,13
+	.sym	_nSelect_Button,_nSelect_Button,8,2,416,.fake7
+;******************************************************************************
+;* CONSTANT TABLE                                                             *
+;******************************************************************************
+	.sect	".const"
+	.bss	CL1,1
+	.bss	CL2,1
+	.bss	CL3,1
+
+	.sect	".cinit"
+	.field  	3,32
+	.field  	CL1+0,32
+	.field  	_glTxBufA3,32
+	.field  	SW0,32
+	.field  	SW1,32
+
+	.sect	".text"
+;******************************************************************************
+;* UNDEFINED EXTERNAL REFERENCES                                              *
+;******************************************************************************
+
+	.global	_Delay_SCC2_SendTo
+
+	.global	_m_Scc1RXBuffBackUp_Ach
+
+	.global	_SCC2_INIT_B
+
+	.global	_m_TCMS_Interface_Timer
+
+	.global	_m_SDR_Flag
+	.global	_memset
+	.global	MOD_U30
+	.global	MOD_I30

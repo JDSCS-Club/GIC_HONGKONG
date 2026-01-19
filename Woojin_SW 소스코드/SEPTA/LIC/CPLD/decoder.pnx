@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE ibis [
+<!ELEMENT ibis (part, pin+)>
+<!ELEMENT part EMPTY>
+<!ELEMENT pin EMPTY>
+<!ATTLIST part
+  arch   CDATA #REQUIRED
+  device CDATA #REQUIRED
+  spg    CDATA #REQUIRED
+  pkg    CDATA #REQUIRED>
+<!ATTLIST pin
+  nm     CDATA #REQUIRED
+  no     CDATA #REQUIRED
+  iostd  (TTL|LVTTL|LVCMOS2|NA) "NA"
+  sr     (SLOW|FAST|slow|fast) "SLOW"
+  dir    (BIDIR|bidir|INPUT|input|OUTPUT|output) "BIDIR">
+]>
+<ibis><part arch="xc9500xl" device="XC9536XL" pkg="VQ44" spg="-10"/><pin dir="input" nm="RST" no="33"/><pin dir="input" nm="STRB" no="42"/><pin dir="input" nm="A&lt;23&gt;" no="7"/><pin dir="input" nm="A&lt;22&gt;" no="6"/><pin dir="input" nm="A&lt;20&gt;" no="3"/><pin dir="input" nm="A&lt;21&gt;" no="5"/><pin dir="input" nm="RWB" no="41"/><pin dir="input" nm="XL16L784_INT" no="21"/><pin dir="input" nm="ROM_SERIAL_SW" no="1"/><pin dir="input" nm="NIO3" no="27"/><pin dir="input" nm="H3" no="43"/><pin dir="input" nm="W5100_INT" no="18"/><pin dir="output" nm="NVSRAM_CS" no="38" sr="fast"/><pin dir="output" nm="ERR_LED" no="23" sr="fast"/><pin dir="output" nm="NIO4" no="44" sr="fast"/><pin dir="output" nm="RUN_LED" no="22" sr="fast"/><pin dir="output" nm="WDI" no="39" sr="fast"/><pin dir="output" nm="VL5V_OE" no="34" sr="fast"/><pin dir="output" nm="FROM_CS" no="2" sr="fast"/><pin dir="output" nm="INT0" no="29" sr="fast"/><pin dir="output" nm="INT1" no="30" sr="fast"/><pin dir="output" nm="WR" no="16" sr="fast"/><pin dir="output" nm="W5100_CS" no="19" sr="fast"/><pin dir="output" nm="XL16L784_CS" no="20" sr="fast"/><pin dir="output" nm="INT2" no="31" sr="fast"/><pin dir="output" nm="INT3" no="32" sr="fast"/><pin dir="output" nm="RD" no="14" sr="fast"/><pin dir="output" nm="DPRAM_CS" no="37" sr="fast"/><pin dir="output" nm="VL5V_DIR" no="36" sr="fast"/><pin dir="output" nm="LRST" no="13" sr="fast"/><pin dir="output" nm="EDGE_MODE" no="28" sr="fast"/><pin dir="output" nm="RDY" no="40" sr="fast"/><pin dir="bidir" nm="D&lt;0&gt;" no="8" sr="fast"/><pin dir="bidir" nm="D&lt;1&gt;" no="12" sr="fast"/></ibis>

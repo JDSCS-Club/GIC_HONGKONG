@@ -1,0 +1,315 @@
+#include "i85C30.H"
+#include "NandFlash.H"
+#include "NorFlash.h"
+
+int gRxComplete = FALSE;	// 수신 정상 Flag [수신비정상->0, 수신정상->1]
+int DATA_LEN=0;
+int cRc=0;
+
+BYTE gRxBuffer[600];			// 데이터 수신 버퍼 [기본길이 16+spare 16]
+BYTE gRxPos = 0;			// 데이터 수신 위치 [초기값->0]
+BYTE gRxExcCode[512];			// 수신 실행 코드
+BYTE gRxStTemp = 0;			// 수신받은 역코드를 계산
+
+extern BYTE gHexaSw;
+
+extern int IsBCCOK(BYTE *pDat,int nLen);
+extern int cal_CRC16(int no,BYTE *dat);
+/**********************************************************************************
+	변수 정의
+***********************************************************************************/
+BYTE SCC_INIT_ASYNC_9600BPS[][2]=
+{
+	{ 9,0xC0},		/* CH A,B INITIALIZE */
+	{ 4,0x44},		/* NO PARITY, 1 STOP, x16MODE */
+	{ 3,0xC0},		/* RX 8 BIT/CHAR, NO AUTO ENABLE */
+	{ 5,0x60},		/* TX 8 BIT/CHAR */
+	{ 6,0x00},		/* ABORT SDLC */
+	{ 7,0x00},		/* ABORT SDLC */
+	{10,0x00},		/* ABORT SDLC */
+	{11,0x56},		/* SET TO PCLK SOURCE */
+
+	/* 16MHz, 9600bps, 50(32H) */
+	/* 16MHz, 19200bps, 24(18H) */
+	/* 16MHz, 38400bps, 11(0bH) */
+	{12,0x32},		/* LOW BYTE B/R ( 16.000Mhz ) */
+	{13,0x00},		/* HIGH  " SET 9600 BAUD */
+
+	{14,0x03},		/* BRG SOURCE = PCLK, ENABLE BRG */
+	{15,0x00},		/* EXT INT DISABLE */
+	{ 3,0xC1},		/* RX ENABLE */
+	{ 5,0x68},		/* TX ENABLE DTR OFF,RTS ON */
+	{ 9,0x0a},		/* MIE SET,NON VECTOR */
+
+	{ 1,0x12},		/* RX,TX INT ENAIBLE */
+
+	{0xff,0xff}		// SCC 데이터의 끝
+};
+
+SCC_INIT_SHAPE SCC1_Init_AChl; // 85C30의 송수신 버퍼 및 플래그
+SCC_INIT_SHAPE SCC1_Init_BChl; // 85C30의 송수신 버퍼 및 플래그
+
+int gSccRxTimeout = 0;
+/*****************************************************************************
+	 동기 통신 칩을 초기화 한다.
+	 main 함수 수행 시 첫 머리에 한번 수행
+	 해야한다.
+******************************************************************************/
+void SCC_8530_Initial()
+{
+	int i;
+
+	SCC_85C30A_CMD1_WR(9,0x40);
+	SCC_85C30B_CMD1_WR(9,0x80);
+
+	// SCC2 A 체널 셋팅, 9600BPS
+	for(i=1;;i++)
+	{
+		if(SCC_INIT_ASYNC_9600BPS[i][0] == 0xff) break;
+		SCC_85C30A_CMD1_WR(SCC_INIT_ASYNC_9600BPS[i][0],SCC_INIT_ASYNC_9600BPS[i][1]);
+	}
+
+	// SCC2 B 체널 셋팅, 9600BPS
+	for(i=1;;i++)
+	{
+		if(SCC_INIT_ASYNC_9600BPS[i][0] == 0xff) break;
+		SCC_85C30B_CMD1_WR(SCC_INIT_ASYNC_9600BPS[i][0],SCC_INIT_ASYNC_9600BPS[i][1]);
+	}
+
+	// 비동기 송수신 구조체 초기화
+	SCC1_Init_AChl.RxOK = FALSE; // 옮바른 데이터가 수신되면 TRUE_FLAG
+	SCC1_Init_AChl.TxEndFlag = FALSE;
+	SCC1_Init_AChl.RxPos = 0; // RX의 버퍼의 위치
+
+	SCC1_Init_BChl.RxOK = FALSE; // 옮바른 데이터가 수신되면 TRUE_FLAG
+	SCC1_Init_BChl.TxEndFlag = FALSE;
+	SCC1_Init_BChl.RxPos = 0; // RX의 버퍼의 위치
+}
+
+/**********************************************************************************
+	SCC 전송시 인터럽트를 이용한다.
+***********************************************************************************/
+//void SCC2_SendTo(char *pData,int nLen,int nChannel)
+void SCC2_SendTo(BYTE *pData,int nLen,int nChannel)
+{
+	int i;
+	BYTE nBuf;
+
+	switch(nChannel)
+	{
+	case SCC_A_CHANNEL:
+		SCC_85C30A_CMD1_RD(0,nBuf);
+		while(nBuf & 0x01)
+		{
+			i = SCC_8530A_DATA1;
+			SCC_85C30A_CMD1_RD(0,nBuf);
+		}
+
+		SCC1_Init_AChl.TxPos = 1;
+		SCC1_Init_AChl.TxLen = nLen;
+		SCC1_Init_AChl.TxEndFlag = FALSE;
+		memcpy(SCC1_Init_AChl.TxBuffer,pData,nLen);
+		SCC_8530A_DATA1 = SCC1_Init_AChl.TxBuffer[0];
+		break;
+
+	case SCC_B_CHANNEL:
+		SCC_85C30B_CMD1_RD(0,nBuf);
+		while(nBuf & 0x01)
+		{
+			i = SCC_8530B_DATA1;
+			SCC_85C30B_CMD1_RD(0,nBuf);
+		}
+
+		SCC1_Init_BChl.TxPos = 1;
+		SCC1_Init_BChl.TxLen = nLen;
+		SCC1_Init_BChl.TxEndFlag = FALSE;
+		memcpy(SCC1_Init_BChl.TxBuffer,pData,nLen);
+		SCC_8530B_DATA1 = SCC1_Init_BChl.TxBuffer[0];
+		break;
+	}
+}
+
+/********************************************************
+	SCC1의 송수신 인터럽트 루틴
+*********************************************************/
+BYTE gDownLoadBuf[512];
+WORD gDownloadRxBlock = 0;
+void SCC_ISR()
+{
+	int i,j;
+
+	BYTE Dow_num;
+	BYTE nCmdCode;
+	BYTE nData;
+
+	EINT;
+
+	for(i=0;i<3;i++)
+	{
+		SCC_85C30A_CMD1_RD(0x03,nCmdCode);
+		if(!(nCmdCode & 0x36)) break;
+		// A채널 RX 일때..
+		if(nCmdCode&0x20)
+		{
+			if(gSccRxTimeout == 0) gRxPos = 0;	//Delay 50ms시간동안 수신되지 않으면  gRxPos=0
+			gSccRxTimeout = SCC_RX_TIMEOUT_MAX; 
+			
+			gRxBuffer[gRxPos++] = (SCC_8530A_DATA1&0xff);
+
+			switch(gRxPos)
+			{
+				// 데이터 프레임 중 STX의 3바이트가 "aabbcc"인지 확인
+				case 1:
+					if(gRxBuffer[0]!=0xaa) gRxPos = 0;
+					break;
+				case 2:
+					if(gRxBuffer[1]!=0xbb) gRxPos = 0;
+					break;
+				case 3:
+					if(gRxBuffer[2]!=0xcc) gRxPos = 0;
+					break;
+				// end of STX Check
+				case 7:
+					if((COM_DAT_HAP(gRxBuffer[3],gRxBuffer[4],gRxBuffer[5],gRxBuffer[6])&0xffff)!=0xffff) gRxPos=0;
+					break;
+				case 8:
+					if(!(gRxBuffer[7]==0xf7||gRxBuffer[7]==0xf8||gRxBuffer[7]==gHexaSw))	gRxPos = 0;
+					break;
+				default:
+					DATA_LEN=COM_DAT(gRxBuffer[3],gRxBuffer[4]);
+
+					if(gRxPos >=(DATA_LEN+10))
+					{
+						cRc=COM_DAT(gRxBuffer[(DATA_LEN+8)],gRxBuffer[(DATA_LEN+9)]);
+						if((cal_CRC16((DATA_LEN+5),(BYTE *)&gRxBuffer[3]))==cRc)		// BCC 체크가 OK일때
+						{
+							gRxPos = 0;			// 데이터 수신 위치를 초기화
+							memcpy(gRxExcCode,(BYTE*)&gRxBuffer,(DATA_LEN+10));
+							gRxComplete = TRUE;
+						}
+					}
+
+					break;
+			}
+		}
+
+    		// A채널 TX 일때
+		if(nCmdCode&0x10)
+		{
+			if(SCC1_Init_AChl.TxPos < SCC1_Init_AChl.TxLen)
+			{
+				SCC_8530A_DATA1 = SCC1_Init_AChl.TxBuffer[SCC1_Init_AChl.TxPos++];
+			}
+			else
+			{
+				SCC_8530A_CONTROL1 = 0x28;
+				SCC1_Init_AChl.TxEndFlag = TRUE;
+			}
+
+			SCC_8530A_CONTROL1 = 0x38;
+		}
+
+
+		// B채널 RX 일때
+		if(nCmdCode&0x04)
+		{
+    		}
+
+		// B채널 TX 일때
+		if(nCmdCode&0x02)
+		{
+		}
+	}
+}
+
+/********************************************************
+	SCC1의 송수신 인터럽트 루틴
+	(FlashMemory에 다운로드 용)
+*********************************************************/
+/*
+BYTE gDownloadRxPos = 0;
+BYTE gDownlaad_newNUM=0;
+WORD gDownloadRxBlockPos = 0;
+BYTE gDownLoadBuf[512];
+BYTE gDownLoadBuf_Page[195];
+BYTE gDownLoad_NG=0;
+extern void FlashPageWrite(WORD nAdr,BYTE *pBuf);
+extern void FlashPageRead(WORD nAdr,BYTE *pBuf);
+void SCC_DownloadISR()
+{
+	int i,j;
+	BYTE nCmdCode;
+	BYTE nData;
+	BYTE nBuff[512];
+
+	EINT;
+
+	for(i=0;i<3;i++)
+	{
+		SCC_85C30A_CMD1_RD(0x03,nCmdCode);
+		if(!(nCmdCode & 0x36)) break;
+
+		// A채널 RX 일때..
+		if(nCmdCode&0x20)
+		{
+			nData = (SCC_8530A_DATA1 & 0xff);
+			//gDownLoadBuf[gDownloadRxPos++] = nData;
+			gDownLoadBuf_Page[gDownlaad_newNUM++]=nData;
+			switch(gDownlaad_newNUM)
+			{
+				// 데이터 프레임 중 STX의 3바이트가 "aabbcc"인지 확인
+				case 1:
+					if(gDownLoadBuf_Page[0]!=0xaa) gDownlaad_newNUM = 0;
+					break;
+				case 2:
+					if(gDownLoadBuf_Page[1]!=0xbb) gDownlaad_newNUM = 0;
+					break;
+				case 3:
+					if(gDownLoadBuf_Page[2]!=0xcc) gDownlaad_newNUM = 0;
+					break;
+				// end of STX Check
+				case 7:
+					if((COM_DAT_HAP(gDownLoadBuf_Page[3],gDownLoadBuf_Page[4],gDownLoadBuf_Page[5],gDownLoadBuf_Page[6])&0xff)!=0x00) gDownlaad_newNUM=0;
+					break;
+				case 8:
+					if(!(gDownLoadBuf_Page[7]==0xf5||gDownLoadBuf_Page[7]==0xf8)) gDownlaad_newNUM = 0;
+					break;
+				case 10:
+					if(!(gDownLoadBuf_Page[9]==0x13)) gDownlaad_newNUM = 0;
+					break;
+				default:
+					DATA_LEN=	COM_DAT(gRxBuffer[3],gRxBuffer[4]);
+					if(gDownlaad_newNUM<=(DATA_LEN+7))		gDownLoadBuf[gDownloadRxPos++] = nData;
+					if(gDownlaad_newNUM >=(DATA_LEN+10))		// 데이터 수신이 완료되면...
+						{
+							gDownlaad_newNUM=0;
+							cRc=COM_DAT(gRxBuffer[(DATA_LEN+8)],gRxBuffer[(DATA_LEN+9)]);
+							if((cal_CRC16((DATA_LEN+5),(BYTE *)&gRxBuffer[3]))!=cRc) gDownLoad_NG++;
+						}
+					if(gDownloadRxPos >= 512)
+					{
+						gDownloadRxPos = 0;
+						FlashPageWrite(gDownloadRxBlockPos,gDownLoadBuf);
+						gDownloadRxBlockPos++;
+					}
+			}
+		}
+
+    	// A채널 TX 일때
+		if(nCmdCode&0x10)
+		{
+		}
+
+		// B채널 RX 일때
+		if(nCmdCode&0x04)
+		{
+    	}
+
+		// B채널 TX 일때
+		if(nCmdCode&0x02)
+		{
+		}
+	}
+}
+*/
+

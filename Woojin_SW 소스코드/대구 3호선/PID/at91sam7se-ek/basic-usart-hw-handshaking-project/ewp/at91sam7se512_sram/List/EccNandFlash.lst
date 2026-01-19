@@ -1,0 +1,745 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:31 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\EccNandFlash.c     #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\EccNandFlash.c"    #
+#                    -D at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\EccNandFlash.lst         #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\EccNandFlash.o            #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\EccNandFlash.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "EccNandFlash.h"
+     35          #include "NandCommon.h"
+     36          #include "NandSpareScheme.h"
+     37          #include <utility/trace.h>
+     38          #include <utility/hamming.h>
+     39          #include <utility/assert.h>
+     40          #ifdef HARDWARE_ECC
+     41          #include <hsmc4/hsmc4_ecc.h>
+     42          #endif 
+     43          #include <string.h>
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
+   \                     memcpy:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0x........         BL       __aeabi_memcpy
+   \   0000000C   0xE1A00004         MOV      R0,R4
+   \   00000010   0xE8BD4010         POP      {R4,LR}
+   \   00000014   0xE12FFF1E         BX       LR               ;; return
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memset(void *, int, size_t)
+   \                     memset:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A00002         MOV      R0,R2
+   \   0000000C   0xE1A02001         MOV      R2,R1
+   \   00000010   0xE1A01000         MOV      R1,R0
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       __aeabi_memset
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0xE8BD4010         POP      {R4,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+     44          
+     45          //------------------------------------------------------------------------------
+     46          //         Internal definitions
+     47          //------------------------------------------------------------------------------
+     48          
+     49          /// Casts
+     50          #define MODEL(ecc)  ((struct NandFlashModel *) ecc)
+     51          #define RAW(ecc)    ((struct RawNandFlash *) ecc)
+     52          
+     53          //------------------------------------------------------------------------------
+     54          //         Exported functions
+     55          //------------------------------------------------------------------------------
+     56          
+     57          //------------------------------------------------------------------------------
+     58          /// Initializes an EccNandFlash instance.
+     59          /// \param ecc  Pointer to an EccNandFlash instance.
+     60          /// \param model  Pointer to the underlying nand chip model. Can be 0.
+     61          /// \param commandAddress  Address at which commands are sent.
+     62          /// \param addressAddress  Address at which addresses are sent.
+     63          /// \param dataAddress  Address at which data is sent.
+     64          /// \param pinChipEnable  Pin controlling the CE signal of the NandFlash.
+     65          /// \param pinReadyBusy  Pin used to monitor the ready/busy signal of the Nand.
+     66          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     67          unsigned char EccNandFlash_Initialize(
+     68              struct EccNandFlash *ecc,
+     69              const struct NandFlashModel *model,
+     70              unsigned int commandAddress,
+     71              unsigned int addressAddress,
+     72              unsigned int dataAddress,
+     73              const Pin pinChipEnable,
+     74              const Pin pinReadyBusy)
+     75          {
+   \                     EccNandFlash_Initialize:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD020         SUB      SP,SP,#+32
+   \   00000008   0xE59DC030         LDR      R12,[SP, #+48]
+     76              unsigned char rc;
+     77              rc = RawNandFlash_Initialize(RAW(ecc),
+     78                                           model,
+     79                                           commandAddress,
+     80                                           addressAddress,
+     81                                           dataAddress,
+     82                                           pinChipEnable,
+     83                                           pinReadyBusy);
+     84          #if defined(HARDWARE_ECC)
+     85              {   unsigned int ecc_page;
+     86                  switch(NandFlashModel_GetPageDataSize(MODEL(ecc))) {
+     87                  case  512: ecc_page = AT91C_HSMC4_PAGESIZE_528_Bytes;  break;
+     88                  case 1024: ecc_page = AT91C_HSMC4_PAGESIZE_1056_Bytes; break;
+     89                  case 2048: ecc_page = AT91C_HSMC4_PAGESIZE_2112_Bytes; break;
+     90                  case 4096: ecc_page = AT91C_HSMC4_PAGESIZE_4224_Bytes; break;
+     91                  default:
+     92                      TRACE_ERROR("PageSize %d not compatible with ECC\n\r",
+     93                                  NandFlashModel_GetPageDataSize(MODEL(ecc)));
+     94                      return NandCommon_ERROR_ECC_NOT_COMPATIBLE;
+     95                  }
+     96                  HSMC4_EccConfigure(AT91C_ECC_TYPCORRECT_ONE_EVERY_256_BYTES,
+     97                                     ecc_page);
+     98              }
+     99          #endif
+    100              return rc;
+   \   0000000C   0xE28DE040         ADD      LR,SP,#+64
+   \   00000010   0xE28D5010         ADD      R5,SP,#+16
+   \   00000014   0xE8BE0050         LDM      LR!,{R4,R6}
+   \   00000018   0xE8A50050         STM      R5!,{R4,R6}
+   \   0000001C   0xE59E6000         LDR      R6,[LR, #0]
+   \   00000020   0xE5856000         STR      R6,[R5, #+0]
+   \   00000024   0xE28DE034         ADD      LR,SP,#+52
+   \   00000028   0xE28D5004         ADD      R5,SP,#+4
+   \   0000002C   0xE8BE0050         LDM      LR!,{R4,R6}
+   \   00000030   0xE8A50050         STM      R5!,{R4,R6}
+   \   00000034   0xE59E6000         LDR      R6,[LR, #0]
+   \   00000038   0xE5856000         STR      R6,[R5, #+0]
+   \   0000003C   0xE58DC000         STR      R12,[SP, #+0]
+   \   00000040   0x........         BL       RawNandFlash_Initialize
+   \   00000044   0xE28DD020         ADD      SP,SP,#+32       ;; stack cleaning
+   \   00000048   0xE8BD4070         POP      {R4-R6,LR}
+   \   0000004C   0xE12FFF1E         BX       LR               ;; return
+    101          }
+    102          
+    103          //------------------------------------------------------------------------------
+    104          /// Reads the data and/or spare of a page of a nandflash chip, and verify that
+    105          /// the data is valid using the ECC information contained in the spare. If one
+    106          /// buffer pointer is 0, the corresponding area is not saved.
+    107          /// Returns 0 if the data has been read and is valid; otherwise returns either
+    108          /// NandCommon_ERROR_CORRUPTEDDATA or ...
+    109          /// \param ecc  Pointer to an EccNandFlash instance.
+    110          /// \param block  Number of block to read from.
+    111          /// \param page  Number of page to read inside given block.
+    112          /// \param data  Data area buffer.
+    113          /// \param spare  Spare area buffer.
+    114          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    115          unsigned char EccNandFlash_ReadPage(
+    116              const struct EccNandFlash *ecc,
+    117              unsigned short block,
+    118              unsigned short page,
+    119              void *data,
+    120              void *spare)
+    121          {
+   \                     EccNandFlash_ReadPage:
+   \   00000000   0xE92D4FF0         PUSH     {R4-R11,LR}
+   \   00000004   0xE24DD05C         SUB      SP,SP,#+92
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A04000         MOV      R4,R0
+   \   00000010   0xE1A05001         MOV      R5,R1
+   \   00000014   0xE1A06002         MOV      R6,R2
+   \   00000018   0xE1A07003         MOV      R7,R3
+   \   0000001C   0xE59D8880         LDR      R8,[SP, #+2176]
+    122              unsigned char tmpSpare[NandCommon_MAXPAGESPARESIZE];
+    123              unsigned char error;
+    124          #ifndef HARDWARE_ECC    
+    125              unsigned char tmpData[NandCommon_MAXPAGEDATASIZE];
+    126              unsigned char hamming[NandCommon_MAXSPAREECCBYTES];
+    127          #else    
+    128              unsigned char hsiaoInSpare[NandCommon_MAXSPAREECCBYTES];
+    129              unsigned char hsiao[NandCommon_MAXSPAREECCBYTES];
+    130          #endif
+    131              
+    132              unsigned short pageDataSize = NandFlashModel_GetPageDataSize(MODEL(ecc));
+   \   00000020   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000024   0xE1A09000         MOV      R9,R0
+    133              unsigned char pageSpareSize = NandFlashModel_GetPageSpareSize(MODEL(ecc));
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       NandFlashModel_GetPageSpareSize
+   \   00000030   0xE1A0A000         MOV      R10,R0
+    134          
+    135              TRACE_DEBUG("EccNandFlash_ReadPage(B#%d:P#%d)\n\r", block, page);
+    136          #ifndef HARDWARE_ECC
+    137              // Start by reading the spare and the data
+    138              error = RawNandFlash_ReadPage(RAW(ecc), block, page, tmpData, tmpSpare);
+   \   00000034   0xE28D001C         ADD      R0,SP,#+28
+   \   00000038   0xE2800E80         ADD      R0,R0,#+2048
+   \   0000003C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000040   0xE28D301C         ADD      R3,SP,#+28
+   \   00000044   0xE1A02006         MOV      R2,R6
+   \   00000048   0xE1A01005         MOV      R1,R5
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       RawNandFlash_ReadPage
+   \   00000054   0xE1B0B000         MOVS     R11,R0
+    139              if (error) {
+   \   00000058   0x0A000003         BEQ      ??EccNandFlash_ReadPage_0
+    140          
+    141                  TRACE_ERROR("EccNandFlash_ReadPage: Failed to read page\n\r");
+   \   0000005C   0x........         LDR      R0,??DataTable1
+   \   00000060   0x........         BL       printf
+    142                  return error;
+   \   00000064   0xE1A0000B         MOV      R0,R11
+   \   00000068   0xEA000020         B        ??EccNandFlash_ReadPage_1
+    143              }
+    144          
+    145              // Retrieve ECC information from page and verify the data
+    146              NandSpareScheme_ReadEcc(NandFlashModel_GetScheme(MODEL(ecc)), tmpSpare, hamming);
+   \                     ??EccNandFlash_ReadPage_0:
+   \   0000006C   0xE1A00004         MOV      R0,R4
+   \   00000070   0x........         BL       NandFlashModel_GetScheme
+   \   00000074   0xE28D2004         ADD      R2,SP,#+4
+   \   00000078   0xE28D101C         ADD      R1,SP,#+28
+   \   0000007C   0xE2811E80         ADD      R1,R1,#+2048
+   \   00000080   0x........         BL       NandSpareScheme_ReadEcc
+    147              error = Hamming_Verify256x(tmpData, pageDataSize, hamming);
+   \   00000084   0xE28D2004         ADD      R2,SP,#+4
+   \   00000088   0xE1A01009         MOV      R1,R9
+   \   0000008C   0xE28D001C         ADD      R0,SP,#+28
+   \   00000090   0x........         BL       Hamming_Verify256x
+   \   00000094   0xE1B0B000         MOVS     R11,R0
+    148          #else
+    149              // Start by reading the spare area
+    150              // Note: Can't read data and spare at the same time, otherwise, the ECC parity generation will be incorrect.
+    151              error = RawNandFlash_ReadPage(RAW(ecc), block, page, 0, tmpSpare);
+    152              if (error) {
+    153          
+    154                  TRACE_ERROR("EccNandFlash_ReadPage: $page %d.%d\n\r",
+    155                              block, page);
+    156                  return error;
+    157              }
+    158              // Retrieve ECC information from page and verify the data
+    159              NandSpareScheme_ReadEcc(NandFlashModel_GetScheme(MODEL(ecc)), tmpSpare, hsiaoInSpare);
+    160              
+    161              // Reading the main data area
+    162              error = RawNandFlash_ReadPage(RAW(ecc), block, page, (unsigned char*)data, 0);
+    163              if (error) {
+    164          
+    165                  TRACE_ERROR("EccNandFlash_ReadPage: $page %d.%d\n\r",
+    166                              block, page);
+    167                  return error;
+    168              }
+    169              HSMC4_GetEccParity(pageDataSize, hsiao, NandFlashModel_GetDataBusWidth(MODEL(ecc)));
+    170              error = HSMC4_VerifyHsiao((unsigned char*) data,
+    171                                        pageDataSize, 
+    172                                        hsiaoInSpare,
+    173                                        hsiao,
+    174                                        NandFlashModel_GetDataBusWidth(MODEL(ecc)));
+    175          #endif    
+    176              if (error && (error != Hamming_ERROR_SINGLEBIT)) {
+   \   00000098   0x13500001         CMPNE    R0,#+1
+   \   0000009C   0x0A000005         BEQ      ??EccNandFlash_ReadPage_2
+    177          
+    178                  TRACE_ERROR("EccNandFlash_ReadPage: at B%d.P%d Unrecoverable data\n\r",
+    179                              block, page);
+   \   000000A0   0xE1A02006         MOV      R2,R6
+   \   000000A4   0xE1A01005         MOV      R1,R5
+   \   000000A8   0x........         LDR      R0,??DataTable1_1
+   \   000000AC   0x........         BL       printf
+    180                  return NandCommon_ERROR_CORRUPTEDDATA;
+   \   000000B0   0xE3A00009         MOV      R0,#+9
+   \   000000B4   0xEA00000D         B        ??EccNandFlash_ReadPage_1
+    181              }
+    182          #ifndef HARDWARE_ECC
+    183              // Copy data and/or spare into final buffers
+    184              if (data) {
+   \                     ??EccNandFlash_ReadPage_2:
+   \   000000B8   0xE3570000         CMP      R7,#+0
+   \   000000BC   0x0A000003         BEQ      ??EccNandFlash_ReadPage_3
+    185          
+    186                  memcpy(data, tmpData, pageDataSize);
+   \   000000C0   0xE1A02009         MOV      R2,R9
+   \   000000C4   0xE28D101C         ADD      R1,SP,#+28
+   \   000000C8   0xE1A00007         MOV      R0,R7
+   \   000000CC   0x........         BL       memcpy
+    187              }
+    188              if (spare) {
+   \                     ??EccNandFlash_ReadPage_3:
+   \   000000D0   0xE3580000         CMP      R8,#+0
+   \   000000D4   0x0A000004         BEQ      ??EccNandFlash_ReadPage_4
+    189          
+    190                  memcpy(spare, tmpSpare, pageSpareSize);
+   \   000000D8   0xE1A0200A         MOV      R2,R10
+   \   000000DC   0xE28D101C         ADD      R1,SP,#+28
+   \   000000E0   0xE2811E80         ADD      R1,R1,#+2048
+   \   000000E4   0xE1A00008         MOV      R0,R8
+   \   000000E8   0x........         BL       memcpy
+    191              }
+    192          #else
+    193               if (spare) {
+    194          
+    195                  memcpy(spare, tmpSpare, pageSpareSize);
+    196              }    
+    197          #endif
+    198              return 0;
+   \                     ??EccNandFlash_ReadPage_4:
+   \   000000EC   0xE3A00000         MOV      R0,#+0
+   \                     ??EccNandFlash_ReadPage_1:
+   \   000000F0   0xE28DD05C         ADD      SP,SP,#+92       ;; stack cleaning
+   \   000000F4   0xE28DDE80         ADD      SP,SP,#+2048
+   \   000000F8   0xE8BD4FF0         POP      {R4-R11,LR}
+   \   000000FC   0xE12FFF1E         BX       LR               ;; return
+    199          }
+    200          
+    201          //------------------------------------------------------------------------------
+    202          /// Writes the data and/or spare area of a nandflash page, after calculating an
+    203          /// ECC for the data area and storing it in the spare. If no data buffer is
+    204          /// provided, the ECC is read from the existing page spare. If no spare buffer
+    205          /// is provided, the spare area is still written with the ECC information
+    206          /// calculated on the data buffer.
+    207          /// Returns 0 if successful; otherwise returns an error code.
+    208          /// \param ecc Pointer to an EccNandFlash instance.
+    209          /// \param block  Number of the block to write in.
+    210          /// \param page  Number of the page to write inside the given block.
+    211          /// \param data  Data area buffer, can be 0.
+    212          /// \param spare  Spare area buffer, can be 0.
+    213          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    214          unsigned char EccNandFlash_WritePage(
+    215              const struct EccNandFlash *ecc,
+    216              unsigned short block,
+    217              unsigned short page,
+    218              void *data,
+    219              void *spare)
+    220          {
+   \                     EccNandFlash_WritePage:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE24DD060         SUB      SP,SP,#+96
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+   \   00000014   0xE1A07003         MOV      R7,R3
+   \   00000018   0xE59D8080         LDR      R8,[SP, #+128]
+    221              unsigned char error;
+    222              unsigned char tmpSpare[NandCommon_MAXPAGESPARESIZE];
+    223              unsigned short pageDataSize = NandFlashModel_GetPageDataSize(MODEL(ecc));
+   \   0000001C   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000020   0xE1A09000         MOV      R9,R0
+    224              unsigned short pageSpareSize = NandFlashModel_GetPageSpareSize(MODEL(ecc));
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       NandFlashModel_GetPageSpareSize
+   \   0000002C   0xE1A0A000         MOV      R10,R0
+    225          #ifndef HARDWARE_ECC    
+    226              unsigned char hamming[NandCommon_MAXSPAREECCBYTES];
+    227          #else    
+    228              unsigned char hsiao[NandCommon_MAXSPAREECCBYTES];
+    229          #endif    
+    230          
+    231              ASSERT(data || spare, "EccNandFlash_WritePage: At least one area must be written\n\r");
+   \   00000030   0xE3570000         CMP      R7,#+0
+   \   00000034   0x03580000         CMPEQ    R8,#+0
+   \   00000038   0x1A000004         BNE      ??EccNandFlash_WritePage_0
+   \   0000003C   0x........         LDR      R0,??DataTable1_2
+   \   00000040   0x........         BL       printf
+   \   00000044   0x........         LDR      R0,??DataTable1_3
+   \   00000048   0x........         BL       printf
+   \                     ??EccNandFlash_WritePage_1:
+   \   0000004C   0xEAFFFFFE         B        ??EccNandFlash_WritePage_1
+    232              TRACE_DEBUG("EccNandFlash_WritePage(B#%d:P#%d)\n\r", block, page);
+    233          #ifndef HARDWARE_ECC
+    234              // Compute ECC on the new data, if provided
+    235              // If not provided, hamming code set to 0xFFFF.. to keep existing bytes
+    236              memset(hamming, 0xFF, NandCommon_MAXSPAREECCBYTES);
+   \                     ??EccNandFlash_WritePage_0:
+   \   00000050   0xE3A02018         MOV      R2,#+24
+   \   00000054   0xE3A010FF         MOV      R1,#+255
+   \   00000058   0xE28D0004         ADD      R0,SP,#+4
+   \   0000005C   0x........         BL       memset
+    237              if (data) {
+   \   00000060   0xE3570000         CMP      R7,#+0
+   \   00000064   0x0A000003         BEQ      ??EccNandFlash_WritePage_2
+    238          
+    239                  // Compute hamming code on data
+    240                  Hamming_Compute256x(data, pageDataSize, hamming);
+   \   00000068   0xE28D2004         ADD      R2,SP,#+4
+   \   0000006C   0xE1A01009         MOV      R1,R9
+   \   00000070   0xE1A00007         MOV      R0,R7
+   \   00000074   0x........         BL       Hamming_Compute256x
+    241              }
+    242          
+    243              // Store code in spare buffer (if no buffer provided, use a temp. one)
+    244              if (!spare) {
+   \                     ??EccNandFlash_WritePage_2:
+   \   00000078   0xE3580000         CMP      R8,#+0
+   \   0000007C   0x1A000004         BNE      ??EccNandFlash_WritePage_3
+    245          
+    246                  spare = tmpSpare;
+   \   00000080   0xE28D801C         ADD      R8,SP,#+28
+    247                  memset(spare, 0xFF, pageSpareSize);
+   \   00000084   0xE1A0200A         MOV      R2,R10
+   \   00000088   0xE3A010FF         MOV      R1,#+255
+   \   0000008C   0xE1A00008         MOV      R0,R8
+   \   00000090   0x........         BL       memset
+    248              }
+    249              NandSpareScheme_WriteEcc(NandFlashModel_GetScheme(MODEL(ecc)), spare, hamming);
+   \                     ??EccNandFlash_WritePage_3:
+   \   00000094   0xE1A00004         MOV      R0,R4
+   \   00000098   0x........         BL       NandFlashModel_GetScheme
+   \   0000009C   0xE28D2004         ADD      R2,SP,#+4
+   \   000000A0   0xE1A01008         MOV      R1,R8
+   \   000000A4   0x........         BL       NandSpareScheme_WriteEcc
+    250          
+    251              // Perform write operation
+    252              error = RawNandFlash_WritePage(RAW(ecc), block, page, data, spare);
+   \   000000A8   0xE58D8000         STR      R8,[SP, #+0]
+   \   000000AC   0xE1A03007         MOV      R3,R7
+   \   000000B0   0xE1A02006         MOV      R2,R6
+   \   000000B4   0xE1A01005         MOV      R1,R5
+   \   000000B8   0xE1A00004         MOV      R0,R4
+   \   000000BC   0x........         BL       RawNandFlash_WritePage
+   \   000000C0   0xE1B04000         MOVS     R4,R0
+    253              if (error) {
+   \   000000C4   0x0A000003         BEQ      ??EccNandFlash_WritePage_4
+    254          
+    255                  TRACE_ERROR("EccNandFlash_WritePage: Failed to write page\n\r");
+   \   000000C8   0x........         LDR      R0,??DataTable1_4
+   \   000000CC   0x........         BL       printf
+    256                  return error;
+   \   000000D0   0xE1A00004         MOV      R0,R4
+   \   000000D4   0xEA000000         B        ??EccNandFlash_WritePage_5
+    257              }
+    258          
+    259          #else
+    260              // Store code in spare buffer (if no buffer provided, use a temp. one)
+    261              if (!spare) {
+    262                  spare = tmpSpare;
+    263                  memset(spare, 0xFF, pageSpareSize);
+    264              }
+    265              // Perform write operation
+    266              error = RawNandFlash_WritePage(RAW(ecc), block, page, data, spare);
+    267              if (error) {
+    268          
+    269                  TRACE_ERROR("EccNandFlash_WritePage: Failed to write page\n\r");
+    270                  return error;
+    271              }
+    272              HSMC4_GetEccParity(pageDataSize, hsiao, NandFlashModel_GetDataBusWidth(MODEL(ecc)));
+    273              // Perform write operation
+    274              NandSpareScheme_WriteEcc(NandFlashModel_GetScheme(MODEL(ecc)), spare, hsiao);
+    275              error = RawNandFlash_WritePage(RAW(ecc), block, page, 0, spare);
+    276              if (error) {
+    277                  TRACE_ERROR("EccNandFlash_WritePage: Failed to write page\n\r");
+    278                  return error;
+    279              }
+    280          #endif        
+    281              return 0;
+   \                     ??EccNandFlash_WritePage_4:
+   \   000000D8   0xE3A00000         MOV      R0,#+0
+   \                     ??EccNandFlash_WritePage_5:
+   \   000000DC   0xE28DD060         ADD      SP,SP,#+96       ;; stack cleaning
+   \   000000E0   0xE8BD47F0         POP      {R4-R10,LR}
+   \   000000E4   0xE12FFF1E         BX       LR               ;; return
+    282          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     `?<Constant "-E- EccNandFlash_Read...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     `?<Constant "-E- EccNandFlash_Read...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_2:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_3:
+   \   00000000   0x........         DC32     `?<Constant "EccNandFlash_WritePag...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_4:
+   \   00000000   0x........         DC32     `?<Constant "-E- EccNandFlash_Writ...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- EccNandFlash_Read...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- EccNandFlash_ReadPage: Failed to read page\012\015"
+   \              0x2D 0x20    
+   \              0x45 0x63    
+   \              0x63 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \              0x64 0x50    
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x74 0x6F    
+   \              0x20 0x72    
+   \              0x65 0x61    
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000031   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- EccNandFlash_Read...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 45H, 63H, 63H, 4EH
+   \              0x2D 0x20    
+   \              0x45 0x63    
+   \              0x63 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x52          DC8 5FH, 52H, 65H, 61H, 64H, 50H, 61H, 67H
+   \              0x65 0x61    
+   \              0x64 0x50    
+   \              0x61 0x67    
+   \   00000018   0x65 0x3A          DC8 65H, 3AH, 20H, 61H, 74H, 20H, 42H, 25H
+   \              0x20 0x61    
+   \              0x74 0x20    
+   \              0x42 0x25    
+   \   00000020   0x64 0x2E          DC8 64H, 2EH, 50H, 25H, 64H, 20H, 55H, 6EH
+   \              0x50 0x25    
+   \              0x64 0x20    
+   \              0x55 0x6E    
+   \   00000028   0x72 0x65          DC8 72H, 65H, 63H, 6FH, 76H, 65H, 72H, 61H
+   \              0x63 0x6F    
+   \              0x76 0x65    
+   \              0x72 0x61    
+   \   00000030   0x62 0x6C          DC8 62H, 6CH, 65H, 20H, 64H, 61H, 74H, 61H
+   \              0x65 0x20    
+   \              0x64 0x61    
+   \              0x74 0x61    
+   \   00000038   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   0000003B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "EccNandFlash_WritePag...">`:
+   \   00000000   0x45 0x63          DC8 45H, 63H, 63H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x63 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000008   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 57H, 72H, 69H
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \              0x72 0x69    
+   \   00000010   0x74 0x65          DC8 74H, 65H, 50H, 61H, 67H, 65H, 3AH, 20H
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \   00000018   0x41 0x74          DC8 41H, 74H, 20H, 6CH, 65H, 61H, 73H, 74H
+   \              0x20 0x6C    
+   \              0x65 0x61    
+   \              0x73 0x74    
+   \   00000020   0x20 0x6F          DC8 20H, 6FH, 6EH, 65H, 20H, 61H, 72H, 65H
+   \              0x6E 0x65    
+   \              0x20 0x61    
+   \              0x72 0x65    
+   \   00000028   0x61 0x20          DC8 61H, 20H, 6DH, 75H, 73H, 74H, 20H, 62H
+   \              0x6D 0x75    
+   \              0x73 0x74    
+   \              0x20 0x62    
+   \   00000030   0x65 0x20          DC8 65H, 20H, 77H, 72H, 69H, 74H, 74H, 65H
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x74 0x65    
+   \   00000038   0x6E 0x0A          DC8 6EH, 0AH, 0DH, 0
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- EccNandFlash_Writ...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 45H, 63H, 63H, 4EH
+   \              0x2D 0x20    
+   \              0x45 0x63    
+   \              0x63 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x57          DC8 5FH, 57H, 72H, 69H, 74H, 65H, 50H, 61H
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x50 0x61    
+   \   00000018   0x67 0x65          DC8 67H, 65H, 3AH, 20H, 46H, 61H, 69H, 6CH
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \   00000020   0x65 0x64          DC8 65H, 64H, 20H, 74H, 6FH, 20H, 77H, 72H
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x77 0x72    
+   \   00000028   0x69 0x74          DC8 69H, 74H, 65H, 20H, 70H, 61H, 67H, 65H
+   \              0x65 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+    283          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       48  EccNandFlash_Initialize
+               48 -> RawNandFlash_Initialize
+     2176  EccNandFlash_ReadPage
+             2176 -> Hamming_Verify256x
+             2176 -> NandFlashModel_GetPageDataSize
+             2176 -> NandFlashModel_GetPageSpareSize
+             2176 -> NandFlashModel_GetScheme
+             2176 -> NandSpareScheme_ReadEcc
+             2176 -> RawNandFlash_ReadPage
+             2176 -> memcpy
+             2176 -> printf
+      128  EccNandFlash_WritePage
+              128 -> Hamming_Compute256x
+              128 -> NandFlashModel_GetPageDataSize
+              128 -> NandFlashModel_GetPageSpareSize
+              128 -> NandFlashModel_GetScheme
+              128 -> NandSpareScheme_WriteEcc
+              128 -> RawNandFlash_WritePage
+              128 -> memset
+              128 -> printf
+        8  memcpy
+                8 -> __aeabi_memcpy
+        8  memset
+                8 -> __aeabi_memset
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      52  ?<Constant "-E- EccNandFlash_Read...">
+      60  ?<Constant "-E- EccNandFlash_Read...">_1
+      52  ?<Constant "-E- EccNandFlash_Writ...">
+      16  ?<Constant "-F- ASSERT: ">
+      60  ?<Constant "EccNandFlash_WritePag...">
+       4  ??DataTable1
+       4  ??DataTable1_1
+       4  ??DataTable1_2
+       4  ??DataTable1_3
+       4  ??DataTable1_4
+      80  EccNandFlash_Initialize
+     256  EccNandFlash_ReadPage
+     232  EccNandFlash_WritePage
+      24  memcpy
+      40  memset
+
+ 
+ 240 bytes in section .rodata
+ 652 bytes in section .text
+ 
+ 588 bytes of CODE  memory (+ 64 bytes shared)
+ 240 bytes of CONST memory
+
+Errors: none
+Warnings: none

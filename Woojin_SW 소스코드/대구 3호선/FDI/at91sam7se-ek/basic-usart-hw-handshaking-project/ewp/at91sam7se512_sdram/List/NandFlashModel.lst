@@ -1,0 +1,806 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     07/Apr/2013  02:16:21 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\NandFlashModel.c   #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\NandFlashModel.c"  #
+#                    -D at91sam7se512 -D sdram -D TRACE_LEVEL=4 -lC           #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\" --remarks             #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll   #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\NandFlashModel.lst      #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\NandFlashModel.o         #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\NandFlashModel.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "NandFlashModel.h"
+     35          #include "NandCommon.h"
+     36          #if defined(CHIP_NAND_CTRL)
+     37          #include <hsmc4/hsmc4.h>
+     38          #endif
+     39          #include <utility/trace.h>
+     40          
+     41          #include <string.h>
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memcpy(void *, void const *, size_t)
+   \                     memcpy:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0x........         BL       __aeabi_memcpy
+   \   0000000C   0xE1A00004         MOV      R0,R4
+   \   00000010   0xE8BD4010         POP      {R4,LR}
+   \   00000014   0xE12FFF1E         BX       LR               ;; return
+     42          
+     43          //------------------------------------------------------------------------------
+     44          //         Internal definitions
+     45          //------------------------------------------------------------------------------
+     46          //------------------------------------------------------------------------------
+     47          /// Get the power of input, given a certain result, i.e. input^(power) = result.
+     48          /// returns the value of "power" if succesfully find the power.
+     49          /// \param result  a certain output we want to calculate.
+     50          /// \param input  the input of the power.
+     51          //------------------------------------------------------------------------------
+     52          #if defined(OP_BOOTSTRAP_on)
+     53          unsigned int CALPOW(unsigned int result, unsigned int input)
+     54          {
+     55          	unsigned int i=0;
+     56          
+     57          	while(i<32)
+     58          	{
+     59          		if(result == (input << i))
+     60          			return i;
+     61          		i++;
+     62          	}
+     63          
+     64          	return 0;
+     65          }
+     66          #endif
+     67          
+     68          //------------------------------------------------------------------------------
+     69          /// Get the interger part of input, given a certain result, i.e.  return = result / input.
+     70          /// returns the value of interger part of the result/input.
+     71          /// \param result  a certain output we want to calculate.
+     72          /// \param input  the input of the division.
+     73          //------------------------------------------------------------------------------
+     74          #if defined(OP_BOOTSTRAP_on)
+     75          unsigned int CALINT(unsigned int result, unsigned int input)
+     76          {
+     77          	unsigned int i=0;
+     78          	unsigned int tmpInput=0;
+     79                  
+     80              while(1)
+     81              {
+     82              	tmpInput +=input;
+     83            		i++;
+     84          	    if(tmpInput == result)
+     85          	      return i;
+     86          	    else if (tmpInput > result)
+     87          	      return (i-1);
+     88              }
+     89          
+     90          }
+     91          #endif
+     92          
+     93          
+     94          //------------------------------------------------------------------------------
+     95          //         Exported functions
+     96          //------------------------------------------------------------------------------
+     97          
+     98          //------------------------------------------------------------------------------
+     99          /// Looks for a NandFlashModel corresponding to the given ID inside a list of
+    100          /// model. If found, the model variable is filled with the correct values.
+    101          /// This function returns 0 if a matching model has been found; otherwise it
+    102          /// returns NandCommon_ERROR_UNKNOWNMODEL.
+    103          /// \param modelList  List of NandFlashModel instances.
+    104          /// \param size  Number of models in list.
+    105          /// \param chipId  Identifier returned by the Nand(id1|(id2<<8)|(id3<<16)|(id4<<24)).
+    106          /// \param model  NandFlashModel instance to update with the model parameters.
+    107          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    108          unsigned char NandFlashModel_Find(
+    109              const struct NandFlashModel *modelList,
+    110              unsigned int size,
+    111              unsigned int chipId,
+    112              struct NandFlashModel *model)
+    113          {
+   \                     NandFlashModel_Find:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A07001         MOV      R7,R1
+   \   0000000C   0xE1A01002         MOV      R1,R2
+   \   00000010   0xE1A05003         MOV      R5,R3
+    114              unsigned char found = 0, id2, id4;
+    115              unsigned int i;
+    116              #if defined(CHIP_NAND_CTRL)
+    117              unsigned char pageSize = 0;
+    118              #endif
+    119              id2 = (unsigned char)(chipId>>8);
+   \   00000014   0xE1A08421         LSR      R8,R1,#+8
+   \   00000018   0xE20880FF         AND      R8,R8,#0xFF
+    120              id4 = (unsigned char)(chipId>>24);
+   \   0000001C   0xE1A06C21         LSR      R6,R1,#+24
+    121          
+    122              TRACE_INFO("Nandflash ID is 0x%08X\n\r", chipId);
+   \   00000020   0x........         LDR      R0,??DataTable0
+   \   00000024   0x........         BL       printf
+    123          
+    124              for(i=0; i<size; i++) {
+   \   00000028   0xE3A00000         MOV      R0,#+0
+   \   0000002C   0xE1A01004         MOV      R1,R4
+   \   00000030   0xEA000000         B        ??NandFlashModel_Find_1
+   \                     ??NandFlashModel_Find_2:
+   \   00000034   0xE2800001         ADD      R0,R0,#+1
+   \                     ??NandFlashModel_Find_1:
+   \   00000038   0xE1500007         CMP      R0,R7
+   \   0000003C   0x2A000030         BCS      ??NandFlashModel_Find_3
+    125                  if(modelList[i].deviceId == id2) {
+   \   00000040   0xE4D1200C         LDRB     R2,[R1], #+12
+   \   00000044   0xE1520008         CMP      R2,R8
+   \   00000048   0x1AFFFFF9         BNE      ??NandFlashModel_Find_2
+    126                      found = 1;
+    127          
+    128                      if(model) {
+   \   0000004C   0xE3550000         CMP      R5,#+0
+   \   00000050   0x0A000029         BEQ      ??NandFlashModel_Find_4
+    129          
+    130                          memcpy(model, &modelList[i], sizeof(struct NandFlashModel));
+   \   00000054   0xE3A0200C         MOV      R2,#+12
+   \   00000058   0xE0801080         ADD      R1,R0,R0, LSL #+1
+   \   0000005C   0xE0841101         ADD      R1,R4,R1, LSL #+2
+   \   00000060   0xE1A00005         MOV      R0,R5
+   \   00000064   0x........         BL       memcpy
+    131          
+    132                          if(model->blockSizeInKBytes == 0 || model->pageSizeInBytes == 0) {
+   \   00000068   0xE1D500B6         LDRH     R0,[R5, #+6]
+   \   0000006C   0xE3500000         CMP      R0,#+0
+   \   00000070   0x11D500B2         LDRHNE   R0,[R5, #+2]
+   \   00000074   0x13500000         CMPNE    R0,#+0
+   \   00000078   0x1A00001F         BNE      ??NandFlashModel_Find_4
+    133                              TRACE_DEBUG("Fetch from ID4(0x%.2x):\r\n", id4);
+    134                              /// Fetch from the extended ID4
+    135                              /// ID4 D5  D4 BlockSize || D1  D0  PageSize
+    136                              ///     0   0   64K      || 0   0   1K
+    137                              ///     0   1   128K     || 0   1   2K
+    138                              ///     1   0   256K     || 1   0   4K
+    139                              ///     1   1   512K     || 1   1   8k
+    140                              #if !defined(OP_BOOTSTRAP_on)
+    141                              switch(id4 & 0x03) {
+   \   0000007C   0xE2060003         AND      R0,R6,#0x3
+   \   00000080   0xE3500003         CMP      R0,#+3
+   \   00000084   0x8A00000A         BHI      ??NandFlashModel_Find_5
+   \   00000088   0xE7DF1000         LDRB     R1,[PC, R0]
+   \   0000008C   0xE08FF101         ADD      PC,PC,R1, LSL #+2
+   \                     ??NandFlashModel_Find_0:
+   \   00000090   0x00 0x02          DC8      0x0,0x2,0x4,0x6
+   \              0x04 0x06    
+    142                                  case 0x00: model->pageSizeInBytes = 1024; break;
+   \                     ??NandFlashModel_Find_6:
+   \   00000094   0xE3A00E40         MOV      R0,#+1024
+   \   00000098   0xEA000004         B        ??NandFlashModel_Find_7
+    143                                  case 0x01: model->pageSizeInBytes = 2048; break;
+   \                     ??NandFlashModel_Find_8:
+   \   0000009C   0xE3A00E80         MOV      R0,#+2048
+   \   000000A0   0xEA000002         B        ??NandFlashModel_Find_7
+    144                                  case 0x02: model->pageSizeInBytes = 4096; break;
+   \                     ??NandFlashModel_Find_9:
+   \   000000A4   0xE3A00D40         MOV      R0,#+4096
+   \   000000A8   0xEA000000         B        ??NandFlashModel_Find_7
+    145                                  case 0x03: model->pageSizeInBytes = 8192; break;
+   \                     ??NandFlashModel_Find_10:
+   \   000000AC   0xE3A00D80         MOV      R0,#+8192
+   \                     ??NandFlashModel_Find_7:
+   \   000000B0   0xE1C500B2         STRH     R0,[R5, #+2]
+    146                              }
+    147                              switch(id4 & 0x30) {
+   \                     ??NandFlashModel_Find_5:
+   \   000000B4   0xE2160030         ANDS     R0,R6,#0x30
+   \   000000B8   0x0A000007         BEQ      ??NandFlashModel_Find_11
+   \   000000BC   0xE3500010         CMP      R0,#+16
+   \   000000C0   0x0A000007         BEQ      ??NandFlashModel_Find_12
+   \   000000C4   0xE3500020         CMP      R0,#+32
+   \   000000C8   0x0A000007         BEQ      ??NandFlashModel_Find_13
+   \   000000CC   0xE3500030         CMP      R0,#+48
+   \   000000D0   0x0A000007         BEQ      ??NandFlashModel_Find_14
+   \   000000D4   0xE3A00000         MOV      R0,#+0
+   \   000000D8   0xEA00000A         B        ??NandFlashModel_Find_15
+    148                                  case 0x00: model->blockSizeInKBytes = 64;  break;
+   \                     ??NandFlashModel_Find_11:
+   \   000000DC   0xE3A00040         MOV      R0,#+64
+   \   000000E0   0xEA000004         B        ??NandFlashModel_Find_16
+    149                                  case 0x10: model->blockSizeInKBytes = 128; break;
+   \                     ??NandFlashModel_Find_12:
+   \   000000E4   0xE3A00080         MOV      R0,#+128
+   \   000000E8   0xEA000002         B        ??NandFlashModel_Find_16
+    150                                  case 0x20: model->blockSizeInKBytes = 256; break;
+   \                     ??NandFlashModel_Find_13:
+   \   000000EC   0xE3A00F40         MOV      R0,#+256
+   \   000000F0   0xEA000000         B        ??NandFlashModel_Find_16
+    151                                  case 0x30: model->blockSizeInKBytes = 512; break;
+   \                     ??NandFlashModel_Find_14:
+   \   000000F4   0xE3A00F80         MOV      R0,#+512
+   \                     ??NandFlashModel_Find_16:
+   \   000000F8   0xE1C500B6         STRH     R0,[R5, #+6]
+    152                              }
+    153          					#else
+    154          					model->pageSizeInBytes = 1024 << (id4 & 0x03);
+    155                              model->blockSizeInKBytes = (64) << ((id4 & 0x30) >>4);
+    156          					#endif
+    157                          }
+    158                          #if defined(CHIP_NAND_CTRL)
+    159                              switch(model->pageSizeInBytes) {
+    160                                  case 1024: pageSize = AT91C_HSMC4_PAGESIZE_1056_Bytes; break;
+    161                                  case 2048: pageSize = AT91C_HSMC4_PAGESIZE_2112_Bytes; break;
+    162                                  case 4096: pageSize = AT91C_HSMC4_PAGESIZE_4224_Bytes; break;
+    163                                  default: TRACE_ERROR("Unsupportted page size for NAND Flash Controller\n\r");
+    164                              }
+    165                              HSMC4_SetMode(pageSize | AT91C_HSMC4_DTOMUL_1048576 | AT91C_HSMC4_EDGECTRL |AT91C_HSMC4_DTOCYC | AT91C_HSMC4_RSPARE);
+    166                          #endif
+    167                      }
+    168                      TRACE_DEBUG("NAND Model found:\r\n");
+    169                      TRACE_DEBUG(" * deviceId = 0x%02X\r\n", model->deviceId);
+    170                      TRACE_DEBUG(" * deviceSizeInMegaBytes = %d\r\n", model->deviceSizeInMegaBytes);
+    171                      TRACE_DEBUG(" * blockSizeInkBytes = %d\r\n", model->blockSizeInKBytes);
+    172                      TRACE_DEBUG(" * pageSizeInBytes = %d\r\n", model->pageSizeInBytes);
+    173                      TRACE_DEBUG(" * options = 0x%02X\r\n", model->options);
+    174                      break;
+    175                  }
+    176              }
+    177          
+    178              // Check if chip has been detected
+    179              if (found) {
+    180          
+    181                  return 0;
+   \                     ??NandFlashModel_Find_4:
+   \   000000FC   0xE3A00000         MOV      R0,#+0
+   \   00000100   0xEA000000         B        ??NandFlashModel_Find_15
+    182              }
+    183              else {
+    184          
+    185                  return NandCommon_ERROR_UNKNOWNMODEL;
+   \                     ??NandFlashModel_Find_3:
+   \   00000104   0xE3A00008         MOV      R0,#+8
+   \                     ??NandFlashModel_Find_15:
+   \   00000108   0xE8BD41F0         POP      {R4-R8,LR}
+   \   0000010C   0xE12FFF1E         BX       LR               ;; return
+    186              }
+    187          }
+    188          
+    189          //------------------------------------------------------------------------------
+    190          /// Translates address/size access of a NandFlashModel to block, page and
+    191          /// offset values. The values are stored in the provided variables if their
+    192          /// pointer is not 0.
+    193          /// Returns 0 if the access is correct; otherwise returns
+    194          /// NandCommon_ERROR_OUTOFBOUNDS.
+    195          /// \param model  Pointer to a NandFlashModel instance.
+    196          /// \param address  Access address.
+    197          /// \param size  Access size in bytes.
+    198          /// \param block  Stores the first accessed block number.
+    199          /// \param page  Stores the first accessed page number inside the first block.
+    200          /// \param offset  Stores the byte offset inside the first accessed page.
+    201          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    202          unsigned char NandFlashModel_TranslateAccess(
+    203              const struct NandFlashModel *model,
+    204              unsigned int address,
+    205              unsigned int size,
+    206              unsigned short *block,
+    207              unsigned short *page,
+    208              unsigned short *offset)
+    209          {
+   \                     NandFlashModel_TranslateAccess:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A09002         MOV      R9,R2
+   \   00000010   0xE1A08003         MOV      R8,R3
+   \   00000014   0xE59D6020         LDR      R6,[SP, #+32]
+   \   00000018   0xE59D7024         LDR      R7,[SP, #+36]
+    210               // Check that access is not too big
+    211              #if !defined(OP_BOOTSTRAP_on)
+    212              if ((address + size) > NandFlashModel_GetDeviceSizeInBytes(model)) {
+   \   0000001C   0x........         BL       NandFlashModel_GetDeviceSizeInBytes
+   \   00000020   0xE1A02000         MOV      R2,R0
+   \   00000024   0xE1A03001         MOV      R3,R1
+   \   00000028   0xE0890005         ADD      R0,R9,R5
+   \   0000002C   0xE3A01000         MOV      R1,#+0
+   \   00000030   0xE1530001         CMP      R3,R1
+   \   00000034   0x8A000002         BHI      ??NandFlashModel_TranslateAccess_0
+   \   00000038   0xE1520000         CMP      R2,R0
+    213          
+    214                  TRACE_DEBUG("NandFlashModel_TranslateAccess: out-of-bounds access.\n\r");
+    215                  return NandCommon_ERROR_OUTOFBOUNDS;
+   \   0000003C   0x33A00003         MOVCC    R0,#+3
+   \   00000040   0x3A00001B         BCC      ??NandFlashModel_TranslateAccess_1
+    216              }
+    217          	#endif
+    218          
+    219              // Get Nand info
+    220              unsigned int blockSize = NandFlashModel_GetBlockSizeInBytes(model);
+   \                     ??NandFlashModel_TranslateAccess_0:
+   \   00000044   0xE1A00004         MOV      R0,R4
+   \   00000048   0x........         BL       NandFlashModel_GetBlockSizeInBytes
+   \   0000004C   0xE1A09000         MOV      R9,R0
+    221              unsigned int pageSize = NandFlashModel_GetPageDataSize(model);
+   \   00000050   0xE1A00004         MOV      R0,R4
+   \   00000054   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000058   0xE1A0A000         MOV      R10,R0
+    222          
+    223              // Translate address
+    224              #if !defined(OP_BOOTSTRAP_on)
+    225              unsigned short tmpBlock = address / blockSize;
+   \   0000005C   0xE1A00005         MOV      R0,R5
+   \   00000060   0xE1A01009         MOV      R1,R9
+   \   00000064   0x........         BL       __aeabi_uidiv
+   \   00000068   0xE1A04000         MOV      R4,R0
+    226              address -= tmpBlock * blockSize;
+   \   0000006C   0xE1A00800         LSL      R0,R0,#+16
+   \   00000070   0xE1A00820         LSR      R0,R0,#+16
+   \   00000074   0xE0000099         MUL      R0,R9,R0
+   \   00000078   0xE0455000         SUB      R5,R5,R0
+    227              unsigned short tmpPage = address / pageSize;
+   \   0000007C   0xE1A00005         MOV      R0,R5
+   \   00000080   0xE1A0100A         MOV      R1,R10
+   \   00000084   0x........         BL       __aeabi_uidiv
+    228              address -= tmpPage * pageSize;
+    229              unsigned short tmpOffset = address;
+   \   00000088   0xE1A01800         LSL      R1,R0,#+16
+   \   0000008C   0xE1A01821         LSR      R1,R1,#+16
+   \   00000090   0xE001019A         MUL      R1,R10,R1
+   \   00000094   0xE0451001         SUB      R1,R5,R1
+    230          	#else
+    231          	unsigned short tmpBlock = CALINT(address, blockSize);
+    232          	address -= tmpBlock * blockSize;
+    233          	unsigned short tmpPage = CALINT(address, pageSize);
+    234          	address -= tmpPage * pageSize;
+    235          	unsigned short tmpOffset= address;
+    236          	#endif
+    237          
+    238              // Save results
+    239              if (block) {
+   \   00000098   0xE3580000         CMP      R8,#+0
+    240          
+    241                  *block = tmpBlock;
+   \   0000009C   0x11C840B0         STRHNE   R4,[R8, #+0]
+    242              }
+    243              if (page) {
+   \   000000A0   0xE3560000         CMP      R6,#+0
+    244          
+    245                  *page = tmpPage;
+   \   000000A4   0x11C600B0         STRHNE   R0,[R6, #+0]
+    246              }
+    247              if (offset) {
+   \   000000A8   0xE3570000         CMP      R7,#+0
+    248          
+    249                  *offset = tmpOffset;
+   \   000000AC   0x11C710B0         STRHNE   R1,[R7, #+0]
+    250              }
+    251          
+    252              return 0;
+   \   000000B0   0xE3A00000         MOV      R0,#+0
+   \                     ??NandFlashModel_TranslateAccess_1:
+   \   000000B4   0xE8BD47F0         POP      {R4-R10,LR}
+   \   000000B8   0xE12FFF1E         BX       LR               ;; return
+    253          }
+    254          
+    255          //------------------------------------------------------------------------------
+    256          /// Returns the spare area placement scheme used by a particular nandflash
+    257          /// model.
+    258          /// \param model  Pointer to a NandFlashModel instance.
+    259          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    260          const struct NandSpareScheme * NandFlashModel_GetScheme(
+    261              const struct NandFlashModel *model)
+    262          {
+    263              return model->scheme;
+   \                     NandFlashModel_GetScheme:
+   \   00000000   0xE5900008         LDR      R0,[R0, #+8]
+   \   00000004   0xE12FFF1E         BX       LR               ;; return
+    264          }
+    265          
+    266          //------------------------------------------------------------------------------
+    267          /// Returns the device ID of a particular NandFlash model.
+    268          /// \param model  Pointer to a NandFlashModel instance.
+    269          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    270          unsigned char NandFlashModel_GetDeviceId(
+    271             const struct NandFlashModel *model)
+    272          {
+    273              return model->deviceId;
+   \                     NandFlashModel_GetDeviceId:
+   \   00000000   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   00000004   0xE12FFF1E         BX       LR               ;; return
+    274          }
+    275          
+    276          //------------------------------------------------------------------------------
+    277          /// Returns the number of blocks in the entire device.
+    278          /// \param model  Pointer to a NandFlashModel instance.
+    279          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    280          unsigned short NandFlashModel_GetDeviceSizeInBlocks(
+    281             const struct NandFlashModel *model)
+    282          {
+   \                     NandFlashModel_GetDeviceSizeInBlocks:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    283          	#if !defined(OP_BOOTSTRAP_on)
+    284              return ((1024) / model->blockSizeInKBytes) * model->deviceSizeInMegaBytes;
+   \   00000008   0xE3A00E40         MOV      R0,#+1024
+   \   0000000C   0xE1D410B6         LDRH     R1,[R4, #+6]
+   \   00000010   0x........         BL       __aeabi_idiv
+   \   00000014   0xE1D410B4         LDRH     R1,[R4, #+4]
+   \   00000018   0xE0000091         MUL      R0,R1,R0
+   \   0000001C   0xE1A00800         LSL      R0,R0,#+16
+   \   00000020   0xE1A00820         LSR      R0,R0,#+16
+   \   00000024   0xE8BD4010         POP      {R4,LR}
+   \   00000028   0xE12FFF1E         BX       LR               ;; return
+    285          	#else
+    286          	unsigned int pow;
+    287          	pow = CALPOW((1024 * model->deviceSizeInMegaBytes), model->blockSizeInKBytes);
+    288          	return (0x1 << pow);
+    289          	#endif
+    290          }
+    291          
+    292          //------------------------------------------------------------------------------
+    293          /// Returns the number of pages in the entire device.
+    294          /// \param model  Pointer to a NandFlashModel instance.
+    295          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    296          unsigned int NandFlashModel_GetDeviceSizeInPages(
+    297             const struct NandFlashModel *model)
+    298          {
+   \                     NandFlashModel_GetDeviceSizeInPages:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    299              return (unsigned int) NandFlashModel_GetDeviceSizeInBlocks(model) //* 8 // HACK
+    300                     * NandFlashModel_GetBlockSizeInPages(model);
+   \   00000008   0x........         BL       NandFlashModel_GetDeviceSizeInBlocks
+   \   0000000C   0xE1A05000         MOV      R5,R0
+   \   00000010   0xE1A00004         MOV      R0,R4
+   \   00000014   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000018   0xE0010590         MUL      R1,R0,R5
+   \   0000001C   0xE1A00001         MOV      R0,R1
+   \   00000020   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+    301          }
+    302          
+    303          //------------------------------------------------------------------------------
+    304          /// Returns the size of the whole device in bytes (this does not include the
+    305          /// size of the spare zones).
+    306          /// \param model  Pointer to a NandFlashModel instance.
+    307          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    308          unsigned long long NandFlashModel_GetDeviceSizeInBytes(
+    309             const struct NandFlashModel *model)
+    310          {
+    311              return ((unsigned long long) model->deviceSizeInMegaBytes) << 20;
+   \                     NandFlashModel_GetDeviceSizeInBytes:
+   \   00000000   0xE1D000B4         LDRH     R0,[R0, #+4]
+   \   00000004   0xE1A01620         MOV      R1,R0, LSR #+12
+   \   00000008   0xE1A00A00         LSL      R0,R0,#+20
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    312          }
+    313          
+    314          //------------------------------------------------------------------------------
+    315          /// Returns the size of the whole device in Mega bytes (this does not include the
+    316          /// size of the spare zones).
+    317          /// \param model  Pointer to a NandFlashModel instance.
+    318          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    319          unsigned int NandFlashModel_GetDeviceSizeInMBytes(
+    320             const struct NandFlashModel *model)
+    321          {
+    322              return ((unsigned int) model->deviceSizeInMegaBytes);
+   \                     NandFlashModel_GetDeviceSizeInMBytes:
+   \   00000000   0xE1D000B4         LDRH     R0,[R0, #+4]
+   \   00000004   0xE12FFF1E         BX       LR               ;; return
+    323          }
+    324          
+    325          
+    326          //------------------------------------------------------------------------------
+    327          /// Returns the number of pages in one single block of a device.
+    328          /// \param model  Pointer to a NandFlashModel instance.
+    329          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    330          unsigned short NandFlashModel_GetBlockSizeInPages(
+    331             const struct NandFlashModel *model)
+    332          {
+   \                     NandFlashModel_GetBlockSizeInPages:
+   \   00000000   0xE92D4000         PUSH     {LR}
+   \   00000004   0xE1A01000         MOV      R1,R0
+    333              #if !defined(OP_BOOTSTRAP_on)
+    334              return model->blockSizeInKBytes * 1024 / model->pageSizeInBytes;
+   \   00000008   0xE1D100B6         LDRH     R0,[R1, #+6]
+   \   0000000C   0xE1A00500         LSL      R0,R0,#+10
+   \   00000010   0xE1D110B2         LDRH     R1,[R1, #+2]
+   \   00000014   0x........         BL       __aeabi_idiv
+   \   00000018   0xE1A00800         LSL      R0,R0,#+16
+   \   0000001C   0xE1A00820         LSR      R0,R0,#+16
+   \   00000020   0xE8BD4000         POP      {LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+    335          	#else
+    336          	unsigned int pow;
+    337          	pow = CALPOW((model->blockSizeInKBytes * 1024), model->pageSizeInBytes);
+    338          	return (0x1 << pow);
+    339          	#endif
+    340          }
+    341          
+    342          //------------------------------------------------------------------------------
+    343          /// Returns the size in bytes of one single block of a device. This does not
+    344          /// take into account the spare zones size.
+    345          /// \param model  Pointer to a NandFlashModel instance.
+    346          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    347          unsigned int NandFlashModel_GetBlockSizeInBytes(
+    348             const struct NandFlashModel *model)
+    349          {
+    350              return (model->blockSizeInKBytes *1024);
+   \                     NandFlashModel_GetBlockSizeInBytes:
+   \   00000000   0xE1D000B6         LDRH     R0,[R0, #+6]
+   \   00000004   0xE1A00500         LSL      R0,R0,#+10
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    351          }
+    352          
+    353          //------------------------------------------------------------------------------
+    354          /// Returns the size of the data area of a page in bytes.
+    355          /// \param model  Pointer to a NandFlashModel instance.
+    356          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    357          unsigned short NandFlashModel_GetPageDataSize(
+    358             const struct NandFlashModel *model)
+    359          {
+    360              return model->pageSizeInBytes;
+   \                     NandFlashModel_GetPageDataSize:
+   \   00000000   0xE1D000B2         LDRH     R0,[R0, #+2]
+   \   00000004   0xE12FFF1E         BX       LR               ;; return
+    361          }
+    362          
+    363          //------------------------------------------------------------------------------
+    364          /// Returns the size of the spare area of a page in bytes.
+    365          /// \param model  Pointer to a NandFlashModel instance.
+    366          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    367          unsigned char NandFlashModel_GetPageSpareSize(
+    368             const struct NandFlashModel *model)
+    369          {
+    370              return (model->pageSizeInBytes>>5); /// Spare size is 16/512 of data size
+   \                     NandFlashModel_GetPageSpareSize:
+   \   00000000   0xE1D000B2         LDRH     R0,[R0, #+2]
+   \   00000004   0xE1A00980         LSL      R0,R0,#+19
+   \   00000008   0xE1A00C20         LSR      R0,R0,#+24
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    371          }
+    372          
+    373          //------------------------------------------------------------------------------
+    374          /// Returns the number of bits used by the data bus of a NandFlash device.
+    375          /// \param model  Pointer to a NandFlashModel instance.
+    376          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    377          unsigned char NandFlashModel_GetDataBusWidth(
+    378             const struct NandFlashModel *model)
+    379          {
+    380              return (model->options&NandFlashModel_DATABUS16)? 16: 8;
+   \                     NandFlashModel_GetDataBusWidth:
+   \   00000000   0xE5D00001         LDRB     R0,[R0, #+1]
+   \   00000004   0xE3100001         TST      R0,#0x1
+   \   00000008   0x13A00010         MOVNE    R0,#+16
+   \   0000000C   0x03A00008         MOVEQ    R0,#+8
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    381          }
+    382          
+    383          //------------------------------------------------------------------------------
+    384          /// Returns 1 if the given NandFlash model uses the "small blocks/pages"
+    385          /// command set; otherwise returns 0.
+    386          /// \param model  Pointer to a NandFlashModel instance.
+    387          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    388          unsigned char NandFlashModel_HasSmallBlocks(
+    389             const struct NandFlashModel *model)
+    390          {
+    391              return (model->pageSizeInBytes <= 512 )? 1: 0;
+   \                     NandFlashModel_HasSmallBlocks:
+   \   00000000   0xE1D000B2         LDRH     R0,[R0, #+2]
+   \   00000004   0xE3A01001         MOV      R1,#+1
+   \   00000008   0xE3811F80         ORR      R1,R1,#0x200
+   \   0000000C   0xE1500001         CMP      R0,R1
+   \   00000010   0x33A00001         MOVCC    R0,#+1
+   \   00000014   0x23A00000         MOVCS    R0,#+0
+   \   00000018   0xE12FFF1E         BX       LR               ;; return
+    392          }
+    393          
+    394          //------------------------------------------------------------------------------
+    395          /// Returns 1 if the device supports the copy-back operation. Otherwise returns
+    396          /// 0.
+    397          /// \param model  Pointer to a NandFlashModel instance.
+    398          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    399          unsigned char NandFlashModel_SupportsCopyBack(
+    400              const struct NandFlashModel *model)
+    401          {
+    402              return ((model->options & NandFlashModel_COPYBACK) != 0);
+   \                     NandFlashModel_SupportsCopyBack:
+   \   00000000   0xE5D00001         LDRB     R0,[R0, #+1]
+   \   00000004   0xE3A01001         MOV      R1,#+1
+   \   00000008   0xE00100A0         AND      R0,R1,R0, LSR #+1
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    403          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \   00000000   0x........         DC32     `?<Constant "-I- Nandflash ID is 0...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Nandflash ID is 0...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Nandflash ID is 0x%08X\012\015"
+   \              0x2D 0x20    
+   \              0x4E 0x61    
+   \              0x6E 0x64    
+   \              0x66 0x6C    
+   \              0x61 0x73    
+   \              0x68 0x20    
+   \              0x49 0x44    
+   \              0x20 0x69    
+   \              0x73 0x20    
+   \              0x30 0x78    
+   \              0x25 0x30    
+   \              0x38 0x58    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       24  NandFlashModel_Find
+             24 -> memcpy
+             24 -> printf
+        0  NandFlashModel_GetBlockSizeInBytes
+        4  NandFlashModel_GetBlockSizeInPages
+              4 -> __aeabi_idiv
+        0  NandFlashModel_GetDataBusWidth
+        0  NandFlashModel_GetDeviceId
+        8  NandFlashModel_GetDeviceSizeInBlocks
+              8 -> __aeabi_idiv
+        0  NandFlashModel_GetDeviceSizeInBytes
+        0  NandFlashModel_GetDeviceSizeInMBytes
+       16  NandFlashModel_GetDeviceSizeInPages
+             16 -> NandFlashModel_GetBlockSizeInPages
+             16 -> NandFlashModel_GetDeviceSizeInBlocks
+        0  NandFlashModel_GetPageDataSize
+        0  NandFlashModel_GetPageSpareSize
+        0  NandFlashModel_GetScheme
+        0  NandFlashModel_HasSmallBlocks
+        0  NandFlashModel_SupportsCopyBack
+       32  NandFlashModel_TranslateAccess
+             32 -> NandFlashModel_GetBlockSizeInBytes
+             32 -> NandFlashModel_GetDeviceSizeInBytes
+             32 -> NandFlashModel_GetPageDataSize
+             32 -> __aeabi_uidiv
+        8  memcpy
+              8 -> __aeabi_memcpy
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      32  ?<Constant "-I- Nandflash ID is 0...">
+       4  ??DataTable0
+     272  NandFlashModel_Find
+      12  NandFlashModel_GetBlockSizeInBytes
+      40  NandFlashModel_GetBlockSizeInPages
+      20  NandFlashModel_GetDataBusWidth
+       8  NandFlashModel_GetDeviceId
+      44  NandFlashModel_GetDeviceSizeInBlocks
+      16  NandFlashModel_GetDeviceSizeInBytes
+       8  NandFlashModel_GetDeviceSizeInMBytes
+      40  NandFlashModel_GetDeviceSizeInPages
+       8  NandFlashModel_GetPageDataSize
+      16  NandFlashModel_GetPageSpareSize
+       8  NandFlashModel_GetScheme
+      28  NandFlashModel_HasSmallBlocks
+      16  NandFlashModel_SupportsCopyBack
+     188  NandFlashModel_TranslateAccess
+      24  memcpy
+
+ 
+  32 bytes in section .rodata
+ 752 bytes in section .text
+ 
+ 728 bytes of CODE  memory (+ 24 bytes shared)
+  32 bytes of CONST memory
+
+Errors: none
+Warnings: none

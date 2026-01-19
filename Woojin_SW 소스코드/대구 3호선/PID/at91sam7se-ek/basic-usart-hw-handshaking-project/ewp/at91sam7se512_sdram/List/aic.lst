@@ -1,0 +1,208 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     07/Apr/2013  02:16:22 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\peripherals\aic\aic.c                 #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\peripherals\aic\aic.c" -D             #
+#                    at91sam7se512 -D sdram -D TRACE_LEVEL=4 -lC              #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\" --remarks             #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll   #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\aic.lst                 #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\aic.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\peripherals\aic\aic.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "aic.h"
+     35          #include <board.h>
+     36          
+     37          //------------------------------------------------------------------------------
+     38          //         Global functions
+     39          //------------------------------------------------------------------------------
+     40          
+     41          //------------------------------------------------------------------------------
+     42          /// Configures an interrupt in the AIC. The interrupt is identified by its
+     43          /// source (AT91C_ID_xxx) and is configured to use the specified mode and
+     44          /// interrupt handler function. Mode is the value that will be put in AIC_SMRx
+     45          /// and the function address will be set in AIC_SVRx.
+     46          /// The interrupt is disabled before configuration, so it is useless
+     47          /// to do it before calling this function. When AIC_ConfigureIT returns, the
+     48          /// interrupt will always be disabled and cleared; it must be enabled by a
+     49          /// call to AIC_EnableIT().
+     50          /// \param source  Interrupt source to configure.
+     51          /// \param mode  Triggering mode and priority of the interrupt.
+     52          /// \param handler  Interrupt handler function.
+     53          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     54          void AIC_ConfigureIT(
+     55              unsigned int source,
+     56              unsigned int mode,
+     57              void (*handler)(void))
+     58          {
+     59              // Disable the interrupt first
+     60              AT91C_BASE_AIC->AIC_IDCR = 1 << source;
+   \                     AIC_ConfigureIT:
+   \   00000000   0xE3A03001         MOV      R3,#+1
+   \   00000004   0xE1A03013         LSL      R3,R3,R0
+   \   00000008   0xE3E0C0DB         MVN      R12,#+219
+   \   0000000C   0xE3CCCEE0         BIC      R12,R12,#0xE00
+   \   00000010   0xE58C3000         STR      R3,[R12, #+0]
+     61          
+     62              // Configure mode and handler
+     63              AT91C_BASE_AIC->AIC_SMR[source] = mode;
+   \   00000014   0xE3CC3F49         BIC      R3,R12,#0x124
+   \   00000018   0xE7831100         STR      R1,[R3, +R0, LSL #+2]
+     64              AT91C_BASE_AIC->AIC_SVR[source] = (unsigned int) handler;
+   \   0000001C   0xE1A01100         LSL      R1,R0,#+2
+   \   00000020   0xE5012F80         STR      R2,[R1, #-3968]
+     65          
+     66              // Clear interrupt
+     67              AT91C_BASE_AIC->AIC_ICCR = 1 << source;
+   \   00000024   0xE3A01001         MOV      R1,#+1
+   \   00000028   0xE1A00011         LSL      R0,R1,R0
+   \   0000002C   0xE3831F4A         ORR      R1,R3,#0x128
+   \   00000030   0x........         B        ??Subroutine0_0
+     68          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE3C11EE0         BIC      R1,R1,#0xE00
+   \                     ??Subroutine0_0:
+   \   00000004   0xE5810000         STR      R0,[R1, #+0]
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+     69          
+     70          //------------------------------------------------------------------------------
+     71          /// Enables interrupts coming from the given (unique) source (AT91C_ID_xxx).
+     72          /// \param source  Interrupt source to enable.
+     73          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     74          void AIC_EnableIT(unsigned int source)
+     75          {
+     76              AT91C_BASE_AIC->AIC_IECR = 1 << source;
+   \                     AIC_EnableIT:
+   \   00000000   0xE3A01001         MOV      R1,#+1
+   \   00000004   0xE1A00011         LSL      R0,R1,R0
+   \   00000008   0xE3E010DF         MVN      R1,#+223
+   \   0000000C   0x........         B        ?Subroutine0
+     77          }
+     78          
+     79          //------------------------------------------------------------------------------
+     80          /// Disables interrupts coming from the given (unique) source (AT91C_ID_xxx).
+     81          /// \param source  Interrupt source to enable.
+     82          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     83          void AIC_DisableIT(unsigned int source)
+     84          {
+     85              AT91C_BASE_AIC->AIC_IDCR = 1 << source;
+   \                     AIC_DisableIT:
+   \   00000000   0xE3A01001         MOV      R1,#+1
+   \   00000004   0xE1A00011         LSL      R0,R1,R0
+   \   00000008   0xE3E010DB         MVN      R1,#+219
+   \   0000000C                      REQUIRE ?Subroutine0
+   \   0000000C                      ;; // Fall through to label ?Subroutine0
+     86          }
+     87          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  AIC_ConfigureIT
+        0  AIC_DisableIT
+        0  AIC_EnableIT
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      12  ?Subroutine0
+      52  AIC_ConfigureIT
+      12  AIC_DisableIT
+      16  AIC_EnableIT
+
+ 
+ 92 bytes in section .text
+ 
+ 92 bytes of CODE memory
+
+Errors: none
+Warnings: none

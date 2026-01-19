@@ -1,0 +1,395 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     06/Apr/2015  18:37:24 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\memories\norflash\NorFlashApi.c               #
+#    Command line =  "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91lib\memories\norflash\NorFlashApi.c" -D           #
+#                    at91sam7se512 -D flash -D TRACE_LEVEL=4 -lC              #
+#                    "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\List\" --remarks --diag_suppress     #
+#                    Pe826,Pe1375 -o "C:\Users\jang                           #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_ #
+#                    flash\Obj\" --no_cse --no_unroll --no_inline             #
+#                    --no_code_motion --no_tbaa --no_clustering               #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/peripherals\" -I "C:\Users\jang         #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/memories\" -I "C:\Users\jang                          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib\" -I "C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내   #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib/components\" -I "C:\Users\jang          #
+#                    duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구            #
+#                    모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se- #
+#                    ek\basic-usart-hw-handshaking-project\ewp\..\..\..\at91l #
+#                    ib/boards/at91sam7se-ek\" --interwork --cpu_mode arm     #
+#                    -On --use_c++_inline                                     #
+#    List file    =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\List\NorFlashApi.lst                 #
+#    Object file  =  C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_flash\Obj\NorFlashApi.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\jang duksu\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91lib\memories\norflash\NorFlashApi.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          #include "NorFlashApi.h"
+     34          #include "NorFlashCommon.h"
+     35          #include <utility/math.h>
+     36          #include <utility/trace.h>
+     37          #include <string.h>
+     38          
+     39          //------------------------------------------------------------------------------
+     40          //         Exported functions
+     41          //------------------------------------------------------------------------------
+     42          
+     43          //------------------------------------------------------------------------------
+     44          /// It will invokes different associate function to implement a RESET command.
+     45          /// \param pNorFlash  Pointer to a NorFlash instance.
+     46          /// \param address  Address offset.
+     47          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     48          void NORFLASH_Reset(struct NorFlash *pNorFlash, unsigned int address)
+     49          {
+   \                     NORFLASH_Reset:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+     50              ((pNorFlash->pOperations)->_fReset)(&(pNorFlash->norFlashInfo), address);
+   \   0000000C   0xE1B01005         MOVS     R1,R5
+   \   00000010   0xE2940004         ADDS     R0,R4,#+4
+   \   00000014   0xE5942000         LDR      R2,[R4, #+0]
+   \   00000018   0xE5922000         LDR      R2,[R2, #+0]
+   \   0000001C   0xE1A0E00F         MOV      LR,PC
+   \   00000020   0xE12FFF12         BX       R2
+     51          }
+   \   00000024   0xE8BD4031         POP      {R0,R4,R5,LR}
+   \   00000028   0xE12FFF1E         BX       LR               ;; return
+     52          
+     53          //------------------------------------------------------------------------------
+     54          /// It will invokes associate function to implement a read manufactory ID command.
+     55          /// \param pNorFlash  Pointer to a NorFlash instance.
+     56          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     57          unsigned int NORFLASH_ReadManufactoryID(struct NorFlash *pNorFlash)
+     58          { 
+   \                     NORFLASH_ReadManufactoryID:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     59              return ((pNorFlash->pOperations)->_fReadManufactoryID)(&(pNorFlash->norFlashInfo));
+   \   00000008   0xE2940004         ADDS     R0,R4,#+4
+   \   0000000C   0xE5941000         LDR      R1,[R4, #+0]
+   \   00000010   0xE5911008         LDR      R1,[R1, #+8]
+   \   00000014   0xE1A0E00F         MOV      LR,PC
+   \   00000018   0xE12FFF11         BX       R1
+   \   0000001C   0xE8BD4010         POP      {R4,LR}
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+     60          }
+     61          
+     62          //------------------------------------------------------------------------------
+     63          /// It will invokes associate function to implement a read device ID command.
+     64          /// ID command.
+     65          /// \param pNorFlash  Pointer to a NorFlash instance.
+     66          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     67          unsigned int NORFLASH_ReadDeviceID(struct NorFlash *pNorFlash)
+     68          {
+   \                     NORFLASH_ReadDeviceID:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     69              return ((pNorFlash->pOperations)->_fReadDeviceID)(&(pNorFlash->norFlashInfo));
+   \   00000008   0xE2940004         ADDS     R0,R4,#+4
+   \   0000000C   0xE5941000         LDR      R1,[R4, #+0]
+   \   00000010   0xE591100C         LDR      R1,[R1, #+12]
+   \   00000014   0xE1A0E00F         MOV      LR,PC
+   \   00000018   0xE12FFF11         BX       R1
+   \   0000001C   0xE8BD4010         POP      {R4,LR}
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+     70          }
+     71          
+     72          //------------------------------------------------------------------------------
+     73          /// Erases the specified block of the device. Returns 0 if the operation was
+     74          /// successful; otherwise returns an error code.
+     75          /// \param pNorFlash  Pointer to a NorFlash instance.
+     76          /// \param address Address offset to be erase.
+     77          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     78          unsigned char NORFLASH_EraseSector(
+     79              struct NorFlash *pNorFlash, 
+     80              unsigned int address)
+     81          {
+   \                     NORFLASH_EraseSector:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+     82              return ((pNorFlash->pOperations)->_fEraseSector)(&(pNorFlash->norFlashInfo), address);
+   \   0000000C   0xE1B01005         MOVS     R1,R5
+   \   00000010   0xE2940004         ADDS     R0,R4,#+4
+   \   00000014   0xE5942000         LDR      R2,[R4, #+0]
+   \   00000018   0xE5922014         LDR      R2,[R2, #+20]
+   \   0000001C   0xE1A0E00F         MOV      LR,PC
+   \   00000020   0xE12FFF12         BX       R2
+   \   00000024   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000028   0xE12FFF1E         BX       LR               ;; return
+     83          }
+     84          
+     85          //------------------------------------------------------------------------------
+     86          /// Erases all the block of the device. Returns 0 if the operation was successful;
+     87          /// otherwise returns an error code.
+     88          /// \param pNorFlash  Pointer to a NorFlash instance.
+     89          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     90          unsigned char NORFLASH_EraseChip(
+     91              struct NorFlash *pNorFlash)
+     92          {
+   \                     NORFLASH_EraseChip:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     93              return ((pNorFlash->pOperations)->_fEraseChip)(&(pNorFlash->norFlashInfo));
+   \   00000008   0xE2940004         ADDS     R0,R4,#+4
+   \   0000000C   0xE5941000         LDR      R1,[R4, #+0]
+   \   00000010   0xE5911010         LDR      R1,[R1, #+16]
+   \   00000014   0xE1A0E00F         MOV      LR,PC
+   \   00000018   0xE12FFF11         BX       R1
+   \   0000001C   0xE8BD4010         POP      {R4,LR}
+   \   00000020   0xE12FFF1E         BX       LR               ;; return
+     94          }
+     95          
+     96          //------------------------------------------------------------------------------
+     97          /// Sends data to the pNorFlash chip from the provided buffer.
+     98          /// \param pNorFlash  Pointer to a NorFlash instance.
+     99          /// \param address Start address offset to be wrote.
+    100          /// \param buffer Buffer where the data is stored.
+    101          /// \param size Number of bytes that will be written.
+    102          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    103          unsigned char NORFLASH_WriteData(
+    104              struct NorFlash *pNorFlash,
+    105              unsigned int address,
+    106              unsigned char *buffer,
+    107              unsigned int size)
+    108          {
+   \                     NORFLASH_WriteData:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0xE1B06002         MOVS     R6,R2
+   \   00000010   0xE1B07003         MOVS     R7,R3
+    109              return ((pNorFlash->pOperations)->_fWriteData)(&(pNorFlash->norFlashInfo), address, buffer, size);
+   \   00000014   0xE1B03007         MOVS     R3,R7
+   \   00000018   0xE1B02006         MOVS     R2,R6
+   \   0000001C   0xE1B01005         MOVS     R1,R5
+   \   00000020   0xE2940004         ADDS     R0,R4,#+4
+   \   00000024   0xE594C000         LDR      R12,[R4, #+0]
+   \   00000028   0xE59CC004         LDR      R12,[R12, #+4]
+   \   0000002C   0xE1A0E00F         MOV      LR,PC
+   \   00000030   0xE12FFF1C         BX       R12
+   \   00000034   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   00000038   0xE12FFF1E         BX       LR               ;; return
+    110          }
+    111          
+    112          //------------------------------------------------------------------------------
+    113          /// Reads data from the NandFlash chip into the provided buffer.
+    114          /// \param pNorFlash  Pointer to a NorFlash instance.
+    115          /// \param buffer  Buffer where the data will be stored.
+    116          /// \param size  Number of bytes that will be read.
+    117          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    118          unsigned char NORFLASH_ReadData(
+    119              struct NorFlash *pNorFlash,
+    120              unsigned int  address,
+    121              unsigned char *buffer,
+    122              unsigned int size)
+    123          {
+   \                     NORFLASH_ReadData:
+   \   00000000   0xE92D47F0         PUSH     {R4-R10,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+   \   00000008   0xE1B05001         MOVS     R5,R1
+   \   0000000C   0xE1B06002         MOVS     R6,R2
+   \   00000010   0xE1B07003         MOVS     R7,R3
+    124              unsigned int busAddress;
+    125              unsigned char busWidth;
+    126              unsigned int i;
+    127              busWidth = NorFlash_GetDataBusWidth(&(pNorFlash->norFlashInfo));
+   \   00000014   0xE2940004         ADDS     R0,R4,#+4
+   \   00000018   0x........         BL       NorFlash_GetDataBusWidth
+   \   0000001C   0xE1B09000         MOVS     R9,R0
+    128              
+    129              busAddress = NorFlash_GetAddressInChip(&(pNorFlash->norFlashInfo), address);
+   \   00000020   0xE1B01005         MOVS     R1,R5
+   \   00000024   0xE2940004         ADDS     R0,R4,#+4
+   \   00000028   0x........         BL       NorFlash_GetAddressInChip
+   \   0000002C   0xE1B08000         MOVS     R8,R0
+    130              
+    131              size /= (busWidth / 8);
+   \   00000030   0xE1B00009         MOVS     R0,R9
+   \   00000034   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000038   0xE3A01008         MOV      R1,#+8
+   \   0000003C   0x........         BL       __aeabi_idiv
+   \   00000040   0xE1B01000         MOVS     R1,R0
+   \   00000044   0xE1B00007         MOVS     R0,R7
+   \   00000048   0x........         BL       __aeabi_uidiv
+   \   0000004C   0xE1B07000         MOVS     R7,R0
+    132              for(i=0; i < size; i++) {
+   \   00000050   0xE3A00000         MOV      R0,#+0
+   \   00000054   0xE1B0A000         MOVS     R10,R0
+   \                     ??NORFLASH_ReadData_0:
+   \   00000058   0xE15A0007         CMP      R10,R7
+   \   0000005C   0x2A000010         BCS      ??NORFLASH_ReadData_1
+    133                  ReadRawData(busWidth, busAddress, buffer);
+   \   00000060   0xE1B02006         MOVS     R2,R6
+   \   00000064   0xE1B01008         MOVS     R1,R8
+   \   00000068   0xE1B00009         MOVS     R0,R9
+   \   0000006C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000070   0x........         BL       ReadRawData
+    134                  buffer+= (busWidth / 8);
+   \   00000074   0xE1B00009         MOVS     R0,R9
+   \   00000078   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   0000007C   0xE3A01008         MOV      R1,#+8
+   \   00000080   0x........         BL       __aeabi_idiv
+   \   00000084   0xE0906006         ADDS     R6,R0,R6
+    135                  busAddress+= (busWidth / 8);
+   \   00000088   0xE1B00009         MOVS     R0,R9
+   \   0000008C   0xE21000FF         ANDS     R0,R0,#0xFF      ;; Zero extend
+   \   00000090   0xE3A01008         MOV      R1,#+8
+   \   00000094   0x........         BL       __aeabi_idiv
+   \   00000098   0xE0908008         ADDS     R8,R0,R8
+    136              }
+   \   0000009C   0xE29AA001         ADDS     R10,R10,#+1
+   \   000000A0   0xEAFFFFEC         B        ??NORFLASH_ReadData_0
+    137              return 0;
+   \                     ??NORFLASH_ReadData_1:
+   \   000000A4   0xE3A00000         MOV      R0,#+0
+   \   000000A8   0xE8BD47F0         POP      {R4-R10,LR}
+   \   000000AC   0xE12FFF1E         BX       LR               ;; return
+    138              
+    139              /*
+    140              if ((busWidth / 8 ) == FLASH_CHIP_WIDTH_8BITS ){ 
+    141                  size = (size);
+    142              }
+    143          
+    144              if ((busWidth / 8 ) == FLASH_CHIP_WIDTH_16BITS ){ 
+    145                  size = (size + 1) >> 1;
+    146              }
+    147              if ((busWidth/8) == FLASH_CHIP_WIDTH_32BITS ){ 
+    148                  size = (size + 3) >> 2;
+    149              }
+    150              
+    151              for(i = 0; i < size; i++) {
+    152                  ReadRawData(busWidth, busAddress, buffer);
+    153                  buffer+= (busWidth / 8);
+    154                  busAddress+= (busWidth / 8);
+    155          
+    156              }
+    157              return 0;
+    158              
+    159              */
+    160          }
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        8  NORFLASH_EraseChip
+              8 -- Indirect call
+       16  NORFLASH_EraseSector
+             16 -- Indirect call
+       32  NORFLASH_ReadData
+             32 -> NorFlash_GetAddressInChip
+             32 -> NorFlash_GetDataBusWidth
+             32 -> ReadRawData
+             32 -> __aeabi_idiv
+             32 -> __aeabi_uidiv
+        8  NORFLASH_ReadDeviceID
+              8 -- Indirect call
+        8  NORFLASH_ReadManufactoryID
+              8 -- Indirect call
+       16  NORFLASH_Reset
+             16 -- Indirect call
+       24  NORFLASH_WriteData
+             24 -- Indirect call
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      36  NORFLASH_EraseChip
+      44  NORFLASH_EraseSector
+     176  NORFLASH_ReadData
+      36  NORFLASH_ReadDeviceID
+      36  NORFLASH_ReadManufactoryID
+      44  NORFLASH_Reset
+      60  NORFLASH_WriteData
+
+ 
+ 432 bytes in section .text
+ 
+ 432 bytes of CODE memory
+
+Errors: none
+Warnings: none

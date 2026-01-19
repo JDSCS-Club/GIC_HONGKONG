@@ -1,0 +1,271 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     07/Apr/2013  02:16:32 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\printf_usart.c                                       #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\printf_usart.c" -D at91sam7se512 -D sdram -D         #
+#                    TRACE_LEVEL=4 -lC "C:\Users\JDS\Desktop\JDS_PRO\국내     #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\at91sam7se512_sdram\List\"         #
+#                    --remarks --diag_suppress Pe826,Pe1375 -o                #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll   #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\printf_usart.lst        #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\printf_usart.o           #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-project\printf_usart.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          /// \unit
+     32          /// This file contains several function re-implementations to make the standard
+     33          /// printf() method output on USART0.
+     34          ///
+     35          /// The re-implemented functions are fputc(), fputs() and putchar().
+     36          //------------------------------------------------------------------------------
+     37          
+     38          //------------------------------------------------------------------------------
+     39          //         Headers
+     40          //------------------------------------------------------------------------------
+     41          
+     42          #include <board.h>
+     43          #include <usart/usart.h>
+     44          
+     45          #include <stdio.h>
+     46          #ifndef NOFPUT
+     47          //------------------------------------------------------------------------------
+     48          //         Global functions
+     49          //------------------------------------------------------------------------------
+     50          
+     51          //------------------------------------------------------------------------------
+     52          /// Implementation of fputc using USART0 as the standard output. Required
+     53          /// for printf().
+     54          /// Returns the character written if successful, or -1 if the output stream is
+     55          /// not stdout or stderr.
+     56          /// \param c  Character to write.
+     57          /// \param pStream  Output stream.
+     58          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     59          signed int fputc(signed int c, FILE *pStream)
+     60          {
+   \                     fputc:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+     61              if ((pStream == stdout) || (pStream == stderr)) {
+   \   00000008   0x........         LDR      R0,??DataTable1
+   \   0000000C   0xE1510000         CMP      R1,R0
+   \   00000010   0x........         LDRNE    R0,??DataTable1_1
+   \   00000014   0x11510000         CMPNE    R1,R0
+   \   00000018   0x1A000007         BNE      ??fputc_0
+     62              
+     63                  USART_Write(AT91C_BASE_US0, c, 0);
+   \   0000001C   0xE3A02000         MOV      R2,#+0
+   \   00000020   0xE1A01804         LSL      R1,R4,#+16
+   \   00000024   0xE1A01821         LSR      R1,R1,#+16
+   \   00000028   0xE3A004FC         MOV      R0,#-67108864
+   \   0000002C   0xE38007FF         ORR      R0,R0,#0x3FC0000
+   \   00000030   0x........         BL       USART_Write
+     64                  return c;
+   \   00000034   0xE1A00004         MOV      R0,R4
+   \   00000038   0xEA000000         B        ??fputc_1
+     65              }
+     66              else {
+     67          
+     68                  return EOF;
+   \                     ??fputc_0:
+   \   0000003C   0xE3E00000         MVN      R0,#+0
+   \                     ??fputc_1:
+   \   00000040   0xE8BD4010         POP      {R4,LR}
+   \   00000044   0xE12FFF1E         BX       LR               ;; return
+     69              }
+     70          }
+     71          
+     72          //------------------------------------------------------------------------------
+     73          /// Implementation of fputs using USART0 as the standard output. Required
+     74          /// for printf().
+     75          /// Returns the number of characters written if successful, or -1 if the output
+     76          /// stream is not stdout or stderr.
+     77          /// \param pStr  String to write.
+     78          /// \param pStream  Output stream.
+     79          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     80          signed int fputs(const char *pStr, FILE *pStream)
+     81          {
+   \                     fputs:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+     82              signed int num = 0;
+   \   0000000C   0xE3A06000         MOV      R6,#+0
+   \   00000010   0xEA000000         B        ??fputs_0
+     83          
+     84              while (*pStr != 0) {
+     85          
+     86                  if (fputc(*pStr, pStream) == -1) {
+     87          
+     88                      return -1;
+     89                  }
+     90                  num++;
+   \                     ??fputs_1:
+   \   00000014   0xE2866001         ADD      R6,R6,#+1
+     91                  pStr++;
+   \                     ??fputs_0:
+   \   00000018   0xE5D40000         LDRB     R0,[R4, #+0]
+   \   0000001C   0xE3500000         CMP      R0,#+0
+   \   00000020   0x0A000006         BEQ      ??fputs_2
+   \   00000024   0xE1A01005         MOV      R1,R5
+   \   00000028   0xE4D40001         LDRB     R0,[R4], #+1
+   \   0000002C   0x........         BL       fputc
+   \   00000030   0xE3700001         CMN      R0,#+1
+   \   00000034   0x1AFFFFF6         BNE      ??fputs_1
+   \   00000038   0xE3E00000         MVN      R0,#+0
+   \   0000003C   0xEA000000         B        ??fputs_3
+     92              }
+     93          
+     94              return num;
+   \                     ??fputs_2:
+   \   00000040   0xE1A00006         MOV      R0,R6
+   \                     ??fputs_3:
+   \   00000044   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000048   0xE12FFF1E         BX       LR               ;; return
+     95          }
+     96          
+     97          #undef putchar
+     98          
+     99          //------------------------------------------------------------------------------
+    100          /// Outputs a character on USART0. Returns the character itself.
+    101          /// \param c  Character to output.
+    102          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    103          signed int putchar(signed int c)
+    104          {
+    105              return fputc(c, stdout);
+   \                     putchar:
+   \   00000000   0x........         LDR      R1,??DataTable1
+   \   00000004   0x........         B        fputc            ;; tailcall
+    106          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1:
+   \   00000000   0x........         DC32     __iar_Stdout
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable1_1:
+   \   00000000   0x........         DC32     __iar_Stderr
+    107          
+    108          #else
+    109          
+    110          //------------------------------------------------------------------------------
+    111          /// Re-implement DBGU_PutChar function to outputs a character through the 
+    112          /// USART0 peripheral
+    113          /// \param c  Character to send.
+    114          //------------------------------------------------------------------------------
+    115          
+    116          void DBGU_PutChar(unsigned char ch)
+    117          { 
+    118              USART_Write(AT91C_BASE_US0, ch, 0);
+    119          }
+    120          
+    121          #endif
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        8  fputc
+              8 -> USART_Write
+       16  fputs
+             16 -> fputc
+        0  putchar
+              0 -> fputc
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable1
+       4  ??DataTable1_1
+      72  fputc
+      76  fputs
+       8  putchar
+
+ 
+ 164 bytes in section .text
+ 
+ 164 bytes of CODE memory
+
+Errors: none
+Warnings: none

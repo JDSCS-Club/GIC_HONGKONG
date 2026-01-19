@@ -1,0 +1,608 @@
+******************************************************************************
+TMS320C3x/4x COFF Linker                Version 5.11                   
+******************************************************************************
+>> Linked Fri Feb 22 15:59:13 2013
+
+OUTPUT FILE NAME:   <main.out>
+ENTRY POINT SYMBOL: "_c_int00"  address: 00a05192
+
+
+MEMORY CONFIGURATION
+
+           name     origin    length      used    attributes    fill
+         --------  --------  ---------  --------  ----------  --------
+         IRAM      0087fe10  0000001f0  00000000     RWIX      
+         FROM      00900000  000080000  00000000     RWIX      
+         SRAM      00a00000  000010000  0000fa80     RWIX      
+
+
+SECTION ALLOCATION MAP
+
+ output                                  attributes/
+section   page    origin      length       input sections
+--------  ----  ----------  ----------   ----------------
+.text      0    00a00000    00005d1c     
+                  00a00000    00000001     start.obj (.text)
+                  00a00001    00000000     rts30.lib : mpyld.obj (.text)
+                  00a00001    00000000               : ctype.obj (.text)
+                  00a00001    0000004e     NorFlash.obj (.text)
+                  00a0004f    00000902     z85c30.obj (.text)
+                  00a00951    00000f3b     Disk.obj (.text)
+                  00a0188c    00001537     GpProface.obj (.text)
+                  00a02dc3    00001c5b     DataPro.obj (.text)
+                  00a04a1e    00000545     LED_DOWNLOAD.obj (.text)
+                  00a04f63    0000022d     Main.obj (.text)
+                  00a05190    0000001b     rts30.lib : boot.obj (.text)
+                  00a051ab    00000033               : divu.obj (.text)
+                  00a051de    0000002a               : modu.obj (.text)
+                  00a05208    00000009               : mpyk.obj (.text)
+                  00a05211    00000026               : exit.obj (.text)
+                  00a05237    0000001d               : memcpy.obj (.text)
+                  00a05254    000001ca               : memory.obj (.text)
+                  00a0541e    00000010               : memset.obj (.text)
+                  00a0542e    00000041               : sprintf.obj (.text)
+                  00a0546f    00000010               : strcat.obj (.text)
+                  00a0547f    0000000d               : strlen.obj (.text)
+                  00a0548c    00000019               : strncmp.obj (.text)
+                  00a054a5    00000025               : divi.obj (.text)
+                  00a054ca    0000000e               : mpyi.obj (.text)
+                  00a054d8    0000067c               : _printfi.obj (.text)
+                  00a05b54    0000003f               : atoi.obj (.text)
+                  00a05b93    0000007d               : ecvt.obj (.text)
+                  00a05c10    00000082               : fcvt.obj (.text)
+                  00a05c92    0000002b               : ltoa.obj (.text)
+                  00a05cbd    00000015               : memccpy.obj (.text)
+                  00a05cd2    00000019               : strncpy.obj (.text)
+                  00a05ceb    00000022               : modi.obj (.text)
+                  00a05d0d    0000000f               : mpyld.obj (.text:flt40)
+
+.cinit     0    00a05d1c    00000819     
+                  00a05d1c    00000006     NorFlash.obj (.cinit)
+                  00a05d22    000001f3     z85c30.obj (.cinit)
+                  00a05f15    0000009f     Disk.obj (.cinit)
+                  00a05fb4    00000061     GpProface.obj (.cinit)
+                  00a06015    00000309     DataPro.obj (.cinit)
+                  00a0631e    00000082     LED_DOWNLOAD.obj (.cinit)
+                  00a063a0    00000051     Main.obj (.cinit)
+                  00a063f1    00000009     rts30.lib : exit.obj (.cinit)
+                  00a063fa    00000003               : memcpy.obj (.cinit)
+                  00a063fd    0000000c               : memory.obj (.cinit)
+                  00a06409    00000004               : sprintf.obj (.cinit)
+                  00a0640d    00000003               : strncmp.obj (.cinit)
+                  00a06410    0000000f               : _printfi.obj (.cinit)
+                  00a0641f    00000003               : atoi.obj (.cinit)
+                  00a06422    00000103               : ctype.obj (.cinit)
+                  00a06525    00000006               : ecvt.obj (.cinit)
+                  00a0652b    00000006               : fcvt.obj (.cinit)
+                  00a06531    00000003               : strncpy.obj (.cinit)
+                  00a06534    00000001     --HOLE-- [fill = 00000000]
+
+.const     0    00a06535    0000076a     
+                  00a06535    00000000     NorFlash.obj (.const)
+                  00a06535    00000000     rts30.lib : strncpy.obj (.const)
+                  00a06535    00000000               : fcvt.obj (.const)
+                  00a06535    00000000               : ecvt.obj (.const)
+                  00a06535    00000000               : atoi.obj (.const)
+                  00a06535    00000000               : strncmp.obj (.const)
+                  00a06535    00000000               : sprintf.obj (.const)
+                  00a06535    00000000               : memory.obj (.const)
+                  00a06535    00000000               : memcpy.obj (.const)
+                  00a06535    00000000               : exit.obj (.const)
+                  00a06535    00000000     z85c30.obj (.const)
+                  00a06535    0000004e     Disk.obj (.const)
+                  00a06583    000001cc     GpProface.obj (.const)
+                  00a0674f    000003c7     DataPro.obj (.const)
+                  00a06b16    00000159     LED_DOWNLOAD.obj (.const)
+                  00a06c6f    00000006     Main.obj (.const)
+                  00a06c75    0000002a     rts30.lib : _printfi.obj (.const)
+
+.data      0    00a00000    00000000     UNINITIALIZED
+                  00a00000    00000000     start.obj (.data)
+                  00a00000    00000000     rts30.lib : mpyld.obj (.data)
+                  00a00000    00000000               : modi.obj (.data)
+                  00a00000    00000000               : strncpy.obj (.data)
+                  00a00000    00000000               : memccpy.obj (.data)
+                  00a00000    00000000               : ltoa.obj (.data)
+                  00a00000    00000000               : fcvt.obj (.data)
+                  00a00000    00000000               : ecvt.obj (.data)
+                  00a00000    00000000               : ctype.obj (.data)
+                  00a00000    00000000               : atoi.obj (.data)
+                  00a00000    00000000               : _printfi.obj (.data)
+                  00a00000    00000000               : mpyi.obj (.data)
+                  00a00000    00000000               : divi.obj (.data)
+                  00a00000    00000000               : strncmp.obj (.data)
+                  00a00000    00000000               : strlen.obj (.data)
+                  00a00000    00000000               : strcat.obj (.data)
+                  00a00000    00000000               : sprintf.obj (.data)
+                  00a00000    00000000               : memset.obj (.data)
+                  00a00000    00000000               : memory.obj (.data)
+                  00a00000    00000000               : memcpy.obj (.data)
+                  00a00000    00000000               : exit.obj (.data)
+                  00a00000    00000000               : mpyk.obj (.data)
+                  00a00000    00000000               : modu.obj (.data)
+                  00a00000    00000000               : divu.obj (.data)
+                  00a00000    00000000               : boot.obj (.data)
+                  00a00000    00000000     Main.obj (.data)
+                  00a00000    00000000     LED_DOWNLOAD.obj (.data)
+                  00a00000    00000000     DataPro.obj (.data)
+                  00a00000    00000000     GpProface.obj (.data)
+                  00a00000    00000000     Disk.obj (.data)
+                  00a00000    00000000     z85c30.obj (.data)
+                  00a00000    00000000     NorFlash.obj (.data)
+
+.stack     0    00a06c9f    00002000     UNINITIALIZED
+                  00a06c9f    00000000     rts30.lib : boot.obj (.stack)
+
+.bss       0    00a08c9f    000069e1     UNINITIALIZED
+                  00a08c9f    00000000     start.obj (.bss)
+                  00a08c9f    00000000     rts30.lib : mpyld.obj (.bss)
+                  00a08c9f    00000000               : modi.obj (.bss)
+                  00a08c9f    00000000               : memccpy.obj (.bss)
+                  00a08c9f    00000000               : ltoa.obj (.bss)
+                  00a08c9f    00000000               : mpyi.obj (.bss)
+                  00a08c9f    00000000               : divi.obj (.bss)
+                  00a08c9f    00000000               : strlen.obj (.bss)
+                  00a08c9f    00000000               : strcat.obj (.bss)
+                  00a08c9f    00000000               : memset.obj (.bss)
+                  00a08c9f    00000000               : mpyk.obj (.bss)
+                  00a08c9f    00000000               : modu.obj (.bss)
+                  00a08c9f    00000000               : divu.obj (.bss)
+                  00a08c9f    00000000               : boot.obj (.bss)
+                  00a08c9f    00000004     NorFlash.obj (.bss)
+                  00a08ca3    000035be     z85c30.obj (.bss)
+                  00a0c261    00002666     Disk.obj (.bss)
+                  00a0e8c7    00000242     GpProface.obj (.bss)
+                  00a0eb09    00000821     DataPro.obj (.bss)
+                  00a0f32a    00000091     LED_DOWNLOAD.obj (.bss)
+                  00a0f3bb    00000037     Main.obj (.bss)
+                  00a0f3f2    00000023     rts30.lib : exit.obj (.bss)
+                  00a0f415    00000001               : memcpy.obj (.bss)
+                  00a0f416    00000006               : memory.obj (.bss)
+                  00a0f41c    00000003               : sprintf.obj (.bss)
+                  00a0f41f    00000001               : strncmp.obj (.bss)
+                  00a0f420    0000008d               : _printfi.obj (.bss)
+                  00a0f4ad    00000001               : atoi.obj (.bss)
+                  00a0f4ae    00000101               : ctype.obj (.bss)
+                  00a0f5af    00000068               : ecvt.obj (.bss)
+                  00a0f617    00000068               : fcvt.obj (.bss)
+                  00a0f67f    00000001               : strncpy.obj (.bss)
+
+.sysmem    0    00a0f680    00000400     UNINITIALIZED
+                  00a0f680    00000001     rts30.lib : memory.obj (.sysmem)
+
+
+GLOBAL SYMBOLS
+
+address  name                             address  name
+-------- ----                             -------- ----
+00a08c9f .bss                             00000400 __SYSMEM_SIZE
+00a00000 .data                            00002000 __STACK_SIZE
+00a00000 .text                            00a00000 edata
+00a0521f C$$EXIT                          00a00000 .data
+00a054a5 DIV_I30                          00a00000 ___edata__
+00a051ab DIV_U30                          00a00000 .text
+00a05ceb MOD_I30                          00a00000 ___data__
+00a051de MOD_U30                          00a00000 ___text__
+00a054ca MPY_I30                          00a00001 _NorFlashAllErase
+00a05208 MPY_K30                          00a00019 _NorFlashBlockErase
+00a05d0d MPY_LD                           00a00033 _NorFlashWrite
+00a019b9 _BCD_BIN                         00a0004f _SCC_Initial
+00a019d8 _BIN_BCD                         00a001d2 _SCC1_SendTo
+00a08ce1 _CRC_Table                       00a00202 _Delay_SCC1_SendTo
+00a00e3d _Check_Header                    00a00240 _SCC2_SendTo
+00a0c386 _Cluster_OneFileBuf              00a0027c _Delay_SCC2_SendTo
+00a0eb27 _DISPLAY_UNIT_ADD_NOR_PIB        00a002c0 _SCC3_SendTo
+00a0eb45 _DISPLAY_UNIT_ADD_NOR_RND        00a002f0 _Delay_SCC3_SendTo
+00a0eb09 _DISPLAY_UNIT_ADD                00a00316 _cal_CRC16
+00a0f369 _DISPLAY_UNIT_FDD                00a00333 _IsBCCOK
+00a0f32d _DISPLAY_UNIT_IDD                00a00362 _MakeBcc
+00a0f34b _DISPLAY_UNIT_RND                00a00380 _SCC1_AB
+00a0f36e _DISPLAY_UNIT_TND                00a00433 _SCC2_AB
+00a035cb _DP_ALL_TEXT_CHECK               00a0057f _SCC3_AB
+00a04963 _DP_ConvAsc2Hex                  00a0062b _SCC_TX_PROTOCOL
+00a04987 _DP_ConvHex2Asc                  00a006b1 _SCC_RNDTX_PROTOCOL
+00a048c2 _DP_DISP_G__HAP                  00a00712 _SCC_TX_PROTOCOL_SELFTEST
+00a02dc3 _DP_DataPro_Init                 00a00769 _SCC_TX_PIB_TEXT
+00a02eb4 _DP_DataPro_Main                 00a007d1 _SCC_TX_ADDSET_TEXT
+00a035a4 _DP_Door_CLOSE                   00a00810 _SCC_Tx_DownLoad_TEXT
+00a0344a _DP_Door_OPEN                    00a0085f _Scc1msTime
+00a033f5 _DP_Door_Sequence                00a00941 _Scc100msTime
+00a033b0 _DP_Find_StationInfo             00a00951 _Delay
+00a03062 _DP_GpDataChange                 00a00961 _SanDisk_WaitReady
+00a046d4 _DP_IDC_SW_UPLOAD_Pro            00a00992 _Sandisk_WaitDRQ
+00a0375b _DP_IM_PR_TEXT_READ              00a009c4 _SanDisk_Info_Read
+00a03829 _DP_Insert_SpecialCodeNew        00a009ec _SanDisk_ABS_RD
+00a03082 _DP_ONTD                         00a00a20 _Sandisk_Init
+00a03d7c _DP_SCC1_A_RX_PRO                00a00ac9 _FileEntry
+00a03226 _DP_SCC2_A_RX_PRO                00a00ba3 _FileCompare1
+00a032eb _DP_SCC2_B_RX_PRO                00a00bd5 _FileCompare2
+00a0433e _DP_SD_Format_Change             00a00c05 _RND_SWFind
+00a03fe3 _DP_SEND_PRO                     00a00c35 _FDD_SWFind
+00a030a7 _DP_SIMULATION                   00a00c65 _IDD_SWFind
+00a03d63 _DP_STNAME_CHANGE                00a00c95 _TND_SWFind
+00a02fe3 _DP_STNAME_INFO_UP               00a00cc5 _FDD_DATAFind
+00a04801 _DP_STOP_PT_INFO_G_FUNCT         00a00cf5 _GetUsedCluster
+00a0472c _DP_STOP_PT_INFO_ITEM_FUNCT      00a00dc3 _Seek_File
+00a02f1f _DP_SanDisk_Check                00a00ded _Seek_File_UNIT
+00a02f5b _DP_SanDisk_InputTimeCheck       00a00e3d _Check_Header
+00a037ae _DP_Scroll_Station_Name          00a00e70 _Nvsram_IDC_UpLoad_CK
+00a031a8 _DP_SelfTest_B                   00a00f0d _Nvsram_IDC_UpLoad_Da
+00a03125 _DP_SelfTest                     00a00f57 _Nvsram_EditerData
+00a035fb _DP_Send_IDD_Check               00a00fa1 _Nvsram_Load
+00a046b4 _DP_TCMSSD_Format                00a0128b _NVSRAM_Display_Schedule
+00a049ee _DP_Timer_100ms_DataPro          00a0135a _NVSRAM_Find_Schedule_Cnt
+00a049b3 _DP_Timer_1ms_DataPro            00a0139c _NVSRAM_Find_IM
+00a02f70 _DP_TranNum_Chech                00a013eb _NVSRAM_Find_PR
+00a04fd0 _DSP_Init                        00a0142c _NVSRAM_Get_StopP
+00a04fa9 _Debug3xInit                     00a0149c _NVSRAM_Rd_StationName
+00a00202 _Delay_SCC1_SendTo               00a014ff _NVSRAM_Rd_StationName_Total
+00a0027c _Delay_SCC2_SendTo               00a015ad _StationCode_Definite
+00a002f0 _Delay_SCC3_SendTo               00a015ed _NVSRAM_Find_RootAllNo
+00a00951 _Delay                           00a0165b _NVSRAM_Rd_StationName_Code
+00a00cc5 _FDD_DATAFind                    00a016b5 _NVSRAM_Comp_StopP
+00a00c35 _FDD_SWFind                      00a016bb _NVSRAM_Comp_TrainNo
+00a00ba3 _FileCompare1                    00a017ff _NVSRAM_Find_StationRoot
+00a00bd5 _FileCompare2                    00a01873 _NVSRAM_MEMCPY
+00a00ac9 _FileEntry                       00a0188c _gp_WritingDWord
+00a0dab7 _FileList                        00a018d9 _gp_WritingWord
+00a02da7 _GP_100msTime                    00a01915 _gp_ReadingWord
+00a02d99 _GP_1msTime                      00a01946 _gp_WritingStr
+00a02d70 _GP_AUTO_MANU_SET                00a01991 _Hex2ASCIIW
+00a0206a _GP_CLEAN                        00a019b9 _BCD_BIN
+00a02290 _GP_DEST_SCREEN                  00a019d8 _BIN_BCD
+00a02058 _GP_DISPLAY_SAFETY               00a01a01 _GpProface_Init
+00a0299d _GP_DOWNLOAD_SDR                 00a01a23 _Gp_Pro_Main
+00a029ca _GP_IDC_SW_UPLOAD                00a01a93 _Gp_Receive
+00a020b5 _GP_MANUAL_SCREEN                00a01b50 _GP_SEND_SCREEN
+00a0215b _GP_MENU_SCREEN                  00a02058 _GP_DISPLAY_SAFETY
+00a02650 _GP_POINT_SCREEN                 00a0206a _GP_CLEAN
+00a028ea _GP_POINT_ST_PRO                 00a02089 _GP_STATE_SCREEN
+00a021c9 _GP_SDR_PRINT                    00a020b5 _GP_MANUAL_SCREEN
+00a0218f _GP_SDR_SCREEN                   00a0215b _GP_MENU_SCREEN
+00a02701 _GP_SELFTEST_SCREEN              00a0218f _GP_SDR_SCREEN
+00a01b50 _GP_SEND_SCREEN                  00a021c9 _GP_SDR_PRINT
+00a02c78 _GP_SFDD_DATA_UPLOAD             00a02290 _GP_DEST_SCREEN
+00a02ae5 _GP_SFDD_SW_UPLOAD               00a02503 _GP_SIMU_SCREEN
+00a02cb8 _GP_SFDD_SW_UPLOAD_CLEAN         00a02650 _GP_POINT_SCREEN
+00a02503 _GP_SIMU_SCREEN                  00a02701 _GP_SELFTEST_SCREEN
+00a02d3e _GP_START_SET                    00a02814 _SDR_Routine_Complete
+00a02089 _GP_STATE_SCREEN                 00a02870 _GP_TRAIN_SCREEN
+00a02870 _GP_TRAIN_SCREEN                 00a028ea _GP_POINT_ST_PRO
+00a00cf5 _GetUsedCluster                  00a0299d _GP_DOWNLOAD_SDR
+00a01a01 _GpProface_Init                  00a029ca _GP_IDC_SW_UPLOAD
+00a01a23 _Gp_Pro_Main                     00a02ae5 _GP_SFDD_SW_UPLOAD
+00a01a93 _Gp_Receive                      00a02c78 _GP_SFDD_DATA_UPLOAD
+00a01991 _Hex2ASCIIW                      00a02cb8 _GP_SFDD_SW_UPLOAD_CLEAN
+00a00c65 _IDD_SWFind                      00a02d3e _GP_START_SET
+00a0f0f3 _Idc_Load                        00a02d70 _GP_AUTO_MANU_SET
+00a00333 _IsBCCOK                         00a02d99 _GP_1msTime
+00a04d8a _LED_DataDownLoad_ST1            00a02da7 _GP_100msTime
+00a04d96 _LED_DataDownLoad_ST2            00a02dc3 _DP_DataPro_Init
+00a04e38 _LED_DataSDR                     00a02eb4 _DP_DataPro_Main
+00a04c4f _LED_ERASS_SDR                   00a02f1f _DP_SanDisk_Check
+00a04b93 _LED_ERASS                       00a02f5b _DP_SanDisk_InputTimeCheck
+00a04a1e _LED_Init                        00a02f70 _DP_TranNum_Chech
+00a04a3c _LED_Main                        00a02fe3 _DP_STNAME_INFO_UP
+00a04f53 _LED_Timer_1ms                   00a03062 _DP_GpDataChange
+00a04a85 _LED_WaitSDR                     00a03082 _DP_ONTD
+00a050df _M_Scc1_Rx                       00a030a7 _DP_SIMULATION
+00a050fb _M_Scc2_RX                       00a03125 _DP_SelfTest
+00a00362 _MakeBcc                         00a031a8 _DP_SelfTest_B
+00a016b5 _NVSRAM_Comp_StopP               00a03226 _DP_SCC2_A_RX_PRO
+00a016bb _NVSRAM_Comp_TrainNo             00a032eb _DP_SCC2_B_RX_PRO
+00a0128b _NVSRAM_Display_Schedule         00a033b0 _DP_Find_StationInfo
+00a0139c _NVSRAM_Find_IM                  00a033f5 _DP_Door_Sequence
+00a013eb _NVSRAM_Find_PR                  00a0344a _DP_Door_OPEN
+00a015ed _NVSRAM_Find_RootAllNo           00a035a4 _DP_Door_CLOSE
+00a0135a _NVSRAM_Find_Schedule_Cnt        00a035cb _DP_ALL_TEXT_CHECK
+00a017ff _NVSRAM_Find_StationRoot         00a035fb _DP_Send_IDD_Check
+00a0142c _NVSRAM_Get_StopP                00a0375b _DP_IM_PR_TEXT_READ
+00a01873 _NVSRAM_MEMCPY                   00a037ae _DP_Scroll_Station_Name
+00a0165b _NVSRAM_Rd_StationName_Code      00a03829 _DP_Insert_SpecialCodeNew
+00a014ff _NVSRAM_Rd_StationName_Total     00a03d63 _DP_STNAME_CHANGE
+00a0149c _NVSRAM_Rd_StationName           00a03d7c _DP_SCC1_A_RX_PRO
+00a00001 _NorFlashAllErase                00a03fe3 _DP_SEND_PRO
+00a00019 _NorFlashBlockErase              00a0433e _DP_SD_Format_Change
+00a00033 _NorFlashWrite                   00a046b4 _DP_TCMSSD_Format
+00a0c36c _NowSector                       00a046d4 _DP_IDC_SW_UPLOAD_Pro
+00a00f57 _Nvsram_EditerData               00a0472c _DP_STOP_PT_INFO_ITEM_FUNCT
+00a00e70 _Nvsram_IDC_UpLoad_CK            00a04801 _DP_STOP_PT_INFO_G_FUNCT
+00a00f0d _Nvsram_IDC_UpLoad_Da            00a048c2 _DP_DISP_G__HAP
+00a00fa1 _Nvsram_Load                     00a04963 _DP_ConvAsc2Hex
+00a0c36b _PreSector                       00a04987 _DP_ConvHex2Asc
+00a00c05 _RND_SWFind                      00a049a0 _user_DebugPrint
+00a00380 _SCC1_AB                         00a049b3 _DP_Timer_1ms_DataPro
+00a09fa2 _SCC1_INIT_A                     00a049ee _DP_Timer_100ms_DataPro
+00a09faf _SCC1_INIT_B                     00a04a1e _LED_Init
+00a001d2 _SCC1_SendTo                     00a04a3c _LED_Main
+00a00433 _SCC2_AB                         00a04a85 _LED_WaitSDR
+00a0b0ec _SCC2_INIT_A                     00a04b93 _LED_ERASS
+00a0b0f9 _SCC2_INIT_B                     00a04c4f _LED_ERASS_SDR
+00a00240 _SCC2_SendTo                     00a04d8a _LED_DataDownLoad_ST1
+00a0057f _SCC3_AB                         00a04d96 _LED_DataDownLoad_ST2
+00a096f0 _SCC3_INIT_A                     00a04e38 _LED_DataSDR
+00a096fd _SCC3_INIT_B                     00a04f53 _LED_Timer_1ms
+00a002c0 _SCC3_SendTo                     00a04f63 _c_int06
+00a08de1 _SCC_INIT_ASYNC_9600bps          00a04fa9 _Debug3xInit
+00a08e03 _SCC_INIT_ASYNC_NONEPARITY_19200BPS 00a04fd0 _DSP_Init
+00a08e25 _SCC_INIT_HDLC_PLL_9600BPS       00a0500c _main
+00a0004f _SCC_Initial                     00a05025 _c_int01
+00a006b1 _SCC_RNDTX_PROTOCOL              00a05063 _c_int02
+00a007d1 _SCC_TX_ADDSET_TEXT              00a050a1 _c_int03
+00a00769 _SCC_TX_PIB_TEXT                 00a050df _M_Scc1_Rx
+00a0062b _SCC_TX_PROTOCOL                 00a050ed _nDisplay_Pro
+00a00712 _SCC_TX_PROTOCOL_SELFTEST        00a050fb _M_Scc2_RX
+00a00810 _SCC_Tx_DownLoad_TEXT            00a05111 _c_int09
+00a02814 _SDR_Routine_Complete            00a05150 _c_int10
+00a009ec _SanDisk_ABS_RD                  00a05192 _c_int00
+00a009c4 _SanDisk_Info_Read               00a051ab DIV_U30
+00a0f2a0 _SanDisk_Vari                    00a051de MOD_U30
+00a00961 _SanDisk_WaitReady               00a05208 MPY_K30
+00a00a20 _Sandisk_Init                    00a05211 _exit
+00a00992 _Sandisk_WaitDRQ                 00a0521f C$$EXIT
+00a00941 _Scc100msTime                    00a05221 _atexit
+00a0085f _Scc1msTime                      00a05236 _abort
+00a00ded _Seek_File_UNIT                  00a05237 _memcpy
+00a00dc3 _Seek_File                       00a052a4 _minit
+00a015ad _StationCode_Definite            00a052ab _malloc
+00a0c8bf _StationNameAll                  00a052e2 _calloc
+00a0db4f _StationName                     00a052fb _realloc
+00a0f28c _TCMSSD                          00a05368 _free
+00a00c95 _TND_SWFind                      00a053cc _bmalloc
+00002000 __STACK_SIZE                     00a0541e _memset
+00000400 __SYSMEM_SIZE                    00a0542e _sprintf
+00a08c9f ___bss__                         00a0546f _strcat
+00a05d1c ___cinit__                       00a0547f _strlen
+00a00000 ___data__                        00a0548c _strncmp
+00a00000 ___edata__                       00a054a5 DIV_I30
+00a0f680 ___end__                         00a054ca MPY_I30
+00a05d1c ___etext__                       00a054d8 __printfi
+ffffffff ___pinit__                       00a05b54 _atoi
+00a00000 ___text__                        00a05b88 _atol
+00a0f3f3 __cleanup_ptr                    00a05b93 _ecvt
+00a0f4ae __ctypes_                        00a05c10 _fcvt
+00a0f3c9 __glDebugAddr                    00a05c92 _ltoa
+00a0f3c8 __glDebugData                    00a05cbd _memccpy
+00a054d8 __printfi                        00a05cd2 _strncpy
+00a06c9f __stack                          00a05ceb MOD_I30
+00a0f680 __sys_memory                     00a05d0d MPY_LD
+00a05236 _abort                           00a05d1c cinit
+00a05221 _atexit                          00a05d1c ___cinit__
+00a05b54 _atoi                            00a05d1c etext
+00a05b88 _atol                            00a05d1c ___etext__
+00a053cc _bmalloc                         00a06c9f __stack
+00a05192 _c_int00                         00a08c9f ___bss__
+00a0f3bb _c_int01_ECC                     00a08c9f .bss
+00a05025 _c_int01                         00a08ca3 _m_nSendTo1LenAch
+00a05063 _c_int02                         00a08ca4 _m_nSendTo1DlyTmAch
+00a0f3bc _c_int02_ECC                     00a08ca5 _m_nSendTo1LenBch
+00a0f3bd _c_int03_ECC                     00a08ca6 _m_nSendTo1DlyTmBch
+00a050a1 _c_int03                         00a08ca7 _m_nSendTo2LenAch
+00a04f63 _c_int06                         00a08ca8 _m_nSendTo2DlyTmAch
+00a05111 _c_int09                         00a08ca9 _m_nSendTo2LenBch
+00a05150 _c_int10                         00a08caa _m_nSendTo2DlyTmBch
+00a00316 _cal_CRC16                       00a08cab _m_nSendTo3LenAch
+00a052e2 _calloc                          00a08cac _m_nSendTo3DlyTmAch
+00a0f3c2 _cint01                          00a08cad _m_nSendTo3LenBch
+00a0f3c3 _cint02                          00a08cae _m_nSendTo3DlyTmBch
+00a0f3c4 _cint03                          00a08caf _m_SCCPISTXBuff_Ach
+00a0f3be _cint04                          00a08ce1 _CRC_Table
+00a0f3bf _cint09                          00a08de1 _SCC_INIT_ASYNC_9600bps
+00a0f3c0 _cint10                          00a08e03 _SCC_INIT_ASYNC_NONEPARITY_19200BPS
+00a0ed2a _dRndDest                        00a08e25 _SCC_INIT_HDLC_PLL_9600BPS
+00a0ed2b _dRndDistance                    00a08e4f _d_TX_SCC1_Ach
+00a0ed29 _dRndNext                        00a08e50 _d_RX_SCC1_Ach
+00a0ed28 _dRndNow                         00a08e51 _d_TX_Debug
+00a0c6bf _dSanDiskInfBuf                  00a08e52 _d_2_A_Rx_Cnt
+00a0ed27 _dStStion                        00a08e53 _d_Scc1_B_TxCnt
+00a08e52 _d_2_A_Rx_Cnt                    00a08e54 _d_Scc2_A_TxCnt
+00a0ecc2 _d_Auto_Cnt                      00a08e55 _d_Scc2_B_TxCnt
+00a0ecd6 _d_Auto_Data                     00a08e56 _nTimeScc_Cnt
+00a0ecd5 _d_Auto_Flag                     00a08e57 _nTimeScc_100Cnt
+00a0ecc3 _d_Auto_TxCnt                    00a08e58 _m_Scc1RXBuff_Bch_Back
+00a0ece5 _d_BetweenCnt                    00a0907e _m_nDelaySend3BuffAch
+00a0ed25 _d_CarNumRem                     00a092a4 _m_Scc2TXBuff_Ach
+00a0ed24 _d_CarNum                        00a094ca _m_Scc3TXBuff_Ach
+00a0ed22 _d_CarNum1                       00a096f0 _SCC3_INIT_A
+00a0ed23 _d_CarNumRem1                    00a096fd _SCC3_INIT_B
+00a0ed34 _d_DI_Dist_cnt                   00a0970a _m_nDelaySend3BuffBch
+00a0ed33 _d_DI_Door                       00a09930 _m_Scc2TXBuff_Bch
+00a0f09f _d_DP_BUFF                       00a09b56 _m_Scc3TXBuff_Bch
+00a0ed87 _d_DP_STOP_Buf                   00a09d7c _m_Scc2RXBuff_Ach_Back
+00a0ed30 _d_DP_STOP_PT_INFO_G_FUNCT       00a09fa2 _SCC1_INIT_A
+00a0ed2e _d_DP_STOP_PT_INFO_ITEM_FUNCT    00a09faf _SCC1_INIT_B
+00a0ed2f _d_DP_STOP_PT_INFO_ITEM_FUNCT_2  00a09fbc _m_Scc3RXBuff_Ach_Back
+00a0ecc9 _d_Dest                          00a0a1e2 _m_Scc1RXBuff_Ach
+00a0e66d _d_DestBuf                       00a0a408 _m_Scc1RXBuff_Bch
+00a0ecc5 _d_Dest_All_Cnt                  00a0a62e _m_Scc1TXBuff_Ach
+00a0ecd7 _d_DiDi_Cnt                      00a0a854 _m_Scc1RXBuff_Ach_Back
+00a0c367 _d_GetUsedCluster_Pass           00a0aa7a _m_nDelaySend2BuffAch
+00a0e8d1 _d_GpSelfCnt                     00a0aca0 _m_Scc2RXBuff_Bch_Back
+00a0ecd0 _d_ICRCnt                        00a0aec6 _m_Scc1TXBuff_Bch
+00a0ecd1 _d_ICR_Select                    00a0b0ec _SCC2_INIT_A
+00a0db3b _d_IM_sendBuf                    00a0b0f9 _SCC2_INIT_B
+00a0c36f _d_IM_sned_cnt                   00a0b106 _m_nDelaySend2BuffBch
+00a0ecc6 _d_MaxStCnt                      00a0b32c _m_Scc3RXBuff_Bch_Back
+00a0c384 _d_NVSRAM_Cnt                    00a0b552 _m_nDelaySend1BuffAch
+00a0c6aa _d_NVSRAM_Get_StopP_Buf          00a0b778 _m_Scc2RXBuff_Ach
+00a0ecc8 _d_Next                          00a0b99e _m_Scc3RXBuff_Ach
+00a0e8cf _d_NorCnt                        00a0bbc4 _m_nDelaySend1BuffBch
+00a0ecc7 _d_Now                           00a0bdea _m_Scc2RXBuff_Bch
+00a0e8cc _d_NowStPoint                    00a0c010 _m_Scc3RXBuff_Bch
+00a0c366 _d_PassCount                     00a0c261 _glCardInfoBuff
+00a0c36e _d_Pat_ReCnt                     00a0c361 _glHeader
+00a08e50 _d_RX_SCC1_Ach                   00a0c362 _glSectPerTrack
+00a0ed2d _d_RndTxCnt                      00a0c363 _glDiskFail
+00a0ed35 _d_Rnd_Cnt                       00a0c364 _glSectorStartOffset
+00a08e53 _d_Scc1_B_TxCnt                  00a0c365 _m_FileSize
+00a0ecd3 _d_Scc2_A_Rx_Pacc_Cnt            00a0c366 _d_PassCount
+00a08e54 _d_Scc2_A_TxCnt                  00a0c367 _d_GetUsedCluster_Pass
+00a0ecd4 _d_Scc2_B_Rx_Pacc_Cnt            00a0c368 _glStartCluster
+00a08e55 _d_Scc2_B_TxCnt                  00a0c369 _glTotalClusterCnt
+00a0f37d _d_Sdr_A                         00a0c36a _glSecCnt
+00a0f37e _d_Sdr_B                         00a0c36b _PreSector
+00a0f37f _d_Sdr_C                         00a0c36c _NowSector
+00a0eccf _d_SelfCnt                       00a0c36d _nFileEntryCnt
+00a0ecd2 _d_SelfTestCnt                   00a0c36e _d_Pat_ReCnt
+00a0ed2c _d_SendCnt                       00a0c36f _d_IM_sned_cnt
+00a0ecd9 _d_SimEndCnt                     00a0c370 _nStCodeList
+00a0eccc _d_SimuDist                      00a0c384 _d_NVSRAM_Cnt
+00a0eccd _d_SimuDistRe                    00a0c385 _d_abcd
+00a0eccb _d_SimuSpeed                     00a0c386 _Cluster_OneFileBuf
+00a0ecca _d_SimuTime                      00a0c57a _m_nFat2Offset
+00a0ecdc _d_StCodeFineAuto                00a0c57b _m_nFatSize
+00a0ecdd _d_StPointVal                    00a0c57c _nDisplayIndex
+00a0ece4 _d_StallCnt_Text                 00a0c6aa _d_NVSRAM_Get_StopP_Buf
+00a08e51 _d_TX_Debug                      00a0c6be _m_nDataOffset
+00a08e4f _d_TX_SCC1_Ach                   00a0c6bf _dSanDiskInfBuf
+00a0ecdb _d_TcmsRxNex                     00a0c8bf _StationNameAll
+00a0ecda _d_TcmsRxNow                     00a0dab7 _FileList
+00a0ed21 _d_TextPo                        00a0db39 _nStart_Address_Point
+00a0ece8 _d_Text_Send_AllNow              00a0db3b _d_IM_sendBuf
+00a0ece6 _d_Text_Send_Cnt                 00a0db4f _StationName
+00a0ece9 _d_Text_Send_NowCnt              00a0e645 _m_nSecPerClust
+00a0ed37 _d_Text_Send_NumBuf              00a0e646 _m_nFat
+00a0ece7 _d_Text_Send_Num                 00a0e647 _d_abcdefg
+00a0e8cb _d_TranNum                       00a0e65b _m_nFat1Offset
+00a0ecde _d_a_Dest                        00a0e65c _m_wTotalSec
+00a0ecdf _d_a_Next                        00a0e65d _m_szVolume
+00a0ece1 _d_a_abab                        00a0e669 _m_VolumeID
+00a0ece0 _d_a_simCnt                      00a0e66d _d_DestBuf
+00a0e8cd _d_abab                          00a0e681 _m_nRootOffset
+00a0c385 _d_abcd                          00a0e682 _nNvsram_Variable
+00a0e647 _d_abcdefg                       00a0e8c7 _m_StartScreenSetTime
+00a0ed31 _d_disp_g_cnt                    00a0e8c8 _nTimeGp_Cnt
+00a0ecd8 _d_doorPintCnt                   00a0e8c9 _glTxA3_Len
+00a0e8ce _d_exCnt                         00a0e8ca _m_StScreen
+00a0e8d0 _d_gpNowPoint                    00a0e8cb _d_TranNum
+00a0ecce _d_jangaaa                       00a0e8cc _d_NowStPoint
+00a0ecc4 _d_sandisk_Count                 00a0e8cd _d_abab
+00a0f0b3 _d_self_Buf                      00a0e8ce _d_exCnt
+00a0ece2 _d_simaaa                        00a0e8cf _d_NorCnt
+00a0ed26 _d_stChCnt                       00a0e8d0 _d_gpNowPoint
+00a05b93 _ecvt                            00a0e8d1 _d_GpSelfCnt
+00a05211 _exit                            00a0e8d2 _sCardInfo
+00a05c10 _fcvt                            00a0e8d3 _nTimeGp_100Cnt
+00a05368 _free                            00a0e8d4 _glTxBufA3
+00a0c261 _glCardInfoBuff                  00a0eac8 _nSelect_Button
+00a0f3c1 _glDebugCnt                      00a0eb09 _DISPLAY_UNIT_ADD
+00a0c363 _glDiskFail                      00a0eb27 _DISPLAY_UNIT_ADD_NOR_PIB
+00a0c361 _glHeader                        00a0eb45 _DISPLAY_UNIT_ADD_NOR_RND
+00a0f3c6 _glScc1a_Delaycnt                00a0eb63 _m_JapanStBuf_R
+00a0f3c5 _glScc1a_cnt                     00a0eb6d _m_JapanStBuf_L
+00a0c36a _glSecCnt                        00a0eb77 _m_ChangStBuf_R
+00a0c362 _glSectPerTrack                  00a0eb81 _m_ChangStBuf_L
+00a0c364 _glSectorStartOffset             00a0eb8b _m_ExperssTimeBuf
+00a0c368 _glStartCluster                  00a0ecc1 _nSandiskInputCheck
+00a0c369 _glTotalClusterCnt               00a0ecc2 _d_Auto_Cnt
+00a0e8c9 _glTxA3_Len                      00a0ecc3 _d_Auto_TxCnt
+00a0e8d4 _glTxBufA3                       00a0ecc4 _d_sandisk_Count
+00a0f3c7 _gpVersion                       00a0ecc5 _d_Dest_All_Cnt
+00a01915 _gp_ReadingWord                  00a0ecc6 _d_MaxStCnt
+00a0188c _gp_WritingDWord                 00a0ecc7 _d_Now
+00a01946 _gp_WritingStr                   00a0ecc8 _d_Next
+00a018d9 _gp_WritingWord                  00a0ecc9 _d_Dest
+00a05c92 _ltoa                            00a0ecca _d_SimuTime
+00a0ed4b _mSelfTest_NG_CntBuf             00a0eccb _d_SimuSpeed
+00a0eb81 _m_ChangStBuf_L                  00a0eccc _d_SimuDist
+00a0eb77 _m_ChangStBuf_R                  00a0eccd _d_SimuDistRe
+00a0eb8b _m_ExperssTimeBuf                00a0ecce _d_jangaaa
+00a0c365 _m_FileSize                      00a0eccf _d_SelfCnt
+00a0eb6d _m_JapanStBuf_L                  00a0ecd0 _d_ICRCnt
+00a0eb63 _m_JapanStBuf_R                  00a0ecd1 _d_ICR_Select
+00a08caf _m_SCCPISTXBuff_Ach              00a0ecd2 _d_SelfTestCnt
+00a0a1e2 _m_Scc1RXBuff_Ach                00a0ecd3 _d_Scc2_A_Rx_Pacc_Cnt
+00a0a854 _m_Scc1RXBuff_Ach_Back           00a0ecd4 _d_Scc2_B_Rx_Pacc_Cnt
+00a0a408 _m_Scc1RXBuff_Bch                00a0ecd5 _d_Auto_Flag
+00a08e58 _m_Scc1RXBuff_Bch_Back           00a0ecd6 _d_Auto_Data
+00a0a62e _m_Scc1TXBuff_Ach                00a0ecd7 _d_DiDi_Cnt
+00a0aec6 _m_Scc1TXBuff_Bch                00a0ecd8 _d_doorPintCnt
+00a09d7c _m_Scc2RXBuff_Ach_Back           00a0ecd9 _d_SimEndCnt
+00a0b778 _m_Scc2RXBuff_Ach                00a0ecda _d_TcmsRxNow
+00a0bdea _m_Scc2RXBuff_Bch                00a0ecdb _d_TcmsRxNex
+00a0aca0 _m_Scc2RXBuff_Bch_Back           00a0ecdc _d_StCodeFineAuto
+00a092a4 _m_Scc2TXBuff_Ach                00a0ecdd _d_StPointVal
+00a09930 _m_Scc2TXBuff_Bch                00a0ecde _d_a_Dest
+00a09fbc _m_Scc3RXBuff_Ach_Back           00a0ecdf _d_a_Next
+00a0b99e _m_Scc3RXBuff_Ach                00a0ece0 _d_a_simCnt
+00a0b32c _m_Scc3RXBuff_Bch_Back           00a0ece1 _d_a_abab
+00a0c010 _m_Scc3RXBuff_Bch                00a0ece2 _d_simaaa
+00a094ca _m_Scc3TXBuff_Ach                00a0ece3 _sInfoNum
+00a09b56 _m_Scc3TXBuff_Bch                00a0ece4 _d_StallCnt_Text
+00a0e8ca _m_StScreen                      00a0ece5 _d_BetweenCnt
+00a0e8c7 _m_StartScreenSetTime            00a0ece6 _d_Text_Send_Cnt
+00a0e669 _m_VolumeID                      00a0ece7 _d_Text_Send_Num
+00a0c6be _m_nDataOffset                   00a0ece8 _d_Text_Send_AllNow
+00a0b552 _m_nDelaySend1BuffAch            00a0ece9 _d_Text_Send_NowCnt
+00a0bbc4 _m_nDelaySend1BuffBch            00a0ed21 _d_TextPo
+00a0aa7a _m_nDelaySend2BuffAch            00a0ed22 _d_CarNum1
+00a0b106 _m_nDelaySend2BuffBch            00a0ed23 _d_CarNumRem1
+00a0907e _m_nDelaySend3BuffAch            00a0ed24 _d_CarNum
+00a0970a _m_nDelaySend3BuffBch            00a0ed25 _d_CarNumRem
+00a0e646 _m_nFat                          00a0ed26 _d_stChCnt
+00a0e65b _m_nFat1Offset                   00a0ed27 _dStStion
+00a0c57a _m_nFat2Offset                   00a0ed28 _dRndNow
+00a0c57b _m_nFatSize                      00a0ed29 _dRndNext
+00a0e681 _m_nRootOffset                   00a0ed2a _dRndDest
+00a0e645 _m_nSecPerClust                  00a0ed2b _dRndDistance
+00a08ca4 _m_nSendTo1DlyTmAch              00a0ed2c _d_SendCnt
+00a08ca6 _m_nSendTo1DlyTmBch              00a0ed2d _d_RndTxCnt
+00a08ca3 _m_nSendTo1LenAch                00a0ed2e _d_DP_STOP_PT_INFO_ITEM_FUNCT
+00a08ca5 _m_nSendTo1LenBch                00a0ed2f _d_DP_STOP_PT_INFO_ITEM_FUNCT_2
+00a08ca8 _m_nSendTo2DlyTmAch              00a0ed30 _d_DP_STOP_PT_INFO_G_FUNCT
+00a08caa _m_nSendTo2DlyTmBch              00a0ed31 _d_disp_g_cnt
+00a08ca7 _m_nSendTo2LenAch                00a0ed32 _nTimeDataPro_Cnt
+00a08ca9 _m_nSendTo2LenBch                00a0ed33 _d_DI_Door
+00a08cac _m_nSendTo3DlyTmAch              00a0ed34 _d_DI_Dist_cnt
+00a08cae _m_nSendTo3DlyTmBch              00a0ed35 _d_Rnd_Cnt
+00a08cab _m_nSendTo3LenAch                00a0ed36 _nTimeDataPro_100Cnt
+00a08cad _m_nSendTo3LenBch                00a0ed37 _d_Text_Send_NumBuf
+00a0e65d _m_szVolume                      00a0ed4b _mSelfTest_NG_CntBuf
+00a0e65c _m_wTotalSec                     00a0ed87 _d_DP_STOP_Buf
+00a0500c _main                            00a0ed9b _nIndex_Flag
+00a052ab _malloc                          00a0efdd _nTmsRxData
+00a05cbd _memccpy                         00a0efe4 _nSelf_Test
+00a05237 _memcpy                          00a0f09f _d_DP_BUFF
+00a0541e _memset                          00a0f0b3 _d_self_Buf
+00a052a4 _minit                           00a0f0ef _nTimeFlag
+00a0f0f9 _nDi_Check                       00a0f0f3 _Idc_Load
+00a0c57c _nDisplayIndex                   00a0f0f9 _nDi_Check
+00a050ed _nDisplay_Pro                    00a0f112 _nTr_St_Info
+00a0c36d _nFileEntryCnt                   00a0f28c _TCMSSD
+00a0ed9b _nIndex_Flag                     00a0f2a0 _SanDisk_Vari
+00a0f32a _nLED_200ms_Flag                 00a0f2a4 _nSccSendFlag
+00a0f32b _nLED_Time_Change                00a0f32a _nLED_200ms_Flag
+00a0f32c _nLED_Time_Cnt                   00a0f32b _nLED_Time_Change
+00a0f38a _nLedDataLoad                    00a0f32c _nLED_Time_Cnt
+00a0e682 _nNvsram_Variable                00a0f32d _DISPLAY_UNIT_IDD
+00a0ecc1 _nSandiskInputCheck              00a0f34b _DISPLAY_UNIT_RND
+00a0f2a4 _nSccSendFlag                    00a0f369 _DISPLAY_UNIT_FDD
+00a0eac8 _nSelect_Button                  00a0f36e _DISPLAY_UNIT_TND
+00a0efe4 _nSelf_Test                      00a0f37d _d_Sdr_A
+00a0c370 _nStCodeList                     00a0f37e _d_Sdr_B
+00a0db39 _nStart_Address_Point            00a0f37f _d_Sdr_C
+00a0ed36 _nTimeDataPro_100Cnt             00a0f38a _nLedDataLoad
+00a0ed32 _nTimeDataPro_Cnt                00a0f3bb _c_int01_ECC
+00a0f0ef _nTimeFlag                       00a0f3bc _c_int02_ECC
+00a0e8d3 _nTimeGp_100Cnt                  00a0f3bd _c_int03_ECC
+00a0e8c8 _nTimeGp_Cnt                     00a0f3be _cint04
+00a08e57 _nTimeScc_100Cnt                 00a0f3bf _cint09
+00a08e56 _nTimeScc_Cnt                    00a0f3c0 _cint10
+00a0efdd _nTmsRxData                      00a0f3c1 _glDebugCnt
+00a0f112 _nTr_St_Info                     00a0f3c2 _cint01
+00a052fb _realloc                         00a0f3c3 _cint02
+00a0e8d2 _sCardInfo                       00a0f3c4 _cint03
+00a0ece3 _sInfoNum                        00a0f3c5 _glScc1a_cnt
+00a0542e _sprintf                         00a0f3c6 _glScc1a_Delaycnt
+00a0546f _strcat                          00a0f3c7 _gpVersion
+00a0547f _strlen                          00a0f3c8 __glDebugData
+00a0548c _strncmp                         00a0f3c9 __glDebugAddr
+00a05cd2 _strncpy                         00a0f3f3 __cleanup_ptr
+00a049a0 _user_DebugPrint                 00a0f4ae __ctypes_
+00a05d1c cinit                            00a0f680 ___end__
+00a00000 edata                            00a0f680 end
+00a0f680 end                              00a0f680 __sys_memory
+00a05d1c etext                            ffffffff ___pinit__
+ffffffff pinit                            ffffffff pinit
+
+[429 symbols]

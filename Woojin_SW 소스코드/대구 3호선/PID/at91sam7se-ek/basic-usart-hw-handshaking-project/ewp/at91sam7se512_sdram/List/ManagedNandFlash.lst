@@ -1,0 +1,3405 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     07/Apr/2013  02:16:23 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c #
+#                    " -D at91sam7se512 -D sdram -D TRACE_LEVEL=4 -lC         #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\" --remarks             #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\" --no_cse --no_unroll   #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\List\ManagedNandFlash.lst    #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sdram\Obj\ManagedNandFlash.o       #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "ManagedNandFlash.h"
+     35          #include "NandSpareScheme.h"
+     36          #include "NandFlashModel.h"
+     37          #include "RawNandFlash.h"
+     38          #include <utility/trace.h>
+     39          #include <utility/assert.h>
+     40          
+     41          #include <string.h>
+
+   \                                 In section .text, align 4
+   \   __intrinsic __nounwind __interwork __softfp void *memset(void *, int, size_t)
+   \                     memset:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A00002         MOV      R0,R2
+   \   0000000C   0xE1A02001         MOV      R2,R1
+   \   00000010   0xE1A01000         MOV      R1,R0
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       __aeabi_memset
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0xE8BD4010         POP      {R4,LR}
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+     42          
+     43          //------------------------------------------------------------------------------
+     44          //         Internal definitions
+     45          //------------------------------------------------------------------------------
+     46          
+     47          // Casts
+     48          #define ECC(managed)    ((struct EccNandFlash *) managed)
+     49          #define RAW(managed)    ((struct RawNandFlash *) managed)
+     50          #define MODEL(managed)  ((struct NandFlashModel *) managed)
+     51          
+     52          // Values returned by the CheckBlock() function
+     53          #define BADBLOCK        255
+     54          #define GOODBLOCK       254
+     55          
+     56          //------------------------------------------------------------------------------
+     57          //         Internal functions
+     58          //------------------------------------------------------------------------------
+     59          
+     60          //------------------------------------------------------------------------------
+     61          /// Returns 1 if a nandflash device is virgin (i.e. has never been used as a
+     62          /// managed nandflash); otherwise return 0.
+     63          /// \param managed  Pointer to a ManagedNandFlash instance.
+     64          /// \param spare    Pointer to allocated spare area (must be assigned)
+     65          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     66          static unsigned char IsDeviceVirgin(const struct ManagedNandFlash *managed,
+     67                                              unsigned char *spare)
+     68          {
+   \                     IsDeviceVirgin:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD010         SUB      SP,SP,#+16
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+     69              struct NandBlockStatus blockStatus;
+     70              const struct NandSpareScheme *scheme =
+     71                                      NandFlashModel_GetScheme(MODEL(managed));
+   \   00000010   0x........         BL       NandFlashModel_GetScheme
+   \   00000014   0xE1A06000         MOV      R6,R0
+     72              unsigned short baseBlock = managed->baseBlock;
+     73              unsigned char badBlockMarker;
+     74              
+     75              unsigned char error;
+     76          
+     77              ASSERT(spare, "ManagedNandFlash_IsDeviceVirgin: spare\n\r");
+   \   00000018   0xE3550000         CMP      R5,#+0
+   \   0000001C   0x1A000004         BNE      ??IsDeviceVirgin_0
+   \   00000020   0x........         LDR      R0,??DataTable10
+   \   00000024   0x........         BL       printf
+   \   00000028   0x........         LDR      R0,??DataTable10_1
+   \   0000002C   0x........         BL       printf
+   \                     ??IsDeviceVirgin_1:
+   \   00000030   0xEAFFFFFE         B        ??IsDeviceVirgin_1
+     78          
+     79              // Read spare area of page #0
+     80              error = RawNandFlash_ReadPage(RAW(managed), baseBlock, 0, 0, spare);
+     81              ASSERT(!error, "ManagedNandFlash_IsDeviceVirgin: Failed to read page #0\n\r");
+   \                     ??IsDeviceVirgin_0:
+   \   00000034   0xE58D5000         STR      R5,[SP, #+0]
+   \   00000038   0xE3A03000         MOV      R3,#+0
+   \   0000003C   0xE3A02000         MOV      R2,#+0
+   \   00000040   0xE3A00030         MOV      R0,#+48
+   \   00000044   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000048   0xE19010B4         LDRH     R1,[R0, +R4]
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       RawNandFlash_ReadPage
+   \   00000054   0xE3500000         CMP      R0,#+0
+   \   00000058   0x0A000004         BEQ      ??IsDeviceVirgin_2
+   \   0000005C   0x........         LDR      R0,??DataTable10
+   \   00000060   0x........         BL       printf
+   \   00000064   0x........         LDR      R0,??DataTable10_2
+   \   00000068   0x........         BL       printf
+   \                     ??IsDeviceVirgin_3:
+   \   0000006C   0xEAFFFFFE         B        ??IsDeviceVirgin_3
+     82          
+     83              // Retrieve bad block marker and block status from spare area
+     84              NandSpareScheme_ReadBadBlockMarker(scheme, spare, &badBlockMarker);
+   \                     ??IsDeviceVirgin_2:
+   \   00000070   0xE28D2004         ADD      R2,SP,#+4
+   \   00000074   0xE1A01005         MOV      R1,R5
+   \   00000078   0xE1A00006         MOV      R0,R6
+   \   0000007C   0x........         BL       NandSpareScheme_ReadBadBlockMarker
+     85              NandSpareScheme_ReadExtra(scheme, spare, &blockStatus, 4, 0);
+   \   00000080   0xE3A00000         MOV      R0,#+0
+   \   00000084   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000088   0xE3A03004         MOV      R3,#+4
+   \   0000008C   0xE28D2008         ADD      R2,SP,#+8
+   \   00000090   0xE1A01005         MOV      R1,R5
+   \   00000094   0xE1A00006         MOV      R0,R6
+   \   00000098   0x........         BL       NandSpareScheme_ReadExtra
+     86          
+     87              // Check if block is marked as bad
+     88              if (badBlockMarker != 0xFF) {
+   \   0000009C   0xE5DD0004         LDRB     R0,[SP, #+4]
+   \   000000A0   0xE35000FF         CMP      R0,#+255
+     89          
+     90                  // Device is not virgin, since page #0 is guaranteed to be good
+     91                  return 0;
+     92              }
+     93              // If device is not virgin, then block status will be set to either
+     94              // FREE, DIRTY or LIVE
+     95              else if (blockStatus.status != NandBlockStatus_DEFAULT) {
+   \   000000A4   0x059D0008         LDREQ    R0,[SP, #+8]
+   \   000000A8   0x0200000F         ANDEQ    R0,R0,#0xF
+   \   000000AC   0x0350000F         CMPEQ    R0,#+15
+     96          
+     97                  // Device is not virgin
+     98                  return 0;
+   \   000000B0   0x13A00000         MOVNE    R0,#+0
+     99              }
+    100          
+    101              return 1;
+   \   000000B4   0x03A00001         MOVEQ    R0,#+1
+   \   000000B8   0xE28DD010         ADD      SP,SP,#+16       ;; stack cleaning
+   \   000000BC   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000C0   0xE12FFF1E         BX       LR               ;; return
+    102          }
+    103          
+    104          //------------------------------------------------------------------------------
+    105          /// Returns BADBLOCK if the given block of a nandflash device is bad; returns
+    106          /// GOODBLOCK if the block is good; or returns a NandCommon_ERROR code.
+    107          /// \param managed  Pointer to a ManagedNandFlash instance.
+    108          /// \param block    Raw block to check.
+    109          /// \param spare    Pointer to allocated spare area (must be assigned)
+    110          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    111          static unsigned char CheckBlock(
+    112              const struct ManagedNandFlash *managed,
+    113              unsigned short block,
+    114              unsigned char  *spare)
+    115          {
+   \                     CheckBlock:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A06000         MOV      R6,R0
+   \   0000000C   0xE1A07001         MOV      R7,R1
+   \   00000010   0xE1A05002         MOV      R5,R2
+    116              unsigned char error;
+    117              unsigned int i;
+    118              unsigned char pageSpareSize = NandFlashModel_GetPageSpareSize(MODEL(managed));
+   \   00000014   0x........         BL       NandFlashModel_GetPageSpareSize
+   \   00000018   0xE1A04000         MOV      R4,R0
+    119          
+    120              ASSERT(spare, "ManagedNandFlash_CheckBlock: spare\n\r");
+   \   0000001C   0xE3550000         CMP      R5,#+0
+   \   00000020   0x1A000004         BNE      ??CheckBlock_0
+   \   00000024   0x........         LDR      R0,??DataTable10
+   \   00000028   0x........         BL       printf
+   \   0000002C   0x........         LDR      R0,??DataTable10_3
+   \   00000030   0x........         BL       printf
+   \                     ??CheckBlock_1:
+   \   00000034   0xEAFFFFFE         B        ??CheckBlock_1
+    121          
+    122              // Read spare area of first page of block
+    123              error = RawNandFlash_ReadPage(RAW(managed), block, 0, 0, spare);
+   \                     ??CheckBlock_0:
+   \   00000038   0xE58D5000         STR      R5,[SP, #+0]
+   \   0000003C   0xE3A03000         MOV      R3,#+0
+   \   00000040   0xE3A02000         MOV      R2,#+0
+   \   00000044   0xE1A01007         MOV      R1,R7
+   \   00000048   0xE1A00006         MOV      R0,R6
+   \   0000004C   0x........         BL       RawNandFlash_ReadPage
+   \   00000050   0xE1B08000         MOVS     R8,R0
+    124              if (error) {
+    125          
+    126                  TRACE_ERROR("CheckBlock: Cannot read page #0 of block #%d\n\r", block);
+   \   00000054   0x11A01007         MOVNE    R1,R7
+   \   00000058   0x........         LDRNE    R0,??DataTable10_4
+   \   0000005C   0x1A000012         BNE      ??CheckBlock_2
+    127                  return error;
+    128              }
+    129          
+    130              // Make sure it is all 0xFF
+    131              for (i=0; i < pageSpareSize; i++) {
+   \   00000060   0xE3A00000         MOV      R0,#+0
+   \   00000064   0xE1A01005         MOV      R1,R5
+   \   00000068   0xEA000003         B        ??CheckBlock_3
+    132          
+    133                  if (spare[i] != 0xFF) {
+   \                     ??CheckBlock_4:
+   \   0000006C   0xE4D12001         LDRB     R2,[R1], #+1
+   \   00000070   0xE35200FF         CMP      R2,#+255
+   \   00000074   0x1A000017         BNE      ??CheckBlock_5
+    134          
+    135                      return BADBLOCK;
+    136                  }
+    137              }
+   \   00000078   0xE2800001         ADD      R0,R0,#+1
+   \                     ??CheckBlock_3:
+   \   0000007C   0xE1500004         CMP      R0,R4
+   \   00000080   0x3AFFFFF9         BCC      ??CheckBlock_4
+    138          
+    139              // Read spare area of second page of block
+    140              error = RawNandFlash_ReadPage(RAW(managed), block, 1, 0, spare);
+   \   00000084   0xE58D5000         STR      R5,[SP, #+0]
+   \   00000088   0xE3A03000         MOV      R3,#+0
+   \   0000008C   0xE3A02001         MOV      R2,#+1
+   \   00000090   0xE1A01007         MOV      R1,R7
+   \   00000094   0xE1A00006         MOV      R0,R6
+   \   00000098   0x........         BL       RawNandFlash_ReadPage
+   \   0000009C   0xE1B08000         MOVS     R8,R0
+    141              if (error) {
+   \   000000A0   0x0A000004         BEQ      ??CheckBlock_6
+    142          
+    143                  TRACE_ERROR("CheckBlock: Cannot read page #1 of block #%d\n\r", block);
+   \   000000A4   0xE1A01007         MOV      R1,R7
+   \   000000A8   0x........         LDR      R0,??DataTable10_5
+   \                     ??CheckBlock_2:
+   \   000000AC   0x........         BL       printf
+    144                  return error;
+   \   000000B0   0xE1A00008         MOV      R0,R8
+   \   000000B4   0xEA00000A         B        ??CheckBlock_7
+    145              }
+    146          
+    147              // Make sure it is all 0xFF
+    148              for (i=0; i < pageSpareSize; i++) {
+   \                     ??CheckBlock_6:
+   \   000000B8   0xE3A00000         MOV      R0,#+0
+   \   000000BC   0xEA000000         B        ??CheckBlock_8
+   \                     ??CheckBlock_9:
+   \   000000C0   0xE2800001         ADD      R0,R0,#+1
+   \                     ??CheckBlock_8:
+   \   000000C4   0xE1500004         CMP      R0,R4
+   \   000000C8   0x2A000004         BCS      ??CheckBlock_10
+    149          
+    150                  if (spare[i] != 0xFF) {
+   \   000000CC   0xE4D51001         LDRB     R1,[R5], #+1
+   \   000000D0   0xE35100FF         CMP      R1,#+255
+   \   000000D4   0x0AFFFFF9         BEQ      ??CheckBlock_9
+    151          
+    152                      return BADBLOCK;
+   \                     ??CheckBlock_5:
+   \   000000D8   0xE3A000FF         MOV      R0,#+255
+   \   000000DC   0xEA000000         B        ??CheckBlock_7
+    153                  }
+    154              }
+    155          
+    156              return GOODBLOCK;
+   \                     ??CheckBlock_10:
+   \   000000E0   0xE3A000FE         MOV      R0,#+254
+   \                     ??CheckBlock_7:
+   \   000000E4   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   000000E8   0xE12FFF1E         BX       LR               ;; return
+    157          }
+    158          
+    159          //------------------------------------------------------------------------------
+    160          /// Physically writes the status of a block inside its first page spare area.
+    161          /// Returns 0 if successful; otherwise returns a NandCommon_ERROR_xx code.
+    162          /// \param managed  Pointer to a ManagedNandFlash instance.
+    163          /// \param block    Raw block number.
+    164          /// \param pStatus  Pointer to status data.
+    165          /// \param spare    Pointer to allocated spare area (must be assigned).
+    166          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    167          static unsigned char WriteBlockStatus(
+    168              const struct ManagedNandFlash *managed,
+    169              unsigned short block,
+    170              struct NandBlockStatus *pStatus,
+    171              unsigned char *spare)
+    172          {
+   \                     WriteBlockStatus:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+   \   00000010   0xE1B07003         MOVS     R7,R3
+    173              ASSERT(spare, "ManagedNandFlash_WriteBlockStatus: spare\n\r");
+   \   00000014   0x1A000004         BNE      ??WriteBlockStatus_0
+   \   00000018   0x........         LDR      R0,??DataTable10
+   \   0000001C   0x........         BL       printf
+   \   00000020   0x........         LDR      R0,??DataTable10_6
+   \   00000024   0x........         BL       printf
+   \                     ??WriteBlockStatus_1:
+   \   00000028   0xEAFFFFFE         B        ??WriteBlockStatus_1
+    174          
+    175              memset(spare, 0xFF, NandCommon_MAXPAGESPARESIZE);
+   \                     ??WriteBlockStatus_0:
+   \   0000002C   0xE3A02040         MOV      R2,#+64
+   \   00000030   0xE3A010FF         MOV      R1,#+255
+   \   00000034   0xE1A00007         MOV      R0,R7
+   \   00000038   0x........         BL       memset
+    176              NandSpareScheme_WriteExtra(NandFlashModel_GetScheme(MODEL(managed)),
+    177                                         spare,
+    178                                         pStatus,
+    179                                         4,
+    180                                         0);
+   \   0000003C   0xE1A00004         MOV      R0,R4
+   \   00000040   0x........         BL       NandFlashModel_GetScheme
+   \   00000044   0xE3A01000         MOV      R1,#+0
+   \   00000048   0xE58D1000         STR      R1,[SP, #+0]
+   \   0000004C   0xE3A03004         MOV      R3,#+4
+   \   00000050   0xE1A02006         MOV      R2,R6
+   \   00000054   0xE1A01007         MOV      R1,R7
+   \   00000058   0x........         BL       NandSpareScheme_WriteExtra
+    181              return RawNandFlash_WritePage(RAW(managed),
+    182                                            block, 0, 0, spare);
+   \   0000005C   0xE58D7000         STR      R7,[SP, #+0]
+   \   00000060   0xE3A03000         MOV      R3,#+0
+   \   00000064   0xE3A02000         MOV      R2,#+0
+   \   00000068   0xE1A01005         MOV      R1,R5
+   \   0000006C   0xE1A00004         MOV      R0,R4
+   \   00000070   0x........         BL       RawNandFlash_WritePage
+   \   00000074   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   00000078   0xE12FFF1E         BX       LR               ;; return
+    183          }
+    184          
+    185          //------------------------------------------------------------------------------
+    186          //         Exported functions
+    187          //------------------------------------------------------------------------------
+    188          
+    189          //------------------------------------------------------------------------------
+    190          /// Initializes a ManagedNandFlash instance. Scans the device to retrieve or
+    191          /// create block status information.
+    192          /// \param managed  Pointer to a ManagedNandFlash instance.
+    193          /// \param model  Pointer to the underlying nand chip model. Can be 0.
+    194          /// \param commandAddress  Address at which commands are sent.
+    195          /// \param addressAddress  Address at which addresses are sent.
+    196          /// \param dataAddress  Address at which data is sent.
+    197          /// \param pinChipEnable  Pin controlling the CE signal of the NandFlash.
+    198          /// \param pinReadyBusy  Pin used to monitor the ready/busy signal of the Nand.
+    199          /// \param baseBlock Base physical block address of managed area, managed 0.
+    200          /// \param sizeInBlocks Number of blocks that is managed.
+    201          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    202          unsigned char ManagedNandFlash_Initialize(
+    203              struct ManagedNandFlash *managed,
+    204              const struct NandFlashModel *model,
+    205              unsigned int commandAddress,
+    206              unsigned int addressAddress,
+    207              unsigned int dataAddress,
+    208              const Pin pinChipEnable,
+    209              const Pin pinReadyBusy,
+    210              unsigned short baseBlock,
+    211              unsigned short sizeInBlocks)
+    212          {
+   \                     ManagedNandFlash_Initialize:
+   \   00000000   0xE92D4BF0         PUSH     {R4-R9,R11,LR}
+   \   00000004   0xE24DD068         SUB      SP,SP,#+104
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE59D0088         LDR      R0,[SP, #+136]
+   \   00000010   0xE1DD6AB4         LDRH     R6,[SP, #+164]
+   \   00000014   0xE1DD5AB8         LDRH     R5,[SP, #+168]
+    213              unsigned char error;
+    214              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    215              unsigned int numBlocks;
+    216              unsigned int pageSpareSize;
+    217              const struct NandSpareScheme *scheme;
+    218              unsigned int block, phyBlock;
+    219              struct NandBlockStatus blockStatus;
+    220              unsigned char badBlockMarker;
+    221              unsigned int eraseCount, minEraseCount, maxEraseCount;
+    222          
+    223              TRACE_DEBUG("ManagedNandFlash_Initialize()\n\r");
+    224          
+    225              // Initialize EccNandFlash
+    226              error = EccNandFlash_Initialize(ECC(managed),
+    227                                              model,
+    228                                              commandAddress,
+    229                                              addressAddress,
+    230                                              dataAddress,
+    231                                              pinChipEnable,
+    232                                              pinReadyBusy);
+   \   00000018   0xE28DC098         ADD      R12,SP,#+152
+   \   0000001C   0xE28D7010         ADD      R7,SP,#+16
+   \   00000020   0xE8BC4100         LDM      R12!,{R8,LR}
+   \   00000024   0xE8A74100         STM      R7!,{R8,LR}
+   \   00000028   0xE59C8000         LDR      R8,[R12, #0]
+   \   0000002C   0xE5878000         STR      R8,[R7, #+0]
+   \   00000030   0xE28DC08C         ADD      R12,SP,#+140
+   \   00000034   0xE28D7004         ADD      R7,SP,#+4
+   \   00000038   0xE8BC4100         LDM      R12!,{R8,LR}
+   \   0000003C   0xE8A74100         STM      R7!,{R8,LR}
+   \   00000040   0xE59C8000         LDR      R8,[R12, #0]
+   \   00000044   0xE5878000         STR      R8,[R7, #+0]
+   \   00000048   0xE58D0000         STR      R0,[SP, #+0]
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       EccNandFlash_Initialize
+   \   00000054   0xE1B09000         MOVS     R9,R0
+    233              if (error) {
+   \   00000058   0x1A0000D0         BNE      ??ManagedNandFlash_Initialize_0
+    234          
+    235                  return error;
+    236              }
+    237          
+    238              // Retrieve model information
+    239              numBlocks = NandFlashModel_GetDeviceSizeInBlocks(MODEL(managed));
+   \   0000005C   0xE1A00004         MOV      R0,R4
+   \   00000060   0x........         BL       NandFlashModel_GetDeviceSizeInBlocks
+   \   00000064   0xE1A07000         MOV      R7,R0
+    240              pageSpareSize = NandFlashModel_GetPageSpareSize(MODEL(managed));
+   \   00000068   0xE1A00004         MOV      R0,R4
+   \   0000006C   0x........         BL       NandFlashModel_GetPageSpareSize
+    241              scheme = NandFlashModel_GetScheme(MODEL(managed));
+   \   00000070   0xE1A00004         MOV      R0,R4
+   \   00000074   0x........         BL       NandFlashModel_GetScheme
+   \   00000078   0xE1A09000         MOV      R9,R0
+    242          
+    243              // Initialize base & size
+    244              if (sizeInBlocks == 0) sizeInBlocks = numBlocks;
+   \   0000007C   0xE3550000         CMP      R5,#+0
+   \   00000080   0x01A05007         MOVEQ    R5,R7
+    245              if (baseBlock > numBlocks) {
+   \   00000084   0xE1570006         CMP      R7,R6
+    246                  baseBlock = 0;
+   \   00000088   0x33A06000         MOVCC    R6,#+0
+   \   0000008C   0x3A000002         BCC      ??ManagedNandFlash_Initialize_1
+    247              }
+    248              else if (baseBlock + sizeInBlocks > numBlocks) {
+                                                       ^
+Remark[Pe1873]: comparison between signed and unsigned operands
+   \   00000090   0xE0850006         ADD      R0,R5,R6
+   \   00000094   0xE1570000         CMP      R7,R0
+    249                  sizeInBlocks = numBlocks - baseBlock;
+   \   00000098   0x30475006         SUBCC    R5,R7,R6
+    250              }
+    251              TRACE_INFO("Managed NF area: %d + %d\n\r", baseBlock, sizeInBlocks);
+   \                     ??ManagedNandFlash_Initialize_1:
+   \   0000009C   0xE1A02805         LSL      R2,R5,#+16
+   \   000000A0   0xE1A02822         LSR      R2,R2,#+16
+   \   000000A4   0xE1A01006         MOV      R1,R6
+   \   000000A8   0x........         LDR      R0,??DataTable10_7
+   \   000000AC   0x........         BL       printf
+    252              
+    253              if (sizeInBlocks > NandCommon_MAXNUMBLOCKS) {
+   \   000000B0   0xE3A00001         MOV      R0,#+1
+   \   000000B4   0xE3800E40         ORR      R0,R0,#0x400
+   \   000000B8   0xE1A05805         LSL      R5,R5,#+16
+   \   000000BC   0xE1A05825         LSR      R5,R5,#+16
+   \   000000C0   0xE1550000         CMP      R5,R0
+   \   000000C4   0x3A000007         BCC      ??ManagedNandFlash_Initialize_2
+    254                  TRACE_ERROR("Out of Maxmized Managed Size: %d > %d\n\r",
+    255                              sizeInBlocks, NandCommon_MAXNUMBLOCKS);
+   \   000000C8   0xE3A02E40         MOV      R2,#+1024
+   \   000000CC   0xE1A01005         MOV      R1,R5
+   \   000000D0   0x........         LDR      R0,??DataTable10_8
+   \   000000D4   0x........         BL       printf
+    256                  TRACE_INFO("Change NandCommon_MAXNUMBLOCKS or sizeInBlocks\n\r");
+   \   000000D8   0x........         LDR      R0,??DataTable10_9
+   \   000000DC   0x........         BL       printf
+    257                  return NandCommon_ERROR_OUTOFBOUNDS;
+   \   000000E0   0xE3A00003         MOV      R0,#+3
+   \   000000E4   0xEA0000AD         B        ??ManagedNandFlash_Initialize_0
+    258              }
+    259          
+    260              managed->baseBlock = baseBlock;
+   \                     ??ManagedNandFlash_Initialize_2:
+   \   000000E8   0xE3A00030         MOV      R0,#+48
+   \   000000EC   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000F0   0xE18060B4         STRH     R6,[R0, +R4]
+    261              managed->sizeInBlocks = sizeInBlocks;
+   \   000000F4   0xE3800002         ORR      R0,R0,#0x2
+   \   000000F8   0xE18050B4         STRH     R5,[R0, +R4]
+    262          
+    263              // Initialize block statuses
+    264              // First, check if device is virgin
+    265              if (IsDeviceVirgin(managed, spare)) {
+   \   000000FC   0xE28D1024         ADD      R1,SP,#+36
+   \   00000100   0xE1A00004         MOV      R0,R4
+   \   00000104   0x........         BL       IsDeviceVirgin
+   \   00000108   0xE3500000         CMP      R0,#+0
+   \   0000010C   0x0A00002C         BEQ      ??ManagedNandFlash_Initialize_3
+    266          
+    267                  TRACE_WARNING("Device is virgin, doing initial block scanning ...\n\r");
+   \   00000110   0x........         LDR      R0,??DataTable10_10
+   \   00000114   0x........         BL       printf
+    268          
+    269                  // Perform initial scan of the device area
+    270                  for (block=0; block < sizeInBlocks; block++) {
+   \   00000118   0xE3A08000         MOV      R8,#+0
+   \   0000011C   0xE3550000         CMP      R5,#+0
+   \   00000120   0x0A00009D         BEQ      ??ManagedNandFlash_Initialize_4
+   \   00000124   0xE1A07004         MOV      R7,R4
+    271          
+    272                      phyBlock = baseBlock + block;
+    273          
+    274                      // Check if physical block is bad
+    275                      error = CheckBlock(managed, phyBlock, spare);
+   \                     ??ManagedNandFlash_Initialize_5:
+   \   00000128   0xE28D2024         ADD      R2,SP,#+36
+   \   0000012C   0xE1A01806         LSL      R1,R6,#+16
+   \   00000130   0xE1A01821         LSR      R1,R1,#+16
+   \   00000134   0xE1A00004         MOV      R0,R4
+   \   00000138   0x........         BL       CheckBlock
+   \   0000013C   0xE1A09000         MOV      R9,R0
+    276                      if (error == BADBLOCK) {
+   \   00000140   0xE35900FF         CMP      R9,#+255
+   \   00000144   0x1A000008         BNE      ??ManagedNandFlash_Initialize_6
+    277          
+    278                          // Mark block as bad
+    279                          TRACE_DEBUG("Block #%d is bad\n\r", block);
+    280                          managed->blockStatuses[block].status = NandBlockStatus_BAD;
+   \   00000148   0xE5970030         LDR      R0,[R7, #+48]
+   \   0000014C   0xE3C0000F         BIC      R0,R0,#0xF
+   \   00000150   0xE5870030         STR      R0,[R7, #+48]
+    281                      }
+   \                     ??ManagedNandFlash_Initialize_7:
+   \   00000154   0xE2888001         ADD      R8,R8,#+1
+   \   00000158   0xE2877004         ADD      R7,R7,#+4
+   \   0000015C   0xE2866001         ADD      R6,R6,#+1
+   \   00000160   0xE1580005         CMP      R8,R5
+   \   00000164   0x3AFFFFEF         BCC      ??ManagedNandFlash_Initialize_5
+   \   00000168   0xEA00008B         B        ??ManagedNandFlash_Initialize_4
+    282                      else if (error == GOODBLOCK) {
+   \                     ??ManagedNandFlash_Initialize_6:
+   \   0000016C   0xE35900FE         CMP      R9,#+254
+   \   00000170   0x1A00000F         BNE      ??ManagedNandFlash_Initialize_8
+    283          
+    284                          // Mark block as free with erase count 0
+    285                          TRACE_DEBUG("Block #%d is free\n\r", block);
+    286                          managed->blockStatuses[block].status = NandBlockStatus_FREE;
+   \   00000174   0xE5970030         LDR      R0,[R7, #+48]
+   \   00000178   0xE3C0000F         BIC      R0,R0,#0xF
+   \   0000017C   0xE380000E         ORR      R0,R0,#0xE
+   \   00000180   0xE5870030         STR      R0,[R7, #+48]
+    287                          managed->blockStatuses[block].eraseCount = 0;
+   \   00000184   0xE3A0000E         MOV      R0,#+14
+   \   00000188   0xE5870030         STR      R0,[R7, #+48]
+    288          
+    289                          // Write status in spare of block first page
+    290                          error = WriteBlockStatus(managed,
+    291                                                   phyBlock,
+    292                                                   &(managed->blockStatuses[block]),
+    293                                                   spare);
+   \   0000018C   0xE28D3024         ADD      R3,SP,#+36
+   \   00000190   0xE2872030         ADD      R2,R7,#+48
+   \   00000194   0xE1A01806         LSL      R1,R6,#+16
+   \   00000198   0xE1A01821         LSR      R1,R1,#+16
+   \   0000019C   0xE1A00004         MOV      R0,R4
+   \   000001A0   0x........         BL       WriteBlockStatus
+   \   000001A4   0xE1B09000         MOVS     R9,R0
+    294                          if (error) {
+   \   000001A8   0x0AFFFFE9         BEQ      ??ManagedNandFlash_Initialize_7
+    295          
+    296                              TRACE_ERROR("ManagedNandFlash_Initialize: WR spare\n\r");
+   \   000001AC   0x........         LDR      R0,??DataTable10_11
+   \   000001B0   0xEA000000         B        ??ManagedNandFlash_Initialize_9
+    297                              return error;
+    298                          }
+    299                      }
+    300                      else {
+    301          
+    302                          TRACE_ERROR("ManagedNandFlash_Initialize: Scan device\n\r");
+   \                     ??ManagedNandFlash_Initialize_8:
+   \   000001B4   0x........         LDR      R0,??DataTable10_12
+   \                     ??ManagedNandFlash_Initialize_9:
+   \   000001B8   0x........         BL       printf
+    303                          return error;
+   \   000001BC   0xE1A00009         MOV      R0,R9
+   \   000001C0   0xEA000076         B        ??ManagedNandFlash_Initialize_0
+    304                      }
+    305                  }
+    306              }
+    307              else {
+    308          
+    309                  TRACE_INFO("Managed, retrieving information ...\n\r");
+   \                     ??ManagedNandFlash_Initialize_3:
+   \   000001C4   0x........         LDR      R0,??DataTable10_13
+   \   000001C8   0x........         BL       printf
+    310          
+    311                  // Retrieve block statuses from their first page spare area
+    312                  // (find maximum and minimum wear at the same time)
+    313                  minEraseCount = 0xFFFFFFFF;
+   \   000001CC   0xE3E01000         MVN      R1,#+0
+   \   000001D0   0xE58D1004         STR      R1,[SP, #+4]
+    314                  maxEraseCount = 0;
+   \   000001D4   0xE3A07000         MOV      R7,#+0
+    315                  for (block=0; block < sizeInBlocks; block++) {
+   \   000001D8   0xE3A08000         MOV      R8,#+0
+   \   000001DC   0xE3550000         CMP      R5,#+0
+   \   000001E0   0x0A00003B         BEQ      ??ManagedNandFlash_Initialize_10
+   \   000001E4   0xE1A0B004         MOV      R11,R4
+    316          
+    317                      phyBlock = baseBlock + block;
+    318          
+    319                      // Read spare of first page
+    320                      error = RawNandFlash_ReadPage(RAW(managed), phyBlock, 0, 0, spare);
+    321                      if (error) {
+   \                     ??ManagedNandFlash_Initialize_11:
+   \   000001E8   0xE28D0024         ADD      R0,SP,#+36
+   \   000001EC   0xE58D0000         STR      R0,[SP, #+0]
+   \   000001F0   0xE3A03000         MOV      R3,#+0
+   \   000001F4   0xE3A02000         MOV      R2,#+0
+   \   000001F8   0xE1A01806         LSL      R1,R6,#+16
+   \   000001FC   0xE1A01821         LSR      R1,R1,#+16
+   \   00000200   0xE1A00004         MOV      R0,R4
+   \   00000204   0x........         BL       RawNandFlash_ReadPage
+   \   00000208   0xE3500000         CMP      R0,#+0
+   \   0000020C   0x0A000003         BEQ      ??ManagedNandFlash_Initialize_12
+    322          
+    323                          TRACE_ERROR("ManagedNandFlash_Initialize: Read block #%d(%d)\n\r",
+    324                                      block, phyBlock);
+                                             ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                              block, phyBlock);
+                                     ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",324  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+   \   00000210   0xE1A02006         MOV      R2,R6
+   \   00000214   0xE1A01008         MOV      R1,R8
+   \   00000218   0x........         LDR      R0,??DataTable10_14
+   \   0000021C   0x........         BL       printf
+    325                      }
+    326          
+    327                      // Retrieve bad block marker and block status
+    328                      NandSpareScheme_ReadBadBlockMarker(scheme, spare, &badBlockMarker);
+   \                     ??ManagedNandFlash_Initialize_12:
+   \   00000220   0xE28D201C         ADD      R2,SP,#+28
+   \   00000224   0xE28D1024         ADD      R1,SP,#+36
+   \   00000228   0xE1A00009         MOV      R0,R9
+   \   0000022C   0x........         BL       NandSpareScheme_ReadBadBlockMarker
+    329                      NandSpareScheme_ReadExtra(scheme, spare, &blockStatus, 4, 0);
+   \   00000230   0xE3A00000         MOV      R0,#+0
+   \   00000234   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000238   0xE3A03004         MOV      R3,#+4
+   \   0000023C   0xE28D2020         ADD      R2,SP,#+32
+   \   00000240   0xE28D1024         ADD      R1,SP,#+36
+   \   00000244   0xE1A00009         MOV      R0,R9
+   \   00000248   0x........         BL       NandSpareScheme_ReadExtra
+    330          
+    331                      // If they do not match, block must be bad
+    332                      if (   (badBlockMarker != 0xFF)
+    333                          && (blockStatus.status != NandBlockStatus_BAD)) {
+   \   0000024C   0xE5DD001C         LDRB     R0,[SP, #+28]
+   \   00000250   0xE35000FF         CMP      R0,#+255
+   \   00000254   0xE59D0020         LDR      R0,[SP, #+32]
+   \   00000258   0x0A000005         BEQ      ??ManagedNandFlash_Initialize_13
+   \   0000025C   0xE310000F         TST      R0,#0xF
+   \   00000260   0x0A00000D         BEQ      ??ManagedNandFlash_Initialize_14
+    334          
+    335                          TRACE_DEBUG("Block #%d(%d) is bad\n\r", block, phyBlock);
+    336                          managed->blockStatuses[block].status = NandBlockStatus_BAD;
+   \   00000264   0xE59B0030         LDR      R0,[R11, #+48]
+   \   00000268   0xE3C0000F         BIC      R0,R0,#0xF
+   \   0000026C   0xE58B0030         STR      R0,[R11, #+48]
+   \   00000270   0xEA000012         B        ??ManagedNandFlash_Initialize_15
+    337                      }
+    338                      // Check that block status is not default 
+    339                      //    (meaning block is not managed)
+    340                      else if (blockStatus.status == NandBlockStatus_DEFAULT) {
+   \                     ??ManagedNandFlash_Initialize_13:
+   \   00000274   0xE200000F         AND      R0,R0,#0xF
+   \   00000278   0xE350000F         CMP      R0,#+15
+   \   0000027C   0x1A000006         BNE      ??ManagedNandFlash_Initialize_14
+    341          
+    342                          ASSERT(0, "Block #%d(%d) is not managed\n\r", block, phyBlock);
+                                                                               ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                  ASSERT(0, "Block #%d(%d) is not managed\n\r", block, phyBlock);
+                                                                       ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",342  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+   \   00000280   0x........         LDR      R0,??DataTable10
+   \   00000284   0x........         BL       printf
+   \   00000288   0xE1A02006         MOV      R2,R6
+   \   0000028C   0xE1A01008         MOV      R1,R8
+   \   00000290   0x........         LDR      R0,??DataTable10_15
+   \   00000294   0x........         BL       printf
+   \                     ??ManagedNandFlash_Initialize_16:
+   \   00000298   0xEAFFFFFE         B        ??ManagedNandFlash_Initialize_16
+    343                      }
+    344                      // Otherwise block status is accurate
+    345                      else {
+    346          
+    347                          TRACE_DEBUG("Block #%03d(%d) : status = %2d | eraseCount = %d\n\r",
+    348                                      block, phyBlock,
+    349                                      blockStatus.status, blockStatus.eraseCount);
+    350                          managed->blockStatuses[block] = blockStatus;
+   \                     ??ManagedNandFlash_Initialize_14:
+   \   0000029C   0xE59D0020         LDR      R0,[SP, #+32]
+   \   000002A0   0xE58B0030         STR      R0,[R11, #+48]
+    351          
+    352                          // Check for min/max erase counts
+    353                          if (blockStatus.eraseCount < minEraseCount) {
+   \   000002A4   0xE59D0020         LDR      R0,[SP, #+32]
+   \   000002A8   0xE59D1004         LDR      R1,[SP, #+4]
+   \   000002AC   0xE1510220         CMP      R1,R0, LSR #+4
+    354          
+    355                              minEraseCount = blockStatus.eraseCount;
+   \   000002B0   0x81A01220         LSRHI    R1,R0,#+4
+   \   000002B4   0x858D1004         STRHI    R1,[SP, #+4]
+    356                          }
+    357                          if (blockStatus.eraseCount > maxEraseCount) {
+   \   000002B8   0xE1570220         CMP      R7,R0, LSR #+4
+    358          
+    359                              maxEraseCount = blockStatus.eraseCount;
+   \   000002BC   0x31A07220         LSRCC    R7,R0,#+4
+    360                          }
+    361          
+    362                          //// Clean block
+    363                          //// Release LIVE blocks
+    364                          //if (managed->blockStatuses[block].status == NandBlockStatus_LIVE) {
+    365                          //
+    366                          //    ManagedNandFlash_ReleaseBlock(managed, block);
+    367                          //}
+    368                          //// Erase DIRTY blocks
+    369                          //if (managed->blockStatuses[block].status == NandBlockStatus_DIRTY) {
+    370                          //
+    371                          //    ManagedNandFlash_EraseBlock(managed, block);
+    372                          //}
+    373                      }
+    374                  }
+   \                     ??ManagedNandFlash_Initialize_15:
+   \   000002C0   0xE2888001         ADD      R8,R8,#+1
+   \   000002C4   0xE28BB004         ADD      R11,R11,#+4
+   \   000002C8   0xE2866001         ADD      R6,R6,#+1
+   \   000002CC   0xE1580005         CMP      R8,R5
+   \   000002D0   0x3AFFFFC4         BCC      ??ManagedNandFlash_Initialize_11
+    375          
+    376                  // Display erase count information
+    377                  TRACE_ERROR_WP("|--------|------------|--------|--------|--------|\n\r");
+   \                     ??ManagedNandFlash_Initialize_10:
+   \   000002D4   0x........         LDR      R0,??DataTable10_16
+   \   000002D8   0x........         BL       printf
+    378                  TRACE_ERROR_WP("|  Wear  |   Count    |  Free  |  Live  | Dirty  |\n\r");
+   \   000002DC   0x........         LDR      R0,??DataTable10_17
+   \   000002E0   0x........         BL       printf
+    379                  TRACE_ERROR_WP("|--------|------------|--------|--------|--------|\n\r");
+   \   000002E4   0x........         LDR      R0,??DataTable10_16
+   \   000002E8   0x........         BL       printf
+    380          
+    381                  for (eraseCount=minEraseCount; eraseCount <= maxEraseCount; eraseCount++) {
+   \   000002EC   0xE59D6004         LDR      R6,[SP, #+4]
+   \   000002F0   0xE1570006         CMP      R7,R6
+   \   000002F4   0x3A000026         BCC      ??ManagedNandFlash_Initialize_17
+    382          
+    383                      unsigned int count = 0, live = 0, dirty = 0, free = 0;
+   \                     ??ManagedNandFlash_Initialize_18:
+   \   000002F8   0xE3A02000         MOV      R2,#+0
+   \   000002FC   0xE3A00000         MOV      R0,#+0
+   \   00000300   0xE3A01000         MOV      R1,#+0
+   \   00000304   0xE3A03000         MOV      R3,#+0
+    384                      for (block=0; block < sizeInBlocks; block++) {
+   \   00000308   0xE3550000         CMP      R5,#+0
+   \   0000030C   0x0A00001D         BEQ      ??ManagedNandFlash_Initialize_19
+   \   00000310   0xE1A0C004         MOV      R12,R4
+   \   00000314   0xE1A0E005         MOV      LR,R5
+    385          
+    386                          if ((managed->blockStatuses[block].eraseCount == eraseCount)
+    387                              && (managed->blockStatuses[block].status != NandBlockStatus_BAD)) {
+   \                     ??ManagedNandFlash_Initialize_20:
+   \   00000318   0xE59C8030         LDR      R8,[R12, #+48]
+   \   0000031C   0xE1560228         CMP      R6,R8, LSR #+4
+   \   00000320   0x1A00000E         BNE      ??ManagedNandFlash_Initialize_21
+   \   00000324   0xE5DC8030         LDRB     R8,[R12, #+48]
+   \   00000328   0xE318000F         TST      R8,#0xF
+   \   0000032C   0x0A00000B         BEQ      ??ManagedNandFlash_Initialize_21
+    388          
+    389                              count++;
+   \   00000330   0xE2822001         ADD      R2,R2,#+1
+    390                          
+    391                              switch (managed->blockStatuses[block].status) {
+   \   00000334   0xE208800F         AND      R8,R8,#0xF
+   \   00000338   0xE3580008         CMP      R8,#+8
+   \   0000033C   0x0A000006         BEQ      ??ManagedNandFlash_Initialize_22
+   \   00000340   0xE358000C         CMP      R8,#+12
+   \   00000344   0x0A000002         BEQ      ??ManagedNandFlash_Initialize_23
+   \   00000348   0xE358000E         CMP      R8,#+14
+   \   0000034C   0x02833001         ADDEQ    R3,R3,#+1
+   \   00000350   0xEA000002         B        ??ManagedNandFlash_Initialize_21
+    392                                  case NandBlockStatus_LIVE: live++; break;
+   \                     ??ManagedNandFlash_Initialize_23:
+   \   00000354   0xE2800001         ADD      R0,R0,#+1
+   \   00000358   0xEA000000         B        ??ManagedNandFlash_Initialize_21
+    393                                  case NandBlockStatus_DIRTY: dirty++; break;
+   \                     ??ManagedNandFlash_Initialize_22:
+   \   0000035C   0xE2811001         ADD      R1,R1,#+1
+    394                                  case NandBlockStatus_FREE: free++; break;
+    395                              }
+    396                          }
+    397                      }
+   \                     ??ManagedNandFlash_Initialize_21:
+   \   00000360   0xE28CC004         ADD      R12,R12,#+4
+   \   00000364   0xE25EE001         SUBS     LR,LR,#+1
+   \   00000368   0x1AFFFFEA         BNE      ??ManagedNandFlash_Initialize_20
+    398          
+    399                      if (count > 0) {
+   \   0000036C   0xE3520000         CMP      R2,#+0
+   \   00000370   0x0A000004         BEQ      ??ManagedNandFlash_Initialize_19
+    400                      
+    401                          TRACE_ERROR_WP("|  %4d  |  %8d  |  %4d  |  %4d  |  %4d  |\n\r",
+    402                                    eraseCount, count, free, live, dirty);
+                                           ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                            eraseCount, count, free, live, dirty);
+                                        ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",402  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+
+                            eraseCount, count, free, live, dirty);
+                                               ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",402  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+
+                            eraseCount, count, free, live, dirty);
+                                                     ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",402  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+
+                            eraseCount, count, free, live, dirty);
+                                                           ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",402  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+
+      unsigned int pageSpareSize;
+                   ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",216  Warning[Pe550]: 
+          variable "pageSpareSize" was set but never used
+   \   00000374   0xE58D1004         STR      R1,[SP, #+4]
+   \   00000378   0xE58D0000         STR      R0,[SP, #+0]
+   \   0000037C   0xE1A01006         MOV      R1,R6
+   \   00000380   0x........         LDR      R0,??DataTable10_18
+   \   00000384   0x........         BL       printf
+    403                      }
+    404                  }
+   \                     ??ManagedNandFlash_Initialize_19:
+   \   00000388   0xE2866001         ADD      R6,R6,#+1
+   \   0000038C   0xE1570006         CMP      R7,R6
+   \   00000390   0x2AFFFFD8         BCS      ??ManagedNandFlash_Initialize_18
+    405                  TRACE_ERROR_WP("|--------|------------|--------|--------|--------|\n\r");
+   \                     ??ManagedNandFlash_Initialize_17:
+   \   00000394   0x........         LDR      R0,??DataTable10_16
+   \   00000398   0x........         BL       printf
+    406              }
+    407          
+    408              return 0;
+   \                     ??ManagedNandFlash_Initialize_4:
+   \   0000039C   0xE3A00000         MOV      R0,#+0
+   \                     ??ManagedNandFlash_Initialize_0:
+   \   000003A0   0xE28DD068         ADD      SP,SP,#+104      ;; stack cleaning
+   \   000003A4   0xE8BD4BF0         POP      {R4-R9,R11,LR}
+   \   000003A8   0xE12FFF1E         BX       LR               ;; return
+    409          }
+    410          
+    411          //------------------------------------------------------------------------------
+    412          /// Allocates a FREE block of a managed nandflash and marks it as LIVE.
+    413          /// Returns 0 if successful; otherwise returns NandCommon_ERROR_WRONGSTATUS if
+    414          /// the block is not FREE.
+    415          /// \param managed  Pointer to a ManagedNandFlash instance.
+    416          /// \param block    Block to allocate, in managed area.
+    417          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    418          unsigned char ManagedNandFlash_AllocateBlock(
+    419              struct ManagedNandFlash *managed,
+    420              unsigned short block)
+    421          {
+   \                     ManagedNandFlash_AllocateBlock:
+   \   00000000   0xE92D4030         PUSH     {R4,R5,LR}
+   \   00000004   0xE24DD044         SUB      SP,SP,#+68
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    422              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    423              TRACE_INFO("ManagedNandFlash_AllocateBlock(%d)\n\r", block);
+   \   00000010   0x........         LDR      R0,??DataTable10_19
+   \   00000014   0x........         BL       printf
+    424          
+    425              // Check that block is FREE
+    426              if (managed->blockStatuses[block].status != NandBlockStatus_FREE) {
+   \   00000018   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   0000001C   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   00000020   0xE200000F         AND      R0,R0,#0xF
+   \   00000024   0xE350000E         CMP      R0,#+14
+   \   00000028   0x0A000003         BEQ      ??ManagedNandFlash_AllocateBlock_0
+    427          
+    428                  TRACE_ERROR("ManagedNandFlash_AllocateBlock: Block must be FREE\n\r");
+   \   0000002C   0x........         LDR      R0,??DataTable10_20
+   \   00000030   0x........         BL       printf
+    429                  return NandCommon_ERROR_WRONGSTATUS;
+   \   00000034   0xE3A0000A         MOV      R0,#+10
+   \   00000038   0xEA000010         B        ??ManagedNandFlash_AllocateBlock_1
+    430              }
+    431          
+    432              // Change block status to LIVE
+    433              managed->blockStatuses[block].status = NandBlockStatus_LIVE;
+   \                     ??ManagedNandFlash_AllocateBlock_0:
+   \   0000003C   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000040   0xE5900030         LDR      R0,[R0, #+48]
+   \   00000044   0xE3C0000F         BIC      R0,R0,#0xF
+   \   00000048   0xE380000C         ORR      R0,R0,#0xC
+   \   0000004C   0xE0841105         ADD      R1,R4,R5, LSL #+2
+   \   00000050   0xE5810030         STR      R0,[R1, #+48]
+    434              return WriteBlockStatus(managed,
+    435                                      managed->baseBlock + block,
+    436                                      &(managed->blockStatuses[block]),
+    437                                      spare);
+   \   00000054   0xE1A0300D         MOV      R3,SP
+   \   00000058   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   0000005C   0xE2802030         ADD      R2,R0,#+48
+   \   00000060   0xE3A00030         MOV      R0,#+48
+   \   00000064   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000068   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000006C   0xE0851000         ADD      R1,R5,R0
+   \   00000070   0xE1A01801         LSL      R1,R1,#+16
+   \   00000074   0xE1A01821         LSR      R1,R1,#+16
+   \   00000078   0xE1A00004         MOV      R0,R4
+   \   0000007C   0x........         BL       WriteBlockStatus
+   \                     ??ManagedNandFlash_AllocateBlock_1:
+   \   00000080   0x........         B        ?Subroutine0
+    438          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE28DD044         ADD      SP,SP,#+68       ;; stack cleaning
+   \   00000004   0xE8BD4030         POP      {R4,R5,LR}
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+    439          
+    440          //------------------------------------------------------------------------------
+    441          /// Releases a LIVE block of a nandflash and marks it as DIRTY.
+    442          /// Returns 0 if successful; otherwise returns NandCommon_ERROR_WRONGSTATUS if
+    443          /// the block is not LIVE, or a RawNandFlash_WritePage error.
+    444          /// \param managed  Pointer to a ManagedNandFlash instance.
+    445          /// \param block  Block to release, based on managed area.
+    446          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    447          unsigned char ManagedNandFlash_ReleaseBlock(
+    448              struct ManagedNandFlash *managed,
+    449              unsigned short block)
+    450          {
+   \                     ManagedNandFlash_ReleaseBlock:
+   \   00000000   0xE92D4030         PUSH     {R4,R5,LR}
+   \   00000004   0xE24DD044         SUB      SP,SP,#+68
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    451              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    452              TRACE_INFO("ManagedNandFlash_ReleaseBlock(%d)\n\r", block);
+   \   00000010   0x........         LDR      R0,??DataTable10_21
+   \   00000014   0x........         BL       printf
+    453          
+    454              // Check that block is LIVE
+    455              if (managed->blockStatuses[block].status != NandBlockStatus_LIVE) {
+   \   00000018   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   0000001C   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   00000020   0xE200000F         AND      R0,R0,#0xF
+   \   00000024   0xE350000C         CMP      R0,#+12
+   \   00000028   0x0A000003         BEQ      ??ManagedNandFlash_ReleaseBlock_0
+    456          
+    457                  TRACE_ERROR("ManagedNandFlash_ReleaseBlock: Block must be LIVE\n\r");
+   \   0000002C   0x........         LDR      R0,??DataTable10_22
+   \   00000030   0x........         BL       printf
+    458                  return NandCommon_ERROR_WRONGSTATUS;
+   \   00000034   0xE3A0000A         MOV      R0,#+10
+   \   00000038   0xEA000010         B        ??ManagedNandFlash_ReleaseBlock_1
+    459              }
+    460          
+    461              // Change block status to DIRTY
+    462              managed->blockStatuses[block].status = NandBlockStatus_DIRTY;
+   \                     ??ManagedNandFlash_ReleaseBlock_0:
+   \   0000003C   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000040   0xE5900030         LDR      R0,[R0, #+48]
+   \   00000044   0xE3C0000F         BIC      R0,R0,#0xF
+   \   00000048   0xE3800008         ORR      R0,R0,#0x8
+   \   0000004C   0xE0841105         ADD      R1,R4,R5, LSL #+2
+   \   00000050   0xE5810030         STR      R0,[R1, #+48]
+    463              return WriteBlockStatus(managed,
+    464                                      managed->baseBlock + block,
+    465                                      &(managed->blockStatuses[block]),
+    466                                      spare);
+   \   00000054   0xE1A0300D         MOV      R3,SP
+   \   00000058   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   0000005C   0xE2802030         ADD      R2,R0,#+48
+   \   00000060   0xE3A00030         MOV      R0,#+48
+   \   00000064   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000068   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000006C   0xE0851000         ADD      R1,R5,R0
+   \   00000070   0xE1A01801         LSL      R1,R1,#+16
+   \   00000074   0xE1A01821         LSR      R1,R1,#+16
+   \   00000078   0xE1A00004         MOV      R0,R4
+   \   0000007C   0x........         BL       WriteBlockStatus
+   \                     ??ManagedNandFlash_ReleaseBlock_1:
+   \   00000080                      REQUIRE ?Subroutine0
+   \   00000080                      ;; // Fall through to label ?Subroutine0
+    467          }
+    468          
+    469          //------------------------------------------------------------------------------
+    470          /// Erases a DIRTY block of a managed NandFlash.
+    471          /// Returns the RawNandFlash_EraseBlock code or NandCommon_ERROR_WRONGSTATUS.
+    472          /// \param managed  Pointer to a ManagedNandFlash instance.
+    473          /// \param block  Block to erase, in managed area.
+    474          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    475          unsigned char ManagedNandFlash_EraseBlock(
+    476              struct ManagedNandFlash *managed,
+    477              unsigned short block)
+    478          {
+   \                     ManagedNandFlash_EraseBlock:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE24DD040         SUB      SP,SP,#+64
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+    479              unsigned int phyBlock = managed->baseBlock + block;
+   \   00000010   0xE3A00030         MOV      R0,#+48
+   \   00000014   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000018   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000001C   0xE0816000         ADD      R6,R1,R0
+    480              unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    481              unsigned char error;
+    482              TRACE_INFO("ManagedNandFlash_EraseBlock(%d)\n\r", block);
+   \   00000020   0x........         LDR      R0,??DataTable10_23
+   \   00000024   0x........         BL       printf
+    483          
+    484              // Check block status
+    485              if (managed->blockStatuses[block].status != NandBlockStatus_DIRTY) {
+   \   00000028   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   0000002C   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   00000030   0xE200000F         AND      R0,R0,#0xF
+   \   00000034   0xE3500008         CMP      R0,#+8
+   \   00000038   0x0A000003         BEQ      ??ManagedNandFlash_EraseBlock_0
+    486          
+    487                  TRACE_ERROR("ManagedNandFlash_EraseBlock: Block must be DIRTY\n\r");
+   \   0000003C   0x........         LDR      R0,??DataTable10_24
+   \   00000040   0x........         BL       printf
+    488                  return NandCommon_ERROR_WRONGSTATUS;
+   \   00000044   0xE3A0000A         MOV      R0,#+10
+   \   00000048   0xEA000016         B        ??ManagedNandFlash_EraseBlock_1
+    489              }
+    490          
+    491              // Erase block
+    492              error = RawNandFlash_EraseBlock(RAW(managed), phyBlock);
+   \                     ??ManagedNandFlash_EraseBlock_0:
+   \   0000004C   0xE1A01806         LSL      R1,R6,#+16
+   \   00000050   0xE1A01821         LSR      R1,R1,#+16
+   \   00000054   0xE1A00004         MOV      R0,R4
+   \   00000058   0x........         BL       RawNandFlash_EraseBlock
+    493              if (error) {
+   \   0000005C   0xE3500000         CMP      R0,#+0
+   \   00000060   0x1A000010         BNE      ??ManagedNandFlash_EraseBlock_1
+    494          
+    495                  return error;
+    496              }
+    497          
+    498              // Update block status
+    499              managed->blockStatuses[block].status = NandBlockStatus_FREE;
+   \   00000064   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000068   0xE5900030         LDR      R0,[R0, #+48]
+   \   0000006C   0xE3C0000F         BIC      R0,R0,#0xF
+   \   00000070   0xE380000E         ORR      R0,R0,#0xE
+   \   00000074   0xE0841105         ADD      R1,R4,R5, LSL #+2
+   \   00000078   0xE5810030         STR      R0,[R1, #+48]
+    500              managed->blockStatuses[block].eraseCount++;
+   \   0000007C   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000080   0xE5900030         LDR      R0,[R0, #+48]
+   \   00000084   0xE2800010         ADD      R0,R0,#+16
+   \   00000088   0xE5810030         STR      R0,[R1, #+48]
+    501              return WriteBlockStatus(managed,
+    502                                      phyBlock,
+    503                                      &(managed->blockStatuses[block]),
+    504                                      spare);
+   \   0000008C   0xE1A0300D         MOV      R3,SP
+   \   00000090   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000094   0xE2802030         ADD      R2,R0,#+48
+   \   00000098   0xE1A01806         LSL      R1,R6,#+16
+   \   0000009C   0xE1A01821         LSR      R1,R1,#+16
+   \   000000A0   0xE1A00004         MOV      R0,R4
+   \   000000A4   0x........         BL       WriteBlockStatus
+   \                     ??ManagedNandFlash_EraseBlock_1:
+   \   000000A8   0xE28DD040         ADD      SP,SP,#+64       ;; stack cleaning
+   \   000000AC   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000B0   0xE12FFF1E         BX       LR               ;; return
+    505          }
+    506          
+    507          //------------------------------------------------------------------------------
+    508          /// Reads the data and/or the spare area of a page on a managed nandflash. If
+    509          /// the data pointer is not 0, then the block MUST be LIVE.
+    510          /// Returns NandCommon_ERROR_WRONGSTATUS if the block is not LIVE and the data
+    511          /// pointer is not null; Otherwise, returns EccNandFlash_ReadPage().
+    512          /// \param managed  Pointer to a ManagedNandFlash instance.
+    513          /// \param block  Block to read page from, based on managed area.
+    514          /// \param page  Number of page to read inside the given block.
+    515          /// \param data  Data area buffer, can be 0.
+    516          /// \param spare  Spare area buffer, can be 0.
+    517          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    518          unsigned char ManagedNandFlash_ReadPage(
+    519              const struct ManagedNandFlash *managed,
+    520              unsigned short block,
+    521              unsigned short page,
+    522              void *data,
+    523              void *spare)
+    524          {
+   \                     ManagedNandFlash_ReadPage:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+   \   00000004   0xE59DC008         LDR      R12,[SP, #+8]
+    525              // Check that the block is LIVE if data is requested
+    526              if ((managed->blockStatuses[block].status != NandBlockStatus_LIVE)
+    527                  && (managed->blockStatuses[block].status != NandBlockStatus_DIRTY)) {
+   \   00000008   0xE080E101         ADD      LR,R0,R1, LSL #+2
+   \   0000000C   0xE5DEE030         LDRB     LR,[LR, #+48]
+   \   00000010   0xE20EE00F         AND      LR,LR,#0xF
+   \   00000014   0xE35E000C         CMP      LR,#+12
+   \   00000018   0x0A000008         BEQ      ??ManagedNandFlash_ReadPage_0
+   \   0000001C   0xE080E101         ADD      LR,R0,R1, LSL #+2
+   \   00000020   0xE5DEE030         LDRB     LR,[LR, #+48]
+   \   00000024   0xE20EE00F         AND      LR,LR,#0xF
+   \   00000028   0xE35E0008         CMP      LR,#+8
+   \   0000002C   0x0A000003         BEQ      ??ManagedNandFlash_ReadPage_0
+    528          
+    529                  TRACE_ERROR("ManagedNandFlash_ReadPage: Block must be LIVE or DIRTY.\n\r");
+   \   00000030   0x........         LDR      R0,??DataTable10_25
+   \   00000034   0x........         BL       printf
+    530                  return NandCommon_ERROR_WRONGSTATUS;
+   \   00000038   0xE3A0000A         MOV      R0,#+10
+   \   0000003C   0xEA000007         B        ??ManagedNandFlash_ReadPage_1
+    531              }
+    532          
+    533              // Read data with ECC verification
+    534              return EccNandFlash_ReadPage(ECC(managed),
+    535                                           managed->baseBlock + block,
+    536                                           page, data, spare);
+   \                     ??ManagedNandFlash_ReadPage_0:
+   \   00000040   0xE58DC000         STR      R12,[SP, #+0]
+   \   00000044   0xE3A0C030         MOV      R12,#+48
+   \   00000048   0xE38CCD40         ORR      R12,R12,#0x1000
+   \   0000004C   0xE19CC0B0         LDRH     R12,[R12, +R0]
+   \   00000050   0xE081100C         ADD      R1,R1,R12
+   \   00000054   0xE1A01801         LSL      R1,R1,#+16
+   \   00000058   0xE1A01821         LSR      R1,R1,#+16
+   \   0000005C   0x........         BL       EccNandFlash_ReadPage
+   \                     ??ManagedNandFlash_ReadPage_1:
+   \   00000060   0xE8BD4002         POP      {R1,LR}
+   \   00000064   0xE12FFF1E         BX       LR               ;; return
+    537          }
+    538          
+    539          //------------------------------------------------------------------------------
+    540          /// Writes the data and/or spare area of a LIVE page on a managed NandFlash.
+    541          /// Returns NandCommon_ERROR_WRONGSTATUS if the page is not LIVE; otherwise,
+    542          /// returns EccNandFlash_WritePage().
+    543          /// \param managed  Pointer to a ManagedNandFlash instance.
+    544          /// \param block  The block to write, in managed area.
+    545          /// \param page  Number of the page to write inside the given block.
+    546          /// \param data  Data area buffer.
+    547          /// \param spare  Spare area buffer.
+    548          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    549          unsigned char ManagedNandFlash_WritePage(
+    550              const struct ManagedNandFlash *managed,
+    551              unsigned short block,
+    552              unsigned short page,
+    553              void *data,
+    554              void *spare)
+    555          {
+   \                     ManagedNandFlash_WritePage:
+   \   00000000   0xE92D5000         PUSH     {R12,LR}
+   \   00000004   0xE59DC008         LDR      R12,[SP, #+8]
+    556              // Check that the block is LIVE
+    557              if (managed->blockStatuses[block].status != NandBlockStatus_LIVE) {
+   \   00000008   0xE080E101         ADD      LR,R0,R1, LSL #+2
+   \   0000000C   0xE5DEE030         LDRB     LR,[LR, #+48]
+   \   00000010   0xE20EE00F         AND      LR,LR,#0xF
+   \   00000014   0xE35E000C         CMP      LR,#+12
+   \   00000018   0x0A000003         BEQ      ??ManagedNandFlash_WritePage_0
+    558          
+    559                  TRACE_ERROR("ManagedNandFlash_WritePage: Block must be LIVE.\n\r");
+   \   0000001C   0x........         LDR      R0,??DataTable10_26
+   \   00000020   0x........         BL       printf
+    560                  return NandCommon_ERROR_WRONGSTATUS;
+   \   00000024   0xE3A0000A         MOV      R0,#+10
+   \   00000028   0xEA000007         B        ??ManagedNandFlash_WritePage_1
+    561              }
+    562          
+    563              // Write data with ECC calculation
+    564              return EccNandFlash_WritePage(ECC(managed),
+    565                                            managed->baseBlock + block,
+    566                                            page, data, spare);
+   \                     ??ManagedNandFlash_WritePage_0:
+   \   0000002C   0xE58DC000         STR      R12,[SP, #+0]
+   \   00000030   0xE3A0C030         MOV      R12,#+48
+   \   00000034   0xE38CCD40         ORR      R12,R12,#0x1000
+   \   00000038   0xE19CC0B0         LDRH     R12,[R12, +R0]
+   \   0000003C   0xE081100C         ADD      R1,R1,R12
+   \   00000040   0xE1A01801         LSL      R1,R1,#+16
+   \   00000044   0xE1A01821         LSR      R1,R1,#+16
+   \   00000048   0x........         BL       EccNandFlash_WritePage
+   \                     ??ManagedNandFlash_WritePage_1:
+   \   0000004C   0xE8BD4002         POP      {R1,LR}
+   \   00000050   0xE12FFF1E         BX       LR               ;; return
+    567          }
+    568          
+    569          //------------------------------------------------------------------------------
+    570          /// Copy the data & spare area of one page to another page. The source block
+    571          /// can be either LIVE or DIRTY, and the destination block must be LIVE; they
+    572          /// must both have the same parity.
+    573          /// Returns 0 if successful; NandCommon_ERROR_WRONGSTATUS if one or more page
+    574          /// is not live; otherwise returns an NandCommon_ERROR_xxx code.
+    575          /// \param managed  Pointer to a ManagedNandFlash instance.
+    576          /// \param sourceBlock  Source block number based on managed area.
+    577          /// \param sourcePage  Number of source page inside the source block.
+    578          /// \param destBlock  Destination block number based on managed area.
+    579          /// \param destPage  Number of destination page inside the dest block.
+    580          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    581          unsigned char ManagedNandFlash_CopyPage(
+    582              const struct ManagedNandFlash *managed,
+    583              unsigned short sourceBlock,
+    584              unsigned short sourcePage,
+    585              unsigned short destBlock,
+    586              unsigned short destPage)
+    587          {
+   \                     ManagedNandFlash_CopyPage:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD048         SUB      SP,SP,#+72
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A04000         MOV      R4,R0
+   \   00000010   0xE1A06001         MOV      R6,R1
+   \   00000014   0xE1A07002         MOV      R7,R2
+   \   00000018   0xE1A05003         MOV      R5,R3
+   \   0000001C   0xE28D8E86         ADD      R8,SP,#+2144
+   \   00000020   0xE1D880B0         LDRH     R8,[R8, #+0]
+    588              unsigned char error;
+    589          
+    590              ASSERT((sourcePage & 1) == (destPage & 1),
+    591                     "ManagedNandFlash_CopyPage: source & dest pages must have the same parity\n\r");
+   \   00000024   0xE2070001         AND      R0,R7,#0x1
+   \   00000028   0xE2081001         AND      R1,R8,#0x1
+   \   0000002C   0xE1500001         CMP      R0,R1
+   \   00000030   0x0A000004         BEQ      ??ManagedNandFlash_CopyPage_0
+   \   00000034   0x........         LDR      R0,??DataTable10
+   \   00000038   0x........         BL       printf
+   \   0000003C   0x........         LDR      R0,??DataTable10_27
+   \   00000040   0x........         BL       printf
+   \                     ??ManagedNandFlash_CopyPage_1:
+   \   00000044   0xEAFFFFFE         B        ??ManagedNandFlash_CopyPage_1
+    592          
+    593              TRACE_INFO("ManagedNandFlash_CopyPage(B#%d:P#%d -> B#%d:P#%d)\n\r",
+    594                        sourceBlock, sourcePage, destBlock, destPage);
+   \                     ??ManagedNandFlash_CopyPage_0:
+   \   00000048   0xE58D8000         STR      R8,[SP, #+0]
+   \   0000004C   0xE1A01006         MOV      R1,R6
+   \   00000050   0x........         LDR      R0,??DataTable10_28
+   \   00000054   0x........         BL       printf
+    595          
+    596              // Check block statuses
+    597              if ((managed->blockStatuses[sourceBlock].status != NandBlockStatus_LIVE)
+    598                   && (managed->blockStatuses[sourceBlock].status != NandBlockStatus_DIRTY)) {
+   \   00000058   0xE0840106         ADD      R0,R4,R6, LSL #+2
+   \   0000005C   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   00000060   0xE200000F         AND      R0,R0,#0xF
+   \   00000064   0xE350000C         CMP      R0,#+12
+   \   00000068   0x0A000005         BEQ      ??ManagedNandFlash_CopyPage_2
+   \   0000006C   0xE0840106         ADD      R0,R4,R6, LSL #+2
+   \   00000070   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   00000074   0xE200000F         AND      R0,R0,#0xF
+   \   00000078   0xE3500008         CMP      R0,#+8
+    599          
+    600                  TRACE_ERROR("ManagedNandFlash_CopyPage: Source block must be LIVE or DIRTY.\n\r");
+   \   0000007C   0x........         LDRNE    R0,??DataTable10_29
+   \   00000080   0x1A000005         BNE      ??ManagedNandFlash_CopyPage_3
+    601                  return NandCommon_ERROR_WRONGSTATUS;
+    602              }
+    603              if (managed->blockStatuses[destBlock].status != NandBlockStatus_LIVE) {
+   \                     ??ManagedNandFlash_CopyPage_2:
+   \   00000084   0xE0840105         ADD      R0,R4,R5, LSL #+2
+   \   00000088   0xE5D00030         LDRB     R0,[R0, #+48]
+   \   0000008C   0xE200000F         AND      R0,R0,#0xF
+   \   00000090   0xE350000C         CMP      R0,#+12
+   \   00000094   0x0A000003         BEQ      ??ManagedNandFlash_CopyPage_4
+    604          
+    605                  TRACE_ERROR("ManagedNandFlash_CopyPage: Destination block must be LIVE.\n\r");
+   \   00000098   0x........         LDR      R0,??DataTable10_30
+   \                     ??ManagedNandFlash_CopyPage_3:
+   \   0000009C   0x........         BL       printf
+    606                  return NandCommon_ERROR_WRONGSTATUS;
+   \   000000A0   0xE3A0000A         MOV      R0,#+10
+   \   000000A4   0xEA000035         B        ??ManagedNandFlash_CopyPage_5
+    607              }
+    608          
+    609              // If destination page is page #0, block status information must not be
+    610              // overwritten
+    611              if (destPage == 0) {
+   \                     ??ManagedNandFlash_CopyPage_4:
+   \   000000A8   0xE3580000         CMP      R8,#+0
+   \   000000AC   0x1A000023         BNE      ??ManagedNandFlash_CopyPage_6
+    612          
+    613                  unsigned char data[NandCommon_MAXPAGEDATASIZE];
+    614                  unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    615          
+    616                  // Read data & spare to copy
+    617                  error = EccNandFlash_ReadPage(ECC(managed),
+    618                                                managed->baseBlock + sourceBlock,
+    619                                                sourcePage,
+    620                                                data, spare);
+   \   000000B0   0xE28D0004         ADD      R0,SP,#+4
+   \   000000B4   0xE58D0000         STR      R0,[SP, #+0]
+   \   000000B8   0xE28D3044         ADD      R3,SP,#+68
+   \   000000BC   0xE1A02007         MOV      R2,R7
+   \   000000C0   0xE3A00030         MOV      R0,#+48
+   \   000000C4   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000C8   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   000000CC   0xE0861000         ADD      R1,R6,R0
+   \   000000D0   0xE1A01801         LSL      R1,R1,#+16
+   \   000000D4   0xE1A01821         LSR      R1,R1,#+16
+   \   000000D8   0xE1A00004         MOV      R0,R4
+   \   000000DC   0x........         BL       EccNandFlash_ReadPage
+    621                  if (error) {
+   \   000000E0   0xE3500000         CMP      R0,#+0
+   \   000000E4   0x1A000025         BNE      ??ManagedNandFlash_CopyPage_5
+    622          
+    623                      return error;
+    624                  }
+    625          
+    626                  // Write destination block status information in spare
+    627                  NandSpareScheme_WriteExtra(NandFlashModel_GetScheme(MODEL(managed)),
+    628                                             spare,
+    629                                             &(managed->blockStatuses[destBlock]),
+    630                                             4,
+    631                                             0);
+   \   000000E8   0xE1A00004         MOV      R0,R4
+   \   000000EC   0x........         BL       NandFlashModel_GetScheme
+   \   000000F0   0xE3A01000         MOV      R1,#+0
+   \   000000F4   0xE58D1000         STR      R1,[SP, #+0]
+   \   000000F8   0xE3A03004         MOV      R3,#+4
+   \   000000FC   0xE0841105         ADD      R1,R4,R5, LSL #+2
+   \   00000100   0xE2812030         ADD      R2,R1,#+48
+   \   00000104   0xE28D1004         ADD      R1,SP,#+4
+   \   00000108   0x........         BL       NandSpareScheme_WriteExtra
+    632          
+    633                  // Write page
+    634                  error = RawNandFlash_WritePage(RAW(managed),
+    635                                                 managed->baseBlock + destBlock,
+    636                                                 destPage,
+    637                                                 data, spare);
+   \   0000010C   0xE28D0004         ADD      R0,SP,#+4
+   \   00000110   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000114   0xE28D3044         ADD      R3,SP,#+68
+   \   00000118   0xE3A02000         MOV      R2,#+0
+   \   0000011C   0xE3A00030         MOV      R0,#+48
+   \   00000120   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000124   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000128   0xE0851000         ADD      R1,R5,R0
+   \   0000012C   0xE1A01801         LSL      R1,R1,#+16
+   \   00000130   0xE1A01821         LSR      R1,R1,#+16
+   \   00000134   0xE1A00004         MOV      R0,R4
+   \   00000138   0x........         BL       RawNandFlash_WritePage
+    638                  if (error) {
+    639          
+    640                      return error;
+   \   0000013C   0xEA00000F         B        ??ManagedNandFlash_CopyPage_5
+    641                  }
+    642              }
+    643              // Otherwise, a normal copy can be done
+    644              else {
+    645          
+    646                  return RawNandFlash_CopyPage(RAW(managed),
+    647                                               managed->baseBlock + sourceBlock,
+    648                                               sourcePage,
+    649                                               managed->baseBlock + destBlock,
+    650                                               destPage);
+   \                     ??ManagedNandFlash_CopyPage_6:
+   \   00000140   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000144   0xE3A00030         MOV      R0,#+48
+   \   00000148   0xE3800D40         ORR      R0,R0,#0x1000
+   \   0000014C   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000150   0xE0853000         ADD      R3,R5,R0
+   \   00000154   0xE1A03803         LSL      R3,R3,#+16
+   \   00000158   0xE1A03823         LSR      R3,R3,#+16
+   \   0000015C   0xE1A02007         MOV      R2,R7
+   \   00000160   0xE3A00030         MOV      R0,#+48
+   \   00000164   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000168   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000016C   0xE0861000         ADD      R1,R6,R0
+   \   00000170   0xE1A01801         LSL      R1,R1,#+16
+   \   00000174   0xE1A01821         LSR      R1,R1,#+16
+   \   00000178   0xE1A00004         MOV      R0,R4
+   \   0000017C   0x........         BL       RawNandFlash_CopyPage
+   \                     ??ManagedNandFlash_CopyPage_5:
+   \   00000180   0xE28DD048         ADD      SP,SP,#+72       ;; stack cleaning
+   \   00000184   0xE28DDE80         ADD      SP,SP,#+2048
+   \   00000188   0xE8BD41F0         POP      {R4-R8,LR}
+   \   0000018C   0xE12FFF1E         BX       LR               ;; return
+    651              }
+    652          
+    653              return 0;
+    654          }
+    655          
+    656          //------------------------------------------------------------------------------
+    657          /// Copies the data from a whole block to another block on a nandflash. Both
+    658          /// blocks must be LIVE.
+    659          /// Returns 0 if successful; otherwise returns NandCommon_ERROR_WRONGSTATUS if
+    660          /// at least one of the blocks is not free, or a NandCommon_ERROR_xxx code.
+    661          /// \param managed  Pointer to a ManagedNandFlash instance.
+    662          /// \param sourceBlock  Source block number.
+    663          /// \param destBlock  Destination block number.
+    664          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    665          unsigned char ManagedNandFlash_CopyBlock(
+    666              const struct ManagedNandFlash *managed,
+    667              unsigned short sourceBlock,
+    668              unsigned short destBlock)
+    669          {
+   \                     ManagedNandFlash_CopyBlock:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    670              unsigned short numPages = NandFlashModel_GetBlockSizeInPages(MODEL(managed));
+   \   00000010   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000014   0xE1A07000         MOV      R7,R0
+    671              unsigned char error;
+    672              unsigned short page;
+    673          
+    674              ASSERT(sourceBlock != destBlock,
+    675                     "ManagedNandFlash_CopyBlock: Source block must be different from dest. block\n\r");
+   \   00000018   0xE1550006         CMP      R5,R6
+   \   0000001C   0x1A000004         BNE      ??ManagedNandFlash_CopyBlock_0
+   \   00000020   0x........         LDR      R0,??DataTable10
+   \   00000024   0x........         BL       printf
+   \   00000028   0x........         LDR      R0,??DataTable10_31
+   \   0000002C   0x........         BL       printf
+   \                     ??ManagedNandFlash_CopyBlock_1:
+   \   00000030   0xEAFFFFFE         B        ??ManagedNandFlash_CopyBlock_1
+    676          
+    677              TRACE_INFO("ManagedNandFlash_CopyBlock(B#%d->B#%d)\n\r",
+    678                        sourceBlock, destBlock);
+   \                     ??ManagedNandFlash_CopyBlock_0:
+   \   00000034   0xE1A02006         MOV      R2,R6
+   \   00000038   0xE1A01005         MOV      R1,R5
+   \   0000003C   0x........         LDR      R0,??DataTable10_32
+   \   00000040   0x........         BL       printf
+    679          
+    680              // Copy all pages
+    681              for (page=0; page < numPages; page++) {
+   \   00000044   0xE3A08000         MOV      R8,#+0
+   \   00000048   0xE3570001         CMP      R7,#+1
+   \   0000004C   0xBA000012         BLT      ??ManagedNandFlash_CopyBlock_2
+    682          
+    683                  error = ManagedNandFlash_CopyPage(managed,
+    684                                                    sourceBlock,
+    685                                                    page,
+    686                                                    destBlock,
+    687                                                    page);
+   \                     ??ManagedNandFlash_CopyBlock_3:
+   \   00000050   0xE1A08808         LSL      R8,R8,#+16
+   \   00000054   0xE1A08828         LSR      R8,R8,#+16
+   \   00000058   0xE58D8000         STR      R8,[SP, #+0]
+   \   0000005C   0xE1A03006         MOV      R3,R6
+   \   00000060   0xE1A02008         MOV      R2,R8
+   \   00000064   0xE1A01005         MOV      R1,R5
+   \   00000068   0xE1A00004         MOV      R0,R4
+   \   0000006C   0x........         BL       ManagedNandFlash_CopyPage
+   \   00000070   0xE1B09000         MOVS     R9,R0
+    688                  if (error) {
+   \   00000074   0x0A000004         BEQ      ??ManagedNandFlash_CopyBlock_4
+    689          
+    690                      TRACE_ERROR("ManagedNandFlash_CopyPage: Failed to copy page %d\n\r", page);
+   \   00000078   0xE1A01008         MOV      R1,R8
+   \   0000007C   0x........         LDR      R0,??DataTable10_33
+   \   00000080   0x........         BL       printf
+    691                      return error;
+   \   00000084   0xE1A00009         MOV      R0,R9
+   \   00000088   0xEA000004         B        ??ManagedNandFlash_CopyBlock_5
+    692                  }
+    693              }
+   \                     ??ManagedNandFlash_CopyBlock_4:
+   \   0000008C   0xE2888001         ADD      R8,R8,#+1
+   \   00000090   0xE1A00808         MOV      R0,R8, LSL #+16
+   \   00000094   0xE1570820         CMP      R7,R0, LSR #+16
+   \   00000098   0xCAFFFFEC         BGT      ??ManagedNandFlash_CopyBlock_3
+    694          
+    695              return 0;
+   \                     ??ManagedNandFlash_CopyBlock_2:
+   \   0000009C   0xE3A00000         MOV      R0,#+0
+   \                     ??ManagedNandFlash_CopyBlock_5:
+   \   000000A0   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   000000A4   0xE12FFF1E         BX       LR               ;; return
+    696          }
+    697          
+    698          //------------------------------------------------------------------------------
+    699          /// Erases all the blocks which are currently marked as DIRTY.
+    700          /// Returns 0 if successful; otherwise, returns a NandCommon_ERROR code.
+    701          /// \param managed  Pointer to a ManagedNandFlash instance.
+    702          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    703          unsigned char ManagedNandFlash_EraseDirtyBlocks(
+    704              struct ManagedNandFlash *managed)
+    705          {
+   \                     ManagedNandFlash_EraseDirtyBlocks:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    706              unsigned int i;
+    707              unsigned char error;
+    708          
+    709              // Erase all dirty blocks
+    710              for (i=0; i < managed->sizeInBlocks; i++) {
+   \   00000008   0xE3A05000         MOV      R5,#+0
+   \   0000000C   0xE1A06004         MOV      R6,R4
+   \   00000010   0xEA000001         B        ??ManagedNandFlash_EraseDirtyBlocks_0
+   \                     ??ManagedNandFlash_EraseDirtyBlocks_1:
+   \   00000014   0xE2855001         ADD      R5,R5,#+1
+   \   00000018   0xE2866004         ADD      R6,R6,#+4
+   \                     ??ManagedNandFlash_EraseDirtyBlocks_0:
+   \   0000001C   0xE3A00032         MOV      R0,#+50
+   \   00000020   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000024   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000028   0xE1550000         CMP      R5,R0
+   \   0000002C   0x2A00000A         BCS      ??ManagedNandFlash_EraseDirtyBlocks_2
+    711          
+    712                  if (managed->blockStatuses[i].status == NandBlockStatus_DIRTY) {
+   \   00000030   0xE5D60030         LDRB     R0,[R6, #+48]
+   \   00000034   0xE200000F         AND      R0,R0,#0xF
+   \   00000038   0xE3500008         CMP      R0,#+8
+   \   0000003C   0x1AFFFFF4         BNE      ??ManagedNandFlash_EraseDirtyBlocks_1
+    713          
+    714                      error = ManagedNandFlash_EraseBlock(managed, i);
+   \   00000040   0xE1A01805         LSL      R1,R5,#+16
+   \   00000044   0xE1A01821         LSR      R1,R1,#+16
+   \   00000048   0xE1A00004         MOV      R0,R4
+   \   0000004C   0x........         BL       ManagedNandFlash_EraseBlock
+    715                      if (error) {
+   \   00000050   0xE3500000         CMP      R0,#+0
+   \   00000054   0x0AFFFFEE         BEQ      ??ManagedNandFlash_EraseDirtyBlocks_1
+    716          
+    717                          return error;
+   \   00000058   0xEA000000         B        ??ManagedNandFlash_EraseDirtyBlocks_3
+    718                      }
+    719                  }
+    720              }
+    721          
+    722              return 0;
+   \                     ??ManagedNandFlash_EraseDirtyBlocks_2:
+   \   0000005C   0xE3A00000         MOV      R0,#+0
+   \                     ??ManagedNandFlash_EraseDirtyBlocks_3:
+   \   00000060   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000064   0xE12FFF1E         BX       LR               ;; return
+    723          }
+    724          
+    725          //------------------------------------------------------------------------------
+    726          /// Looks for the youngest block having the desired status among the blocks
+    727          /// of a managed nandflash. If a block is found, its index is stored inside
+    728          /// the provided variable (if pointer is not 0).
+    729          /// Returns 0 if a block has been found; otherwise returns either
+    730          /// NandCommon_ERROR_NOBLOCKFOUND if there are no blocks having the desired
+    731          /// status.
+    732          /// \param managed  Pointer to a ManagedNandFlash instance.
+    733          /// \param block  Pointer to the block number variable, based on managed area.
+    734          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    735          unsigned char ManagedNandFlash_FindYoungestBlock(
+    736              const struct ManagedNandFlash *managed,
+    737              unsigned char status,
+    738              unsigned short *block)
+    739          {
+   \                     ManagedNandFlash_FindYoungestBlock:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+    740              unsigned char found = 0;
+   \   00000004   0xE3A0E000         MOV      LR,#+0
+    741              unsigned short bestBlock = 0;
+   \   00000008   0xE3A04000         MOV      R4,#+0
+    742              unsigned int i;
+    743          
+    744              // Go through the block array
+    745              for (i=0; i < managed->sizeInBlocks; i++) {
+   \   0000000C   0xE3A03000         MOV      R3,#+0
+   \   00000010   0xE1A0C000         MOV      R12,R0
+   \   00000014   0xE3A05032         MOV      R5,#+50
+   \   00000018   0xE3855D40         ORR      R5,R5,#0x1000
+   \   0000001C   0xE19550B0         LDRH     R5,[R5, +R0]
+   \   00000020   0xE3550000         CMP      R5,#+0
+   \   00000024   0x0A00001C         BEQ      ??ManagedNandFlash_FindYoungestBlock_0
+    746          
+    747                  // Check status
+    748                  if (managed->blockStatuses[i].status == status) {
+   \                     ??ManagedNandFlash_FindYoungestBlock_1:
+   \   00000028   0xE5DC5030         LDRB     R5,[R12, #+48]
+   \   0000002C   0xE205500F         AND      R5,R5,#0xF
+   \   00000030   0xE1550001         CMP      R5,R1
+   \   00000034   0x1A00000B         BNE      ??ManagedNandFlash_FindYoungestBlock_2
+    749          
+    750                      // If no block was found, i becomes the best block
+    751                      if (!found) {
+   \   00000038   0xE35E0000         CMP      LR,#+0
+    752          
+    753                          found = 1;
+   \   0000003C   0x03A0E001         MOVEQ    LR,#+1
+    754                          bestBlock = i;
+   \   00000040   0x0A000007         BEQ      ??ManagedNandFlash_FindYoungestBlock_3
+    755                      }
+    756                      // Compare the erase counts otherwise
+    757                      else if (managed->blockStatuses[i].eraseCount
+    758                               < managed->blockStatuses[bestBlock].eraseCount) {
+   \   00000044   0xE59C5030         LDR      R5,[R12, #+48]
+   \   00000048   0xE1A05225         LSR      R5,R5,#+4
+   \   0000004C   0xE1A06804         LSL      R6,R4,#+16
+   \   00000050   0xE1A06826         LSR      R6,R6,#+16
+   \   00000054   0xE0806106         ADD      R6,R0,R6, LSL #+2
+   \   00000058   0xE5966030         LDR      R6,[R6, #+48]
+   \   0000005C   0xE1550226         CMP      R5,R6, LSR #+4
+   \   00000060   0xAA000000         BGE      ??ManagedNandFlash_FindYoungestBlock_2
+    759          
+    760                          bestBlock = i;
+   \                     ??ManagedNandFlash_FindYoungestBlock_3:
+   \   00000064   0xE1A04003         MOV      R4,R3
+    761                      }
+    762                  }
+    763              }
+   \                     ??ManagedNandFlash_FindYoungestBlock_2:
+   \   00000068   0xE2833001         ADD      R3,R3,#+1
+   \   0000006C   0xE28CC004         ADD      R12,R12,#+4
+   \   00000070   0xE3A05032         MOV      R5,#+50
+   \   00000074   0xE3855D40         ORR      R5,R5,#0x1000
+   \   00000078   0xE19550B0         LDRH     R5,[R5, +R0]
+   \   0000007C   0xE1530005         CMP      R3,R5
+   \   00000080   0x3AFFFFE8         BCC      ??ManagedNandFlash_FindYoungestBlock_1
+    764          
+    765              if (found) {
+   \   00000084   0xE35E0000         CMP      LR,#+0
+   \   00000088   0x0A000003         BEQ      ??ManagedNandFlash_FindYoungestBlock_0
+    766          
+    767                  if (block) {
+   \   0000008C   0xE3520000         CMP      R2,#+0
+    768          
+    769                      *block = bestBlock;
+   \   00000090   0x11C240B0         STRHNE   R4,[R2, #+0]
+    770                  }
+    771                  return 0;
+   \   00000094   0xE3A00000         MOV      R0,#+0
+   \   00000098   0xEA000000         B        ??ManagedNandFlash_FindYoungestBlock_4
+    772              }
+    773              else {
+    774          
+    775                  return NandCommon_ERROR_NOBLOCKFOUND;
+   \                     ??ManagedNandFlash_FindYoungestBlock_0:
+   \   0000009C   0xE3A00004         MOV      R0,#+4
+   \                     ??ManagedNandFlash_FindYoungestBlock_4:
+   \   000000A0   0xE8BD4070         POP      {R4-R6,LR}
+   \   000000A4   0xE12FFF1E         BX       LR               ;; return
+    776              }
+    777          }
+    778          
+    779          //------------------------------------------------------------------------------
+    780          /// Counts and returns the number of blocks having the given status in a
+    781          /// managed nandflash.
+    782          /// \param managed  Pointer to a ManagedNandFlash instance.
+    783          /// \param status  Desired block status.
+    784          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    785          unsigned short ManagedNandFlash_CountBlocks(
+    786              const struct ManagedNandFlash *managed,
+    787              unsigned char status)
+    788          {
+   \                     ManagedNandFlash_CountBlocks:
+   \   00000000   0xE92D4000         PUSH     {LR}
+    789              unsigned int i;
+    790              unsigned short count = 0;
+   \   00000004   0xE3A02000         MOV      R2,#+0
+    791          
+    792              // Examine each block
+    793              for (i=0; i < managed->sizeInBlocks; i++) {
+   \   00000008   0xE3A03000         MOV      R3,#+0
+   \   0000000C   0xE1A0C000         MOV      R12,R0
+   \   00000010   0xE3A0E032         MOV      LR,#+50
+   \   00000014   0xE38EED40         ORR      LR,LR,#0x1000
+   \   00000018   0xE19EE0B0         LDRH     LR,[LR, +R0]
+   \   0000001C   0xE35E0000         CMP      LR,#+0
+   \   00000020   0x0A00000A         BEQ      ??ManagedNandFlash_CountBlocks_0
+    794          
+    795                  if (managed->blockStatuses[i].status == status) {
+   \                     ??ManagedNandFlash_CountBlocks_1:
+   \   00000024   0xE5DCE030         LDRB     LR,[R12, #+48]
+   \   00000028   0xE20EE00F         AND      LR,LR,#0xF
+   \   0000002C   0xE15E0001         CMP      LR,R1
+    796          
+    797                      count++;
+   \   00000030   0x02822001         ADDEQ    R2,R2,#+1
+    798                  }
+    799              }
+   \   00000034   0xE2833001         ADD      R3,R3,#+1
+   \   00000038   0xE28CC004         ADD      R12,R12,#+4
+   \   0000003C   0xE3A0E032         MOV      LR,#+50
+   \   00000040   0xE38EED40         ORR      LR,LR,#0x1000
+   \   00000044   0xE19EE0B0         LDRH     LR,[LR, +R0]
+   \   00000048   0xE153000E         CMP      R3,LR
+   \   0000004C   0x3AFFFFF4         BCC      ??ManagedNandFlash_CountBlocks_1
+    800          
+    801              return count;
+   \                     ??ManagedNandFlash_CountBlocks_0:
+   \   00000050   0xE1A00802         LSL      R0,R2,#+16
+   \   00000054   0xE1A00820         LSR      R0,R0,#+16
+   \   00000058   0xE8BD4000         POP      {LR}
+   \   0000005C   0xE12FFF1E         BX       LR               ;; return
+    802          }
+    803          
+    804          //------------------------------------------------------------------------------
+    805          /// Returns the number of available blocks in a managed nandflash.
+    806          /// \param managed  Pointer to a ManagedNandFlash instance.
+    807          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    808          unsigned short ManagedNandFlash_GetDeviceSizeInBlocks(
+    809              const struct ManagedNandFlash *managed)
+    810          {
+    811              return managed->sizeInBlocks;
+   \                     ManagedNandFlash_GetDeviceSizeInBlocks:
+   \   00000000   0xE3A01032         MOV      R1,#+50
+   \   00000004   0xE3811D40         ORR      R1,R1,#0x1000
+   \   00000008   0xE19100B0         LDRH     R0,[R1, +R0]
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    812          }
+    813          
+    814          //------------------------------------------------------------------------------
+    815          /// Erase all blocks in the managed area of nand flash.
+    816          /// \param managed  Pointer to a ManagedNandFlash instance.
+    817          /// \param level    Erase level.
+    818          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    819          unsigned char ManagedNandFlash_EraseAll(struct ManagedNandFlash *managed,
+    820                                                  unsigned char level)
+    821          {
+   \                     ManagedNandFlash_EraseAll:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    822              unsigned int i;
+    823              unsigned char error = 0;
+   \   00000008   0xE3A07000         MOV      R7,#+0
+    824          
+    825              if (level == NandEraseFULL) {
+   \   0000000C   0xE3510002         CMP      R1,#+2
+   \   00000010   0x1A000028         BNE      ??ManagedNandFlash_EraseAll_0
+    826                  for (i=0; i < managed->sizeInBlocks; i++) {
+   \   00000014   0xE3A05000         MOV      R5,#+0
+   \   00000018   0xE1A06004         MOV      R6,R4
+   \   0000001C   0xE3A00032         MOV      R0,#+50
+   \   00000020   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000024   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000028   0xE3500000         CMP      R0,#+0
+   \   0000002C   0x0A00005B         BEQ      ??ManagedNandFlash_EraseAll_1
+    827                      error = RawNandFlash_EraseBlock(RAW(managed),
+    828                                                      managed->baseBlock + i);
+   \                     ??ManagedNandFlash_EraseAll_2:
+   \   00000030   0xE3A00030         MOV      R0,#+48
+   \   00000034   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000038   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000003C   0xE0851000         ADD      R1,R5,R0
+   \   00000040   0xE1A01801         LSL      R1,R1,#+16
+   \   00000044   0xE1A01821         LSR      R1,R1,#+16
+   \   00000048   0xE1A00004         MOV      R0,R4
+   \   0000004C   0x........         BL       RawNandFlash_EraseBlock
+   \   00000050   0xE1A07000         MOV      R7,R0
+    829                      // Reset block status
+    830                      managed->blockStatuses[i].eraseCount = 0;
+   \   00000054   0xE5D60030         LDRB     R0,[R6, #+48]
+   \   00000058   0xE200000F         AND      R0,R0,#0xF
+   \   0000005C   0xE5860030         STR      R0,[R6, #+48]
+    831                      if (error) {
+   \   00000060   0xE3570000         CMP      R7,#+0
+   \   00000064   0x0A000009         BEQ      ??ManagedNandFlash_EraseAll_3
+    832                          TRACE_WARNING("Managed_FullErase: %d(%d)\n\r",
+    833                                        i, managed->baseBlock + i);
+                                               ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                                i, managed->baseBlock + i);
+                                   ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",833  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+   \   00000068   0xE3A00030         MOV      R0,#+48
+   \   0000006C   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000070   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000074   0xE0852000         ADD      R2,R5,R0
+   \   00000078   0xE1A01005         MOV      R1,R5
+   \   0000007C   0x........         LDR      R0,??DataTable10_34
+   \   00000080   0x........         BL       printf
+    834                          managed->blockStatuses[i].status     = NandBlockStatus_BAD;
+   \   00000084   0xE5960030         LDR      R0,[R6, #+48]
+   \   00000088   0xE3C0000F         BIC      R0,R0,#0xF
+   \   0000008C   0xEA000000         B        ??ManagedNandFlash_EraseAll_4
+    835                          continue;
+    836                      }
+    837                      managed->blockStatuses[i].status     = NandBlockStatus_FREE;
+   \                     ??ManagedNandFlash_EraseAll_3:
+   \   00000090   0xE3A0000E         MOV      R0,#+14
+   \                     ??ManagedNandFlash_EraseAll_4:
+   \   00000094   0xE5860030         STR      R0,[R6, #+48]
+    838                  }
+   \   00000098   0xE2855001         ADD      R5,R5,#+1
+   \   0000009C   0xE2866004         ADD      R6,R6,#+4
+   \   000000A0   0xE3A00032         MOV      R0,#+50
+   \   000000A4   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000A8   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   000000AC   0xE1550000         CMP      R5,R0
+   \   000000B0   0x3AFFFFDE         BCC      ??ManagedNandFlash_EraseAll_2
+   \   000000B4   0xEA000039         B        ??ManagedNandFlash_EraseAll_1
+    839              }
+    840              else if (level == NandEraseDATA) {
+   \                     ??ManagedNandFlash_EraseAll_0:
+   \   000000B8   0xE3510001         CMP      R1,#+1
+   \   000000BC   0xE1A05007         MOV      R5,R7
+   \   000000C0   0x1A000018         BNE      ??ManagedNandFlash_EraseAll_5
+    841                  for (i=0; i < managed->sizeInBlocks; i++) {
+   \   000000C4   0xE3A00032         MOV      R0,#+50
+   \   000000C8   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000CC   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   000000D0   0xE3500000         CMP      R0,#+0
+   \   000000D4   0x0A000031         BEQ      ??ManagedNandFlash_EraseAll_1
+    842                      error = ManagedNandFlash_EraseBlock(managed, i);
+   \                     ??ManagedNandFlash_EraseAll_6:
+   \   000000D8   0xE1A01805         LSL      R1,R5,#+16
+   \   000000DC   0xE1A01821         LSR      R1,R1,#+16
+   \   000000E0   0xE1A00004         MOV      R0,R4
+   \   000000E4   0x........         BL       ManagedNandFlash_EraseBlock
+   \   000000E8   0xE1B07000         MOVS     R7,R0
+    843                      if (error) {
+   \   000000EC   0x0A000006         BEQ      ??ManagedNandFlash_EraseAll_7
+    844                          TRACE_WARNING("Managed_DataErase: %d(%d)\n\r",
+    845                                        i, managed->baseBlock + i);
+                                               ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                                i, managed->baseBlock + i);
+                                   ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",845  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+   \   000000F0   0xE3A00030         MOV      R0,#+48
+   \   000000F4   0xE3800D40         ORR      R0,R0,#0x1000
+   \   000000F8   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   000000FC   0xE0852000         ADD      R2,R5,R0
+   \   00000100   0xE1A01005         MOV      R1,R5
+   \   00000104   0x........         LDR      R0,??DataTable10_35
+   \   00000108   0x........         BL       printf
+    846                      }
+    847                  }
+   \                     ??ManagedNandFlash_EraseAll_7:
+   \   0000010C   0xE2855001         ADD      R5,R5,#+1
+   \   00000110   0xE3A00032         MOV      R0,#+50
+   \   00000114   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000118   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   0000011C   0xE1550000         CMP      R5,R0
+   \   00000120   0x3AFFFFEC         BCC      ??ManagedNandFlash_EraseAll_6
+   \   00000124   0xEA00001D         B        ??ManagedNandFlash_EraseAll_1
+    848              }
+    849              else {
+    850                  for (i=0; i < managed->sizeInBlocks; i++) {
+   \                     ??ManagedNandFlash_EraseAll_5:
+   \   00000128   0xE1A06004         MOV      R6,R4
+   \   0000012C   0xE3A00032         MOV      R0,#+50
+   \   00000130   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000134   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000138   0xE3500000         CMP      R0,#+0
+   \   0000013C   0x0A000017         BEQ      ??ManagedNandFlash_EraseAll_1
+    851                      if (managed->blockStatuses[i].status == NandBlockStatus_DIRTY) {
+   \                     ??ManagedNandFlash_EraseAll_8:
+   \   00000140   0xE5D60030         LDRB     R0,[R6, #+48]
+   \   00000144   0xE200000F         AND      R0,R0,#0xF
+   \   00000148   0xE3500008         CMP      R0,#+8
+   \   0000014C   0x1A00000C         BNE      ??ManagedNandFlash_EraseAll_9
+    852                          error = ManagedNandFlash_EraseBlock(managed, i);
+   \   00000150   0xE1A01805         LSL      R1,R5,#+16
+   \   00000154   0xE1A01821         LSR      R1,R1,#+16
+   \   00000158   0xE1A00004         MOV      R0,R4
+   \   0000015C   0x........         BL       ManagedNandFlash_EraseBlock
+   \   00000160   0xE1B07000         MOVS     R7,R0
+    853                          if (error) {
+   \   00000164   0x0A000006         BEQ      ??ManagedNandFlash_EraseAll_9
+    854                              TRACE_WARNING("Managed_DirtyErase: %d(%d)\n\r",
+    855                                            i, managed->baseBlock + i);
+                                                   ^
+Remark[Pe181]: argument is incompatible with corresponding format string
+          conversion
+
+                                    i, managed->baseBlock + i);
+                                       ^
+"C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\ManagedNandFlash.c",855  Remark[Pe181]: 
+          argument is incompatible with corresponding format string conversion
+   \   00000168   0xE3A00030         MOV      R0,#+48
+   \   0000016C   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000170   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000174   0xE0852000         ADD      R2,R5,R0
+   \   00000178   0xE1A01005         MOV      R1,R5
+   \   0000017C   0x........         LDR      R0,??DataTable10_36
+   \   00000180   0x........         BL       printf
+    856                          }
+    857                      }
+    858                  }
+   \                     ??ManagedNandFlash_EraseAll_9:
+   \   00000184   0xE2855001         ADD      R5,R5,#+1
+   \   00000188   0xE2866004         ADD      R6,R6,#+4
+   \   0000018C   0xE3A00032         MOV      R0,#+50
+   \   00000190   0xE3800D40         ORR      R0,R0,#0x1000
+   \   00000194   0xE19000B4         LDRH     R0,[R0, +R4]
+   \   00000198   0xE1550000         CMP      R5,R0
+   \   0000019C   0x3AFFFFE7         BCC      ??ManagedNandFlash_EraseAll_8
+    859              }
+    860              
+    861              return error;
+   \                     ??ManagedNandFlash_EraseAll_1:
+   \   000001A0   0xE1A00007         MOV      R0,R7
+   \   000001A4   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   000001A8   0xE12FFF1E         BX       LR               ;; return
+    862          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_1:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_IsDe...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_2:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_IsDe...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_3:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_Chec...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_4:
+   \   00000000   0x........         DC32     `?<Constant "-E- CheckBlock: Canno...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_5:
+   \   00000000   0x........         DC32     `?<Constant "-E- CheckBlock: Canno...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_6:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_Writ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_7:
+   \   00000000   0x........         DC32     `?<Constant "-I- Managed NF area: ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_8:
+   \   00000000   0x........         DC32     `?<Constant "-E- Out of Maxmized M...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_9:
+   \   00000000   0x........         DC32     `?<Constant "-I- Change NandCommon...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_10:
+   \   00000000   0x........         DC32     `?<Constant "-W- Device is virgin,...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_11:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_12:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_13:
+   \   00000000   0x........         DC32     `?<Constant "-I- Managed, retrievi...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_14:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_2`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_15:
+   \   00000000   0x........         DC32     `?<Constant "Block #%d(%d) is not ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_16:
+   \   00000000   0x........         DC32     `?<Constant "|--------|-----------...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_17:
+   \   00000000   0x........         DC32     `?<Constant "|  Wear  |   Count   ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_18:
+   \   00000000   0x........         DC32     `?<Constant "|  %4d  |  %8d  |  %4...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_19:
+   \   00000000   0x........         DC32     `?<Constant "-I- ManagedNandFlash_...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_20:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_3`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_21:
+   \   00000000   0x........         DC32     `?<Constant "-I- ManagedNandFlash_...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_22:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_4`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_23:
+   \   00000000   0x........         DC32     `?<Constant "-I- ManagedNandFlash_...">_2`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_24:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_5`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_25:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_6`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_26:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_7`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_27:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_Copy...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_28:
+   \   00000000   0x........         DC32     `?<Constant "-I- ManagedNandFlash_...">_3`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_29:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_8`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_30:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_9`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_31:
+   \   00000000   0x........         DC32     `?<Constant "ManagedNandFlash_Copy...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_32:
+   \   00000000   0x........         DC32     `?<Constant "-I- ManagedNandFlash_...">_4`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_33:
+   \   00000000   0x........         DC32     `?<Constant "-E- ManagedNandFlash_...">_10`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_34:
+   \   00000000   0x........         DC32     `?<Constant "-W- Managed_FullErase...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_35:
+   \   00000000   0x........         DC32     `?<Constant "-W- Managed_DataErase...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable10_36:
+   \   00000000   0x........         DC32     `?<Constant "-W- Managed_DirtyEras...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_IsDe...">`:
+   \   00000000   0x4D 0x61          DC8 "ManagedNandFlash_IsDeviceVirgin: spare\012\015"
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x49    
+   \              0x73 0x44    
+   \              0x65 0x76    
+   \              0x69 0x63    
+   \              0x65 0x56    
+   \              0x69 0x72    
+   \              0x67 0x69    
+   \              0x6E 0x3A    
+   \              0x20 0x73    
+   \              0x70 0x61    
+   \              0x72 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_IsDe...">_1`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 6EH, 61H, 67H, 65H, 64H, 4EH
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x49          DC8 5FH, 49H, 73H, 44H, 65H, 76H, 69H, 63H
+   \              0x73 0x44    
+   \              0x65 0x76    
+   \              0x69 0x63    
+   \   00000018   0x65 0x56          DC8 65H, 56H, 69H, 72H, 67H, 69H, 6EH, 3AH
+   \              0x69 0x72    
+   \              0x67 0x69    
+   \              0x6E 0x3A    
+   \   00000020   0x20 0x46          DC8 20H, 46H, 61H, 69H, 6CH, 65H, 64H, 20H
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \   00000028   0x74 0x6F          DC8 74H, 6FH, 20H, 72H, 65H, 61H, 64H, 20H
+   \              0x20 0x72    
+   \              0x65 0x61    
+   \              0x64 0x20    
+   \   00000030   0x70 0x61          DC8 70H, 61H, 67H, 65H, 20H, 23H, 30H, 0AH
+   \              0x67 0x65    
+   \              0x20 0x23    
+   \              0x30 0x0A    
+   \   00000038   0x0D 0x00          DC8 0DH, 0
+   \   0000003A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_Chec...">`:
+   \   00000000   0x4D 0x61          DC8 "ManagedNandFlash_CheckBlock: spare\012\015"
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x68 0x65    
+   \              0x63 0x6B    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x3A    
+   \              0x20 0x73    
+   \              0x70 0x61    
+   \              0x72 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000025   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CheckBlock: Canno...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 43H, 68H, 65H, 63H
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x65 0x63    
+   \   00000008   0x6B 0x42          DC8 6BH, 42H, 6CH, 6FH, 63H, 6BH, 3AH, 20H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \   00000010   0x43 0x61          DC8 43H, 61H, 6EH, 6EH, 6FH, 74H, 20H, 72H
+   \              0x6E 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x72    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 64H, 20H, 70H, 61H, 67H, 65H
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000020   0x20 0x23          DC8 20H, 23H, 30H, 20H, 6FH, 66H, 20H, 62H
+   \              0x30 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x62    
+   \   00000028   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 23H, 25H, 64H
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CheckBlock: Canno...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 43H, 68H, 65H, 63H
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x65 0x63    
+   \   00000008   0x6B 0x42          DC8 6BH, 42H, 6CH, 6FH, 63H, 6BH, 3AH, 20H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \   00000010   0x43 0x61          DC8 43H, 61H, 6EH, 6EH, 6FH, 74H, 20H, 72H
+   \              0x6E 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x72    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 64H, 20H, 70H, 61H, 67H, 65H
+   \              0x64 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000020   0x20 0x23          DC8 20H, 23H, 31H, 20H, 6FH, 66H, 20H, 62H
+   \              0x31 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x62    
+   \   00000028   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 23H, 25H, 64H
+   \              0x63 0x6B    
+   \              0x20 0x23    
+   \              0x25 0x64    
+   \   00000030   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000033   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_Writ...">`:
+   \   00000000   0x4D 0x61          DC8 "ManagedNandFlash_WriteBlockStatus: spare\012\015"
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x53    
+   \              0x74 0x61    
+   \              0x74 0x75    
+   \              0x73 0x3A    
+   \              0x20 0x73    
+   \              0x70 0x61    
+   \              0x72 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Managed NF area: ...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Managed NF area: %d + %d\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x20    
+   \              0x4E 0x46    
+   \              0x20 0x61    
+   \              0x72 0x65    
+   \              0x61 0x3A    
+   \              0x20 0x25    
+   \              0x64 0x20    
+   \              0x2B 0x20    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- Out of Maxmized M...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- Out of Maxmized Managed Size: %d > %d\012\015"
+   \              0x2D 0x20    
+   \              0x4F 0x75    
+   \              0x74 0x20    
+   \              0x6F 0x66    
+   \              0x20 0x4D    
+   \              0x61 0x78    
+   \              0x6D 0x69    
+   \              0x7A 0x65    
+   \              0x64 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x20    
+   \              0x53 0x69    
+   \              0x7A 0x65    
+   \              0x3A 0x20    
+   \              0x25 0x64    
+   \              0x20 0x3E    
+   \              0x20 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Change NandCommon...">`:
+   \   00000000   0x2D 0x49          DC8 2DH, 49H, 2DH, 20H, 43H, 68H, 61H, 6EH
+   \              0x2D 0x20    
+   \              0x43 0x68    
+   \              0x61 0x6E    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 20H, 4EH, 61H, 6EH, 64H, 43H
+   \              0x20 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x43    
+   \   00000010   0x6F 0x6D          DC8 6FH, 6DH, 6DH, 6FH, 6EH, 5FH, 4DH, 41H
+   \              0x6D 0x6F    
+   \              0x6E 0x5F    
+   \              0x4D 0x41    
+   \   00000018   0x58 0x4E          DC8 58H, 4EH, 55H, 4DH, 42H, 4CH, 4FH, 43H
+   \              0x55 0x4D    
+   \              0x42 0x4C    
+   \              0x4F 0x43    
+   \   00000020   0x4B 0x53          DC8 4BH, 53H, 20H, 6FH, 72H, 20H, 73H, 69H
+   \              0x20 0x6F    
+   \              0x72 0x20    
+   \              0x73 0x69    
+   \   00000028   0x7A 0x65          DC8 7AH, 65H, 49H, 6EH, 42H, 6CH, 6FH, 63H
+   \              0x49 0x6E    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000030   0x6B 0x73          DC8 6BH, 73H, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000035   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-W- Device is virgin,...">`:
+   \   00000000   0x2D 0x57          DC8 2DH, 57H, 2DH, 20H, 44H, 65H, 76H, 69H
+   \              0x2D 0x20    
+   \              0x44 0x65    
+   \              0x76 0x69    
+   \   00000008   0x63 0x65          DC8 63H, 65H, 20H, 69H, 73H, 20H, 76H, 69H
+   \              0x20 0x69    
+   \              0x73 0x20    
+   \              0x76 0x69    
+   \   00000010   0x72 0x67          DC8 72H, 67H, 69H, 6EH, 2CH, 20H, 64H, 6FH
+   \              0x69 0x6E    
+   \              0x2C 0x20    
+   \              0x64 0x6F    
+   \   00000018   0x69 0x6E          DC8 69H, 6EH, 67H, 20H, 69H, 6EH, 69H, 74H
+   \              0x67 0x20    
+   \              0x69 0x6E    
+   \              0x69 0x74    
+   \   00000020   0x69 0x61          DC8 69H, 61H, 6CH, 20H, 62H, 6CH, 6FH, 63H
+   \              0x6C 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \   00000028   0x6B 0x20          DC8 6BH, 20H, 73H, 63H, 61H, 6EH, 6EH, 69H
+   \              0x73 0x63    
+   \              0x61 0x6E    
+   \              0x6E 0x69    
+   \   00000030   0x6E 0x67          DC8 6EH, 67H, 20H, 2EH, 2EH, 2EH, 0AH, 0DH
+   \              0x20 0x2E    
+   \              0x2E 0x2E    
+   \              0x0A 0x0D    
+   \   00000038   0x00               DC8 0
+   \   00000039   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- ManagedNandFlash_Initialize: WR spare\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x49    
+   \              0x6E 0x69    
+   \              0x74 0x69    
+   \              0x61 0x6C    
+   \              0x69 0x7A    
+   \              0x65 0x3A    
+   \              0x20 0x57    
+   \              0x52 0x20    
+   \              0x73 0x70    
+   \              0x61 0x72    
+   \              0x65 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_1`:
+   \   00000000   0x2D 0x45          DC8 "-E- ManagedNandFlash_Initialize: Scan device\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x49    
+   \              0x6E 0x69    
+   \              0x74 0x69    
+   \              0x61 0x6C    
+   \              0x69 0x7A    
+   \              0x65 0x3A    
+   \              0x20 0x53    
+   \              0x63 0x61    
+   \              0x6E 0x20    
+   \              0x64 0x65    
+   \              0x76 0x69    
+   \              0x63 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- Managed, retrievi...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- Managed, retrieving information ...\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x2C    
+   \              0x20 0x72    
+   \              0x65 0x74    
+   \              0x72 0x69    
+   \              0x65 0x76    
+   \              0x69 0x6E    
+   \              0x67 0x20    
+   \              0x69 0x6E    
+   \              0x66 0x6F    
+   \              0x72 0x6D    
+   \              0x61 0x74    
+   \              0x69 0x6F    
+   \              0x6E 0x20    
+   \              0x2E 0x2E    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   0000002A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_2`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 49H, 6EH, 69H
+   \              0x73 0x68    
+   \              0x5F 0x49    
+   \              0x6E 0x69    
+   \   00000018   0x74 0x69          DC8 74H, 69H, 61H, 6CH, 69H, 7AH, 65H, 3AH
+   \              0x61 0x6C    
+   \              0x69 0x7A    
+   \              0x65 0x3A    
+   \   00000020   0x20 0x52          DC8 20H, 52H, 65H, 61H, 64H, 20H, 62H, 6CH
+   \              0x65 0x61    
+   \              0x64 0x20    
+   \              0x62 0x6C    
+   \   00000028   0x6F 0x63          DC8 6FH, 63H, 6BH, 20H, 23H, 25H, 64H, 28H
+   \              0x6B 0x20    
+   \              0x23 0x25    
+   \              0x64 0x28    
+   \   00000030   0x25 0x64          DC8 25H, 64H, 29H, 0AH, 0DH, 0
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+   \   00000036   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Block #%d(%d) is not ...">`:
+   \   00000000   0x42 0x6C          DC8 "Block #%d(%d) is not managed\012\015"
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x23 0x25    
+   \              0x64 0x28    
+   \              0x25 0x64    
+   \              0x29 0x20    
+   \              0x69 0x73    
+   \              0x20 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x6D    
+   \              0x61 0x6E    
+   \              0x61 0x67    
+   \              0x65 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "|--------|-----------...">`:
+   \   00000000   0x7C 0x2D          DC8 7CH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \   00000008   0x2D 0x7C          DC8 2DH, 7CH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \   00000010   0x2D 0x2D          DC8 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 7CH, 2DH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x7C 0x2D    
+   \   00000018   0x2D 0x2D          DC8 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 7CH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x7C    
+   \   00000020   0x2D 0x2D          DC8 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \   00000028   0x7C 0x2D          DC8 7CH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH, 2DH
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \              0x2D 0x2D    
+   \   00000030   0x2D 0x7C          DC8 2DH, 7CH, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000035   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "|  Wear  |   Count   ...">`:
+   \   00000000   0x7C 0x20          DC8 7CH, 20H, 20H, 57H, 65H, 61H, 72H, 20H
+   \              0x20 0x57    
+   \              0x65 0x61    
+   \              0x72 0x20    
+   \   00000008   0x20 0x7C          DC8 20H, 7CH, 20H, 20H, 20H, 43H, 6FH, 75H
+   \              0x20 0x20    
+   \              0x20 0x43    
+   \              0x6F 0x75    
+   \   00000010   0x6E 0x74          DC8 6EH, 74H, 20H, 20H, 20H, 20H, 7CH, 20H
+   \              0x20 0x20    
+   \              0x20 0x20    
+   \              0x7C 0x20    
+   \   00000018   0x20 0x46          DC8 20H, 46H, 72H, 65H, 65H, 20H, 20H, 7CH
+   \              0x72 0x65    
+   \              0x65 0x20    
+   \              0x20 0x7C    
+   \   00000020   0x20 0x20          DC8 20H, 20H, 4CH, 69H, 76H, 65H, 20H, 20H
+   \              0x4C 0x69    
+   \              0x76 0x65    
+   \              0x20 0x20    
+   \   00000028   0x7C 0x20          DC8 7CH, 20H, 44H, 69H, 72H, 74H, 79H, 20H
+   \              0x44 0x69    
+   \              0x72 0x74    
+   \              0x79 0x20    
+   \   00000030   0x20 0x7C          DC8 20H, 7CH, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000035   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "|  %4d  |  %8d  |  %4...">`:
+   \   00000000   0x7C 0x20          DC8 "|  %4d  |  %8d  |  %4d  |  %4d  |  %4d  |\012\015"
+   \              0x20 0x25    
+   \              0x34 0x64    
+   \              0x20 0x20    
+   \              0x7C 0x20    
+   \              0x20 0x25    
+   \              0x38 0x64    
+   \              0x20 0x20    
+   \              0x7C 0x20    
+   \              0x20 0x25    
+   \              0x34 0x64    
+   \              0x20 0x20    
+   \              0x7C 0x20    
+   \              0x20 0x25    
+   \              0x34 0x64    
+   \              0x20 0x20    
+   \              0x7C 0x20    
+   \              0x20 0x25    
+   \              0x34 0x64    
+   \              0x20 0x20    
+   \              0x7C 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- ManagedNandFlash_...">`:
+   \   00000000   0x2D 0x49          DC8 "-I- ManagedNandFlash_AllocateBlock(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x41    
+   \              0x6C 0x6C    
+   \              0x6F 0x63    
+   \              0x61 0x74    
+   \              0x65 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x28 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_3`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 41H, 6CH, 6CH
+   \              0x73 0x68    
+   \              0x5F 0x41    
+   \              0x6C 0x6C    
+   \   00000018   0x6F 0x63          DC8 6FH, 63H, 61H, 74H, 65H, 42H, 6CH, 6FH
+   \              0x61 0x74    
+   \              0x65 0x42    
+   \              0x6C 0x6F    
+   \   00000020   0x63 0x6B          DC8 63H, 6BH, 3AH, 20H, 42H, 6CH, 6FH, 63H
+   \              0x3A 0x20    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000028   0x6B 0x20          DC8 6BH, 20H, 6DH, 75H, 73H, 74H, 20H, 62H
+   \              0x6D 0x75    
+   \              0x73 0x74    
+   \              0x20 0x62    
+   \   00000030   0x65 0x20          DC8 65H, 20H, 46H, 52H, 45H, 45H, 0AH, 0DH
+   \              0x46 0x52    
+   \              0x45 0x45    
+   \              0x0A 0x0D    
+   \   00000038   0x00               DC8 0
+   \   00000039   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- ManagedNandFlash_...">_1`:
+   \   00000000   0x2D 0x49          DC8 "-I- ManagedNandFlash_ReleaseBlock(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x6C    
+   \              0x65 0x61    
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x28    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_4`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 52H, 65H, 6CH
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x6C    
+   \   00000018   0x65 0x61          DC8 65H, 61H, 73H, 65H, 42H, 6CH, 6FH, 63H
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \   00000020   0x6B 0x3A          DC8 6BH, 3AH, 20H, 42H, 6CH, 6FH, 63H, 6BH
+   \              0x20 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000028   0x20 0x6D          DC8 20H, 6DH, 75H, 73H, 74H, 20H, 62H, 65H
+   \              0x75 0x73    
+   \              0x74 0x20    
+   \              0x62 0x65    
+   \   00000030   0x20 0x4C          DC8 20H, 4CH, 49H, 56H, 45H, 0AH, 0DH, 0
+   \              0x49 0x56    
+   \              0x45 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- ManagedNandFlash_...">_2`:
+   \   00000000   0x2D 0x49          DC8 "-I- ManagedNandFlash_EraseBlock(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x45    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x28    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+   \   00000026   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_5`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 45H, 72H, 61H
+   \              0x73 0x68    
+   \              0x5F 0x45    
+   \              0x72 0x61    
+   \   00000018   0x73 0x65          DC8 73H, 65H, 42H, 6CH, 6FH, 63H, 6BH, 3AH
+   \              0x42 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x3A    
+   \   00000020   0x20 0x42          DC8 20H, 42H, 6CH, 6FH, 63H, 6BH, 20H, 6DH
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x20 0x6D    
+   \   00000028   0x75 0x73          DC8 75H, 73H, 74H, 20H, 62H, 65H, 20H, 44H
+   \              0x74 0x20    
+   \              0x62 0x65    
+   \              0x20 0x44    
+   \   00000030   0x49 0x52          DC8 49H, 52H, 54H, 59H, 0AH, 0DH, 0
+   \              0x54 0x59    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000037   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_6`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 52H, 65H, 61H
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \   00000018   0x64 0x50          DC8 64H, 50H, 61H, 67H, 65H, 3AH, 20H, 42H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x42    
+   \   00000020   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 6DH, 75H, 73H
+   \              0x63 0x6B    
+   \              0x20 0x6D    
+   \              0x75 0x73    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 62H, 65H, 20H, 4CH, 49H, 56H
+   \              0x62 0x65    
+   \              0x20 0x4C    
+   \              0x49 0x56    
+   \   00000030   0x45 0x20          DC8 45H, 20H, 6FH, 72H, 20H, 44H, 49H, 52H
+   \              0x6F 0x72    
+   \              0x20 0x44    
+   \              0x49 0x52    
+   \   00000038   0x54 0x59          DC8 54H, 59H, 2EH, 0AH, 0DH, 0
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   0000003E   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_7`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 57H, 72H, 69H
+   \              0x73 0x68    
+   \              0x5F 0x57    
+   \              0x72 0x69    
+   \   00000018   0x74 0x65          DC8 74H, 65H, 50H, 61H, 67H, 65H, 3AH, 20H
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \   00000020   0x42 0x6C          DC8 42H, 6CH, 6FH, 63H, 6BH, 20H, 6DH, 75H
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x6D 0x75    
+   \   00000028   0x73 0x74          DC8 73H, 74H, 20H, 62H, 65H, 20H, 4CH, 49H
+   \              0x20 0x62    
+   \              0x65 0x20    
+   \              0x4C 0x49    
+   \   00000030   0x56 0x45          DC8 56H, 45H, 2EH, 0AH, 0DH, 0
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+   \   00000036   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_Copy...">`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 6EH, 61H, 67H, 65H, 64H, 4EH
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x43          DC8 5FH, 43H, 6FH, 70H, 79H, 50H, 61H, 67H
+   \              0x6F 0x70    
+   \              0x79 0x50    
+   \              0x61 0x67    
+   \   00000018   0x65 0x3A          DC8 65H, 3AH, 20H, 73H, 6FH, 75H, 72H, 63H
+   \              0x20 0x73    
+   \              0x6F 0x75    
+   \              0x72 0x63    
+   \   00000020   0x65 0x20          DC8 65H, 20H, 26H, 20H, 64H, 65H, 73H, 74H
+   \              0x26 0x20    
+   \              0x64 0x65    
+   \              0x73 0x74    
+   \   00000028   0x20 0x70          DC8 20H, 70H, 61H, 67H, 65H, 73H, 20H, 6DH
+   \              0x61 0x67    
+   \              0x65 0x73    
+   \              0x20 0x6D    
+   \   00000030   0x75 0x73          DC8 75H, 73H, 74H, 20H, 68H, 61H, 76H, 65H
+   \              0x74 0x20    
+   \              0x68 0x61    
+   \              0x76 0x65    
+   \   00000038   0x20 0x74          DC8 20H, 74H, 68H, 65H, 20H, 73H, 61H, 6DH
+   \              0x68 0x65    
+   \              0x20 0x73    
+   \              0x61 0x6D    
+   \   00000040   0x65 0x20          DC8 65H, 20H, 70H, 61H, 72H, 69H, 74H, 79H
+   \              0x70 0x61    
+   \              0x72 0x69    
+   \              0x74 0x79    
+   \   00000048   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   0000004B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- ManagedNandFlash_...">_3`:
+   \   00000000   0x2D 0x49          DC8 2DH, 49H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 43H, 6FH, 70H
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \   00000018   0x79 0x50          DC8 79H, 50H, 61H, 67H, 65H, 28H, 42H, 23H
+   \              0x61 0x67    
+   \              0x65 0x28    
+   \              0x42 0x23    
+   \   00000020   0x25 0x64          DC8 25H, 64H, 3AH, 50H, 23H, 25H, 64H, 20H
+   \              0x3A 0x50    
+   \              0x23 0x25    
+   \              0x64 0x20    
+   \   00000028   0x2D 0x3E          DC8 2DH, 3EH, 20H, 42H, 23H, 25H, 64H, 3AH
+   \              0x20 0x42    
+   \              0x23 0x25    
+   \              0x64 0x3A    
+   \   00000030   0x50 0x23          DC8 50H, 23H, 25H, 64H, 29H, 0AH, 0DH, 0
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_8`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 43H, 6FH, 70H
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \   00000018   0x79 0x50          DC8 79H, 50H, 61H, 67H, 65H, 3AH, 20H, 53H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x53    
+   \   00000020   0x6F 0x75          DC8 6FH, 75H, 72H, 63H, 65H, 20H, 62H, 6CH
+   \              0x72 0x63    
+   \              0x65 0x20    
+   \              0x62 0x6C    
+   \   00000028   0x6F 0x63          DC8 6FH, 63H, 6BH, 20H, 6DH, 75H, 73H, 74H
+   \              0x6B 0x20    
+   \              0x6D 0x75    
+   \              0x73 0x74    
+   \   00000030   0x20 0x62          DC8 20H, 62H, 65H, 20H, 4CH, 49H, 56H, 45H
+   \              0x65 0x20    
+   \              0x4C 0x49    
+   \              0x56 0x45    
+   \   00000038   0x20 0x6F          DC8 20H, 6FH, 72H, 20H, 44H, 49H, 52H, 54H
+   \              0x72 0x20    
+   \              0x44 0x49    
+   \              0x52 0x54    
+   \   00000040   0x59 0x2E          DC8 59H, 2EH, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000045   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_9`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 43H, 6FH, 70H
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \   00000018   0x79 0x50          DC8 79H, 50H, 61H, 67H, 65H, 3AH, 20H, 44H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x44    
+   \   00000020   0x65 0x73          DC8 65H, 73H, 74H, 69H, 6EH, 61H, 74H, 69H
+   \              0x74 0x69    
+   \              0x6E 0x61    
+   \              0x74 0x69    
+   \   00000028   0x6F 0x6E          DC8 6FH, 6EH, 20H, 62H, 6CH, 6FH, 63H, 6BH
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000030   0x20 0x6D          DC8 20H, 6DH, 75H, 73H, 74H, 20H, 62H, 65H
+   \              0x75 0x73    
+   \              0x74 0x20    
+   \              0x62 0x65    
+   \   00000038   0x20 0x4C          DC8 20H, 4CH, 49H, 56H, 45H, 2EH, 0AH, 0DH
+   \              0x49 0x56    
+   \              0x45 0x2E    
+   \              0x0A 0x0D    
+   \   00000040   0x00               DC8 0
+   \   00000041   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "ManagedNandFlash_Copy...">_1`:
+   \   00000000   0x4D 0x61          DC8 4DH, 61H, 6EH, 61H, 67H, 65H, 64H, 4EH
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x43          DC8 5FH, 43H, 6FH, 70H, 79H, 42H, 6CH, 6FH
+   \              0x6F 0x70    
+   \              0x79 0x42    
+   \              0x6C 0x6F    
+   \   00000018   0x63 0x6B          DC8 63H, 6BH, 3AH, 20H, 53H, 6FH, 75H, 72H
+   \              0x3A 0x20    
+   \              0x53 0x6F    
+   \              0x75 0x72    
+   \   00000020   0x63 0x65          DC8 63H, 65H, 20H, 62H, 6CH, 6FH, 63H, 6BH
+   \              0x20 0x62    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \   00000028   0x20 0x6D          DC8 20H, 6DH, 75H, 73H, 74H, 20H, 62H, 65H
+   \              0x75 0x73    
+   \              0x74 0x20    
+   \              0x62 0x65    
+   \   00000030   0x20 0x64          DC8 20H, 64H, 69H, 66H, 66H, 65H, 72H, 65H
+   \              0x69 0x66    
+   \              0x66 0x65    
+   \              0x72 0x65    
+   \   00000038   0x6E 0x74          DC8 6EH, 74H, 20H, 66H, 72H, 6FH, 6DH, 20H
+   \              0x20 0x66    
+   \              0x72 0x6F    
+   \              0x6D 0x20    
+   \   00000040   0x64 0x65          DC8 64H, 65H, 73H, 74H, 2EH, 20H, 62H, 6CH
+   \              0x73 0x74    
+   \              0x2E 0x20    
+   \              0x62 0x6C    
+   \   00000048   0x6F 0x63          DC8 6FH, 63H, 6BH, 0AH, 0DH, 0
+   \              0x6B 0x0A    
+   \              0x0D 0x00    
+   \   0000004E   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-I- ManagedNandFlash_...">_4`:
+   \   00000000   0x2D 0x49          DC8 "-I- ManagedNandFlash_CopyBlock(B#%d->B#%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \              0x79 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x28 0x42    
+   \              0x23 0x25    
+   \              0x64 0x2D    
+   \              0x3E 0x42    
+   \              0x23 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- ManagedNandFlash_...">_10`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 4DH, 61H, 6EH, 61H
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \   00000008   0x67 0x65          DC8 67H, 65H, 64H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x64 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000010   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 43H, 6FH, 70H
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \   00000018   0x79 0x50          DC8 79H, 50H, 61H, 67H, 65H, 3AH, 20H, 46H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x46    
+   \   00000020   0x61 0x69          DC8 61H, 69H, 6CH, 65H, 64H, 20H, 74H, 6FH
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x74 0x6F    
+   \   00000028   0x20 0x63          DC8 20H, 63H, 6FH, 70H, 79H, 20H, 70H, 61H
+   \              0x6F 0x70    
+   \              0x79 0x20    
+   \              0x70 0x61    
+   \   00000030   0x67 0x65          DC8 67H, 65H, 20H, 25H, 64H, 0AH, 0DH, 0
+   \              0x20 0x25    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-W- Managed_FullErase...">`:
+   \   00000000   0x2D 0x57          DC8 "-W- Managed_FullErase: %d(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x5F    
+   \              0x46 0x75    
+   \              0x6C 0x6C    
+   \              0x45 0x72    
+   \              0x61 0x73    
+   \              0x65 0x3A    
+   \              0x20 0x25    
+   \              0x64 0x28    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-W- Managed_DataErase...">`:
+   \   00000000   0x2D 0x57          DC8 "-W- Managed_DataErase: %d(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x5F    
+   \              0x44 0x61    
+   \              0x74 0x61    
+   \              0x45 0x72    
+   \              0x61 0x73    
+   \              0x65 0x3A    
+   \              0x20 0x25    
+   \              0x64 0x28    
+   \              0x25 0x64    
+   \              0x29 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-W- Managed_DirtyEras...">`:
+   \   00000000   0x2D 0x57          DC8 "-W- Managed_DirtyErase: %d(%d)\012\015"
+   \              0x2D 0x20    
+   \              0x4D 0x61    
+   \              0x6E 0x61    
+   \              0x67 0x65    
+   \              0x64 0x5F    
+   \              0x44 0x69    
+   \              0x72 0x74    
+   \              0x79 0x45    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x3A 0x20    
+   \              0x25 0x64    
+   \              0x28 0x25    
+   \              0x64 0x29    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000021   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       32  CheckBlock
+               32 -> NandFlashModel_GetPageSpareSize
+               32 -> RawNandFlash_ReadPage
+               32 -> printf
+       32  IsDeviceVirgin
+               32 -> NandFlashModel_GetScheme
+               32 -> NandSpareScheme_ReadBadBlockMarker
+               32 -> NandSpareScheme_ReadExtra
+               32 -> RawNandFlash_ReadPage
+               32 -> printf
+       80  ManagedNandFlash_AllocateBlock
+               80 -> WriteBlockStatus
+               80 -> printf
+       32  ManagedNandFlash_CopyBlock
+               32 -> ManagedNandFlash_CopyPage
+               32 -> NandFlashModel_GetBlockSizeInPages
+               32 -> printf
+     2144  ManagedNandFlash_CopyPage
+             2144 -> EccNandFlash_ReadPage
+             2144 -> NandFlashModel_GetScheme
+             2144 -> NandSpareScheme_WriteExtra
+             2144 -> RawNandFlash_CopyPage
+             2144 -> RawNandFlash_WritePage
+             2144 -> printf
+        4  ManagedNandFlash_CountBlocks
+       24  ManagedNandFlash_EraseAll
+               24 -> ManagedNandFlash_EraseBlock
+               24 -> RawNandFlash_EraseBlock
+               24 -> printf
+       80  ManagedNandFlash_EraseBlock
+               80 -> RawNandFlash_EraseBlock
+               80 -> WriteBlockStatus
+               80 -> printf
+       16  ManagedNandFlash_EraseDirtyBlocks
+               16 -> ManagedNandFlash_EraseBlock
+       16  ManagedNandFlash_FindYoungestBlock
+        0  ManagedNandFlash_GetDeviceSizeInBlocks
+      136  ManagedNandFlash_Initialize
+              136 -> CheckBlock
+              136 -> EccNandFlash_Initialize
+              136 -> IsDeviceVirgin
+              136 -> NandFlashModel_GetDeviceSizeInBlocks
+              136 -> NandFlashModel_GetPageSpareSize
+              136 -> NandFlashModel_GetScheme
+              136 -> NandSpareScheme_ReadBadBlockMarker
+              136 -> NandSpareScheme_ReadExtra
+              136 -> RawNandFlash_ReadPage
+              136 -> WriteBlockStatus
+              136 -> printf
+        8  ManagedNandFlash_ReadPage
+                8 -> EccNandFlash_ReadPage
+                8 -> printf
+       80  ManagedNandFlash_ReleaseBlock
+               80 -> WriteBlockStatus
+               80 -> printf
+        8  ManagedNandFlash_WritePage
+                8 -> EccNandFlash_WritePage
+                8 -> printf
+       24  WriteBlockStatus
+               24 -> NandFlashModel_GetScheme
+               24 -> NandSpareScheme_WriteExtra
+               24 -> RawNandFlash_WritePage
+               24 -> memset
+               24 -> printf
+        8  memset
+                8 -> __aeabi_memset
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      52  ?<Constant "-E- CheckBlock: Canno...">
+      52  ?<Constant "-E- CheckBlock: Canno...">_1
+      44  ?<Constant "-E- ManagedNandFlash_...">
+      48  ?<Constant "-E- ManagedNandFlash_...">_1
+      56  ?<Constant "-E- ManagedNandFlash_...">_10
+      56  ?<Constant "-E- ManagedNandFlash_...">_2
+      60  ?<Constant "-E- ManagedNandFlash_...">_3
+      56  ?<Constant "-E- ManagedNandFlash_...">_4
+      56  ?<Constant "-E- ManagedNandFlash_...">_5
+      64  ?<Constant "-E- ManagedNandFlash_...">_6
+      56  ?<Constant "-E- ManagedNandFlash_...">_7
+      72  ?<Constant "-E- ManagedNandFlash_...">_8
+      68  ?<Constant "-E- ManagedNandFlash_...">_9
+      44  ?<Constant "-E- Out of Maxmized M...">
+      16  ?<Constant "-F- ASSERT: ">
+      56  ?<Constant "-I- Change NandCommon...">
+      32  ?<Constant "-I- Managed NF area: ...">
+      44  ?<Constant "-I- Managed, retrievi...">
+      44  ?<Constant "-I- ManagedNandFlash_...">
+      40  ?<Constant "-I- ManagedNandFlash_...">_1
+      40  ?<Constant "-I- ManagedNandFlash_...">_2
+      56  ?<Constant "-I- ManagedNandFlash_...">_3
+      48  ?<Constant "-I- ManagedNandFlash_...">_4
+      60  ?<Constant "-W- Device is virgin,...">
+      32  ?<Constant "-W- Managed_DataErase...">
+      36  ?<Constant "-W- Managed_DirtyEras...">
+      32  ?<Constant "-W- Managed_FullErase...">
+      32  ?<Constant "Block #%d(%d) is not ...">
+      40  ?<Constant "ManagedNandFlash_Chec...">
+      76  ?<Constant "ManagedNandFlash_Copy...">
+      80  ?<Constant "ManagedNandFlash_Copy...">_1
+      44  ?<Constant "ManagedNandFlash_IsDe...">
+      60  ?<Constant "ManagedNandFlash_IsDe...">_1
+      44  ?<Constant "ManagedNandFlash_Writ...">
+      44  ?<Constant "|  %4d  |  %8d  |  %4...">
+      56  ?<Constant "|  Wear  |   Count   ...">
+      56  ?<Constant "|--------|-----------...">
+       4  ??DataTable10
+       4  ??DataTable10_1
+       4  ??DataTable10_10
+       4  ??DataTable10_11
+       4  ??DataTable10_12
+       4  ??DataTable10_13
+       4  ??DataTable10_14
+       4  ??DataTable10_15
+       4  ??DataTable10_16
+       4  ??DataTable10_17
+       4  ??DataTable10_18
+       4  ??DataTable10_19
+       4  ??DataTable10_2
+       4  ??DataTable10_20
+       4  ??DataTable10_21
+       4  ??DataTable10_22
+       4  ??DataTable10_23
+       4  ??DataTable10_24
+       4  ??DataTable10_25
+       4  ??DataTable10_26
+       4  ??DataTable10_27
+       4  ??DataTable10_28
+       4  ??DataTable10_29
+       4  ??DataTable10_3
+       4  ??DataTable10_30
+       4  ??DataTable10_31
+       4  ??DataTable10_32
+       4  ??DataTable10_33
+       4  ??DataTable10_34
+       4  ??DataTable10_35
+       4  ??DataTable10_36
+       4  ??DataTable10_4
+       4  ??DataTable10_5
+       4  ??DataTable10_6
+       4  ??DataTable10_7
+       4  ??DataTable10_8
+       4  ??DataTable10_9
+      12  ?Subroutine0
+     236  CheckBlock
+     196  IsDeviceVirgin
+     132  ManagedNandFlash_AllocateBlock
+     168  ManagedNandFlash_CopyBlock
+     400  ManagedNandFlash_CopyPage
+      96  ManagedNandFlash_CountBlocks
+     428  ManagedNandFlash_EraseAll
+     180  ManagedNandFlash_EraseBlock
+     104  ManagedNandFlash_EraseDirtyBlocks
+     168  ManagedNandFlash_FindYoungestBlock
+      16  ManagedNandFlash_GetDeviceSizeInBlocks
+     940  ManagedNandFlash_Initialize
+     104  ManagedNandFlash_ReadPage
+     128  ManagedNandFlash_ReleaseBlock
+      84  ManagedNandFlash_WritePage
+     124  WriteBlockStatus
+      40  memset
+
+ 
+ 1 852 bytes in section .rodata
+ 3 704 bytes in section .text
+ 
+ 3 664 bytes of CODE  memory (+ 40 bytes shared)
+ 1 852 bytes of CONST memory
+
+Errors: none
+Warnings: 1

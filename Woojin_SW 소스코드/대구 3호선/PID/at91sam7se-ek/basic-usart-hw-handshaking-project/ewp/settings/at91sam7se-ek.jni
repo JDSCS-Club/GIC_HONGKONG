@@ -1,0 +1,2 @@
+device=AT91SAM7SE512 ; device name
+core=ARM7TDMI ; core name

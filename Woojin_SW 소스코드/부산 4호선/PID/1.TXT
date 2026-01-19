@@ -1,0 +1,2 @@
+*********Graph 1의 데이터들 ***********
+aa bb cc [WLEN-5] 00 b5 f1 31 0a 01 01 00 60 01 14 01 10 10 00 0f 0a 00 00 1b 01 02 1b 02 01 1b 03 01 c0 cc 20 b9 f8 20 bf aa 1b 01 03 20 20 bc ad bf ef bf aa 20 20 20 1b 01 02 20 b3 bb b8 ae bd c7 b9 ae 20 20 1b 01 01 a0 5b 41 72 72 6f 77 5d 20 03 [CRC]

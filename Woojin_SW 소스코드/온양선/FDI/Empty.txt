@@ -1,0 +1,4 @@
+{\rtf1\ansi\ansicpg949\deff0\deflang1042{\fonttbl{\f0\froman\fcharset129 \'b9\'d9\'c5\'c1\'c3\'bc;}}
+{\colortbl ;\red255\green255\blue0;\red0\green255\blue0;}
+\viewkind4\uc1\pard\cf1\f0\fs24 afafafasffdafsdafafsafas\cf2 
+\par }

@@ -1,0 +1,440 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     29/Apr/2013  12:37:20 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\spid.c             #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\spid.c" -D         #
+#                    at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC               #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\spid.lst                 #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\spid.o                    #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\spi-flash\spid.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "spid.h"
+     35          #include <board.h>
+     36          
+     37          //------------------------------------------------------------------------------
+     38          //         Macros
+     39          //------------------------------------------------------------------------------
+     40          
+     41          /// Write PMC register
+     42          #define WRITE_PMC(pPmc, regName, value) pPmc->regName = (value)
+     43          
+     44          /// Write SPI register
+     45          #define WRITE_SPI(pSpi, regName, value) pSpi->regName = (value)
+     46          
+     47          /// Read SPI registers
+     48          #define READ_SPI(pSpi, regName) (pSpi->regName)
+     49          
+     50          //------------------------------------------------------------------------------
+     51          //         Exported functions
+     52          //------------------------------------------------------------------------------
+     53          
+     54          //------------------------------------------------------------------------------
+     55          /// Initializes the Spid structure and the corresponding SPI hardware.
+     56          /// Always returns 0.
+     57          /// \param pSpid  Pointer to a Spid instance.
+     58          /// \param pSpiHw  Associated SPI peripheral.
+     59          /// \param spiId  SPI peripheral identifier.
+     60          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     61          unsigned char SPID_Configure(Spid *pSpid, AT91S_SPI *pSpiHw, unsigned char spiId)
+     62          {
+     63              // Initialize the SPI structure
+     64              pSpid->pSpiHw = pSpiHw;
+   \                     SPID_Configure:
+   \   00000000   0xE5801000         STR      R1,[R0, #+0]
+     65              pSpid->spiId  = spiId;
+   \   00000004   0xE5C02004         STRB     R2,[R0, #+4]
+     66              pSpid->semaphore = 1;
+   \   00000008   0xE3A02001         MOV      R2,#+1
+   \   0000000C   0xE5C0200C         STRB     R2,[R0, #+12]
+     67              pSpid->pCurrentCommand = 0;
+   \   00000010   0xE3A02000         MOV      R2,#+0
+   \   00000014   0xE5802008         STR      R2,[R0, #+8]
+     68          
+     69              // Enable the SPI clock
+     70              WRITE_PMC(AT91C_BASE_PMC, PMC_PCER, (1 << pSpid->spiId));
+   \   00000018   0xE3A02001         MOV      R2,#+1
+   \   0000001C   0xE1D030D4         LDRSB    R3,[R0, #+4]
+   \   00000020   0xE1A02312         LSL      R2,R2,R3
+   \   00000024   0xE3E030EF         MVN      R3,#+239
+   \   00000028   0xE3C33FC0         BIC      R3,R3,#0x300
+   \   0000002C   0xE5832000         STR      R2,[R3, #+0]
+     71              
+     72              // Execute a software reset of the SPI twice
+     73              WRITE_SPI(pSpiHw, SPI_CR, AT91C_SPI_SWRST);
+   \   00000030   0xE3A02080         MOV      R2,#+128
+   \   00000034   0xE5812000         STR      R2,[R1, #+0]
+     74          
+     75              // Configure SPI in Master Mode with No CS selected !!!
+     76              WRITE_SPI(pSpiHw, SPI_MR, AT91C_SPI_MSTR | AT91C_SPI_MODFDIS | AT91C_SPI_PCS);
+   \   00000038   0xE3A02011         MOV      R2,#+17
+   \   0000003C   0xE3822AF0         ORR      R2,R2,#0xF0000
+   \   00000040   0xE5812004         STR      R2,[R1, #+4]
+     77               
+     78              // Disable the PDC transfer    
+     79              WRITE_SPI(pSpiHw, SPI_PTCR, AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS);
+   \   00000044   0xE3A02002         MOV      R2,#+2
+   \   00000048   0xE3822F80         ORR      R2,R2,#0x200
+   \   0000004C   0xE5812120         STR      R2,[R1, #+288]
+     80          
+     81              // Enable the SPI
+     82              WRITE_SPI(pSpiHw, SPI_CR, AT91C_SPI_SPIEN);
+   \   00000050   0xE3A02001         MOV      R2,#+1
+   \   00000054   0xE5812000         STR      R2,[R1, #+0]
+     83          
+     84              // Enable the SPI clock
+     85              WRITE_PMC(AT91C_BASE_PMC, PMC_PCDR, (1 << pSpid->spiId));
+   \   00000058   0xE1D000D4         LDRSB    R0,[R0, #+4]
+   \   0000005C   0xE1A00012         LSL      R0,R2,R0
+   \   00000060   0xE3831004         ORR      R1,R3,#0x4
+   \   00000064   0xE5810000         STR      R0,[R1, #+0]
+     86              
+     87              return 0;
+   \   00000068   0xE3A00000         MOV      R0,#+0
+   \   0000006C   0xE12FFF1E         BX       LR               ;; return
+     88          }
+     89          
+     90          //------------------------------------------------------------------------------
+     91          /// Configures the parameters for the device corresponding to the cs.
+     92          /// \param pSpid  Pointer to a Spid instance.
+     93          /// \param cs  number corresponding to the SPI chip select.
+     94          /// \param csr  SPI_CSR value to setup.
+     95          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     96          void SPID_ConfigureCS(Spid *pSpid, unsigned char cs, unsigned int csr)
+     97          {
+     98              AT91S_SPI *pSpiHw = pSpid->pSpiHw;
+     99              WRITE_SPI(pSpiHw, SPI_CSR[cs], csr);
+   \                     SPID_ConfigureCS:
+   \   00000000   0xE5900000         LDR      R0,[R0, #+0]
+   \   00000004   0xE0800101         ADD      R0,R0,R1, LSL #+2
+   \   00000008   0xE5802030         STR      R2,[R0, #+48]
+    100          }
+   \   0000000C   0xE12FFF1E         BX       LR               ;; return
+    101              
+    102          //------------------------------------------------------------------------------
+    103          /// Starts a SPI master transfer. This is a non blocking function. It will
+    104          /// return as soon as the transfer is started.
+    105          /// Returns 0 if the transfer has been started successfully; otherwise returns
+    106          /// SPID_ERROR_LOCK is the driver is in use, or SPID_ERROR if the command is not
+    107          /// valid.
+    108          /// \param pSpid  Pointer to a Spid instance.
+    109          /// \param pCommand Pointer to the SPI command to execute.
+    110          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    111          unsigned char SPID_SendCommand(Spid *pSpid, SpidCmd *pCommand)
+    112          {
+    113              AT91S_SPI *pSpiHw = pSpid->pSpiHw;
+   \                     SPID_SendCommand:
+   \   00000000   0xE5902000         LDR      R2,[R0, #+0]
+    114               unsigned int spiMr;
+    115                   
+    116               // Try to get the dataflash semaphore
+    117               
+    118               /*
+    119               if (pSpid->semaphore == 0) {
+    120              
+    121                   return SPID_ERROR_LOCK;
+    122              }
+    123               pSpid->semaphore--;
+    124              */
+    125               
+    126              // Enable the SPI clock
+    127              WRITE_PMC(AT91C_BASE_PMC, PMC_PCER, (1 << pSpid->spiId));
+   \   00000004   0xE3A03001         MOV      R3,#+1
+   \   00000008   0xE1D000D4         LDRSB    R0,[R0, #+4]
+   \   0000000C   0xE1A00013         LSL      R0,R3,R0
+   \   00000010   0xE3E030EF         MVN      R3,#+239
+   \   00000014   0xE3C33FC0         BIC      R3,R3,#0x300
+   \   00000018   0xE5830000         STR      R0,[R3, #+0]
+    128              
+    129              // Disable transmitter and receiver
+    130              WRITE_SPI(pSpiHw, SPI_PTCR, AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS);
+   \   0000001C   0xE3A00002         MOV      R0,#+2
+   \   00000020   0xE3800F80         ORR      R0,R0,#0x200
+   \   00000024   0xE5820120         STR      R0,[R2, #+288]
+    131          
+    132               // Write to the MR register
+    133               spiMr = READ_SPI(pSpiHw, SPI_MR);
+   \   00000028   0xE5920004         LDR      R0,[R2, #+4]
+    134               spiMr |= AT91C_SPI_PCS;
+    135               spiMr &= ~((1 << pCommand->spiCs) << 16);
+    136              //WRITE_SPI(pSpiHw, SPI_MR, spiMr);
+    137               WRITE_SPI(pSpiHw, SPI_MR, (AT91C_SPI_MSTR|AT91C_SPI_MODFDIS));
+   \   0000002C   0xE3A00011         MOV      R0,#+17
+   \   00000030   0xE5820004         STR      R0,[R2, #+4]
+    138               
+    139              /*
+    140              // Initialize the two SPI PDC buffer
+    141              WRITE_SPI(pSpiHw, SPI_RPR, (int) pCommand->pCmd);
+    142              WRITE_SPI(pSpiHw, SPI_RCR, pCommand->cmdSize);
+    143              
+    144              WRITE_SPI(pSpiHw, SPI_TPR, (int) pCommand->pCmd);
+    145              WRITE_SPI(pSpiHw, SPI_TCR, pCommand->cmdSize);
+    146             
+    147              
+    148              
+    149              WRITE_SPI(pSpiHw, SPI_RNPR, (int) pCommand->pData);
+    150              WRITE_SPI(pSpiHw, SPI_RNCR, pCommand->dataSize);
+    151           
+    152              WRITE_SPI(pSpiHw, SPI_TNPR, (int) pCommand->pData);
+    153              WRITE_SPI(pSpiHw, SPI_TNCR, pCommand->dataSize);
+    154          */
+    155          
+    156              
+    157              //WRITE_SPI(pSpiHw, SPI_RPR, (int) pCommand->pCmd);
+    158              //WRITE_SPI(pSpiHw, SPI_RCR, pCommand->cmdSize);
+    159              
+    160              WRITE_SPI(pSpiHw, SPI_TPR, (int) pCommand->pCmd);
+   \   00000034   0xE5910000         LDR      R0,[R1, #+0]
+   \   00000038   0xE5820108         STR      R0,[R2, #+264]
+    161              WRITE_SPI(pSpiHw, SPI_TCR, pCommand->cmdSize);
+   \   0000003C   0xE5D10004         LDRB     R0,[R1, #+4]
+   \   00000040   0xE582010C         STR      R0,[R2, #+268]
+    162             
+    163              
+    164              
+    165              //WRITE_SPI(pSpiHw, SPI_RNPR, (int) pCommand->pData);
+    166              //WRITE_SPI(pSpiHw, SPI_RNCR, pCommand->dataSize);
+    167           
+    168              WRITE_SPI(pSpiHw, SPI_TNPR, (int) pCommand->pData);
+   \   00000044   0xE5910008         LDR      R0,[R1, #+8]
+   \   00000048   0xE5820118         STR      R0,[R2, #+280]
+    169              WRITE_SPI(pSpiHw, SPI_TNCR, pCommand->dataSize);
+   \   0000004C   0xE1D100BC         LDRH     R0,[R1, #+12]
+   \   00000050   0xE582011C         STR      R0,[R2, #+284]
+    170              
+    171              
+    172              // Initialize the callback
+    173              //pSpid->pCurrentCommand = pCommand;
+    174              
+    175              // Enable transmitter and receiver
+    176              WRITE_SPI(pSpiHw, SPI_PTCR, AT91C_PDC_RXTEN | AT91C_PDC_TXTEN);
+   \   00000054   0xE3A00001         MOV      R0,#+1
+   \   00000058   0xE3800F40         ORR      R0,R0,#0x100
+   \   0000005C   0xE5820120         STR      R0,[R2, #+288]
+    177          
+    178              // Enable buffer complete interrupt
+    179             // WRITE_SPI(pSpiHw, SPI_IER, AT91C_SPI_RXBUFF);
+    180              
+    181              
+    182              return 0;    
+   \   00000060   0xE3A00000         MOV      R0,#+0
+   \   00000064   0xE12FFF1E         BX       LR               ;; return
+    183          }
+    184          
+    185          //------------------------------------------------------------------------------
+    186          /// The SPI_Handler must be called by the SPI Interrupt Service Routine with the
+    187          /// corresponding Spi instance.
+    188          /// The SPI_Handler will unlock the Spi semaphore and invoke the upper application 
+    189          /// callback.
+    190          /// \param pSpid  Pointer to a Spid instance.
+    191          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    192          void SPID_Handler(Spid *pSpid)
+    193          {
+   \                     SPID_Handler:
+   \   00000000   0xE24DD008         SUB      SP,SP,#+8
+    194              SpidCmd *pSpidCmd = pSpid->pCurrentCommand;
+   \   00000004   0xE5902008         LDR      R2,[R0, #+8]
+    195              AT91S_SPI *pSpiHw = pSpid->pSpiHw;
+   \   00000008   0xE5901000         LDR      R1,[R0, #+0]
+    196              volatile unsigned int spiSr;
+    197              
+    198              // Read the status register
+    199              spiSr = READ_SPI(pSpiHw, SPI_SR);    
+   \   0000000C   0xE5913010         LDR      R3,[R1, #+16]
+   \   00000010   0xE58D3000         STR      R3,[SP, #+0]
+    200              if (spiSr & AT91C_SPI_RXBUFF) {
+   \   00000014   0xE59D3000         LDR      R3,[SP, #+0]
+   \   00000018   0xE3130040         TST      R3,#0x40
+   \   0000001C   0x0A000016         BEQ      ??SPID_Handler_0
+    201          
+    202                  // Disable transmitter and receiver
+    203                  WRITE_SPI(pSpiHw, SPI_PTCR, AT91C_PDC_RXTDIS | AT91C_PDC_TXTDIS);
+   \   00000020   0xE3A03002         MOV      R3,#+2
+   \   00000024   0xE3833F80         ORR      R3,R3,#0x200
+   \   00000028   0xE5813120         STR      R3,[R1, #+288]
+    204          
+    205                  // Disable the SPI clock
+    206                  WRITE_PMC(AT91C_BASE_PMC, PMC_PCDR, (1 << pSpid->spiId));
+   \   0000002C   0xE3A03001         MOV      R3,#+1
+   \   00000030   0xE1D0C0D4         LDRSB    R12,[R0, #+4]
+   \   00000034   0xE1A03C13         LSL      R3,R3,R12
+   \   00000038   0xE3E0C0EB         MVN      R12,#+235
+   \   0000003C   0xE3CCCFC0         BIC      R12,R12,#0x300
+   \   00000040   0xE58C3000         STR      R3,[R12, #+0]
+    207          
+    208                  // Disable buffer complete interrupt
+    209                  WRITE_SPI(pSpiHw, SPI_IDR, AT91C_SPI_RXBUFF);
+   \   00000044   0xE3A03040         MOV      R3,#+64
+   \   00000048   0xE5813018         STR      R3,[R1, #+24]
+    210          
+    211                  // Release the dataflash semaphore
+    212                  pSpid->semaphore++;
+   \   0000004C   0xE5D0100C         LDRB     R1,[R0, #+12]
+   \   00000050   0xE2811001         ADD      R1,R1,#+1
+   \   00000054   0xE5C0100C         STRB     R1,[R0, #+12]
+    213                      
+    214                  // Invoke the callback associated with the current command
+    215                  if (pSpidCmd && pSpidCmd->callback) {
+   \   00000058   0xE3520000         CMP      R2,#+0
+   \   0000005C   0x15920010         LDRNE    R0,[R2, #+16]
+   \   00000060   0x13500000         CMPNE    R0,#+0
+   \   00000064   0x0A000004         BEQ      ??SPID_Handler_0
+    216                  
+    217                      pSpidCmd->callback(0, pSpidCmd->pArgument);
+   \   00000068   0xE5921014         LDR      R1,[R2, #+20]
+   \   0000006C   0xE3A00000         MOV      R0,#+0
+   \   00000070   0xE5922010         LDR      R2,[R2, #+16]
+   \   00000074   0xE28DD008         ADD      SP,SP,#+8        ;; stack cleaning
+   \   00000078   0xE12FFF12         BX       R2               ;; tailcall
+    218                  }
+    219                      
+    220                  // Nothing must be done after. A new DF operation may have been started
+    221                  // in the callback function.
+    222              }
+    223          }
+   \                     ??SPID_Handler_0:
+   \   0000007C   0xE28DD008         ADD      SP,SP,#+8        ;; stack cleaning
+   \   00000080   0xE12FFF1E         BX       LR               ;; return
+    224          
+    225          //------------------------------------------------------------------------------
+    226          /// Returns 1 if the SPI driver is currently busy executing a command; otherwise
+    227          /// returns 0.
+    228          /// \param pSpid  Pointer to a SPI driver instance.
+    229          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    230          unsigned char SPID_IsBusy(const Spid *pSpid)
+    231          {
+    232              if (pSpid->semaphore == 0) {
+   \                     SPID_IsBusy:
+   \   00000000   0xE5D0000C         LDRB     R0,[R0, #+12]
+   \   00000004   0xE3500000         CMP      R0,#+0
+    233          
+    234                  return 1;
+   \   00000008   0x03A00001         MOVEQ    R0,#+1
+    235              }
+    236              else {
+    237          
+    238                  return 0;
+   \   0000000C   0x13A00000         MOVNE    R0,#+0
+   \   00000010   0xE12FFF1E         BX       LR               ;; return
+    239              }
+    240          }
+    241          
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+        0  SPID_Configure
+        0  SPID_ConfigureCS
+        8  SPID_Handler
+             0 -- Indirect call
+        0  SPID_IsBusy
+        0  SPID_SendCommand
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+     112  SPID_Configure
+      16  SPID_ConfigureCS
+     132  SPID_Handler
+      20  SPID_IsBusy
+     104  SPID_SendCommand
+
+ 
+ 384 bytes in section .text
+ 
+ 384 bytes of CODE memory
+
+Errors: none
+Warnings: none

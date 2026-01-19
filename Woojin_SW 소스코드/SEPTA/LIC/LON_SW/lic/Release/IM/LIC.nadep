@@ -1,0 +1,32 @@
+; Echelon Dependency File - do not edit.
+; D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Release\IM\LIC.nadep
+; Created Thursday, November 01, 2012, 15:42:37
+
+[Global]
+Provider=NEURON Assembler
+Version=1
+Inputs=1
+Outputs=1
+Switches=1
+Parameters=0
+
+[Input_1]
+Basename=LIC.ns
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Release\IM\LIC.ns
+Type=0
+Size=106638
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x15066290
+
+[Output_1]
+Basename=LIC.no
+Fullname=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Release\IM\LIC.no
+Type=0
+Size=106837
+TimestampHigh=0x1cdb7fc
+TimestampLow=0x1514aad0
+
+[Switches]
+8=D:\Users\JDS_SSD\Desktop\JDS_PRO\SEPTA\프로그램\LIC\Lon_SW\WJ_LIC (20101210)\LIC\Release\IM\LIC
+
+[Parameters]

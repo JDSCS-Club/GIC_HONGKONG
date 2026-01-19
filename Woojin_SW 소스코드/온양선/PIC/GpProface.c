@@ -1,0 +1,1714 @@
+#include "def.h"
+#include "main.h"
+#include "saf82532.h"
+#include "PA_Pro.h"
+#include "user.h"
+#include "Disk.h"
+#include "xr16788.h"
+#include "GpProface.h"
+#include "LED_DOWNLOAD.h"
+
+//**********************************************************************
+// 변수 선언
+//**********************************************************************
+
+extern TMS_RX_DATA_PR nTmsRxData;
+
+extern INDEX_FLAG nIndex_Flag;
+
+extern PNVSRAM_VARIABLE nNvsram_Variable;	// 사용 되는 변수
+extern SANDISK_VARI SanDisk_Vari;
+extern TRAN_STATION_INFO nTr_St_Info;
+
+extern PSTATION_NAME StationName;
+//extern STATION_NAME StationName[61];		// 한 다이아 에서 사용 가능한 역명.
+
+extern SELF_TEST nSelf_Test;	//자기 진단 관련 구조체
+
+extern IDC_ROM_WRITE Idc_Load;
+extern LED_DATA_DOWNLOAD nLedDataLoad;
+extern TCMS_IDC_INFO nTcmsIdcInfo;
+
+extern m_PA_SelfTest_Buf[30];
+
+extern DI_CHECK nDi_Check;
+
+extern SCC_SEND_FLAG nSccSendFlag;
+
+extern SAF82532_SCC Saf82532_Ach;
+extern SAF82532_SCC Saf82532_Bch;
+
+extern XR16788_INIT_SHAPE Xr16788_1Ch;
+extern XR16788_INIT_SHAPE Xr16788_2Ch;
+extern XR16788_INIT_SHAPE Xr16788_3Ch;
+extern XR16788_INIT_SHAPE Xr16788_4Ch;
+
+extern UCHAR m_FileSize;
+
+//***********************************************************************
+//	Write Protocol at Gp Address
+//	Input:  Addr = 16bit Address
+//	value = 2byte Data (Interrupt)
+//***********************************************************************
+
+UCHAR m_GPTxDataBuf[500];
+UCHAR m_GpTxDataCnt = 0;
+UCHAR m_GpTimeCnt = 0;
+UCHAR m_nGpScreenNum = 0;
+
+SELETC_BUTTON nSelect_Button;
+
+
+/*****************************************************/
+/*       Write Protocol at Gp Address                */
+/*       Input:  Addr = 16bit Address                */
+/*       value = 2byte Data (Interrupt)  	     */
+/*****************************************************/
+void gp_WritingDWord(WORD Addr,WORD nData)
+{
+	m_GPTxDataBuf[m_GpTxDataCnt++] = ESC;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 'W';
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (Addr>>8)&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = Addr&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 0x00;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 0x02;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (nData >> 24) & 0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (nData >> 16) & 0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (nData >> 8) & 0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = nData&0xff;
+}
+
+void gp_WritingWord(WORD Addr,WORD nData)
+{	
+	m_GPTxDataBuf[m_GpTxDataCnt++] = ESC;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 'W';
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (Addr>>8)&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = Addr&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 0x00;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 0x01;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (nData >> 8) & 0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = nData&0xff;
+}
+
+void gp_ReadingWord(WORD Addr,WORD nCnt)
+{	
+	m_GPTxDataBuf[m_GpTxDataCnt++] = ESC;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 'R';
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (Addr>>8)&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = Addr&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (nCnt >> 8) & 0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = nCnt&0xff;
+}
+
+void gp_WritingStr(WORD Addr,WORD Len, UCHAR *pData)
+{	
+	int i;
+
+	m_GPTxDataBuf[m_GpTxDataCnt++] = ESC;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = 'W';
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (Addr>>8)&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = Addr&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = (Len>>8)&0xff;
+	m_GPTxDataBuf[m_GpTxDataCnt++] = Len&0xff;
+
+	for(i=0;i<Len*2;i++)
+	{
+		m_GPTxDataBuf[m_GpTxDataCnt++] = WORD_L(pData[i]);
+	}	
+}
+/******************************************************
+Name  : Hex2ASCIIW(WORD nInput, UCHAR *pOutput)
+Input : BCD 4digit Train No
+Output: pOutput (Buffer)
+Description:
+
+열차 번호를 얻기 위한 작업 (Ascii 코드로 인식)
+(0x1234 -> 0x31,0x32,0x33,0x34)
+*******************************************************/
+void Hex2ASCIIW(WORD nInput, UCHAR *pOutput)
+{
+	pOutput[0] = 0x30;
+	pOutput[1] = ((nInput>>12)&0xf)%10 +0x30; 
+	pOutput[2] = ((nInput>>8 )&0xf)%10 +0x30;
+	pOutput[3] = ((nInput>>4 )&0xf)%10 +0x30;
+	pOutput[4] = (nInput&0xf)%10 +0x30;
+}
+
+
+
+WORD BCD_BIN(WORD nInput)
+{
+	WORD sNum = 0;
+
+	sNum += ((nInput>>12)&0xf) * 1000;
+	sNum += ((nInput>>8)&0xf) * 100;
+	sNum += ((nInput>>4)&0xf) * 10;
+	sNum += ((nInput)&0xf) * 1;
+	return sNum;
+}
+
+WORD BIN_BCD(WORD nInput)
+{
+	WORD sNum = 0;
+
+	sNum = (((nInput/1000)%10)<<12)&0xf000;
+	sNum |= (((nInput/100)%10)<<8)&0xf00;
+	sNum |= (((nInput/10)%10)<<4)&0xf0;
+	sNum |= ((nInput%10)&0xf);
+	return sNum;
+
+}
+/****************** GP초기화 함수   *****************
+/*****************************************************/
+void GpProface_Init()
+{
+	nSelect_Button.nGPTranNumInput.nFlag = 0;
+	nSelect_Button.nScreenRxTime = 100;
+	nSelect_Button.nScreenSafe = 60000;
+	nSelect_Button.nScreenSetNum = 1;
+	nSelect_Button.nScreen_Send_Delay_Time = 0;
+
+	//시험 화면 버튼 초기화.
+	nTr_St_Info.nAutoDoorFlag = 0;
+	nTr_St_Info.nSimulationFlag = 0;
+	nTr_St_Info.nDISFPatFlag  = 0;
+	nTr_St_Info.nPIBPatFlag = 0;
+	gp_WritingWord(0x41,0);	
+
+	nTr_St_Info.nDest.nCode = 1;
+
+	gpTURNOFFINIT;
+
+	gpSTATE; //초기에 상태 화면을 표출
+
+}
+/******** Main 문에서 처리되는 내용.  *****************
+/*****************************************************/
+UCHAR d_gpTxCnt = 0;
+
+void Gp_Pro_Main()
+{
+
+	int sGpTxLen = 0;
+
+	//GP 화면에 모든 통신을 여기서 일괄 적으로 보낸다.
+	if(!(m_GpTimeCnt%300))
+	{
+		if(m_GpTxDataCnt && !Saf82532_Bch.nTxDisable1msCnt)
+		{
+			d_gpTxCnt++;
+			sGpTxLen = WORD_L(m_GpTxDataCnt);
+			m_GpTxDataCnt = 0;
+			saf82532_Send(SAB82532_BCH,m_GPTxDataBuf,sGpTxLen);
+		}
+	}
+
+	//화면에 상태 정보를 일적 시간마다 체크 해서 갱신 한다.
+	if(!(m_GpTimeCnt%300) && !(nSelect_Button.nScreenRxTime) && !Saf82532_Bch.nTxDisable1msCnt)  //&& SCC2_INIT_A.TxOK)
+	{
+		nSelect_Button.nScreenRxTime = 100;
+
+		if(nSelect_Button.nScreenSafe >= 5)
+		{
+			GP_SEND_SCREEN(nSelect_Button.nScreenSetNum);
+		}
+
+	}
+}
+/****************************************************************
+
+****************************************************************/
+/*****************************************************
+GP   1ms 타이머 
+*****************************************************/
+void GP_1msTime()
+{
+
+	m_GpTimeCnt++;
+	//화면 보호 기능. 카운터.
+
+	if(nSelect_Button.nScreenSafe == 1)
+	{
+		nSelect_Button.nScreenSafe = 0;
+		gpTURNOFF;
+	}
+
+	if(nSelect_Button.nScreenRxTime) {nSelect_Button.nScreenRxTime--;}
+	if(nSelect_Button.nScreenSafe){nSelect_Button.nScreenSafe--;}
+
+}
+/****************************************************************
+
+****************************************************************/
+
+UCHAR d_gpReceive = 0;
+void gp_Receive(UCHAR *pGpRxData)
+{
+	nSelect_Button.nScreenSafe = 60000;
+
+	d_gpReceive++;
+
+	if(WORD_L(pGpRxData[1]) == 0x41)	//GP 에서 열차 변호를 입력 한다.
+	{
+
+		
+		nSelect_Button.nScreenRxTime = 100; 
+
+		nSelect_Button.nGPTranNumInput.nNum = BCD_BIN(MAKE_WORD(pGpRxData[2],pGpRxData[3]));
+		//Hex2ASCIIW(nSelect_Button.nGPTranNumInput.nNum,nSelect_Button.nGPTranNumInput.nASC_NumBuf);
+
+		nSelect_Button.nGPTranNumInput.nFlag = TRUE;
+	}			
+	else if(WORD_L(pGpRxData[1]) == 0x49)
+	{
+		nSelect_Button.nScreenRxTime = 100; 
+
+		GP_STATE_SCREEN(WORD_L(pGpRxData[3]));		//상태화면 처리부분.
+		GP_MANUAL_SCREEN(WORD_L(pGpRxData[3]));		//수동 설정 처리 부분.
+		GP_MENU_SCREEN(WORD_L(pGpRxData[3]));		//메뮤 화면 이동
+		GP_DEST_SCREEN(WORD_L(pGpRxData[3]));		//행선설정
+		GP_SIMU_SCREEN(WORD_L(pGpRxData[3]));		//시험 화면 처리 부분.
+		GP_POINT_SCREEN(WORD_L(pGpRxData[3]));		//지점 보정 화면 처리
+		GP_SELFTEST_SCREEN(WORD_L(pGpRxData[3]));	//자기진단.
+		GP_TRAIN_SCREEN(WORD_L(pGpRxData[3]));		//열차번호 입력 화면
+		GP_CLEAN(WORD_L(pGpRxData[3]));				//무표시 전송.
+		GP_DISPLAY_SAFETY(WORD_L(pGpRxData[3]));	//화면 보호 기능.
+		GP_SDR_SCREEN(WORD_L(pGpRxData[3]));		//디버깅 화면
+		GP_IDC_SW_UPLOAD(WORD_L(pGpRxData[3]));		//SW UPLOAD 화면
+		GP_SFDD_SW_UPLOAD(WORD_L(pGpRxData[3]));	//LED 표시기 업로드 화면.
+
+	}
+}
+/****************************************************** 
+지속 적으로 화면 정보를 갱신한다. (300ms 마다 동작)
+/*****************************************************/
+
+void GP_SEND_SCREEN(UCHAR nScreenNum)
+{
+	UCHAR sTemp;
+	UCHAR sCharBuf[10];
+	UCHAR glVer[10];
+	UCHAR sSelfTestBuf[60];
+	UCHAR sClean_Buf[20];
+	UCHAR sDataBuf[10];
+	UCHAR sDowRep[15];
+
+
+	switch(WORD_L(nScreenNum))
+	{
+	case 1:	//상태 화면
+
+		if(nDi_Check.nHcr.nFlag) {gpHCR;}
+		else if(nDi_Check.nIcr.nFlag){gpICR;}
+		else if(nDi_Check.nTcr.nFlag){gpTCR;}
+		else {gpDI_CHECK;}
+
+		if(SanDisk_Vari.nDiskInputCheckFlag){gpCARDOK;}
+		else {gpCARDERR; }
+
+		if(nTr_St_Info.nTcmsRxNGCnt>5) {gpCOMERR; } //TCMS 통신 화면 표출 부분.
+		else {gpCOMCLR;}
+
+		gpSTATE;
+		gpTURNOFFINIT;
+		gpTURNON;
+
+		gpDISTANCE(nTr_St_Info.nDistance); //nTmsRxData.nDist
+		//gpDISTANCE(nTmsRxData.nDist); //nTmsRxData.nDist
+
+		gp_WritingWord(100,BIN_BCD(nSelect_Button.nGPTranNumInput.nNum));
+
+		memset(sClean_Buf,0x20,20);
+
+		if(nDi_Check.nDoor.nFlag)//출입문 처리.
+		{
+			gpSTATEOPEN;
+			gpNOWSTATION;
+			if(WORD_L(nTr_St_Info.nNow.nCode) != 0xFF)
+			{
+				NVSRAM_Rd_StationName_Code(nTr_St_Info.nNow.nCode,nTr_St_Info.nNow.nEnNameBuf,nTr_St_Info.nGpStName.nNow); 
+				gp_WritingStr(0x82,5,nTr_St_Info.nGpStName.nNow);	// 현재역
+			}
+			else
+			{
+				gp_WritingStr(0x82,5,sClean_Buf);	// 현재역
+			}
+		}	
+		else 
+		{
+			gpSTATECLOSE ;
+			gpAFTERSTATION; 
+			if(WORD_L(nTr_St_Info.nNext.nCode) != 0xFF)
+			{
+				NVSRAM_Rd_StationName_Code(nTr_St_Info.nNext.nCode,nTr_St_Info.nNext.nEnNameBuf,nTr_St_Info.nGpStName.nNext);
+				gp_WritingStr(0x82,5,nTr_St_Info.nGpStName.nNext);	// 다음역 표출
+			}
+			else
+			{
+				gp_WritingStr(0x82,5,sClean_Buf);	// 현재역
+			}
+
+		}
+
+		if(WORD_L(nTr_St_Info.nDest.nCode) != 0xFF)
+		{
+			NVSRAM_Rd_StationName_Code(nTr_St_Info.nDest.nCode,nTr_St_Info.nDest.nEnNameBuf,nTr_St_Info.nGpStName.nDest);
+			gp_WritingStr(0x96,5,nTr_St_Info.nGpStName.nDest);	// 행선 표출
+		}
+		else
+		{
+			gp_WritingStr(0x96,5,sClean_Buf);	// 행선 표출
+		}
+
+		glVer[0] = BYTE_H(nTmsRxData.nDataDefin)%10+0x30; 
+		glVer[1] = BYTE_L(nTmsRxData.nDataDefin)%10+0x30;
+		glVer[2] = ((ROM_VER /100)+0x30);
+		glVer[3] = (ROM_VER %100)/10+0x30; 
+		glVer[4] = '.'; 
+		glVer[5] = (ROM_VER %100)%10+0x30; 
+
+		//nTemp = Check_Header?EDIT_VER_OFFST);
+		
+		sTemp = MAKE_WORD(WORD_L(NVSRAM(m_FileSize-4)),WORD_L(NVSRAM(m_FileSize-3)));
+		if(!sTemp){ sTemp = MAKE_WORD(WORD_L(NVSRAM(m_FileSize-8)),WORD_L(NVSRAM(m_FileSize-7)));}
+
+		glVer[6] = DP_ConvHex2Asc(BYTE_H(WORD_H(sTemp)));
+		glVer[7] = DP_ConvHex2Asc(BYTE_L(WORD_H(sTemp)));
+		glVer[8] =  DP_ConvHex2Asc(BYTE_H(WORD_L(sTemp)));
+		glVer[9] = DP_ConvHex2Asc(BYTE_L(WORD_L(sTemp)));
+		
+		gp_WritingStr(0xc8,5,glVer);
+
+		break;
+
+	case 2:	//수동 설정.
+
+		gp_WritingWord(100,BIN_BCD(nSelect_Button.nGPTranNumInput.nNum));
+
+
+		if(nTr_St_Info.nDistance > 100)	
+		{
+			gpAFTERSTATION; 
+			gpMANUINIT;
+		}
+		else 
+		{ 
+			gpNOWSTATION;
+			gpMANUINIT;
+		}
+
+		nSelect_Button.nScreenSetNum = 0;
+
+		break;
+	case 3:	//자기 진다.
+
+		if(WORD_L(nTr_St_Info.nSelf_Test_Flag))	//자기진단 진행중
+		{
+			gpSDRCHK;
+		}
+		else	//자기진단 결과 표출.
+		{
+			gpSETCLR;
+			gpROOTEN;
+
+			memset(sSelfTestBuf,0x01,60);					
+
+			if(nSelf_Test.nPA_SCREEN_SET == 1)	//방송 자기진단.
+			{
+				nSelf_Test.nPA_PrintCnt++;
+				if(!(nSelf_Test.nPA_PrintCnt%10))	//일정 시간 마다 화면을 갱신한다.
+				{
+					memcpy(sSelfTestBuf,0x00,30);
+					SDR_Routine_Complete(sSelfTestBuf,FALSE);	// GP 화면에 0/X를 표출한다  공백 표출한다.
+				}
+				else if(!((nSelf_Test.nPA_PrintCnt-1)%10))
+				{ 
+					memcpy(sSelfTestBuf,m_PA_SelfTest_Buf,30);
+					SDR_Routine_Complete(sSelfTestBuf,TRUE);	// GP 화면에 0/X를 표출한다.
+				}
+			}
+			else //LED 표시기 
+			{
+				if(WORD_L(nTcmsIdcInfo.nIDCFlag) == 1)
+				{
+					memcpy(sSelfTestBuf,nSelf_Test.nSELF_RXDATA_Buf,(DISPLAY_UNIT+LCDC));
+					memcpy(&sSelfTestBuf[DISPLAY_UNIT+LCDC],nSelf_Test.nSELF_RXDATA_Buf_2R,(DISPLAY_UNIT+LCDC));
+				}
+				else
+				{
+					memcpy(sSelfTestBuf,nSelf_Test.nSELF_RXDATA_Buf,(DISPLAY_UNIT+LCDC));
+				}
+
+				nSelect_Button.nScreenSetNum  = 0;
+				nSelf_Test.nPA_PrintCnt = 0;
+
+				SDR_Routine_Complete(sSelfTestBuf,TRUE);	// GP 화면에 0/X를 표출한다.
+			}
+		}
+
+		break;
+	case 4:	//시험 화면.
+
+		gpSPEED(nTr_St_Info.nSpeed);
+		gpDISTANCE(nTr_St_Info.nDistance);
+
+		if(nTr_St_Info.nDoor){gpDOOROPEN;}
+		else {gpDOORCLOSE;}
+
+		break;
+	case 5:	//지점 보정.
+
+		if(nTr_St_Info.nStopPatNum)
+		{
+			if(nTr_St_Info.nAutoDoorFlag && nTr_St_Info.nSimulationFlag)
+			{
+				if(nTr_St_Info.nDoor && (nTr_St_Info.nDoorOPenCnt == 1)) // 오픈
+				{
+					gpSPOT;
+					GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCnt);
+				}
+				else if(!nTr_St_Info.nDoor) //close
+				{
+					gpSPOT2;
+					GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCnt);
+				}
+			}
+			else
+			{
+				if(nDi_Check.nDoor.nFlag) // 오픈
+				{
+					gpSPOT;
+					GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCnt);
+				}
+				else if(!nDi_Check.nDoor.nFlag) //close
+				{
+					gpSPOT2;
+					GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCnt);
+				}
+
+			}
+
+			gpDISTANCE(nTr_St_Info.nDistance); //거리 정보를 갱신한다.
+		}
+
+		break;
+	case 6: //행선 설정 화면.
+		gpROOTEN;
+		break;
+	case 7:	//열번 설정 화면.
+
+		gp_WritingWord(100,BIN_BCD(nSelect_Button.nGPTranNumInput.nNum));
+		
+		gpNOWSTATION;
+
+		break;
+	case 8:	//디버깅 화면 TCMS/ PIC 프로토콜
+
+		gpSDR_SCREEN;
+
+		//출입문 처리.
+		if(nDi_Check.nDoor.nFlag){gpSTATEOPEN;}
+		else{gpSTATECLOSE;}
+
+		if(nDi_Check.nDoRight.nFlag&0x01){gpDoorRightOpen;}
+		else if(nDi_Check.nDoLeft.nFlag&0x01){gpDoorLeftOpen;}
+		else{gpDoorCLOSE;}
+
+		if(!Xr16788_1Ch.nTxPos)
+		{
+			gp_WritingStr(450,10,(UCHAR *)"TMS -> PIC");
+			gp_WritingStr(460,10,(UCHAR *)"PIC -> TMS");
+			gp_WritingStr(470,11,(UCHAR *)"TMS <-> PIC");
+
+			Xr16788_1Ch.nRxBuf_BackUp[24] = Xr16788_1Ch.nRxOK_Cnt%256;
+			Xr16788_1Ch.nTxBuffer[24] = Xr16788_1Ch.nTxOK_Cnt%256;
+
+			GP_SDR_PRINT(Xr16788_1Ch.nRxBuf_BackUp,Xr16788_1Ch.nRxLen+1,Xr16788_1Ch.nTxBuffer,Xr16788_1Ch.nTxLen+1,nSelect_Button.nScreen_Send_Delay_Time,0);
+			nSelect_Button.nScreen_Send_Delay_Time++;
+		}
+
+		break;
+	case 9:	//프로그램 업로드
+
+		gpROOTDIS;
+
+		gp_WritingStr(555,5,(UCHAR*)"UpLoading!");
+
+		memset(sClean_Buf,0x20,20);
+
+		if(WORD_L(Idc_Load.nErCnt)<=50 && !DWORD_L(Idc_Load.nDataNvsrLoad ))
+		{
+			sTemp = (WORD_L(Idc_Load.nErCnt)*100)/50;
+
+			sCharBuf[0] = sTemp/100 +0x30;
+			sCharBuf[1] = sTemp/10 +0x30;
+			sCharBuf[2] = sTemp%10 +0x30;
+			sCharBuf[3] = 0x25;
+
+			gp_WritingWord(300,sTemp);
+
+			gp_WritingStr(540,2,sCharBuf);
+
+			gp_WritingStr(545,2,sClean_Buf);
+
+		}
+		else if(DWORD_L(Idc_Load.nDataNvsrLoad))
+		{
+			sTemp = (DWORD_MASKING(Idc_Load.nRomWriteCnt)*100)/DWORD_MASKING(Idc_Load.nDataNvsrLoad);
+
+			sCharBuf[0] = sTemp/100 +0x30;
+			sCharBuf[1] = sTemp/10 +0x30;
+			sCharBuf[2] = sTemp%10 +0x30;
+			sCharBuf[3] = 0x25;
+
+			gp_WritingWord(300,100);
+			gp_WritingStr(540,2,(UCHAR*)"100%");
+
+			gp_WritingWord(301,sTemp);
+			gp_WritingStr(545,2,sCharBuf);
+
+		}
+
+		if(Idc_Load.nKO_Flag)
+		{
+
+			gp_WritingWord(300,100);
+			gp_WritingStr(540,2,(UCHAR*)"100%");
+
+			gp_WritingWord(301,100);
+			gp_WritingStr(545,2,(UCHAR*)"100%");
+
+			gp_WritingStr(555,5,sClean_Buf);
+			gp_WritingStr(550,5,(UCHAR*)"OK_Finish!");
+
+			nSelect_Button.nScreenSetNum = 0;
+
+			gpBuzzerOff;
+
+			gpROOTEN;
+			//gpButtonON;
+		}
+
+		break;
+	case 10:	//방송장치 설정기 프로토콜.
+		//출입문 처리.
+		gpPASDR_SCREEN;
+		if(nDi_Check.nDoor.nFlag){gpSTATEOPEN;}
+		else{gpSTATECLOSE;}
+
+		if(nDi_Check.nDoRight.nFlag){gpDoorRightOpen;}
+		else if(nDi_Check.nDoLeft.nFlag){gpDoorLeftOpen;}
+		else{gpDoorCLOSE;}
+
+		gp_WritingStr(450,10,(UCHAR *)"PIC -> PA");
+		gp_WritingStr(460,10,(UCHAR *)"PA -> PIC");
+		gp_WritingStr(470,11,(UCHAR *)"PIC <-> PA");
+
+		GP_SDR_PRINT(nTr_St_Info.nPaTxDataBuf,22,Saf82532_Ach.nRxBackUp,22,nSelect_Button.nScreen_Send_Delay_Time,1);
+		nSelect_Button.nScreen_Send_Delay_Time++;
+
+		break;
+	case 11:		// 다운로드 상태 확인 버튼
+		if(!nLedDataLoad.nSelfTestFlag)
+		{
+			nSelect_Button.nScreenSetNum = 0;
+
+			gpROOTEN;
+
+			memset(sSelfTestBuf,0x01,11);
+			memcpy(sSelfTestBuf,nSelf_Test.nSELF_RXDATA_Buf,(DISPLAY_UNIT+LCDC));
+			SDR_Routine_Complete(sSelfTestBuf,TRUE);	// GP 화면에 0/X를 표출한다.
+
+			if(nLedDataLoad.nSDR_RxCnt)// 수신 카운터가 있으면 
+			{
+				gpLED_UPLOAD_ERBUT;	// 상태 확인이 끝나면 삭제 버튼을 보여준다.
+				gpLED_UPLOAD_ERBUT_SF_ON;
+
+				gp_WritingStr(585,8,(UCHAR *)"UNIT FiND -> OK");
+			}
+			else	//수신 카운터가 없으면.
+			{
+				xr16l788_Init(XR16L788_3CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+				Xr16788_3Ch.nBPS = 192;
+				gp_WritingStr(585,8,(UCHAR *)"UNIT FiND -> NG");
+
+			}
+
+			nLedDataLoad.nSDR_RxCnt = 0;	//수신 카운터.
+		}
+		break;
+	case 12:	//다운로드 메모리 삭제 결과 
+
+		if(nLedDataLoad.nErassFlag.nST_2)
+		{
+			sTemp = (DWORD_L(nLedDataLoad.nSDR_RxCnt)*100)/DWORD_L(nLedDataLoad.nErassFlag.nTXCnt);
+			sCharBuf[0] = sTemp/100 +0x30;
+			sCharBuf[1] = sTemp/10 +0x30;
+			sCharBuf[2] = sTemp%10 +0x30;
+			sCharBuf[3] = 0x25;
+
+			gp_WritingWord(300,sTemp);
+			gp_WritingStr(540,2,sCharBuf);
+
+			gp_WritingWord(301,000);
+			gp_WritingStr(545,2,(UCHAR*)"000%");
+
+		}
+		else
+		{
+			nSelect_Button.nScreenSetNum = 0;
+			if(WORD_L(nLedDataLoad.nErassFlag.nRepCnt))
+			{
+				memcpy(sDowRep,(UCHAR *)"Repet Num -> ",13);
+				sDowRep[13] = 0x30;
+				sDowRep[14] = WORD_L(nLedDataLoad.nErassFlag.nRepCnt)%10 + 0x30;
+
+				gp_WritingStr(595,8,sDowRep);
+			}
+			else
+			{
+				if(!nLedDataLoad.nErassFlag.nErassOk)		{ gp_WritingStr(595,8,(UCHAR *)"ERASS     -> NG");}
+				else if(nLedDataLoad.nErassFlag.nErassOk)	
+				{
+					gp_WritingStr(595,8,(UCHAR *)"ERASS     -> OK");
+					gp_WritingWord(300,100);
+					gp_WritingStr(540,2,(UCHAR*)"100%");
+				}	
+
+				gpROOTEN;
+
+			}
+
+		}
+
+		break;
+	case 13:	//다운로드 데이타 다운로드
+		if(nLedDataLoad.nDataSize)
+		{
+
+			sTemp = (DWORD_L(nLedDataLoad.nDataTxCnt)*100)/(DWORD_L(nLedDataLoad.nDataSize)/128) ;
+			sCharBuf[0] = sTemp/100 +0x30;
+			sCharBuf[1] = sTemp/10 +0x30;
+			sCharBuf[2] = sTemp%10 +0x30;
+			sCharBuf[3] = 0x25;
+
+			gp_WritingWord(300,100);
+			gp_WritingStr(540,2,(UCHAR*)"100%");
+
+			gp_WritingWord(301,sTemp);
+			gp_WritingStr(545,2,sCharBuf);
+
+		}
+		else if(!nLedDataLoad.nDataSize)
+		{
+
+			gp_WritingWord(301,100);
+			gp_WritingStr(545,2,(UCHAR*)"100%");
+
+			gp_WritingStr(605,8,(UCHAR *)"DATA DOWN -> OK");
+
+			memset(sSelfTestBuf,0x01,60);
+
+			SDR_Routine_Complete(sSelfTestBuf,FALSE);//공백 표출한다.
+
+			if(nLedDataLoad.nDataSDRFlag)
+			{
+				gp_WritingStr(615,8,(UCHAR *)"DATA SDR CHACK.");
+			}
+			else if(!nLedDataLoad.nDataSDRFlag)
+			{
+				memcpy(sSelfTestBuf,nSelf_Test.nSELF_RXDATA_Buf,DISPLAY_UNIT);
+				SDR_Routine_Complete(sSelfTestBuf,TRUE);	// GP 화면에 0/X를 표출한다
+				nSelect_Button.nScreenSetNum = 0;
+			}
+		}
+		break;
+	}
+
+}
+/*************************************************** 
+화면 보호 기능.
+*****************************************************/
+void GP_DISPLAY_SAFETY(UCHAR nScreenInf)
+{
+	switch(nScreenInf)
+	{
+	case 0x39: 
+		nSelect_Button.nScreenSafe = 0;
+		gpTURNOFF;
+		break;
+	}
+}
+
+/*************************************************** 
+무표시 전송  
+*****************************************************/
+void GP_CLEAN(UCHAR nScreenInf)
+{
+
+	switch(nScreenInf)
+	{
+	case 0x4B:
+		nSccSendFlag.nClean = 1;
+		break;
+	}
+
+}
+/*************************************************** 
+상태 화면 처리 부분.   
+*****************************************************/
+void GP_STATE_SCREEN(UCHAR nScreenInf)
+{
+	UCHAR sClean_Buf[30];
+	switch(nScreenInf)
+	{
+	case 0x33: //상태 화면
+		memset(sClean_Buf,0x20,30);
+		gp_WritingStr(300,15,sClean_Buf);
+
+		nSelect_Button.nScreenSetNum = 1;
+		nTr_St_Info.nSinmuScrCnt = 0;
+
+		nLedDataLoad.nFDDSelt = FALSE;
+		nLedDataLoad.nSDDSelt = FALSE;
+
+		gpSTATE;
+		break;
+	}
+}
+/****************************************************
+수동 설정 처리 부분   
+/*****************************************************/
+void GP_MANUAL_SCREEN(UCHAR nScreenInf)
+{
+	UCHAR sManual_Buf[40];
+	UCHAR sManual_ClenBuf[30];
+	memset(sManual_Buf,0x20,40);
+	memset(sManual_ClenBuf,0x20,30);
+
+	memcpy(sManual_Buf,(UCHAR *)"The Next Station ",17);
+
+	memcpy(&sManual_Buf[17],nTr_St_Info.nGpStName.nNext,15);
+
+	switch(nScreenInf)
+	{
+	case 0x3C:	// 수동 설정.
+
+		gp_WritingStr(300,15,sManual_ClenBuf);
+		gp_WritingStr(330,15,sManual_ClenBuf);
+
+		nSelect_Button.nScreenSetNum = 2;
+
+		nTr_St_Info.nSinmuScrCnt = 0;
+		gpMANU;
+		gpMANUINIT; 
+		gpMANUNOBLK;
+
+		break;
+	case 0x4E:  //문장 표출 정보
+
+		gp_WritingStr(330,15,sManual_ClenBuf);
+		gp_WritingStr(300,15,sManual_Buf);
+
+		gpNOWBLK;
+		gpMANUOKBLK;
+		break;
+	case 0x56: 
+		gp_WritingStr(300,15,sManual_ClenBuf);
+		gp_WritingStr(330,15,sManual_Buf);
+
+		gpMANUNOBLK;
+		gpMANUINIT; 
+
+		nSelect_Button.nScreenSetNum = 2;
+
+		nSccSendFlag.nManualSet = 2;
+
+		break;
+	}
+}
+/*****************************************************
+메뉴 이동 버튼   
+*****************************************************/
+void GP_MENU_SCREEN(UCHAR nScreenInf)
+{
+	switch(nScreenInf)
+	{
+	case 0x32://메뉴 화면
+		nSelect_Button.nScreenSetNum = 0;
+		gpMENU;
+
+		break;
+	}
+}
+/*****************************************************
+디버깅 화면 이동
+*****************************************************/
+void GP_SDR_SCREEN(UCHAR nScreenInf)
+{
+	UCHAR sClBuf[100];
+
+	switch(nScreenInf)
+	{
+	case 114://디버깅 화면 이동
+		nSelect_Button.nScreenSetNum = 8;
+		nSelect_Button.nScreenRxTime = 1000;
+
+		memset(sClBuf,0x00,100);
+
+		gp_WritingStr(400,40,sClBuf);
+		gp_WritingStr(500,40,sClBuf);
+		gp_WritingStr(600,10,sClBuf);
+
+
+		gpSDR_SCREEN;
+		gpDoorCLOSE;
+
+		break;
+	case 120:
+		nSelect_Button.nScreenSetNum = 10;
+		nSelect_Button.nScreenRxTime = 1000;
+
+		memset(sClBuf,0x00,100);
+
+		gp_WritingStr(400,40,sClBuf);
+		gp_WritingStr(500,40,sClBuf);
+		gp_WritingStr(600,10,sClBuf);
+
+		gpPASDR_SCREEN;
+
+
+		break;
+	}
+}
+
+void GP_SDR_PRINT(UCHAR *pDataTcms,UCHAR nTmsLen,UCHAR *pDataIcd,UCHAR nIcdLen,UCHAR nSend_ID,UCHAR nPicPaCode)
+{
+	int i;
+	UCHAR sGpSdrBuf[100];
+	UCHAR sRxLen = 0;
+	UCHAR sTxLen = 0;
+
+	sRxLen = nTmsLen;
+	sTxLen = nIcdLen;
+
+	if(WORD_L(nTr_St_Info.nTcmsRxNGCnt)<=5 || WORD_L(nPicPaCode))
+	{
+		if(nSend_ID&0x01)//부하량 감소
+		{
+
+			for(i=0;i<= WORD_L(sRxLen);i++)
+			{
+				sGpSdrBuf[i*3] =   BYTE_H(pDataTcms[i]) >= 0x0A ? (BYTE_H(pDataTcms[i])-10) + 0x41 :   BYTE_H(pDataTcms[i])+0x30;
+				sGpSdrBuf[i*3+1] = BYTE_L(pDataTcms[i]) >= 0x0A ? (BYTE_L(pDataTcms[i])-10) + 0x41 :   BYTE_L(pDataTcms[i])+0x30;
+
+				sGpSdrBuf[i*3+2] = 0x2D;
+			}
+
+			gp_WritingStr(400,(sRxLen*3)/2,sGpSdrBuf);
+		}
+		else
+		{
+
+			for(i=0;i<= WORD_L(sTxLen);i++)
+			{
+				sGpSdrBuf[i*3] =   BYTE_H(pDataIcd[i]) >= 0x0A ? (BYTE_H(pDataIcd[i])-10) + 0x41 :   BYTE_H(pDataIcd[i])+0x30;
+				sGpSdrBuf[i*3+1] = BYTE_L(pDataIcd[i]) >= 0x0A ? (BYTE_L(pDataIcd[i])-10) + 0x41 :   BYTE_L(pDataIcd[i])+0x30;
+
+				sGpSdrBuf[i*3+2] = 0x2D;
+			}
+
+			gp_WritingStr(500,(sTxLen*3)/2,sGpSdrBuf);
+		}
+	}
+	else if(WORD_L(nTr_St_Info.nTcmsRxNGCnt) > 5)
+	{
+		gp_WritingStr(600,9,(UCHAR *)"* TMS InterFace NG");
+	}
+
+}
+/*****************************************************
+행선 설정 처리 부분   
+*****************************************************/
+
+void GP_DEST_SCREEN(UCHAR nScreenInf)
+{
+	UCHAR i;
+	UCHAR sScreenNumBuf[5];
+	UCHAR sDestNum = 0,sDestNum1 = 0;
+	UCHAR sTreanNumSet = 0;
+	UCHAR sTreanSetDest = 0;
+	UCHAR sDestTxBuf[20];
+
+	switch(WORD_L(nScreenInf))
+	{
+	case 0x38://행선 설정 화면 
+		nSelect_Button.nScreenSetNum = 6;
+		nTr_St_Info.nSinmuScrCnt = 0;
+		gpROOT;
+		gpROOTINIT; 
+		gpROOTEN; 
+		gpROOTNOBLK;
+		
+		for(i=0;i<100;i++) // 100 = 행선 설정에서 설정될수 있는 전체 역명
+		{
+			if(WORD_L(nNvsram_Variable->nDestCodeList[i]) == WORD_L(nTr_St_Info.nDest.nCode))
+			{
+				sTreanNumSet = i;
+				break;
+			}
+		}
+
+		nNvsram_Variable->nScreenNum = ((sTreanNumSet)/10);
+		sTreanSetDest = (sTreanNumSet%10);
+
+		NVSRAM_Find_StationRoot(WORD_L(nNvsram_Variable->nScreenNum),10);	//역명을 불러 오는 부분.	
+		for(i=0;i<10;i++) gp_WritingStr(340+i*10,5, nNvsram_Variable->nDestScreen[i].nStationName);	
+
+		gp_WritingWord(0x3D,(0x01<<((sTreanSetDest)%10))); // 선택된 데이터 검정색으로 고정 
+
+		sScreenNumBuf[0] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)/10)+0x30);
+		sScreenNumBuf[1] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)%10)+0x30);
+
+		gp_WritingStr(440,1,sScreenNumBuf);
+
+		//gpROOTWHITE;
+
+		break;
+	case 0x6E:	//이전 화면 버튼.
+
+		if(WORD_L(nNvsram_Variable->nScreenNum))
+		{
+			nNvsram_Variable->nScreenNum--;
+
+			NVSRAM_Find_StationRoot(WORD_L(nNvsram_Variable->nScreenNum),10);	//역명을 불러 오는 부분.	
+			for(i=0;i<10;i++) gp_WritingStr(340+i*10,5, nNvsram_Variable->nDestScreen[i].nStationName);	
+
+			sScreenNumBuf[0] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)/10)+0x30);
+			sScreenNumBuf[1] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)%10)+0x30);
+			gp_WritingStr(440,1,sScreenNumBuf);
+
+			gpROOTWHITE;
+			gpROOTINIT; 
+			gpROOTDIS;
+
+		}
+
+		break;
+	case 0x6F:	//다음 화면 버튼.
+
+		if(WORD_L(nNvsram_Variable->nScreenNum)<9)
+		{
+			if((WORD_L(SanDisk_Vari.nTotalDestCnt)/10)+1 > WORD_L(nNvsram_Variable->nScreenNum+1 ))
+			{
+				nNvsram_Variable->nScreenNum++;
+				NVSRAM_Find_StationRoot(WORD_L(nNvsram_Variable->nScreenNum),10);	//역명을 불러 오는 부분.	
+				for(i=0;i<10;i++) gp_WritingStr(340+i*10,5, nNvsram_Variable->nDestScreen[i].nStationName);	
+
+				sScreenNumBuf[0] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)/10)+0x30);
+				sScreenNumBuf[1] = (((WORD_L(nNvsram_Variable->nScreenNum)+1)%10)+0x30);
+				gp_WritingStr(440,1,sScreenNumBuf);
+
+				gpROOTWHITE;
+				gpROOTINIT; 
+				gpROOTDIS;
+			}
+		}
+
+		break;
+	case 0x64: gpROOT1BLK;  gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=1; break;	// 행선설정1 (T Tag 설정)
+	case 0x65: gpROOT2BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=2; break;	// 행선설정2 (T Tag 설정)
+	case 0x66: gpROOT3BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=3; break;	// 행선설정3 (T Tag 설정)
+	case 0x67: gpROOT4BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=4; break;	// 행선설정4 (T Tag 설정)
+	case 0x68: gpROOT5BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=5; break;	// 행선설정5 (T Tag 설정)
+	case 0x69: gpROOT6BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=6; break;	// 행선설정6 (T Tag 설정)
+	case 0x6a: gpROOT7BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=7; break;	// 행선설정7 (T Tag 설정)
+	case 0x6b: gpROOT8BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=8; break;	// 행선설정8 (T Tag 설정)
+	case 0x6c: gpROOT9BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=9; break;	// 행선설정9 (T Tag 설정)
+	case 0x6d: gpROOT10BLK;	gpROOTACTIVE;  gpROOTDIS; nNvsram_Variable->nDestSetNum=10; break;	// 행선설정10(T Tag 설정)
+
+	case 0x51: 
+		gpROOTNOBLK; 
+		gpROOTINIT; //행성 설정 확인 버튼 조작.
+
+		sDestNum = WORD_L(SanDisk_Vari.nTotalDestCnt);
+		sDestNum1 = WORD_L(nNvsram_Variable->nScreenNum)*10+WORD_L(nNvsram_Variable->nDestSetNum);
+
+		if(sDestNum >= sDestNum1)
+		{
+			nNvsram_Variable->nDestSetNumRe = WORD_L(nNvsram_Variable->nDestSetNum);
+			gp_WritingWord(0x3D,(0x01<<((WORD_L(nNvsram_Variable->nDestSetNumRe)-1)%10))); 	 // 선택된 데이터 검정색으로 고정 
+			nTr_St_Info.nDest.nCode = WORD_L(nNvsram_Variable->nDestCodeList[sDestNum1-1]);
+
+			NVSRAM_Rd_StationName_Code(nTr_St_Info.nDest.nCode,nTr_St_Info.nDest.nEnNameBuf,nTr_St_Info.nGpStName.nDest);//
+
+			gp_WritingStr(0x96,5,nTr_St_Info.nGpStName.nDest);	// 행선 표출
+
+			nSccSendFlag.nSDI_Clean = 2;
+
+			nSccSendFlag.nDeSTCodeSet = 4;
+
+			nSccSendFlag.nSddCodeSet = 3;
+
+			//SCC_TX_PROTOCOL(sDestTxBuf,0xF8,0x31,0x1C,WORD_L(nTr_St_Info.nDest.nCode),10);
+			//Delay_SCC2_SendTo(sDestTxBuf,20,SCC_A_CHANNEL,5);
+
+		}
+		gpROOTEN;
+		break;
+	}
+
+}
+/******************************************************
+시험 화면 처리 부분.  
+*****************************************************/
+void GP_SIMU_SCREEN(UCHAR nScreenInf)
+{
+
+	UCHAR sSimuFlag_Cnt = 0;
+	switch(nScreenInf)
+	{
+	case 0x37:	//시험 화면.
+
+		nTr_St_Info.nSinmuScrCnt++;
+		if(!(nTr_St_Info.nSinmuScrCnt%5)) // 5번을 눌렀을 경우 들어 온다.
+		{
+			nSelect_Button.nScreenSetNum = 4;
+			nTr_St_Info.nSinmuScrCnt= 0;
+
+			sSimuFlag_Cnt  |= nTr_St_Info.nPIBPatFlag ? 0x01 : 0x00;
+			sSimuFlag_Cnt  |= nTr_St_Info.nDISFPatFlag ? 0x04 : 0x00;
+			sSimuFlag_Cnt  |= nTr_St_Info.nSimulationFlag ? 0x02 : 0x00;
+			sSimuFlag_Cnt  |= nTr_St_Info.nAutoDoorFlag ? 0x08 : 0x00;
+
+			gp_WritingWord(0x41,sSimuFlag_Cnt);
+
+			gpTEST;
+		}
+		break;
+	case 0x5A: 
+		nTr_St_Info.nPIBPatFlag = NOT(nTr_St_Info.nPIBPatFlag);	// 차내패턴시험	
+		nSccSendFlag.nPIBPaten = 1;
+		break;		
+	case 0x5D: 
+		nTr_St_Info.nDISFPatFlag = NOT(nTr_St_Info.nDISFPatFlag); // 행선 패턴시험
+		nSccSendFlag.nS_FDIPaten = 1;
+		break;
+	case 0x5B: 
+		nTr_St_Info.nSimulationFlag = NOT(nTr_St_Info.nSimulationFlag); // 모의주행시험 
+		if(!nTr_St_Info.nSimulationFlag)//시험을 종류할때 초기화
+		{
+			nTr_St_Info.nSpeed = 0;
+			nTr_St_Info.nDistance = 0;
+
+			nTr_St_Info.nDoor = 1;
+
+			nTr_St_Info.nDoorOPenCnt = 0;
+
+			gp_WritingStr(300,15,(UCHAR *)"                              ");	//클리어한다.
+
+			gpDISTANCE(nTr_St_Info.nDistance);
+			gpSPEED(nTr_St_Info.nSpeed);
+			gpDOOROPEN; 			
+		}
+		else	//시험을 시작할때 출입문을 오픈으로 한다.
+		{
+			nTr_St_Info.nDoor = 1;
+
+		}
+		break;		
+	case 0x5C: 
+		nTr_St_Info.nAutoDoorFlag = NOT(nTr_St_Info.nAutoDoorFlag);		// 자동 출입문 개폐
+		break;		
+
+	case 0x5E: 
+		nTr_St_Info.nSpeed+= 25;	 				// 속도 +
+		if(nTr_St_Info.nSpeed >= 500) nTr_St_Info.nSpeed = 500;
+		gpSPEED(nTr_St_Info.nSpeed);
+
+		break;						
+	case 0x5F: // 속도 -		
+		if(nTr_St_Info.nSpeed) { nTr_St_Info.nSpeed-= 10;}
+		gpSPEED(nTr_St_Info.nSpeed);
+
+		break;
+	case 0x60: // 출입문 ON
+		nTr_St_Info.nDoor =1; 
+		gpDOOROPEN;							
+		break;											// DoorOpen
+	case 0x61: //출입문 OFF
+		nTr_St_Info.nDoor =0; 
+		gpDOORCLOSE;
+		break;		// DoorClose
+	}
+}
+/****************************************************
+지점 보정 화면 처리 부분.   
+*****************************************************/
+UCHAR d_Point_Vel = 0;
+void GP_POINT_SCREEN(UCHAR nScreenInf)
+{
+	d_Point_Vel++;
+
+	switch(nScreenInf)
+	{
+	case 0x36: //지점 보정 화면
+
+
+		if(nDi_Check.nDoor.nFlag) {gpSPOT; }	// 출입문 접점에 따라 지점 보정에서 보여주는 화면이 달라 진다.
+		else {gpSPOT2; }
+
+		gpSPOTINIT; gpSPOTEN;
+
+		nTr_St_Info.nStation_PointCntRe = nTr_St_Info.nStation_PointCnt;
+
+		GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCnt);
+
+		nSelect_Button.nScreenSetNum = 5;
+
+		break;
+		//////////////////////////////////////////////////////////////////진행방향
+	case 0x46: 
+		gpSPOTDIS; 
+		
+		
+		if(WORD_L(nTr_St_Info.nStopPatNum))
+		{
+			nSelect_Button.nScreenRxTime = 2000;
+			if(WORD_L(nTr_St_Info.nStation_PointCntRe) < WORD_L(nTr_St_Info.nStation_MaxCnt)-1)
+			{
+				nTr_St_Info.nStation_PointCntRe++;
+			}
+			else
+			{
+				nTr_St_Info.nStation_PointCntRe = WORD_L(nTr_St_Info.nStation_MaxCnt)-1;
+			}
+
+			GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCntRe);	
+		}
+		gpSPOTEN;
+		break;
+
+		//////////////////////////////////////////////////////////////////반대방향
+
+	case 0x47: 
+		gpSPOTDIS; 
+		if(WORD_L(nTr_St_Info.nStopPatNum))
+		{	
+			nSelect_Button.nScreenRxTime = 2000;
+			if(WORD_L(nTr_St_Info.nStation_PointCntRe)> 0)
+			{
+				nTr_St_Info.nStation_PointCntRe--;
+			}
+			else
+			{
+				nTr_St_Info.nStation_PointCntRe = 0;
+			}
+			GP_POINT_ST_PRO(nTr_St_Info.nStation_PointCntRe);
+
+		}	
+		gpSPOTEN;
+		break;
+		/////////////////////////////////////////////////////////////////// 확인 
+
+	case 0x53: 
+		gpSPOTINIT; 	//확인시 현재역 포인터 업데이트
+		if(WORD_L(nTr_St_Info.nStopPatNum))
+		{
+			nTr_St_Info.nStation_PointCnt = nTr_St_Info.nStation_PointCntRe;
+
+			//속도가 있는 상황에서 지점 보정을 다시 하면 문장 Index를 초기화 한다. 정확한 문장 찾기를 위해
+			nIndex_Flag.nIndexDI_DICnt = 0;
+			nIndex_Flag.nIndexCnt = 0;
+
+			DP_STNAME_INFO_UP();
+			DP_ALL_TEXT_CHECK();
+
+		}
+		break;	
+	}
+
+}
+/***************************************************
+자기진단 처리 부분. 
+****************************************************/
+void GP_SELFTEST_SCREEN(UCHAR nScreenInf)
+{
+	UCHAR sSelf_Buf[60];
+
+	switch(nScreenInf)
+	{
+	case 0x3D:	//자기 진단 화면
+		nTr_St_Info.nSinmuScrCnt = 0;
+
+		//nSelf_Test.nSELF_ICR_SELECT = 0;
+
+		if(WORD_L(nSelf_Test.nSELF_ICR_SELECT) == 1) { gpSELFT_12;}
+		else if(!WORD_L(nSelf_Test.nSELF_ICR_SELECT)) { gpSELFT_4;}
+
+		gpSELFTESTINIT;		
+		gp4RBLACK_S;gp6RWITE;gp8RWITE;
+		gp8SELFITEM;
+
+		gpROOTEN;
+
+		break;
+	case 0x74:	// 자기 진단 4량 선택
+		gp4RBLK_S; 
+		gpSELKTOKBLK;
+		gpROOTDIS;
+		break;
+	case 0x57: // 자기 진단 확인 버튼 누름
+
+		gpSELFTESTINIT;		
+		gp4RBLACK_S;
+
+		nSelf_Test.nSELF_All_Cnt = 0;
+		nSelf_Test.nSELF_ICR_CNT = 0;
+
+		nTr_St_Info.nSelf_Test_Flag = TRUE;
+
+		memset(nSelf_Test.nSELF_RXDATA_Buf,0x01,15);
+
+		memset(nSelf_Test.nSELF_RXDATA_Buf_2R,0x01,15);
+		//memset(nSelf_Test.nSELF_RXDATA_Buf_3R,0x01,20);
+
+		memset(sSelf_Buf,0x01,60);
+
+		SDR_Routine_Complete(sSelf_Buf,FALSE);//공백 표출한다.
+
+		nSelect_Button.nScreenSetNum = 3;
+
+		break;
+
+	case 112:	//표시기 화면 호출.
+
+		nSelf_Test.nPA_SCREEN_SET = 0;
+
+		if(WORD_L(nSelf_Test.nSELF_ICR_SELECT) == 1) { gpSELFT_12;}
+		else if(!WORD_L(nSelf_Test.nSELF_ICR_SELECT)) { gpSELFT_4;}
+
+		nSelect_Button.nScreenSetNum = 3;
+
+		break;
+	case 113: //방송 화면 호출.
+
+		nSelf_Test.nPA_SCREEN_SET = 1;
+		//nSelf_Test.nSELF_ICR_SELECT = 1;
+
+		gpSELFT_PA;
+
+		memcpy(sSelf_Buf,0x00,30);
+		SDR_Routine_Complete(sSelf_Buf,FALSE);	// GP 화면에 0/X를 표출한다.
+		nSelect_Button.nScreenSetNum = 3;
+
+
+		break;
+	}
+}
+/******************************************************************
+SDR_Routine_Complete 
+GP 화면에 O/X를 표출한다.
+*******************************************************************/
+void SDR_Routine_Complete(UCHAR *pSData,UCHAR nSt_End)					// GP와 재확인 할 것 
+{
+	UCHAR i;
+	UCHAR pDData[120];
+	UCHAR sDisplay_Unit;
+
+	sDisplay_Unit =DISPLAY_UNIT+LCDC+(nSelf_Test.nPA_SCREEN_SET*19) + (nTcmsIdcInfo.nIDCFlag*11);
+
+	for(i=0;i<sDisplay_Unit;i++) 									//대구 지하철 
+	{
+		if(WORD_L(nSt_End))
+		{
+			if(pSData[i]) {pDData[i*2]= 0x08; pDData[i*2+1]= 0x06;} // X 표출 (2054)
+			else {pDData[i*2]= 0x08; pDData[i*2+1]= 0x05;}		// O 표출 (2053)	
+		}
+		else if(!WORD_L(nSt_End))
+		{
+			pDData[i*2]= 0x08; pDData[i*2+1]= 0x07; // 공백 표출
+		}
+	}
+
+	if(nSelf_Test.nPA_SCREEN_SET == 1)	//방송 상태
+	{
+		gp_WritingStr(242,sDisplay_Unit,pDData);	
+	}
+	else
+	{
+		gp_WritingStr(220,sDisplay_Unit,pDData);					// Address 를 순차적으로 잡아서 표출 할 것 
+	}
+}
+/***************************************************
+열차 번호 입력 처리 부분.   
+*****************************************************/
+void GP_TRAIN_SCREEN(UCHAR nScreenInf)
+{
+
+	switch(nScreenInf)
+	{
+	case 0x34:	// 열번설정 화면.
+
+		nSelect_Button.nScreenSetNum = 7;
+		
+		gpTRAINNUMBER;
+		gpKEYACTIVE;
+		gpKEYCLR;
+		gpSETCLR;
+		gpKEYEN; 	
+
+		break;
+	case 0x4D:	//열번설정 KEY입력 신호 값.
+		gpKEYINIT;
+		break;
+	case 0x50: //열번설정후 확인 버튼 조작.
+
+		gpKEYCLR;
+		gpRDNUMBER;
+		gpKEYDIS; 
+		gpTRNOSEEK; 	
+		gpKEYEN;
+		break;
+	}
+}
+
+/********************************************************************
+지점 보정기능 문장 처리 하는 함수  
+*********************************************************************/
+void GP_POINT_ST_PRO(UCHAR nPointSt)
+{
+	UCHAR sPointBuf[15];
+	UCHAR sPreBuf[15];
+	UCHAR sNowBuf[15];
+	UCHAR sNextBuf[15];
+	memset(sPointBuf,0x20,15);
+	if(!WORD_L(nTr_St_Info.nStopPatNum))
+	{
+
+	}
+	else 
+	{
+		if(WORD_L(nPointSt))
+		{
+
+			if((WORD_L(nPointSt)+1)<= WORD_L(nTr_St_Info.nStation_MaxCnt)-1)
+			{
+				memcpy(sNextBuf,StationName->StaName[nPointSt+1].EngName,15);
+				DP_GpDataChange(nTr_St_Info.nGpStName.nNext,sNextBuf);
+				gp_WritingStr(170,6,nTr_St_Info.nGpStName.nNext);
+
+			}
+			else if(WORD_L(nPointSt) == WORD_L(nTr_St_Info.nStation_MaxCnt)-1)
+			{
+				gp_WritingStr(170,6,sPointBuf);
+
+			}
+
+			memcpy(sPreBuf, StationName->StaName[nPointSt-1].EngName,15);
+			memcpy(sNowBuf, StationName->StaName[nPointSt].EngName,15);
+
+			DP_GpDataChange(nTr_St_Info.nGpStName.nPre,sPreBuf);
+			DP_GpDataChange(nTr_St_Info.nGpStName.nNow,sNowBuf);
+
+			gp_WritingStr(180,6,nTr_St_Info.nGpStName.nPre);
+			gp_WritingStr(160,6,nTr_St_Info.nGpStName.nNow);
+
+		}
+		else 
+		{
+			memcpy(sNowBuf, StationName->StaName[nPointSt].EngName,15);
+			memcpy(sNextBuf,StationName->StaName[nPointSt+1].EngName,15);
+
+			DP_GpDataChange(nTr_St_Info.nGpStName.nNow,sNowBuf);
+			DP_GpDataChange(nTr_St_Info.nGpStName.nNext,sNextBuf);
+
+			gp_WritingStr(180,6,sPointBuf);
+			gp_WritingStr(170,6,nTr_St_Info.nGpStName.nNext);
+			gp_WritingStr(160,6,nTr_St_Info.nGpStName.nNow);
+		}
+	}
+
+}
+
+/********************************************************************
+GP_AUTO_SELFTEST 자기 진단을 자동으로 실시 한다.
+*********************************************************************/
+void GP_AUTO_SELFTEST()
+{
+	UCHAR sSelf_Buf[60];
+
+	nTr_St_Info.nSinmuScrCnt = 0;
+
+	//nSelf_Test.nSELF_ICR_SELECT = 0;
+
+	if(WORD_L(nSelf_Test.nSELF_ICR_SELECT) == 1) { gpSELFT_12;}
+	else if(!WORD_L(nSelf_Test.nSELF_ICR_SELECT)) { gpSELFT_4;}
+
+
+	gpSELFTESTINIT;		
+	gp4RBLACK_S;gp6RWITE;gp8RWITE;
+	gp8SELFITEM;
+
+	gpROOTEN;
+
+	gpSELFTESTINIT;		
+	gp4RBLACK_S;
+
+	nSelf_Test.nSELF_All_Cnt = 0;
+	nSelf_Test.nSELF_ICR_CNT = 0;
+
+	nTr_St_Info.nSelf_Test_Flag = TRUE;
+
+	memset(nSelf_Test.nSELF_RXDATA_Buf,0x01,15);
+	memset(nSelf_Test.nSELF_RXDATA_Buf_2R,0x01,15);
+	//memset(nSelf_Test.nSELF_RXDATA_Buf_3R,0x01,20);
+
+	memset(sSelf_Buf,0x01,60);
+
+	SDR_Routine_Complete(sSelf_Buf,FALSE);//공백 표출한다.
+
+	nSelect_Button.nScreenSetNum = 3;
+
+}
+/********************************************************************
+GP_DOWNLOAD_SDR  ---> LED 프로그램 다운로드 자기진단.
+*********************************************************************/
+
+void GP_DOWNLOAD_SDR()
+{
+	UCHAR sSelf_Buf[60];
+	nTr_St_Info.nSinmuScrCnt = 0;
+
+	//nSelf_Test.nSELF_ICR_SELECT = 0;
+
+	nSelf_Test.nSELF_All_Cnt = 0;
+	nSelf_Test.nSELF_ICR_CNT = 0;
+
+	memset(nSelf_Test.nSELF_RXDATA_Buf,0x01,15);
+	memset(nSelf_Test.nSELF_RXDATA_Buf_2R,0x01,15);
+
+	memset(sSelf_Buf,0x01,60);
+
+	SDR_Routine_Complete(sSelf_Buf,FALSE);//공백 표출한다.
+}
+/*****************************************************
+GP_IDC_SW_UPLOAD 
+*****************************************************/
+UCHAR d_UPUP = 0;
+void GP_IDC_SW_UPLOAD(UCHAR nScreenInf)
+{
+	UCHAR sDataBuf[30];
+	UCHAR sClenBuf[20];
+
+	memset(sClenBuf,0x20,20);
+
+	switch(nScreenInf)
+	{
+	case 117:	//업로드 화면 전환.
+
+		nSelect_Button.nScreenSetNum = 0;
+
+		gpUpLoad;
+		gpROOTDIS;
+
+		gp_WritingStr(550,5,sClenBuf);
+		gp_WritingStr(555,5,sClenBuf);
+
+		break;
+	case 118:	//업로드 데이타 확인
+		if(SanDisk_Vari.nDiskInputCheckFlag)	// 카드 체크.
+		{
+			SanDisk_Vari.nDiskUpChekFlag = Nvsram_IDC_UpLoad_CK(sDataBuf,IDC_FILE);	// 버전 체크
+
+			gpUpLoad_2;
+
+			gp_WritingWord(300,0);
+			gp_WritingWord(301,0);
+
+			gp_WritingStr(560,3,(UCHAR*)ROM_VER_S);
+			gp_WritingStr(565,1,(UCHAR*)"->");
+			gp_WritingStr(570,3,sDataBuf);
+
+			gp_WritingStr(540,2,(UCHAR*)"000%");
+			gp_WritingStr(545,2,(UCHAR*)"000%");
+
+			if(WORD_L(SanDisk_Vari.nDiskUpChekFlag) == 1)
+			{
+				gp_WritingStr(550,5,sClenBuf);
+				gp_WritingStr(555,5,(UCHAR*)"New UpLoad");
+			}
+			else if(WORD_L(SanDisk_Vari.nDiskUpChekFlag) == 2)
+			{
+				gp_WritingStr(555,5,sClenBuf);
+				gp_WritingStr(550,5,(UCHAR*)"같은버전 ");
+			}
+			else if(WORD_L(SanDisk_Vari.nDiskUpChekFlag) == 3)
+			{
+				gp_WritingStr(555,5,sClenBuf);
+				gp_WritingStr(550,5,(UCHAR*)"옛날버전 ");
+			}
+
+			gpROOTEN;
+		}
+		else
+		{
+			gp_WritingStr(550,5,sClenBuf);
+			gp_WritingStr(555,5,(UCHAR*)"CARD CHECK");
+			gpROOTDIS;
+
+		}
+
+		break;
+	case 119:
+
+		//gpButtonOFF;
+
+		Idc_Load.nIDC_ROM_Flag = 1;
+		Idc_Load.nKO_Flag = 0;
+		nSelect_Button.nScreenSetNum = 9;
+
+		break;
+
+	}
+
+}
+/*****************************************************
+GP_SFDD_SW_UPLOAD 
+*****************************************************/
+
+void GP_SFDD_SW_UPLOAD(UCHAR nScreenInf)
+{
+	UCHAR sClenBuf[20];
+	UCHAR sDataBuf[10];
+
+	memset(sClenBuf,0x20,20);
+
+	switch(nScreenInf)
+	{
+	case 121:	// 상태 확인
+		nLedDataLoad.nWaitSDR = 6;
+		xr16l788_Init(XR16L788_3CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,XR16L788_1STOPBIT);	
+		Xr16788_3Ch.nBPS = 192;
+
+		gpROOTDIS;
+		break;
+	case 122:	//Erass 
+		nLedDataLoad.nErassFlag.nST_1 = TRUE;
+		nLedDataLoad.nErassFlag.nErassOk = FALSE;
+		nSelf_Test.nSELF_TX_Cnt = 0;
+		gpLED_UPLOAD_ERBUT_SF_OFF;
+		gpROOTDIS;
+
+		break;
+	case 123:	//데이타 다운로드
+		nLedDataLoad.nDataDownFlag = TRUE;
+		nSelect_Button.nScreenSetNum = 13;
+
+		gpLED_UPLOAD_DABUT_SF_OFF;
+		gpROOTDIS;
+
+		break;
+	case 124:	//SDD 선택
+		gpROOTEN;
+
+		nSelect_Button.nScreenSetNum = 0;
+
+		if(!Nvsram_IDC_UpLoad_CK(sDataBuf,SDD_FILE))
+		{
+			gp_WritingStr(550,5,sClenBuf);
+			gp_WritingStr(555,5,(UCHAR*)"FILE CHECK");
+		}
+		else
+		{
+			nLedDataLoad.nSDDSelt = TRUE;
+			nLedDataLoad.nFDDSelt = FALSE;
+
+			gpSFDD_UPLOAD_SCREEN;
+
+			nLedDataLoad.nSFKindCode = 0xF6;
+
+			if(WORD_L(sDataBuf[0]) == 0x35)
+			{
+				gp_WritingStr(575,8,(UCHAR*)"SDD CHECK -> OK");
+			}
+			else
+			{
+				gp_WritingStr(575,8,(UCHAR*)"SDD CHECK -> NG");
+			}
+
+			GP_SFDD_SW_UPLOAD_CLEAN();
+
+		}
+
+		break;
+
+	case 125:	//FDD 선택
+		gpROOTEN;
+
+		nSelect_Button.nScreenSetNum = 0;
+
+		if(!Nvsram_IDC_UpLoad_CK(sDataBuf,FDD_FILE))
+		{
+			gp_WritingStr(550,5,sClenBuf);
+			gp_WritingStr(555,5,(UCHAR*)"FILE CHECK");
+		}
+		else
+		{
+
+			nLedDataLoad.nFDDSelt = TRUE;
+			nLedDataLoad.nSDDSelt = FALSE;
+
+			gpSFDD_UPLOAD_SCREEN;
+			nLedDataLoad.nSFKindCode = 0xF5;
+			if(WORD_L(sDataBuf[0]) == 0x34)
+			{
+				gp_WritingStr(575,8,(UCHAR*)"FDD CHECK -> OK");
+			}
+			else
+			{
+				gp_WritingStr(575,8,(UCHAR*)"FDD CHECK -> NG");
+			}
+
+			GP_SFDD_SW_UPLOAD_CLEAN();
+
+		}
+
+		break;
+
+	}
+
+}
+
+/*****************************************************
+GP_SFDD_SW_UPLOAD_CLEAN  메모리 초기화
+*****************************************************/
+void GP_SFDD_SW_UPLOAD_CLEAN()
+{
+	UCHAR sSelf_Buf[60];
+	UCHAR sClenBuf[20];
+
+	memset(sSelf_Buf,0x01,60);
+
+	memset(sClenBuf,0x20,20);
+
+	SDR_Routine_Complete(sSelf_Buf,FALSE);//공백 표출한다.
+
+	gpLED_UPLOAD_BUTOFF;
+	gpLED_UPLOAD_DABUTOFF;
+
+	gpLED_UPLOAD_ERBUT_SF_OFF;
+	gpLED_UPLOAD_DABUT_SF_OFF;
+
+	gp_WritingStr(585,10,sClenBuf);
+	gp_WritingStr(595,10,sClenBuf);
+	gp_WritingStr(605,10,sClenBuf);
+	gp_WritingStr(615,10,sClenBuf);
+
+	gp_WritingWord(300,0);
+	gp_WritingStr(540,2,(UCHAR*)"000%");
+
+	gp_WritingWord(301,0);
+	gp_WritingStr(545,2,(UCHAR*)"000%");
+
+}

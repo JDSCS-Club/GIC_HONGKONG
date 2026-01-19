@@ -1,0 +1,152 @@
+#include "def.h"
+//#include "cf.h"
+
+UCHAR m_btCfCardInfoBuf[256]={0,0,};
+int m_nSectorStartOffset = 0;
+
+//**************************************************************
+//	Disk를 초기화 시킨다.
+//**************************************************************
+int cf_Init()
+{	
+	UCHAR nBuff[512];
+	
+	cf_SectorRead(32,nBuff);
+	
+	if(nBuff[0] == 0xeb)
+		m_nSectorStartOffset = 32;
+	else
+		m_nSectorStartOffset = 0;
+}
+
+//**************************************************************
+//	원하는 섹터를 0으로 채운다.
+//**************************************************************
+int cf_SectorErase(int nSectorPos)
+{
+	cf_WaitReady();
+	
+	SEC_CNT_REG	= 0x01;
+	SEC_NUM_REG	= nSectorPos & 0xff;
+	CYL_LOW_REG	= nSectorPos >> 8;
+	CYL_HI_REG	= nSectorPos >> 16;
+	DRV_HD_REG	= 0xe0 | ((nSectorPos >> 24)&0xf);
+
+	cf_WaitDRQ();
+
+	COMMAND_REG	= ERASE_REG;
+	
+	return 1;
+}
+
+//**************************************************************
+//	디스크의 정보 값을 읽어 온다.
+//**************************************************************
+void cf_InfoRead()
+{
+	WORD i;	
+
+	SEC_CNT_REG	= 0x01;
+	SEC_NUM_REG	= 0;
+	CYL_LOW_REG	= 0;
+	CYL_HI_REG	= 0;
+	COMMAND_REG	= INFO_REG;	
+
+	cf_WaitDRQ();
+	for (i=0;i<256;i++) m_btCfCardInfoBuf[i] = DATA_REG & 0xff;
+}
+
+
+//**************************************************************
+//	디스크로부터 데이터를 읽는다. (LBA)
+//**************************************************************
+int cf_SectorRead(int nSectorPos,UCHAR *pBuff)
+{
+	WORD i;
+
+	cf_WaitReady();
+	
+	SEC_CNT_REG	= 0x01;
+	SEC_NUM_REG	= nSectorPos & 0xff;
+	CYL_LOW_REG	= nSectorPos >> 8;
+	CYL_HI_REG	= nSectorPos >> 16;
+	DRV_HD_REG	= 0xe0 | ((nSectorPos >> 24)&0xf);
+	COMMAND_REG	= RD_REG;
+	
+	cf_WaitDRQ();
+	
+	for (i=0;i<512;i++) pBuff[i] = DATA_REG&0xff;
+}
+
+
+//**************************************************************
+//	디스크에 데이터를 쓴다. (LBA)
+//**************************************************************
+int cf_SectorWrite(int nSectorPos,UCHAR *pBuff)
+{
+	WORD i;
+
+	cf_WaitReady();
+	
+	SEC_CNT_REG	= 0x01;
+	SEC_NUM_REG	= nSectorPos & 0xff;
+	CYL_LOW_REG	= nSectorPos >> 8;
+	CYL_HI_REG	= nSectorPos >> 16;
+	DRV_HD_REG	= 0xe0 | ((nSectorPos >> 24)&0xf);
+	COMMAND_REG	= WR_REG;
+	
+	cf_WaitDRQ();
+	
+	for (i=0;i<512;i++) DATA_REG = pBuff[i];
+}
+
+//**************************************************************
+//	디스크 READY. (LBA)
+//**************************************************************
+int cf_WaitReady()
+{
+	unsigned char a,b;
+
+	a = STATUS_REG;
+	b = a & 0xf0;
+
+	while(a==0x01)
+	{
+		a = STATUS_REG;
+	}
+
+	while(b!=0x50)
+	{
+		a = STATUS_REG;
+		b = a & 0xf0;
+	}
+	
+	return 1;
+}
+
+
+//**************************************************************
+//	디스크 Wait. (LBA)
+//**************************************************************
+int cf_WaitDRQ()
+{
+	unsigned char a,b;
+
+	a = STATUS_REG;
+	b = a & 0xf8;
+
+	while(a==0x01)
+	{
+		a = STATUS_REG;
+	}
+
+	while(b!=0x58)
+	{
+		a = STATUS_REG;
+		b = a&0xf8;
+	}
+	
+	return 1;
+}
+
+

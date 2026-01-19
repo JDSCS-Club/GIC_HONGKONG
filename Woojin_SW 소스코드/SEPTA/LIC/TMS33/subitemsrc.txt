@@ -1,0 +1,461 @@
+/**********************************************************
+	냉난방기 통신 처리 루틴
+***********************************************************/
+void ud_HvacTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	nTxBufPos=0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x08;
+	nTxBuf[nTxBufPos++] = 0x30;
+	nTxBuf[nTxBufPos++] = 0x03;
+	nTxBuf[nTxBufPos++] = 0x24;
+	nTxBuf[nTxBufPos++] = 0x23;
+	nTxBuf[nTxBufPos++] = 0x15;
+	nTxBuf[nTxBufPos++] = 0x25;
+	nTxBuf[nTxBufPos++] = 0x05;
+	nTxBuf[nTxBufPos++] = 0xaa;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_1CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_HvacRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: if(ucRxBuf != 0x06) nRxPos = 0; break;
+	case 4: if(ucRxBuf != 0x30) nRxPos = 0; break;
+	case 10: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 12:
+		m_nXr16l784RxLen1 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen1-3))
+		{
+			memcpy(m_ucXr16l784RxBuf1,nRxCtBuf,m_nXr16l784RxLen1);
+			m_bXr16l784RxOkFlag1 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	BCU 통신 처리 루틴
+***********************************************************/
+void ud_BcuTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	nTxBufPos=0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x08;
+	nTxBuf[nTxBufPos++] = 0x20;
+	nTxBuf[nTxBufPos++] = 0x03; // 년
+	nTxBuf[nTxBufPos++] = 0x12; // 월
+	nTxBuf[nTxBufPos++] = 0x23; // 일
+	nTxBuf[nTxBufPos++] = 0x15; // 시
+	nTxBuf[nTxBufPos++] = 0x25; // 분
+	nTxBuf[nTxBufPos++] = 0x05; // 초
+	nTxBuf[nTxBufPos++] = 0x00; // 요청항목
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_2CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_BcuRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: break;
+	case 4: break;
+	case 23: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 25:
+		m_nXr16l784RxLen2 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen2-3))
+		{
+			memcpy(m_ucXr16l784RxBuf2,nRxCtBuf,m_nXr16l784RxLen2);
+			m_bXr16l784RxOkFlag2 = TRUE;
+			
+			xr16l784_Send(XR16L784_3CHL,nRxCtBuf,m_nXr16l784RxLen2);
+			
+		}
+	}
+}
+
+/**********************************************************
+	SIV 통신 처리 루틴
+***********************************************************/
+void ud_SivTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_1CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x03;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_1CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_SivRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: if(ucRxBuf != 0x15) nRxPos = 0; break;
+	case 4: break;
+	case 25: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 27:
+		m_nXr16l784RxLen1 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen1-3))
+		{
+			memcpy(m_ucXr16l784RxBuf1,nRxCtBuf,m_nXr16l784RxLen1);
+			m_bXr16l784RxOkFlag1 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	CMSB 통신 처리 루틴
+***********************************************************/
+void ud_CmsbTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_2CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = 0x21;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_2CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_CmsbRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: break;
+	case 4: break;
+	case 15: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 17:
+		m_nXr16l784RxLen2 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen2-3))
+		{
+			memcpy(m_ucXr16l784RxBuf2,nRxCtBuf,m_nXr16l784RxLen2);
+			m_bXr16l784RxOkFlag2 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	ATC/ATO 통신 처리 루틴
+***********************************************************/
+void ud_AtoTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_1CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x0c;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x39;
+	nTxBuf[nTxBufPos++] = 0x29;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_1CHL,nTxBuf,nTxBufPos+2);
+}
+
+
+void ud_AtoRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: if(ucRxBuf != 0x34) nRxPos = 0; break;
+	case 4: break;
+	case 56: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 58:
+		m_nXr16l784RxLen1 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen1-3))
+		{
+			memcpy(m_ucXr16l784RxBuf1,nRxCtBuf,m_nXr16l784RxLen1);
+			m_bXr16l784RxOkFlag1 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	PA(방송장치) 통신 처리 루틴
+***********************************************************/
+void ud_PaTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_2CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x05; // 길이
+	nTxBuf[nTxBufPos++] = 0x31; // Command
+	nTxBuf[nTxBufPos++] = 0x3B;
+	nTxBuf[nTxBufPos++] = 0x38;
+	nTxBuf[nTxBufPos++] = 0x39;
+	nTxBuf[nTxBufPos++] = 0x25;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_2CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_PaRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: break;
+	case 4: if(ucRxBuf != 0x31) nRxPos = 0; break;
+	case 6: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 8:
+		m_nXr16l784RxLen2 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen2-3))
+		{
+			memcpy(m_ucXr16l784RxBuf2,nRxCtBuf,m_nXr16l784RxLen2);
+			m_bXr16l784RxOkFlag2 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	TRS(무선장치) 통신 처리 루틴
+***********************************************************/
+void ud_TrsTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_1CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02; // STX
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x06; // 길이
+	nTxBuf[nTxBufPos++] = 0x32; // Command
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = 0x03;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x05;
+	nTxBuf[nTxBufPos++] = 0x00;
+	nTxBuf[nTxBufPos++] = 0x03; // ETX
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_1CHL,nTxBuf,nTxBufPos+2);
+}
+
+
+void ud_TrsRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	case 3: if(ucRxBuf != 0x34) nRxPos = 0; break;
+	case 4: break;
+	case 56: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 58:
+		m_nXr16l784RxLen1 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen1-3))
+		{
+			memcpy(m_ucXr16l784RxBuf1,nRxCtBuf,m_nXr16l784RxLen1);
+			m_bXr16l784RxOkFlag1 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	PIC(표시기) 통신 처리 루틴
+***********************************************************/
+void ud_PicTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_2CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02;
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x05; // 길이
+	nTxBuf[nTxBufPos++] = 0x32; // Command
+	nTxBuf[nTxBufPos++] = 0x32;
+	nTxBuf[nTxBufPos++] = 0x30;
+	nTxBuf[nTxBufPos++] = 0x30;
+	nTxBuf[nTxBufPos++] = 0x30;
+	nTxBuf[nTxBufPos++] = 0x03;
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_2CHL,nTxBuf,nTxBufPos+2);
+}
+
+void ud_PicRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	case 2: break;
+	// 길이
+	case 3: break;
+	// Command
+	case 4: if(ucRxBuf != 0x32) nRxPos = 0; break;
+	case 5: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 7:
+		m_nXr16l784RxLen2 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen2-3))
+		{
+			memcpy(m_ucXr16l784RxBuf2,nRxCtBuf,m_nXr16l784RxLen2);
+			m_bXr16l784RxOkFlag2 = TRUE;
+		}
+	}
+}
+
+/**********************************************************
+	VVVF 통신 처리 루틴
+***********************************************************/
+void ud_VvvfTxRoutine()
+{
+	int nTxBufPos = 0;
+	static int nTxSeq = 0;
+	UCHAR nTxBuf[XR16L784_BUF_MAX];
+
+	XR16L784_TXEN(XR16L784_1CHL);
+	nTxBufPos = 0;
+	nTxBuf[nTxBufPos++] = 0x02; // STX
+	nTxBuf[nTxBufPos++] = (nTxSeq++&0x01);
+	nTxBuf[nTxBufPos++] = 0x08; // 길이
+	nTxBuf[nTxBufPos++] = 0x20; // Command
+	nTxBuf[nTxBufPos++] = 0x00; // 시험및 TRACE요청 유무
+	nTxBuf[nTxBufPos++] = 0x06; // 년
+	nTxBuf[nTxBufPos++] = 0x01; // 월
+	nTxBuf[nTxBufPos++] = 0x01; // 일
+	nTxBuf[nTxBufPos++] = 0x01; // 시
+	nTxBuf[nTxBufPos++] = 0x01; // 분
+	nTxBuf[nTxBufPos++] = 0x01; // 초
+	nTxBuf[nTxBufPos++] = 0x03; // ETX
+	MakeBcc(&nTxBuf[1],nTxBufPos-1);
+	
+	xr16l784_Send(XR16L784_1CHL,nTxBuf,nTxBufPos+2);
+}
+
+
+void ud_VvvfRxRoutine(UCHAR ucRxBuf)
+{
+	static UCHAR nRxCtBuf[XR16L784_BUF_MAX];
+	static int nRxPos = 0;
+	
+	nRxCtBuf[nRxPos++] = ucRxBuf;
+	switch(nRxPos)
+	{
+	case 1: if(ucRxBuf != 0x02) nRxPos = 0; break;
+	// SEQ
+	case 2: break;
+	// 길이
+	case 3: break;
+	// Command
+	case 4: if(ucRxBuf != 0x20) nRxPos = 0; break;
+	case 29: if(ucRxBuf != 0x03) nRxPos = 0; break;
+	case 31:
+		m_nXr16l784RxLen1 = nRxPos;
+		nRxPos = 0;
+		if(IsBccOk(&nRxCtBuf[1],m_nXr16l784RxLen1-3))
+		{
+			memcpy(m_ucXr16l784RxBuf1,nRxCtBuf,m_nXr16l784RxLen1);
+			m_bXr16l784RxOkFlag1 = TRUE;
+		}
+	}
+}

@@ -1,0 +1,16 @@
+---- m_btCttSignalA Matches (16 in 2 files) ----
+User.asm:	.field  	_m_btCttSignalA+0,32
+User.asm:	.global	_m_btCttSignalA
+User.asm:	.bss	_m_btCttSignalA,1
+User.asm:	.sym	_m_btCttSignalA,_m_btCttSignalA,12,2,32
+User.asm:        sti       r0,@_m_btCttSignalA+0
+User.asm:        or        @_m_btCttSignalA+0,r0
+User.asm:        or        @_m_btCttSignalA+0,r0
+User.asm:        or        @_m_btCttSignalA+0,r0
+User.asm:        or        @_m_btCttSignalA+0,r0
+User.c:UCHAR m_btCttSignalA = 0x00; // 컨텍트 신호 Married car일때 A or Single car
+User.c:				m_btCttSignalA = btRxBuf[4];
+User.c:				pCnsc_Lic_T_F->chContactSignalBuf[0] = ConvHex2Asc(BYTE_H(m_btCttSignalA | m_btCttSignalB));
+User.c:				pCnsc_Lic_T_F->chContactSignalBuf[1] = ConvHex2Asc(BYTE_L(m_btCttSignalA | m_btCttSignalB));
+User.c:					lsLicSdBuf.chDoorInfo[0][0] = ConvHex2Asc(BYTE_H(m_btCttSignalA | m_btCttSignalB)); // Door접점신호
+User.c:					lsLicSdBuf.chDoorInfo[0][1] = ConvHex2Asc(BYTE_L(m_btCttSignalA | m_btCttSignalB));

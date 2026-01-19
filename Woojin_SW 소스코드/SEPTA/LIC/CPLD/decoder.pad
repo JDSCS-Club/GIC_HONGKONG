@@ -1,0 +1,73 @@
+Release 8.1i - Fit L.68
+Copyright(c) 1995-2003 Xilinx Inc. All rights reserved
+
+ 3-19-2010  8:34AM
+
+NOTE: This file is designed to be imported into a spreadsheet program
+such as Microsoft Excel for viewing, printing and sorting. The pipe '|'
+character is used as the data field separator.
+This file is also designed to support parsing.
+
+Input file:  decoder.ngd
+output file: decoder.pad
+Part type:   xc9536xl
+Speed grade: -10
+Package:     vq44
+
+Pinout by Pin Number:
+
+-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+Pin Number|Signal Name|Pin Usage|Pin Name|Direction|IO Standard|IO Bank Number|{blank}|Slew Rate|Termination|{blank}|Voltage|Constraint|
+P1|ROM_SERIAL_SW|I|I/O/GCK3|INPUT|||||||||
+P2|FROM_CS|O|I/O|OUTPUT|||||||||
+P3|A<20>|I|I/O|INPUT|||||||||
+P4|GND||GND||||||||||
+P5|A<21>|I|I/O|INPUT|||||||||
+P6|A<22>|I|I/O|INPUT|||||||||
+P7|A<23>|I|I/O|INPUT|||||||||
+P8|D<0>|I/O|I/O|BIDIR|||||||||
+P9|TDI||TDI||||||||||
+P10|TMS||TMS||||||||||
+P11|TCK||TCK||||||||||
+P12|D<1>|I/O|I/O|BIDIR|||||||||
+P13|LRST|O|I/O|OUTPUT|||||||||
+P14|RD|O|I/O|OUTPUT|||||||||
+P15|VCC||VCCINT||||||||||
+P16|WR|O|I/O|OUTPUT|||||||||
+P17|GND||GND||||||||||
+P18|W5100_INT|I|I/O|INPUT|||||||||
+P19|W5100_CS|O|I/O|OUTPUT|||||||||
+P20|XL16L784_CS|O|I/O|OUTPUT|||||||||
+P21|XL16L784_INT|I|I/O|INPUT|||||||||
+P22|RUN_LED|O|I/O|OUTPUT|||||||||
+P23|ERR_LED|O|I/O|OUTPUT|||||||||
+P24|TDO||TDO||||||||||
+P25|GND||GND||||||||||
+P26|VCC||VCCIO||||||||||
+P27|NIO3|I|I/O|INPUT|||||||||
+P28|EDGE_MODE|O|I/O|OUTPUT|||||||||
+P29|INT0|O|I/O|OUTPUT|||||||||
+P30|INT1|O|I/O|OUTPUT|||||||||
+P31|INT2|O|I/O|OUTPUT|||||||||
+P32|INT3|O|I/O|OUTPUT|||||||||
+P33|RST|I|I/O/GSR|INPUT|||||||||
+P34|VL5V_OE|O|I/O/GTS2|OUTPUT|||||||||
+P35|VCC||VCCINT||||||||||
+P36|VL5V_DIR|O|I/O/GTS1|OUTPUT|||||||||
+P37|DPRAM_CS|O|I/O|OUTPUT|||||||||
+P38|NVSRAM_CS|O|I/O|OUTPUT|||||||||
+P39|WDI|O|I/O|OUTPUT|||||||||
+P40|RDY|O|I/O|OUTPUT|||||||||
+P41|RWB|I|I/O|INPUT|||||||||
+P42|STRB|I|I/O|INPUT|||||||||
+P43|H3|GCK/I|I/O/GCK1||||||||||
+P44|NIO4|O|I/O/GCK2|OUTPUT|||||||||
+
+To preserve the pinout above for future design iterations in
+Project Navigator simply execute the (Lock Pins) process
+located under the (Implement Design) process in a toolbox named
+(Optional Implementation Tools) or invoke PIN2UCF from the
+command line. The location constraints will be written into your
+specified UCF file
+
+

@@ -1,0 +1,32 @@
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:34 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l start.asm start.obj -tC:\Users\JDS\AppData\Local\Temp\start.tmp 
+
+start.asm                                                            PAGE    1
+
+        1                   ;******************************************************************************
+        2                   ;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+        3                   ;* Date/Time created: Mon Apr 29 17:36:34 2013                                *
+        4                   ;******************************************************************************
+        5                           .regalias       ; enable floating point register aliases
+        6          0000000b fp      .set    ar3
+        7          0000000b FP      .set    ar3
+        8                   ;******************************************************************************
+        9                   ;* GLOBAL FILE PARAMETERS                                                     *
+       10                   ;*                                                                            *
+       11                   ;*   Optimization       : Always Choose Smaller Code Size                     *
+       12                   ;*   Memory             : Small Memory Model                                  *
+       13                   ;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+       14                   ;*   Multiply           : in Hardware (24 bits max)                           *
+       15                   ;*   Memory Info        : Unmapped Memory Exists                              *
+       16                   ;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+       17                   ;*   Calls              : Normal Library ASM calls                            *
+       18                   ;*   Debug Info         : Optimized TI Debug Information                      *
+       19                   ;******************************************************************************
+       20                   ;       c:\lang\tms320c3x\511\bin\ac30.exe start.c C:\Users\JDS\AppData\Local\Temp\start.if 
+       21                           .file   "start.c"
+       22                           .global _c_int00        
+       23 00000000                  .text                   
+       24 00000000 60000000!        br      _c_int00        
+       25                           .end                    
+
+ No Errors,  No Warnings

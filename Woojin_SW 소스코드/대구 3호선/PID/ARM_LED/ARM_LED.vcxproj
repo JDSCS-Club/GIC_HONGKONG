@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{078DDE83-7B75-4294-B068-4D385E30CC1F}</ProjectGuid>
+    <RootNamespace>ARM_LED</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\at91lib\boards\at91sam7se-ek\board_lowlevel.c" />
+    <ClCompile Include="..\at91lib\boards\at91sam7se-ek\board_memories.c" />
+    <ClCompile Include="..\at91lib\memories\MEDDdram.c" />
+    <ClCompile Include="..\at91lib\memories\MEDFlash.c" />
+    <ClCompile Include="..\at91lib\memories\Media.c" />
+    <ClCompile Include="..\at91lib\memories\MEDNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\MEDRamDisk.c" />
+    <ClCompile Include="..\at91lib\memories\MEDSdcard.c" />
+    <ClCompile Include="..\at91lib\memories\MEDSdmmc.c" />
+    <ClCompile Include="..\at91lib\memories\MEDSdram.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\EccNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\ManagedNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\MappedNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\NandFlashModel.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\NandFlashModelList.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\NandSpareScheme.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\RawNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\SkipBlockNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\nandflash\TranslatedNandFlash.c" />
+    <ClCompile Include="..\at91lib\memories\norflash\NorFlashAmd.c" />
+    <ClCompile Include="..\at91lib\memories\norflash\NorFlashApi.c" />
+    <ClCompile Include="..\at91lib\memories\norflash\NorFlashCFI.c" />
+    <ClCompile Include="..\at91lib\memories\norflash\NorFlashCommon.c" />
+    <ClCompile Include="..\at91lib\memories\norflash\NorFlashIntel.c" />
+    <ClCompile Include="..\at91lib\memories\sdmmc\sdmmc_mci.c" />
+    <ClCompile Include="..\at91lib\memories\sdmmc\sdmmc_spi.c" />
+    <ClCompile Include="..\at91lib\memories\sdmmc\sdspi.c" />
+    <ClCompile Include="..\at91lib\memories\spi-flash\at26.c" />
+    <ClCompile Include="..\at91lib\memories\spi-flash\at26d.c" />
+    <ClCompile Include="..\at91lib\memories\spi-flash\at45.c" />
+    <ClCompile Include="..\at91lib\memories\spi-flash\at45d.c" />
+    <ClCompile Include="..\at91lib\memories\spi-flash\spid.c" />
+    <ClCompile Include="..\at91lib\peripherals\aic\aic.c" />
+    <ClCompile Include="..\at91lib\peripherals\cp15\cp15.c" />
+    <ClCompile Include="..\at91lib\peripherals\pio\pio.c" />
+    <ClCompile Include="..\at91lib\peripherals\pit\pit.c" />
+    <ClCompile Include="..\at91lib\peripherals\pmc\pmc.c" />
+    <ClCompile Include="..\at91lib\peripherals\spi\spi.c" />
+    <ClCompile Include="..\at91lib\peripherals\tc\tc.c" />
+    <ClCompile Include="..\at91lib\peripherals\usart\usart.c" />
+    <ClCompile Include="..\at91lib\utility\hamming.c" />
+    <ClCompile Include="..\at91lib\utility\math.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\Download.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\LED_Display.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\main.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\printf_usart.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\SPI_FUN.c" />
+    <ClCompile Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\UART.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\at91lib\boards\at91sam7se-ek\at91sam7se512\AT91SAM7SE512.h" />
+    <ClInclude Include="..\at91lib\boards\at91sam7se-ek\board.h" />
+    <ClInclude Include="..\at91lib\boards\at91sam7se-ek\board_memories.h" />
+    <ClInclude Include="..\at91lib\memories\MEDDdram.h" />
+    <ClInclude Include="..\at91lib\memories\MEDFlash.h" />
+    <ClInclude Include="..\at91lib\memories\Media.h" />
+    <ClInclude Include="..\at91lib\memories\MEDNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\MEDRamDisk.h" />
+    <ClInclude Include="..\at91lib\memories\MEDSdcard.h" />
+    <ClInclude Include="..\at91lib\memories\MEDSdmmc.h" />
+    <ClInclude Include="..\at91lib\memories\MEDSdram.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\EccNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\ManagedNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\MappedNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\NandCommon.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\NandFlashModel.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\NandFlashModelList.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\NandSpareScheme.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\RawNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\SkipBlockNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\nandflash\TranslatedNandFlash.h" />
+    <ClInclude Include="..\at91lib\memories\norflash\NorFlashAmd.h" />
+    <ClInclude Include="..\at91lib\memories\norflash\NorFlashApi.h" />
+    <ClInclude Include="..\at91lib\memories\norflash\NorFlashCFI.h" />
+    <ClInclude Include="..\at91lib\memories\norflash\NorFlashCommon.h" />
+    <ClInclude Include="..\at91lib\memories\norflash\NorFlashIntel.h" />
+    <ClInclude Include="..\at91lib\memories\sdmmc\sdmmc_mci.h" />
+    <ClInclude Include="..\at91lib\memories\sdmmc\sdmmc_spi.h" />
+    <ClInclude Include="..\at91lib\memories\sdmmc\sdspi.h" />
+    <ClInclude Include="..\at91lib\memories\spi-flash\at26.h" />
+    <ClInclude Include="..\at91lib\memories\spi-flash\at26d.h" />
+    <ClInclude Include="..\at91lib\memories\spi-flash\at45.h" />
+    <ClInclude Include="..\at91lib\memories\spi-flash\at45d.h" />
+    <ClInclude Include="..\at91lib\memories\spi-flash\spid.h" />
+    <ClInclude Include="..\at91lib\peripherals\aic\aic.h" />
+    <ClInclude Include="..\at91lib\peripherals\cp15\cp15.h" />
+    <ClInclude Include="..\at91lib\peripherals\dbgu\dbgu.h" />
+    <ClInclude Include="..\at91lib\peripherals\pio\pio.h" />
+    <ClInclude Include="..\at91lib\peripherals\pit\pit.h" />
+    <ClInclude Include="..\at91lib\peripherals\pmc\pmc.h" />
+    <ClInclude Include="..\at91lib\peripherals\spi\spi.h" />
+    <ClInclude Include="..\at91lib\peripherals\tc\tc.h" />
+    <ClInclude Include="..\at91lib\peripherals\usart\usart.h" />
+    <ClInclude Include="..\at91lib\utility\assert.h" />
+    <ClInclude Include="..\at91lib\utility\hamming.h" />
+    <ClInclude Include="..\at91lib\utility\math.h" />
+    <ClInclude Include="..\at91lib\utility\trace.h" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\Download.h" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\LED_Display.h" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\main.h" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\NorFlash.H" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\SPI_FUN.h" />
+    <ClInclude Include="..\at91sam7se-ek\basic-usart-hw-handshaking-project\UART.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\at91lib\boards\at91sam7se-ek\board_cstartup_iar.s" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,2701 @@
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    1
+
+        1                   ;******************************************************************************
+        2                   ;* TMS320C3x/4x ANSI C Code Generator                            Version 5.11 *
+        3                   ;* Date/Time created: Mon Apr 29 17:36:38 2013                                *
+        4                   ;******************************************************************************
+        5                           .regalias       ; enable floating point register aliases
+        6          0000000b fp      .set    ar3
+        7          0000000b FP      .set    ar3
+        8                   ;******************************************************************************
+        9                   ;* GLOBAL FILE PARAMETERS                                                     *
+       10                   ;*                                                                            *
+       11                   ;*   Optimization       : Always Choose Smaller Code Size                     *
+       12                   ;*   Memory             : Small Memory Model                                  *
+       13                   ;*   Float-to-Int       : Normal Conversions (round toward zero)              *
+       14                   ;*   Multiply           : in Hardware (24 bits max)                           *
+       15                   ;*   Memory Info        : Unmapped Memory Exists                              *
+       16                   ;*   Repeat Loops       : Use RPTS and/or RPTB                                *
+       17                   ;*   Calls              : Normal Library ASM calls                            *
+       18                   ;*   Debug Info         : Optimized TI Debug Information                      *
+       19                   ;******************************************************************************
+       20                   ;       c:\lang\tms320c3x\511\bin\ac30.exe led_download.c C:\Users\JDS\AppData\Local\Temp\led_download.
+       21                           .file   "led_download.c"
+       22                           .file   "def.h"
+       23                           .sym    _WORD,0,13,13,32
+       24                           .sym    _USHORT,0,13,13,32
+       25                           .sym    _BYTE,0,12,13,32
+       26                           .sym    _UCHAR,0,12,13,32
+       27                           .sym    _UINT,0,14,13,32
+       28                           .sym    _BOOL,0,4,13,32
+       29                           .sym    _DWORD,0,15,13,32
+       30                           .file   "string.h"
+       31                           .sym    _size_t,0,14,13,32
+       32                           .file   "xr16788.h"
+       33                           .stag   .fake2,32
+       34                           .member _B0,0,14,18,1
+       35                           .member _B1,1,14,18,1
+       36                           .member _B2,2,14,18,1
+       37                           .member _B3,3,14,18,1
+       38                           .member _B4,4,14,18,1
+       39                           .member _B5,5,14,18,1
+       40                           .member _B6,6,14,18,1
+       41                           .member _B7,7,14,18,1
+       42                           .eos
+       43                           .utag   .fake1,32
+       44                           .member _BYTE,0,14,11,32
+       45                           .member _BIT,0,8,11,32,.fake2
+       46                           .eos
+       47                           .stag   .fake0,32
+       48                           .member _DR,0,9,8,32,.fake1
+       49                           .eos
+       50                           .sym    _TMS_SEND_DATA,0,8,13,32,.fake0
+       51                           .sym    _PTMS_SEND_DATA,0,24,13,32,.fake0
+       52                           .utag   .fake4,32
+       53                           .member _btRxd,0,12,11,32
+       54                           .member _btTxd,0,12,11,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    2
+
+       55                           .member _btDll,0,12,11,32
+       56                           .eos
+       57                           .utag   .fake5,32
+       58                           .member _btDlm,0,12,11,32
+       59                           .member _btIer,0,12,11,32
+       60                           .eos
+       61                           .utag   .fake6,32
+       62                           .member _btIir,0,12,11,32
+       63                           .member _btFcr,0,12,11,32
+       64                           .eos
+       65                           .stag   .fake3,512
+       66                           .member _CREG1,0,9,8,32,.fake4
+       67                           .member _CREG2,32,9,8,32,.fake5
+       68                           .member _CREG3,64,9,8,32,.fake6
+       69                           .member _btLcr,96,12,8,32
+       70                           .member _btMcr,128,12,8,32
+       71                           .member _btLsr,160,12,8,32
+       72                           .member _btMsr_U,192,12,8,32
+       73                           .member _btScr,224,12,8,32
+       74                           .member _btSp,256,60,8,256,,8
+       75                           .eos
+       76                           .sym    _XR16L788ST,0,8,13,512,.fake3
+       77                           .sym    _PXR16L788ST,0,24,13,32,.fake3
+       78                           .stag   .fake7,4096
+       79                           .member _xr16Reg,0,56,8,4096,.fake3,8
+       80                           .eos
+       81                           .sym    _XR16L788BDY,0,8,13,4096,.fake7
+       82                           .sym    _PXR16L788BDY,0,24,13,32,.fake7
+       83                           .stag   .fake8,608
+       84                           .member _nTxPos,0,12,8,32
+       85                           .member _nTxLen,32,12,8,32
+       86                           .member _nTxOK,64,12,8,32
+       87                           .member _nTxOK_Cnt,96,12,8,32
+       88                           .member _nTx_Rts_Off,128,12,8,32
+       89                           .member _nTxBuffer,160,28,8,32
+       90                           .member _nTxTimeOut,192,12,8,32
+       91                           .member _nRxOK,224,12,8,32
+       92                           .member _nRxOK_Cnt,256,12,8,32
+       93                           .member _nRxRearPos,288,12,8,32
+       94                           .member _nRxFrontPos,320,12,8,32
+       95                           .member _nRxPos,352,12,8,32
+       96                           .member _nRxDlyTm,384,12,8,32
+       97                           .member _nRxLen,416,12,8,32
+       98                           .member _nRxBuffer,448,28,8,32
+       99                           .member _nGetRxBuf,480,28,8,32
+      100                           .member _nRxBuf_BackUp,512,28,8,32
+      101                           .member _nRxTimeOut,544,12,8,32
+      102                           .member _nBPS,576,12,8,32
+      103                           .eos
+      104                           .sym    _XR16788_INIT_SHAPE,0,8,13,608,.fake8
+      105                           .sym    _pXR16788_INIT_SHAPE,0,24,13,32,.fake8
+      106                           .file   "PA_Pro.h"
+      107                           .stag   .fake10,32
+      108                           .member _n1EM1_1,0,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    3
+
+      109                           .member _n2EM2_1,1,14,18,1
+      110                           .member _n3EM3_1,2,14,18,1
+      111                           .member _n4EM4_1,3,14,18,1
+      112                           .member _n5EMSW,4,14,18,1
+      113                           .member _n6TCRCallFinish,5,14,18,1
+      114                           .member _n7EMCallFinish,6,14,18,1
+      115                           .member _n8sp,7,14,18,1
+      116                           .eos
+      117                           .stag   .fake11,32
+      118                           .member _n1EM1_2,0,14,18,1
+      119                           .member _n2EM2_2,1,14,18,1
+      120                           .member _n3EM3_2,2,14,18,1
+      121                           .member _n4EM4_2,3,14,18,1
+      122                           .member _n5sp,4,14,18,1
+      123                           .member _n6sp,5,14,18,1
+      124                           .member _n7sp,6,14,18,1
+      125                           .member _n8sp,7,14,18,1
+      126                           .eos
+      127                           .stag   .fake9,64
+      128                           .member _nTCR_DATA_1,0,8,8,32,.fake10
+      129                           .member _nTCR_DATA_2,32,8,8,32,.fake11
+      130                           .eos
+      131                           .sym    _PA_ICR_INFO,0,8,13,64,.fake9
+      132                           .stag   .fake13,32
+      133                           .member _n1Mster_Active,0,14,18,1
+      134                           .member _n2sp,1,14,18,1
+      135                           .member _n3EM_Call_End,2,14,18,1
+      136                           .member _n4Fire,3,14,18,1
+      137                           .member _n5ICR_DI,4,14,18,1
+      138                           .member _n6ICR_Flag,5,14,18,1
+      139                           .member _n7sp1,6,14,18,1
+      140                           .member _n8sp2,7,14,18,1
+      141                           .eos
+      142                           .stag   .fake14,32
+      143                           .member _n1Door_LR,0,14,18,1
+      144                           .member _n2DCW,1,14,18,1
+      145                           .member _n3DOW,2,14,18,1
+      146                           .member _n4BR_Start,3,14,18,1
+      147                           .member _n5BR_Finish,4,14,18,1
+      148                           .member _n6INFO,5,14,18,1
+      149                           .member _n7RM,6,14,18,1
+      150                           .member _n8sp,7,14,18,1
+      151                           .eos
+      152                           .stag   .fake15,32
+      153                           .member _n1PDT1,0,14,18,1
+      154                           .member _n2PDT2,1,14,18,1
+      155                           .member _n3SNDChk,2,14,18,1
+      156                           .member _n4sp,3,14,18,1
+      157                           .member _n5StarST_PA,4,14,18,1
+      158                           .member _n6sp,5,14,18,1
+      159                           .member _n7sp,6,14,18,1
+      160                           .member _n8sp,7,14,18,1
+      161                           .eos
+      162                           .stag   .fake12,608
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    4
+
+      163                           .member _nSTX,0,12,8,32
+      164                           .member _nPA_ADD,32,12,8,32
+      165                           .member _nPIC_ADD,64,12,8,32
+      166                           .member _nSDR_Code,96,12,8,32
+      167                           .member _TEXT_03,128,8,8,32,.fake13
+      168                           .member _nLine_Num,160,12,8,32
+      169                           .member _nNow_ST,192,12,8,32
+      170                           .member _nPR_Num,224,12,8,32
+      171                           .member _nNext_ST,256,12,8,32
+      172                           .member _nDest_ST,288,12,8,32
+      173                           .member _TEXT_09,320,8,8,32,.fake14
+      174                           .member _TEST_10,352,8,8,32,.fake15
+      175                           .member _nTramNum,384,60,8,64,,2
+      176                           .member _nDistNUM,448,60,8,64,,2
+      177                           .member _nTCR_DATA,512,8,8,64,.fake9
+      178                           .member _nETX,576,12,8,32
+      179                           .eos
+      180                           .sym    _PIS_PA_TXDATA,0,8,13,608,.fake12
+      181                           .sym    _PPIS_PA_TXDATA,0,24,13,32,.fake12
+      182                           .stag   .fake17,32
+      183                           .member _n1PAVC_1,0,14,18,1
+      184                           .member _n2COB_1,1,14,18,1
+      185                           .member _n3SOBL_1,2,14,18,1
+      186                           .member _n4SOBR_1,3,14,18,1
+      187                           .member _n5PAVC_2,4,14,18,1
+      188                           .member _n6COB_2,5,14,18,1
+      189                           .member _n7SOBL_2,6,14,18,1
+      190                           .member _n8SOBR_2,7,14,18,1
+      191                           .eos
+      192                           .stag   .fake18,32
+      193                           .member _n1EI1_1,0,14,18,1
+      194                           .member _n2EI2_1,1,14,18,1
+      195                           .member _n3EI3_1,2,14,18,1
+      196                           .member _n4EI4_1,3,14,18,1
+      197                           .member _n5sp,4,14,18,1
+      198                           .member _n6sp,5,14,18,1
+      199                           .member _n7sp,6,14,18,1
+      200                           .member _n8sp,7,14,18,1
+      201                           .eos
+      202                           .stag   .fake19,32
+      203                           .member _n1EI1_2,0,14,18,1
+      204                           .member _n2EI2_2,1,14,18,1
+      205                           .member _n3EI3_2,2,14,18,1
+      206                           .member _n4EI4_2,3,14,18,1
+      207                           .member _n5sp,4,14,18,1
+      208                           .member _n6sp,5,14,18,1
+      209                           .member _n7sp,6,14,18,1
+      210                           .member _n8sp,7,14,18,1
+      211                           .eos
+      212                           .stag   .fake20,32
+      213                           .member _n1AMP1,0,14,18,1
+      214                           .member _n2AMP2,1,14,18,1
+      215                           .member _n3AMP3,2,14,18,1
+      216                           .member _n4AMP4,3,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    5
+
+      217                           .member _n5sp,4,14,18,1
+      218                           .member _n6sp,5,14,18,1
+      219                           .member _n7sp,6,14,18,1
+      220                           .member _n8sp,7,14,18,1
+      221                           .eos
+      222                           .stag   .fake21,32
+      223                           .member _n1ACK,0,14,18,1
+      224                           .member _n2ACK_KingCh,1,14,18,1
+      225                           .member _n3Speaking,2,14,18,1
+      226                           .member _n4sp,3,14,18,1
+      227                           .member _n5sp,4,14,18,1
+      228                           .member _n6sp,5,14,18,1
+      229                           .member _n7sp,6,14,18,1
+      230                           .member _n8sp,7,14,18,1
+      231                           .eos
+      232                           .stag   .fake22,32
+      233                           .member _n1EI1_1_Call,0,14,18,1
+      234                           .member _n2EI2_1_Call,1,14,18,1
+      235                           .member _n3EI3_1_Call,2,14,18,1
+      236                           .member _n4EI4_1_Call,3,14,18,1
+      237                           .member _n5sp,4,14,18,1
+      238                           .member _n6sp,5,14,18,1
+      239                           .member _n7sp,6,14,18,1
+      240                           .member _n8sp,7,14,18,1
+      241                           .eos
+      242                           .stag   .fake23,32
+      243                           .member _n1EI1_2_Call,0,14,18,1
+      244                           .member _n2EI2_2_Call,1,14,18,1
+      245                           .member _n3EI3_2_Call,2,14,18,1
+      246                           .member _n4EI4_2_Call,3,14,18,1
+      247                           .member _n5sp,4,14,18,1
+      248                           .member _n6sp,5,14,18,1
+      249                           .member _n7sp,6,14,18,1
+      250                           .member _n8sp,7,14,18,1
+      251                           .eos
+      252                           .stag   .fake24,32
+      253                           .member _n1IFV1_1,0,14,18,1
+      254                           .member _n2IFV1_2,1,14,18,1
+      255                           .member _n3IFV1_3,2,14,18,1
+      256                           .member _n4IFV1_4,3,14,18,1
+      257                           .member _n5IFV2_1,4,14,18,1
+      258                           .member _n6IFV2_2,5,14,18,1
+      259                           .member _n7IFV2_3,6,14,18,1
+      260                           .member _n8IFV2_4,7,14,18,1
+      261                           .eos
+      262                           .stag   .fake25,32
+      263                           .member _n1sp,0,14,18,1
+      264                           .member _n2IFV3_2,1,14,18,1
+      265                           .member _n3IFV3_3,2,14,18,1
+      266                           .member _n4sp,3,14,18,1
+      267                           .member _n5sp,4,14,18,1
+      268                           .member _n6IFV4_2,5,14,18,1
+      269                           .member _n7IFV4_3,6,14,18,1
+      270                           .member _n8sp,7,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    6
+
+      271                           .eos
+      272                           .stag   .fake16,608
+      273                           .member _nSTX,0,12,8,32
+      274                           .member _nPIC_ADD,32,12,8,32
+      275                           .member _nPA_ADD,64,12,8,32
+      276                           .member _nSD_Code,96,12,8,32
+      277                           .member _TEST_03_Falt,128,8,8,32,.fake17
+      278                           .member _TEST_04_Falt,160,8,8,32,.fake18
+      279                           .member _TEST_05_Falt,192,8,8,32,.fake19
+      280                           .member _TEST_06_Falt,224,8,8,32,.fake20
+      281                           .member _TEST_07,256,8,8,32,.fake21
+      282                           .member _TEST_08,288,8,8,32,.fake22
+      283                           .member _TEST_09,320,8,8,32,.fake23
+      284                           .member _TEST_10_Falt,352,8,8,32,.fake24
+      285                           .member _TEST_11_Falt,384,8,8,32,.fake25
+      286                           .member _nSound_Level,416,12,8,32
+      287                           .member _nRomVer,448,12,8,32
+      288                           .member _nTCR_DATA,480,8,8,64,.fake9
+      289                           .member _nTEXT16sp,544,12,8,32
+      290                           .member _nETX,576,12,8,32
+      291                           .eos
+      292                           .sym    _PA_PIS_TXDATA,0,8,13,608,.fake16
+      293                           .sym    _PPA_PIS_TXDATA,0,24,13,32,.fake16
+      294                           .file   "user.h"
+      295                           .stag   .fake26,128
+      296                           .member _nTotalDestCnt,0,12,8,32
+      297                           .member _nCheakSt,32,12,8,32
+      298                           .member _nDiskInputCheckFlag,64,12,8,32
+      299                           .member _nDiskUpChekFlag,96,12,8,32
+      300                           .eos
+      301                           .sym    _SANDISK_VARI,0,8,13,128,.fake26
+      302                           .stag   .fake27,1472
+      303                           .member _nCode,0,12,8,32
+      304                           .member _nEnNameBuf,32,60,8,480,,15
+      305                           .member _nIRNameBuf,512,60,8,960,,30
+      306                           .eos
+      307                           .sym    _STATION_INFO,0,8,13,1472,.fake27
+      308                           .stag   .fake28,1920
+      309                           .member _nPre,0,60,8,480,,15
+      310                           .member _nNow,480,60,8,480,,15
+      311                           .member _nNext,960,60,8,480,,15
+      312                           .member _nDest,1440,60,8,480,,15
+      313                           .eos
+      314                           .sym    _GP_ST_NAME,0,8,13,1920,.fake28
+      315                           .stag   .fake29,128
+      316                           .member _nFlag_DI_INPUT,0,12,8,32
+      317                           .member _nFlag_Simu,32,12,8,32
+      318                           .member _nFlag_SelfTest,64,12,8,32
+      319                           .member _nAutoPlay_Flag,96,12,8,32
+      320                           .eos
+      321                           .sym    _TIME_FLAG,0,8,13,128,.fake29
+      322                           .stag   .fake30,2112
+      323                           .member _nSELF_ADDDATA_BUF,0,60,8,960,,30
+      324                           .member _nSELF_RXDATA_Buf,960,60,8,480,,15
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    7
+
+      325                           .member _nSELF_RXDATA_Buf_2R,1440,60,8,480,,15
+      326                           .member _nSELF_TX_Cnt,1920,12,8,32
+      327                           .member _nSELF_All_Cnt,1952,12,8,32
+      328                           .member _nSELF_ICR_CNT,1984,12,8,32
+      329                           .member _nSELF_ICR_SELECT,2016,12,8,32
+      330                           .member _nPA_PrintCnt,2048,12,8,32
+      331                           .member _nPA_SCREEN_SET,2080,12,8,32
+      332                           .eos
+      333                           .sym    _SELF_TEST,0,8,13,2112,.fake30
+      334                           .stag   .fake32,32
+      335                           .member _nFirCode,0,14,18,1
+      336                           .member _B1,1,14,18,1
+      337                           .member _B2,2,14,18,1
+      338                           .member _B3,3,14,18,1
+      339                           .member _B4,4,14,18,1
+      340                           .member _B5,5,14,18,1
+      341                           .member _B6,6,14,18,1
+      342                           .member _nAutoTest,7,14,18,1
+      343                           .eos
+      344                           .stag   .fake31,17024
+      345                           .member _nStopPatNum,0,12,8,32
+      346                           .member _nStation_MaxCnt,32,12,8,32
+      347                           .member _nStation_StartPointCnt,64,12,8,32
+      348                           .member _nStation_PointCnt,96,12,8,32
+      349                           .member _nStation_PointCntRe,128,12,8,32
+      350                           .member _nStation_List,160,60,8,6400,,200
+      351                           .member _nPIBPatFlag,6560,12,8,32
+      352                           .member _nDISFPatFlag,6592,12,8,32
+      353                           .member _nSimulationFlag,6624,12,8,32
+      354                           .member _nSimulationCnt,6656,12,8,32
+      355                           .member _nAutoDoorFlag,6688,12,8,32
+      356                           .member _nSpeed,6720,12,8,32
+      357                           .member _nDoor,6752,12,8,32
+      358                           .member _nDoorOPenCnt,6784,12,8,32
+      359                           .member _nDistance,6816,12,8,32
+      360                           .member _nSinmuScrCnt,6848,12,8,32
+      361                           .member _nTcmsRxNGCnt,6880,12,8,32
+      362                           .member _nStart,6912,8,8,1472,.fake27
+      363                           .member _nPre,8384,8,8,1472,.fake27
+      364                           .member _nNow,9856,8,8,1472,.fake27
+      365                           .member _nNext,11328,8,8,1472,.fake27
+      366                           .member _nDest,12800,8,8,1472,.fake27
+      367                           .member _nGpStName,14272,8,8,1920,.fake28
+      368                           .member _nSelf_Test_Flag,16192,12,8,32
+      369                           .member _nClean_Flag,16224,12,8,32
+      370                           .member _nSendTextEnd,16256,12,8,32
+      371                           .member _nPaTxDataBuf,16288,60,8,704,,22
+      372                           .member _nFirAuto,16992,8,8,32,.fake32
+      373                           .eos
+      374                           .sym    _TRAN_STATION_INFO,0,8,13,17024,.fake31
+      375                           .stag   .fake33,128
+      376                           .member _nFlag,0,12,8,32
+      377                           .member _nTime,32,12,8,32
+      378                           .member _nTimeCnt,64,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    8
+
+      379                           .member _nFlagCnt,96,12,8,32
+      380                           .eos
+      381                           .sym    _ONTD_CHECK,0,8,13,128,.fake33
+      382                           .stag   .fake34,768
+      383                           .member _nHcr,0,8,8,128,.fake33
+      384                           .member _nIcr,128,8,8,128,.fake33
+      385                           .member _nTcr,256,8,8,128,.fake33
+      386                           .member _nDoor,384,8,8,128,.fake33
+      387                           .member _nDoLeft,512,8,8,128,.fake33
+      388                           .member _nDoRight,640,8,8,128,.fake33
+      389                           .eos
+      390                           .sym    _DI_CHECK,0,8,13,768,.fake34
+      391                           .stag   .fake35,864
+      392                           .member _nIndexBuf,0,60,8,640,,20
+      393                           .member _nIndexST_STAllCnt,640,12,8,32
+      394                           .member _nAllCnt_Cnt,672,12,8,32
+      395                           .member _nIndexDI_DICnt,704,12,8,32
+      396                           .member _nIndexCnt,736,12,8,32
+      397                           .member _nDistanRe,768,15,8,32
+      398                           .member _nDistanNew,800,15,8,32
+      399                           .member _nBetweenFlag,832,12,8,32
+      400                           .eos
+      401                           .sym    _INDEX_FLAG,0,8,13,864,.fake35
+      402                           .stag   .fake36,384
+      403                           .member _nDataDefin,0,12,8,32
+      404                           .member _nCarNum,32,12,8,32
+      405                           .member _nDist,64,12,8,32
+      406                           .member _nDist_10,96,4,8,32
+      407                           .member _nStaCod,128,12,8,32
+      408                           .member _nNowCod,160,12,8,32
+      409                           .member _nNowCod_Re,192,12,8,32
+      410                           .member _nNexCod,224,12,8,32
+      411                           .member _nNexCod_Re,256,12,8,32
+      412                           .member _nDetCod,288,12,8,32
+      413                           .member _nDetCod_Re,320,12,8,32
+      414                           .member _nMasterFlag,352,12,8,32
+      415                           .eos
+      416                           .sym    _TMS_RX_DATA_PR,0,8,13,384,.fake36
+      417                           .stag   .fake37,64
+      418                           .member _nTxNum,0,12,8,32
+      419                           .member _nTxFlag,32,12,8,32
+      420                           .eos
+      421                           .sym    _IM_PR_SEND,0,8,13,64,.fake37
+      422                           .stag   .fake38,608
+      423                           .member _nTrNumSet,0,12,8,32
+      424                           .member _nDeSTCodeSet,32,12,8,32
+      425                           .member _nSddCodeSet,64,12,8,32
+      426                           .member _nClean,96,12,8,32
+      427                           .member _nPIBPaten,128,12,8,32
+      428                           .member _nS_FDIPaten,160,12,8,32
+      429                           .member _nIM_Text,192,8,8,64,.fake37
+      430                           .member _nPR_Text,256,8,8,64,.fake37
+      431                           .member _nAddSet,320,12,8,32
+      432                           .member _nSDI_Clean,352,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE    9
+
+      433                           .member _nManualSet,384,12,8,32
+      434                           .member _nDeadheadFlag,416,12,8,32
+      435                           .member _nDest9999Flag,448,12,8,32
+      436                           .member _nSddAddCntUp,480,12,8,32
+      437                           .member _nPaSendTxCnt,512,12,8,32
+      438                           .member _nPaSendStartFlag,544,12,8,32
+      439                           .member _nPaSendEndFlag,576,12,8,32
+      440                           .eos
+      441                           .sym    _SCC_SEND_FLAG,0,8,13,608,.fake38
+      442                           .stag   .fake39,64
+      443                           .member _nCh,0,12,8,32
+      444                           .member _nLen,32,12,8,32
+      445                           .eos
+      446                           .sym    _RING_FALG,0,8,13,64,.fake39
+      447                           .stag   .fake40,704
+      448                           .member _nPush_Cnt,0,12,8,32
+      449                           .member _nPop_Cnt,32,12,8,32
+      450                           .member _nRingFlagBuf,64,56,8,640,.fake39,10
+      451                           .eos
+      452                           .sym    _RING_BUF_FALG,0,8,13,704,.fake40
+      453                           .stag   .fake41,17600
+      454                           .member _nDataBuf,0,60,8,17600,,550
+      455                           .eos
+      456                           .sym    _RING_DATA,0,8,13,17600,.fake41
+      457                           .stag   .fake42,176000
+      458                           .member _nRingDataBuf,0,56,8,176000,.fake41,10
+      459                           .eos
+      460                           .sym    _RING_BUF_DATA,0,8,13,176000,.fake42
+      461                           .sym    _PRING_BUF_DATA,0,24,13,32,.fake42
+      462                           .stag   .fake43,224
+      463                           .member _nIDC_ROM_Flag,0,12,8,32
+      464                           .member _nErCnt,32,12,8,32
+      465                           .member _nErFlag,64,12,8,32
+      466                           .member _nDataNvsrLoad,96,12,8,32
+      467                           .member _nDataNvsrWait,128,12,8,32
+      468                           .member _nRomWriteCnt,160,12,8,32
+      469                           .member _nKO_Flag,192,12,8,32
+      470                           .eos
+      471                           .sym    _IDC_ROM_WRITE,0,8,13,224,.fake43
+      472                           .stag   .fake44,224
+      473                           .member _nAA,0,12,8,32
+      474                           .member _nBB,32,12,8,32
+      475                           .member _nCC,64,12,8,32
+      476                           .member _nLen_H,96,12,8,32
+      477                           .member _nLen_L,128,12,8,32
+      478                           .member _nLenCom_H,160,12,8,32
+      479                           .member _nLenCom_L,192,12,8,32
+      480                           .eos
+      481                           .sym    _SCC_HEAD,0,8,13,224,.fake44
+      482                           .stag   .fake45,320
+      483                           .member _nToAdd,0,12,8,32
+      484                           .member _nFromAdd,32,12,8,32
+      485                           .member _nCode,64,12,8,32
+      486                           .member _nSp3,96,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   10
+
+      487                           .member _nSp4,128,12,8,32
+      488                           .member _nErBlk,160,12,8,32
+      489                           .member _nSp6,192,12,8,32
+      490                           .member _nSp7,224,12,8,32
+      491                           .member _nSp8,256,12,8,32
+      492                           .member _nSp9,288,12,8,32
+      493                           .eos
+      494                           .sym    _SCC_TEST,0,8,13,320,.fake45
+      495                           .stag   .fake46,640
+      496                           .member _nHead,0,8,8,224,.fake44
+      497                           .member _nTest,224,8,8,320,.fake45
+      498                           .member _Etx,544,12,8,32
+      499                           .member _CRC_H,576,12,8,32
+      500                           .member _CRC_L,608,12,8,32
+      501                           .eos
+      502                           .sym    _SCC_TX_DATA,0,8,13,640,.fake46
+      503                           .sym    _PSCC_TX_DATA,0,24,13,32,.fake46
+      504                           .stag   .fake47,17696
+      505                           .member _nToAdd,0,12,8,32
+      506                           .member _nFromAdd,32,12,8,32
+      507                           .member _nCode,64,12,8,32
+      508                           .member _nTEXT,96,60,8,17600,,550
+      509                           .eos
+      510                           .sym    _SCC_TEXT,0,8,13,17696,.fake47
+      511                           .stag   .fake48,17920
+      512                           .member _nHead,0,8,8,224,.fake44
+      513                           .member _nText,224,8,8,17696,.fake47
+      514                           .eos
+      515                           .sym    _SCC_PIB_TEXT,0,8,13,17920,.fake48
+      516                           .sym    _PSCC_PIB_TEXT,0,24,13,32,.fake48
+      517                           .stag   .fake50,32
+      518                           .member _nFirCode,0,14,18,1
+      519                           .member _B1,1,14,18,1
+      520                           .member _B2,2,14,18,1
+      521                           .member _B3,3,14,18,1
+      522                           .member _nMc2Flag,4,14,18,1
+      523                           .member _nMc1Flag,5,14,18,1
+      524                           .member _nIDCFlag,6,14,18,1
+      525                           .member _nAutoTest,7,14,18,1
+      526                           .eos
+      527                           .stag   .fake51,32
+      528                           .member _n1PA_1,0,14,18,1
+      529                           .member _n2PA_4,1,14,18,1
+      530                           .member _n3COB_1,2,14,18,1
+      531                           .member _n4COB_4,3,14,18,1
+      532                           .member _n5SOBL_1,4,14,18,1
+      533                           .member _n6SOBL_4,5,14,18,1
+      534                           .member _n7SOBR_1,6,14,18,1
+      535                           .member _n8SOBR_4,7,14,18,1
+      536                           .eos
+      537                           .stag   .fake52,32
+      538                           .member _n1Pow_Amp_1,0,14,18,1
+      539                           .member _n2Pow_Amp_2,1,14,18,1
+      540                           .member _n3Pow_Amp_3,2,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   11
+
+      541                           .member _n4Pow_Amp_4,3,14,18,1
+      542                           .member _n5sp,4,14,18,1
+      543                           .member _n6sp,5,14,18,1
+      544                           .member _n7sp,6,14,18,1
+      545                           .member _n8sp,7,14,18,1
+      546                           .eos
+      547                           .stag   .fake53,32
+      548                           .member _n1EM_Phon_1,0,14,18,1
+      549                           .member _n2EM_Phon_2,1,14,18,1
+      550                           .member _n3EM_Phon_3,2,14,18,1
+      551                           .member _n4EM_Phon_4,3,14,18,1
+      552                           .member _n5sp,4,14,18,1
+      553                           .member _n6sp,5,14,18,1
+      554                           .member _n7sp,6,14,18,1
+      555                           .member _n8sp,7,14,18,1
+      556                           .eos
+      557                           .stag   .fake49,704
+      558                           .member _nSTX,0,12,8,32
+      559                           .member _nST_Code,32,12,8,32
+      560                           .member _nSp1,64,12,8,32
+      561                           .member _nStaCod,96,12,8,32
+      562                           .member _nNowCod,128,12,8,32
+      563                           .member _nNexCod,160,12,8,32
+      564                           .member _nDetCod,192,12,8,32
+      565                           .member _nSp2,224,12,8,32
+      566                           .member _BIT,256,8,8,32,.fake50
+      567                           .member _nTrnBuf,288,60,8,128,,4
+      568                           .member _PA_IDC_Falt_1,416,8,8,32,.fake51
+      569                           .member _PA_IDC_Falt_2,448,8,8,32,.fake52
+      570                           .member _PA_IDC_Falt_3,480,8,8,32,.fake53
+      571                           .member _nTCR_DATA,512,8,8,64,.fake9
+      572                           .member _nSp3Buf,576,60,8,96,,3
+      573                           .member _nETX,672,12,8,32
+      574                           .eos
+      575                           .sym    _SCC_TCMS,0,8,13,704,.fake49
+      576                           .sym    _TCMS_PSS,0,24,13,32,.fake49
+      577                           .stag   .fake56,32
+      578                           .member _n1PA_1,0,14,18,1
+      579                           .member _n2PA_4,1,14,18,1
+      580                           .member _n3COB_1,2,14,18,1
+      581                           .member _n4COB_4,3,14,18,1
+      582                           .member _n5SOBL_1,4,14,18,1
+      583                           .member _n6SOBL_4,5,14,18,1
+      584                           .member _n7SOBR_1,6,14,18,1
+      585                           .member _n8SOBR_4,7,14,18,1
+      586                           .eos
+      587                           .utag   .fake55,32
+      588                           .member _BYTE,0,14,11,32
+      589                           .member _BIT,0,8,11,32,.fake56
+      590                           .eos
+      591                           .stag   .fake58,32
+      592                           .member _n1Pow_Amp_1,0,14,18,1
+      593                           .member _n2Pow_Amp_2,1,14,18,1
+      594                           .member _n3Pow_Amp_3,2,14,18,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   12
+
+      595                           .member _n4Pow_Amp_4,3,14,18,1
+      596                           .member _n5sp,4,14,18,1
+      597                           .member _n6sp,5,14,18,1
+      598                           .member _n7sp,6,14,18,1
+      599                           .member _n8sp,7,14,18,1
+      600                           .eos
+      601                           .utag   .fake57,32
+      602                           .member _BYTE,0,14,11,32
+      603                           .member _BIT,0,8,11,32,.fake58
+      604                           .eos
+      605                           .stag   .fake60,32
+      606                           .member _n1EM_Phon_1,0,14,18,1
+      607                           .member _n2EM_Phon_2,1,14,18,1
+      608                           .member _n3EM_Phon_3,2,14,18,1
+      609                           .member _n4EM_Phon_4,3,14,18,1
+      610                           .member _n5sp,4,14,18,1
+      611                           .member _n6sp,5,14,18,1
+      612                           .member _n7sp,6,14,18,1
+      613                           .member _n8sp,7,14,18,1
+      614                           .eos
+      615                           .utag   .fake59,32
+      616                           .member _BYTE,0,14,11,32
+      617                           .member _BIT,0,8,11,32,.fake60
+      618                           .eos
+      619                           .stag   .fake61,32
+      620                           .member _n1FDD_1,0,14,18,1
+      621                           .member _n2FDD_4,1,14,18,1
+      622                           .member _n3sp,2,14,18,1
+      623                           .member _n4sp,3,14,18,1
+      624                           .member _n5FDD_5,4,14,18,1
+      625                           .member _n6FDD_8,5,14,18,1
+      626                           .member _n7sp,6,14,18,1
+      627                           .member _n8Self_Info,7,14,18,1
+      628                           .eos
+      629                           .stag   .fake62,32
+      630                           .member _n1SDD1_1,0,14,18,1
+      631                           .member _n2SDD2_1,1,14,18,1
+      632                           .member _n3SDD3_1,2,14,18,1
+      633                           .member _n4SDD4_1,3,14,18,1
+      634                           .member _n5SDD5_1,4,14,18,1
+      635                           .member _n6SDD6_1,5,14,18,1
+      636                           .member _n7SDD7_1,6,14,18,1
+      637                           .member _n8SDD8_1,7,14,18,1
+      638                           .eos
+      639                           .stag   .fake63,32
+      640                           .member _n1SDD1_2,0,14,18,1
+      641                           .member _n2SDD2_2,1,14,18,1
+      642                           .member _n3SDD3_2,2,14,18,1
+      643                           .member _n4SDD4_2,3,14,18,1
+      644                           .member _n5SDD5_2,4,14,18,1
+      645                           .member _n6SDD6_2,5,14,18,1
+      646                           .member _n7SDD7_2,6,14,18,1
+      647                           .member _n8SDD8_2,7,14,18,1
+      648                           .eos
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   13
+
+      649                           .stag   .fake54,704
+      650                           .member _nSTX,0,12,8,32
+      651                           .member _nST_Code,32,12,8,32
+      652                           .member _nSp1,64,12,8,32
+      653                           .member _nStaCod,96,12,8,32
+      654                           .member _nNowCod,128,12,8,32
+      655                           .member _nNexCod,160,12,8,32
+      656                           .member _nDetCod,192,12,8,32
+      657                           .member _PA_IDC_Falt_1,224,9,8,32,.fake55
+      658                           .member _PA_IDC_Falt_2,256,9,8,32,.fake57
+      659                           .member _PA_IDC_Falt_3,288,9,8,32,.fake59
+      660                           .member _nTCR_DATA,320,8,8,64,.fake9
+      661                           .member _PID_Falt_1,384,8,8,32,.fake61
+      662                           .member _PID_Falt_2,416,8,8,32,.fake62
+      663                           .member _PID_Falt_3,448,8,8,32,.fake63
+      664                           .member _nSpBuf,480,60,8,192,,6
+      665                           .member _nETX,672,12,8,32
+      666                           .eos
+      667                           .sym    _PSS_TCMS_SD,0,8,13,704,.fake54
+      668                           .sym    _PPSS_TCMS_SD,0,24,13,32,.fake54
+      669                           .stag   .fake64,96
+      670                           .member _nIDCFlag,0,12,8,32
+      671                           .member _nMc1Flag,32,12,8,32
+      672                           .member _nMc2Flag,64,12,8,32
+      673                           .eos
+      674                           .sym    _TCMS_IDC_INFO,0,8,13,96,.fake64
+      675                           .stag   .fake65,160
+      676                           .member _nTimeTranNum,0,14,8,32
+      677                           .member _nStartHour,32,60,8,64,,2
+      678                           .member _nStartMin,96,60,8,64,,2
+      679                           .eos
+      680                           .sym    _TRANNUMTIME,0,8,13,160,.fake65
+      681                           .sym    _PTRANNUMTIME,0,24,13,32,.fake65
+      682                           .stag   .fake66,4000
+      683                           .member _nTIMEBUF,0,56,8,4000,.fake65,25
+      684                           .eos
+      685                           .sym    _TIMEBUF,0,8,13,4000,.fake66
+      686                           .sym    _PTIMEBUF,0,24,13,32,.fake66
+      687                           .file   "GpProface.h"
+      688                           .stag   .fake67,320
+      689                           .member _nFlag,0,12,8,32
+      690                           .member _nNum,32,13,8,32
+      691                           .member _nRemNum,64,13,8,32
+      692                           .member _nNowSt_Re,96,12,8,32
+      693                           .member _nNextSt_Re,128,12,8,32
+      694                           .member _nASC_NumBuf,160,60,8,160,,5
+      695                           .eos
+      696                           .sym    _TRANNUM_INPUT,0,8,13,320,.fake67
+      697                           .stag   .fake68,448
+      698                           .member _nGPTranNumInput,0,8,8,320,.fake67
+      699                           .member _nScreenSetNum,320,12,8,32
+      700                           .member _nScreenRxTime,352,12,8,32
+      701                           .member _nScreenSafe,384,12,8,32
+      702                           .member _nScreen_Send_Delay_Time,416,12,8,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   14
+
+      703                           .eos
+      704                           .sym    _SELETC_BUTTON,0,8,13,448,.fake68
+      705                           .file   "LED_DOWNLOAD.h"
+      706                           .stag   .fake69,160
+      707                           .member _nST_1,0,12,8,32
+      708                           .member _nST_2,32,12,8,32
+      709                           .member _nTXCnt,64,12,8,32
+      710                           .member _nRepCnt,96,12,8,32
+      711                           .member _nErassOk,128,12,8,32
+      712                           .eos
+      713                           .sym    _DOWN_STEP,0,8,13,160,.fake69
+      714                           .stag   .fake70,576
+      715                           .member _nSDDSelt,0,12,8,32
+      716                           .member _nFDDSelt,32,12,8,32
+      717                           .member _nSFKindCode,64,12,8,32
+      718                           .member _nWaitSDR,96,12,8,32
+      719                           .member _nSelfTestFlag,128,12,8,32
+      720                           .member _nSDR_RxCnt,160,12,8,32
+      721                           .member _nErassFlag,192,8,8,160,.fake69
+      722                           .member _nDataDownFlag,352,12,8,32
+      723                           .member _nDataRepetFlag,384,12,8,32
+      724                           .member _nDataRepetNum,416,12,8,32
+      725                           .member _nDataRepetCnt,448,12,8,32
+      726                           .member _nDataSDRFlag,480,12,8,32
+      727                           .member _nDataSize,512,12,8,32
+      728                           .member _nDataTxCnt,544,12,8,32
+      729                           .eos
+      730                           .sym    _LED_DATA_DOWNLOAD,0,8,13,576,.fake70
+      731                           .file   "led_download.c"
+      732                   
+      733 00000000                  .sect   ".cinit"
+      734 00000000 00000001         .field          1,32
+      735 00000001 00000000-        .field          _nLED_200ms_Flag+0,32
+      736 00000002 00000000         .field          0,32            ; _nLED_200ms_Flag @ 0
+      737                   
+      738 00000000                  .sect   ".text"
+      739                   
+      740                           .global _nLED_200ms_Flag
+      741 00000000                  .bss    _nLED_200ms_Flag,1
+      742                           .sym    _nLED_200ms_Flag,_nLED_200ms_Flag,12,2,32
+      743                   
+      744 00000003                  .sect   ".cinit"
+      745 00000003 00000001         .field          1,32
+      746 00000004 00000001-        .field          _nLED_Time_Change+0,32
+      747 00000005 000000c8         .field          200,32          ; _nLED_Time_Change @ 0
+      748                   
+      749 00000000                  .sect   ".text"
+      750                   
+      751                           .global _nLED_Time_Change
+      752 00000001                  .bss    _nLED_Time_Change,1
+      753                           .sym    _nLED_Time_Change,_nLED_Time_Change,12,2,32
+      754                   
+      755 00000006                  .sect   ".cinit"
+      756 00000006 00000001         .field          1,32
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   15
+
+      757 00000007 00000002-        .field          _nLED_Time_Cnt+0,32
+      758 00000008 00000000         .field          0,32            ; _nLED_Time_Cnt @ 0
+      759                   
+      760 00000000                  .sect   ".text"
+      761                   
+      762                           .global _nLED_Time_Cnt
+      763 00000002                  .bss    _nLED_Time_Cnt,1
+      764                           .sym    _nLED_Time_Cnt,_nLED_Time_Cnt,12,2,32
+      765                   
+      766 00000009                  .sect   ".cinit"
+      767 00000009 00000008         .field          IR_1,32
+      768 0000000a 00000003-        .field          _DISPLAY_UNIT_SDD+0,32
+      769 0000000b 0000001a         .field          26,32           ; _DISPLAY_UNIT_SDD[0] @ 0
+      770 0000000c 0000002a         .field          42,32           ; _DISPLAY_UNIT_SDD[1] @ 32
+      771 0000000d 0000003a         .field          58,32           ; _DISPLAY_UNIT_SDD[2] @ 64
+      772 0000000e 0000004a         .field          74,32           ; _DISPLAY_UNIT_SDD[3] @ 96
+      773 0000000f 0000001b         .field          27,32           ; _DISPLAY_UNIT_SDD[4] @ 128
+      774 00000010 0000002b         .field          43,32           ; _DISPLAY_UNIT_SDD[5] @ 160
+      775 00000011 0000003b         .field          59,32           ; _DISPLAY_UNIT_SDD[6] @ 192
+      776 00000012 0000004b         .field          75,32           ; _DISPLAY_UNIT_SDD[7] @ 224
+      777          00000008 IR_1:   .set    8
+      778                   
+      779 00000000                  .sect   ".text"
+      780                   
+      781                           .global _DISPLAY_UNIT_SDD
+      782 00000003                  .bss    _DISPLAY_UNIT_SDD,8
+      783                           .sym    _DISPLAY_UNIT_SDD,_DISPLAY_UNIT_SDD,60,2,256,,8
+      784                   
+      785 00000013                  .sect   ".cinit"
+      786 00000013 00000002         .field          IR_2,32
+      787 00000014 0000000b-        .field          _DISPLAY_UNIT_FDD+0,32
+      788 00000015 0000001f         .field          31,32           ; _DISPLAY_UNIT_FDD[0] @ 0
+      789 00000016 0000000f         .field          15,32           ; _DISPLAY_UNIT_FDD[1] @ 32
+      790          00000002 IR_2:   .set    2
+      791                   
+      792 00000000                  .sect   ".text"
+      793                   
+      794                           .global _DISPLAY_UNIT_FDD
+      795 0000000b                  .bss    _DISPLAY_UNIT_FDD,2
+      796                           .sym    _DISPLAY_UNIT_FDD,_DISPLAY_UNIT_FDD,60,2,64,,2
+      797 00000000                  .sect    ".text"
+      798                   
+      799                           .global _LED_Init
+      800                           .sym    _LED_Init,_LED_Init,32,2,0
+      801                           .func   34
+      802                   ;******************************************************************************
+      803                   ;* FUNCTION NAME: _LED_Init                                                   *
+      804                   ;*                                                                            *
+      805                   ;*   Architecture       : TMS320C30                                           *
+      806                   ;*   Calling Convention : Stack Parameter Convention                          *
+      807                   ;*   Function Uses Regs : r0                                                  *
+      808                   ;*   Regs Saved         :                                                     *
+      809                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      810                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   16
+
+      811                   ;******************************************************************************
+      812 00000000          _LED_Init:
+      813                           .line   1
+      814                   ;----------------------------------------------------------------------
+      815                   ;  34 | void LED_Init()                                                        
+      816                   ;----------------------------------------------------------------------
+      817 00000000 0f2b0000         push      fp
+      818 00000001 500b0014         ldiu      sp,fp
+      819                           .line   3
+      820                   ;----------------------------------------------------------------------
+      821                   ;  36 | nLedDataLoad.nFDDSelt = 0;                                             
+      822                   ;----------------------------------------------------------------------
+      823 00000002 50600000         ldiu      0,r0
+      824 00000003 1520001a-        sti       r0,@_nLedDataLoad+1
+      825                           .line   4
+      826                   ;----------------------------------------------------------------------
+      827                   ;  37 | nLedDataLoad.nSDDSelt = 0;                                             
+      828                   ;----------------------------------------------------------------------
+      829 00000004 15200019-        sti       r0,@_nLedDataLoad+0
+      830                           .line   5
+      831                   ;----------------------------------------------------------------------
+      832                   ;  38 | nLedDataLoad.nSFKindCode = 0;                                          
+      833                   ;----------------------------------------------------------------------
+      834 00000005 1520001b-        sti       r0,@_nLedDataLoad+2
+      835                           .line   7
+      836                   ;----------------------------------------------------------------------
+      837                   ;  40 | nLedDataLoad.nWaitSDR = 0;                                             
+      838                   ;----------------------------------------------------------------------
+      839 00000006 1520001c-        sti       r0,@_nLedDataLoad+3
+      840                           .line   9
+      841                   ;----------------------------------------------------------------------
+      842                   ;  42 | nLedDataLoad.nSelfTestFlag = 0;                                        
+      843                   ;----------------------------------------------------------------------
+      844 00000007 1520001d-        sti       r0,@_nLedDataLoad+4
+      845                           .line   10
+      846                   ;----------------------------------------------------------------------
+      847                   ;  43 | nLedDataLoad.nSDR_RxCnt = 0;                                           
+      848                   ;----------------------------------------------------------------------
+      849 00000008 1520001e-        sti       r0,@_nLedDataLoad+5
+      850                           .line   12
+      851                   ;----------------------------------------------------------------------
+      852                   ;  45 | nLedDataLoad.nErassFlag.nST_1 = 0;                                     
+      853                   ;----------------------------------------------------------------------
+      854 00000009 1520001f-        sti       r0,@_nLedDataLoad+6
+      855                           .line   13
+      856                   ;----------------------------------------------------------------------
+      857                   ;  46 | nLedDataLoad.nErassFlag.nST_2 = 0;                                     
+      858                   ;----------------------------------------------------------------------
+      859 0000000a 15200020-        sti       r0,@_nLedDataLoad+7
+      860                           .line   14
+      861                   ;----------------------------------------------------------------------
+      862                   ;  47 | nLedDataLoad.nErassFlag.nTXCnt = 0;     //Erass 블럭 전송 카운터       
+      863                   ;----------------------------------------------------------------------
+      864 0000000b 15200021-        sti       r0,@_nLedDataLoad+8
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   17
+
+      865                           .line   15
+      866                   ;----------------------------------------------------------------------
+      867                   ;  48 | nLedDataLoad.nErassFlag.nRepCnt = 0;                                   
+      868                   ;----------------------------------------------------------------------
+      869 0000000c 15200022-        sti       r0,@_nLedDataLoad+9
+      870                           .line   16
+      871                   ;----------------------------------------------------------------------
+      872                   ;  49 | nLedDataLoad.nErassFlag.nErassOk = FALSE;                              
+      873                   ;----------------------------------------------------------------------
+      874 0000000d 15200023-        sti       r0,@_nLedDataLoad+10
+      875                           .line   18
+      876                   ;----------------------------------------------------------------------
+      877                   ;  51 | nLedDataLoad.nDataDownFlag = 0;                                        
+      878                   ;----------------------------------------------------------------------
+      879 0000000e 15200024-        sti       r0,@_nLedDataLoad+11
+      880                           .line   19
+      881                   ;----------------------------------------------------------------------
+      882                   ;  52 | nLedDataLoad.nDataRepetFlag = 0;                                       
+      883                   ;----------------------------------------------------------------------
+      884 0000000f 15200025-        sti       r0,@_nLedDataLoad+12
+      885                           .line   20
+      886                   ;----------------------------------------------------------------------
+      887                   ;  53 | nLedDataLoad.nDataRepetNum = 0;                                        
+      888                   ;----------------------------------------------------------------------
+      889 00000010 15200026-        sti       r0,@_nLedDataLoad+13
+      890                           .line   21
+      891                   ;----------------------------------------------------------------------
+      892                   ;  54 | nLedDataLoad.nDataRepetCnt = 0;                                        
+      893                   ;----------------------------------------------------------------------
+      894 00000011 15200027-        sti       r0,@_nLedDataLoad+14
+      895                           .line   22
+      896                   ;----------------------------------------------------------------------
+      897                   ;  55 | nLedDataLoad.nDataSDRFlag = 0;                                         
+      898                   ;----------------------------------------------------------------------
+      899 00000012 15200028-        sti       r0,@_nLedDataLoad+15
+      900                           .line   23
+      901                   ;----------------------------------------------------------------------
+      902                   ;  56 | nLedDataLoad.nDataSize = 0;                                            
+      903                   ;----------------------------------------------------------------------
+      904 00000013 15200029-        sti       r0,@_nLedDataLoad+16
+      905                           .line   24
+      906                   ;----------------------------------------------------------------------
+      907                   ;  57 | nLedDataLoad.nDataTxCnt = 0;                                           
+      908                   ;----------------------------------------------------------------------
+      909 00000014 1520002a-        sti       r0,@_nLedDataLoad+17
+      910                           .line   25
+      911 00000015 50410b01         ldiu      *-fp(1),r1
+      912 00000016 504bc300         ldiu      *fp,fp
+      913 00000017 18740002         subi      2,sp
+      914 00000018 68000001         bu        r1
+      915                   ;*      Branch Occurs to r1 
+      916                           .endfunc        58,000000000h,0
+      917                   
+      918                   
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   18
+
+      919 00000019                  .sect    ".text"
+      920                   
+      921                           .global _LED_Main
+      922                           .sym    _LED_Main,_LED_Main,32,2,0
+      923                           .func   62
+      924                   ;******************************************************************************
+      925                   ;* FUNCTION NAME: _LED_Main                                                   *
+      926                   ;*                                                                            *
+      927                   ;*   Architecture       : TMS320C30                                           *
+      928                   ;*   Calling Convention : Stack Parameter Convention                          *
+      929                   ;*   Function Uses Regs : r0,fp,sp,st                                         *
+      930                   ;*   Regs Saved         :                                                     *
+      931                   ;*   Stack Frame        : Full (w/ debug)                                     *
+      932                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+      933                   ;******************************************************************************
+      934 00000019          _LED_Main:
+      935                           .line   1
+      936                   ;----------------------------------------------------------------------
+      937                   ;  62 | void LED_Main()                                                        
+      938                   ;----------------------------------------------------------------------
+      939 00000019 0f2b0000         push      fp
+      940 0000001a 500b0014         ldiu      sp,fp
+      941                           .line   3
+      942                   ;----------------------------------------------------------------------
+      943                   ;  64 | if(nLED_200ms_Flag)                                                    
+      944                   ;----------------------------------------------------------------------
+      945 0000001b 08200000-        ldi       @_nLED_200ms_Flag+0,r0
+      946 0000001c 6a05002f         beq       L22
+      947                   ;*      Branch Occurs to L22 
+      948                           .line   5
+      949                   ;----------------------------------------------------------------------
+      950                   ;  66 | nLED_200ms_Flag = FALSE;                                               
+      951                   ;----------------------------------------------------------------------
+      952 0000001d 50600000         ldiu      0,r0
+      953 0000001e 15200000-        sti       r0,@_nLED_200ms_Flag+0
+      954                           .line   7
+      955                   ;----------------------------------------------------------------------
+      956                   ;  68 | if(WORD_L(Xr16788_3Ch.nTxOK))                                          
+      957                   ;----------------------------------------------------------------------
+      958 0000001f 506000ff         ldiu      255,r0
+      959 00000020 1a200002!        tstb      @_Xr16788_3Ch+2,r0
+      960 00000021 6a05002a         beq       L22
+      961                   ;*      Branch Occurs to L22 
+      962                           .line   9
+      963                   ;----------------------------------------------------------------------
+      964                   ;  70 | if(nLedDataLoad.nSDDSelt || nLedDataLoad.nFDDSelt)                     
+      965                   ;----------------------------------------------------------------------
+      966 00000022 08200019-        ldi       @_nLedDataLoad+0,r0
+      967 00000023 6a060002         bne       L8
+      968                   ;*      Branch Occurs to L8 
+      969 00000024 0820001a-        ldi       @_nLedDataLoad+1,r0
+      970 00000025 6a050001         beq       L9
+      971                   ;*      Branch Occurs to L9 
+      972 00000026          L8:        
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   19
+
+      973                           .line   11
+      974                   ;----------------------------------------------------------------------
+      975                   ;  72 | LED_WaitSDR();                                                         
+      976                   ;----------------------------------------------------------------------
+      977 00000026 62000050'        call      _LED_WaitSDR
+      978                                                           ; Call Occurs
+      979 00000027          L9:        
+      980                           .line   14
+      981                   ;----------------------------------------------------------------------
+      982                   ;  75 | if(nLedDataLoad.nErassFlag.nST_1)                                      
+      983                   ;----------------------------------------------------------------------
+      984 00000027 0820001f-        ldi       @_nLedDataLoad+6,r0
+      985 00000028 6a050002         beq       L11
+      986                   ;*      Branch Occurs to L11 
+      987                           .line   16
+      988                   ;----------------------------------------------------------------------
+      989                   ;  77 | LED_ERASS();                                                           
+      990                   ;----------------------------------------------------------------------
+      991 00000029 620000ae'        call      _LED_ERASS
+      992                                                           ; Call Occurs
+      993 0000002a 6a000021         bu        L22
+      994                   ;*      Branch Occurs to L22 
+      995 0000002b          L11:        
+      996                           .line   18
+      997                   ;----------------------------------------------------------------------
+      998                   ;  79 | else if(!nLedDataLoad.nErassFlag.nST_1 &&nLedDataLoad.nErassFlag.nST_2)
+      999                   ;----------------------------------------------------------------------
+     1000 0000002b 0820001f-        ldi       @_nLedDataLoad+6,r0
+     1001 0000002c 6a060004         bne       L14
+     1002                   ;*      Branch Occurs to L14 
+     1003 0000002d 08200020-        ldi       @_nLedDataLoad+7,r0
+     1004 0000002e 6a050002         beq       L14
+     1005                   ;*      Branch Occurs to L14 
+     1006                           .line   20
+     1007                   ;----------------------------------------------------------------------
+     1008                   ;  81 | LED_ERASS_SDR();                                                       
+     1009                   ;----------------------------------------------------------------------
+     1010 0000002f 620000f4'        call      _LED_ERASS_SDR
+     1011                                                           ; Call Occurs
+     1012 00000030 6a00001b         bu        L22
+     1013                   ;*      Branch Occurs to L22 
+     1014 00000031          L14:        
+     1015                           .line   22
+     1016                   ;----------------------------------------------------------------------
+     1017                   ;  83 | else if(nLedDataLoad.nDataDownFlag)     // 데이타 전송.                
+     1018                   ;----------------------------------------------------------------------
+     1019 00000031 08200024-        ldi       @_nLedDataLoad+11,r0
+     1020 00000032 6a05000b         beq       L17
+     1021                   ;*      Branch Occurs to L17 
+     1022                           .line   24
+     1023                   ;----------------------------------------------------------------------
+     1024                   ;  85 | LED_DataDownLoad_ST1(); // 전송 데이타 사이즈 확인.                    
+     1025                   ;----------------------------------------------------------------------
+     1026 00000033 6200018a'        call      _LED_DataDownLoad_ST1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   20
+
+     1027                                                           ; Call Occurs
+     1028                           .line   26
+     1029                   ;----------------------------------------------------------------------
+     1030                   ;  87 | if(nLedDataLoad.nDataSize) // 데이타 전송.                             
+     1031                   ;----------------------------------------------------------------------
+     1032 00000034 08200029-        ldi       @_nLedDataLoad+16,r0
+     1033 00000035 6a050016         beq       L22
+     1034                   ;*      Branch Occurs to L22 
+     1035                           .line   28
+     1036                   ;----------------------------------------------------------------------
+     1037                   ;  89 | LED_DataDownLoad_ST2(nLedDataLoad.nDataTxCnt);                         
+     1038                   ;----------------------------------------------------------------------
+     1039 00000036 5020002a-        ldiu      @_nLedDataLoad+17,r0
+     1040 00000037 0f200000         push      r0
+     1041 00000038 62000194'        call      _LED_DataDownLoad_ST2
+     1042                                                           ; Call Occurs
+     1043 00000039 18740001         subi      1,sp
+     1044                           .line   29
+     1045                   ;----------------------------------------------------------------------
+     1046                   ;  90 | nLedDataLoad.nDataTxCnt++;                                             
+     1047                   ;----------------------------------------------------------------------
+     1048 0000003a 50600001         ldiu      1,r0
+     1049 0000003b 0220002a-        addi      @_nLedDataLoad+17,r0  ; Unsigned
+     1050 0000003c 1520002a-        sti       r0,@_nLedDataLoad+17
+     1051 0000003d 6a00000e         bu        L22
+     1052                   ;*      Branch Occurs to L22 
+     1053 0000003e          L17:        
+     1054                           .line   32
+     1055                   ;----------------------------------------------------------------------
+     1056                   ;  93 | else if(nLedDataLoad.nDataSDRFlag)                                     
+     1057                   ;----------------------------------------------------------------------
+     1058 0000003e 08200028-        ldi       @_nLedDataLoad+15,r0
+     1059 0000003f 6a05000c         beq       L22
+     1060                   ;*      Branch Occurs to L22 
+     1061                           .line   34
+     1062                   ;----------------------------------------------------------------------
+     1063                   ;  95 | if(!nLedDataLoad.nDataRepetFlag)                                       
+     1064                   ;----------------------------------------------------------------------
+     1065 00000040 08200025-        ldi       @_nLedDataLoad+12,r0
+     1066 00000041 6a060002         bne       L20
+     1067                   ;*      Branch Occurs to L20 
+     1068                           .line   36
+     1069                   ;----------------------------------------------------------------------
+     1070                   ;  97 | LED_DataSDR();                                                         
+     1071                   ;----------------------------------------------------------------------
+     1072 00000042 620001c6'        call      _LED_DataSDR
+     1073                                                           ; Call Occurs
+     1074 00000043 6a000008         bu        L22
+     1075                   ;*      Branch Occurs to L22 
+     1076 00000044          L20:        
+     1077                           .line   38
+     1078                   ;----------------------------------------------------------------------
+     1079                   ;  99 | else if(nLedDataLoad.nDataRepetFlag)                                   
+     1080                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   21
+
+     1081 00000044 08200025-        ldi       @_nLedDataLoad+12,r0
+     1082 00000045 6a050006         beq       L22
+     1083                   ;*      Branch Occurs to L22 
+     1084                           .line   40
+     1085                   ;----------------------------------------------------------------------
+     1086                   ; 101 | nLedDataLoad.nDataRepetFlag = FALSE;                                   
+     1087                   ;----------------------------------------------------------------------
+     1088 00000046 50600000         ldiu      0,r0
+     1089 00000047 15200025-        sti       r0,@_nLedDataLoad+12
+     1090                           .line   41
+     1091                   ;----------------------------------------------------------------------
+     1092                   ; 102 | LED_DataDownLoad_ST2(nLedDataLoad.nDataRepetNum);                      
+     1093                   ;----------------------------------------------------------------------
+     1094 00000048 50200026-        ldiu      @_nLedDataLoad+13,r0
+     1095 00000049 0f200000         push      r0
+     1096 0000004a 62000194'        call      _LED_DataDownLoad_ST2
+     1097                                                           ; Call Occurs
+     1098 0000004b 18740001         subi      1,sp
+     1099 0000004c          L22:        
+     1100                           .line   46
+     1101 0000004c 50530b01         ldiu      *-fp(1),bk
+     1102 0000004d 504bc300         ldiu      *fp,fp
+     1103 0000004e 18740002         subi      2,sp
+     1104 0000004f 68000013         bu        bk
+     1105                   ;*      Branch Occurs to bk 
+     1106                           .endfunc        107,000000000h,0
+     1107                   
+     1108                   
+     1109 00000050                  .sect    ".text"
+     1110                   
+     1111                           .global _LED_WaitSDR
+     1112                           .sym    _LED_WaitSDR,_LED_WaitSDR,32,2,0
+     1113                           .func   111
+     1114                   ;******************************************************************************
+     1115                   ;* FUNCTION NAME: _LED_WaitSDR                                                *
+     1116                   ;*                                                                            *
+     1117                   ;*   Architecture       : TMS320C30                                           *
+     1118                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1119                   ;*   Function Uses Regs : r0,r1,r2,r3,fp,sp,st,rs,re,rc                       *
+     1120                   ;*   Regs Saved         :                                                     *
+     1121                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1122                   ;*   Total Frame Size   : 2 Call + 0 Parm + 31 Auto + 0 SOE = 33 words        *
+     1123                   ;******************************************************************************
+     1124 00000050          _LED_WaitSDR:
+     1125                           .sym    _sWastBuf,1,60,1,640,,20
+     1126                           .sym    _sSelfTestBuf,21,60,1,352,,11
+     1127                           .line   1
+     1128                   ;----------------------------------------------------------------------
+     1129                   ; 111 | void LED_WaitSDR()                                                     
+     1130                   ; 113 | UCHAR sWastBuf[20];                                                    
+     1131                   ; 114 | UCHAR sSelfTestBuf[11];                                                
+     1132                   ;----------------------------------------------------------------------
+     1133 00000050 0f2b0000         push      fp
+     1134 00000051 500b0014         ldiu      sp,fp
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   22
+
+     1135 00000052 0274001f         addi      31,sp
+     1136                           .line   6
+     1137                   ;----------------------------------------------------------------------
+     1138                   ; 116 | if(nLedDataLoad.nWaitSDR)                                              
+     1139                   ;----------------------------------------------------------------------
+     1140 00000053 0820001c-        ldi       @_nLedDataLoad+3,r0
+     1141 00000054 6a05003f         beq       L29
+     1142                   ;*      Branch Occurs to L29 
+     1143                           .line   8
+     1144                   ;----------------------------------------------------------------------
+     1145                   ; 118 | nLedDataLoad.nWaitSDR--;                                               
+     1146                   ;----------------------------------------------------------------------
+     1147 00000055 50600001         ldiu      1,r0
+     1148 00000056 19a0001c-        subri     @_nLedDataLoad+3,r0   ; Unsigned
+     1149 00000057 1520001c-        sti       r0,@_nLedDataLoad+3
+     1150                           .line   10
+     1151                   ;----------------------------------------------------------------------
+     1152                   ; 120 | Xr_TX_PROTOCOL(sWastBuf,nLedDataLoad.nSFKindCode,0x31,0x1F,0,0,0,0,0,10
+     1153                   ;     | );                                                                     
+     1154                   ;----------------------------------------------------------------------
+     1155 00000058 5061000a         ldiu      10,r1
+     1156 00000059 50620000         ldiu      0,r2
+     1157 0000005a 50630000         ldiu      0,r3
+     1158 0000005b 50790000         ldiu      0,rs
+     1159 0000005c 507a0000         ldiu      0,re
+     1160 0000005d 507b0031         ldiu      49,rc
+     1161 0000005e 0f210000         push      r1
+     1162 0000005f 50600000         ldiu      0,r0
+     1163 00000060 0f200000         push      r0
+     1164 00000061 5061001f         ldiu      31,r1
+     1165 00000062 0f220000         push      r2
+     1166 00000063 5000000b         ldiu      fp,r0
+     1167 00000064 0f230000         push      r3
+     1168 00000065 0f390000         push      rs
+     1169 00000066 02600001         addi      1,r0
+     1170 00000067 0f3a0000         push      re
+     1171 00000068 0f210000         push      r1
+     1172 00000069 0f3b0000         push      rc
+     1173 0000006a 5021001b-        ldiu      @_nLedDataLoad+2,r1
+     1174 0000006b 0f210000         push      r1
+     1175 0000006c 0f200000         push      r0
+     1176 0000006d 62000000!        call      _Xr_TX_PROTOCOL
+     1177                                                           ; Call Occurs
+     1178 0000006e 1874000a         subi      10,sp
+     1179                           .line   12
+     1180                   ;----------------------------------------------------------------------
+     1181                   ; 122 | xr16l788_Send(XR16L788_3CHL,sWastBuf,20);                              
+     1182                   ;----------------------------------------------------------------------
+     1183 0000006f 5000000b         ldiu      fp,r0
+     1184 00000070 50620014         ldiu      20,r2
+     1185 00000071 0f220000         push      r2
+     1186 00000072 02600001         addi      1,r0
+     1187 00000073 0f200000         push      r0
+     1188 00000074 50610002         ldiu      2,r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   23
+
+     1189 00000075 0f210000         push      r1
+     1190 00000076 62000000!        call      _xr16l788_Send
+     1191                                                           ; Call Occurs
+     1192 00000077 18740003         subi      3,sp
+     1193                           .line   14
+     1194                   ;----------------------------------------------------------------------
+     1195                   ; 124 | if(nLedDataLoad.nWaitSDR == 3)  // 다운로드 프로그램 9600 으로 변경한다
+     1196                   ;     | .                                                                      
+     1197                   ;----------------------------------------------------------------------
+     1198 00000078 5020001c-        ldiu      @_nLedDataLoad+3,r0
+     1199 00000079 04e00003         cmpi      3,r0
+     1200 0000007a 6a060010         bne       L27
+     1201                   ;*      Branch Occurs to L27 
+     1202                           .line   16
+     1203                   ;----------------------------------------------------------------------
+     1204                   ; 126 | nLED_Time_Cnt = 1;                                                     
+     1205                   ;----------------------------------------------------------------------
+     1206 0000007b 50600001         ldiu      1,r0
+     1207 0000007c 15200002-        sti       r0,@_nLED_Time_Cnt+0
+     1208                           .line   17
+     1209                   ;----------------------------------------------------------------------
+     1210                   ; 127 | xr16l788_Init(XR16L788_3CHL,9600,XR16L788_DATA8,XR16L788_NONEPARITY,XR1
+     1211                   ;     | 6L788_1STOPBIT);                                                       
+     1212                   ;----------------------------------------------------------------------
+     1213 0000007d 50630000         ldiu      0,r3
+     1214 0000007e 50610000         ldiu      0,r1
+     1215 0000007f 50620003         ldiu      3,r2
+     1216 00000080 50790002         ldiu      2,rs
+     1217 00000081 0f230000         push      r3
+     1218 00000082 50602580         ldiu      9600,r0
+     1219 00000083 0f210000         push      r1
+     1220 00000084 0f220000         push      r2
+     1221 00000085 0f200000         push      r0
+     1222 00000086 0f390000         push      rs
+     1223 00000087 62000000!        call      _xr16l788_Init
+     1224                                                           ; Call Occurs
+     1225 00000088 18740005         subi      5,sp
+     1226                           .line   18
+     1227                   ;----------------------------------------------------------------------
+     1228                   ; 128 | Xr16788_3Ch.nBPS = 96;                                                 
+     1229                   ;----------------------------------------------------------------------
+     1230 00000089 50600060         ldiu      96,r0
+     1231 0000008a 15200012!        sti       r0,@_Xr16788_3Ch+18
+     1232 0000008b          L27:        
+     1233                           .line   21
+     1234                   ;----------------------------------------------------------------------
+     1235                   ; 131 | if(!nLedDataLoad.nWaitSDR)                                             
+     1236                   ;----------------------------------------------------------------------
+     1237 0000008b 0820001c-        ldi       @_nLedDataLoad+3,r0
+     1238 0000008c 6a060007         bne       L29
+     1239                   ;*      Branch Occurs to L29 
+     1240                           .line   23
+     1241                   ;----------------------------------------------------------------------
+     1242                   ; 133 | GP_DOWNLOAD_SDR();      //자기진단 결과 표출 초기화.                   
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   24
+
+     1243                   ;----------------------------------------------------------------------
+     1244 0000008d 62000000!        call      _GP_DOWNLOAD_SDR
+     1245                                                           ; Call Occurs
+     1246                           .line   24
+     1247                   ;----------------------------------------------------------------------
+     1248                   ; 134 | nLED_Time_Change = 200;                                                
+     1249                   ;----------------------------------------------------------------------
+     1250 0000008e 506000c8         ldiu      200,r0
+     1251 0000008f 15200001-        sti       r0,@_nLED_Time_Change+0
+     1252                           .line   25
+     1253                   ;----------------------------------------------------------------------
+     1254                   ; 135 | nLedDataLoad.nSelfTestFlag = 1;                                        
+     1255                   ;----------------------------------------------------------------------
+     1256 00000090 50600001         ldiu      1,r0
+     1257 00000091 1520001d-        sti       r0,@_nLedDataLoad+4
+     1258                           .line   27
+     1259                   ;----------------------------------------------------------------------
+     1260                   ; 137 | nLedDataLoad.nErassFlag.nTXCnt = 0;                                    
+     1261                   ;----------------------------------------------------------------------
+     1262 00000092 50600000         ldiu      0,r0
+     1263 00000093 15200021-        sti       r0,@_nLedDataLoad+8
+     1264 00000094          L29:        
+     1265                           .line   31
+     1266                   ;----------------------------------------------------------------------
+     1267                   ; 141 | if(nLedDataLoad.nSelfTestFlag)                                         
+     1268                   ;----------------------------------------------------------------------
+     1269 00000094 0820001d-        ldi       @_nLedDataLoad+4,r0
+     1270 00000095 6a050014         beq       L35
+     1271                   ;*      Branch Occurs to L35 
+     1272                           .line   33
+     1273                   ;----------------------------------------------------------------------
+     1274                   ; 143 | if(nLedDataLoad.nFDDSelt)                                              
+     1275                   ;----------------------------------------------------------------------
+     1276 00000096 0820001a-        ldi       @_nLedDataLoad+1,r0
+     1277 00000097 6a250006         beqd      L32
+     1278 00000098 0c800000         nop
+     1279 00000099 53610002         ldine     2,r1
+     1280 0000009a 5320002b-        ldine     @CL1,r0
+     1281                   ;*      Branch Occurs to L32 
+     1282                           .line   35
+     1283                   ;----------------------------------------------------------------------
+     1284                   ; 145 | DP_SelfTest(DISPLAY_UNIT_FDD,2);                                       
+     1285                   ;----------------------------------------------------------------------
+     1286 0000009b 0f210000         push      r1
+     1287 0000009c 0f200000         push      r0
+     1288 0000009d 62000000!        call      _DP_SelfTest
+     1289                                                           ; Call Occurs
+     1290 0000009e 18740002         subi      2,sp
+     1291 0000009f 6a000008         bu        L34
+     1292                   ;*      Branch Occurs to L34 
+     1293 000000a0          L32:        
+     1294                           .line   37
+     1295                   ;----------------------------------------------------------------------
+     1296                   ; 147 | else if(nLedDataLoad.nSDDSelt)                                         
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   25
+
+     1297                   ;----------------------------------------------------------------------
+     1298 000000a0 08200019-        ldi       @_nLedDataLoad+0,r0
+     1299 000000a1 6a050006         beq       L34
+     1300                   ;*      Branch Occurs to L34 
+     1301                           .line   39
+     1302                   ;----------------------------------------------------------------------
+     1303                   ; 149 | DP_SelfTest(DISPLAY_UNIT_SDD,8);                                       
+     1304                   ;----------------------------------------------------------------------
+     1305 000000a2 50610008         ldiu      8,r1
+     1306 000000a3 5020002c-        ldiu      @CL2,r0
+     1307 000000a4 0f210000         push      r1
+     1308 000000a5 0f200000         push      r0
+     1309 000000a6 62000000!        call      _DP_SelfTest
+     1310                                                           ; Call Occurs
+     1311 000000a7 18740002         subi      2,sp
+     1312 000000a8          L34:        
+     1313                           .line   42
+     1314                   ;----------------------------------------------------------------------
+     1315                   ; 152 | nSelect_Button.nScreenSetNum = 11;                                     
+     1316                   ;----------------------------------------------------------------------
+     1317 000000a8 5060000b         ldiu      11,r0
+     1318 000000a9 1520000a!        sti       r0,@_nSelect_Button+10
+     1319 000000aa          L35:        
+     1320                           .line   44
+     1321 000000aa 50530b01         ldiu      *-fp(1),bk
+     1322 000000ab 504bc300         ldiu      *fp,fp
+     1323 000000ac 18740021         subi      33,sp
+     1324 000000ad 68000013         bu        bk
+     1325                   ;*      Branch Occurs to bk 
+     1326                           .endfunc        154,000000000h,31
+     1327                   
+     1328                   
+     1329                   
+     1330 00000017                  .sect   ".cinit"
+     1331 00000017 00000004         .field          IR_3,32
+     1332 00000018 0000000d-        .field          .init0$1+0,32
+     1333 00000019 0000003c         .field          60,32           ; .init0$1[0] @ 0
+     1334 0000001a 0000003d         .field          61,32           ; .init0$1[1] @ 32
+     1335 0000001b 0000003e         .field          62,32           ; .init0$1[2] @ 64
+     1336 0000001c 0000003f         .field          63,32           ; .init0$1[3] @ 96
+     1337          00000004 IR_3:   .set    4
+     1338                   
+     1339 000000ae                  .sect   ".text"
+     1340 000000ae                  .sect    ".text"
+     1341                   
+     1342                           .global _LED_ERASS
+     1343                           .sym    _LED_ERASS,_LED_ERASS,32,2,0
+     1344                           .func   159
+     1345                   ;******************************************************************************
+     1346                   ;* FUNCTION NAME: _LED_ERASS                                                  *
+     1347                   ;*                                                                            *
+     1348                   ;*   Architecture       : TMS320C30                                           *
+     1349                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1350                   ;*   Function Uses Regs : r0,r1,r2,r3,ar0,ar1,fp,ir0,sp,st,rs,re,rc           *
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   26
+
+     1351                   ;*   Regs Saved         :                                                     *
+     1352                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1353                   ;*   Total Frame Size   : 2 Call + 0 Parm + 30 Auto + 0 SOE = 32 words        *
+     1354                   ;******************************************************************************
+     1355 000000ae          _LED_ERASS:
+     1356 0000000d                  .bss    .init0$1,5
+     1357                           .sym    .init0$1,.init0$1,60,3,160,,5
+     1358                           .sym    _sSelf_Tx_Buf,1,60,1,800,,25
+     1359                           .sym    _sErBlkBuf,26,60,1,160,,5
+     1360                           .line   1
+     1361                   ;----------------------------------------------------------------------
+     1362                   ; 159 | void LED_ERASS()                                                       
+     1363                   ; 161 | UCHAR sSelf_Tx_Buf[25];                                                
+     1364                   ;----------------------------------------------------------------------
+     1365 000000ae 0f2b0000         push      fp
+     1366 000000af 500b0014         ldiu      sp,fp
+     1367 000000b0 0274001e         addi      30,sp
+     1368                           .line   4
+     1369                   ;----------------------------------------------------------------------
+     1370                   ; 162 | UCHAR sErBlkBuf[5] = {0x3C,0x3D,0x3E,0x3F};                            
+     1371                   ;----------------------------------------------------------------------
+     1372 000000b1 5029002d-        ldiu      @CL3,ar1
+     1373 000000b2 5008000b         ldiu      fp,ar0
+     1374 000000b3 0268001a         addi      26,ar0
+     1375 000000b4 50402101         ldiu      *ar1++(1),r0
+     1376 000000b5 13fb0003         rpts      3                     ; Fast MEMCPY(#3)
+     1377 000000b6 da002021         sti       r0,*ar0++(1)
+     1378                   ||      ldi       *ar1++(1),r0
+     1379 000000b7 15402001         sti       r0,*ar0++(1)
+     1380                           .line   6
+     1381                   ;----------------------------------------------------------------------
+     1382                   ; 164 | nLED_Time_Change = 2500;                                               
+     1383                   ;----------------------------------------------------------------------
+     1384 000000b8 506009c4         ldiu      2500,r0
+     1385 000000b9 15200001-        sti       r0,@_nLED_Time_Change+0
+     1386                           .line   9
+     1387                   ;----------------------------------------------------------------------
+     1388                   ; 167 | if(nLedDataLoad.nErassFlag.nTXCnt>=4)                                  
+     1389                   ;----------------------------------------------------------------------
+     1390 000000ba 50200021-        ldiu      @_nLedDataLoad+8,r0
+     1391 000000bb 04e00004         cmpi      4,r0
+     1392 000000bc 6a21000a         blod      L40
+     1393 000000bd 0c800000         nop
+     1394 000000be 50a00021-        ldilo     @_nLedDataLoad+8,r0
+     1395 000000bf 50e10004         ldilo     4,r1
+     1396                   ;*      Branch Occurs to L40 
+     1397                           .line   11
+     1398                   ;----------------------------------------------------------------------
+     1399                   ; 169 | nLedDataLoad.nErassFlag.nTXCnt = 0;                                    
+     1400                   ;----------------------------------------------------------------------
+     1401 000000c0 50600000         ldiu      0,r0
+     1402 000000c1 15200021-        sti       r0,@_nLedDataLoad+8
+     1403                           .line   12
+     1404                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   27
+
+     1405                   ; 170 | nSelf_Test.nSELF_TX_Cnt = 0;                                           
+     1406                   ;----------------------------------------------------------------------
+     1407 000000c2 1520003c!        sti       r0,@_nSelf_Test+60
+     1408                           .line   14
+     1409                   ;----------------------------------------------------------------------
+     1410                   ; 172 | nLedDataLoad.nErassFlag.nST_1 = FALSE;                                 
+     1411                   ;----------------------------------------------------------------------
+     1412 000000c3 1520001f-        sti       r0,@_nLedDataLoad+6
+     1413                           .line   15
+     1414                   ;----------------------------------------------------------------------
+     1415                   ; 173 | nLedDataLoad.nErassFlag.nST_2 = TRUE;                                  
+     1416                   ;----------------------------------------------------------------------
+     1417 000000c4 50600001         ldiu      1,r0
+     1418 000000c5 15200020-        sti       r0,@_nLedDataLoad+7
+     1419                           .line   16
+     1420                   ;----------------------------------------------------------------------
+     1421                   ; 174 | nSelect_Button.nScreenSetNum = 12;                                     
+     1422                   ; 176 | else                                                                   
+     1423                   ;----------------------------------------------------------------------
+     1424 000000c6 5060000c         ldiu      12,r0
+     1425 000000c7 1520000a!        sti       r0,@_nSelect_Button+10
+     1426 000000c8 6a000027         bu        L41
+     1427                   ;*      Branch Occurs to L41 
+     1428                           .line   20
+     1429                   ;----------------------------------------------------------------------
+     1430                   ; 178 | Xr_TX_PROTOCOL(sSelf_Tx_Buf,nLedDataLoad.nSFKindCode,0x31,0x01,0,0,sErB
+     1431                   ;     | lkBuf[(nLedDataLoad.nErassFlag.nTXCnt)%4],0,0,10);                     
+     1432                   ;----------------------------------------------------------------------
+     1433 000000c9          L40:        
+     1434 000000c9 62000000!        call      MOD_U30
+     1435                                                           ; Call Occurs
+     1436 000000ca 50620001         ldiu      1,r2
+     1437 000000cb 50630031         ldiu      49,r3
+     1438 000000cc 5008000b         ldiu      fp,ar0
+     1439 000000cd 0268001a         addi      26,ar0
+     1440 000000ce 50110000         ldiu      r0,ir0
+     1441 000000cf 507a0000         ldiu      0,re
+     1442 000000d0 507b0000         ldiu      0,rc
+     1443 000000d1 5061000a         ldiu      10,r1
+     1444 000000d2 50594000         ldiu      *+ar0(ir0),rs
+     1445 000000d3 50600000         ldiu      0,r0
+     1446 000000d4 0f210000         push      r1
+     1447 000000d5 0f200000         push      r0
+     1448 000000d6 0f3a0000         push      re
+     1449 000000d7 50610000         ldiu      0,r1
+     1450 000000d8 0f390000         push      rs
+     1451 000000d9 5000000b         ldiu      fp,r0
+     1452 000000da 0f3b0000         push      rc
+     1453 000000db 0f210000         push      r1
+     1454 000000dc 0f220000         push      r2
+     1455 000000dd 0f230000         push      r3
+     1456 000000de 02600001         addi      1,r0
+     1457 000000df 5021001b-        ldiu      @_nLedDataLoad+2,r1
+     1458 000000e0 0f210000         push      r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   28
+
+     1459 000000e1 0f200000         push      r0
+     1460 000000e2 62000000!        call      _Xr_TX_PROTOCOL
+     1461                                                           ; Call Occurs
+     1462 000000e3 1874000a         subi      10,sp
+     1463                           .line   21
+     1464                   ;----------------------------------------------------------------------
+     1465                   ; 179 | xr16l788_Send(XR16L788_3CHL,sSelf_Tx_Buf,20);                          
+     1466                   ;----------------------------------------------------------------------
+     1467 000000e4 50610014         ldiu      20,r1
+     1468 000000e5 0f210000         push      r1
+     1469 000000e6 5000000b         ldiu      fp,r0
+     1470 000000e7 02600001         addi      1,r0
+     1471 000000e8 0f200000         push      r0
+     1472 000000e9 50620002         ldiu      2,r2
+     1473 000000ea 0f220000         push      r2
+     1474 000000eb 62000000!        call      _xr16l788_Send
+     1475                                                           ; Call Occurs
+     1476 000000ec 18740003         subi      3,sp
+     1477                           .line   22
+     1478                   ;----------------------------------------------------------------------
+     1479                   ; 180 | nLedDataLoad.nErassFlag.nTXCnt++;                                      
+     1480                   ;----------------------------------------------------------------------
+     1481 000000ed 50600001         ldiu      1,r0
+     1482 000000ee 02200021-        addi      @_nLedDataLoad+8,r0   ; Unsigned
+     1483 000000ef 15200021-        sti       r0,@_nLedDataLoad+8
+     1484 000000f0          L41:        
+     1485                           .line   24
+     1486 000000f0 50530b01         ldiu      *-fp(1),bk
+     1487 000000f1 504bc300         ldiu      *fp,fp
+     1488 000000f2 18740020         subi      32,sp
+     1489 000000f3 68000013         bu        bk
+     1490                   ;*      Branch Occurs to bk 
+     1491                           .endfunc        182,000000000h,30
+     1492                   
+     1493                   
+     1494                   
+     1495 0000001d                  .sect   ".cinit"
+     1496 0000001d 00000001         .field          1,32
+     1497 0000001e 00000012-        .field          _d_Sdr_A+0,32
+     1498 0000001f 00000000         .field          0,32            ; _d_Sdr_A @ 0
+     1499                   
+     1500 000000f4                  .sect   ".text"
+     1501                   
+     1502                           .global _d_Sdr_A
+     1503 00000012                  .bss    _d_Sdr_A,1
+     1504                           .sym    _d_Sdr_A,_d_Sdr_A,12,2,32
+     1505                   
+     1506 00000020                  .sect   ".cinit"
+     1507 00000020 00000001         .field          1,32
+     1508 00000021 00000013-        .field          _d_Sdr_B+0,32
+     1509 00000022 00000000         .field          0,32            ; _d_Sdr_B @ 0
+     1510                   
+     1511 000000f4                  .sect   ".text"
+     1512                   
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   29
+
+     1513                           .global _d_Sdr_B
+     1514 00000013                  .bss    _d_Sdr_B,1
+     1515                           .sym    _d_Sdr_B,_d_Sdr_B,12,2,32
+     1516                   
+     1517 00000023                  .sect   ".cinit"
+     1518 00000023 00000004         .field          IR_4,32
+     1519 00000024 00000014-        .field          .init1$2+0,32
+     1520 00000025 0000003c         .field          60,32           ; .init1$2[0] @ 0
+     1521 00000026 0000003d         .field          61,32           ; .init1$2[1] @ 32
+     1522 00000027 0000003e         .field          62,32           ; .init1$2[2] @ 64
+     1523 00000028 0000003f         .field          63,32           ; .init1$2[3] @ 96
+     1524          00000004 IR_4:   .set    4
+     1525                   
+     1526 000000f4                  .sect   ".text"
+     1527 000000f4                  .sect    ".text"
+     1528                   
+     1529                           .global _LED_ERASS_SDR
+     1530                           .sym    _LED_ERASS_SDR,_LED_ERASS_SDR,32,2,0
+     1531                           .func   187
+     1532                   ;******************************************************************************
+     1533                   ;* FUNCTION NAME: _LED_ERASS_SDR                                              *
+     1534                   ;*                                                                            *
+     1535                   ;*   Architecture       : TMS320C30                                           *
+     1536                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1537                   ;*   Function Uses Regs : r0,r1,r2,r3,r4,r5,ar0,ar1,fp,ir0,ir1,sp,st,rs,re,rc *
+     1538                   ;*   Regs Saved         : r4,r5                                               *
+     1539                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1540                   ;*   Total Frame Size   : 2 Call + 0 Parm + 57 Auto + 2 SOE = 61 words        *
+     1541                   ;******************************************************************************
+     1542 000000f4          _LED_ERASS_SDR:
+     1543 00000014                  .bss    .init1$2,5
+     1544                           .sym    .init1$2,.init1$2,60,3,160,,5
+     1545                           .sym    _i,1,4,1,32
+     1546                           .sym    _sSelf_Tx_Buf,2,60,1,800,,25
+     1547                           .sym    _sSelf_RxData_Buf,27,60,1,800,,25
+     1548                           .sym    _sErBlkBuf,52,60,1,160,,5
+     1549                           .sym    _sErAddCnt,57,12,1,32
+     1550                           .line   1
+     1551                   ;----------------------------------------------------------------------
+     1552                   ; 187 | void LED_ERASS_SDR()                                                   
+     1553                   ; 189 | int i;                                                                 
+     1554                   ; 190 | UCHAR sSelf_Tx_Buf[25];                                                
+     1555                   ; 191 | UCHAR sSelf_RxData_Buf[25];                                            
+     1556                   ;----------------------------------------------------------------------
+     1557 000000f4 0f2b0000         push      fp
+     1558 000000f5 500b0014         ldiu      sp,fp
+     1559 000000f6 02740039         addi      57,sp
+     1560 000000f7 0f240000         push      r4
+     1561 000000f8 0f250000         push      r5
+     1562                           .line   6
+     1563                   ;----------------------------------------------------------------------
+     1564                   ; 192 | UCHAR sErBlkBuf[5] = {0x3C,0x3D,0x3E,0x3F};                            
+     1565                   ;----------------------------------------------------------------------
+     1566 000000f9 5029002e-        ldiu      @CL4,ar1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   30
+
+     1567 000000fa 5008000b         ldiu      fp,ar0
+     1568 000000fb 02680034         addi      52,ar0
+     1569 000000fc 50402101         ldiu      *ar1++(1),r0
+     1570 000000fd 13fb0003         rpts      3                     ; Fast MEMCPY(#6)
+     1571 000000fe da002021         sti       r0,*ar0++(1)
+     1572                   ||      ldi       *ar1++(1),r0
+     1573 000000ff 15402001         sti       r0,*ar0++(1)
+     1574                           .line   7
+     1575                   ;----------------------------------------------------------------------
+     1576                   ; 193 | UCHAR sErAddCnt = 0;                                                   
+     1577                   ;----------------------------------------------------------------------
+     1578 00000100 50600000         ldiu      0,r0
+     1579 00000101 15400339         sti       r0,*+fp(57)
+     1580                           .line   9
+     1581                   ;----------------------------------------------------------------------
+     1582                   ; 195 | memcpy(sSelf_RxData_Buf,nSelf_Test.nSELF_RXDATA_Buf,15);               
+     1583                   ;----------------------------------------------------------------------
+     1584 00000102 5029002f-        ldiu      @CL5,ar1
+     1585 00000103 5008000b         ldiu      fp,ar0
+     1586 00000104 0268001b         addi      27,ar0
+     1587 00000105 50402101         ldiu      *ar1++(1),r0
+     1588 00000106 13fb000d         rpts      13                    ; Fast MEMCPY(#9)
+     1589 00000107 da002021         sti       r0,*ar0++(1)
+     1590                   ||      ldi       *ar1++(1),r0
+     1591 00000108 15402001         sti       r0,*ar0++(1)
+     1592                           .line   11
+     1593                   ;----------------------------------------------------------------------
+     1594                   ; 197 | nLED_Time_Change = 300;                                                
+     1595                   ;----------------------------------------------------------------------
+     1596 00000109 5060012c         ldiu      300,r0
+     1597 0000010a 15200001-        sti       r0,@_nLED_Time_Change+0
+     1598                           .line   13
+     1599                   ;----------------------------------------------------------------------
+     1600                   ; 199 | for(i = WORD_L(nSelf_Test.nSELF_TX_Cnt);i<(DISPLAY_UNIT);i++)          
+     1601                   ;----------------------------------------------------------------------
+     1602 0000010b 506000ff         ldiu      255,r0
+     1603 0000010c 02a0003c!        and       @_nSelf_Test+60,r0
+     1604 0000010d 15400301         sti       r0,*+fp(1)
+     1605 0000010e 04e0000a         cmpi      10,r0
+     1606 0000010f 6a0a0011         bge       L48
+     1607                   ;*      Branch Occurs to L48 
+     1608 00000110          L44:        
+     1609                           .line   15
+     1610                   ;----------------------------------------------------------------------
+     1611                   ; 201 | if(!WORD_L(sSelf_RxData_Buf[i]))                                       
+     1612                   ;----------------------------------------------------------------------
+     1613 00000110 5008000b         ldiu      fp,ar0
+     1614 00000111 50510301         ldiu      *+fp(1),ir0
+     1615 00000112 0268001b         addi      27,ar0
+     1616 00000113 506000ff         ldiu      255,r0
+     1617 00000114 27c00040         tstb3     *+ar0(ir0),r0
+     1618 00000115 6a060003         bne       L47
+     1619                   ;*      Branch Occurs to L47 
+     1620                           .line   17
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   31
+
+     1621                   ;----------------------------------------------------------------------
+     1622                   ; 203 | sErAddCnt = i;                                                         
+     1623                   ;----------------------------------------------------------------------
+     1624 00000116 50400301         ldiu      *+fp(1),r0
+     1625 00000117 15400339         sti       r0,*+fp(57)
+     1626                           .line   18
+     1627                   ;----------------------------------------------------------------------
+     1628                   ; 204 | break;                                                                 
+     1629                   ;----------------------------------------------------------------------
+     1630 00000118 6a000008         bu        L48
+     1631                   ;*      Branch Occurs to L48 
+     1632 00000119          L47:        
+     1633                           .line   20
+     1634                   ;----------------------------------------------------------------------
+     1635                   ; 206 | else {nSelf_Test.nSELF_TX_Cnt++;}                                      
+     1636                   ;----------------------------------------------------------------------
+     1637 00000119 50600001         ldiu      1,r0
+     1638 0000011a 0220003c!        addi      @_nSelf_Test+60,r0    ; Unsigned
+     1639 0000011b 1520003c!        sti       r0,@_nSelf_Test+60
+     1640                           .line   13
+     1641 0000011c 50600001         ldiu      1,r0
+     1642 0000011d 02400301         addi      *+fp(1),r0
+     1643 0000011e 15400301         sti       r0,*+fp(1)
+     1644 0000011f 04e0000a         cmpi      10,r0
+     1645 00000120 6a07ffef         blt       L44
+     1646                   ;*      Branch Occurs to L44 
+     1647 00000121          L48:        
+     1648                           .line   23
+     1649                   ;----------------------------------------------------------------------
+     1650                   ; 209 | if(nSelf_Test.nSELF_TX_Cnt >= DISPLAY_UNIT)                            
+     1651                   ;----------------------------------------------------------------------
+     1652 00000121 5020003c!        ldiu      @_nSelf_Test+60,r0
+     1653 00000122 04e0000a         cmpi      10,r0
+     1654 00000123 6a21002e         blod      L56
+     1655 00000124 0c800000         nop
+     1656 00000125 50a00021-        ldilo     @_nLedDataLoad+8,r0
+     1657 00000126 50e10004         ldilo     4,r1
+     1658                   ;*      Branch Occurs to L56 
+     1659                           .line   25
+     1660                   ;----------------------------------------------------------------------
+     1661                   ; 211 | nSelf_Test.nSELF_TX_Cnt = 0;                                           
+     1662                   ;----------------------------------------------------------------------
+     1663 00000127 50600000         ldiu      0,r0
+     1664 00000128 1520003c!        sti       r0,@_nSelf_Test+60
+     1665                           .line   27
+     1666                   ;----------------------------------------------------------------------
+     1667                   ; 213 | nLedDataLoad.nErassFlag.nST_1 = FALSE;                                 
+     1668                   ;----------------------------------------------------------------------
+     1669 00000129 1520001f-        sti       r0,@_nLedDataLoad+6
+     1670                           .line   28
+     1671                   ;----------------------------------------------------------------------
+     1672                   ; 214 | nLedDataLoad.nErassFlag.nST_2 = FALSE;                                 
+     1673                   ;----------------------------------------------------------------------
+     1674 0000012a 15200020-        sti       r0,@_nLedDataLoad+7
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   32
+
+     1675                           .line   30
+     1676                   ;----------------------------------------------------------------------
+     1677                   ; 216 | d_Sdr_B = nLedDataLoad.nSDR_RxCnt;                                     
+     1678                   ; 218 | //nLedDataLoad.nErassFlag.nTXCnt = (nLedDataLoad.nErassFlag.nTXCnt) - (
+     1679                   ;     | nLedDataLoad.nErassFlag.nTXCnt%4);                                     
+     1680                   ;----------------------------------------------------------------------
+     1681 0000012b 5020001e-        ldiu      @_nLedDataLoad+5,r0
+     1682 0000012c 15200013-        sti       r0,@_d_Sdr_B+0
+     1683                           .line   33
+     1684                   ;----------------------------------------------------------------------
+     1685                   ; 219 | d_Sdr_A = nLedDataLoad.nErassFlag.nTXCnt;                              
+     1686                   ;----------------------------------------------------------------------
+     1687 0000012d 50200021-        ldiu      @_nLedDataLoad+8,r0
+     1688 0000012e 15200012-        sti       r0,@_d_Sdr_A+0
+     1689                           .line   35
+     1690                   ;----------------------------------------------------------------------
+     1691                   ; 221 | if(WORD_L(nLedDataLoad.nErassFlag.nTXCnt) >= WORD_L(nLedDataLoad.nSDR_R
+     1692                   ;     | xCnt))   //모두 잘 지워 졌을때.                                        
+     1693                   ;----------------------------------------------------------------------
+     1694 0000012f 506100ff         ldiu      255,r1
+     1695 00000130 02a10021-        and       @_nLedDataLoad+8,r1
+     1696 00000131 506000ff         ldiu      255,r0
+     1697 00000132 02a0001e-        and       @_nLedDataLoad+5,r0
+     1698 00000133 23800100         cmpi3     r0,r1
+     1699 00000134 6a010011         blo       L51
+     1700                   ;*      Branch Occurs to L51 
+     1701                           .line   37
+     1702                   ;----------------------------------------------------------------------
+     1703                   ; 223 | nLedDataLoad.nErassFlag.nRepCnt = 0;                                   
+     1704                   ;----------------------------------------------------------------------
+     1705 00000135 50600000         ldiu      0,r0
+     1706 00000136 15200022-        sti       r0,@_nLedDataLoad+9
+     1707                           .line   38
+     1708                   ;----------------------------------------------------------------------
+     1709                   ; 224 | nLedDataLoad.nErassFlag.nErassOk = TRUE;                               
+     1710                   ;----------------------------------------------------------------------
+     1711 00000137 50600001         ldiu      1,r0
+     1712 00000138 15200023-        sti       r0,@_nLedDataLoad+10
+     1713                           .line   39
+     1714                   ;----------------------------------------------------------------------
+     1715                   ; 225 | gpLED_UPLOAD_DABUT;                                                    
+     1716                   ;----------------------------------------------------------------------
+     1717 00000139 50610001         ldiu      1,r1
+     1718 0000013a 0f210000         push      r1
+     1719 0000013b 506002bd         ldiu      701,r0
+     1720 0000013c 0f200000         push      r0
+     1721 0000013d 62000000!        call      _gp_WritingWord
+     1722                                                           ; Call Occurs
+     1723 0000013e 18740002         subi      2,sp
+     1724                           .line   40
+     1725                   ;----------------------------------------------------------------------
+     1726                   ; 226 | gpLED_UPLOAD_DABUT_SF_ON;                                              
+     1727                   ; 228 | else    // 지우기 실패로 인해 다시 지운다. 5회 반복한다.               
+     1728                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   33
+
+     1729 0000013f 50600001         ldiu      1,r0
+     1730 00000140 506102c7         ldiu      711,r1
+     1731 00000141 0f200000         push      r0
+     1732 00000142 0f210000         push      r1
+     1733 00000143 62000000!        call      _gp_WritingWord
+     1734                                                           ; Call Occurs
+     1735 00000144 18740002         subi      2,sp
+     1736 00000145 6a00000a         bu        L54
+     1737                   ;*      Branch Occurs to L54 
+     1738 00000146          L51:        
+     1739                           .line   44
+     1740                   ;----------------------------------------------------------------------
+     1741                   ; 230 | nLedDataLoad.nErassFlag.nRepCnt++;                                     
+     1742                   ;----------------------------------------------------------------------
+     1743 00000146 50600001         ldiu      1,r0
+     1744 00000147 02200022-        addi      @_nLedDataLoad+9,r0   ; Unsigned
+     1745 00000148 15200022-        sti       r0,@_nLedDataLoad+9
+     1746                           .line   45
+     1747                   ;----------------------------------------------------------------------
+     1748                   ; 231 | if(nLedDataLoad.nErassFlag.nRepCnt <5)                                 
+     1749                   ;----------------------------------------------------------------------
+     1750 00000149 04e00005         cmpi      5,r0
+     1751 0000014a 6a040003         bhs       L53
+     1752                   ;*      Branch Occurs to L53 
+     1753                           .line   47
+     1754                   ;----------------------------------------------------------------------
+     1755                   ; 233 | nLedDataLoad.nErassFlag.nST_1 = TRUE;                                  
+     1756                   ; 235 | else                                                                   
+     1757                   ;----------------------------------------------------------------------
+     1758 0000014b 50600001         ldiu      1,r0
+     1759 0000014c 1520001f-        sti       r0,@_nLedDataLoad+6
+     1760 0000014d 6a000002         bu        L54
+     1761                   ;*      Branch Occurs to L54 
+     1762 0000014e          L53:        
+     1763                           .line   51
+     1764                   ;----------------------------------------------------------------------
+     1765                   ; 237 | nLedDataLoad.nErassFlag.nRepCnt = 0;                                   
+     1766                   ;----------------------------------------------------------------------
+     1767 0000014e 50600000         ldiu      0,r0
+     1768 0000014f 15200022-        sti       r0,@_nLedDataLoad+9
+     1769 00000150          L54:        
+     1770                           .line   55
+     1771                   ;----------------------------------------------------------------------
+     1772                   ; 241 | nLedDataLoad.nSDR_RxCnt = 0;                                           
+     1773                   ;----------------------------------------------------------------------
+     1774 00000150 50600000         ldiu      0,r0
+     1775 00000151 1520001e-        sti       r0,@_nLedDataLoad+5
+     1776                           .line   56
+     1777                   ;----------------------------------------------------------------------
+     1778                   ; 242 | nLedDataLoad.nErassFlag.nTXCnt = 0;                                    
+     1779                   ; 244 | else                                                                   
+     1780                   ;----------------------------------------------------------------------
+     1781 00000152 15200021-        sti       r0,@_nLedDataLoad+8
+     1782 00000153 6a000030         bu        L60
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   34
+
+     1783                   ;*      Branch Occurs to L60 
+     1784                           .line   60
+     1785                   ;----------------------------------------------------------------------
+     1786                   ; 246 | Xr_TX_PROTOCOL(sSelf_Tx_Buf,nSelf_Test.nSELF_ADDDATA_BUF[sErAddCnt],0x3
+     1787                   ;     | 1,0x07,0,0x10,sErBlkBuf[(nLedDataLoad.nErassFlag.nTXCnt)%4],0,0,10);   
+     1788                   ;----------------------------------------------------------------------
+     1789 00000154          L56:        
+     1790 00000154 62000000!        call      MOD_U30
+     1791                                                           ; Call Occurs
+     1792 00000155 5062000a         ldiu      10,r2
+     1793 00000156 50630010         ldiu      16,r3
+     1794 00000157 5008000b         ldiu      fp,ar0
+     1795 00000158 50290030-        ldiu      @CL6,ar1
+     1796 00000159 50510339         ldiu      *+fp(57),ir0
+     1797 0000015a 02680034         addi      52,ar0
+     1798 0000015b 50120000         ldiu      r0,ir1
+     1799 0000015c 507a0000         ldiu      0,re
+     1800                   
+     1801 0000015d c7604180         ldiu      *+ar0(ir1),r5
+     1802                   ||      ldiu      *+ar1(ir0),r4
+     1803                   
+     1804 0000015e 50610000         ldiu      0,r1
+     1805 0000015f 50790031         ldiu      49,rs
+     1806 00000160 0f220000         push      r2
+     1807 00000161 5000000b         ldiu      fp,r0
+     1808 00000162 0f210000         push      r1
+     1809 00000163 50620000         ldiu      0,r2
+     1810 00000164 02600002         addi      2,r0
+     1811 00000165 0f3a0000         push      re
+     1812 00000166 50610007         ldiu      7,r1
+     1813 00000167 0f250000         push      r5
+     1814 00000168 0f230000         push      r3
+     1815 00000169 0f220000         push      r2
+     1816 0000016a 0f210000         push      r1
+     1817 0000016b 0f390000         push      rs
+     1818 0000016c 0f240000         push      r4
+     1819 0000016d 0f200000         push      r0
+     1820 0000016e 62000000!        call      _Xr_TX_PROTOCOL
+     1821                                                           ; Call Occurs
+     1822 0000016f 1874000a         subi      10,sp
+     1823                           .line   62
+     1824                   ;----------------------------------------------------------------------
+     1825                   ; 248 | nLedDataLoad.nErassFlag.nTXCnt++;                                      
+     1826                   ;----------------------------------------------------------------------
+     1827 00000170 50600001         ldiu      1,r0
+     1828 00000171 02200021-        addi      @_nLedDataLoad+8,r0   ; Unsigned
+     1829 00000172 15200021-        sti       r0,@_nLedDataLoad+8
+     1830                           .line   64
+     1831                   ;----------------------------------------------------------------------
+     1832                   ; 250 | if(!(nLedDataLoad.nErassFlag.nTXCnt%4) && nLedDataLoad.nErassFlag.nTXCn
+     1833                   ;     | t)//한 장치당 삭제 블럭 갯수 만큼 물어 본다.                           
+     1834                   ;----------------------------------------------------------------------
+     1835 00000173 50600003         ldiu      3,r0
+     1836 00000174 1a200021-        tstb      @_nLedDataLoad+8,r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   35
+
+     1837 00000175 6a060005         bne       L59
+     1838                   ;*      Branch Occurs to L59 
+     1839 00000176 08200021-        ldi       @_nLedDataLoad+8,r0
+     1840 00000177 6a050003         beq       L59
+     1841                   ;*      Branch Occurs to L59 
+     1842                           .line   66
+     1843                   ;----------------------------------------------------------------------
+     1844                   ; 252 | nSelf_Test.nSELF_TX_Cnt++;                                             
+     1845                   ;----------------------------------------------------------------------
+     1846 00000178 50600001         ldiu      1,r0
+     1847 00000179 0220003c!        addi      @_nSelf_Test+60,r0    ; Unsigned
+     1848 0000017a 1520003c!        sti       r0,@_nSelf_Test+60
+     1849 0000017b          L59:        
+     1850                           .line   69
+     1851                   ;----------------------------------------------------------------------
+     1852                   ; 255 | xr16l788_Send(XR16L788_3CHL,sSelf_Tx_Buf,20);                          
+     1853                   ;----------------------------------------------------------------------
+     1854 0000017b 50620014         ldiu      20,r2
+     1855 0000017c 5000000b         ldiu      fp,r0
+     1856 0000017d 50610002         ldiu      2,r1
+     1857 0000017e 0f220000         push      r2
+     1858 0000017f 02600002         addi      2,r0
+     1859 00000180 0f200000         push      r0
+     1860 00000181 0f210000         push      r1
+     1861 00000182 62000000!        call      _xr16l788_Send
+     1862                                                           ; Call Occurs
+     1863 00000183 18740003         subi      3,sp
+     1864 00000184          L60:        
+     1865                           .line   71
+     1866 00000184 0e250000         pop       r5
+     1867 00000185 50530b01         ldiu      *-fp(1),bk
+     1868 00000186 0e240000         pop       r4
+     1869 00000187 504bc300         ldiu      *fp,fp
+     1870 00000188 1874003b         subi      59,sp
+     1871 00000189 68000013         bu        bk
+     1872                   ;*      Branch Occurs to bk 
+     1873                           .endfunc        257,000000030h,57
+     1874                   
+     1875                   
+     1876 0000018a                  .sect    ".text"
+     1877                   
+     1878                           .global _LED_DataDownLoad_ST1
+     1879                           .sym    _LED_DataDownLoad_ST1,_LED_DataDownLoad_ST1,32,2,0
+     1880                           .func   261
+     1881                   ;******************************************************************************
+     1882                   ;* FUNCTION NAME: _LED_DataDownLoad_ST1                                       *
+     1883                   ;*                                                                            *
+     1884                   ;*   Architecture       : TMS320C30                                           *
+     1885                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1886                   ;*   Function Uses Regs : r0,st                                               *
+     1887                   ;*   Regs Saved         :                                                     *
+     1888                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1889                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     1890                   ;******************************************************************************
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   36
+
+     1891 0000018a          _LED_DataDownLoad_ST1:
+     1892                           .line   1
+     1893                   ;----------------------------------------------------------------------
+     1894                   ; 261 | void LED_DataDownLoad_ST1()                                            
+     1895                   ;----------------------------------------------------------------------
+     1896 0000018a 0f2b0000         push      fp
+     1897 0000018b 500b0014         ldiu      sp,fp
+     1898                           .line   3
+     1899                   ;----------------------------------------------------------------------
+     1900                   ; 263 | if(!nLedDataLoad.nDataSize)                                            
+     1901                   ;----------------------------------------------------------------------
+     1902 0000018c 08200029-        ldi       @_nLedDataLoad+16,r0
+     1903 0000018d 6a060002         bne       L64
+     1904                   ;*      Branch Occurs to L64 
+     1905                           .line   5
+     1906                   ;----------------------------------------------------------------------
+     1907                   ; 265 | nLedDataLoad.nDataSize = Nvsram_IDC_UpLoad_Da();                       
+     1908                   ;----------------------------------------------------------------------
+     1909 0000018e 62000000!        call      _Nvsram_IDC_UpLoad_Da
+     1910                                                           ; Call Occurs
+     1911 0000018f 15200029-        sti       r0,@_nLedDataLoad+16
+     1912 00000190          L64:        
+     1913                           .line   7
+     1914 00000190 50530b01         ldiu      *-fp(1),bk
+     1915 00000191 504bc300         ldiu      *fp,fp
+     1916 00000192 18740002         subi      2,sp
+     1917 00000193 68000013         bu        bk
+     1918                   ;*      Branch Occurs to bk 
+     1919                           .endfunc        267,000000000h,0
+     1920                   
+     1921                   
+     1922 00000194                  .sect    ".text"
+     1923                   
+     1924                           .global _LED_DataDownLoad_ST2
+     1925                           .sym    _LED_DataDownLoad_ST2,_LED_DataDownLoad_ST2,32,2,0
+     1926                           .func   268
+     1927                   ;******************************************************************************
+     1928                   ;* FUNCTION NAME: _LED_DataDownLoad_ST2                                       *
+     1929                   ;*                                                                            *
+     1930                   ;*   Architecture       : TMS320C30                                           *
+     1931                   ;*   Calling Convention : Stack Parameter Convention                          *
+     1932                   ;*   Function Uses Regs : r0,r1,r2,ar0,ar1,fp,sp,st,rs,re,rc                  *
+     1933                   ;*   Regs Saved         :                                                     *
+     1934                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     1935                   ;*   Total Frame Size   : 2 Call + 1 Parm + 300 Auto + 0 SOE = 303 words      *
+     1936                   ;******************************************************************************
+     1937 00000194          _LED_DataDownLoad_ST2:
+     1938                           .sym    _nBlkNum,-2,12,9,32
+     1939                           .sym    _sDataBuf,1,60,1,4800,,150
+     1940                           .sym    _sDataTextBuf,151,60,1,4800,,150
+     1941                           .line   1
+     1942                   ;----------------------------------------------------------------------
+     1943                   ; 268 | void LED_DataDownLoad_ST2(UCHAR nBlkNum)                               
+     1944                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   37
+
+     1945 00000194 0f2b0000         push      fp
+     1946 00000195 500b0014         ldiu      sp,fp
+     1947 00000196 0274012c         addi      300,sp
+     1948                           .line   2
+     1949                   ;----------------------------------------------------------------------
+     1950                   ; 270 | UCHAR sDataBuf[150];                                                   
+     1951                   ; 271 | UCHAR sDataTextBuf[150];                                               
+     1952                   ;----------------------------------------------------------------------
+     1953                           .line   6
+     1954                   ;----------------------------------------------------------------------
+     1955                   ; 273 | nLED_Time_Change = 200;                                                
+     1956                   ;----------------------------------------------------------------------
+     1957 00000197 506000c8         ldiu      200,r0
+     1958 00000198 15200001-        sti       r0,@_nLED_Time_Change+0
+     1959                           .line   8
+     1960                   ;----------------------------------------------------------------------
+     1961                   ; 275 | memcpy(sDataBuf,&NVSRAM(nBlkNum*128),128);                             
+     1962                   ;----------------------------------------------------------------------
+     1963 00000199 50480b02         ldiu      *-fp(2),ar0
+     1964 0000019a 5009000b         ldiu      fp,ar1
+     1965 0000019b 0ae80080         mpyi      128,ar0
+     1966 0000019c 02690001         addi      1,ar1
+     1967 0000019d 02280031-        addi      @CL7,ar0              ; Unsigned
+     1968 0000019e 50402001         ldiu      *ar0++(1),r0
+     1969 0000019f 13fb007e         rpts      126                   ; Fast MEMCPY(#12)
+     1970 000001a0 da002120         sti       r0,*ar1++(1)
+     1971                   ||      ldi       *ar0++(1),r0
+     1972 000001a1 15402101         sti       r0,*ar1++(1)
+     1973                           .line   9
+     1974                   ;----------------------------------------------------------------------
+     1975                   ; 276 | Xr_Tx_DownLoad_TEXT(sDataTextBuf,sDataBuf,nLedDataLoad.nSFKindCode,(nBl
+     1976                   ;     | kNum+30720));                                                          
+     1977                   ;----------------------------------------------------------------------
+     1978 000001a2 5001000b         ldiu      fp,r1
+     1979 000001a3 5002000b         ldiu      fp,r2
+     1980 000001a4 02610001         addi      1,r1
+     1981 000001a5 50607800         ldiu      30720,r0
+     1982 000001a6 02400b02         addi      *-fp(2),r0            ; Unsigned
+     1983 000001a7 0f200000         push      r0
+     1984 000001a8 5020001b-        ldiu      @_nLedDataLoad+2,r0
+     1985 000001a9 0f200000         push      r0
+     1986 000001aa 0f210000         push      r1
+     1987 000001ab 02620097         addi      151,r2
+     1988 000001ac 0f220000         push      r2
+     1989 000001ad 62000000!        call      _Xr_Tx_DownLoad_TEXT
+     1990                                                           ; Call Occurs
+     1991 000001ae 18740004         subi      4,sp
+     1992                           .line   11
+     1993                   ;----------------------------------------------------------------------
+     1994                   ; 278 | xr16l788_Send(XR16L788_3CHL,sDataTextBuf,144);                         
+     1995                   ;----------------------------------------------------------------------
+     1996 000001af 50610090         ldiu      144,r1
+     1997 000001b0 5000000b         ldiu      fp,r0
+     1998 000001b1 0f210000         push      r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   38
+
+     1999 000001b2 02600097         addi      151,r0
+     2000 000001b3 0f200000         push      r0
+     2001 000001b4 50620002         ldiu      2,r2
+     2002 000001b5 0f220000         push      r2
+     2003 000001b6 62000000!        call      _xr16l788_Send
+     2004                                                           ; Call Occurs
+     2005 000001b7 18740003         subi      3,sp
+     2006                           .line   14
+     2007                   ;----------------------------------------------------------------------
+     2008                   ; 281 | if((nBlkNum*128) >= nLedDataLoad.nDataSize)                            
+     2009                   ;----------------------------------------------------------------------
+     2010 000001b8 50400b02         ldiu      *-fp(2),r0
+     2011 000001b9 0ae00080         mpyi      128,r0
+     2012 000001ba 04a00029-        cmpi      @_nLedDataLoad+16,r0
+     2013 000001bb 6a010006         blo       L68
+     2014                   ;*      Branch Occurs to L68 
+     2015                           .line   16
+     2016                   ;----------------------------------------------------------------------
+     2017                   ; 283 | nLedDataLoad.nDataDownFlag = FALSE;                                    
+     2018                   ;----------------------------------------------------------------------
+     2019 000001bc 50600000         ldiu      0,r0
+     2020 000001bd 15200024-        sti       r0,@_nLedDataLoad+11
+     2021                           .line   17
+     2022                   ;----------------------------------------------------------------------
+     2023                   ; 284 | nLedDataLoad.nDataSDRFlag = TRUE;                                      
+     2024                   ;----------------------------------------------------------------------
+     2025 000001be 50600001         ldiu      1,r0
+     2026 000001bf 15200028-        sti       r0,@_nLedDataLoad+15
+     2027                           .line   18
+     2028                   ;----------------------------------------------------------------------
+     2029                   ; 285 | nLedDataLoad.nDataSize = 0;                                            
+     2030                   ; 286 | //nLedDataLoad.nDataTxCnt = 0;                                         
+     2031                   ;----------------------------------------------------------------------
+     2032 000001c0 50600000         ldiu      0,r0
+     2033 000001c1 15200029-        sti       r0,@_nLedDataLoad+16
+     2034 000001c2          L68:        
+     2035                           .line   21
+     2036 000001c2 50530b01         ldiu      *-fp(1),bk
+     2037 000001c3 504bc300         ldiu      *fp,fp
+     2038 000001c4 1874012e         subi      302,sp
+     2039 000001c5 68000013         bu        bk
+     2040                   ;*      Branch Occurs to bk 
+     2041                           .endfunc        288,000000000h,300
+     2042                   
+     2043                   
+     2044 000001c6                  .sect    ".text"
+     2045                   
+     2046                           .global _LED_DataSDR
+     2047                           .sym    _LED_DataSDR,_LED_DataSDR,32,2,0
+     2048                           .func   290
+     2049                   ;******************************************************************************
+     2050                   ;* FUNCTION NAME: _LED_DataSDR                                                *
+     2051                   ;*                                                                            *
+     2052                   ;*   Architecture       : TMS320C30                                           *
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   39
+
+     2053                   ;*   Calling Convention : Stack Parameter Convention                          *
+     2054                   ;*   Function Uses Regs : r0,r1,r2,r3,ar0,ar1,fp,ir0,bk,sp,st,rs,re,rc        *
+     2055                   ;*   Regs Saved         :                                                     *
+     2056                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     2057                   ;*   Total Frame Size   : 2 Call + 0 Parm + 54 Auto + 0 SOE = 56 words        *
+     2058                   ;******************************************************************************
+     2059 000001c6          _LED_DataSDR:
+     2060                           .sym    _i,1,12,1,32
+     2061                           .sym    _sSelf_RxData_Buf,2,60,1,800,,25
+     2062                           .sym    _sSelf_Tx_Buf,27,60,1,800,,25
+     2063                           .sym    _sPoinData,52,12,1,32
+     2064                           .sym    _sDataBlt1,53,12,1,32
+     2065                           .sym    _sDataBlt2,54,12,1,32
+     2066                           .line   1
+     2067                   ;----------------------------------------------------------------------
+     2068                   ; 290 | void LED_DataSDR()                                                     
+     2069                   ; 292 | UCHAR i;                                                               
+     2070                   ; 293 | UCHAR sSelf_RxData_Buf[25];                                            
+     2071                   ; 294 | UCHAR sSelf_Tx_Buf[25];                                                
+     2072                   ; 295 | UCHAR sPoinData;                                                       
+     2073                   ; 296 | UCHAR sDataBlt1,sDataBlt2;                                             
+     2074                   ;----------------------------------------------------------------------
+     2075 000001c6 0f2b0000         push      fp
+     2076 000001c7 500b0014         ldiu      sp,fp
+     2077 000001c8 02740036         addi      54,sp
+     2078                           .line   9
+     2079                   ;----------------------------------------------------------------------
+     2080                   ; 298 | sDataBlt1 = 30720;                                                     
+     2081                   ;----------------------------------------------------------------------
+     2082 000001c9 50607800         ldiu      30720,r0
+     2083 000001ca 15400335         sti       r0,*+fp(53)
+     2084                           .line   10
+     2085                   ;----------------------------------------------------------------------
+     2086                   ; 299 | sDataBlt2 = (nLedDataLoad.nDataTxCnt-1) + 30720;                       
+     2087                   ;----------------------------------------------------------------------
+     2088 000001cb 506077ff         ldiu      30719,r0
+     2089 000001cc 0220002a-        addi      @_nLedDataLoad+17,r0  ; Unsigned
+     2090 000001cd 15400336         sti       r0,*+fp(54)
+     2091                           .line   12
+     2092                   ;----------------------------------------------------------------------
+     2093                   ; 301 | memcpy(sSelf_RxData_Buf,nSelf_Test.nSELF_RXDATA_Buf,15);               
+     2094                   ;----------------------------------------------------------------------
+     2095 000001ce 5029002f-        ldiu      @CL5,ar1
+     2096 000001cf 5008000b         ldiu      fp,ar0
+     2097 000001d0 02680002         addi      2,ar0
+     2098 000001d1 50402101         ldiu      *ar1++(1),r0
+     2099 000001d2 13fb000d         rpts      13                    ; Fast MEMCPY(#15)
+     2100 000001d3 da002021         sti       r0,*ar0++(1)
+     2101                   ||      ldi       *ar1++(1),r0
+     2102 000001d4 15402001         sti       r0,*ar0++(1)
+     2103                           .line   14
+     2104                   ;----------------------------------------------------------------------
+     2105                   ; 303 | if(WORD_L(nLedDataLoad.nDataRepetCnt) > 5)                             
+     2106                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   40
+
+     2107 000001d5 506000ff         ldiu      255,r0
+     2108 000001d6 02a00027-        and       @_nLedDataLoad+14,r0
+     2109 000001d7 04e00005         cmpi      5,r0
+     2110 000001d8 6a020008         bls       L72
+     2111                   ;*      Branch Occurs to L72 
+     2112                           .line   17
+     2113                   ;----------------------------------------------------------------------
+     2114                   ; 306 | nSelf_Test.nSELF_RXDATA_Buf[nSelf_Test.nSELF_TX_Cnt] = 1;              
+     2115                   ;----------------------------------------------------------------------
+     2116 000001d9 5031003c!        ldiu      @_nSelf_Test+60,ir0
+     2117 000001da 5028002f-        ldiu      @CL5,ar0
+     2118 000001db 50600001         ldiu      1,r0
+     2119 000001dc 15404000         sti       r0,*+ar0(ir0)
+     2120                           .line   18
+     2121                   ;----------------------------------------------------------------------
+     2122                   ; 307 | nSelf_Test.nSELF_TX_Cnt++;                                             
+     2123                   ;----------------------------------------------------------------------
+     2124 000001dd 0220003c!        addi      @_nSelf_Test+60,r0    ; Unsigned
+     2125 000001de 1520003c!        sti       r0,@_nSelf_Test+60
+     2126                           .line   19
+     2127                   ;----------------------------------------------------------------------
+     2128                   ; 308 | nLedDataLoad.nDataRepetCnt = 0;                                        
+     2129                   ;----------------------------------------------------------------------
+     2130 000001df 50600000         ldiu      0,r0
+     2131 000001e0 15200027-        sti       r0,@_nLedDataLoad+14
+     2132 000001e1          L72:        
+     2133                           .line   22
+     2134                   ;----------------------------------------------------------------------
+     2135                   ; 311 | for(i = WORD_L(nSelf_Test.nSELF_TX_Cnt);i<(DISPLAY_UNIT);i++)          
+     2136                   ;----------------------------------------------------------------------
+     2137 000001e1 506000ff         ldiu      255,r0
+     2138 000001e2 02a0003c!        and       @_nSelf_Test+60,r0
+     2139 000001e3 15400301         sti       r0,*+fp(1)
+     2140 000001e4 04e0000a         cmpi      10,r0
+     2141 000001e5 6a040011         bhs       L77
+     2142                   ;*      Branch Occurs to L77 
+     2143 000001e6          L73:        
+     2144                           .line   24
+     2145                   ;----------------------------------------------------------------------
+     2146                   ; 313 | if(!WORD_L(sSelf_RxData_Buf[i]))                                       
+     2147                   ;----------------------------------------------------------------------
+     2148 000001e6 5008000b         ldiu      fp,ar0
+     2149 000001e7 50510301         ldiu      *+fp(1),ir0
+     2150 000001e8 02680002         addi      2,ar0
+     2151 000001e9 506000ff         ldiu      255,r0
+     2152 000001ea 27c00040         tstb3     *+ar0(ir0),r0
+     2153 000001eb 6a060003         bne       L76
+     2154                   ;*      Branch Occurs to L76 
+     2155                           .line   26
+     2156                   ;----------------------------------------------------------------------
+     2157                   ; 315 | sPoinData = i;                                                         
+     2158                   ;----------------------------------------------------------------------
+     2159 000001ec 50400301         ldiu      *+fp(1),r0
+     2160 000001ed 15400334         sti       r0,*+fp(52)
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   41
+
+     2161                           .line   27
+     2162                   ;----------------------------------------------------------------------
+     2163                   ; 316 | break;                                                                 
+     2164                   ;----------------------------------------------------------------------
+     2165 000001ee 6a000008         bu        L77
+     2166                   ;*      Branch Occurs to L77 
+     2167 000001ef          L76:        
+     2168                           .line   29
+     2169                   ;----------------------------------------------------------------------
+     2170                   ; 318 | else {nSelf_Test.nSELF_TX_Cnt++;}                                      
+     2171                   ;----------------------------------------------------------------------
+     2172 000001ef 50600001         ldiu      1,r0
+     2173 000001f0 0220003c!        addi      @_nSelf_Test+60,r0    ; Unsigned
+     2174 000001f1 1520003c!        sti       r0,@_nSelf_Test+60
+     2175                           .line   22
+     2176 000001f2 50600001         ldiu      1,r0
+     2177 000001f3 02400301         addi      *+fp(1),r0            ; Unsigned
+     2178 000001f4 15400301         sti       r0,*+fp(1)
+     2179 000001f5 04e0000a         cmpi      10,r0
+     2180 000001f6 6a01ffef         blo       L73
+     2181                   ;*      Branch Occurs to L73 
+     2182 000001f7          L77:        
+     2183                           .line   32
+     2184                   ;----------------------------------------------------------------------
+     2185                   ; 321 | if(nSelf_Test.nSELF_TX_Cnt >= DISPLAY_UNIT)                            
+     2186                   ;----------------------------------------------------------------------
+     2187 000001f7 5020003c!        ldiu      @_nSelf_Test+60,r0
+     2188 000001f8 04e0000a         cmpi      10,r0
+     2189 000001f9 6a210039         blod      L80
+     2190 000001fa 50d10334         ldilo     *+fp(52),ir0
+     2191 000001fb 50a80030-        ldilo     @CL6,ar0
+     2192 000001fc 50e0000a         ldilo     10,r0
+     2193                   ;*      Branch Occurs to L80 
+     2194                           .line   34
+     2195                   ;----------------------------------------------------------------------
+     2196                   ; 323 | nLedDataLoad.nDataSDRFlag = FALSE;                                     
+     2197                   ;----------------------------------------------------------------------
+     2198 000001fd 50600000         ldiu      0,r0
+     2199 000001fe 15200028-        sti       r0,@_nLedDataLoad+15
+     2200                           .line   35
+     2201                   ;----------------------------------------------------------------------
+     2202                   ; 324 | nLedDataLoad.nDataTxCnt = 0;                                           
+     2203                   ;----------------------------------------------------------------------
+     2204 000001ff 1520002a-        sti       r0,@_nLedDataLoad+17
+     2205                           .line   36
+     2206                   ;----------------------------------------------------------------------
+     2207                   ; 325 | nLedDataLoad.nDataRepetCnt = 0;                                        
+     2208                   ;----------------------------------------------------------------------
+     2209 00000200 15200027-        sti       r0,@_nLedDataLoad+14
+     2210                           .line   37
+     2211                   ;----------------------------------------------------------------------
+     2212                   ; 326 | nLedDataLoad.nDataRepetNum = 0;                                        
+     2213                   ;----------------------------------------------------------------------
+     2214 00000201 15200026-        sti       r0,@_nLedDataLoad+13
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   42
+
+     2215                           .line   39
+     2216                   ;----------------------------------------------------------------------
+     2217                   ; 328 | gpLED_UPLOAD_ERBUT_SF_ON;                                              
+     2218                   ;----------------------------------------------------------------------
+     2219 00000202 50610001         ldiu      1,r1
+     2220 00000203 0f210000         push      r1
+     2221 00000204 506002c6         ldiu      710,r0
+     2222 00000205 0f200000         push      r0
+     2223 00000206 62000000!        call      _gp_WritingWord
+     2224                                                           ; Call Occurs
+     2225 00000207 18740002         subi      2,sp
+     2226                           .line   40
+     2227                   ;----------------------------------------------------------------------
+     2228                   ; 329 | gpLED_UPLOAD_DABUT_SF_ON;                                              
+     2229                   ;----------------------------------------------------------------------
+     2230 00000208 50610001         ldiu      1,r1
+     2231 00000209 506002c7         ldiu      711,r0
+     2232 0000020a 0f210000         push      r1
+     2233 0000020b 0f200000         push      r0
+     2234 0000020c 62000000!        call      _gp_WritingWord
+     2235                                                           ; Call Occurs
+     2236 0000020d 18740002         subi      2,sp
+     2237                           .line   41
+     2238                   ;----------------------------------------------------------------------
+     2239                   ; 330 | gpROOTEN;                                                              
+     2240                   ;----------------------------------------------------------------------
+     2241 0000020e 50610001         ldiu      1,r1
+     2242 0000020f 0f210000         push      r1
+     2243 00000210 50600039         ldiu      57,r0
+     2244 00000211 0f200000         push      r0
+     2245 00000212 62000000!        call      _gp_WritingWord
+     2246                                                           ; Call Occurs
+     2247 00000213 18740002         subi      2,sp
+     2248                           .line   43
+     2249                   ;----------------------------------------------------------------------
+     2250                   ; 332 | Xr_TX_PROTOCOL(sSelf_Tx_Buf,nLedDataLoad.nSFKindCode,0x31,0x1a,0,0x00,0
+     2251                   ;     | x00,sDataBlt1,sDataBlt2,10);                                           
+     2252                   ;----------------------------------------------------------------------
+     2253 00000214 5060000a         ldiu      10,r0
+     2254 00000215 0f200000         push      r0
+     2255 00000216 50400336         ldiu      *+fp(54),r0
+     2256 00000217 0f200000         push      r0
+     2257 00000218 50410335         ldiu      *+fp(53),r1
+     2258 00000219 0f210000         push      r1
+     2259 0000021a 50790000         ldiu      0,rs
+     2260 0000021b 50610031         ldiu      49,r1
+     2261 0000021c 0f390000         push      rs
+     2262 0000021d 50600000         ldiu      0,r0
+     2263 0000021e 0f200000         push      r0
+     2264 0000021f 50620000         ldiu      0,r2
+     2265 00000220 0f220000         push      r2
+     2266 00000221 5063001a         ldiu      26,r3
+     2267 00000222 0f230000         push      r3
+     2268 00000223 0f210000         push      r1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   43
+
+     2269 00000224 5000000b         ldiu      fp,r0
+     2270 00000225 0260001b         addi      27,r0
+     2271 00000226 5021001b-        ldiu      @_nLedDataLoad+2,r1
+     2272 00000227 0f210000         push      r1
+     2273 00000228 0f200000         push      r0
+     2274 00000229 62000000!        call      _Xr_TX_PROTOCOL
+     2275                                                           ; Call Occurs
+     2276 0000022a 1874000a         subi      10,sp
+     2277                           .line   45
+     2278                   ;----------------------------------------------------------------------
+     2279                   ; 334 | xr16l788_Send(XR16L788_3CHL,sSelf_Tx_Buf,20);                          
+     2280                   ; 336 | //xr16l788_Init(XR16L788_3CHL,19200,XR16L788_DATA8,XR16L788_EVENPARITY,
+     2281                   ;     | XR16L788_1STOPBIT);                                                    
+     2282                   ; 337 | //Xr16788_3Ch.nBPS = 192;                                              
+     2283                   ; 340 | else                                                                   
+     2284                   ;----------------------------------------------------------------------
+     2285 0000022b 5000000b         ldiu      fp,r0
+     2286 0000022c 50610014         ldiu      20,r1
+     2287 0000022d 0f210000         push      r1
+     2288 0000022e 0260001b         addi      27,r0
+     2289 0000022f 0f200000         push      r0
+     2290 00000230 50620002         ldiu      2,r2
+     2291 00000231 0f220000         push      r2
+     2292 00000232 62000000!        call      _xr16l788_Send
+     2293                                                           ; Call Occurs
+     2294 00000233 18740003         subi      3,sp
+     2295 00000234 6a00001f         bu        L81
+     2296                   ;*      Branch Occurs to L81 
+     2297                           .line   53
+     2298                   ;----------------------------------------------------------------------
+     2299                   ; 342 | Xr_TX_PROTOCOL(sSelf_Tx_Buf,nSelf_Test.nSELF_ADDDATA_BUF[sPoinData],0x3
+     2300                   ;     | 1,0x07,0,0x20,0x00,sDataBlt1,sDataBlt2,10);                            
+     2301                   ;----------------------------------------------------------------------
+     2302 00000235          L80:        
+     2303 00000235 50730000         ldiu      0,bk
+     2304 00000236 50630020         ldiu      32,r3
+     2305 00000237 50620000         ldiu      0,r2
+     2306 00000238 50610007         ldiu      7,r1
+     2307 00000239 50594000         ldiu      *+ar0(ir0),rs
+     2308 0000023a 507a0031         ldiu      49,re
+     2309 0000023b 0f200000         push      r0
+     2310 0000023c 50400336         ldiu      *+fp(54),r0
+     2311 0000023d 0f200000         push      r0
+     2312 0000023e 505b0335         ldiu      *+fp(53),rc
+     2313 0000023f 5000000b         ldiu      fp,r0
+     2314 00000240 0f3b0000         push      rc
+     2315 00000241 0f330000         push      bk
+     2316 00000242 0260001b         addi      27,r0
+     2317 00000243 0f230000         push      r3
+     2318 00000244 0f220000         push      r2
+     2319 00000245 0f210000         push      r1
+     2320 00000246 0f3a0000         push      re
+     2321 00000247 0f390000         push      rs
+     2322 00000248 0f200000         push      r0
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   44
+
+     2323 00000249 62000000!        call      _Xr_TX_PROTOCOL
+     2324                                                           ; Call Occurs
+     2325 0000024a 1874000a         subi      10,sp
+     2326                           .line   55
+     2327                   ;----------------------------------------------------------------------
+     2328                   ; 344 | xr16l788_Send(XR16L788_3CHL,sSelf_Tx_Buf,20);                          
+     2329                   ;----------------------------------------------------------------------
+     2330 0000024b 50620014         ldiu      20,r2
+     2331 0000024c 0f220000         push      r2
+     2332 0000024d 5000000b         ldiu      fp,r0
+     2333 0000024e 0260001b         addi      27,r0
+     2334 0000024f 0f200000         push      r0
+     2335 00000250 50610002         ldiu      2,r1
+     2336 00000251 0f210000         push      r1
+     2337 00000252 62000000!        call      _xr16l788_Send
+     2338                                                           ; Call Occurs
+     2339 00000253 18740003         subi      3,sp
+     2340 00000254          L81:        
+     2341                           .line   58
+     2342                   ;----------------------------------------------------------------------
+     2343                   ; 347 | nLedDataLoad.nDataRepetCnt++;                                          
+     2344                   ;----------------------------------------------------------------------
+     2345 00000254 50600001         ldiu      1,r0
+     2346 00000255 02200027-        addi      @_nLedDataLoad+14,r0  ; Unsigned
+     2347 00000256 15200027-        sti       r0,@_nLedDataLoad+14
+     2348                           .line   60
+     2349 00000257 50530b01         ldiu      *-fp(1),bk
+     2350 00000258 504bc300         ldiu      *fp,fp
+     2351 00000259 18740038         subi      56,sp
+     2352 0000025a 68000013         bu        bk
+     2353                   ;*      Branch Occurs to bk 
+     2354                           .endfunc        349,000000000h,54
+     2355                   
+     2356                   
+     2357 0000025b                  .sect    ".text"
+     2358                   
+     2359                           .global _LED_Timer_1ms
+     2360                           .sym    _LED_Timer_1ms,_LED_Timer_1ms,32,2,0
+     2361                           .func   353
+     2362                   ;******************************************************************************
+     2363                   ;* FUNCTION NAME: _LED_Timer_1ms                                              *
+     2364                   ;*                                                                            *
+     2365                   ;*   Architecture       : TMS320C30                                           *
+     2366                   ;*   Calling Convention : Stack Parameter Convention                          *
+     2367                   ;*   Function Uses Regs : r0,r1,st                                            *
+     2368                   ;*   Regs Saved         :                                                     *
+     2369                   ;*   Stack Frame        : Full (w/ debug)                                     *
+     2370                   ;*   Total Frame Size   : 2 Call + 0 Parm + 0 Auto + 0 SOE = 2 words          *
+     2371                   ;******************************************************************************
+     2372 0000025b          _LED_Timer_1ms:
+     2373                           .line   1
+     2374                   ;----------------------------------------------------------------------
+     2375                   ; 353 | void LED_Timer_1ms()                                                   
+     2376                   ;----------------------------------------------------------------------
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   45
+
+     2377 0000025b 0f2b0000         push      fp
+     2378 0000025c 500b0014         ldiu      sp,fp
+     2379                           .line   3
+     2380                   ;----------------------------------------------------------------------
+     2381                   ; 355 | nLED_Time_Cnt++;                                                       
+     2382                   ;----------------------------------------------------------------------
+     2383 0000025d 50600001         ldiu      1,r0
+     2384 0000025e 02200002-        addi      @_nLED_Time_Cnt+0,r0  ; Unsigned
+     2385 0000025f 15200002-        sti       r0,@_nLED_Time_Cnt+0
+     2386                           .line   4
+     2387                   ;----------------------------------------------------------------------
+     2388                   ; 356 | if(!(nLED_Time_Cnt%nLED_Time_Change))                                  
+     2389                   ;----------------------------------------------------------------------
+     2390 00000260 50210001-        ldiu      @_nLED_Time_Change+0,r1
+     2391 00000261 62000000!        call      MOD_U30
+     2392                                                           ; Call Occurs
+     2393 00000262 04e00000         cmpi      0,r0
+     2394 00000263 6a060003         bne       L86
+     2395                   ;*      Branch Occurs to L86 
+     2396                           .line   6
+     2397                   ;----------------------------------------------------------------------
+     2398                   ; 358 | nLED_Time_Cnt = 1;                                                     
+     2399                   ;----------------------------------------------------------------------
+     2400 00000264 50600001         ldiu      1,r0
+     2401 00000265 15200002-        sti       r0,@_nLED_Time_Cnt+0
+     2402                           .line   7
+     2403                   ;----------------------------------------------------------------------
+     2404                   ; 359 | nLED_200ms_Flag = TRUE;                                                
+     2405                   ;----------------------------------------------------------------------
+     2406 00000266 15200000-        sti       r0,@_nLED_200ms_Flag+0
+     2407 00000267          L86:        
+     2408                           .line   10
+     2409 00000267 50490b01         ldiu      *-fp(1),ar1
+     2410 00000268 504bc300         ldiu      *fp,fp
+     2411 00000269 18740002         subi      2,sp
+     2412 0000026a 68000009         bu        ar1
+     2413                   ;*      Branch Occurs to ar1 
+     2414                           .endfunc        362,000000000h,0
+     2415                   
+     2416                   
+     2417                   
+     2418                           .global _nLedDataLoad
+     2419 00000019                  .bss    _nLedDataLoad,18
+     2420                           .sym    _nLedDataLoad,_nLedDataLoad,8,2,576,.fake70
+     2421                   ;******************************************************************************
+     2422                   ;* CONSTANT TABLE                                                             *
+     2423                   ;******************************************************************************
+     2424 00000000                  .sect   ".const"
+     2425 0000002b                  .bss    CL1,1
+     2426 0000002c                  .bss    CL2,1
+     2427 0000002d                  .bss    CL3,1
+     2428 0000002e                  .bss    CL4,1
+     2429 0000002f                  .bss    CL5,1
+     2430 00000030                  .bss    CL6,1
+TMS320C3x/4x COFF AssemblerVersion 5.11     Mon Apr 29 17:36:38 2013
+Copyright (c) 1987-1999 Texas Instruments Incorporatedc:\lang\tms320c3x\511\bin\asm30.exe -l led_download.asm led_download.obj -tC:\Users\JDS\AppData\Local\Temp\led_download.tmp 
+
+led_download.asm                                                     PAGE   46
+
+     2431 00000031                  .bss    CL7,1
+     2432                   
+     2433 00000029                  .sect   ".cinit"
+     2434 00000029 00000007         .field          7,32
+     2435 0000002a 0000002b-        .field          CL1+0,32
+     2436 0000002b 0000000b-        .field          _DISPLAY_UNIT_FDD,32
+     2437 0000002c 00000003-        .field          _DISPLAY_UNIT_SDD,32
+     2438 0000002d 0000000d-        .field          .init0$1,32
+     2439 0000002e 00000014-        .field          .init1$2,32
+     2440 0000002f 0000001e!        .field          _nSelf_Test+30,32
+     2441 00000030 00000000!        .field          _nSelf_Test,32
+     2442 00000031 00c00000         .field          12582912,32
+     2443                   
+     2444 0000026b                  .sect   ".text"
+     2445                   ;******************************************************************************
+     2446                   ;* UNDEFINED EXTERNAL REFERENCES                                              *
+     2447                   ;******************************************************************************
+     2448                   
+     2449                           .global _xr16l788_Init
+     2450                   
+     2451                           .global _xr16l788_Send
+     2452                   
+     2453                           .global _Xr_TX_PROTOCOL
+     2454                   
+     2455                           .global _Xr_Tx_DownLoad_TEXT
+     2456                   
+     2457                           .global _DP_SelfTest
+     2458                   
+     2459                           .global _gp_WritingWord
+     2460                   
+     2461                           .global _GP_DOWNLOAD_SDR
+     2462                   
+     2463                           .global _nSelect_Button
+     2464                   
+     2465                           .global _nSelf_Test
+     2466                   
+     2467                           .global _Xr16788_3Ch
+     2468                           .global MOD_U30
+     2469                           .global _Nvsram_IDC_UpLoad_Da
+
+ No Errors,  No Warnings

@@ -1,0 +1,2144 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     15/Apr/2013  10:54:37 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\RawNandFlash.c     #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\nandflash\RawNandFlash.c"    #
+#                    -D at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\RawNandFlash.lst         #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\RawNandFlash.o            #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\nandflash\RawNandFlash.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "RawNandFlash.h"
+     35          #include "NandCommon.h"
+     36          #include "NandFlashModelList.h"
+     37          #include <utility/trace.h>
+     38          #include <utility/assert.h>
+     39          
+     40          #include <string.h>
+     41          
+     42          #if !defined(CHIP_NAND_CTRL)
+     43          //------------------------------------------------------------------------------
+     44          //         Internal definitions
+     45          //------------------------------------------------------------------------------
+     46          
+     47          /// Nand flash chip status codes
+     48          #define STATUS_READY                    (1 << 6)
+     49          #define STATUS_ERROR                    (1 << 0)
+     50          
+     51          /// Nand flash commands
+     52          #define COMMAND_READ_1                  0x00
+     53          #define COMMAND_READ_2                  0x30
+     54          #define COMMAND_COPYBACK_READ_1         0x00
+     55          #define COMMAND_COPYBACK_READ_2         0x35
+     56          #define COMMAND_COPYBACK_PROGRAM_1      0x85
+     57          #define COMMAND_COPYBACK_PROGRAM_2      0x10
+     58          #define COMMAND_RANDOM_OUT              0x05
+     59          #define COMMAND_RANDOM_OUT_2            0xE0
+     60          #define COMMAND_RANDOM_IN               0x85
+     61          #define COMMAND_READID                  0x90
+     62          #define COMMAND_WRITE_1                 0x80
+     63          #define COMMAND_WRITE_2                 0x10
+     64          #define COMMAND_ERASE_1                 0x60
+     65          #define COMMAND_ERASE_2                 0xD0
+     66          #define COMMAND_STATUS                  0x70
+     67          #define COMMAND_RESET                   0xFF
+     68          
+     69          
+     70          /// Nand flash commands (small blocks)
+     71          #define COMMAND_READ_A                  0x00
+     72          #define COMMAND_READ_C                  0x50
+     73          
+     74          //------------------------------------------------------------------------------
+     75          //         Internal macros
+     76          //------------------------------------------------------------------------------
+     77          #define ENABLE_CE(raw)        PIO_Clear(&(raw->pinChipEnable))
+     78          #define DISABLE_CE(raw)       PIO_Set(&(raw->pinChipEnable))
+     79          
+     80          #define WRITE_COMMAND(raw, command) \
+     81              {*((volatile unsigned char *) raw->commandAddress) = (unsigned char) command;}
+     82          #define WRITE_COMMAND16(raw, command) \
+     83              {*((volatile unsigned short *) raw->commandAddress) = (unsigned short) command;}
+     84          #define WRITE_ADDRESS(raw, address) \
+     85              {*((volatile unsigned char *) raw->addressAddress) = (unsigned char) address;}
+     86          #define WRITE_ADDRESS16(raw, address) \
+     87              {*((volatile unsigned short *) raw->addressAddress) = (unsigned short) address;}
+     88          #define WRITE_DATA8(raw, data) \
+     89              {*((volatile unsigned char *) raw->dataAddress) = (unsigned char) data;}
+     90          #define READ_DATA8(raw) \
+     91              (*((volatile unsigned char *) raw->dataAddress))
+     92          #define WRITE_DATA16(raw, data) \
+     93              {*((volatile unsigned short *) raw->dataAddress) = (unsigned short) data;}
+     94          #define READ_DATA16(raw) \
+     95              (*((volatile unsigned short *) raw->dataAddress))
+     96          
+     97          /// Internal cast macros
+     98          #define MODEL(raw)  ((struct NandFlashModel *) raw)
+     99          
+    100          /// Number of tries for erasing a block
+    101          #define NUMERASETRIES           2
+    102          /// Number of tries for writing a block
+    103          #define NUMWRITETRIES           2
+    104          /// Number of tries for copying a block
+    105          #define NUMCOPYTRIES            2
+    106          
+    107          //------------------------------------------------------------------------------
+    108          //         Internal functions
+    109          //------------------------------------------------------------------------------
+    110          
+    111          //------------------------------------------------------------------------------
+    112          /// Sends the column address to the NandFlash chip.
+    113          /// \param raw  Pointer to a RawNandFlash instance.
+    114          /// \param columnAddress  Column address to send.
+    115          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    116          static void WriteColumnAddress(
+    117              const struct RawNandFlash *raw,
+    118              unsigned short columnAddress)
+    119          {
+   \                     WriteColumnAddress:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    120              unsigned short pageDataSize = NandFlashModel_GetPageDataSize(MODEL(raw));
+   \   0000000C   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000010   0xE1A06000         MOV      R6,R0
+    121          
+    122              /* Check the data bus width of the NandFlash */
+    123              if (NandFlashModel_GetDataBusWidth(MODEL(raw)) == 16) {
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       NandFlashModel_GetDataBusWidth
+   \   0000001C   0xE3500010         CMP      R0,#+16
+    124                  /* Div 2 is because we address in word and not in byte */
+    125                  columnAddress >>= 1;
+   \   00000020   0x01A050A5         LSREQ    R5,R5,#+1
+    126              }
+    127          
+    128              while (pageDataSize > 0) {
+   \   00000024   0xE3560000         CMP      R6,#+0
+   \   00000028   0x........         B        ?Subroutine0
+    129              
+    130                  if (NandFlashModel_GetDataBusWidth(MODEL(raw)) == 16) {
+    131                      WRITE_ADDRESS16(raw, columnAddress & 0xFF);
+    132                  }
+    133                  else {
+    134                      WRITE_ADDRESS(raw, columnAddress & 0xFF);
+    135                  }
+    136                  pageDataSize >>= 8;
+    137                  columnAddress >>= 8;
+    138              }
+    139          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0x0A00000A         BEQ      ??Subroutine0_0
+   \                     ??Subroutine0_1:
+   \   00000004   0xE1A00004         MOV      R0,R4
+   \   00000008   0x........         BL       NandFlashModel_GetDataBusWidth
+   \   0000000C   0xE3500010         CMP      R0,#+16
+   \   00000010   0xE5940010         LDR      R0,[R4, #+16]
+   \   00000014   0x020510FF         ANDEQ    R1,R5,#0xFF
+   \   00000018   0x01C010B0         STRHEQ   R1,[R0, #+0]
+   \   0000001C   0x15C05000         STRBNE   R5,[R0, #+0]
+   \   00000020   0xE1A06426         LSR      R6,R6,#+8
+   \   00000024   0xE1A05425         LSR      R5,R5,#+8
+   \   00000028   0xE3560000         CMP      R6,#+0
+   \   0000002C   0x1AFFFFF4         BNE      ??Subroutine0_1
+   \                     ??Subroutine0_0:
+   \   00000030   0xE8BD4070         POP      {R4-R6,LR}
+   \   00000034   0xE12FFF1E         BX       LR               ;; return
+    140          
+    141          //------------------------------------------------------------------------------
+    142          /// Sends the row address to the NandFlash chip.
+    143          /// \param raw  Pointer to a RawNandFlash instance.
+    144          /// \param rowAddress  Row address to send.
+    145          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    146          static void WriteRowAddress(
+    147              const struct RawNandFlash *raw,
+    148              unsigned int rowAddress)
+    149          {
+   \                     WriteRowAddress:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    150              unsigned int numPages = NandFlashModel_GetDeviceSizeInPages(MODEL(raw));
+   \   0000000C   0x........         BL       NandFlashModel_GetDeviceSizeInPages
+   \   00000010   0xE1B06000         MOVS     R6,R0
+    151          
+    152              while (numPages > 0) {
+   \   00000014                      REQUIRE ?Subroutine0
+   \   00000014                      ;; // Fall through to label ?Subroutine0
+    153              
+    154                  if (NandFlashModel_GetDataBusWidth(MODEL(raw)) == 16) {
+    155                      WRITE_ADDRESS16(raw, rowAddress & 0xFF);
+    156                  }
+    157                  else {
+    158                      WRITE_ADDRESS(raw, rowAddress & 0xFF);
+    159                  }
+    160                  numPages >>= 8;
+    161                  rowAddress >>= 8;
+    162              }
+    163          }
+    164          
+    165          //------------------------------------------------------------------------------
+    166          /// Waiting for the completion of a page program, erase and random read completion.
+    167          /// \param raw  Pointer to a RawNandFlash instance.
+    168          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    169          static void WaitReady(const struct RawNandFlash *raw)
+    170          {
+   \                     WaitReady:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    171              if (raw->pinReadyBusy.mask) {
+   \   00000008   0xE5940024         LDR      R0,[R4, #+36]
+   \   0000000C   0xE3500000         CMP      R0,#+0
+   \   00000010   0x0A000004         BEQ      ??WaitReady_0
+    172                  while (!PIO_Get(&(raw->pinReadyBusy)));
+   \                     ??WaitReady_1:
+   \   00000014   0xE2840024         ADD      R0,R4,#+36
+   \   00000018   0x........         BL       PIO_Get
+   \   0000001C   0xE3500000         CMP      R0,#+0
+   \   00000020   0x0AFFFFFB         BEQ      ??WaitReady_1
+   \   00000024   0xEA000006         B        ??WaitReady_2
+    173              }
+    174              else {
+    175                  WRITE_COMMAND(raw, COMMAND_STATUS);
+   \                     ??WaitReady_0:
+   \   00000028   0xE594000C         LDR      R0,[R4, #+12]
+   \   0000002C   0xE3A01070         MOV      R1,#+112
+   \   00000030   0xE5C01000         STRB     R1,[R0, #+0]
+    176                  while ((READ_DATA8(raw) & STATUS_READY) != STATUS_READY);
+   \                     ??WaitReady_3:
+   \   00000034   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000038   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   0000003C   0xE3100040         TST      R0,#0x40
+   \   00000040   0x0AFFFFFB         BEQ      ??WaitReady_3
+    177              }
+    178          }
+   \                     ??WaitReady_2:
+   \   00000044   0xE8BD4010         POP      {R4,LR}
+   \   00000048   0xE12FFF1E         BX       LR               ;; return
+    179          
+    180          //------------------------------------------------------------------------------
+    181          /// Return 1 if program or erase operation is completed.
+    182          /// and the program or erase operation is completed successfully, otherwise return 0.
+    183          /// \param raw  Pointer to a RawNandFlash instance.
+    184          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    185          static unsigned char IsOperationComplete(const struct RawNandFlash *raw)
+    186          {
+    187              unsigned char status;
+    188          
+    189              WRITE_COMMAND(raw, COMMAND_STATUS);
+   \                     IsOperationComplete:
+   \   00000000   0xE590100C         LDR      R1,[R0, #+12]
+   \   00000004   0xE3A02070         MOV      R2,#+112
+   \   00000008   0xE5C12000         STRB     R2,[R1, #+0]
+    190          
+    191              status = READ_DATA8(raw);
+   \   0000000C   0xE5900014         LDR      R0,[R0, #+20]
+   \   00000010   0xE5D00000         LDRB     R0,[R0, #+0]
+    192          
+    193              if (((status & STATUS_READY) != STATUS_READY) || ((status & STATUS_ERROR) != 0)) {
+   \   00000014   0xE2000041         AND      R0,R0,#0x41
+   \   00000018   0xE3500040         CMP      R0,#+64
+    194                  return 0;
+   \   0000001C   0x13A00000         MOVNE    R0,#+0
+    195              }
+    196              return 1;
+   \   00000020   0x03A00001         MOVEQ    R0,#+1
+   \   00000024   0xE12FFF1E         BX       LR               ;; return
+    197          }
+    198          
+    199          //------------------------------------------------------------------------------
+    200          /// Sends data to the NandFlash chip from the provided buffer.
+    201          /// \param raw  Pointer to a RawNandFlash instance.
+    202          /// \param buffer  Buffer where the data is stored.
+    203          /// \param size  Number of bytes that will be written
+    204          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    205          static void WriteData(
+    206              const struct RawNandFlash *raw,
+    207              unsigned char *buffer,
+    208              unsigned int size)
+    209          {
+   \                     WriteData:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    210              unsigned int i;
+    211          
+    212              // Check the data bus width of the NandFlash
+    213              if (NandFlashModel_GetDataBusWidth(MODEL(raw)) == 16) {
+   \   00000010   0x........         BL       NandFlashModel_GetDataBusWidth
+   \   00000014   0xE3500010         CMP      R0,#+16
+   \   00000018   0x1A000007         BNE      ??WriteData_0
+    214          
+    215                  unsigned short *buffer16 = (unsigned short *) buffer;
+    216                  size >>= 1;
+   \   0000001C   0xE1B060A6         LSRS     R6,R6,#+1
+    217          
+    218                  for(i=0; i < size; i++) {
+   \   00000020   0x0A00000C         BEQ      ??WriteData_1
+    219          
+    220                      WRITE_DATA16(raw, buffer16[i]);
+   \                     ??WriteData_2:
+   \   00000024   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000028   0xE0D510B2         LDRH     R1,[R5], #+2
+   \   0000002C   0xE1C010B0         STRH     R1,[R0, #+0]
+    221                  }
+   \   00000030   0xE2566001         SUBS     R6,R6,#+1
+   \   00000034   0x1AFFFFFA         BNE      ??WriteData_2
+   \   00000038   0xEA000006         B        ??WriteData_1
+    222              }
+    223              else {
+    224          
+    225                  for(i=0; i < size; i++) {
+   \                     ??WriteData_0:
+   \   0000003C   0xE3560000         CMP      R6,#+0
+   \   00000040   0x0A000004         BEQ      ??WriteData_1
+    226          
+    227                      WRITE_DATA8(raw, buffer[i]);
+   \                     ??WriteData_3:
+   \   00000044   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000048   0xE4D51001         LDRB     R1,[R5], #+1
+   \   0000004C   0xE5C01000         STRB     R1,[R0, #+0]
+    228                  }
+   \   00000050   0xE2566001         SUBS     R6,R6,#+1
+   \   00000054   0x1AFFFFFA         BNE      ??WriteData_3
+    229              }
+    230          }
+   \                     ??WriteData_1:
+   \   00000058   0x........         B        ??Subroutine0_0
+    231          
+    232          //------------------------------------------------------------------------------
+    233          /// Reads data from the NandFlash chip into the provided buffer.
+    234          /// \param nand  Pointer to a RawNandFlash instance.
+    235          /// \param buffer  Buffer where the data will be stored.
+    236          /// \param size  Number of bytes that will be read
+    237          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    238          static void ReadData(
+    239              const struct RawNandFlash *raw,
+    240              unsigned char *buffer,
+    241              unsigned int size)
+    242          {
+   \                     ReadData:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+    243              unsigned int i;
+    244          
+    245              // Check the chip data bus width
+    246              if (NandFlashModel_GetDataBusWidth(MODEL(raw)) == 16) {
+   \   00000010   0x........         BL       NandFlashModel_GetDataBusWidth
+   \   00000014   0xE3500010         CMP      R0,#+16
+   \   00000018   0x1A000007         BNE      ??ReadData_0
+    247          
+    248                  unsigned short *buffer16 = (unsigned short *) buffer;
+    249                  size >>= 1;
+   \   0000001C   0xE1B060A6         LSRS     R6,R6,#+1
+    250          
+    251                  for (i=0; i < size; i++) {
+   \   00000020   0x0A00000C         BEQ      ??ReadData_1
+    252          
+    253                      buffer16[i] = READ_DATA16(raw);
+   \                     ??ReadData_2:
+   \   00000024   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000028   0xE1D000B0         LDRH     R0,[R0, #+0]
+   \   0000002C   0xE0C500B2         STRH     R0,[R5], #+2
+    254                  }
+   \   00000030   0xE2566001         SUBS     R6,R6,#+1
+   \   00000034   0x1AFFFFFA         BNE      ??ReadData_2
+   \   00000038   0xEA000006         B        ??ReadData_1
+    255              }
+    256              else {
+    257          
+    258                  for (i=0; i < size; i++) {
+   \                     ??ReadData_0:
+   \   0000003C   0xE3560000         CMP      R6,#+0
+   \   00000040   0x0A000004         BEQ      ??ReadData_1
+    259          
+    260                      buffer[i] = READ_DATA8(raw);
+   \                     ??ReadData_3:
+   \   00000044   0xE5940014         LDR      R0,[R4, #+20]
+   \   00000048   0xE5D00000         LDRB     R0,[R0, #+0]
+   \   0000004C   0xE4C50001         STRB     R0,[R5], #+1
+    261                  }
+   \   00000050   0xE2566001         SUBS     R6,R6,#+1
+   \   00000054   0x1AFFFFFA         BNE      ??ReadData_3
+    262              }
+    263          }
+   \                     ??ReadData_1:
+   \   00000058   0x........         B        ??Subroutine0_0
+    264          
+    265          //------------------------------------------------------------------------------
+    266          /// Erases the specified block of the device. Returns 0 if the operation was
+    267          /// successful; otherwise returns an error code.
+    268          /// \param raw  Pointer to a RawNandFlash instance.
+    269          /// \param block  Number of the physical block to erase.
+    270          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    271          static unsigned char EraseBlock(
+    272              const struct RawNandFlash *raw,
+    273              unsigned short block)
+    274          {
+   \                     EraseBlock:
+   \   00000000   0xE92D40F8         PUSH     {R3-R7,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    275              unsigned char error = 0;
+   \   0000000C   0xE3A06000         MOV      R6,#+0
+    276              unsigned int rowAddress;
+    277          
+    278              TRACE_DEBUG("EraseBlock(%d)\r\n", block);
+    279          
+    280              // Calculate address used for erase
+    281              rowAddress = block * NandFlashModel_GetBlockSizeInPages(MODEL(raw));
+   \   00000010   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000014   0xE1A07000         MOV      R7,R0
+    282          
+    283              // Start erase
+    284              ENABLE_CE(raw);
+   \   00000018   0xE2840018         ADD      R0,R4,#+24
+   \   0000001C   0x........         BL       PIO_Clear
+    285              WRITE_COMMAND(raw, COMMAND_ERASE_1);
+   \   00000020   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000024   0xE3A01060         MOV      R1,#+96
+   \   00000028   0xE5C01000         STRB     R1,[R0, #+0]
+    286              WriteRowAddress(raw, rowAddress);
+   \   0000002C   0xE0010597         MUL      R1,R7,R5
+   \   00000030   0xE1A00004         MOV      R0,R4
+   \   00000034   0x........         BL       WriteRowAddress
+    287              WRITE_COMMAND(raw, COMMAND_ERASE_2);
+   \   00000038   0xE594000C         LDR      R0,[R4, #+12]
+   \   0000003C   0xE3A010D0         MOV      R1,#+208
+   \   00000040   0xE5C01000         STRB     R1,[R0, #+0]
+    288          
+    289              WaitReady(raw);
+   \   00000044   0xE1A00004         MOV      R0,R4
+   \   00000048   0x........         BL       WaitReady
+    290          	#if !defined (OP_BOOTSTRAP_on)
+    291              if (!IsOperationComplete(raw)) {
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       IsOperationComplete
+   \   00000054   0xE3500000         CMP      R0,#+0
+   \   00000058   0x1A000003         BNE      ??EraseBlock_0
+    292                  TRACE_ERROR(
+    293                           "EraseBlock: Could not erase block %d.\n\r",
+    294                           block);
+   \   0000005C   0xE1A01005         MOV      R1,R5
+   \   00000060   0x........         LDR      R0,??DataTable8
+   \   00000064   0x........         BL       printf
+    295                  error = NandCommon_ERROR_CANNOTERASE;
+   \   00000068   0xE3A0600D         MOV      R6,#+13
+    296              }
+    297          	#endif
+    298          
+    299              DISABLE_CE(raw);
+   \                     ??EraseBlock_0:
+   \   0000006C   0xE2840018         ADD      R0,R4,#+24
+   \   00000070   0x........         BL       PIO_Set
+    300          
+    301              return error;
+   \   00000074   0xE1A00006         MOV      R0,R6
+   \   00000078   0xE8BD40F2         POP      {R1,R4-R7,LR}
+   \   0000007C   0xE12FFF1E         BX       LR               ;; return
+    302          }
+    303          
+    304          //------------------------------------------------------------------------------
+    305          /// Writes the data and/or the spare area of a page on a NandFlash chip. If one
+    306          /// of the buffer pointer is 0, the corresponding area is not written.
+    307          /// Returns 0 if the write operation is successful; otherwise returns 1.
+    308          /// \param raw  Pointer to a RawNandFlash instance.
+    309          /// \param block  Number of the block where the page to write resides.
+    310          /// \param page  Number of the page to write inside the given block.
+    311          /// \param data  Buffer containing the data area.
+    312          /// \param spare  Buffer containing the spare area.
+    313          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    314          static unsigned char WritePage(
+    315              const struct RawNandFlash *raw,
+    316              unsigned short block,
+    317              unsigned short page,
+    318              void *data,
+    319              void *spare)
+    320          {
+   \                     WritePage:
+   \   00000000   0xE92D4FF8         PUSH     {R3-R11,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A0A001         MOV      R10,R1
+   \   0000000C   0xE1A0B002         MOV      R11,R2
+   \   00000010   0xE1A05003         MOV      R5,R3
+   \   00000014   0xE59D6028         LDR      R6,[SP, #+40]
+    321              unsigned char error = 0;
+   \   00000018   0xE3A07000         MOV      R7,#+0
+    322              unsigned int pageDataSize = NandFlashModel_GetPageDataSize(MODEL(raw));
+   \   0000001C   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000020   0xE1A08000         MOV      R8,R0
+    323              unsigned int spareDataSize = NandFlashModel_GetPageSpareSize(MODEL(raw));
+   \   00000024   0xE1A00004         MOV      R0,R4
+   \   00000028   0x........         BL       NandFlashModel_GetPageSpareSize
+   \   0000002C   0xE1A09000         MOV      R9,R0
+    324              unsigned short dummyByte;
+    325              unsigned int rowAddress;
+    326          
+    327              TRACE_DEBUG("WritePage(B#%d:P#%d)\r\n", block, page);
+    328              // Calculate physical address of the page
+    329              rowAddress = block * NandFlashModel_GetBlockSizeInPages(MODEL(raw)) + page;
+   \   00000030   0xE1A00004         MOV      R0,R4
+   \   00000034   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000038   0xE02ABA90         MLA      R10,R0,R10,R11
+    330          
+    331              // Start write operation
+    332              ENABLE_CE(raw);
+   \   0000003C   0xE2840018         ADD      R0,R4,#+24
+   \   00000040   0x........         BL       PIO_Clear
+    333          
+    334              // Write data area if needed
+    335              if (data) {
+   \   00000044   0xE3550000         CMP      R5,#+0
+   \   00000048   0x0A000023         BEQ      ??WritePage_0
+    336          
+    337                  WRITE_COMMAND(raw, COMMAND_WRITE_1);
+   \   0000004C   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000050   0xE3A01080         MOV      R1,#+128
+   \   00000054   0xE5C01000         STRB     R1,[R0, #+0]
+    338                  WriteColumnAddress(raw, 0);
+   \   00000058   0xE3A01000         MOV      R1,#+0
+   \   0000005C   0xE1A00004         MOV      R0,R4
+   \   00000060   0x........         BL       WriteColumnAddress
+    339                  WriteRowAddress(raw, rowAddress);
+   \   00000064   0xE1A0100A         MOV      R1,R10
+   \   00000068   0xE1A00004         MOV      R0,R4
+   \   0000006C   0x........         BL       WriteRowAddress
+    340                  WriteData(raw, (unsigned char *) data, pageDataSize);
+   \   00000070   0xE1A02008         MOV      R2,R8
+   \   00000074   0xE1A01005         MOV      R1,R5
+   \   00000078   0xE1A00004         MOV      R0,R4
+   \   0000007C   0x........         BL       WriteData
+    341          
+    342                  // Spare is written here as well since it is more efficient
+    343                  if (spare) {
+   \   00000080   0xE3560000         CMP      R6,#+0
+   \   00000084   0x0A000004         BEQ      ??WritePage_1
+    344          
+    345                      WriteData(raw, (unsigned char *) spare, spareDataSize);
+   \   00000088   0xE1A02009         MOV      R2,R9
+   \   0000008C   0xE1A01006         MOV      R1,R6
+   \   00000090   0xE1A00004         MOV      R0,R4
+   \   00000094   0x........         BL       WriteData
+   \   00000098   0xEA000003         B        ??WritePage_2
+    346                  }
+    347                  else {
+    348                      // Note: special case when ECC parity generation. 
+    349                      // ECC results are available as soon as the counter reaches the end of the main area.
+    350                      // But when reach PageSize for an example, it could not generate last ECC_PR, The 
+    351                      // workaround is to receive PageSize+1 word.
+    352                      ReadData(raw, (unsigned char *) (&dummyByte), 2);
+   \                     ??WritePage_1:
+   \   0000009C   0xE3A02002         MOV      R2,#+2
+   \   000000A0   0xE1A0100D         MOV      R1,SP
+   \   000000A4   0xE1A00004         MOV      R0,R4
+   \   000000A8   0x........         BL       ReadData
+    353                  }
+    354                  WRITE_COMMAND(raw, COMMAND_WRITE_2);
+   \                     ??WritePage_2:
+   \   000000AC   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000B0   0xE3A01010         MOV      R1,#+16
+   \   000000B4   0xE5C01000         STRB     R1,[R0, #+0]
+    355          
+    356                  WaitReady(raw);
+   \   000000B8   0xE1A00004         MOV      R0,R4
+   \   000000BC   0x........         BL       WaitReady
+    357                  if (!IsOperationComplete(raw)) {
+   \   000000C0   0xE1A00004         MOV      R0,R4
+   \   000000C4   0x........         BL       IsOperationComplete
+   \   000000C8   0xE3500000         CMP      R0,#+0
+   \   000000CC   0x1A000002         BNE      ??WritePage_0
+    358                      TRACE_ERROR("WritePage: Failed writing data area.\n\r");
+   \   000000D0   0x........         LDR      R0,??DataTable8_1
+   \   000000D4   0x........         BL       printf
+    359                      error = NandCommon_ERROR_CANNOTWRITE;
+   \   000000D8   0xE3A07007         MOV      R7,#+7
+    360                  }
+    361              }
+    362          
+    363              // Write spare area alone if needed
+    364              if (spare && !data) {
+   \                     ??WritePage_0:
+   \   000000DC   0xE3560000         CMP      R6,#+0
+   \   000000E0   0x0A00001A         BEQ      ??WritePage_3
+   \   000000E4   0xE3550000         CMP      R5,#+0
+   \   000000E8   0x1A000018         BNE      ??WritePage_3
+    365          
+    366                  WRITE_COMMAND(raw, COMMAND_WRITE_1);
+   \   000000EC   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000F0   0xE3A01080         MOV      R1,#+128
+   \   000000F4   0xE5C01000         STRB     R1,[R0, #+0]
+    367                  WriteColumnAddress(raw, pageDataSize);
+   \   000000F8   0xE1A01008         MOV      R1,R8
+   \   000000FC   0xE1A00004         MOV      R0,R4
+   \   00000100   0x........         BL       WriteColumnAddress
+    368                  WriteRowAddress(raw, rowAddress);
+   \   00000104   0xE1A0100A         MOV      R1,R10
+   \   00000108   0xE1A00004         MOV      R0,R4
+   \   0000010C   0x........         BL       WriteRowAddress
+    369                  WriteData(raw, (unsigned char *) spare, spareDataSize);
+   \   00000110   0xE1A02009         MOV      R2,R9
+   \   00000114   0xE1A01006         MOV      R1,R6
+   \   00000118   0xE1A00004         MOV      R0,R4
+   \   0000011C   0x........         BL       WriteData
+    370                  WRITE_COMMAND(raw, COMMAND_WRITE_2);
+   \   00000120   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000124   0xE3A01010         MOV      R1,#+16
+   \   00000128   0xE5C01000         STRB     R1,[R0, #+0]
+    371          
+    372                  WaitReady(raw);
+   \   0000012C   0xE1A00004         MOV      R0,R4
+   \   00000130   0x........         BL       WaitReady
+    373                  if (!IsOperationComplete(raw)) {
+   \   00000134   0xE1A00004         MOV      R0,R4
+   \   00000138   0x........         BL       IsOperationComplete
+   \   0000013C   0xE3500000         CMP      R0,#+0
+   \   00000140   0x1A000002         BNE      ??WritePage_3
+    374                      TRACE_ERROR("WritePage: Failed writing data area.\n\r");
+   \   00000144   0x........         LDR      R0,??DataTable8_1
+   \   00000148   0x........         BL       printf
+    375                      error = NandCommon_ERROR_CANNOTWRITE;
+   \   0000014C   0xE3A07007         MOV      R7,#+7
+    376                  }
+    377              }
+    378          
+    379              // Disable chip
+    380              DISABLE_CE(raw);
+   \                     ??WritePage_3:
+   \   00000150   0xE2840018         ADD      R0,R4,#+24
+   \   00000154   0x........         BL       PIO_Set
+    381          
+    382              return error;
+   \   00000158   0xE1A00007         MOV      R0,R7
+   \   0000015C   0xE8BD4FF2         POP      {R1,R4-R11,LR}
+   \   00000160   0xE12FFF1E         BX       LR               ;; return
+    383          }
+    384          
+    385          
+    386          //------------------------------------------------------------------------------
+    387          /// Copies the data in a page of the NandFlash device to an other page on that
+    388          /// same chip. Both pages must have be even or odd; it is not possible to copy
+    389          /// and even page to an odd page and vice-versa.
+    390          /// Returns 0 if the operation is successful; otherwise returns a
+    391          /// NandCommon_ERROR code.
+    392          /// \param raw  Pointer to a RawNandFlash instance.
+    393          /// \param sourceBlock  Source block number.
+    394          /// \param sourcePage  Source page number inside the source block.
+    395          /// \param destBlock  Destination block number.
+    396          /// \param destPage  Destination page number inside the destination block.
+    397          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    398          static unsigned char CopyPage(
+    399              const struct RawNandFlash *raw,
+    400              unsigned short sourceBlock,
+    401              unsigned short sourcePage,
+    402              unsigned short destBlock,
+    403              unsigned short destPage)
+    404          {
+   \                     CopyPage:
+   \   00000000   0xE92D4FF0         PUSH     {R4-R11,LR}
+   \   00000004   0xE24DD044         SUB      SP,SP,#+68
+   \   00000008   0xE24DDE80         SUB      SP,SP,#+2048
+   \   0000000C   0xE1A04000         MOV      R4,R0
+   \   00000010   0xE1A05001         MOV      R5,R1
+   \   00000014   0xE1A06002         MOV      R6,R2
+   \   00000018   0xE1A07003         MOV      R7,R3
+   \   0000001C   0xE28D8E86         ADD      R8,SP,#+2144
+   \   00000020   0xE1D880B8         LDRH     R8,[R8, #+8]
+    405              unsigned short numPages = NandFlashModel_GetBlockSizeInPages(MODEL(raw));
+   \   00000024   0x........         BL       NandFlashModel_GetBlockSizeInPages
+    406              unsigned int sourceRow = sourceBlock * numPages + sourcePage;
+   \   00000028   0xE0296590         MLA      R9,R0,R5,R6
+    407              unsigned int destRow = destBlock * numPages + destPage;
+   \   0000002C   0xE02B8790         MLA      R11,R0,R7,R8
+    408              unsigned char error = 0;
+   \   00000030   0xE3A0A000         MOV      R10,#+0
+    409          
+    410              ASSERT((sourcePage & 1) == (destPage & 1),
+    411                     "CopyPage: Source and destination page must have the same parity.\n\r");
+   \   00000034   0xE2060001         AND      R0,R6,#0x1
+   \   00000038   0xE2081001         AND      R1,R8,#0x1
+   \   0000003C   0xE1500001         CMP      R0,R1
+   \   00000040   0x0A000004         BEQ      ??CopyPage_0
+   \   00000044   0x........         LDR      R0,??DataTable8_2
+   \   00000048   0x........         BL       printf
+   \   0000004C   0x........         LDR      R0,??DataTable8_3
+   \   00000050   0x........         BL       printf
+   \                     ??CopyPage_1:
+   \   00000054   0xEAFFFFFE         B        ??CopyPage_1
+    412          
+    413              TRACE_DEBUG("CopyPage(B#%d:P#%d -> B#%d:P#%d)\n\r",
+    414                        sourceBlock, sourcePage, destBlock, destPage);
+    415          
+    416              // Use the copy-back facility if available
+    417              if (NandFlashModel_SupportsCopyBack(MODEL(raw))) {
+   \                     ??CopyPage_0:
+   \   00000058   0xE1A00004         MOV      R0,R4
+   \   0000005C   0x........         BL       NandFlashModel_SupportsCopyBack
+   \   00000060   0xE3500000         CMP      R0,#+0
+   \   00000064   0x0A000026         BEQ      ??CopyPage_2
+    418          
+    419                  // Start operation
+    420                  ENABLE_CE(raw);
+   \   00000068   0xE2840018         ADD      R0,R4,#+24
+   \   0000006C   0x........         BL       PIO_Clear
+    421          
+    422                  // Start copy-back read
+    423                  WRITE_COMMAND(raw, COMMAND_COPYBACK_READ_1);
+   \   00000070   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000074   0xE3A01000         MOV      R1,#+0
+   \   00000078   0xE5C01000         STRB     R1,[R0, #+0]
+    424                  WriteColumnAddress(raw, 0);
+   \   0000007C   0xE1A00004         MOV      R0,R4
+   \   00000080   0x........         BL       WriteColumnAddress
+    425                  WriteRowAddress(raw, sourceRow);
+   \   00000084   0xE1A01009         MOV      R1,R9
+   \   00000088   0xE1A00004         MOV      R0,R4
+   \   0000008C   0x........         BL       WriteRowAddress
+    426                  WRITE_COMMAND(raw, COMMAND_COPYBACK_READ_2);
+   \   00000090   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000094   0xE3A01035         MOV      R1,#+53
+   \   00000098   0xE5C01000         STRB     R1,[R0, #+0]
+    427                  WaitReady(raw);
+   \   0000009C   0xE1A00004         MOV      R0,R4
+   \   000000A0   0x........         BL       WaitReady
+    428          
+    429                  // Start copy-back write
+    430                  WRITE_COMMAND(raw, COMMAND_COPYBACK_PROGRAM_1);
+   \   000000A4   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000A8   0xE3A01085         MOV      R1,#+133
+   \   000000AC   0xE5C01000         STRB     R1,[R0, #+0]
+    431                  WriteColumnAddress(raw, 0);
+   \   000000B0   0xE3A01000         MOV      R1,#+0
+   \   000000B4   0xE1A00004         MOV      R0,R4
+   \   000000B8   0x........         BL       WriteColumnAddress
+    432                  WriteRowAddress(raw, destRow);
+   \   000000BC   0xE1A0100B         MOV      R1,R11
+   \   000000C0   0xE1A00004         MOV      R0,R4
+   \   000000C4   0x........         BL       WriteRowAddress
+    433                  WRITE_COMMAND(raw, COMMAND_COPYBACK_PROGRAM_2);
+   \   000000C8   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000CC   0xE3A01010         MOV      R1,#+16
+   \   000000D0   0xE5C01000         STRB     R1,[R0, #+0]
+    434                  WaitReady(raw);
+   \   000000D4   0xE1A00004         MOV      R0,R4
+   \   000000D8   0x........         BL       WaitReady
+    435          
+    436                  // Check status
+    437                  if (!IsOperationComplete(raw)) {
+   \   000000DC   0xE1A00004         MOV      R0,R4
+   \   000000E0   0x........         BL       IsOperationComplete
+   \   000000E4   0xE3500000         CMP      R0,#+0
+   \   000000E8   0x1A000002         BNE      ??CopyPage_3
+    438                      TRACE_ERROR("CopyPage: Failed to copy page.\n\r");
+   \   000000EC   0x........         LDR      R0,??DataTable8_4
+   \   000000F0   0x........         BL       printf
+    439                      error = NandCommon_ERROR_CANNOTCOPY;
+   \   000000F4   0xE3A0A00E         MOV      R10,#+14
+    440                  }
+    441          
+    442                  // Finish operation
+    443                  DISABLE_CE(raw);
+   \                     ??CopyPage_3:
+   \   000000F8   0xE2840018         ADD      R0,R4,#+24
+   \   000000FC   0x........         BL       PIO_Set
+   \   00000100   0xEA000018         B        ??CopyPage_4
+    444              }
+    445              else {
+    446          
+    447                  // Software copy
+    448                  unsigned char data[NandCommon_MAXPAGEDATASIZE];
+    449                  unsigned char spare[NandCommon_MAXPAGESPARESIZE];
+    450                  if (RawNandFlash_ReadPage(raw, sourceBlock, sourcePage, data, spare)) {
+   \                     ??CopyPage_2:
+   \   00000104   0xE28D0004         ADD      R0,SP,#+4
+   \   00000108   0xE58D0000         STR      R0,[SP, #+0]
+   \   0000010C   0xE28D3044         ADD      R3,SP,#+68
+   \   00000110   0xE1A02006         MOV      R2,R6
+   \   00000114   0xE1A01005         MOV      R1,R5
+   \   00000118   0xE1A00004         MOV      R0,R4
+   \   0000011C   0x........         BL       RawNandFlash_ReadPage
+   \   00000120   0xE3500000         CMP      R0,#+0
+   \   00000124   0x0A000003         BEQ      ??CopyPage_5
+    451          
+    452                      TRACE_ERROR("CopyPage: Failed to read page to copy\n\r");
+   \   00000128   0x........         LDR      R0,??DataTable8_5
+   \   0000012C   0x........         BL       printf
+    453                      error = NandCommon_ERROR_CANNOTREAD;
+   \   00000130   0xE3A0A006         MOV      R10,#+6
+   \   00000134   0xEA00000B         B        ??CopyPage_4
+    454                  }
+    455                  else if (RawNandFlash_WritePage(raw, destBlock, destPage, data, spare)) {
+   \                     ??CopyPage_5:
+   \   00000138   0xE28D0004         ADD      R0,SP,#+4
+   \   0000013C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000140   0xE28D3044         ADD      R3,SP,#+68
+   \   00000144   0xE1A02008         MOV      R2,R8
+   \   00000148   0xE1A01007         MOV      R1,R7
+   \   0000014C   0xE1A00004         MOV      R0,R4
+   \   00000150   0x........         BL       RawNandFlash_WritePage
+   \   00000154   0xE3500000         CMP      R0,#+0
+   \   00000158   0x0A000002         BEQ      ??CopyPage_4
+    456          
+    457                      TRACE_ERROR("CopyPage: Failed to write dest. page\n\r");
+   \   0000015C   0x........         LDR      R0,??DataTable8_6
+   \   00000160   0x........         BL       printf
+    458                      error = NandCommon_ERROR_CANNOTWRITE;
+   \   00000164   0xE3A0A007         MOV      R10,#+7
+    459                  }
+    460              }
+    461          
+    462              return error;
+   \                     ??CopyPage_4:
+   \   00000168   0xE1A0000A         MOV      R0,R10
+   \   0000016C   0xE28DD044         ADD      SP,SP,#+68       ;; stack cleaning
+   \   00000170   0xE28DDE80         ADD      SP,SP,#+2048
+   \   00000174   0xE8BD4FF0         POP      {R4-R11,LR}
+   \   00000178   0xE12FFF1E         BX       LR               ;; return
+    463          }
+    464          
+    465          //------------------------------------------------------------------------------
+    466          //         Exported functions
+    467          //------------------------------------------------------------------------------
+    468          
+    469          //------------------------------------------------------------------------------
+    470          /// Initializes a RawNandFlash instance based on the given model and physical
+    471          /// interface. If no model is provided, then the function tries to autodetect
+    472          /// it.
+    473          /// Returns 0 if initialization is successful; otherwise returns
+    474          /// NandCommon_ERROR_UNKNOWNMODEL.
+    475          /// \param raw  Pointer to a RawNandFlash instance.
+    476          /// \param model  Pointer to the underlying nand chip model. Can be 0.
+    477          /// \param commandAddress  Address at which commands are sent.
+    478          /// \param addressAddress  Address at which addresses are sent.
+    479          /// \param dataAddress  Address at which data is sent.
+    480          /// \param pinChipEnable  Pin controlling the CE signal of the NandFlash.
+    481          /// \param pinReadyBusy  Pin used to monitor the ready/busy signal of the Nand.
+    482          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    483          unsigned char RawNandFlash_Initialize(
+    484              struct RawNandFlash *raw,
+    485              const struct NandFlashModel *model,
+    486              unsigned int commandAddress,
+    487              unsigned int addressAddress,
+    488              unsigned int dataAddress,
+    489              const Pin pinChipEnable,
+    490              const Pin pinReadyBusy)
+    491          {
+   \                     RawNandFlash_Initialize:
+   \   00000000   0xE92D4038         PUSH     {R3-R5,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE59D0010         LDR      R0,[SP, #+16]
+    492              TRACE_DEBUG("RawNandFlash_Initialize()\r\n");
+    493          
+    494              // Initialize fields
+    495              raw->commandAddress = commandAddress;
+   \   00000010   0xE584200C         STR      R2,[R4, #+12]
+    496              raw->addressAddress = addressAddress;
+   \   00000014   0xE5843010         STR      R3,[R4, #+16]
+    497              raw->dataAddress = dataAddress;
+   \   00000018   0xE5840014         STR      R0,[R4, #+20]
+    498              raw->pinChipEnable = pinChipEnable;
+   \   0000001C   0xE2840018         ADD      R0,R4,#+24
+   \   00000020   0xE28D1014         ADD      R1,SP,#+20
+   \   00000024   0xE8B1100C         LDM      R1!,{R2,R3,R12}
+   \   00000028   0xE8A0100C         STM      R0!,{R2,R3,R12}
+    499              raw->pinReadyBusy = pinReadyBusy;
+   \   0000002C   0xE8B1100C         LDM      R1!,{R2,R3,R12}
+   \   00000030   0xE8A0100C         STM      R0!,{R2,R3,R12}
+    500          
+    501              // Reset
+    502              RawNandFlash_Reset(raw);
+   \   00000034   0xE1A00004         MOV      R0,R4
+   \   00000038   0x........         BL       RawNandFlash_Reset
+    503          
+    504              // If model is not provided, autodetect it
+    505              if (!model) {
+   \   0000003C   0xE3550000         CMP      R5,#+0
+   \   00000040   0x1A00000C         BNE      ??RawNandFlash_Initialize_0
+    506          
+    507                  TRACE_DEBUG("No model provided, trying autodetection ...\n\r");
+    508                  if (NandFlashModel_Find(nandFlashModelList,
+    509                                          NandFlashModelList_SIZE,
+    510                                          RawNandFlash_ReadId(raw),
+    511                                          &(raw->model))) {
+   \   00000044   0xE1A00004         MOV      R0,R4
+   \   00000048   0x........         BL       RawNandFlash_ReadId
+   \   0000004C   0xE1A03004         MOV      R3,R4
+   \   00000050   0xE1A02000         MOV      R2,R0
+   \   00000054   0xE3A0103A         MOV      R1,#+58
+   \   00000058   0x........         LDR      R0,??DataTable8_7
+   \   0000005C   0x........         BL       NandFlashModel_Find
+   \   00000060   0xE3500000         CMP      R0,#+0
+   \   00000064   0x0A000006         BEQ      ??RawNandFlash_Initialize_1
+    512          
+    513                      TRACE_ERROR(
+    514                                "RawNandFlash_Initialize: Could not autodetect chip.\n\r");
+   \   00000068   0x........         LDR      R0,??DataTable8_8
+   \   0000006C   0x........         BL       printf
+    515                      return NandCommon_ERROR_UNKNOWNMODEL;
+   \   00000070   0xE3A00008         MOV      R0,#+8
+   \   00000074   0xEA000002         B        ??RawNandFlash_Initialize_1
+    516                  }
+    517              }
+    518              else {
+    519          
+    520                  // Copy provided model
+    521                  raw->model = *model;
+   \                     ??RawNandFlash_Initialize_0:
+   \   00000078   0xE8B50007         LDM      R5!,{R0-R2}
+   \   0000007C   0xE8A40007         STM      R4!,{R0-R2}
+    522              }
+    523          
+    524              return 0;
+   \   00000080   0xE3A00000         MOV      R0,#+0
+   \                     ??RawNandFlash_Initialize_1:
+   \   00000084   0xE8BD4032         POP      {R1,R4,R5,LR}
+   \   00000088   0xE12FFF1E         BX       LR               ;; return
+    525          }
+    526          
+    527          //------------------------------------------------------------------------------
+    528          /// Resets a NandFlash device.
+    529          /// \param raw  Pointer to a RawNandFlash instance.
+    530          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    531          void RawNandFlash_Reset(const struct RawNandFlash *raw)
+    532          {
+   \                     RawNandFlash_Reset:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    533              TRACE_DEBUG("RawNandFlash_Reset()\n\r");
+    534          
+    535              ENABLE_CE(raw);
+   \   00000008   0xE2840018         ADD      R0,R4,#+24
+   \   0000000C   0x........         BL       PIO_Clear
+    536              WRITE_COMMAND16(raw, COMMAND_RESET);
+   \   00000010   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000014   0xE3A010FF         MOV      R1,#+255
+   \   00000018   0xE1C010B0         STRH     R1,[R0, #+0]
+    537              WaitReady(raw);
+   \   0000001C   0xE1A00004         MOV      R0,R4
+   \   00000020   0x........         BL       WaitReady
+    538              DISABLE_CE(raw);
+   \   00000024   0xE2840018         ADD      R0,R4,#+24
+   \   00000028   0xE8BD4010         POP      {R4,LR}
+   \   0000002C   0x........         B        PIO_Set          ;; tailcall
+    539          }
+    540          
+    541          //------------------------------------------------------------------------------
+    542          /// Reads and returns the identifiers of a NandFlash chip.
+    543          /// \param raw  Pointer to a RawNandFlash instance.
+    544          /// \return id1|(id2<<8)|(id3<<16)|(id4<<24)
+    545          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    546          unsigned int RawNandFlash_ReadId(const struct RawNandFlash *raw)
+    547          {
+   \                     RawNandFlash_ReadId:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+    548              unsigned int chipId;
+    549          
+    550              TRACE_DEBUG("RawNandFlash_ReadId()\n\r");
+    551          
+    552              ENABLE_CE(raw);
+   \   00000008   0xE2840018         ADD      R0,R4,#+24
+   \   0000000C   0x........         BL       PIO_Clear
+    553              WRITE_COMMAND16(raw, COMMAND_READID);
+   \   00000010   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000014   0xE3A01090         MOV      R1,#+144
+   \   00000018   0xE1C010B0         STRH     R1,[R0, #+0]
+    554              //WRITE_COMMAND(raw, COMMAND_READID);
+    555              WRITE_ADDRESS(raw, 0);
+   \   0000001C   0xE5940010         LDR      R0,[R4, #+16]
+   \   00000020   0xE3A01000         MOV      R1,#+0
+   \   00000024   0xE5C01000         STRB     R1,[R0, #+0]
+    556              chipId  = READ_DATA8(raw);
+   \   00000028   0xE5940014         LDR      R0,[R4, #+20]
+   \   0000002C   0xE5D05000         LDRB     R5,[R0, #+0]
+    557              chipId |= READ_DATA8(raw) << 8;
+   \   00000030   0xE5D06000         LDRB     R6,[R0, #+0]
+    558              chipId |= READ_DATA8(raw) << 16;
+   \   00000034   0xE5D07000         LDRB     R7,[R0, #+0]
+    559              chipId |= READ_DATA8(raw) << 24;
+   \   00000038   0xE5D08000         LDRB     R8,[R0, #+0]
+    560              DISABLE_CE(raw);
+   \   0000003C   0xE2840018         ADD      R0,R4,#+24
+   \   00000040   0x........         BL       PIO_Set
+    561          
+    562              return chipId;
+   \   00000044   0xE1850406         ORR      R0,R5,R6, LSL #+8
+   \   00000048   0xE1800807         ORR      R0,R0,R7, LSL #+16
+   \   0000004C   0xE1800C08         ORR      R0,R0,R8, LSL #+24
+   \   00000050   0xE8BD41F0         POP      {R4-R8,LR}
+   \   00000054   0xE12FFF1E         BX       LR               ;; return
+    563          }
+    564          
+    565          //------------------------------------------------------------------------------
+    566          /// Erases the specified block of the device, retrying several time if it fails.
+    567          /// Returns 0 if successful; otherwise returns NandCommon_ERROR_BADBLOCK.
+    568          /// \param raw  Pointer to a RawNandFlash instance.
+    569          /// \param block  Number of the physical block to erase.
+    570          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    571          unsigned char RawNandFlash_EraseBlock(
+    572              const struct RawNandFlash *raw,
+    573              unsigned short block)
+    574          {
+   \                     RawNandFlash_EraseBlock:
+   \   00000000   0xE92D4070         PUSH     {R4-R6,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+    575          	#if !defined(OP_BOOTSTRAP_on)
+    576              unsigned char numTries = NUMERASETRIES;
+   \   0000000C   0xE3A06002         MOV      R6,#+2
+    577          
+    578              TRACE_DEBUG("RawNandFlash_EraseBlock(B#%d)\n\r", block);
+    579          
+    580              while (numTries > 0) {
+    581          
+    582                  if (!EraseBlock(raw, block)) {
+   \                     ??RawNandFlash_EraseBlock_0:
+   \   00000010   0xE1A01005         MOV      R1,R5
+   \   00000014   0xE1A00004         MOV      R0,R4
+   \   00000018   0x........         BL       EraseBlock
+   \   0000001C   0xE3500000         CMP      R0,#+0
+   \   00000020   0x0A000007         BEQ      ??RawNandFlash_EraseBlock_1
+    583          
+    584                      return 0;
+    585                  }
+    586                  numTries--;
+   \   00000024   0xE2466001         SUB      R6,R6,#+1
+    587              }
+   \   00000028   0xE21660FF         ANDS     R6,R6,#0xFF
+   \   0000002C   0x1AFFFFF7         BNE      ??RawNandFlash_EraseBlock_0
+    588          
+    589              TRACE_ERROR("RawNandFlash_EraseBlock: Failed to erase %d after %d tries\n\r",
+    590                          block, NUMERASETRIES);
+   \   00000030   0xE3A02002         MOV      R2,#+2
+   \   00000034   0xE1A01005         MOV      R1,R5
+   \   00000038   0x........         LDR      R0,??DataTable8_9
+   \   0000003C   0x........         BL       printf
+    591              return NandCommon_ERROR_BADBLOCK;
+   \   00000040   0xE3A0000C         MOV      R0,#+12
+   \                     ??RawNandFlash_EraseBlock_1:
+   \   00000044   0x........         B        ??Subroutine0_0
+    592          	#else
+    593          	return EraseBlock(raw, block);
+    594          	#endif
+    595          }
+    596          
+    597          //------------------------------------------------------------------------------
+    598          /// Reads the data and/or the spare areas of a page of a NandFlash into the
+    599          /// provided buffers. If a buffer pointer is 0, the corresponding area is not
+    600          /// read.
+    601          /// Returns 0 if the operation has been successful; otherwise returns 1.
+    602          /// \param raw  Pointer to a RawNandFlash instance.
+    603          /// \param block  Number of the block where the page to read resides.
+    604          /// \param page  Number of the page to read inside the given block.
+    605          /// \param data  Buffer where the data area will be stored.
+    606          /// \param spare  Buffer where the spare area will be stored.
+    607          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    608          unsigned char RawNandFlash_ReadPage(
+    609              const struct RawNandFlash *raw,
+    610              unsigned short block,
+    611              unsigned short page,
+    612              void *data,
+    613              void *spare)
+    614          {
+   \                     RawNandFlash_ReadPage:
+   \   00000000   0xE92D4FF8         PUSH     {R3-R11,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A0A001         MOV      R10,R1
+   \   0000000C   0xE1A0B002         MOV      R11,R2
+   \   00000010   0xE1A05003         MOV      R5,R3
+   \   00000014   0xE59D6028         LDR      R6,[SP, #+40]
+    615              unsigned char hasSmallBlocks = NandFlashModel_HasSmallBlocks(MODEL(raw));
+   \   00000018   0x........         BL       NandFlashModel_HasSmallBlocks
+   \   0000001C   0xE1A07000         MOV      R7,R0
+    616              unsigned int pageDataSize = NandFlashModel_GetPageDataSize(MODEL(raw));
+   \   00000020   0xE1A00004         MOV      R0,R4
+   \   00000024   0x........         BL       NandFlashModel_GetPageDataSize
+   \   00000028   0xE1A08000         MOV      R8,R0
+    617              unsigned int pageSpareSize = NandFlashModel_GetPageSpareSize(MODEL(raw));
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       NandFlashModel_GetPageSpareSize
+   \   00000034   0xE1A09000         MOV      R9,R0
+    618              unsigned int colAddress;
+    619              unsigned int rowAddress;
+    620          
+    621              ASSERT(data || spare, "RawNandFlash_ReadPage: At least one area must be read\n\r");
+   \   00000038   0xE3550000         CMP      R5,#+0
+   \   0000003C   0x03560000         CMPEQ    R6,#+0
+   \   00000040   0x1A000004         BNE      ??RawNandFlash_ReadPage_0
+   \   00000044   0x........         LDR      R0,??DataTable8_2
+   \   00000048   0x........         BL       printf
+   \   0000004C   0x........         LDR      R0,??DataTable8_10
+   \   00000050   0x........         BL       printf
+   \                     ??RawNandFlash_ReadPage_1:
+   \   00000054   0xEAFFFFFE         B        ??RawNandFlash_ReadPage_1
+    622              TRACE_DEBUG("RawNandFlash_ReadPage(B#%d:P#%d)\r\n", block, page);
+    623          
+    624              // Calculate actual address of the page
+    625              rowAddress = block * NandFlashModel_GetBlockSizeInPages(MODEL(raw)) + page;
+   \                     ??RawNandFlash_ReadPage_0:
+   \   00000058   0xE1A00004         MOV      R0,R4
+   \   0000005C   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000060   0xE02ABA90         MLA      R10,R0,R10,R11
+    626          
+    627              // Start operation
+    628              ENABLE_CE(raw);
+   \   00000064   0xE2840018         ADD      R0,R4,#+24
+   \   00000068   0x........         BL       PIO_Clear
+    629          
+    630              if (data) {
+   \   0000006C   0xE3550000         CMP      R5,#+0
+    631                  colAddress = 0;
+   \   00000070   0x13A01000         MOVNE    R1,#+0
+    632              }
+    633              else {
+    634                  // to read spare area in sequential access
+    635                  colAddress = pageDataSize;
+   \   00000074   0x01A01008         MOVEQ    R1,R8
+    636              }
+    637          
+    638              // Use either small blocks or large blocks data area read
+    639              if (hasSmallBlocks) {
+   \   00000078   0xE3570000         CMP      R7,#+0
+   \   0000007C   0xE594000C         LDR      R0,[R4, #+12]
+   \   00000080   0xE3A02000         MOV      R2,#+0
+   \   00000084   0xE5C02000         STRB     R2,[R0, #+0]
+   \   00000088   0xE1A00004         MOV      R0,R4
+   \   0000008C   0x0A000004         BEQ      ??RawNandFlash_ReadPage_2
+    640          
+    641                  WRITE_COMMAND(raw, COMMAND_READ_A);
+    642                  WriteColumnAddress(raw, colAddress);
+   \   00000090   0x........         BL       WriteColumnAddress
+    643                  WriteRowAddress(raw, rowAddress);
+   \   00000094   0xE1A0100A         MOV      R1,R10
+   \   00000098   0xE1A00004         MOV      R0,R4
+   \   0000009C   0x........         BL       WriteRowAddress
+   \   000000A0   0xEA000006         B        ??RawNandFlash_ReadPage_3
+    644              }
+    645              else {
+    646          
+    647                  WRITE_COMMAND(raw, COMMAND_READ_1);
+    648                  WriteColumnAddress(raw, colAddress);
+   \                     ??RawNandFlash_ReadPage_2:
+   \   000000A4   0x........         BL       WriteColumnAddress
+    649                  WriteRowAddress(raw, rowAddress);
+   \   000000A8   0xE1A0100A         MOV      R1,R10
+   \   000000AC   0xE1A00004         MOV      R0,R4
+   \   000000B0   0x........         BL       WriteRowAddress
+    650                  WRITE_COMMAND(raw, COMMAND_READ_2);
+   \   000000B4   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000B8   0xE3A01030         MOV      R1,#+48
+   \   000000BC   0xE5C01000         STRB     R1,[R0, #+0]
+    651              }
+    652          
+    653              // Wait for the nand to be ready
+    654              WaitReady(raw);
+   \                     ??RawNandFlash_ReadPage_3:
+   \   000000C0   0xE1A00004         MOV      R0,R4
+   \   000000C4   0x........         BL       WaitReady
+    655          
+    656              // Read data area if needed
+    657              if (data) {
+   \   000000C8   0xE3550000         CMP      R5,#+0
+   \   000000CC   0xE594000C         LDR      R0,[R4, #+12]
+   \   000000D0   0xE3A01000         MOV      R1,#+0
+   \   000000D4   0xE5C01000         STRB     R1,[R0, #+0]
+   \   000000D8   0x0A000005         BEQ      ??RawNandFlash_ReadPage_4
+    658                  WRITE_COMMAND(raw, COMMAND_READ_1);
+    659                  ReadData(raw, (unsigned char *) data, pageDataSize);
+   \   000000DC   0xE1A02008         MOV      R2,R8
+   \   000000E0   0xE1A01005         MOV      R1,R5
+   \   000000E4   0xE1A00004         MOV      R0,R4
+   \   000000E8   0x........         BL       ReadData
+    660          
+    661                  if (spare) {
+   \   000000EC   0xE3560000         CMP      R6,#+0
+   \   000000F0   0x0A000003         BEQ      ??RawNandFlash_ReadPage_5
+    662                      ReadData(raw, (unsigned char *) spare, pageSpareSize);
+    663                  }
+    664              }
+    665              else {
+    666                  // Read spare area only
+    667                  WRITE_COMMAND(raw, COMMAND_READ_1);
+    668                  ReadData(raw, (unsigned char *) spare, pageSpareSize);
+   \                     ??RawNandFlash_ReadPage_4:
+   \   000000F4   0xE1A02009         MOV      R2,R9
+   \   000000F8   0xE1A01006         MOV      R1,R6
+   \   000000FC   0xE1A00004         MOV      R0,R4
+   \   00000100   0x........         BL       ReadData
+    669              }
+    670          
+    671              // Disable CE
+    672              DISABLE_CE(raw);
+   \                     ??RawNandFlash_ReadPage_5:
+   \   00000104   0xE2840018         ADD      R0,R4,#+24
+   \   00000108   0x........         BL       PIO_Set
+    673          
+    674              return 0;
+   \   0000010C   0xE3A00000         MOV      R0,#+0
+   \   00000110   0xE8BD4FF2         POP      {R1,R4-R11,LR}
+   \   00000114   0xE12FFF1E         BX       LR               ;; return
+    675          }
+    676          
+    677          //------------------------------------------------------------------------------
+    678          /// Writes the data and/or the spare area of a page on a NandFlash chip. If one
+    679          /// of the buffer pointer is 0, the corresponding area is not written. Retries
+    680          /// several time if there is an error.
+    681          /// Returns 0 if the write operation is successful; otherwise returns
+    682          /// NandCommon_ERROR_BADBLOCK.
+    683          /// \param raw  Pointer to a RawNandFlash instance.
+    684          /// \param block  Number of the block where the page to write resides.
+    685          /// \param page  Number of the page to write inside the given block.
+    686          /// \param data  Buffer containing the data area.
+    687          /// \param spare  Buffer containing the spare area.
+    688          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    689          unsigned char RawNandFlash_WritePage(
+    690              const struct RawNandFlash *raw,
+    691              unsigned short block,
+    692              unsigned short page,
+    693              void *data,
+    694              void *spare)
+    695          {
+   \                     RawNandFlash_WritePage:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+   \   00000010   0xE1A07003         MOV      R7,R3
+   \   00000014   0xE59D8020         LDR      R8,[SP, #+32]
+    696              unsigned char numTries = NUMWRITETRIES;
+   \   00000018   0xE3A09002         MOV      R9,#+2
+    697          
+    698              TRACE_DEBUG("RawNandFlash_WritePage(B#%d:P#%d)\r\n", block, page);
+    699          
+    700              while (numTries > 0) {
+    701          
+    702                  if (!WritePage(raw, block, page, data, spare)) {
+   \                     ??RawNandFlash_WritePage_0:
+   \   0000001C   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000020   0xE1A03007         MOV      R3,R7
+   \   00000024   0xE1A02006         MOV      R2,R6
+   \   00000028   0xE1A01005         MOV      R1,R5
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       WritePage
+   \   00000034   0xE3500000         CMP      R0,#+0
+   \   00000038   0x0A000006         BEQ      ??RawNandFlash_WritePage_1
+    703          
+    704                      return 0;
+    705                  }
+    706                  numTries--;
+   \   0000003C   0xE2499001         SUB      R9,R9,#+1
+    707              }
+   \   00000040   0xE21990FF         ANDS     R9,R9,#0xFF
+   \   00000044   0x1AFFFFF4         BNE      ??RawNandFlash_WritePage_0
+    708          
+    709              TRACE_ERROR("RawNandFlash_WritePage: Failed to write page after %d tries\n\r", NUMWRITETRIES);
+   \   00000048   0xE3A01002         MOV      R1,#+2
+   \   0000004C   0x........         LDR      R0,??DataTable8_11
+   \   00000050   0x........         BL       printf
+    710              return NandCommon_ERROR_BADBLOCK;
+   \   00000054   0xE3A0000C         MOV      R0,#+12
+   \                     ??RawNandFlash_WritePage_1:
+   \   00000058   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   0000005C   0xE12FFF1E         BX       LR               ;; return
+    711          }
+    712          
+    713          //------------------------------------------------------------------------------
+    714          /// Copy the data in a page of the NandFlash device to an other page on that
+    715          /// same chip. Both pages must have be even or odd; it is not possible to copy
+    716          /// and even page to an odd page and vice-versa. Several retries are attempted
+    717          /// if errors are encountered.
+    718          /// Returns 0 if the operation is successful; otherwise returns
+    719          /// NandCommon_ERROR_BADBLOCK indicating that the destination block is bad.
+    720          /// \param raw  Pointer to a RawNandFlash instance.
+    721          /// \param sourceBlock  Source block number.
+    722          /// \param sourcePage  Source page number inside the source block.
+    723          /// \param destBlock  Destination block number.
+    724          /// \param destPage  Destination page number inside the destination block.
+    725          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    726          unsigned char RawNandFlash_CopyPage(
+    727              const struct RawNandFlash *raw,
+    728              unsigned short sourceBlock,
+    729              unsigned short sourcePage,
+    730              unsigned short destBlock,
+    731              unsigned short destPage)
+    732          {
+   \                     RawNandFlash_CopyPage:
+   \   00000000   0xE92D43F8         PUSH     {R3-R9,LR}
+   \   00000004   0xE1A04000         MOV      R4,R0
+   \   00000008   0xE1A05001         MOV      R5,R1
+   \   0000000C   0xE1A06002         MOV      R6,R2
+   \   00000010   0xE1A07003         MOV      R7,R3
+   \   00000014   0xE1DD82B0         LDRH     R8,[SP, #+32]
+    733              unsigned char numTries = NUMCOPYTRIES;
+   \   00000018   0xE3A09002         MOV      R9,#+2
+    734          
+    735              TRACE_DEBUG("RawNandFlash_CopyPage(B#%d:P#%d -> B#%d:P#%d)\n\r",
+    736                        sourceBlock, sourcePage, destBlock, destPage);
+    737          
+    738              while (numTries) {
+    739          
+    740                  if (!CopyPage(raw, sourceBlock, sourcePage, destBlock, destPage)) {
+   \                     ??RawNandFlash_CopyPage_0:
+   \   0000001C   0xE58D8000         STR      R8,[SP, #+0]
+   \   00000020   0xE1A03007         MOV      R3,R7
+   \   00000024   0xE1A02006         MOV      R2,R6
+   \   00000028   0xE1A01005         MOV      R1,R5
+   \   0000002C   0xE1A00004         MOV      R0,R4
+   \   00000030   0x........         BL       CopyPage
+   \   00000034   0xE3500000         CMP      R0,#+0
+   \   00000038   0x0A000006         BEQ      ??RawNandFlash_CopyPage_1
+    741          
+    742                      return 0;
+    743                  }
+    744                  numTries--;
+   \   0000003C   0xE2499001         SUB      R9,R9,#+1
+    745              }
+   \   00000040   0xE21990FF         ANDS     R9,R9,#0xFF
+   \   00000044   0x1AFFFFF4         BNE      ??RawNandFlash_CopyPage_0
+    746          
+    747              TRACE_ERROR("RawNandFlash_CopyPage: Failed to copy page after %d tries\n\r", NUMCOPYTRIES);
+   \   00000048   0xE3A01002         MOV      R1,#+2
+   \   0000004C   0x........         LDR      R0,??DataTable8_12
+   \   00000050   0x........         BL       printf
+    748              return NandCommon_ERROR_BADBLOCK;
+   \   00000054   0xE3A0000C         MOV      R0,#+12
+   \                     ??RawNandFlash_CopyPage_1:
+   \   00000058   0xE8BD43F2         POP      {R1,R4-R9,LR}
+   \   0000005C   0xE12FFF1E         BX       LR               ;; return
+    749          }
+    750          
+    751          //------------------------------------------------------------------------------
+    752          /// Copies the data of one whole block of a NandFlash device to another block.
+    753          /// Returns 0 if successful; otherwise returns NandCommon_ERROR_BADBLOCK.
+    754          /// \param raw  Pointer to a RawNandFlash instance.
+    755          /// \param sourceBlock  Source block number.
+    756          /// \param destBlock  Destination block number.
+    757          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    758          unsigned char RawNandFlash_CopyBlock(
+    759              const struct RawNandFlash *raw,
+    760              unsigned short sourceBlock,
+    761              unsigned short destBlock)
+    762          {
+   \                     RawNandFlash_CopyBlock:
+   \   00000000   0xE92D41F0         PUSH     {R4-R8,LR}
+   \   00000004   0xE24DD008         SUB      SP,SP,#+8
+   \   00000008   0xE1A04000         MOV      R4,R0
+   \   0000000C   0xE1A05001         MOV      R5,R1
+   \   00000010   0xE1A06002         MOV      R6,R2
+    763              unsigned short numPages = NandFlashModel_GetBlockSizeInPages(MODEL(raw));
+   \   00000014   0x........         BL       NandFlashModel_GetBlockSizeInPages
+   \   00000018   0xE1A07000         MOV      R7,R0
+    764              unsigned int i;
+    765          
+    766              ASSERT(sourceBlock != destBlock,
+    767                     "RawNandFlash_CopyBlock: Source block must be different from dest block\n\r");
+   \   0000001C   0xE1550006         CMP      R5,R6
+   \   00000020   0x1A000004         BNE      ??RawNandFlash_CopyBlock_0
+   \   00000024   0x........         LDR      R0,??DataTable8_2
+   \   00000028   0x........         BL       printf
+   \   0000002C   0x........         LDR      R0,??DataTable8_13
+   \   00000030   0x........         BL       printf
+   \                     ??RawNandFlash_CopyBlock_1:
+   \   00000034   0xEAFFFFFE         B        ??RawNandFlash_CopyBlock_1
+    768              TRACE_DEBUG("RawNandFlash_CopyBlock(B#%d->B#%d)\n\r",
+    769                        sourceBlock, destBlock);
+    770          
+    771              // Copy all pages
+    772              for (i=0; i < numPages; i++) {
+   \                     ??RawNandFlash_CopyBlock_0:
+   \   00000038   0xE3A08000         MOV      R8,#+0
+   \   0000003C   0xE3570000         CMP      R7,#+0
+   \   00000040   0x0A000012         BEQ      ??RawNandFlash_CopyBlock_2
+    773          
+    774                  if (RawNandFlash_CopyPage(raw, sourceBlock, i, destBlock, i)) {
+   \                     ??RawNandFlash_CopyBlock_3:
+   \   00000044   0xE1A00808         LSL      R0,R8,#+16
+   \   00000048   0xE1A00820         LSR      R0,R0,#+16
+   \   0000004C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000050   0xE1A03006         MOV      R3,R6
+   \   00000054   0xE1A02808         LSL      R2,R8,#+16
+   \   00000058   0xE1A02822         LSR      R2,R2,#+16
+   \   0000005C   0xE1A01005         MOV      R1,R5
+   \   00000060   0xE1A00004         MOV      R0,R4
+   \   00000064   0x........         BL       RawNandFlash_CopyPage
+   \   00000068   0xE3500000         CMP      R0,#+0
+   \   0000006C   0x0A000004         BEQ      ??RawNandFlash_CopyBlock_4
+    775          
+    776                      TRACE_ERROR(
+    777                                "RawNandFlash_CopyBlock: Failed to copy page %u\n\r",
+    778                                i);
+   \   00000070   0xE1A01008         MOV      R1,R8
+   \   00000074   0x........         LDR      R0,??DataTable8_14
+   \   00000078   0x........         BL       printf
+    779                      return NandCommon_ERROR_BADBLOCK;
+   \   0000007C   0xE3A0000C         MOV      R0,#+12
+   \   00000080   0xEA000003         B        ??RawNandFlash_CopyBlock_5
+    780                  }
+    781              }
+   \                     ??RawNandFlash_CopyBlock_4:
+   \   00000084   0xE2888001         ADD      R8,R8,#+1
+   \   00000088   0xE1580007         CMP      R8,R7
+   \   0000008C   0x3AFFFFEC         BCC      ??RawNandFlash_CopyBlock_3
+    782          
+    783              return 0;
+   \                     ??RawNandFlash_CopyBlock_2:
+   \   00000090   0xE3A00000         MOV      R0,#+0
+   \                     ??RawNandFlash_CopyBlock_5:
+   \   00000094   0xE8BD41F6         POP      {R1,R2,R4-R8,LR}
+   \   00000098   0xE12FFF1E         BX       LR               ;; return
+    784          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8:
+   \   00000000   0x........         DC32     `?<Constant "-E- EraseBlock: Could...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_1:
+   \   00000000   0x........         DC32     `?<Constant "-E- WritePage: Failed...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_2:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_3:
+   \   00000000   0x........         DC32     `?<Constant "CopyPage: Source and ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_4:
+   \   00000000   0x........         DC32     `?<Constant "-E- CopyPage: Failed ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_5:
+   \   00000000   0x........         DC32     `?<Constant "-E- CopyPage: Failed ...">_1`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_6:
+   \   00000000   0x........         DC32     `?<Constant "-E- CopyPage: Failed ...">_2`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_7:
+   \   00000000   0x........         DC32     nandFlashModelList
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_8:
+   \   00000000   0x........         DC32     `?<Constant "-E- RawNandFlash_Init...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_9:
+   \   00000000   0x........         DC32     `?<Constant "-E- RawNandFlash_Eras...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_10:
+   \   00000000   0x........         DC32     `?<Constant "RawNandFlash_ReadPage...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_11:
+   \   00000000   0x........         DC32     `?<Constant "-E- RawNandFlash_Writ...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_12:
+   \   00000000   0x........         DC32     `?<Constant "-E- RawNandFlash_Copy...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_13:
+   \   00000000   0x........         DC32     `?<Constant "RawNandFlash_CopyBloc...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable8_14:
+   \   00000000   0x........         DC32     `?<Constant "-E- RawNandFlash_Copy...">_1`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- EraseBlock: Could...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- EraseBlock: Could not erase block %d.\012\015"
+   \              0x2D 0x20    
+   \              0x45 0x72    
+   \              0x61 0x73    
+   \              0x65 0x42    
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \              0x43 0x6F    
+   \              0x75 0x6C    
+   \              0x64 0x20    
+   \              0x6E 0x6F    
+   \              0x74 0x20    
+   \              0x65 0x72    
+   \              0x61 0x73    
+   \              0x65 0x20    
+   \              0x62 0x6C    
+   \              0x6F 0x63    
+   \              0x6B 0x20    
+   \              0x25 0x64    
+   \              0x2E 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- WritePage: Failed...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- WritePage: Failed writing data area.\012\015"
+   \              0x2D 0x20    
+   \              0x57 0x72    
+   \              0x69 0x74    
+   \              0x65 0x50    
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x69 0x6E    
+   \              0x67 0x20    
+   \              0x64 0x61    
+   \              0x74 0x61    
+   \              0x20 0x61    
+   \              0x72 0x65    
+   \              0x61 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "CopyPage: Source and ...">`:
+   \   00000000   0x43 0x6F          DC8 43H, 6FH, 70H, 79H, 50H, 61H, 67H, 65H
+   \              0x70 0x79    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \   00000008   0x3A 0x20          DC8 3AH, 20H, 53H, 6FH, 75H, 72H, 63H, 65H
+   \              0x53 0x6F    
+   \              0x75 0x72    
+   \              0x63 0x65    
+   \   00000010   0x20 0x61          DC8 20H, 61H, 6EH, 64H, 20H, 64H, 65H, 73H
+   \              0x6E 0x64    
+   \              0x20 0x64    
+   \              0x65 0x73    
+   \   00000018   0x74 0x69          DC8 74H, 69H, 6EH, 61H, 74H, 69H, 6FH, 6EH
+   \              0x6E 0x61    
+   \              0x74 0x69    
+   \              0x6F 0x6E    
+   \   00000020   0x20 0x70          DC8 20H, 70H, 61H, 67H, 65H, 20H, 6DH, 75H
+   \              0x61 0x67    
+   \              0x65 0x20    
+   \              0x6D 0x75    
+   \   00000028   0x73 0x74          DC8 73H, 74H, 20H, 68H, 61H, 76H, 65H, 20H
+   \              0x20 0x68    
+   \              0x61 0x76    
+   \              0x65 0x20    
+   \   00000030   0x74 0x68          DC8 74H, 68H, 65H, 20H, 73H, 61H, 6DH, 65H
+   \              0x65 0x20    
+   \              0x73 0x61    
+   \              0x6D 0x65    
+   \   00000038   0x20 0x70          DC8 20H, 70H, 61H, 72H, 69H, 74H, 79H, 2EH
+   \              0x61 0x72    
+   \              0x69 0x74    
+   \              0x79 0x2E    
+   \   00000040   0x0A 0x0D          DC8 0AH, 0DH, 0
+   \              0x00         
+   \   00000043   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CopyPage: Failed ...">`:
+   \   00000000   0x2D 0x45          DC8 "-E- CopyPage: Failed to copy page.\012\015"
+   \              0x2D 0x20    
+   \              0x43 0x6F    
+   \              0x70 0x79    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x63 0x6F    
+   \              0x70 0x79    
+   \              0x20 0x70    
+   \              0x61 0x67    
+   \              0x65 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000025   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CopyPage: Failed ...">_1`:
+   \   00000000   0x2D 0x45          DC8 "-E- CopyPage: Failed to read page to copy\012\015"
+   \              0x2D 0x20    
+   \              0x43 0x6F    
+   \              0x70 0x79    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x72 0x65    
+   \              0x61 0x64    
+   \              0x20 0x70    
+   \              0x61 0x67    
+   \              0x65 0x20    
+   \              0x74 0x6F    
+   \              0x20 0x63    
+   \              0x6F 0x70    
+   \              0x79 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- CopyPage: Failed ...">_2`:
+   \   00000000   0x2D 0x45          DC8 "-E- CopyPage: Failed to write dest. page\012\015"
+   \              0x2D 0x20    
+   \              0x43 0x6F    
+   \              0x70 0x79    
+   \              0x50 0x61    
+   \              0x67 0x65    
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x77 0x72    
+   \              0x69 0x74    
+   \              0x65 0x20    
+   \              0x64 0x65    
+   \              0x73 0x74    
+   \              0x2E 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- RawNandFlash_Init...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 52H, 61H, 77H, 4EH
+   \              0x2D 0x20    
+   \              0x52 0x61    
+   \              0x77 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x49          DC8 5FH, 49H, 6EH, 69H, 74H, 69H, 61H, 6CH
+   \              0x6E 0x69    
+   \              0x74 0x69    
+   \              0x61 0x6C    
+   \   00000018   0x69 0x7A          DC8 69H, 7AH, 65H, 3AH, 20H, 43H, 6FH, 75H
+   \              0x65 0x3A    
+   \              0x20 0x43    
+   \              0x6F 0x75    
+   \   00000020   0x6C 0x64          DC8 6CH, 64H, 20H, 6EH, 6FH, 74H, 20H, 61H
+   \              0x20 0x6E    
+   \              0x6F 0x74    
+   \              0x20 0x61    
+   \   00000028   0x75 0x74          DC8 75H, 74H, 6FH, 64H, 65H, 74H, 65H, 63H
+   \              0x6F 0x64    
+   \              0x65 0x74    
+   \              0x65 0x63    
+   \   00000030   0x74 0x20          DC8 74H, 20H, 63H, 68H, 69H, 70H, 2EH, 0AH
+   \              0x63 0x68    
+   \              0x69 0x70    
+   \              0x2E 0x0A    
+   \   00000038   0x0D 0x00          DC8 0DH, 0
+   \   0000003A   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- RawNandFlash_Eras...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 52H, 61H, 77H, 4EH
+   \              0x2D 0x20    
+   \              0x52 0x61    
+   \              0x77 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x45          DC8 5FH, 45H, 72H, 61H, 73H, 65H, 42H, 6CH
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x42 0x6C    
+   \   00000018   0x6F 0x63          DC8 6FH, 63H, 6BH, 3AH, 20H, 46H, 61H, 69H
+   \              0x6B 0x3A    
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \   00000020   0x6C 0x65          DC8 6CH, 65H, 64H, 20H, 74H, 6FH, 20H, 65H
+   \              0x64 0x20    
+   \              0x74 0x6F    
+   \              0x20 0x65    
+   \   00000028   0x72 0x61          DC8 72H, 61H, 73H, 65H, 20H, 25H, 64H, 20H
+   \              0x73 0x65    
+   \              0x20 0x25    
+   \              0x64 0x20    
+   \   00000030   0x61 0x66          DC8 61H, 66H, 74H, 65H, 72H, 20H, 25H, 64H
+   \              0x74 0x65    
+   \              0x72 0x20    
+   \              0x25 0x64    
+   \   00000038   0x20 0x74          DC8 20H, 74H, 72H, 69H, 65H, 73H, 0AH, 0DH
+   \              0x72 0x69    
+   \              0x65 0x73    
+   \              0x0A 0x0D    
+   \   00000040   0x00               DC8 0
+   \   00000041   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "RawNandFlash_ReadPage...">`:
+   \   00000000   0x52 0x61          DC8 52H, 61H, 77H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x77 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000008   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 52H, 65H, 61H
+   \              0x73 0x68    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \   00000010   0x64 0x50          DC8 64H, 50H, 61H, 67H, 65H, 3AH, 20H, 41H
+   \              0x61 0x67    
+   \              0x65 0x3A    
+   \              0x20 0x41    
+   \   00000018   0x74 0x20          DC8 74H, 20H, 6CH, 65H, 61H, 73H, 74H, 20H
+   \              0x6C 0x65    
+   \              0x61 0x73    
+   \              0x74 0x20    
+   \   00000020   0x6F 0x6E          DC8 6FH, 6EH, 65H, 20H, 61H, 72H, 65H, 61H
+   \              0x65 0x20    
+   \              0x61 0x72    
+   \              0x65 0x61    
+   \   00000028   0x20 0x6D          DC8 20H, 6DH, 75H, 73H, 74H, 20H, 62H, 65H
+   \              0x75 0x73    
+   \              0x74 0x20    
+   \              0x62 0x65    
+   \   00000030   0x20 0x72          DC8 20H, 72H, 65H, 61H, 64H, 0AH, 0DH, 0
+   \              0x65 0x61    
+   \              0x64 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- RawNandFlash_Writ...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 52H, 61H, 77H, 4EH
+   \              0x2D 0x20    
+   \              0x52 0x61    
+   \              0x77 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x57          DC8 5FH, 57H, 72H, 69H, 74H, 65H, 50H, 61H
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x50 0x61    
+   \   00000018   0x67 0x65          DC8 67H, 65H, 3AH, 20H, 46H, 61H, 69H, 6CH
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \   00000020   0x65 0x64          DC8 65H, 64H, 20H, 74H, 6FH, 20H, 77H, 72H
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x77 0x72    
+   \   00000028   0x69 0x74          DC8 69H, 74H, 65H, 20H, 70H, 61H, 67H, 65H
+   \              0x65 0x20    
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \   00000030   0x20 0x61          DC8 20H, 61H, 66H, 74H, 65H, 72H, 20H, 25H
+   \              0x66 0x74    
+   \              0x65 0x72    
+   \              0x20 0x25    
+   \   00000038   0x64 0x20          DC8 64H, 20H, 74H, 72H, 69H, 65H, 73H, 0AH
+   \              0x74 0x72    
+   \              0x69 0x65    
+   \              0x73 0x0A    
+   \   00000040   0x0D 0x00          DC8 0DH, 0
+   \   00000042   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- RawNandFlash_Copy...">`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 52H, 61H, 77H, 4EH
+   \              0x2D 0x20    
+   \              0x52 0x61    
+   \              0x77 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x43          DC8 5FH, 43H, 6FH, 70H, 79H, 50H, 61H, 67H
+   \              0x6F 0x70    
+   \              0x79 0x50    
+   \              0x61 0x67    
+   \   00000018   0x65 0x3A          DC8 65H, 3AH, 20H, 46H, 61H, 69H, 6CH, 65H
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \   00000020   0x64 0x20          DC8 64H, 20H, 74H, 6FH, 20H, 63H, 6FH, 70H
+   \              0x74 0x6F    
+   \              0x20 0x63    
+   \              0x6F 0x70    
+   \   00000028   0x79 0x20          DC8 79H, 20H, 70H, 61H, 67H, 65H, 20H, 61H
+   \              0x70 0x61    
+   \              0x67 0x65    
+   \              0x20 0x61    
+   \   00000030   0x66 0x74          DC8 66H, 74H, 65H, 72H, 20H, 25H, 64H, 20H
+   \              0x65 0x72    
+   \              0x20 0x25    
+   \              0x64 0x20    
+   \   00000038   0x74 0x72          DC8 74H, 72H, 69H, 65H, 73H, 0AH, 0DH, 0
+   \              0x69 0x65    
+   \              0x73 0x0A    
+   \              0x0D 0x00    
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "RawNandFlash_CopyBloc...">`:
+   \   00000000   0x52 0x61          DC8 52H, 61H, 77H, 4EH, 61H, 6EH, 64H, 46H
+   \              0x77 0x4E    
+   \              0x61 0x6E    
+   \              0x64 0x46    
+   \   00000008   0x6C 0x61          DC8 6CH, 61H, 73H, 68H, 5FH, 43H, 6FH, 70H
+   \              0x73 0x68    
+   \              0x5F 0x43    
+   \              0x6F 0x70    
+   \   00000010   0x79 0x42          DC8 79H, 42H, 6CH, 6FH, 63H, 6BH, 3AH, 20H
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x3A 0x20    
+   \   00000018   0x53 0x6F          DC8 53H, 6FH, 75H, 72H, 63H, 65H, 20H, 62H
+   \              0x75 0x72    
+   \              0x63 0x65    
+   \              0x20 0x62    
+   \   00000020   0x6C 0x6F          DC8 6CH, 6FH, 63H, 6BH, 20H, 6DH, 75H, 73H
+   \              0x63 0x6B    
+   \              0x20 0x6D    
+   \              0x75 0x73    
+   \   00000028   0x74 0x20          DC8 74H, 20H, 62H, 65H, 20H, 64H, 69H, 66H
+   \              0x62 0x65    
+   \              0x20 0x64    
+   \              0x69 0x66    
+   \   00000030   0x66 0x65          DC8 66H, 65H, 72H, 65H, 6EH, 74H, 20H, 66H
+   \              0x72 0x65    
+   \              0x6E 0x74    
+   \              0x20 0x66    
+   \   00000038   0x72 0x6F          DC8 72H, 6FH, 6DH, 20H, 64H, 65H, 73H, 74H
+   \              0x6D 0x20    
+   \              0x64 0x65    
+   \              0x73 0x74    
+   \   00000040   0x20 0x62          DC8 20H, 62H, 6CH, 6FH, 63H, 6BH, 0AH, 0DH
+   \              0x6C 0x6F    
+   \              0x63 0x6B    
+   \              0x0A 0x0D    
+   \   00000048   0x00               DC8 0
+   \   00000049   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-E- RawNandFlash_Copy...">_1`:
+   \   00000000   0x2D 0x45          DC8 2DH, 45H, 2DH, 20H, 52H, 61H, 77H, 4EH
+   \              0x2D 0x20    
+   \              0x52 0x61    
+   \              0x77 0x4E    
+   \   00000008   0x61 0x6E          DC8 61H, 6EH, 64H, 46H, 6CH, 61H, 73H, 68H
+   \              0x64 0x46    
+   \              0x6C 0x61    
+   \              0x73 0x68    
+   \   00000010   0x5F 0x43          DC8 5FH, 43H, 6FH, 70H, 79H, 42H, 6CH, 6FH
+   \              0x6F 0x70    
+   \              0x79 0x42    
+   \              0x6C 0x6F    
+   \   00000018   0x63 0x6B          DC8 63H, 6BH, 3AH, 20H, 46H, 61H, 69H, 6CH
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \   00000020   0x65 0x64          DC8 65H, 64H, 20H, 74H, 6FH, 20H, 63H, 6FH
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x63 0x6F    
+   \   00000028   0x70 0x79          DC8 70H, 79H, 20H, 70H, 61H, 67H, 65H, 20H
+   \              0x20 0x70    
+   \              0x61 0x67    
+   \              0x65 0x20    
+   \   00000030   0x25 0x75          DC8 25H, 75H, 0AH, 0DH, 0
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000035   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+    785          
+    786          #endif
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+     2152  CopyPage
+             2152 -> IsOperationComplete
+             2152 -> NandFlashModel_GetBlockSizeInPages
+             2152 -> NandFlashModel_SupportsCopyBack
+             2152 -> PIO_Clear
+             2152 -> PIO_Set
+             2152 -> RawNandFlash_ReadPage
+             2152 -> RawNandFlash_WritePage
+             2152 -> WaitReady
+             2152 -> WriteColumnAddress
+             2152 -> WriteRowAddress
+             2152 -> printf
+       24  EraseBlock
+               24 -> IsOperationComplete
+               24 -> NandFlashModel_GetBlockSizeInPages
+               24 -> PIO_Clear
+               24 -> PIO_Set
+               24 -> WaitReady
+               24 -> WriteRowAddress
+               24 -> printf
+        0  IsOperationComplete
+       32  RawNandFlash_CopyBlock
+               32 -> NandFlashModel_GetBlockSizeInPages
+               32 -> RawNandFlash_CopyPage
+               32 -> printf
+       32  RawNandFlash_CopyPage
+               32 -> CopyPage
+               32 -> printf
+       16  RawNandFlash_EraseBlock
+               16 -> EraseBlock
+               16 -> printf
+       16  RawNandFlash_Initialize
+               16 -> NandFlashModel_Find
+               16 -> RawNandFlash_ReadId
+               16 -> RawNandFlash_Reset
+               16 -> printf
+       24  RawNandFlash_ReadId
+               24 -> PIO_Clear
+               24 -> PIO_Set
+       40  RawNandFlash_ReadPage
+               40 -> NandFlashModel_GetBlockSizeInPages
+               40 -> NandFlashModel_GetPageDataSize
+               40 -> NandFlashModel_GetPageSpareSize
+               40 -> NandFlashModel_HasSmallBlocks
+               40 -> PIO_Clear
+               40 -> PIO_Set
+               40 -> ReadData
+               40 -> WaitReady
+               40 -> WriteColumnAddress
+               40 -> WriteRowAddress
+               40 -> printf
+        8  RawNandFlash_Reset
+                8 -> PIO_Clear
+                0 -> PIO_Set
+                8 -> WaitReady
+       32  RawNandFlash_WritePage
+               32 -> WritePage
+               32 -> printf
+       16  ReadData
+               16 -> NandFlashModel_GetDataBusWidth
+        8  WaitReady
+                8 -> PIO_Get
+       16  WriteColumnAddress
+               16 -> NandFlashModel_GetDataBusWidth
+               16 -> NandFlashModel_GetPageDataSize
+       16  WriteData
+               16 -> NandFlashModel_GetDataBusWidth
+       40  WritePage
+               40 -> IsOperationComplete
+               40 -> NandFlashModel_GetBlockSizeInPages
+               40 -> NandFlashModel_GetPageDataSize
+               40 -> NandFlashModel_GetPageSpareSize
+               40 -> PIO_Clear
+               40 -> PIO_Set
+               40 -> ReadData
+               40 -> WaitReady
+               40 -> WriteColumnAddress
+               40 -> WriteData
+               40 -> WriteRowAddress
+               40 -> printf
+       16  WriteRowAddress
+               16 -> NandFlashModel_GetDataBusWidth
+               16 -> NandFlashModel_GetDeviceSizeInPages
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      40  ?<Constant "-E- CopyPage: Failed ...">
+      44  ?<Constant "-E- CopyPage: Failed ...">_1
+      44  ?<Constant "-E- CopyPage: Failed ...">_2
+      44  ?<Constant "-E- EraseBlock: Could...">
+      64  ?<Constant "-E- RawNandFlash_Copy...">
+      56  ?<Constant "-E- RawNandFlash_Copy...">_1
+      68  ?<Constant "-E- RawNandFlash_Eras...">
+      60  ?<Constant "-E- RawNandFlash_Init...">
+      68  ?<Constant "-E- RawNandFlash_Writ...">
+      44  ?<Constant "-E- WritePage: Failed...">
+      16  ?<Constant "-F- ASSERT: ">
+      68  ?<Constant "CopyPage: Source and ...">
+      76  ?<Constant "RawNandFlash_CopyBloc...">
+      56  ?<Constant "RawNandFlash_ReadPage...">
+       4  ??DataTable8
+       4  ??DataTable8_1
+       4  ??DataTable8_10
+       4  ??DataTable8_11
+       4  ??DataTable8_12
+       4  ??DataTable8_13
+       4  ??DataTable8_14
+       4  ??DataTable8_2
+       4  ??DataTable8_3
+       4  ??DataTable8_4
+       4  ??DataTable8_5
+       4  ??DataTable8_6
+       4  ??DataTable8_7
+       4  ??DataTable8_8
+       4  ??DataTable8_9
+      56  ?Subroutine0
+     380  CopyPage
+     128  EraseBlock
+      40  IsOperationComplete
+     156  RawNandFlash_CopyBlock
+      96  RawNandFlash_CopyPage
+      72  RawNandFlash_EraseBlock
+     140  RawNandFlash_Initialize
+      88  RawNandFlash_ReadId
+     280  RawNandFlash_ReadPage
+      48  RawNandFlash_Reset
+      96  RawNandFlash_WritePage
+      92  ReadData
+      76  WaitReady
+      44  WriteColumnAddress
+      92  WriteData
+     356  WritePage
+      20  WriteRowAddress
+
+ 
+   748 bytes in section .rodata
+ 2 320 bytes in section .text
+ 
+ 2 320 bytes of CODE  memory
+   748 bytes of CONST memory
+
+Errors: none
+Warnings: none

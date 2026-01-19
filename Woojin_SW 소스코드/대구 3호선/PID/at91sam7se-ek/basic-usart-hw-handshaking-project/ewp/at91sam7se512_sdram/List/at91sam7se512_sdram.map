@@ -1,0 +1,848 @@
+###############################################################################
+#                                                                             #
+# IAR ELF Linker V6.30.6.53336/W32 for ARM              02/Sep/2014  08:12:13 #
+# Copyright 2007-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Output file  =  C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Exe\at91sam7se512_sdram.out          #
+#    Map file     =  C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내            #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\List\at91sam7se512_sdram.map         #
+#    Command line =  "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\Download.o"                      #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\EccNandFlash.o"                  #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\LED_Display.o"                   #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\ManagedNandFlash.o"              #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\MappedNandFlash.o"               #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NandFlashModel.o"                #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NandFlashModelList.o"            #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NandSpareScheme.o"               #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NorFlashAmd.o"                   #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NorFlashApi.o"                   #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NorFlashCFI.o"                   #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NorFlashCommon.o"                #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\NorFlashIntel.o"                 #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\RawNandFlash.o"                  #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\SPI_FUN.o"                       #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\SkipBlockNandFlash.o"            #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\TranslatedNandFlash.o"           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\UART.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\aic.o"                           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\at26.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\at26d.o"                         #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\at45.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\at45d.o"                         #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\board_cstartup_iar.o"            #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\board_lowlevel.o"                #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\board_memories.o"                #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\cp15.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\cp15_asm_iar.o"                  #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\hamming.o"                       #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\main.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\math.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\pio.o"                           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\pit.o"                           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\pmc.o"                           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\printf_usart.o"                  #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\spi.o"                           #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\spid.o"                          #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\tc.o"                            #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Obj\usart.o" --redirect              #
+#                    _Printf=_PrintfSmall --redirect _Scanf=_ScanfSmall -o    #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\Exe\at91sam7se512_sdram.out" --map   #
+#                    "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내           #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    at91sam7se512_sdram\List\at91sam7se512_sdram.map"        #
+#                    --config "C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내  #
+#                    프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_L #
+#                    ED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\ #
+#                    ..\..\..\at91lib\boards\at91sam7se-ek\at91sam7se512\sdra #
+#                    m" --diag_suppress Lp005,Lp006 --semihosting --entry     #
+#                    resetHandler --vfe                                       #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+*******************************************************************************
+*** RUNTIME MODEL ATTRIBUTES
+***
+
+CppFlavor                     = *
+__Heap_Handler                = Basic
+__SystemLibrary               = DLib
+__dlib_dynamic_initialization = normal
+
+
+*******************************************************************************
+*** PLACEMENT SUMMARY
+***
+
+"P1":  place in [from 0x20000000 to 0x200000ff] { section .cstartup };
+"P2":  place in [from 0x00200000 to 0x002000ff] { section .vectors };
+"P3":  place in [from 0x20000100 to 0x21ffffff] {
+          ro, rw, block IRQ_STACK, block SYS_STACK, block CSTACK, block HEAP };
+
+  Section            Kind        Address    Size  Object
+  -------            ----        -------    ----  ------
+"P2":                                       0x88
+  P2 s0                       0x00200000    0x88  <Init block>
+    .vectors         inited   0x00200000    0x88  board_cstartup_iar.o [1]
+                            - 0x00200088    0x88
+
+"P1":                                       0x4c
+  .cstartup          ro code  0x20000000    0x4c  board_cstartup_iar.o [1]
+                            - 0x2000004c    0x4c
+
+"P3", part 1 of 2:                        0x8960
+  .text              ro code  0x20000100  0x2a34  LED_Display.o [1]
+  .text              ro code  0x20002b34    0x28  at45.o [1]
+  .text              ro code  0x20002b5c    0x18  NandFlashModel.o [1]
+  .text              ro code  0x20002b74    0x44  strncmp.o [3]
+  .text              ro code  0x20002bb8   0x6b4  main.o [1]
+  .text              ro code  0x2000326c    0xc4  NorFlashApi.o [1]
+  .text              ro code  0x20003330   0x1d4  I32DivMod.o [4]
+  .text              ro code  0x20003504   0x354  UART.o [1]
+  .text              ro code  0x20003858    0x7c  ABImemset.o [4]
+  .text              ro code  0x200038d4    0xd4  ABImemcpy.o [4]
+  .text              ro code  0x200039a8   0x158  usart.o [1]
+  .text              ro code  0x20003b00   0x168  SPI_FUN.o [1]
+  .text              ro code  0x20003c68    0x7c  pmc.o [1]
+  .text              ro code  0x20003ce4    0x5c  aic.o [1]
+  .text              ro code  0x20003d40    0xd8  tc.o [1]
+  .text              ro code  0x20003e18    0x74  pit.o [1]
+  .text              ro code  0x20003e8c   0x1b0  pio.o [1]
+  .text              ro code  0x2000403c   0x284  board_memories.o [1]
+  .text              ro code  0x200042c0   0x28c  NorFlashCFI.o [1]
+  .text              ro code  0x2000454c   0x7b0  Download.o [1]
+  .text              ro code  0x20004cfc    0x98  NorFlashCommon.o [1]
+  .text              ro code  0x20004d94     0x4  IntDivZer.o [4]
+  .text              ro code  0x20004d98    0x40  printf.o [3]
+  .text              ro code  0x20004dd8   0x16c  spid.o [1]
+  .text              ro code  0x20004f44     0xc  math.o [1]
+  .text              ro code  0x20004f50   0x12c  at26.o [1]
+  .text              ro code  0x2000507c   0xbf4  xprintfsmall.o [3]
+  .text              ro code  0x20005c70    0x34  xmbtowc.o [3]
+  .text              ro code  0x20005ca4    0x20  strchr.o [4]
+  .text              ro code  0x20005cc4    0x54  strlen.o [4]
+  .text              ro code  0x20005d18    0x94  memchr.o [4]
+  .text              ro code  0x20005dac    0x14  xmbcurmax.o [3]
+  .text              ro code  0x20005dc0   0x150  xxmemxmalloc.o [3]
+  .text              ro code  0x20005f10    0x28  xwctomb.o [3]
+  .text              ro code  0x20005f38   0x10c  xxmemxfree.o [3]
+  .text              ro code  0x20006044    0x1c  setlocale.o [3]
+  .text              ro code  0x20006060    0x94  xencoding_sb.o [3]
+  .text              ro code  0x200060f4   0x148  xsyslock.o [3]
+  .text              ro code  0x2000623c    0x40  xgetmemchunk.o [3]
+  .text              ro code  0x2000627c     0x4  xtls.o [3]
+  .text              ro code  0x20006280     0x8  xmtx2.o [3]
+  .text              ro code  0x20006288    0x10  xmtx.o [3]
+  .text              ro code  0x20006298   0x604  NorFlashAmd.o [1]
+  .text              ro code  0x2000689c   0x454  NorFlashIntel.o [1]
+  .text              ro code  0x20006cf0   0x17c  board_lowlevel.o [1]
+  .rodata            const    0x20006e6c    0xd8  main.o [1]
+  .rodata            const    0x20006f44    0xb0  SPI_FUN.o [1]
+  .rodata            const    0x20006ff4    0x94  pmc.o [1]
+  .rodata            const    0x20007088    0x8c  at26.o [1]
+  .text              ro code  0x20007114    0x58  printf_usart.o [1]
+  .text              ro code  0x2000716c    0x54  data_init3.o [4]
+  .rodata            const    0x200071c0    0x48  pmc.o [1]
+  .text              ro code  0x20007208    0x2e  copy_init3.o [4]
+  .text              ro code  0x20007238    0x28  xprout.o [3]
+  .text              ro code  0x20007260    0x28  zero_init3.o [4]
+  .rodata            const    0x20007288    0x24  SPI_FUN.o [1]
+  .rodata            const    0x200072ac    0x24  board_memories.o [1]
+  .text              ro code  0x200072d0    0x24  cmain.o [4]
+  .text              ro code  0x200072f4     0x8  low_level_init.o [3]
+  .text              ro code  0x200072fc     0x4  exit.o [3]
+  .text              ro code  0x20007300    0x20  exit.o [5]
+  .text              ro code  0x20007320    0x14  cexit.o [4]
+  .iar.init_table    const    0x20007334    0x24  - Linker created -
+  .rodata            const    0x20007358    0x20  SPI_FUN.o [1]
+  .rodata            const    0x20007378    0x20  at26.o [1]
+  .rodata            const    0x20007398    0x20  pmc.o [1]
+  .rodata            const    0x200073b8    0x20  usart.o [1]
+  .rodata            const    0x200073d8    0x18  NorFlashCFI.o [1]
+  .rodata            const    0x200073f0    0x18  NorFlashCFI.o [1]
+  .rodata            const    0x20007408    0x14  tc.o [1]
+  .rodata            const    0x2000741c    0x10  SPI_FUN.o [1]
+  .rodata            const    0x2000742c    0x10  at26.o [1]
+  .rodata            const    0x2000743c    0x10  pmc.o [1]
+  .text              ro code  0x2000744c     0x4  vectortrap.o [4]
+  .text              ro code  0x20007450     0x4  xreturnswi.o [5]
+  .text              ro code  0x20007454     0x0  cstart_clearlocks.o [4]
+  .rodata            const    0x20007454     0x0  bwt_init3c.o [4]
+  .data              const    0x20007454   0x400  UART.o [1]
+  .data              const    0x20007854    0x40  xfiles.o [3]
+  .data              const    0x20007894    0x40  xfiles.o [3]
+  .data              const    0x200078d4    0x30  SPI_FUN.o [1]
+  .data              const    0x20007904    0x24  LED_Display.o [1]
+  .data              const    0x20007928    0x10  LED_Display.o [1]
+  .data              const    0x20007938     0xc  LED_Display.o [1]
+  .data              const    0x20007944     0xc  LED_Display.o [1]
+  .data              const    0x20007950     0x8  LED_Display.o [1]
+  .data              const    0x20007958     0x4  Download.o [1]
+  .data              const    0x2000795c     0x4  Download.o [1]
+  .data              const    0x20007960     0x4  LED_Display.o [1]
+  .data              const    0x20007964     0x4  LED_Display.o [1]
+  .data              const    0x20007968     0x4  LED_Display.o [1]
+  .data              const    0x2000796c     0x4  LED_Display.o [1]
+  .data              const    0x20007970     0x4  main.o [1]
+  .data              const    0x20007974     0x4  main.o [1]
+  CSTACK                      0x20007978  0x1000  <Block>
+    CSTACK           uninit   0x20007978  0x1000  <Block tail>
+  IRQ_STACK                   0x20008978    0x60  <Block>
+    IRQ_STACK        uninit   0x20008978    0x60  <Block tail>
+  HEAP                        0x200089d8     0x0  <Block>
+  Initializer bytes  ro data  0x200089d8    0x88  <for P2 s0>
+                            - 0x20008a60  0x8960
+
+"P3", part 2 of 2:                        0x2a2c
+  .bss               zero     0x20008a60   0xbb8  LED_Display.o [1]
+  .bss               zero     0x20009618   0x400  LED_Display.o [1]
+  .bss               zero     0x20009a18   0x400  LED_Display.o [1]
+  .bss               zero     0x20009e18   0x400  LED_Display.o [1]
+  .bss               zero     0x2000a218   0x400  LED_Display.o [1]
+  .bss               zero     0x2000a618   0x200  UART.o [1]
+  .bss               zero     0x2000a818   0x200  UART.o [1]
+  .bss               zero     0x2000aa18   0x200  UART.o [1]
+  .bss               zero     0x2000ac18   0x200  UART.o [1]
+  .bss               zero     0x2000ae18   0x190  Download.o [1]
+  .bss               zero     0x2000afa8   0x190  main.o [1]
+  __DLIB_PERTHREAD   zero     0x2000b138    0x74  setlocale.o [3]
+  .bss               zero     0x2000b1ac    0x68  main.o [1]
+  .bss               zero     0x2000b214    0x50  xfiles.o [3]
+  .bss               zero     0x2000b264    0x50  xfiles.o [3]
+  .bss               zero     0x2000b2b4    0x38  LED_Display.o [1]
+  .bss               zero     0x2000b2ec    0x38  xsyslock.o [3]
+  .bss               zero     0x2000b324    0x34  LED_Display.o [1]
+  .bss               zero     0x2000b358    0x34  UART.o [1]
+  .bss               zero     0x2000b38c    0x28  SPI_FUN.o [1]
+  .bss               zero     0x2000b3b4    0x10  SPI_FUN.o [1]
+  .bss               zero     0x2000b3c4     0xc  LED_Display.o [1]
+  .bss               zero     0x2000b3d0     0xc  LED_Display.o [1]
+  .bss               zero     0x2000b3dc     0x8  LED_Display.o [1]
+  .bss               zero     0x2000b3e4     0x8  xxmemxmalloc.o [3]
+  .bss               zero     0x2000b3ec     0x4  Download.o [1]
+  .bss               zero     0x2000b3f0     0x4  Download.o [1]
+  .bss               zero     0x2000b3f4     0x4  Download.o [1]
+  .bss               zero     0x2000b3f8     0x4  Download.o [1]
+  .bss               zero     0x2000b3fc     0x4  Download.o [1]
+  .bss               zero     0x2000b400     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b404     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b408     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b40c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b410     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b414     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b418     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b41c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b420     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b424     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b428     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b42c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b430     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b434     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b438     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b43c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b440     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b444     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b448     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b44c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b450     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b454     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b458     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b45c     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b460     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b464     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b468     0x4  LED_Display.o [1]
+  .bss               zero     0x2000b46c     0x4  main.o [1]
+  .bss               zero     0x2000b470     0x4  main.o [1]
+  .bss               zero     0x2000b474     0x4  main.o [1]
+  .bss               zero     0x2000b478     0x4  main.o [1]
+  .bss               zero     0x2000b47c     0x4  main.o [1]
+  .bss               zero     0x2000b480     0x4  main.o [1]
+  .bss               zero     0x2000b484     0x4  xgetmemchunk.o [3]
+  .bss               zero     0x2000b488     0x1  main.o [1]
+  .bss               zero     0x2000b489     0x1  main.o [1]
+                            - 0x2000b48a  0x2a2a
+
+
+*******************************************************************************
+*** INIT TABLE
+***
+
+          Address     Size
+          -------     ----
+Zero (__iar_zero_init3)
+    1 destination range, total size 0x2a2a:
+          0x20008a60  0x2a2a
+
+Copy (__iar_copy_init3)
+    1 source range, total size 0x88:
+          0x200089d8    0x88
+    1 destination range, total size 0x88:
+          0x00200000    0x88
+
+
+
+*******************************************************************************
+*** MODULE SUMMARY
+***
+
+    Module                ro code  rw code  ro data  rw data
+    ------                -------  -------  -------  -------
+C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_sdram\Obj: [1]
+    Download.o              1 968                        428
+    LED_Display.o          10 804                      7 444
+    NandFlashModel.o           24
+    NorFlashAmd.o           1 540
+    NorFlashApi.o             196
+    NorFlashCFI.o             652                48
+    NorFlashCommon.o          152
+    NorFlashIntel.o         1 108
+    SPI_FUN.o                 360               260      104
+    UART.o                    852                      3 124
+    aic.o                      92
+    at26.o                    300               188
+    at45.o                     40
+    board_cstartup_iar.o       76      136      136
+    board_lowlevel.o          380
+    board_memories.o          644                36
+    main.o                  1 716               216      538
+    math.o                     12
+    pio.o                     432
+    pit.o                     116
+    pmc.o                     124               268
+    printf_usart.o             88
+    spid.o                    364
+    tc.o                      216                20
+    usart.o                   344                32
+    --------------------------------------------------------
+    Total:                 22 600      136    1 204   11 638
+
+command line: [2]
+    --------------------------------------------------------
+    Total:
+
+dl4t_alf.a: [3]
+    exit.o                      4
+    low_level_init.o            8
+    printf.o                   64
+    setlocale.o                28                        116
+    strncmp.o                  68
+    xencoding_sb.o            148
+    xfiles.o                                             288
+    xgetmemchunk.o             64                          4
+    xmbcurmax.o                20
+    xmbtowc.o                  52
+    xmtx.o                     16
+    xmtx2.o                     8
+    xprintfsmall.o          3 060
+    xprout.o                   40
+    xsyslock.o                328                         56
+    xtls.o                      4
+    xwctomb.o                  40
+    xxmemxfree.o              268
+    xxmemxmalloc.o            336                          8
+    --------------------------------------------------------
+    Total:                  4 556                        472
+
+rt4t_al.a: [4]
+    ABImemcpy.o               212
+    ABImemset.o               124
+    I32DivMod.o               468
+    IntDivZer.o                 4
+    bwt_init3c.o
+    cexit.o                    20
+    cmain.o                    36
+    copy_init3.o               46
+    cstart_clearlocks.o
+    data_init3.o               84
+    memchr.o                  148
+    strchr.o                   32
+    strlen.o                   84
+    vectortrap.o                4
+    zero_init3.o               40
+    --------------------------------------------------------
+    Total:                  1 302
+
+shs_l.a: [5]
+    exit.o                     32
+    xreturnswi.o                4
+    --------------------------------------------------------
+    Total:                     36
+
+    Gaps                        2
+    Linker created                               36    4 192
+------------------------------------------------------------
+    Grand Total:           28 496      136    1 240   16 302
+
+
+*******************************************************************************
+*** ENTRY LIST
+***
+
+Entry                      Address   Size  Type      Object
+-----                      -------   ----  ----      ------
+?main                   0x200072d0         Code  Gb  cmain.o [4]
+ADD_CHECK               0x20003078   0x30  Code  Gb  main.o [1]
+AIC_ConfigureIT         0x20003ce4   0x34  Code  Gb  aic.o [1]
+AIC_DisableIT           0x20003d28    0xc  Code  Gb  aic.o [1]
+AIC_EnableIT            0x20003d18   0x10  Code  Gb  aic.o [1]
+AMD_EraseChip           0x20006668  0x14c  Code  Gb  NorFlashAmd.o [1]
+AMD_EraseSector         0x20006530  0x138  Code  Gb  NorFlashAmd.o [1]
+AMD_ReadDeviceID        0x20006528    0x8  Code  Gb  NorFlashAmd.o [1]
+AMD_ReadManufactoryId   0x20006520    0x8  Code  Gb  NorFlashAmd.o [1]
+AMD_Reset               0x2000651c    0x4  Code  Gb  NorFlashAmd.o [1]
+AMD_Write_Data          0x200067b4   0xe8  Code  Gb  NorFlashAmd.o [1]
+AT26_Configure          0x20004f50   0xbc  Code  Gb  at26.o [1]
+AT26_SendCommand        0x2000500c   0x60  Code  Gb  at26.o [1]
+AT26_Write              0x20003b08   0xe0  Code  Gb  SPI_FUN.o [1]
+Abort_Handler           0x2000744c         Code  Wk  vectortrap.o [4]
+Arrow_L                 0x20007944    0xc  Data  Gb  LED_Display.o [1]
+Arrow_R                 0x20007938    0xc  Data  Gb  LED_Display.o [1]
+BASIC_VALUE             0x20001c38   0xb4  Code  Gb  LED_Display.o [1]
+BLINK_DCC_T_C           0x2000b448    0x4  Data  Gb  LED_Display.o [1]
+BOARD_ConfigureFlash48MHz
+                        0x2000426c   0x18  Code  Gb  board_memories.o [1]
+BOARD_ConfigureNorFlash
+                        0x20004284   0x10  Code  Gb  board_memories.o [1]
+BOARD_ConfigureSdram    0x20004094  0x1cc  Code  Gb  board_memories.o [1]
+BOARD_GetRemap          0x2000403c   0x38  Code  Lc  board_memories.o [1]
+BOARD_RemapRam          0x20004074    0xc  Code  Gb  board_memories.o [1]
+B_FRONT                 0x2000b43c    0x4  Data  Gb  LED_Display.o [1]
+Blink_Timer_Count       0x2000796c    0x4  Data  Gb  LED_Display.o [1]
+CH                      0x20007964    0x4  Data  Gb  LED_Display.o [1]
+CHACK_DATA              0x2000b454    0x4  Data  Gb  LED_Display.o [1]
+CHH                     0x2000b418    0x4  Data  Gb  LED_Display.o [1]
+CRC_Table               0x20007454  0x400  Data  Lc  UART.o [1]
+CSTACK$$Base            0x20007978          --   Gb  - Linker created -
+CSTACK$$Limit           0x20008978          --   Gb  - Linker created -
+ChackHexa               0x20002fd8   0xa0  Code  Gb  main.o [1]
+Compari_Arrow_L         0x2000b3d0    0xc  Data  Gb  LED_Display.o [1]
+Compari_Arrow_R         0x2000b3c4    0xc  Data  Gb  LED_Display.o [1]
+Compari_ITEM            0x2000b3dc    0x8  Data  Gb  LED_Display.o [1]
+ConfigurePit            0x20002f24   0x3c  Code  Lc  main.o [1]
+ConfigureTc0            0x20002df4   0x7c  Code  Gb  main.o [1]
+ConfigureTc1            0x20002e70   0x7c  Code  Gb  main.o [1]
+ConfigureUsart0         0x20002d8c   0x68  Code  Gb  main.o [1]
+DCC                     0x20007928   0x10  Data  Gb  LED_Display.o [1]
+DCC_CONTROL             0x20002264  0x3ac  Code  Gb  LED_Display.o [1]
+DCC_T_C                 0x2000b444    0x4  Data  Gb  LED_Display.o [1]
+DOT_VIDEO_PIRNT         0x20001810   0xe4  Code  Gb  LED_Display.o [1]
+Display_Init            0x20000100   0x48  Code  Gb  LED_Display.o [1]
+Display_main            0x20000148  0x2fc  Code  Gb  LED_Display.o [1]
+Dot_Video               0x2000b428    0x4  Data  Gb  LED_Display.o [1]
+Down_int09              0x20004c6c   0x60  Code  Gb  Download.o [1]
+Download_main           0x2000454c  0x2c0  Code  Gb  Download.o [1]
+ESC                     0x20007904   0x24  Data  Gb  LED_Display.o [1]
+FIQ_Handler             0x2000744c         Code  Wk  vectortrap.o [4]
+FONT_POSITION           0x20000444  0xb60  Code  Gb  LED_Display.o [1]
+FRONT                   0x2000b438    0x4  Data  Gb  LED_Display.o [1]
+Font_Data               0x20009e18  0x400  Data  Gb  LED_Display.o [1]
+HEAP$$Base              0x200089d8          --   Gb  - Linker created -
+HEAP$$Limit             0x200089d8          --   Gb  - Linker created -
+HEX_SWITCH              0x20001e2c  0x130  Code  Gb  LED_Display.o [1]
+Hex_Pri_T_F             0x20007968    0x4  Data  Gb  LED_Display.o [1]
+Hex_Pri_Tim             0x2000b424    0x4  Data  Gb  LED_Display.o [1]
+IMAG_POINT_VALUE        0x20000fdc  0x158  Code  Gb  LED_Display.o [1]
+INTEL_EraseChip         0x20006bac   0x54  Code  Gb  NorFlashIntel.o [1]
+INTEL_EraseSector       0x20006aec   0xc0  Code  Gb  NorFlashIntel.o [1]
+INTEL_ReadDeviceID      0x20006ae4    0x8  Code  Gb  NorFlashIntel.o [1]
+INTEL_ReadManufactoryId
+                        0x20006adc    0x8  Code  Gb  NorFlashIntel.o [1]
+INTEL_Reset             0x20006ad8    0x4  Code  Gb  NorFlashIntel.o [1]
+INTEL_Write_Data        0x20006c00   0xf0  Code  Gb  NorFlashIntel.o [1]
+IRQ_Handler             0x2000744c         Code  Wk  vectortrap.o [4]
+IRQ_STACK$$Base         0x20008978          --   Gb  - Linker created -
+IRQ_STACK$$Limit        0x200089d8          --   Gb  - Linker created -
+ISR_Pit                 0x20002efc   0x28  Code  Lc  main.o [1]
+ISR_Spi                 0x20003b00    0x8  Code  Gb  SPI_FUN.o [1]
+ISR_Tc0                 0x20002c30   0x78  Code  Gb  main.o [1]
+ISR_Tc1                 0x20002ca8   0xe4  Code  Gb  main.o [1]
+ISR_Usart0              0x20002bb8   0x78  Code  Gb  main.o [1]
+ITEM                    0x20007950    0x8  Data  Gb  LED_Display.o [1]
+Imag_Screen             0x20001168  0x270  Code  Gb  LED_Display.o [1]
+Imag_Screen_8           0x2000168c  0x17c  Code  Gb  LED_Display.o [1]
+Imag_Screen_door        0x200013e0  0x298  Code  Gb  LED_Display.o [1]
+IsDisplayAddressOk      0x20004818   0xe8  Code  Gb  Download.o [1]
+IsPrintOfVersion        0x20004900   0x38  Code  Gb  Download.o [1]
+LED_Display_c_int10     0x2000290c  0x21c  Code  Gb  LED_Display.o [1]
+LEFT_DOT_VIDEO_PIRNT    0x200018f4  0x104  Code  Gb  LED_Display.o [1]
+LEF_Font_posi           0x2000b45c    0x4  Data  Gb  LED_Display.o [1]
+LINE_BUFF               0x20008a60  0xbb8  Data  Gb  LED_Display.o [1]
+Left_Dot_Video          0x2000b430    0x4  Data  Gb  LED_Display.o [1]
+LowLevelInit            0x20006cfc  0x16c  Code  Gb  board_lowlevel.o [1]
+MODE_SET                0x200030a8   0x38  Code  Gb  main.o [1]
+NORFLASH_EraseSector    0x20003280   0x14  Code  Gb  NorFlashApi.o [1]
+NORFLASH_ReadData       0x200032a8   0x88  Code  Gb  NorFlashApi.o [1]
+NORFLASH_Reset          0x2000326c   0x14  Code  Gb  NorFlashApi.o [1]
+NORFLASH_WriteData      0x20003294   0x14  Code  Gb  NorFlashApi.o [1]
+NORMAL_DCC_COUNT        0x20002624  0x1dc  Code  Gb  LED_Display.o [1]
+NorFlash_CFI_Detect     0x20004444  0x100  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetAddressInChip
+                        0x20004428    0xc  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetByteAddress
+                        0x2000440c    0xc  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetByteAddressInChip
+                        0x20004418   0x10  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetDataBusWidth
+                        0x20004434   0x10  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetDeviceBlockSize
+                        0x200042f8   0x94  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetDeviceNumOfBlocks
+                        0x200042c0   0x38  Code  Gb  NorFlashCFI.o [1]
+NorFlash_GetDeviceSectorAddress
+                        0x2000438c   0x80  Code  Gb  NorFlashCFI.o [1]
+PATTREN                 0x20001f60   0xe0  Code  Gb  LED_Display.o [1]
+PATTREN_MOVE_VALUE      0x20002040  0x210  Code  Gb  LED_Display.o [1]
+PAT_COLOR               0x2000b41c    0x4  Data  Gb  LED_Display.o [1]
+PIO_Configure           0x20003f24   0xe4  Code  Gb  pio.o [1]
+PIO_Get                 0x20004008   0x20  Code  Gb  pio.o [1]
+PIO_SetInput            0x20003ec4   0x28  Code  Lc  pio.o [1]
+PIO_SetOutput           0x20003eec   0x38  Code  Lc  pio.o [1]
+PIO_SetPeripheralA      0x20003e8c   0x1c  Code  Lc  pio.o [1]
+PIO_SetPeripheralB      0x20003ea8   0x1c  Code  Lc  pio.o [1]
+PIT_Enable              0x20003e40   0x10  Code  Gb  pit.o [1]
+PIT_EnableIT            0x20003e60   0x14  Code  Gb  pit.o [1]
+PIT_GetPIVR             0x20003e84    0x8  Code  Gb  pit.o [1]
+PIT_GetStatus           0x20003e74    0x4  Code  Gb  pit.o [1]
+PIT_Init                0x20003e18   0x28  Code  Gb  pit.o [1]
+PMC_EnablePeripheral    0x20003c68   0x5c  Code  Gb  pmc.o [1]
+POP                     0x20001b78   0xb8  Code  Gb  LED_Display.o [1]
+PUSH                    0x20001a70  0x100  Code  Gb  LED_Display.o [1]
+Pattren_inter_time      0x2000b420    0x4  Data  Gb  LED_Display.o [1]
+PixelPut                0x20004abc   0x68  Code  Gb  Download.o [1]
+Prefetch_Handler        0x2000744c         Code  Wk  vectortrap.o [4]
+RECEIVECnt              0x2000b450    0x4  Data  Gb  LED_Display.o [1]
+REMEMBER_RING           0x2000b324   0x34  Data  Gb  LED_Display.o [1]
+RING_DATA               0x20009a18  0x400  Data  Gb  LED_Display.o [1]
+ReadRawData             0x20004d24   0x38  Code  Gb  NorFlashCommon.o [1]
+Region$$Table$$Base     0x20007334          --   Gb  - Linker created -
+Region$$Table$$Limit    0x20007358          --   Gb  - Linker created -
+RxTimerBuf              0x2000afa8  0x190  Data  Gb  main.o [1]
+SCAN                    0x2000b2b4   0x38  Data  Gb  LED_Display.o [1]
+SCC1_Init_AChl          0x2000b358   0x34  Data  Gb  UART.o [1]
+SCC_ISR                 0x200035e0  0x1e8  Code  Gb  UART.o [1]
+SCC_ISR_Timer           0x200037c8   0x78  Code  Gb  UART.o [1]
+SCC_Init                0x20003504   0x9c  Code  Gb  UART.o [1]
+SCC_RxBuf               0x2000a618  0x200  Data  Gb  UART.o [1]
+SCC_RxBuf_BackUP        0x2000a818  0x200  Data  Gb  UART.o [1]
+SCC_TxBuf               0x2000aa18  0x200  Data  Gb  UART.o [1]
+SCC_TxBuf_BackUP        0x2000ac18  0x200  Data  Gb  UART.o [1]
+SCREEN_PRINT            0x200019fc   0x68  Code  Gb  LED_Display.o [1]
+SCREEN_WIDTH_MAX        0x20007958    0x4  Data  Gb  Download.o [1]
+SEND_DATA               0x20001d00  0x124  Code  Gb  LED_Display.o [1]
+SPID_Configure          0x20004dd8   0x70  Code  Gb  spid.o [1]
+SPID_ConfigureCS        0x20004e48   0x10  Code  Gb  spid.o [1]
+SPID_Handler            0x20004ec0   0x84  Code  Gb  spid.o [1]
+SPID_SendCommand        0x20004e58   0x68  Code  Gb  spid.o [1]
+SPI_Init                0x20003be8   0x64  Code  Gb  SPI_FUN.o [1]
+STATIC_LEF_Posi         0x2000b460    0x4  Data  Gb  LED_Display.o [1]
+STATIC_Left_Dot_Video   0x2000b434    0x4  Data  Gb  LED_Display.o [1]
+STOP_DCC_COUNT          0x20002800   0xa0  Code  Gb  LED_Display.o [1]
+SWI_Handler             0x2000744c         Code  Wk  vectortrap.o [4]
+SW_TIMER                0x20002f60   0x78  Code  Gb  main.o [1]
+SendStatusReq           0x20004938  0x184  Code  Gb  Download.o [1]
+Spi_pins                0x200078d4   0x30  Data  Gb  SPI_FUN.o [1]
+TC_Configure            0x20003d40   0x1c  Code  Gb  tc.o [1]
+TC_FindMckDivisor       0x20003d74   0xa0  Code  Gb  tc.o [1]
+TC_Start                0x20003d5c    0xc  Code  Gb  tc.o [1]
+TC_Stop                 0x20003d68    0xc  Code  Gb  tc.o [1]
+TextOut                 0x20004b24   0x88  Code  Gb  Download.o [1]
+UP_DATA_LEN             0x2000b458    0x4  Data  Gb  LED_Display.o [1]
+UP_Font_posi            0x2000b464    0x4  Data  Gb  LED_Display.o [1]
+USART_Configure         0x200039a8   0x40  Code  Gb  usart.o [1]
+USART_ReadBuffer        0x20003ab0   0x40  Code  Gb  usart.o [1]
+USART_SetReceiverEnabled
+                        0x200039fc   0x14  Code  Gb  usart.o [1]
+USART_SetTransmitterEnabled
+                        0x200039e8   0x14  Code  Gb  usart.o [1]
+USART_Write             0x20003a10   0x5c  Code  Gb  usart.o [1]
+USART_WriteBuffer       0x20003a6c   0x44  Code  Gb  usart.o [1]
+Undefined_Handler       0x2000744c         Code  Wk  vectortrap.o [4]
+Up_Dot_Video            0x2000b42c    0x4  Data  Gb  LED_Display.o [1]
+VersionImagePut         0x20004bac   0xc0  Code  Gb  Download.o [1]
+WriteCommand            0x20004cfc   0x28  Code  Gb  NorFlashCommon.o [1]
+WriteRawData            0x20004d5c   0x38  Code  Gb  NorFlashCommon.o [1]
+_EncodingSb_Mbtowc      0x20006094   0x50  Code  Gb  xencoding_sb.o [3]
+_EncodingSb_Wctomb      0x20006060   0x34  Code  Gb  xencoding_sb.o [3]
+_IsdstStr               0x2000b13c    0x4  Data  Gb  setlocale.o [3]
+_LitobSmall             0x20005a90  0x168  Code  Lc  xprintfsmall.o [3]
+_LocaleEncoding         0x20006044   0x18  Code  Gb  setlocale.o [3]
+_LocaleReturnString     0x2000b15c   0x50  Data  Lc  setlocale.o [3]
+_Locale_Profile         0x2000b140   0x1c  Data  Gb  setlocale.o [3]
+_Mbtowc                 0x20005c70   0x34  Code  Gb  xmbtowc.o [3]
+_PrintfSmall            0x2000507c  0x6a4  Code  Gb  xprintfsmall.o [3]
+_Prout                  0x20007238   0x28  Code  Gb  xprout.o [3]
+_PutcharsSmall          0x20005bf8   0x60  Code  Lc  xprintfsmall.o [3]
+_PutstrSmall            0x20005720  0x364  Code  Lc  xprintfsmall.o [3]
+_TzoneStr               0x2000b138    0x4  Data  Gb  setlocale.o [3]
+_Wctomb                 0x20005f10   0x28  Code  Gb  xwctomb.o [3]
+__ICFEDIT_region_RAM_end__ {Abs}
+                        0x00207fff          --   Gb  command line/config [2]
+__ICFEDIT_region_RAM_start__ {Abs}
+                        0x00200000          --   Gb  command line/config [2]
+__ICFEDIT_region_SDRAM_end__ {Abs}
+                        0x21ffffff          --   Gb  command line/config [2]
+__ICFEDIT_region_SDRAM_start__ {Abs}
+                        0x20000000          --   Gb  command line/config [2]
+__ICFEDIT_size_cstack__ {Abs}
+                        0x00001000          --   Gb  command line/config [2]
+__ICFEDIT_size_heap__ {Abs}
+                        0x00000000          --   Gb  command line/config [2]
+__ICFEDIT_size_irqstack__ {Abs}
+                        0x00000060          --   Gb  command line/config [2]
+__ICFEDIT_size_startup__ {Abs}
+                        0x00000100          --   Gb  command line/config [2]
+__ICFEDIT_size_sysstack__ {Abs}
+                        0x00000060          --   Gb  command line/config [2]
+__ICFEDIT_size_vectors__ {Abs}
+                        0x00000100          --   Gb  command line/config [2]
+__aeabi_idiv            0x20003330         Code  Gb  I32DivMod.o [4]
+__aeabi_idiv0           0x20004d94         Code  Gb  IntDivZer.o [4]
+__aeabi_idivmod         0x20003330         Code  Gb  I32DivMod.o [4]
+__aeabi_memcpy          0x200038d4         Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy4         0x200038f8         Code  Gb  ABImemcpy.o [4]
+__aeabi_memcpy8         0x200038f8         Code  Gb  ABImemcpy.o [4]
+__aeabi_memset          0x20003858         Code  Gb  ABImemset.o [4]
+__aeabi_uidiv           0x20003360         Code  Gb  I32DivMod.o [4]
+__aeabi_uidivmod        0x20003360         Code  Gb  I32DivMod.o [4]
+__cexit_clearlocks      0x20007324         Code  Gb  cexit.o [4]
+__cmain                 0x200072d0         Code  Gb  cmain.o [4]
+__cstart_clearlocks     0x20007454         Data  Gb  cstart_clearlocks.o [4]
+__data_Aldata           0x2000b3e4    0x8  Data  Gb  xxmemxmalloc.o [3]
+__data_GetMemChunk      0x2000623c   0x40  Code  Gb  xgetmemchunk.o [3]
+__exit                  0x20007300   0x20  Code  Gb  exit.o [5]
+__iar_Locksyslock       0x2000617c   0xa4  Code  Gb  xsyslock.o [3]
+__iar_Mbcurmax          0x20005dac   0x14  Code  Gb  xmbcurmax.o [3]
+__iar_Memchr            0x20005d18         Code  Gb  memchr.o [4]
+__iar_Memset            0x20003858         Code  Gb  ABImemset.o [4]
+__iar_Memset_word       0x20003864         Code  Gb  ABImemset.o [4]
+__iar_SB                0x20007454         Data  Gb  bwt_init3c.o [4]
+__iar_Stderr            0x20007894   0x40  Data  Gb  xfiles.o [3]
+__iar_Stdout            0x20007854   0x40  Data  Gb  xfiles.o [3]
+__iar_Strchr            0x20005ca4         Code  Gb  strchr.o [4]
+__iar_Unlocksyslock     0x20006220   0x18  Code  Gb  xsyslock.o [3]
+__iar_clearlocks        0x200060f4   0x88  Code  Gb  xsyslock.o [3]
+__iar_copy_init3        0x20007209   0x2e  Code  Gb  copy_init3.o [4]
+__iar_data_init3        0x2000716c   0x54  Code  Gb  data_init3.o [4]
+__iar_dlib_perthread_access
+                        0x2000627c    0x4  Code  Gb  xtls.o [3]
+__iar_file_Mtxdst       0x20006284    0x4  Code  Gb  xmtx2.o [3]
+__iar_file_Mtxinit      0x20006280    0x4  Code  Gb  xmtx2.o [3]
+__iar_return_from_swi   0x20007450    0x4  Code  Gb  xreturnswi.o [5]
+__iar_system_Mtxdst     0x2000628c    0x4  Code  Gb  xmtx.o [3]
+__iar_system_Mtxinit    0x20006288    0x4  Code  Gb  xmtx.o [3]
+__iar_system_Mtxlock    0x20006290    0x4  Code  Gb  xmtx.o [3]
+__iar_system_Mtxunlock  0x20006294    0x4  Code  Gb  xmtx.o [3]
+__iar_zero_init3        0x20007261   0x28  Code  Gb  zero_init3.o [4]
+__low_level_init        0x200072f4    0x8  Code  Gb  low_level_init.o [3]
+_call_main              0x200072e0         Code  Gb  cmain.o [4]
+_exit                   0x20007320         Code  Gb  cexit.o [4]
+_main                   0x200072e8         Code  Gb  cmain.o [4]
+amdOperations           0x200073d8   0x18  Data  Gb  NorFlashCFI.o [1]
+amd_Program             0x2000640c  0x110  Code  Gb  NorFlashAmd.o [1]
+amd_ReadIdentification  0x2000630c  0x100  Code  Gb  NorFlashAmd.o [1]
+amd_Reset               0x20006298   0x74  Code  Gb  NorFlashAmd.o [1]
+at26                    0x2000b38c   0x28  Data  Gb  SPI_FUN.o [1]
+bytesReceived           0x2000b46c    0x4  Data  Gb  main.o [1]
+cal_CRC16               0x200035a0   0x40  Code  Gb  UART.o [1]
+defaultFiqHandler       0x20006cf4    0x4  Code  Gb  board_lowlevel.o [1]
+defaultIrqHandler       0x20006cf8    0x4  Code  Gb  board_lowlevel.o [1]
+defaultSpuriousHandler  0x20006cf0    0x4  Code  Gb  board_lowlevel.o [1]
+ebuf                    0x2000b214   0x50  Data  Lc  xfiles.o [3]
+exit                    0x200072fc    0x4  Code  Gb  exit.o [3]
+file_mtx                0x2000b2f0   0x20  Data  Lc  xsyslock.o [3]
+fputc                   0x20007114   0x48  Code  Gb  printf_usart.o [1]
+free                    0x20005f38  0x108  Code  Gb  xxmemxfree.o [3]
+gFirmWareExeFlag        0x2000795c    0x4  Data  Gb  Download.o [1]
+gFirmWareExeTime        0x2000b3fc    0x4  Data  Gb  Download.o [1]
+gOneSec                 0x2000b404    0x4  Data  Gb  LED_Display.o [1]
+gTxDisableTimerCnt      0x2000b3f4    0x4  Data  Gb  Download.o [1]
+gTxEnableTimerCnt       0x2000b3f0    0x4  Data  Gb  Download.o [1]
+gVersionPrintFlag       0x2000b3f8    0x4  Data  Gb  Download.o [1]
+glDebugCnt              0x2000b44c    0x4  Data  Gb  LED_Display.o [1]
+hnum                    0x2000b410    0x4  Data  Gb  LED_Display.o [1]
+hnumm                   0x2000b414    0x4  Data  Gb  LED_Display.o [1]
+intelOperations         0x200073f0   0x18  Data  Gb  NorFlashCFI.o [1]
+intel_ClearStatus       0x20006994   0x30  Code  Gb  NorFlashIntel.o [1]
+intel_GetBlockLockStatus
+                        0x20006a24   0x24  Code  Gb  NorFlashIntel.o [1]
+intel_Program           0x20006a48   0x90  Code  Gb  NorFlashIntel.o [1]
+intel_ReadIdentification
+                        0x200068d0   0x6c  Code  Gb  NorFlashIntel.o [1]
+intel_ReadStatus        0x2000693c   0x58  Code  Gb  NorFlashIntel.o [1]
+intel_Reset             0x2000689c   0x34  Code  Gb  NorFlashIntel.o [1]
+intel_UnlockSector      0x200069c4   0x60  Code  Gb  NorFlashIntel.o [1]
+irqHandler              0x00200034         Code  Gb  board_cstartup_iar.o [1]
+mBlackChick             0x2000ae18  0x190  Data  Gb  Download.o [1]
+mBlockSize              0x2000b3ec    0x4  Data  Gb  Download.o [1]
+mFont_Save_posi         0x2000b468    0x4  Data  Gb  LED_Display.o [1]
+mHexSwitchAdd           0x2000b489    0x1  Data  Gb  main.o [1]
+mScanVidioFlag          0x20007960    0x4  Data  Gb  LED_Display.o [1]
+mTimerDebugCnt          0x2000b474    0x4  Data  Gb  main.o [1]
+mTimerFlag              0x2000b470    0x4  Data  Gb  main.o [1]
+main                    0x200030e0   0xf8  Code  Gb  main.o [1]
+malloc                  0x20005dc0  0x14c  Code  Gb  xxmemxmalloc.o [3]
+memchr                  0x20005d18         Code  Gb  memchr.o [4]
+memcpy                  0x20002b5c   0x18  Code  Gb  NandFlashModel.o [1]
+memset                  0x20002b34   0x28  Code  Gb  at45.o [1]
+min                     0x20004f44    0xc  Code  Gb  math.o [1]
+mtx                     0x2000b310   0x14  Data  Lc  xsyslock.o [3]
+nBB                     0x2000a218  0x400  Data  Gb  LED_Display.o [1]
+nBuff                   0x20009618  0x400  Data  Gb  LED_Display.o [1]
+nIsPattern              0x2000b400    0x4  Data  Gb  LED_Display.o [1]
+norFlash                0x2000b1ac   0x68  Data  Gb  main.o [1]
+num                     0x2000b408    0x4  Data  Gb  LED_Display.o [1]
+numm                    0x2000b40c    0x4  Data  Gb  LED_Display.o [1]
+obuf                    0x2000b264   0x50  Data  Lc  xfiles.o [3]
+pBuffer                 0x2000b488    0x1  Data  Gb  main.o [1]
+pins                    0x20006e6c   0xd8  Data  Gb  main.o [1]
+printf                  0x20004d98   0x40  Code  Gb  printf.o [3]
+putchar                 0x2000715c    0x8  Code  Gb  printf_usart.o [1]
+resetHandler            0x20000000         Code  Gb  board_cstartup_iar.o [1]
+resetVector             0x00200000         Code  Gb  board_cstartup_iar.o [1]
+spid                    0x2000b3b4   0x10  Data  Gb  SPI_FUN.o [1]
+stop_time               0x2000b440    0x4  Data  Gb  LED_Display.o [1]
+strchr                  0x20005ca4         Code  Gb  strchr.o [4]
+strlen                  0x20005cc4         Code  Gb  strlen.o [4]
+strncmp                 0x20002b74   0x44  Code  Gb  strncmp.o [3]
+syslock_o               0x2000b2ec    0x4  Data  Lc  xsyslock.o [3]
+
+
+[1] = C:\Users\JDS_Retina\Dropbox\회사\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\ARM_AT91sam7se512_Dagu_LED\at91sam7se-ek\basic-usart-hw-handshaking-project\ewp\at91sam7se512_sdram\Obj
+[2] = command line
+[3] = dl4t_alf.a
+[4] = rt4t_al.a
+[5] = shs_l.a
+
+  28 496 bytes of readonly  code memory
+     136 bytes of readwrite code memory
+   1 240 bytes of readonly  data memory
+  16 302 bytes of readwrite data memory
+
+Errors: none
+Warnings: none

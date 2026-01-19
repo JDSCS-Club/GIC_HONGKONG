@@ -1,0 +1,933 @@
+###############################################################################
+#                                                                             #
+# IAR ANSI C/C++ Compiler V6.30.6.53336/W32 for ARM     29/Apr/2013  12:37:19 #
+# Copyright 1999-2012 IAR Systems AB.                                         #
+#                                                                             #
+#    Cpu mode     =  arm                                                      #
+#    Endian       =  little                                                   #
+#    Source file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\at45d.c            #
+#    Command line =  "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91lib\memories\spi-flash\at45d.c" -D        #
+#                    at91sam7se512 -D sram -D TRACE_LEVEL=4 -lC               #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\" --remarks              #
+#                    --diag_suppress Pe826,Pe1375 -o                          #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\" --no_cse --no_unroll    #
+#                    --no_inline --no_code_motion --no_tbaa --no_clustering   #
+#                    --no_scheduling --debug --endian=little --cpu=ARM7TDMI   #
+#                    -e --fpu=None --dlib_config "C:\Program Files\IAR        #
+#                    Systems\Embedded Workbench 6.0\arm\INC\c\DLib_Config_Ful #
+#                    l.h" -I "C:\Users\JDS\Desktop\JDS_PRO\국내               #
+#                    프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaki #
+#                    ng-project-at91sam7se-ek\at91sam7se-ek\basic-usart-hw-ha #
+#                    ndshaking-project\ewp\..\..\..\at91lib/peripherals\" -I  #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib\" -I                            #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/components\" -I                 #
+#                    "C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구         #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\..\..\..\at91lib/boards/at91sam7se-ek\"          #
+#                    --interwork --cpu_mode arm -Oh --use_c++_inline          #
+#    List file    =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\List\at45d.lst                #
+#    Object file  =  C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구          #
+#                    모노레일\프로그램\basic-usart-hw-handshaking-project-at9 #
+#                    1sam7se-ek\at91sam7se-ek\basic-usart-hw-handshaking-proj #
+#                    ect\ewp\at91sam7se512_sram\Obj\at45d.o                   #
+#                                                                             #
+#                                                                             #
+###############################################################################
+
+C:\Users\JDS\Desktop\JDS_PRO\국내 프로젝트\대구 모노레일\프로그램\basic-usart-hw-handshaking-project-at91sam7se-ek\at91lib\memories\spi-flash\at45d.c
+      1          /* ----------------------------------------------------------------------------
+      2           *         ATMEL Microcontroller Software Support 
+      3           * ----------------------------------------------------------------------------
+      4           * Copyright (c) 2008, Atmel Corporation
+      5           *
+      6           * All rights reserved.
+      7           *
+      8           * Redistribution and use in source and binary forms, with or without
+      9           * modification, are permitted provided that the following conditions are met:
+     10           *
+     11           * - Redistributions of source code must retain the above copyright notice,
+     12           * this list of conditions and the disclaimer below.
+     13           *
+     14           * Atmel's name may not be used to endorse or promote products derived from
+     15           * this software without specific prior written permission.
+     16           *
+     17           * DISCLAIMER: THIS SOFTWARE IS PROVIDED BY ATMEL "AS IS" AND ANY EXPRESS OR
+     18           * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+     19           * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT ARE
+     20           * DISCLAIMED. IN NO EVENT SHALL ATMEL BE LIABLE FOR ANY DIRECT, INDIRECT,
+     21           * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+     22           * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+     23           * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+     24           * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+     25           * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+     26           * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+     27           * ----------------------------------------------------------------------------
+     28           */
+     29          
+     30          //------------------------------------------------------------------------------
+     31          //         Headers
+     32          //------------------------------------------------------------------------------
+     33          
+     34          #include "at45.h"
+     35          #include "at45d.h"
+     36          #include <board.h>
+     37          #include <utility/assert.h>
+     38          
+     39          //------------------------------------------------------------------------------
+     40          //         Local functions
+     41          //------------------------------------------------------------------------------
+     42          
+     43          //------------------------------------------------------------------------------
+     44          /// Wait for transfer to finish calling the SPI driver ISR (interrupts are
+     45          /// disabled).
+     46          /// \param pAt45  Pointer to an AT45 driver instance.
+     47          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     48          static void AT45D_Wait(At45 *pAt45)
+     49          {
+   \                     AT45D_Wait:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     50              SANITY_CHECK(pAt45);
+   \   00000008   0x1A000008         BNE      ??AT45D_Wait_0
+   \   0000000C   0x........         LDR      R0,??DataTable4
+   \   00000010   0x........         BL       printf
+   \   00000014   0xE3A02032         MOV      R2,#+50
+   \   00000018   0x........         LDR      R1,??DataTable4_1
+   \   0000001C   0x........         LDR      R0,??DataTable4_2
+   \   00000020   0x........         BL       printf
+   \                     ??AT45D_Wait_1:
+   \   00000024   0xEAFFFFFE         B        ??AT45D_Wait_1
+     51          
+     52              // Wait for transfer to finish
+     53              while (AT45_IsBusy(pAt45)) {
+     54              
+     55                  SPID_Handler(pAt45->pSpid);
+   \                     ??AT45D_Wait_2:
+   \   00000028   0xE5940000         LDR      R0,[R4, #+0]
+   \   0000002C   0x........         BL       SPID_Handler
+     56              }
+   \                     ??AT45D_Wait_0:
+   \   00000030   0xE1A00004         MOV      R0,R4
+   \   00000034   0x........         BL       AT45_IsBusy
+   \   00000038   0xE3500000         CMP      R0,#+0
+   \   0000003C   0x1AFFFFF9         BNE      ??AT45D_Wait_2
+     57          }
+   \   00000040   0x........         B        ??Subroutine0_0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine0:
+   \   00000000   0xE28DD018         ADD      SP,SP,#+24       ;; stack cleaning
+   \                     ??Subroutine0_0:
+   \   00000004   0xE8BD4010         POP      {R4,LR}
+   \   00000008   0xE12FFF1E         BX       LR               ;; return
+     58          
+     59          
+     60          //------------------------------------------------------------------------------
+     61          //         Global functions
+     62          //------------------------------------------------------------------------------
+     63          
+     64          //------------------------------------------------------------------------------
+     65          /// Waits for the At45 to be ready to accept new commands.
+     66          /// \param pAt45  Pointer to a At45 driver instance.
+     67          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     68          void AT45D_WaitReady(At45 *pAt45) 
+     69          {
+   \                     AT45D_WaitReady:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE1B04000         MOVS     R4,R0
+     70              unsigned char ready = 0;
+     71          
+     72              SANITY_CHECK(pAt45);
+   \   00000008   0x1A000006         BNE      ??AT45D_WaitReady_0
+   \   0000000C   0x........         LDR      R0,??DataTable4
+   \   00000010   0x........         BL       printf
+   \   00000014   0xE3A02048         MOV      R2,#+72
+   \   00000018   0x........         LDR      R1,??DataTable4_1
+   \   0000001C   0x........         LDR      R0,??DataTable4_2
+   \   00000020   0x........         BL       printf
+   \                     ??AT45D_WaitReady_1:
+   \   00000024   0xEAFFFFFE         B        ??AT45D_WaitReady_1
+     73          
+     74              // Poll device until it is ready
+     75              while (!ready) {
+     76          
+     77                  ready = AT45_STATUS_READY(AT45D_GetStatus(pAt45));
+   \                     ??AT45D_WaitReady_0:
+   \   00000028   0xE1A00004         MOV      R0,R4
+   \   0000002C   0x........         BL       AT45D_GetStatus
+   \   00000030   0xE3100080         TST      R0,#0x80
+   \   00000034   0x0AFFFFFB         BEQ      ??AT45D_WaitReady_0
+     78              }
+     79          }
+   \   00000038   0x........         B        ??Subroutine0_0
+     80          
+     81          //------------------------------------------------------------------------------
+     82          /// Retrieves and returns the At45 current status, or 0 if an error
+     83          /// happened.
+     84          /// \param pAt45  Pointer to a At45 driver instance.
+     85          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+     86          unsigned char AT45D_GetStatus(At45 *pAt45)
+     87          {
+   \                     AT45D_GetStatus:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD018         SUB      SP,SP,#+24
+   \   00000008   0xE1B04000         MOVS     R4,R0
+     88              unsigned char error;
+     89              unsigned char status;
+     90          
+     91              SANITY_CHECK(pAt45);
+   \   0000000C   0x1A000006         BNE      ??AT45D_GetStatus_0
+   \   00000010   0x........         LDR      R0,??DataTable4
+   \   00000014   0x........         BL       printf
+   \   00000018   0xE3A0205B         MOV      R2,#+91
+   \   0000001C   0x........         LDR      R1,??DataTable4_1
+   \   00000020   0x........         LDR      R0,??DataTable4_2
+   \   00000024   0x........         BL       printf
+   \                     ??AT45D_GetStatus_1:
+   \   00000028   0xEAFFFFFE         B        ??AT45D_GetStatus_1
+     92          
+     93              // Issue a status register read command
+     94              error = AT45_SendCommand(pAt45, AT45_STATUS_READ, 1, &status, 1, 0, 0, 0);
+     95              ASSERT(!error, "-F- AT45_GetStatus: Failed to issue command.\n\r");
+   \                     ??AT45D_GetStatus_0:
+   \   0000002C   0xE3A00000         MOV      R0,#+0
+   \   00000030   0xE58D000C         STR      R0,[SP, #+12]
+   \   00000034   0xE58D0008         STR      R0,[SP, #+8]
+   \   00000038   0xE58D0004         STR      R0,[SP, #+4]
+   \   0000003C   0xE3A00001         MOV      R0,#+1
+   \   00000040   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000044   0xE28D3010         ADD      R3,SP,#+16
+   \   00000048   0xE3A02001         MOV      R2,#+1
+   \   0000004C   0xE3A010D7         MOV      R1,#+215
+   \   00000050   0xE1A00004         MOV      R0,R4
+   \   00000054   0x........         BL       AT45_SendCommand
+   \   00000058   0xE3500000         CMP      R0,#+0
+   \   0000005C   0x0A000006         BEQ      ??AT45D_GetStatus_2
+   \   00000060   0x........         LDR      R0,??DataTable4
+   \   00000064   0x........         BL       printf
+   \   00000068   0x........         LDR      R0,??DataTable4_3
+   \   0000006C   0x........         BL       printf
+   \                     ??AT45D_GetStatus_3:
+   \   00000070   0xEAFFFFFE         B        ??AT45D_GetStatus_3
+     96          
+     97              // Wait for command to terminate
+     98              while (AT45_IsBusy(pAt45)) {
+     99              
+    100                  AT45D_Wait(pAt45);
+   \                     ??AT45D_GetStatus_4:
+   \   00000074   0xE1A00004         MOV      R0,R4
+   \   00000078   0x........         BL       AT45D_Wait
+    101              }
+   \                     ??AT45D_GetStatus_2:
+   \   0000007C   0xE1A00004         MOV      R0,R4
+   \   00000080   0x........         BL       AT45_IsBusy
+   \   00000084   0xE3500000         CMP      R0,#+0
+   \   00000088   0x1AFFFFF9         BNE      ??AT45D_GetStatus_4
+    102          
+    103              return status;
+   \   0000008C   0xE5DD0010         LDRB     R0,[SP, #+16]
+   \   00000090   0x........         B        ?Subroutine0
+    104          }
+    105          
+    106          //------------------------------------------------------------------------------
+    107          /// Reads data from the At45 inside the provided buffer. Since a continuous
+    108          /// read command is used, there is no restriction on the buffer size and read
+    109          /// address.
+    110          /// \param pAt45  Pointer to a At45 driver instance.
+    111          /// \param pBuffer  Data buffer.
+    112          /// \param size  Number of bytes to read.
+    113          /// \param address  Address at which data shall be read.
+    114          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    115          void AT45D_Read(
+    116              At45 *pAt45,
+    117              unsigned char *pBuffer,
+    118              unsigned int size,
+    119              unsigned int address) 
+    120          {
+   \                     AT45D_Read:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD010         SUB      SP,SP,#+16
+   \   00000008   0xE1B04000         MOVS     R4,R0
+    121              unsigned char error;
+    122          
+    123              SANITY_CHECK(pAt45);
+   \   0000000C   0x1A000006         BNE      ??AT45D_Read_0
+   \   00000010   0x........         LDR      R0,??DataTable4
+   \   00000014   0x........         BL       printf
+   \   00000018   0xE3A0207B         MOV      R2,#+123
+   \   0000001C   0x........         LDR      R1,??DataTable4_1
+   \   00000020   0x........         LDR      R0,??DataTable4_2
+   \   00000024   0x........         BL       printf
+   \                     ??AT45D_Read_1:
+   \   00000028   0xEAFFFFFE         B        ??AT45D_Read_1
+    124              SANITY_CHECK(pBuffer);
+   \                     ??AT45D_Read_0:
+   \   0000002C   0xE3510000         CMP      R1,#+0
+   \   00000030   0x1A000006         BNE      ??AT45D_Read_2
+   \   00000034   0x........         LDR      R0,??DataTable4
+   \   00000038   0x........         BL       printf
+   \   0000003C   0xE3A0207C         MOV      R2,#+124
+   \   00000040   0x........         LDR      R1,??DataTable4_1
+   \   00000044   0x........         LDR      R0,??DataTable4_2
+   \   00000048   0x........         BL       printf
+   \                     ??AT45D_Read_3:
+   \   0000004C   0xEAFFFFFE         B        ??AT45D_Read_3
+    125          
+    126              // Issue a continuous read array command
+    127              error = AT45_SendCommand(pAt45, AT45_CONTINUOUS_READ_LEG, 8, pBuffer, size, address, 0, 0);
+    128              ASSERT(!error, "-F- AT45_Read: Failed to issue command\n\r");
+   \                     ??AT45D_Read_2:
+   \   00000050   0xE3A00000         MOV      R0,#+0
+   \   00000054   0xE58D000C         STR      R0,[SP, #+12]
+   \   00000058   0xE58D0008         STR      R0,[SP, #+8]
+   \   0000005C   0xE58D3004         STR      R3,[SP, #+4]
+   \   00000060   0xE58D2000         STR      R2,[SP, #+0]
+   \   00000064   0xE1A03001         MOV      R3,R1
+   \   00000068   0xE3A02008         MOV      R2,#+8
+   \   0000006C   0xE3A010E8         MOV      R1,#+232
+   \   00000070   0xE1A00004         MOV      R0,R4
+   \   00000074   0x........         BL       AT45_SendCommand
+   \   00000078   0xE3500000         CMP      R0,#+0
+   \   0000007C   0x0A000006         BEQ      ??AT45D_Read_4
+   \   00000080   0x........         LDR      R0,??DataTable4
+   \   00000084   0x........         BL       printf
+   \   00000088   0x........         LDR      R0,??DataTable4_4
+   \   0000008C   0x........         BL       printf
+   \                     ??AT45D_Read_5:
+   \   00000090   0xEAFFFFFE         B        ??AT45D_Read_5
+    129          
+    130              // Wait for the read command to execute
+    131              while (AT45_IsBusy(pAt45)) {
+    132              
+    133                  AT45D_Wait(pAt45);
+   \                     ??AT45D_Read_6:
+   \   00000094   0xE1A00004         MOV      R0,R4
+   \   00000098   0x........         BL       AT45D_Wait
+    134              }
+   \                     ??AT45D_Read_4:
+   \   0000009C   0xE1A00004         MOV      R0,R4
+   \   000000A0   0x........         BL       AT45_IsBusy
+   \   000000A4   0xE3500000         CMP      R0,#+0
+   \   000000A8   0x1AFFFFF9         BNE      ??AT45D_Read_6
+    135          }
+   \   000000AC   0xE28DD010         ADD      SP,SP,#+16       ;; stack cleaning
+   \   000000B0   0x........         B        ??Subroutine0_0
+    136          
+    137          //------------------------------------------------------------------------------
+    138          /// Writes data on the At45 at the specified address. Only one page of
+    139          /// data is written that way; if the address is not at the beginning of the
+    140          /// page, the data is written starting from this address and wraps around to
+    141          /// the beginning of the page.
+    142          /// \param pAt45  Pointer to a At45 driver instance.
+    143          /// \param pBuffer  Buffer containing the data to write.
+    144          /// \param size  Number of bytes to write.
+    145          /// \param address  Destination address on the At45.
+    146          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    147          void AT45D_Write(
+    148              At45 *pAt45,
+    149              unsigned char *pBuffer,
+    150              unsigned int size,
+    151              unsigned int address) 
+    152          {
+   \                     AT45D_Write:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD010         SUB      SP,SP,#+16
+   \   00000008   0xE1B04000         MOVS     R4,R0
+    153              unsigned char error;
+    154          
+    155              SANITY_CHECK(pAt45);
+   \   0000000C   0x1A000006         BNE      ??AT45D_Write_0
+   \   00000010   0x........         LDR      R0,??DataTable4
+   \   00000014   0x........         BL       printf
+   \   00000018   0xE3A0209B         MOV      R2,#+155
+   \   0000001C   0x........         LDR      R1,??DataTable4_1
+   \   00000020   0x........         LDR      R0,??DataTable4_2
+   \   00000024   0x........         BL       printf
+   \                     ??AT45D_Write_1:
+   \   00000028   0xEAFFFFFE         B        ??AT45D_Write_1
+    156              SANITY_CHECK(pBuffer);
+   \                     ??AT45D_Write_0:
+   \   0000002C   0xE3510000         CMP      R1,#+0
+   \   00000030   0x1A000006         BNE      ??AT45D_Write_2
+   \   00000034   0x........         LDR      R0,??DataTable4
+   \   00000038   0x........         BL       printf
+   \   0000003C   0xE3A0209C         MOV      R2,#+156
+   \   00000040   0x........         LDR      R1,??DataTable4_1
+   \   00000044   0x........         LDR      R0,??DataTable4_2
+   \   00000048   0x........         BL       printf
+   \                     ??AT45D_Write_3:
+   \   0000004C   0xEAFFFFFE         B        ??AT45D_Write_3
+    157              SANITY_CHECK(size <= pAt45->pDesc->pageSize);
+   \                     ??AT45D_Write_2:
+   \   00000050   0xE594001C         LDR      R0,[R4, #+28]
+   \   00000054   0xE5900008         LDR      R0,[R0, #+8]
+   \   00000058   0xE1500002         CMP      R0,R2
+   \   0000005C   0x2A000006         BCS      ??AT45D_Write_4
+   \   00000060   0x........         LDR      R0,??DataTable4
+   \   00000064   0x........         BL       printf
+   \   00000068   0xE3A0209D         MOV      R2,#+157
+   \   0000006C   0x........         LDR      R1,??DataTable4_1
+   \   00000070   0x........         LDR      R0,??DataTable4_2
+   \   00000074   0x........         BL       printf
+   \                     ??AT45D_Write_5:
+   \   00000078   0xEAFFFFFE         B        ??AT45D_Write_5
+    158          
+    159              // Issue a page write through buffer 1 command
+    160              error = AT45_SendCommand(pAt45, AT45_PAGE_WRITE_BUF1, 4, pBuffer, size, address, 0, 0);
+    161              ASSERT(!error, "-F- AT45_Write: Could not issue command.\n\r");
+   \                     ??AT45D_Write_4:
+   \   0000007C   0xE3A00000         MOV      R0,#+0
+   \   00000080   0xE58D000C         STR      R0,[SP, #+12]
+   \   00000084   0xE58D0008         STR      R0,[SP, #+8]
+   \   00000088   0xE58D3004         STR      R3,[SP, #+4]
+   \   0000008C   0xE58D2000         STR      R2,[SP, #+0]
+   \   00000090   0xE1A03001         MOV      R3,R1
+   \   00000094   0xE3A02004         MOV      R2,#+4
+   \   00000098   0xE3A01082         MOV      R1,#+130
+   \   0000009C   0xE1A00004         MOV      R0,R4
+   \   000000A0   0x........         BL       AT45_SendCommand
+   \   000000A4   0xE3500000         CMP      R0,#+0
+   \   000000A8   0x0A000005         BEQ      ??AT45D_Write_6
+   \   000000AC   0x........         LDR      R0,??DataTable4
+   \   000000B0   0x........         BL       printf
+   \   000000B4   0x........         LDR      R0,??DataTable4_5
+   \   000000B8   0x........         BL       printf
+   \                     ??AT45D_Write_7:
+   \   000000BC   0xEAFFFFFE         B        ??AT45D_Write_7
+    162          
+    163              // Wait until the command is sent
+    164              while (AT45_IsBusy(pAt45)) {
+    165              
+    166                  AT45D_Wait(pAt45);
+   \                     ??AT45D_Write_8:
+   \   000000C0   0x........         BL       AT45D_Wait
+    167              }
+   \                     ??AT45D_Write_6:
+   \   000000C4   0xE1A00004         MOV      R0,R4
+   \   000000C8   0x........         BL       AT45_IsBusy
+   \   000000CC   0xE3500000         CMP      R0,#+0
+   \   000000D0   0xE1A00004         MOV      R0,R4
+   \   000000D4   0x1AFFFFF9         BNE      ??AT45D_Write_8
+    168          
+    169              // Wait until the At45 becomes ready again
+    170              AT45D_WaitReady(pAt45);
+   \   000000D8   0x........         B        ?Subroutine1
+    171          }
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ?Subroutine1:
+   \   00000000   0xE28DD010         ADD      SP,SP,#+16       ;; stack cleaning
+   \   00000004   0xE8BD4010         POP      {R4,LR}
+   \   00000008   0x........         B        AT45D_WaitReady  ;; tailcall
+    172          
+    173          //------------------------------------------------------------------------------
+    174          /// Erases a page of data at the given address in the At45.
+    175          /// \param pAt45  Pointer to a At45 driver instance.
+    176          /// \param address  Address of page to erase.
+    177          //------------------------------------------------------------------------------
+
+   \                                 In section .text, align 4, keep-with-next
+    178          void AT45D_Erase(At45 *pAt45, unsigned int address) 
+    179          {
+   \                     AT45D_Erase:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD010         SUB      SP,SP,#+16
+   \   00000008   0xE1B04000         MOVS     R4,R0
+    180              unsigned char error;
+    181          
+    182              SANITY_CHECK(pAt45);
+   \   0000000C   0x1A000006         BNE      ??AT45D_Erase_0
+   \   00000010   0xE59F0058         LDR      R0,??AT45D_Erase_1
+   \   00000014   0x........         BL       printf
+   \   00000018   0xE3A020B6         MOV      R2,#+182
+   \   0000001C   0xE59F1050         LDR      R1,??AT45D_Erase_1+0x4
+   \   00000020   0xE59F0050         LDR      R0,??AT45D_Erase_1+0x8
+   \   00000024   0x........         BL       printf
+   \                     ??AT45D_Erase_2:
+   \   00000028   0xEAFFFFFE         B        ??AT45D_Erase_2
+    183          
+    184              // Issue a page erase command.
+    185              error = AT45_SendCommand(pAt45, AT45_PAGE_ERASE, 4, 0, 0, address, 0, 0);
+    186              ASSERT(!error, "-F- AT45_Erase: Could not issue command.\n\r");
+   \                     ??AT45D_Erase_0:
+   \   0000002C   0xE3A00000         MOV      R0,#+0
+   \   00000030   0xE58D000C         STR      R0,[SP, #+12]
+   \   00000034   0xE58D0008         STR      R0,[SP, #+8]
+   \   00000038   0xE58D1004         STR      R1,[SP, #+4]
+   \   0000003C   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000040   0xE3A03000         MOV      R3,#+0
+   \   00000044   0xE3A02004         MOV      R2,#+4
+   \   00000048   0xE3A01081         MOV      R1,#+129
+   \   0000004C   0xE1A00004         MOV      R0,R4
+   \   00000050   0x........         BL       AT45_SendCommand
+   \   00000054   0xE3500000         CMP      R0,#+0
+   \   00000058   0x0A000009         BEQ      ??AT45D_Erase_3
+   \   0000005C   0xE59F000C         LDR      R0,??AT45D_Erase_1
+   \   00000060   0x........         BL       printf
+   \   00000064   0xE59F0010         LDR      R0,??AT45D_Erase_1+0xC
+   \   00000068   0x........         BL       printf
+   \                     ??AT45D_Erase_4:
+   \   0000006C   0xEAFFFFFE         B        ??AT45D_Erase_4
+   \                     ??AT45D_Erase_1:
+   \   00000070   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+   \   00000074   0x........         DC32     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`
+   \   00000078   0x........         DC32     `?<Constant "Sanity check failed a...">`
+   \   0000007C   0x........         DC32     `?<Constant "-F- AT45_Erase: Could...">`
+    187          
+    188              // Wait for end of transfer
+    189              while (AT45_IsBusy(pAt45)) {
+    190              
+    191                  AT45D_Wait(pAt45);
+   \                     ??AT45D_Erase_5:
+   \   00000080   0x........         BL       AT45D_Wait
+    192              }
+   \                     ??AT45D_Erase_3:
+   \   00000084   0xE1A00004         MOV      R0,R4
+   \   00000088   0x........         BL       AT45_IsBusy
+   \   0000008C   0xE3500000         CMP      R0,#+0
+   \   00000090   0xE1A00004         MOV      R0,R4
+   \   00000094   0x1AFFFFF9         BNE      ??AT45D_Erase_5
+    193          
+    194              // Poll until the At45 has completed the erase operation
+    195              AT45D_WaitReady(pAt45);
+   \   00000098                      REQUIRE ?Subroutine1
+   \   00000098                      ;; // Fall through to label ?Subroutine1
+    196          }
+    197          
+    198          //------------------------------------------------------------------------------
+    199          /// Configure power-of-2 binary page size in the At45.
+    200          /// \param pAt45  Pointer to a At45 driver instance.
+    201          //------------------------------------------------------------------------------
+    202          
+
+   \                                 In section .text, align 4, keep-with-next
+    203          void AT45D_BinaryPage(At45 *pAt45) 
+    204          {
+   \                     AT45D_BinaryPage:
+   \   00000000   0xE92D4010         PUSH     {R4,LR}
+   \   00000004   0xE24DD018         SUB      SP,SP,#+24
+   \   00000008   0xE1B04000         MOVS     R4,R0
+    205              unsigned char error;
+    206              unsigned char opcode[3]= {AT45_BINARY_PAGE};
+   \   0000000C   0xE28D0010         ADD      R0,SP,#+16
+   \   00000010   0xE59F106C         LDR      R1,??AT45D_BinaryPage_0
+   \   00000014   0xE5912000         LDR      R2,[R1, #0]
+   \   00000018   0xE5802000         STR      R2,[R0, #+0]
+    207              SANITY_CHECK(pAt45);
+   \   0000001C   0x1A000006         BNE      ??AT45D_BinaryPage_1
+   \   00000020   0xE59F0060         LDR      R0,??AT45D_BinaryPage_0+0x4
+   \   00000024   0x........         BL       printf
+   \   00000028   0xE3A020CF         MOV      R2,#+207
+   \   0000002C   0xE59F1058         LDR      R1,??AT45D_BinaryPage_0+0x8
+   \   00000030   0xE59F0058         LDR      R0,??AT45D_BinaryPage_0+0xC
+   \   00000034   0x........         BL       printf
+   \                     ??AT45D_BinaryPage_2:
+   \   00000038   0xEAFFFFFE         B        ??AT45D_BinaryPage_2
+    208          
+    209              // Issue a binary page command.
+    210          
+    211              error = AT45_SendCommand(pAt45, AT45_BINARY_PAGE_FIRST_OPCODE, 1, opcode, 3, 0, 0, 0);
+    212             
+    213              ASSERT(!error, "-F- AT45_Erase: Could not issue command.\n\r");
+   \                     ??AT45D_BinaryPage_1:
+   \   0000003C   0xE3A00000         MOV      R0,#+0
+   \   00000040   0xE58D000C         STR      R0,[SP, #+12]
+   \   00000044   0xE58D0008         STR      R0,[SP, #+8]
+   \   00000048   0xE58D0004         STR      R0,[SP, #+4]
+   \   0000004C   0xE3A00003         MOV      R0,#+3
+   \   00000050   0xE58D0000         STR      R0,[SP, #+0]
+   \   00000054   0xE28D3010         ADD      R3,SP,#+16
+   \   00000058   0xE3A02001         MOV      R2,#+1
+   \   0000005C   0xE3A0103D         MOV      R1,#+61
+   \   00000060   0xE1A00004         MOV      R0,R4
+   \   00000064   0x........         BL       AT45_SendCommand
+   \   00000068   0xE3500000         CMP      R0,#+0
+   \   0000006C   0x0A00000A         BEQ      ??AT45D_BinaryPage_3
+   \   00000070   0xE59F0010         LDR      R0,??AT45D_BinaryPage_0+0x4
+   \   00000074   0x........         BL       printf
+   \   00000078   0xE59F0014         LDR      R0,??AT45D_BinaryPage_0+0x10
+   \   0000007C   0x........         BL       printf
+   \                     ??AT45D_BinaryPage_4:
+   \   00000080   0xEAFFFFFE         B        ??AT45D_BinaryPage_4
+   \                     ??AT45D_BinaryPage_0:
+   \   00000084   0x........         DC32     `?<Constant {42, 128, 166}>`
+   \   00000088   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+   \   0000008C   0x........         DC32     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`
+   \   00000090   0x........         DC32     `?<Constant "Sanity check failed a...">`
+   \   00000094   0x........         DC32     `?<Constant "-F- AT45_Erase: Could...">`
+    214          
+    215              // Wait for end of transfer
+    216              while (AT45_IsBusy(pAt45)) {
+    217              
+    218                  AT45D_Wait(pAt45);
+   \                     ??AT45D_BinaryPage_5:
+   \   00000098   0x........         BL       AT45D_Wait
+    219              }
+   \                     ??AT45D_BinaryPage_3:
+   \   0000009C   0xE1A00004         MOV      R0,R4
+   \   000000A0   0x........         BL       AT45_IsBusy
+   \   000000A4   0xE3500000         CMP      R0,#+0
+   \   000000A8   0xE1A00004         MOV      R0,R4
+   \   000000AC   0x1AFFFFF9         BNE      ??AT45D_BinaryPage_5
+    220          
+    221              // Wait until the At45 becomes ready again
+    222              AT45D_WaitReady(pAt45);
+   \   000000B0   0x........         BL       AT45D_WaitReady
+    223          }
+   \   000000B4                      REQUIRE ?Subroutine0
+   \   000000B4                      ;; // Fall through to label ?Subroutine0
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4:
+   \   00000000   0x........         DC32     `?<Constant "-F- ASSERT: ">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_1:
+   \   00000000   0x........         DC32     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_2:
+   \   00000000   0x........         DC32     `?<Constant "Sanity check failed a...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_3:
+   \   00000000   0x........         DC32     `?<Constant "-F- AT45_GetStatus: F...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_4:
+   \   00000000   0x........         DC32     `?<Constant "-F- AT45_Read: Failed...">`
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable4_5:
+   \   00000000   0x........         DC32     `?<Constant "-F- AT45_Write: Could...">`
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- ASSERT: ">`:
+   \   00000000   0x2D 0x46          DC8 "-F- ASSERT: "
+   \              0x2D 0x20    
+   \              0x41 0x53    
+   \              0x53 0x45    
+   \              0x52 0x54    
+   \              0x3A 0x20    
+   \              0x00         
+   \   0000000D   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "Sanity check failed a...">`:
+   \   00000000   0x53 0x61          DC8 "Sanity check failed at %s:%d\012\015"
+   \              0x6E 0x69    
+   \              0x74 0x79    
+   \              0x20 0x63    
+   \              0x68 0x65    
+   \              0x63 0x6B    
+   \              0x20 0x66    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x61 0x74    
+   \              0x20 0x25    
+   \              0x73 0x3A    
+   \              0x25 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000001F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "C:\\\\Users\\\\JDS\\\\Desktop\\\\...">`:
+   \   00000000   0x43 0x3A          DC8 43H, 3AH, 5CH, 55H, 73H, 65H, 72H, 73H
+   \              0x5C 0x55    
+   \              0x73 0x65    
+   \              0x72 0x73    
+   \   00000008   0x5C 0x4A          DC8 5CH, 4AH, 44H, 53H, 5CH, 44H, 65H, 73H
+   \              0x44 0x53    
+   \              0x5C 0x44    
+   \              0x65 0x73    
+   \   00000010   0x6B 0x74          DC8 6BH, 74H, 6FH, 70H, 5CH, 4AH, 44H, 53H
+   \              0x6F 0x70    
+   \              0x5C 0x4A    
+   \              0x44 0x53    
+   \   00000018   0x5F 0x50          DC8 5FH, 50H, 52H, 4FH, 5CH, 0B1H, 0B9H, 0B3H
+   \              0x52 0x4F    
+   \              0x5C 0xB1    
+   \              0xB9 0xB3    
+   \   00000020   0xBB 0x20          DC8 0BBH, 20H, 0C7H, 0C1H, 0B7H, 0CEH, 0C1H, 0A7H
+   \              0xC7 0xC1    
+   \              0xB7 0xCE    
+   \              0xC1 0xA7    
+   \   00000028   0xC6 0xAE          DC8 0C6H, 0AEH, 5CH, 0B4H, 0EBH, 0B1H, 0B8H, 20H
+   \              0x5C 0xB4    
+   \              0xEB 0xB1    
+   \              0xB8 0x20    
+   \   00000030   0xB8 0xF0          DC8 0B8H, 0F0H, 0B3H, 0EBH, 0B7H, 0B9H, 0C0H, 0CFH
+   \              0xB3 0xEB    
+   \              0xB7 0xB9    
+   \              0xC0 0xCF    
+   \   00000038   0x5C 0xC7          DC8 5CH, 0C7H, 0C1H, 0B7H, 0CEH, 0B1H, 0D7H, 0B7H
+   \              0xC1 0xB7    
+   \              0xCE 0xB1    
+   \              0xD7 0xB7    
+   \   00000040   0xA5 0x5C          DC8 0A5H, 5CH, 62H, 61H, 73H, 69H, 63H, 2DH
+   \              0x62 0x61    
+   \              0x73 0x69    
+   \              0x63 0x2D    
+   \   00000048   0x75 0x73          DC8 75H, 73H, 61H, 72H, 74H, 2DH, 68H, 77H
+   \              0x61 0x72    
+   \              0x74 0x2D    
+   \              0x68 0x77    
+   \   00000050   0x2D 0x68          DC8 2DH, 68H, 61H, 6EH, 64H, 73H, 68H, 61H
+   \              0x61 0x6E    
+   \              0x64 0x73    
+   \              0x68 0x61    
+   \   00000058   0x6B 0x69          DC8 6BH, 69H, 6EH, 67H, 2DH, 70H, 72H, 6FH
+   \              0x6E 0x67    
+   \              0x2D 0x70    
+   \              0x72 0x6F    
+   \   00000060   0x6A 0x65          DC8 6AH, 65H, 63H, 74H, 2DH, 61H, 74H, 39H
+   \              0x63 0x74    
+   \              0x2D 0x61    
+   \              0x74 0x39    
+   \   00000068   0x31 0x73          DC8 31H, 73H, 61H, 6DH, 37H, 73H, 65H, 2DH
+   \              0x61 0x6D    
+   \              0x37 0x73    
+   \              0x65 0x2D    
+   \   00000070   0x65 0x6B          DC8 65H, 6BH, 5CH, 61H, 74H, 39H, 31H, 6CH
+   \              0x5C 0x61    
+   \              0x74 0x39    
+   \              0x31 0x6C    
+   \   00000078   0x69 0x62          DC8 69H, 62H, 5CH, 6DH, 65H, 6DH, 6FH, 72H
+   \              0x5C 0x6D    
+   \              0x65 0x6D    
+   \              0x6F 0x72    
+   \   00000080   0x69 0x65          DC8 69H, 65H, 73H, 5CH, 73H, 70H, 69H, 2DH
+   \              0x73 0x5C    
+   \              0x73 0x70    
+   \              0x69 0x2D    
+   \   00000088   0x66 0x6C          DC8 66H, 6CH, 61H, 73H, 68H, 5CH, 61H, 74H
+   \              0x61 0x73    
+   \              0x68 0x5C    
+   \              0x61 0x74    
+   \   00000090   0x34 0x35          DC8 34H, 35H, 64H, 2EH, 63H, 0
+   \              0x64 0x2E    
+   \              0x63 0x00    
+   \   00000096   0x00 0x00          DC8 0, 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- AT45_GetStatus: F...">`:
+   \   00000000   0x2D 0x46          DC8 "-F- AT45_GetStatus: Failed to issue command.\012\015"
+   \              0x2D 0x20    
+   \              0x41 0x54    
+   \              0x34 0x35    
+   \              0x5F 0x47    
+   \              0x65 0x74    
+   \              0x53 0x74    
+   \              0x61 0x74    
+   \              0x75 0x73    
+   \              0x3A 0x20    
+   \              0x46 0x61    
+   \              0x69 0x6C    
+   \              0x65 0x64    
+   \              0x20 0x74    
+   \              0x6F 0x20    
+   \              0x69 0x73    
+   \              0x73 0x75    
+   \              0x65 0x20    
+   \              0x63 0x6F    
+   \              0x6D 0x6D    
+   \              0x61 0x6E    
+   \              0x64 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002F   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- AT45_Read: Failed...">`:
+   \   00000000   0x2D 0x46          DC8 "-F- AT45_Read: Failed to issue command\012\015"
+   \              0x2D 0x20    
+   \              0x41 0x54    
+   \              0x34 0x35    
+   \              0x5F 0x52    
+   \              0x65 0x61    
+   \              0x64 0x3A    
+   \              0x20 0x46    
+   \              0x61 0x69    
+   \              0x6C 0x65    
+   \              0x64 0x20    
+   \              0x74 0x6F    
+   \              0x20 0x69    
+   \              0x73 0x73    
+   \              0x75 0x65    
+   \              0x20 0x63    
+   \              0x6F 0x6D    
+   \              0x6D 0x61    
+   \              0x6E 0x64    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   00000029   0x00 0x00          DC8 0, 0, 0
+   \              0x00         
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- AT45_Write: Could...">`:
+   \   00000000   0x2D 0x46          DC8 "-F- AT45_Write: Could not issue command.\012\015"
+   \              0x2D 0x20    
+   \              0x41 0x54    
+   \              0x34 0x35    
+   \              0x5F 0x57    
+   \              0x72 0x69    
+   \              0x74 0x65    
+   \              0x3A 0x20    
+   \              0x43 0x6F    
+   \              0x75 0x6C    
+   \              0x64 0x20    
+   \              0x6E 0x6F    
+   \              0x74 0x20    
+   \              0x69 0x73    
+   \              0x73 0x75    
+   \              0x65 0x20    
+   \              0x63 0x6F    
+   \              0x6D 0x6D    
+   \              0x61 0x6E    
+   \              0x64 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant "-F- AT45_Erase: Could...">`:
+   \   00000000   0x2D 0x46          DC8 "-F- AT45_Erase: Could not issue command.\012\015"
+   \              0x2D 0x20    
+   \              0x41 0x54    
+   \              0x34 0x35    
+   \              0x5F 0x45    
+   \              0x72 0x61    
+   \              0x73 0x65    
+   \              0x3A 0x20    
+   \              0x43 0x6F    
+   \              0x75 0x6C    
+   \              0x64 0x20    
+   \              0x6E 0x6F    
+   \              0x74 0x20    
+   \              0x69 0x73    
+   \              0x73 0x75    
+   \              0x65 0x20    
+   \              0x63 0x6F    
+   \              0x6D 0x6D    
+   \              0x61 0x6E    
+   \              0x64 0x2E    
+   \              0x0A 0x0D    
+   \              0x00         
+   \   0000002B   0x00               DC8 0
+
+   \                                 In section .rodata, align 4
+   \                     `?<Constant {42, 128, 166}>`:
+   \   00000000   0x2A 0x80          DC8 42, 128, 166, 0
+   \              0xA6 0x00    
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+       32  AT45D_BinaryPage
+             32 -> AT45D_Wait
+             32 -> AT45D_WaitReady
+             32 -> AT45_IsBusy
+             32 -> AT45_SendCommand
+             32 -> printf
+       24  AT45D_Erase
+             24 -> AT45D_Wait
+              0 -> AT45D_WaitReady
+             24 -> AT45_IsBusy
+             24 -> AT45_SendCommand
+             24 -> printf
+       32  AT45D_GetStatus
+             32 -> AT45D_Wait
+             32 -> AT45_IsBusy
+             32 -> AT45_SendCommand
+             32 -> printf
+       24  AT45D_Read
+             24 -> AT45D_Wait
+             24 -> AT45_IsBusy
+             24 -> AT45_SendCommand
+             24 -> printf
+        8  AT45D_Wait
+              8 -> AT45_IsBusy
+              8 -> SPID_Handler
+              8 -> printf
+        8  AT45D_WaitReady
+              8 -> AT45D_GetStatus
+              8 -> printf
+       24  AT45D_Write
+             24 -> AT45D_Wait
+              0 -> AT45D_WaitReady
+             24 -> AT45_IsBusy
+             24 -> AT45_SendCommand
+             24 -> printf
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      16  ?<Constant "-F- ASSERT: ">
+      44  ?<Constant "-F- AT45_Erase: Could...">
+      48  ?<Constant "-F- AT45_GetStatus: F...">
+      44  ?<Constant "-F- AT45_Read: Failed...">
+      44  ?<Constant "-F- AT45_Write: Could...">
+     152  ?<Constant "C:\\Users\\JDS\\Desktop\\...">
+      32  ?<Constant "Sanity check failed a...">
+       4  ?<Constant {42, 128, 166}>
+       4  ??DataTable4
+       4  ??DataTable4_1
+       4  ??DataTable4_2
+       4  ??DataTable4_3
+       4  ??DataTable4_4
+       4  ??DataTable4_5
+      12  ?Subroutine0
+      12  ?Subroutine1
+     180  AT45D_BinaryPage
+     152  AT45D_Erase
+     148  AT45D_GetStatus
+     180  AT45D_Read
+      68  AT45D_Wait
+      60  AT45D_WaitReady
+     220  AT45D_Write
+
+ 
+   384 bytes in section .rodata
+ 1 056 bytes in section .text
+ 
+ 1 056 bytes of CODE  memory
+   384 bytes of CONST memory
+
+Errors: none
+Warnings: none

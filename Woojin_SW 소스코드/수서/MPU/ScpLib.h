@@ -1,0 +1,296 @@
+/*******************************************************************/
+/* SCM2 BOARD HEADER                                               */
+/* -SCM2 Board와 관련된 정의는 여기서 기술한다.                    */
+/*******************************************************************/
+#ifndef _SCPLIB_H_
+#define _SCPLIB_H_
+
+#include "mmtype.h"
+
+/*********************************************************/
+/*	어드레스 맵                                          */
+/*********************************************************/
+#define SCM2A_BASE	0xF0F00000	/* 메인통신용 */
+#define SCM2B_BASE	0xF0F10000	/* 로컬통신용 */
+
+#define SCM2A_HEXA		(SCM2A_BASE)	/* SCM2A HEXA S/W */
+#define SCM2B_HEXA		(SCM2B_BASE)	/* SCM2B HEXA S/W */
+
+/*********************************************************/
+/*	일반 정의                                            */
+/*********************************************************/
+
+#define SCM_TXBYTES		514	/* 메인통신 TX 크기 */
+#define	SCM_RXBYTES		514	/* 메인통신 RX 크기 */
+
+#define SCM_MCOM_PACKET_WSIZE		265		/* 메인통신 DPRAM 의 WORD 크기 */
+#define SCM_MCOM_DBLOCK_WSIZE		257		/* 메인통신 DPRAM 구조중 데이터 블럭만의 크기 */
+#define SCM_TUCOM_PACKET_WSIZE		60		/* 메인통신을 가지고 있는 SCM 하부통신 DPRAM 의 WORD 크기 (Tiny USCOM)*/
+#define SCM_TUCOM_DBLOCK_WSIZE		56		/* 메인통신을 가지고 있는 SCM 하부통신 DPRAM 구조중 데이터 블럭만의 크기  (Tiny USCOM)*/
+#define SCM_USCOM_PACKET_WSIZE		300		/* 하부통신 DPRAM 의 WORD 크기 (ALL LCOM)*/
+#define SCM_USCOM_DBLOCK_WSIZE		296		/* 하부통신 DPRAM 구조중 데이터 블럭만의 크기  (ALL LCOM)*/
+#define SCM_LIUCOM_PACKET_WSIZE		210		/* LIU 통신 DPRAM 의 WORD 크기 */
+#define SCM_LIUCOM_DBLOCK_WSIZE		206		/* LIU 통신 DPRAM 구조중 데이터 블럭만의 크기 */
+
+#define SCM_TX_TOGGLE		0
+#define SCM_TX_SEND1		BIT00
+#define SCM_TX_SEND2		BIT01
+#define SCM_TX_UPDATED		BIT02
+
+
+/*********************************************************/
+/*	메인통신 어드레스 맵                                 */
+/*********************************************************/
+/* DPRAM 어드레스 */
+
+#define SCM_MCOM_TXSENDREG	(SCM2A_BASE+(32<<1))																/* SCM2A 송신 설정 */
+
+#define SCM2A_ICOM_TXSENDREG	(SCM2A_BASE+((32+SCM_MCOM_PACKET_WSIZE*12)<<1))									/* LIU1,2 INNER COM ADDRESS */
+#define SCM2A_TCOM_TXSENDREG	(SCM2A_BASE+((32+SCM_MCOM_PACKET_WSIZE*12+SCM_LIUCOM_PACKET_WSIZE*2)<<1))
+
+#define SCM2B_LCOM_TXSENDREG	(SCM2B_BASE+(32<<1))
+
+/* 중앙 로컬통신 구조 (Under System Comunication Structure: USCOM) */
+typedef struct
+{
+	USHORT wRxTxFlag;
+	USHORT bfEvent;	/* 통신형태: 0: Stop ,1 ~ 0xFE: 전송횟수 , 0xFF: 무한전송*/ /* 응답시간: 10 ~ 255ms */
+	USHORT wLen;		/* 길이: 0 ~ 255 */
+	USHORT wDataBlock[SCM_USCOM_DBLOCK_WSIZE];
+	USHORT wBcc;
+}UCOMCELL_HUGE_REGTYPE,*PUCOMCELL_HUGE_REGTYPE;
+
+typedef struct
+{
+	USHORT wRxTxFlag;
+	USHORT bfEvent;	/* 통신형태: 0: Stop ,1 ~ 0xFE: 전송횟수 , 0xFF: 무한전송*/ /* 응답시간: 10 ~ 255ms */
+	USHORT wLen;		/* 길이: 0 ~ 255 */
+	USHORT wDataBlock[SCM_LIUCOM_DBLOCK_WSIZE];
+	USHORT wBcc;
+}LIUCOMCELL_REGTYPE,*PLIUCOMCELL_REGTYPE;
+
+typedef struct
+{
+	USHORT wRxTxFlag;
+	USHORT bfEvent;	/* 통신형태: 0: Stop ,1 ~ 0xFE: 전송횟수 , 0xFF: 무한전송*/ /* 응답시간: 10 ~ 255ms */
+	USHORT wLen;		/* 길이: 0 ~ 255 */
+	USHORT wDataBlock[SCM_TUCOM_DBLOCK_WSIZE];
+	USHORT wBcc;
+}UCOMCELL_TINY_REGTYPE,*PUCOMCELL_TINY_REGTYPE;
+
+typedef struct
+{
+	UCOMCELL_HUGE_REGTYPE TxReg;
+	UCOMCELL_HUGE_REGTYPE RxReg;
+}USCOM_HUGE_REGTYPE,*PUSCOM_HUGE_REGTYPE;
+
+typedef struct
+{
+	LIUCOMCELL_REGTYPE TxReg;
+	LIUCOMCELL_REGTYPE RxReg;
+}LIUCOM_REGTYPE,*PLIUCOM_REGTYPE;
+
+typedef struct
+{
+	UCOMCELL_TINY_REGTYPE TxReg;
+	UCOMCELL_TINY_REGTYPE RxReg;
+}UCOM_TINY_REGTYPE,*PUCOM_TINY_REGTYPE;
+
+
+typedef struct
+{
+	USHORT wRxTxFlag;			/* 전송 플래그 */
+	USHORT wResponsCnt;			/* 자동응답 카운터 */
+	USHORT spare1[5];
+	USHORT wDataBlock[SCM_MCOM_DBLOCK_WSIZE];
+	USHORT wBcc;
+}MCOM_REGTYPE,*PMCOM_REGTYPE;
+
+
+
+
+/*********************************************************/
+/*	메인통신 (내부)                                      */
+/*********************************************************/
+#define MAX_LCOM_SIZE	600
+
+#define NAME_UCOM_CHANNELS		4		/* 배열로 할당된 중앙 채널 장치 갯수 (MAX_UCOM_CHANNEL 이상이어야 한다.)*/
+#define NAME_LCOM_CHANNELS		4		/* 배열로 할당된 단말 채널 장치 갯수 (MAX_LCOM_CHANNEL 이상이어야 한다.)*/
+
+#define MAX_UCOM_CHANNEL		4		/* 중앙 TC의 채널 갯수 : Upper System */
+#define MAX_LCOM_CHANNEL		4		/* 한개 CC당 채널 갯수 : Lower System */
+
+/* 단말 하부통신 구조 (Under System Comunication Structure: USCOM) */
+/* OPCODE 0 : 하부통신 */
+typedef struct
+{
+	UCHAR chChannel;	/* 채널:0x00 ~ 0xFE ,0xFF:더이상 없음*/
+	UCHAR chSubChannel;	/* 추가채널:0x00 ~ 0xFE ,0xFF:더이상 없음*/
+	UCHAR chSpare;
+	UCHAR chLen;		/* DataBlock 길이: 0 ~ 255 */
+	UCHAR chEvent	;	/* 통신형태: 0: Stop ,1 ~ 0xFE: 전송횟수 , 0xFF: 무한전송*/
+	UCHAR chCycle;
+	USHORT wApplyCarHo;	/* 적용차호 Bit Field */
+}USCOMRXTXHEADTYPE,*PUSCOMRXTXHEADTYPE;
+
+typedef struct
+{
+	USCOMRXTXHEADTYPE Head;
+	UCHAR chDataBlock[255];
+}USCOMRXTXTYPE,*PUSCOMRXTXTYPE;
+
+typedef struct	/* 메인통신 헤더 구조 */
+{
+	BYTE bMaster	:1;		/* MASTER 상태 플래그 */
+	BYTE bPermit	:1;		/* MASTER 허가 플래그 */
+	BYTE nCmdCode	:6;		/* 커맨드 코드 -> 내가 MASTER를 취득하는게 아니라 상대편에게 MASTER가 되라고 요청할때 */
+
+	SYSTIMETYPE systime;			/* 자기 시스템 날짜 [BCD] */
+
+	BYTE bSetTime		:1; /* 시간설정지령 */
+	BYTE bSlaveStarted	:1;	/* Slave가 기동되었는가 */
+	BYTE bSetCarNum		:1;	/* 차량번호 설정 */
+	BYTE        		:1;
+	BYTE        		:1;
+	BYTE				:1; 
+	BYTE 				:1; 
+	BYTE 				:1; 
+
+	BYTE ICode;				/* 정보 코드 -> 맞춤 정보 수신용 코드 */
+} MAINCOMHEAD, *PMAINCOMHEAD; /* 14 BYTE */
+
+
+typedef struct /* 메인통신 중앙장치 바디 구조 */
+{
+	BYTE tcDi[4];	/* TC:CN3 -> 4 byte TC ONLY */
+	BYTE ccDi[6];	/* TC:CN2 -> 6 byte CC COMMON */
+
+	USHORT bDownloadStarted		:1;
+	USHORT bAutoDownFail		:1;
+	USHORT 						:1;
+	USHORT 						:1;
+	USHORT 						:1;
+	USHORT 						:1;
+	USHORT 						:1;
+	USHORT 						:1;
+
+	USHORT wCurScrNo;		/* 현재 GP 화면번호 -> 2 byte */
+	USHORT wSpeed;			/* 속도 0.1 km/h 단위 : 1/10 이 속도 */
+	USHORT nNotch;			/* 노치값 */
+
+	USHORT wTcUComFault;
+	USHORT wTcUComStarted;
+	USHORT wComFaultCnt[4];
+	
+	USHORT wMainCmdCode;		/* 동작코드 */
+	BYTE   chMainCmdData[20];	/* 동작코드수반 데이터 */
+
+	/* 하부장치 체널정보 - 가변 */
+	BYTE pLSysBlock[0];
+
+} MAINCOMTCBODY, *PMAINCOMTCBODY;
+
+typedef struct
+{
+	UCHAR nAddress1;		/* To Address */
+	UCHAR nAddress2;		/* From Address */
+
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR			:1;
+	UCHAR bResReq	:1;		/* 응답 요구 */
+	
+	UCHAR nOpCodeOffset;	/* 단말장치 OPCODE OFFSET */
+}MCOMPTLHEAD,*PMCOMPTLHEAD; /* 프로토콜 용 HEAD */
+
+typedef struct	/* 메인통신 프로토콜 구조 */
+{
+	MCOMPTLHEAD Head;
+	MAINCOMHEAD tcHead;			/*  14 BYTE */
+	MAINCOMTCBODY tcBody;		/* 146 BYTE */
+}MAINCOMTCINFO, *PMAINCOMTCINFO;
+
+/* 단말통신 OPCODE[10] 에 대한 정보 */
+typedef struct
+{
+	UCHAR chOpCode;
+	BYTE ccDo[10][6];
+	UCHAR chUsComTxBlock[0];
+}MCOMCCTXBODYTYPE,*PMCOMCCTXBODYTYPE; /* 중앙장치 -> 단말장치 */
+
+typedef struct
+{
+	UCHAR chTag;			/* ASCII - 'A' ~ 'Z' */
+	UCHAR chVerNum;			/* 버전 숫자 */
+}SCMVERTYPE,*PSCMVERTYPE;
+
+typedef struct
+{
+	UCHAR chHexaID[3];
+	SCMVERTYPE Version[3];
+	UCHAR chModuleFault;		/* BIT00: SCM2B, BIT01: SCM3C , BIT02: DIP , BIT03:D100A , BIT04:D100B , BIT5:AUX */
+	UCHAR ccDoFb[6];			/* CCDO FEED BACK 6 byte -channel */
+	UCHAR ccDi[14];				/* CCDI 14 BYTE */
+	UCHAR ccAi[4];				/* CCAI 4 BYTE */
+}CCRXHEADTYPE,*PCCRXHEADTYPE;	/* 34 BYTE */
+
+typedef struct
+{
+	UCHAR chOpCode;
+	CCRXHEADTYPE Head;
+	UCHAR chDataPack[0];		/* USCOMRXTXTYPE */
+
+}MCOMCCRXBODYTYPE,*PMCOMCCRXBODYTYPE; /* 개별 단말장치 -> 중앙장치 */
+
+typedef struct
+{
+	MCOMPTLHEAD Head;
+	MCOMCCRXBODYTYPE Body;
+}MAINCOMCCRXINFO,*PMAINCOMCCRXINFO;
+
+
+#define SPCODE_LIU_HUGECOM	300
+#define SPCODE_DOWN			200
+
+
+#define DOWN_MAX_RECODE	400
+#define DOWN_MAX_ERROR	5
+#define DOWN_MAX_BYTESIZE	400
+
+/* FORMWARE 포함된 ID를 체크한다. */
+#define FW_TYPE_NONE	0x00
+#define FW_TYPE_SCM2	0x01
+#define FW_TYPE_MCPU	0x10
+#define FW_TYPE_DIA		0x20
+
+#define FIRM_FILENAME_MCPUBOOT	"BOOTROM.BIN"
+#define FIRM_FILENAME_MCPU		"TGIS_SA0.BIN"
+#define FIRM_FILENAME_SCM2		"SCM2_C0.BIN"
+#define REC_DIA_FILENAME		"OPCODE11.DIA"
+
+
+/* scplib.c 에서 사용 할 채널 정보 */
+#define FIRM_TCSCM2_NUM		1			/* 중앙장치(LIU)의 SCM2의 갯수 */
+#define FIRM_CCSCM2_NUM		1			/* 단말장치의 SCM2의 갯수 */
+
+#define	UCOM_TXSENDREG		SCM2A_TCOM_TXSENDREG					/* 중앙장치의 하부통신에 사용할 주소 (SCM2B_LCOM_TXSENDREG,SCM2A_TCOM_TXSENDREG)*/
+
+
+
+
+
+
+USHORT sm_DownloadByMem_TC(BYTE chTcHexaID,LPBYTE pDataBuf,UINT nDataSize,USHORT wDataType,BOOL bNoLiu2);
+
+#if (UCOM_TXSENDREG == SCM2B_LCOM_TXSENDREG)
+typedef USCOM_HUGE_REGTYPE	USCOM_REGTYPE,*PUSCOM_REGTYPE;			/* 중앙장치의 메인통신용 제외, 두번째 SCM을 사용할 경우 (HUGE)*/ 
+#else
+typedef UCOM_TINY_REGTYPE	USCOM_REGTYPE,*PUSCOM_REGTYPE;			/* 중앙장치의 메인통신용 보드의 내장 채널을 사용할 경우 (TINY) */
+        
+#endif 
+
+#endif /* _SCPLIB_H_ */
