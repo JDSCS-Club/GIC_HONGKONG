@@ -1,0 +1,36 @@
+"Engineering Change Order
+(시방 변경 통보서 )",,,,,,,
+,,,,,,,
+PROJECT : HONGKONG,,,,,,,
+,,,,,,,
+Date,Model(Board),No.,Before Revision,,After Revision,,Remark
+,,,Location,Specification,Location,Specification,
+2014. 5. 20,VoIP A1,1,U5,ST232,,,삭제
+,,2,S1,S-1011A,,,삭제
+,,3,TP1,TP,,,삭제
+,,4,TP2,TP,,,삭제
+,,5,J3,HEADER 3PIN,,,삭제
+,,6,C30,104P,,,삭제
+,,7,C31,104P,,,삭제
+,,8,C32,104P,,,삭제
+,,9,C33,104P,,,삭제
+,,10,C34,104P,,,삭제
+,,11,R40,0R,,,삭제
+,,12,R41,0R,,,삭제
+,,13,,,R31,0R,추가
+,,14,,,R32,0R,추가
+,,15,,,R33,0R,추가
+,,16,,,R34,0R,추가
+,,17,,,R85,0R,추가
+,,18,,,R86,0R,추가
+2014. 6. 2,PSR-VoIP A1,1,,,C8,106P/2012,누락
+,,2,,,C9,106P/2012,누락
+,,3,,,C10,106P/2012,누락
+,,4,,,C15,106P/2012,누락
+,,5,,,C17,106P/2012,누락
+,,6,,,C18,106P/2012,누락
+2014. 7. 7,PSR-VoIP A2,1,C8,106P/2012,C8,NOP,
+,,2,C12,103P,C12,NOP,
+,,3,R33,0R,R33,NOP,
+,,4,R34,0R,R34,NOP,
+2014. 7. 14,PSR-VoIP A2,1,CN1,09031966921(96pin_Male),CN1,533402(Male_96pin),HARTING에서 ERNI로 변경

@@ -1,0 +1,23 @@
+,,,,,,,
+,MOP-SUB-A1,,,,,,
+,,,,,,2019-09-18 00:00:00,
+10.0,No.,NAME,SPEC,Q'ty,LOCATION NUMBER,"작업
+구분",비고
+20.0,1,Photo Coupler,PS2801-1,2,"PS1,PS2",SMD,
+20.0,2,DIODE,1SS226,2,"Q1,Q2",SMD,
+20.0,3,DIODE,1N4007-SMD,2,"D2,D4",SMD,
+20.0,4,TR,KRC106S,2,"Q3,Q4",SMD,
+20.0,5,TAN-D,47uF/25V/D,2,"CT1,CT2",SMD,
+20.0,6,Chip Capacitor (1608),104P,2,"C1,C2",SMD,
+40.0,7,Chip Resistor (1608),4.7K,4,"R1,R3,R5,R7",SMD,
+20.0,8,Chip Resistor (1608),10K,2,"R2,R4",SMD,
+20.0,9,Chip Resistor (1608),NOP,2,"R6,R8",SMD,
+10.0,10,Chip Resistor (2012),0R/2012,1,R10,SMD,
+20.0,11,SSR RELAY,AQZ207,2,"RY1,RY2",DIP,
+10.0,12,DC-DC CONVERTER,RO-1212S,1,U1,DIP,
+20.0,13,Metal Oxide Varistor,14D221,2,"D1,D3",DIP,
+10.0,14,Connector,35312-07,1,J1,DIP,
+10.0,15,Connector,5569-04,1,J2,DIP,
+10.0,16,PCB,"FR-4, 2Layer, 1.6T ( 140 x 160 mm )
+Array ( 1 x 2 )",1,-,Ass'y,
+,,,,29,,,

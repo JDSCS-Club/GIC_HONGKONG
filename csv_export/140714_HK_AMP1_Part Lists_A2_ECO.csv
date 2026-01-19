@@ -1,0 +1,19 @@
+"Engineering Change Order
+(시방 변경 통보서 )",,,,,,,
+,,,,,,,
+PROJECT : HONGKONG,,,,,,,
+,,,,,,,
+Date,Model(Board),No.,Before Revision,,After Revision,,Remark
+,,,Location,Specification,Location,Specification,
+2014. 6. 26,HK_AMP1_A2,1,D5,1N4148WS,D5,1N4148W,부품 패키지 변경
+2014. 7. 7,HK_AMP1_A2,1,FB2,BLM21PG220SN1,FB2,NOP,
+,,2,X1,NOP,-,-,
+,,3,-,-,CT15,22uF/10V/A,
+,,4,C2,18P,-,-,
+,,5,C3,18P,-,-,
+,,6,C50,221P,C50,224P,AMP On시 노이즈방지 
+,,7,C61,105P,-,-,
+,,8,R116,1K,R116,101R,
+,,9,R119,20K,R119,4.7K,
+,,10,R120,20K,R120,2.2K,
+2014. 7. 14,HK_AMP1_A2,1,CN1,09031966921(96pin_Male),CN1,533402(Male_96pin),HARTING에서 ERNI로 변경

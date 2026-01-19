@@ -1,0 +1,12 @@
+"Engineering Change Order
+(시방 변경 통보서 )",,,,,,,
+,,,,,,,
+PROJECT : PBX Module,,,,,,,
+,,,,,,,
+Date,Model(Board),No.,Before Revision,,After Revision,,Remark
+,,,Location,Specification,Location,Specification,
+2014. 5. 23,PBX Module A1,1,R46,NOP,R46,0R,변경
+,,2,R47,NOP,R47,0R,변경
+,,3,R74,10K,R74,NOP,변경
+,,4,,,R33,10M,추가
+2014. 12. 11,PBX Module A1,1,U3,TPS3808G25DBV,U3,TPS3808G33DBV,

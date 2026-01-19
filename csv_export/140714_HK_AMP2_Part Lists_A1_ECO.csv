@@ -1,0 +1,24 @@
+"Engineering Change Order
+(시방 변경 통보서 )",,,,,,,
+,,,,,,,
+PROJECT : HONGKONG,,,,,,,
+,,,,,,,
+Date,Model(Board),No.,Before Revision,,After Revision,,Remark
+,,,Location,Specification,Location,Specification,
+2014. 5. 20,AAB2_A1,1,RY1,DS2Y-S-DC12V,RY1,G2RL-2-DC12V,변경
+,,2,RY2,DS2Y-S-DC12V,RY2,G2RL-2-DC12V,변경
+,,3,RY3,DS2Y-S-DC12V,RY3,G2RL-2-DC12V,변경
+,,4,RY4,DS2Y-S-DC12V,RY4,G2RL-2-DC12V,변경
+2014. 5. 26,AAB2_A1,1,T1,8:333/48MM,T1,8:4/48mm,변경
+,,2,T2,8:333/48MM,T2,8:4/48mm,변경
+,,3,T3,8:333/48MM,T3,NOP,변경
+,,4,T4,8:333/48MM,T4,NOP,변경
+,,5,D3,1SR154-400,D3,NOP,변경
+,,6,D4,1SR154-400,D4,NOP,변경
+,,7,Q3,KRC106S,Q3,NOP,변경
+,,8,Q4,KRC106S,Q4,NOP,변경
+,,9,RY3,G2RL-2-DC12,RY3,NOP,변경
+,,10,RY4,G2RL-2-DC12,RY4,NOP,변경
+,,11,LED2,GREEN,LED2,NOP,변경
+,,12,R2,1.5K,R2,NOP,변경
+2014. 7. 14,HK_AMP2_A1,1,CN1,09031966921(96pin_Male),CN1,533402(Male_96pin),HARTING에서 ERNI로 변경
