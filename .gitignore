@@ -4,9 +4,9 @@
 # Virtual environment
 .venv/
 
-# Export directories
+# Export directories - ignore all files in these directories
 csv_export/
 docx_export/
-pptx_export/ # Added for pptx conversions
+pptx_export/
 
 # Test comment
