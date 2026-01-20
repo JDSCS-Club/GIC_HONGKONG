@@ -1,0 +1,14 @@
+v=0
+o=- 15916442759346664710 15916442759346664710 IN IP4 localhost
+s=Unnamed
+i=N/A
+c=IN IP4 224.1.1.2/255
+t=0 0
+a=tool:vlc 3.0.0-git
+a=recvonly
+a=type:broadcast
+a=charset:UTF-8
+m=video 5000 RTP/AVP 96
+b=RR:0
+a=rtpmap:96 H264/90000
+a=fmtp:96 media=video; clock-rate=90000; packetization-mode=1; profile-level-id=64001e; sprop-parameter-sets=Z0JAKqaAeAIn5UAA\,aM4wpIAA
